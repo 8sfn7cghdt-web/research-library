@@ -1,0 +1,9 @@
+[
+  { "file": "00_Briefing.md", "after": "## In Brief", "snippet": "contested_page.html" },
+  { "file": "01_Origins_And_Deep_History.md", "after": "IV. The first secession", "snippet": "first_secession.html" },
+  { "file": "02_Modern_Arc.md", "after": "II. Rival Civil Religions at War", "snippet": "same_bible.html" },
+  { "file": "02_Modern_Arc.md", "after": "VI. Death, Suffering, and Consolation", "snippet": "work_of_death.html" },
+  { "file": "03_Whitman_Shaped_By_The_War.md", "after": "III. The hospital years as religious formation", "snippet": "whitmans_turn.html" },
+  { "file": "04_Whitman_As_Shaper.md", "after": "Death as the Deepest Theme", "snippet": "immanence_axis.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "forecast_fan.html" }
+]
