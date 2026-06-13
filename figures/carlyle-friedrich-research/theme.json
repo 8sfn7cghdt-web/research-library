@@ -5,7 +5,7 @@
   "light": {
     "bg": "#e8e7e1", "panel": "#d6d4ca", "text": "#1b1e23", "muted": "#585f68",
     "accent": "#2b5577", "border": "#c5c3b8", "mark": "#cdd9e6", "cover-bg": "#e1dfd7",
-    "t1": "#3e4750", "t2": "#27486b", "t3": "#8a3a2f", "t4": "#866c1a", "t5": "#2f6f7e"
+    "t1": "#3e4750", "t2": "#27486b", "t3": "#8a3a2f", "t4": "#7a611a", "t5": "#2f6f7e"
   },
   "dark": {
     "bg": "#14161a", "panel": "#1e2128", "text": "#dde0e4", "muted": "#8a929c",
@@ -21,5 +21,5 @@
     "hr_glyph": "'\\2014\\2002\\25c6\\2002\\2014'",
     "fig_radius": "2px"
   },
-  "cover_palette": ["#27486b", "#3e4750", "#8a3a2f", "#866c1a"]
+  "cover_palette": ["#27486b", "#3e4750", "#8a3a2f", "#7a611a"]
 }
