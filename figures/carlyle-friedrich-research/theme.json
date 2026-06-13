@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Iron Clock-Work — Carlylese letterpress drilled on a Prussian order-of-battle",
+  "anchor": "The mid-Victorian six-volume letterpress folio of the History (Chapman & Hall, 1858-65), where Carlyle's capitalized Powers — Sham, Reality, Veracity, Fact, Dryasdust — stand on the page like Fraktur proper-nouns, crossed with the 18th-century Prussian order-of-battle plan and the drill-ground whose troops move 'straight, rigid, regular as iron clock-work... with the lightning sleeping in it'; the cadence is Old-Testament jeremiad heard 'surpassable only by Doomsday'.",
+  "rationale": "The corpus's load-bearing fact is that the style IS the argument: a granite, deformed prose of parataxis, coined fire-compounds, and capitalized abstractions enacting a Sham-versus-Reality cosmology, in which a single Reality (Friedrich) is quarried out of and held against a 'swindler-century'. So the world is cold, iron, drilled, monumental — gunmetal and Prussian blue, the oxblood of the battle 'whirlwind of blood', the brass of the Pour le Merite, and one cold steel-spark of 'lightning'. High-contrast Didone display = the engraved Victorian title-page and the cold steel; sharp 2px corners = the drill. Never warm, never persuasive — compulsion, not consent.",
+  "light": {
+    "bg": "#e8e7e1", "panel": "#d6d4ca", "text": "#1b1e23", "muted": "#585f68",
+    "accent": "#2b5577", "border": "#c5c3b8", "mark": "#cdd9e6", "cover-bg": "#e1dfd7",
+    "t1": "#3e4750", "t2": "#27486b", "t3": "#8a3a2f", "t4": "#866c1a", "t5": "#2f6f7e"
+  },
+  "dark": {
+    "bg": "#14161a", "panel": "#1e2128", "text": "#dde0e4", "muted": "#8a929c",
+    "accent": "#7cb0e0", "border": "#2c313a", "mark": "#23364a", "cover-bg": "#1b1e24",
+    "t1": "#8b97a3", "t2": "#6fa3d4", "t3": "#d97a68", "t4": "#d4b552", "t5": "#5bb6c4"
+  },
+  "fonts": {
+    "display": "Didot, 'Bodoni 72', 'Hoefler Text', Georgia, 'Times New Roman', serif",
+    "body": "Charter, 'Bitstream Charter', Cambria, Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', ui-monospace, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2014\\2002\\25c6\\2002\\2014'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#27486b", "#3e4750", "#8a3a2f", "#866c1a"]
+}

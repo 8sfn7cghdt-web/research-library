@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Liber Novus — an illuminated mandala on lapis-and-gold vellum",
+  "anchor": "Jung's own hand-painted Red Book (Liber Novus, 1915-1930) mandala folios — deep lapis ultramarine, gold leaf, cinnabar, malachite, iron-gall ink on parchment — fused with the alchemical squaring-of-the-circle emblem (circle, square, quaternity) Jung read as the projected drama of individuation.",
+  "rationale": "This corpus's load-bearing claim is that the self is a mandala whose center cannot be told apart from the God-image (CW 11, para 231), and that individuation is the squaring of the circle — making the threefold whole by integrating the dark fourth. The native artifact is therefore Jung's own illuminated manuscript: the painted mandala, the quaternity, the two fishes of the Piscean aeon, the alchemical coniunctio. Lapis = the unconscious depth; cinnabar = the numinous center and the Red Book's fire; gold = the imago Dei; malachite = alchemy; aubergine = spirit and the missing fourth.",
+  "light": {
+    "bg": "#f2efe6",
+    "panel": "#e7e1d2",
+    "text": "#211b2c",
+    "muted": "#665c72",
+    "accent": "#b53d14",
+    "border": "#d3ccbb",
+    "mark": "#f0d68a",
+    "cover-bg": "#e9e3d4",
+    "t1": "#1f3a8f",
+    "t2": "#b53d14",
+    "t3": "#937010",
+    "t4": "#1f6b52",
+    "t5": "#6a3d86"
+  },
+  "dark": {
+    "bg": "#0f0d16",
+    "panel": "#221d30",
+    "text": "#ece6da",
+    "muted": "#9a90a6",
+    "accent": "#ed6c42",
+    "border": "#322b40",
+    "mark": "#4a3a1e",
+    "cover-bg": "#1b1726",
+    "t1": "#6f93e0",
+    "t2": "#ed6c42",
+    "t3": "#d8a83e",
+    "t4": "#4fb287",
+    "t5": "#b389d8"
+  },
+  "fonts": {
+    "display": "Baskerville, 'Baskerville Old Face', 'Big Caslon', 'Hoefler Text', Garamond, Georgia, serif",
+    "body": "Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', ui-monospace, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\25d0   \\00b7'",
+    "fig_radius": "4px"
+  },
+  "cover_palette": [
+    "#1f3a8f",
+    "#b8381b",
+    "#937010",
+    "#6a3d86"
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "aesthetic": "Broken Type — a wood-type mourning broadside over the contested two-column folio Bible",
+  "anchor": "The 1861 wood-type Union recruiting broadside + the two-column folio Bible (book·chapter·verse rules, red rubrication) + the black-bordered mourning notice + the gilt-stamped green cloth of the 1855 Leaves of Grass.",
+  "rationale": "The corpus argues the war was a theological event: North and South read the SAME plain-text Bible to opposite conclusions with no court of appeal to decide between them (Noll's 'theological crisis'). So the controlling artifact is the contested scriptural page itself — austere black wood-type and red rubric on cool newsprint, bordered like a mourning notice for 620,000 dead. Against this austerity stands Whitman's counter-scripture: the grass-green of the Leaves binding and the gilt of Jubilee. Deliberately NOT ancestry's warm illuminated atlas — monochrome broadside, cool newsprint, slab wood-type display where ancestry is polychrome heraldry, warm rag paper, old-style serif.",
+  "light": {
+    "bg": "#e6e2d5", "panel": "#f4f1e7", "text": "#1c1a16", "muted": "#5d574b",
+    "accent": "#a3251c", "border": "#c4bca6", "mark": "#dcc485", "cover-bg": "#ddd7c5",
+    "t1": "#9c2a1e", "t2": "#2a2620", "t3": "#2e4a64", "t4": "#386047", "t5": "#8f6716"
+  },
+  "dark": {
+    "bg": "#15130f", "panel": "#211e17", "text": "#e9e1d0", "muted": "#9a9082", "accent": "#dd6a5a",
+    "border": "#332f26", "mark": "#4a3c1d", "cover-bg": "#1d1a13",
+    "t1": "#e07a64", "t2": "#d7cfbc", "t3": "#7099bf", "t4": "#6faa80", "t5": "#d6a84e"
+  },
+  "fonts": {
+    "display": "'Rockwell', 'Rockwell Nova', 'Roboto Slab', 'Bookman Old Style', Georgia, 'Times New Roman', serif",
+    "body": "Georgia, 'Times New Roman', 'Times', 'Liberation Serif', serif",
+    "mono": "'Courier New', 'Nimbus Mono PS', 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\2767   \\00b7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#9c2a1e", "#2a2620", "#386047", "#8f6716"]
+}

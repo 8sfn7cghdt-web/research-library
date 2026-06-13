@@ -1,0 +1,9 @@
+[
+  { "file": "05_Themes_Ideology.md", "after": "## Hero-Worship and the Great-Man Theory", "snippet": "sham_reality.html" },
+  { "file": "02_Carlylese_Style.md", "after": "## The architecture of the sentence", "snippet": "carlylese_anatomy.html" },
+  { "file": "01_Composition_History.md", "after": "## Narrative: From Cromwell to Friedrich", "snippet": "dead_lift_timeline.html" },
+  { "file": "04_Battle_Set_Pieces.md", "after": "## How the Devices Cohere", "snippet": "battle_matrix.html" },
+  { "file": "07_Career_Historiography.md", "after": "## The Career Arc: From the Revolution to the King", "snippet": "career_arc.html" },
+  { "file": "09_Contested_Afterlife.md", "after": "## The German Channel", "snippet": "contested_lineage.html" },
+  { "file": "09_Contested_Afterlife.md", "after": "## The Shadow and the Recovery", "snippet": "reputation_fan.html" }
+]
