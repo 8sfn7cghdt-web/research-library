@@ -632,6 +632,23 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
   #content { padding-top: 3.6rem; }
   figure.corpus-fig { margin-left: -.6rem; margin-right: -.6rem; padding: .7rem .6rem .7rem; }
 }
+/* distraction-free focus mode (desktop only — leaves the mobile drawer alone) */
+@media (min-width: 861px) {
+  #sidebar { transition: transform .22s ease; }
+  #main { transition: margin-left .22s ease; }
+  body.focus-mode #sidebar { transform: translateX(-100%); }
+  body.focus-mode #main { margin-left: 0; }
+  body.focus-mode #content { max-width: 760px; }
+}
+/* keyboard-shortcuts help (toggled with ?) */
+#kbd-help { position: fixed; inset: 0; z-index: 90; background: rgba(20,18,15,.5); display: none;
+  align-items: center; justify-content: center; }
+#kbd-help.open { display: flex; }
+#kbd-help .kh { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; min-width: 250px; }
+#kbd-help h3 { font-family: var(--display); margin: 0 0 .8rem; font-size: 1.05rem; }
+#kbd-help dl { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1rem; margin: 0; font-family: var(--sans); font-size: .82rem; }
+#kbd-help dt { color: var(--accent); font-weight: 600; white-space: nowrap; }
+#kbd-help dd { margin: 0; color: var(--muted); }
 """
 
 APP_JS = r"""
@@ -664,7 +681,10 @@ docs.forEach((d, i) => {
   toc.appendChild(a);
 });
 
+let firstShow = true;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function show(i, anchorText) {
+  const apply = () => {
   current = Math.max(0, Math.min(docs.length - 1, i));
   content.innerHTML = marked.parse(docs[current].body);
   // rewrite chapter-to-chapter .md links into in-app navigation
@@ -687,6 +707,15 @@ function show(i, anchorText) {
     const rec = (JSON.parse(localStorage.getItem('library-recents') || '[]') || []).filter(r => r.slug !== corpus.slug);
     rec.unshift({ slug: corpus.slug, title: corpus.title, ch: current, chTitle: docs[current].title, ts: Date.now() });
     localStorage.setItem('library-recents', JSON.stringify(rec.slice(0, 20)));
+    // quiet reading streak: bump once per calendar day a chapter is opened
+    const today = new Date().toISOString().slice(0, 10);
+    const st = JSON.parse(localStorage.getItem('reading-streak') || '{}');
+    if (st.last !== today) {
+      const yest = new Date(Date.now() - 864e5).toISOString().slice(0, 10);
+      st.count = (st.last === yest ? (st.count || 0) : 0) + 1;
+      st.last = today;
+      localStorage.setItem('reading-streak', JSON.stringify(st));
+    }
   } catch (e) {}
   if (anchorText) {
     const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
@@ -697,15 +726,57 @@ function show(i, anchorText) {
   }
   document.getElementById('main').scrollIntoView();
   window.scrollTo(0, 0);
+  };
+  // cross-fade chapter swaps where supported (skips first paint + reduced motion)
+  if (document.startViewTransition && !reduceMotion && !firstShow) document.startViewTransition(apply);
+  else apply();
+  firstShow = false;
 }
 
 document.getElementById('prev').onclick = () => show(current - 1);
 document.getElementById('next').onclick = () => show(current + 1);
+
+let chordKey = null, chordTimer;
 document.addEventListener('keydown', (e) => {
-  if (e.target === searchBox) return;
-  if (e.key === 'ArrowLeft') show(current - 1);
-  if (e.key === 'ArrowRight') show(current + 1);
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  const back = document.getElementById('cmdk-back');
+  if (back && back.classList.contains('open')) return;  // palette owns the keys when open
+  const help = document.getElementById('kbd-help');
+  if (help && help.classList.contains('open')) { if (e.key === 'Escape' || e.key === '?') toggleHelp(); return; }
+  if (chordKey === 'g') { clearTimeout(chordTimer); chordKey = null;
+    if (e.key === 'g') { show(0); return; }
+    if (e.key === 'e') { show(docs.length - 1); return; } }
+  if (e.key === 'g') { chordKey = 'g'; chordTimer = setTimeout(() => { chordKey = null; }, 700); return; }
+  if (e.key === 'ArrowLeft' || e.key === 'k') show(current - 1);
+  else if (e.key === 'ArrowRight' || e.key === 'j') show(current + 1);
+  else if (e.key === 'z' || e.key === 'Z') toggleFocus();
+  else if (e.key === '?') toggleHelp();
 });
+
+function toggleFocus() {
+  const on = document.body.classList.toggle('focus-mode');
+  localStorage.setItem('reader-focus', on ? '1' : '0');
+}
+if (localStorage.getItem('reader-focus') === '1') document.body.classList.add('focus-mode');
+
+function toggleHelp() {
+  let h = document.getElementById('kbd-help');
+  if (!h) {
+    h = document.createElement('div'); h.id = 'kbd-help';
+    h.innerHTML = '<div class="kh"><h3>Keyboard</h3><dl>'
+      + '<dt>⌘K</dt><dd>command palette</dd>'
+      + '<dt>← / k</dt><dd>previous chapter</dd>'
+      + '<dt>→ / j</dt><dd>next chapter</dd>'
+      + '<dt>g g</dt><dd>first chapter</dd>'
+      + '<dt>g e</dt><dd>last chapter</dd>'
+      + '<dt>Z</dt><dd>focus mode</dd>'
+      + '<dt>?</dt><dd>this help</dd></dl></div>';
+    h.addEventListener('click', (ev) => { if (ev.target === h) toggleHelp(); });
+    document.body.appendChild(h);
+  }
+  h.classList.toggle('open');
+}
 
 // search
 let timer;
@@ -772,6 +843,10 @@ window.addEventListener('hashchange', () => {
 # ('' for root pages, '../' for edition pages in docs/<section>/) prefixes them.
 
 SHELL_CSS = """
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
 #cmdk-fab { position: fixed; left: .9rem; bottom: .9rem; z-index: 60; display: inline-flex; align-items: center; gap: .45rem;
   font-family: var(--sans); font-size: .72rem; letter-spacing: .03em; color: var(--muted);
   background: var(--panel); border: 1px solid var(--border); border-radius: 11px; padding: .4rem .7rem; cursor: pointer; }
@@ -798,14 +873,13 @@ SHELL_CSS = """
 .cmdk-t mark { background: var(--mark, #f3dfa0); color: inherit; border-radius: 2px; padding: 0 1px; }
 .cmdk-m { font-family: var(--sans); font-size: .68rem; color: var(--muted); white-space: nowrap; letter-spacing: .02em; }
 .cmdk-none { font-family: var(--sans); font-size: .85rem; color: var(--muted); text-align: center; padding: 1.4rem .6rem; }
-.card .cover { position: relative; }
-.card-ring { position: absolute; left: .5rem; top: .5rem; width: 34px; height: 34px; }
-.card-ring .rbg { stroke: var(--border); }
-.card-ring text { font-family: var(--sans); font-size: 9px; fill: var(--muted); }
-.card-seal { position: absolute; right: .5rem; top: .5rem; width: 24px; height: 24px; border-radius: 50%;
-  background: var(--accent); color: #fff; display: none; align-items: center; justify-content: center; border: 2px solid var(--cover-bg); }
-.card-seal svg { width: 13px; height: 13px; }
-.card.is-complete .card-seal { display: flex; }
+/* reading progress lives on the meta line (bottom-right of the card body), never over the cover image */
+.meta.has-prog { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+.card-prog { display: inline-flex; align-items: center; gap: .34rem; font-family: var(--sans); font-size: .68rem;
+  letter-spacing: .02em; text-transform: none; color: var(--muted); white-space: nowrap; }
+.card-prog svg { width: 14px; height: 14px; flex: none; }
+.card-prog .pbg { stroke: var(--border); }
+.card-prog.done { color: var(--accent); }
 #resume { display: none; }
 #resume.on { display: block; max-width: 1080px; margin: 1.2rem auto 0; padding: 0 2rem; }
 #resume a { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); background: var(--panel);
@@ -843,7 +917,7 @@ SHELL_JS = r"""
       ENTRIES.push({ t: it.title, m: (it.category || '') + (it.meta ? ' · ' + it.meta : ''), grp: 'Editions', icon: '▤', href: it.href, k: kw(it.title, it.category, it.meta) });
     }
   });
-  var GRP_ORDER = ['Continue', 'Corpora', 'Sections', 'Chapters', 'Editions'];
+  var GRP_ORDER = ['Continue', 'Corpora', 'Sections', 'Chapters', 'In the text', 'Editions'];
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
   function fuzzy(q, s) { q = q.toLowerCase(); s = s.toLowerCase(); var i = 0, j = 0; while (i < q.length && j < s.length) { if (q[i] === s[j]) i++; j++; } return i === q.length; }
@@ -871,6 +945,34 @@ SHELL_JS = r"""
     });
   }
 
+  // global "in the text" search — search-index.json is fetched lazily on the
+  // first body-length query, so it never blocks first paint (and degrades to
+  // title search if the fetch fails, e.g. opened from file://).
+  var SI = null, siState = 'idle';
+  function loadSI() {
+    if (siState !== 'idle') return;
+    siState = 'loading';
+    fetch(base + 'search-index.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (j) { SI = j; siState = 'ready'; if (isOpen() && input && input.value.trim().length >= 2) render(); })
+      .catch(function () { siState = 'failed'; });
+  }
+  function bodyMatches(q) {
+    if (siState !== 'ready' || !SI || q.length < 2) return [];
+    var out = [];
+    for (var c = 0; c < SI.length && out.length < 16; c++) {
+      var corp = SI[c], chs = corp.chapters || [];
+      for (var i = 0; i < chs.length && out.length < 16; i++) {
+        var text = chs[i].text || '', pos = text.toLowerCase().indexOf(q);
+        if (pos < 0) continue;
+        var s = Math.max(0, pos - 32), e = Math.min(text.length, pos + q.length + 54);
+        var snip = (s > 0 ? '…' : '') + text.slice(s, e).trim() + (e < text.length ? '…' : '');
+        out.push({ t: snip, m: corp.title + ' · ' + (chs[i].title || ('Ch ' + (i + 1))), grp: 'In the text',
+                   icon: '¶', href: corp.slug + '.html#ch-' + chs[i].i });
+      }
+    }
+    return out;
+  }
+
   var back, input, resEl, rows = [], sel = 0, built = false;
   function build() {
     if (built) return;
@@ -887,15 +989,25 @@ SHELL_JS = r"""
   }
   function results(q) {
     if (!q) return recentEntries().concat(ENTRIES.filter(function (e) { return e.grp === 'Corpora' || e.grp === 'Sections'; }));
+    var ql = q.toLowerCase();
+    if (ql.length >= 3) loadSI();
     var subs = [], fuz = [];
-    ENTRIES.forEach(function (e) { var s = score(q, e); if (s < 5) subs.push({ e: e, s: s }); else if (s === 5) fuz.push(e); });
-    if (subs.length) { subs.sort(function (a, b) { return a.s - b.s; }); return subs.slice(0, 14).map(function (x) { return x.e; }); }
-    return fuz.slice(0, 10);  // only when nothing matched directly — graceful typo fallback
+    ENTRIES.forEach(function (e) { var s = score(ql, e); if (s < 5) subs.push({ e: e, s: s }); else if (s === 5) fuz.push(e); });
+    var head;
+    if (subs.length) { subs.sort(function (a, b) { return a.s - b.s; }); head = subs.slice(0, 10).map(function (x) { return x.e; }); }
+    else head = fuz.slice(0, 8);
+    return head.concat(bodyMatches(ql));  // title/chapter hits first, then in-the-text hits
   }
   function render() {
     var q = input.value.trim();
     var list = results(q);
-    if (!list.length) { rows = []; resEl.innerHTML = '<div class="cmdk-none">No matches. Try a title, a chapter, or “ghost”.</div>'; return; }
+    if (!list.length) {
+      rows = [];
+      resEl.innerHTML = (siState === 'loading')
+        ? '<div class="cmdk-none">Searching inside the chapters…</div>'
+        : '<div class="cmdk-none">No matches. Try a title, a chapter, or “ghost”.</div>';
+      return;
+    }
     var ordered = [];
     GRP_ORDER.forEach(function (g) { list.forEach(function (e) { if (e.grp === g) ordered.push(e); }); });
     list.forEach(function (e) { if (GRP_ORDER.indexOf(e.grp) < 0) ordered.push(e); });
@@ -942,24 +1054,24 @@ SHELL_JS = r"""
     var slug = card.getAttribute('data-slug');
     var total = +card.getAttribute('data-total') || 0;
     var accent = card.getAttribute('data-accent') || '--accent';
-    var cover = card.querySelector('.cover');
-    if (!cover || !total) return;
+    var meta = card.querySelector('.meta');
+    if (!meta || !total) return;
     var read = 0;
     try { read = (JSON.parse(localStorage.getItem('read:' + slug) || '[]') || []).filter(function (x) { return x < total; }).length; } catch (e) {}
-    if (read > 0) {
-      var r = 14, cir = 2 * Math.PI * r, off = cir * (1 - read / total);
-      var ring = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      ring.setAttribute('class', 'card-ring'); ring.setAttribute('viewBox', '0 0 36 36');
-      ring.innerHTML = '<circle cx="18" cy="18" r="17.4" fill="var(--bg)" opacity="0.78"/>'
-        + '<circle class="rbg" cx="18" cy="18" r="' + r + '" fill="none" stroke-width="3.4"/>'
-        + '<circle cx="18" cy="18" r="' + r + '" fill="none" stroke="var(' + accent + ')" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="' + cir.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 18 18)"/>'
-        + '<text x="18" y="18" text-anchor="middle" dominant-baseline="central">' + Math.round(read / total * 100) + '</text>';
-      cover.appendChild(ring);
+    if (!read) return;  // keep the meta line clean until there's progress
+    var done = read >= total;
+    var prog = document.createElement('span');
+    prog.className = 'card-prog' + (done ? ' done' : '');
+    if (done) {
+      card.classList.add('is-complete');
+      prog.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="var(' + accent + ')" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 4 6.5 12 3 8.5"/></svg>Read';
+    } else {
+      var r = 6, cir = 2 * Math.PI * r, off = cir * (1 - read / total);
+      prog.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle class="pbg" cx="8" cy="8" r="' + r + '" fill="none" stroke-width="2.4"/>'
+        + '<circle cx="8" cy="8" r="' + r + '" fill="none" stroke="var(' + accent + ')" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="' + cir.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 8 8)"/></svg>' + read + '/' + total;
     }
-    var seal = document.createElement('span'); seal.className = 'card-seal';
-    seal.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
-    cover.appendChild(seal);
-    if (read >= total) card.classList.add('is-complete');
+    meta.classList.add('has-prog');
+    meta.appendChild(prog);
   });
 
   var resume = document.getElementById('resume');
@@ -975,6 +1087,15 @@ SHELL_JS = r"""
       resume.classList.add('on');
     }
   }
+
+  // quiet reading streak — a small folio stat folded into the library stats line
+  try {
+    var st = JSON.parse(localStorage.getItem('reading-streak') || '{}');
+    var stats = document.querySelector('.stats');
+    if (stats && st && (st.count || 0) >= 2 && !/streak/.test(stats.textContent)) {
+      stats.textContent = stats.textContent + ' · ' + st.count + '-day reading streak';
+    }
+  } catch (e) {}
 })();
 """
 
@@ -2681,6 +2802,20 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
 
 # ---------------------------------------------------------------- build
 
+def strip_md(body, cap=6000):
+    """Plain-text excerpt of a chapter body for the global search index.
+
+    Drops injected figure HTML/SVG, code fences, markdown punctuation and URLs,
+    collapses whitespace, and caps length so search-index.json stays lean.
+    """
+    t = re.sub(r"```.*?```", " ", body, flags=re.S)
+    t = re.sub(r"<[^>]+>", " ", t)
+    t = re.sub(r"https?://\S+", " ", t)
+    t = re.sub(r"[#>*_`~\[\]()|]", " ", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t[:cap]
+
+
 def json_for_html(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
@@ -2702,6 +2837,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     cards = []
     manifest = []          # cross-page command-palette index (corpora + sections + editions)
     pages = []             # reader renders deferred until the manifest below is complete
+    search_entries = []    # trimmed chapter text for the palette's "in the text" search
     total_chapters = 0
     total_words = 0
 
@@ -2776,6 +2912,13 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             "href": f"{corpus['slug']}.html",
             "chapters": [d["title"] for d in corpus["documents"]],
         })
+        search_entries.append({
+            "slug": corpus["slug"], "title": corpus["title"],
+            "chapters": [
+                {"i": di, "title": d["title"], "text": strip_md(d["body"])}
+                for di, d in enumerate(corpus["documents"])
+            ],
+        })
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
 
@@ -2811,6 +2954,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
     shell_sub = shell_html(manifest_json, "../")    # edition pages in docs/<section>/
+
+    # Lazy global-search payload — the palette fetches this only on an "in the
+    # text" query, so it never weighs down first paint. Bodies are trimmed.
+    (out / "search-index.json").write_text(json.dumps(search_entries, ensure_ascii=False))
 
     # Now write the reader pages, each carrying the shared shell.
     for p in pages:
