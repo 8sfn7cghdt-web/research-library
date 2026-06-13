@@ -1495,6 +1495,7 @@ def _fp_beat_css():
     def sel(beat, prefix=""):
         return (f'{prefix}.fp-sec[data-beat="{beat}"],'
                 f'{prefix}.fp-oped[data-beat="{beat}"],'
+                f'{prefix}.fp-fp-sec[data-beat="{beat}"],'
                 f'{prefix}.fp-jump a[data-beat="{beat}"]')
     dark_prefix = '[data-theme="dark"] '
     light = "\n".join(f'{sel(b)}{{--sec:{l};}}' for b, (l, d) in FP_BEATS.items())
@@ -1816,6 +1817,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
     </div>
   </header>
   <nav class="fp-jump" id="fp-jump" aria-label="Sections"></nav>
+  <section id="fp-frontpage" class="fp-frontpage" aria-label="In this edition"></section>
   <section id="fp-lead" class="fp-lead-wrap"></section>
   <div id="fp-body"></div>
   <footer class="fp-foot">
@@ -1874,6 +1876,27 @@ FINGERPRINT_EDITION_CSS = """
 .fp-jump a:hover { color: var(--text); background: var(--panel); }
 .fp-jump a.active { color: var(--text); background: var(--panel); box-shadow: inset 0 0 0 1px var(--border); }
 
+/* front-page index — every article listed under its section, as a newspaper
+   contents box. Flows in columns; each block tinted by its beat accent. */
+.fp-frontpage { margin: 0 0 2.6rem; }
+.fp-fp-h { font-family: var(--sans); font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .22em;
+  color: var(--muted); text-align: center; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text);
+  padding: .5rem 0; margin: 0 0 1.5rem; }
+.fp-fp-grid { columns: 2; column-gap: 2.4rem; }
+.fp-fp-sec { break-inside: avoid; -webkit-column-break-inside: avoid; margin: 0 0 1.3rem; }
+.fp-fp-head { display: flex; align-items: center; gap: .45rem; margin: 0 0 .5rem; padding-bottom: .3rem;
+  border-bottom: 1px solid var(--sec); }
+.fp-fp-sigil { width: 15px; height: 15px; color: var(--sec); flex: none; }
+.fp-fp-sigil svg { width: 100%; height: 100%; display: block; }
+.fp-fp-title { font-family: var(--sans); font-size: .67rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .11em; color: var(--sec); }
+.fp-fp-list { list-style: none; margin: 0; padding: 0; }
+.fp-fp-list li { margin: 0 0 .4rem; line-height: 1.28; }
+.fp-fp-list a { font-family: var(--display); font-size: .98rem; color: var(--text); text-decoration: none;
+  border-bottom: 1px solid transparent; transition: color .12s ease; }
+.fp-fp-list a:hover { color: var(--sec); border-bottom-color: var(--sec); }
+.fp-fp-by { font-family: var(--sans); font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+
 /* the Above-the-Fold lead */
 .fp-lead { margin: 0 0 1rem; }
 .fp-kicker { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .68rem; text-transform: uppercase;
@@ -1901,7 +1924,7 @@ FINGERPRINT_EDITION_CSS = """
   letter-spacing: .14em; color: var(--sec); margin: 0; }
 
 /* a story card */
-.fp-story { border-left: 3px solid var(--sec); padding: 0 0 0 1.1rem; margin: 0 0 1.7rem; }
+.fp-story { border-left: 3px solid var(--sec); padding: 0 0 0 1.1rem; margin: 0 0 1.7rem; scroll-margin-top: 4rem; }
 .fp-story:last-child { margin-bottom: 0; }
 .fp-story-head { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.22;
   letter-spacing: -.01em; margin: 0 0 .35rem; }
@@ -1952,6 +1975,7 @@ FINGERPRINT_EDITION_CSS = """
 
 @media (max-width: 620px) {
   .fp-edition { padding: 1.2rem 1.2rem 1rem; }
+  .fp-fp-grid { columns: 1; }
   .fp-jump { margin: 0 -1.2rem 1.6rem; padding: .5rem 1.2rem; }
   .fp-folio { font-size: .56rem; letter-spacing: .06em; }
   .fp-oped { grid-template-columns: 1fr; gap: .9rem; }
@@ -2092,8 +2116,8 @@ sections.forEach((sec, i) => {
   head.appendChild(el('span', 'fp-sec-sigil', MARKS[beat] || ''));
   head.appendChild(el('h2', 'fp-sec-title', esc(sec.section_title || '')));
   sec_el.appendChild(head);
-  (sec.stories || []).forEach(s => {
-    const st = el('article', 'fp-story');
+  (sec.stories || []).forEach((s, j) => {
+    const st = el('article', 'fp-story'); st.id = 'art-' + i + '-' + j;
     st.appendChild(el('h3', 'fp-story-head', esc(s.headline || '')));
     if (s.dek) st.appendChild(el('p', 'fp-story-dek', esc(s.dek)));
     const sb = el('div', 'fp-story-body', marked.parse(s.body || '')); openExternal(sb);
@@ -2104,6 +2128,47 @@ sections.forEach((sec, i) => {
   });
   body.appendChild(sec_el);
 });
+
+// ---- front-page index: every article listed under its section ----
+(function buildFrontPage() {
+  const host = document.getElementById('fp-frontpage');
+  if (!host) return;
+  const blocks = [];
+  if (ed.lead) blocks.push({ beat: 'partnership-signals', title: 'Above the Fold',
+    items: [{ headline: ed.lead.headline || '', href: '#fp-lead' }] });
+  sections.forEach((sec, i) => {
+    const beat = sec.section_class || '';
+    const isOped = beat.indexOf('wire-opinion') === 0;
+    const items = (sec.stories || []).map((s, j) => ({
+      headline: s.headline || '',
+      by: isOped ? (s.portrait_caption || '') : '',
+      href: isOped ? ('#sec-' + i) : ('#art-' + i + '-' + j),
+    }));
+    blocks.push({ beat, title: sec.section_title || '', items });
+  });
+  host.appendChild(el('h2', 'fp-fp-h', 'In This Edition'));
+  const grid = el('div', 'fp-fp-grid');
+  blocks.forEach(b => {
+    const block = el('div', 'fp-fp-sec'); block.dataset.beat = b.beat;
+    const head = el('div', 'fp-fp-head');
+    head.appendChild(el('span', 'fp-fp-sigil', MARKS[b.beat] || ''));
+    head.appendChild(el('span', 'fp-fp-title', esc(b.title)));
+    block.appendChild(head);
+    const ul = el('ul', 'fp-fp-list');
+    b.items.forEach(it => {
+      const li = document.createElement('li');
+      const by = it.by ? ` <span class="fp-fp-by">— ${esc(it.by)}</span>` : '';
+      const a = el('a', null, esc(it.headline) + by);
+      a.href = it.href;
+      a.onclick = (e) => { e.preventDefault();
+        const t = document.querySelector(it.href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
+      li.appendChild(a); ul.appendChild(li);
+    });
+    block.appendChild(ul);
+    grid.appendChild(block);
+  });
+  host.appendChild(grid);
+})();
 
 // ---- build the jump-nav (Above the Fold first) ----
 (function buildNav() {
