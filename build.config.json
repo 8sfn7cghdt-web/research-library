@@ -1,6 +1,6 @@
 {
-  "title": "Research Library",
-  "subtitle": "Deep-research corpora, readable and searchable.",
+  "title": "AI for HUMANities",
+  "subtitle": "Agentic Scholarship",
   "out": "docs",
   "ghost": {
     "enabled": true,

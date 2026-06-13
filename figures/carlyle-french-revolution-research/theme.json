@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Burnt Manuscript — a conflagration set in the type of an 1837 Romantic folio",
+  "anchor": "The 1837 first edition (James Fraser, 3 vols. — 'The Bastille / The Constitution / The Guillotine') read against the two facts that organize the whole corpus: the only fair copy of Volume I burned to kindling at Harriet Taylor's hearth on 6 March 1835, and the book's own controlling fire-imagery — Sansculottism as 'the Death-Birth of a World', the 'huge smoke-cloud, streaked with rays as of heaven on one side; girt on the other as with hellfire', and the recurring World-Phoenix of immolation-and-Palingenesia carried over from Sartor. Carlyle told Jane the rewrite came 'direct and flamingly from the heart of a living man' — a draft that had literally been used to make flame.",
+  "rationale": "The book IS a fire: a providential conflagration in which an ancien regime hollowed to Sham burns and a new world is born of the ash. So the world is incandescent, not cool — ember-crimson and flame-orange against charred ash-paper, with the 'rays as of heaven' in worn gilt and one band of smoke-blue for the doubled valence (heaven on one side, hellfire on the other). The Baskerville-led transitional serif is the 1830s English book face — Romantic, high-rhetorical, declamatory — set apart from the cold Didone of the Friedrich corpus and the Scotch-Roman of the Calvinist corpus. Warm, urgent, apocalyptic — the jeremiad, not the lecture.",
+  "light": {
+    "bg": "#ece4d2", "panel": "#ded2bd", "text": "#241a15", "muted": "#6c5b4d",
+    "accent": "#b14a0d", "border": "#cdbfa6", "mark": "#f1c98f", "cover-bg": "#e6dcc7",
+    "t1": "#bd3a14", "t2": "#b2540d", "t3": "#8a6a10", "t4": "#3c5a72", "t5": "#74454a"
+  },
+  "dark": {
+    "bg": "#1a1310", "panel": "#2c2017", "text": "#ece0d3", "muted": "#a48d7d",
+    "accent": "#e08a3e", "border": "#392a21", "mark": "#5a3416", "cover-bg": "#221812",
+    "t1": "#e26a40", "t2": "#e89a4a", "t3": "#d6b24e", "t4": "#6f9cc2", "t5": "#c68a8a"
+  },
+  "fonts": {
+    "display": "'Big Caslon', 'Caslon', 'Hoefler Text', Baskerville, Georgia, serif",
+    "body": "Palatino, 'Palatino Linotype', 'Book Antiqua', Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2767   \\25c6   \\2767'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": ["#bd3a14", "#b2540d", "#8a6a10", "#3c5a72"]
+}

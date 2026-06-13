@@ -15,6 +15,23 @@
         "Ernest Hemingway",
         "Walt Whitman"
       ]
+    },
+    {
+      "date": "2026-06-13",
+      "weekday": "Saturday",
+      "edition_number": 6,
+      "file": "ghost/2026-06-13-ghost-of-times.html",
+      "lead_headline": "A Tower of Stone, and Six Who Came to Be Heard",
+      "lead_dek": "What the old man saw in Spain, walking past the parliament to the masons and the migrants and the wounded.",
+      "lead_writer": "Walt Whitman",
+      "writers": [
+        "Walt Whitman",
+        "Thomas Carlyle",
+        "G.K. Chesterton",
+        "Ernest Hemingway",
+        "C.G. Jung",
+        "Scott Adams"
+      ]
     }
   ]
 }

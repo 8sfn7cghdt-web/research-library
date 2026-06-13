@@ -412,6 +412,19 @@ def hero_svg():
             "aria-label='A mosaic sun rising over an arcade of arches'>" + "".join(parts) + "</svg>")
 
 
+def hero_art():
+    """The library hero. Uses aiforhumanities.<ext> if present (base64-embedded so
+    index.html stays self-contained), else falls back to the generative mosaic SVG."""
+    for ext in COVER_EXTS:
+        img = HERE / f"aiforhumanities{ext}"
+        if img.exists():
+            mime = mimetypes.guess_type(img.name)[0] or "image/png"
+            b64 = base64.b64encode(img.read_bytes()).decode("ascii")
+            return (f"<img class='hero-img' src='data:{mime};base64,{b64}' "
+                    "alt='AI for HUMANities' decoding='async'>")
+    return hero_svg()
+
+
 # ---------------------------------------------------------------- templates
 
 READER_TEMPLATE = """<!DOCTYPE html>
@@ -774,6 +787,7 @@ header { max-width: 1080px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
 .hero-text { flex: 1.1; }
 .hero-art { flex: 1; min-width: 0; }
 .hero-art svg { width: 100%; height: auto; display: block; }
+.hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
 [data-theme="dark"] .hero-art .hero-core { fill: #161513; }
 [data-theme="dark"] .hero-art .hero-ground { fill: #e8e4db; }
 .kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
@@ -1129,7 +1143,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         css=LIBRARY_CSS,
         favicon=FAVICON,
         stats=stats,
-        hero=hero_svg(),
+        hero=hero_art(),
         ghost_band=ghost_band,
         cards="\n".join(cards),
         theme_js=LIBRARY_THEME_JS,

@@ -1,0 +1,25 @@
+{
+  "aesthetic": "Lost the Confession, Kept the Grammar — the Westminster plain-style cut in Scotch Roman granite",
+  "anchor": "The Burgher Seceder kirk of Annandale rendered as an artifact set: the Westminster Confession of Faith (1647) and the 1650 Scottish Metrical Psalter (psalms only, no instruments, no ornament), the whinstone James Carlyle the Ecclefechan stonemason hewed, the kirkyard slate, and Scotch Roman — the workmanlike book-roman cut in Edinburgh in Carlyle's own lifetime (and the face Georgia revives). The corpus's load-bearing claim is that Carlyle's mature thought is 'a Scottish Calvinism that has lost its confession but kept its grammar.'",
+  "rationale": "A Seceder meeting-house is the opposite of ornament: bare walls, hewn stone, the metrical psalm, covenant-black ink on grey paper, the long preached Word. So the palette is granite slate and whin-grey oatmeal under covenant ink, near-monochrome but for a single grave bloom of moor-heather — the one Scottish colour on the kirkyard stone — with the oxblood of the blood-signed Covenant, the moss-lichen of the gravestone, and worn Bible-gilt held in reserve. Georgia (Scotch Roman) for display ties the type to Edinburgh and sets the corpus apart from the Friedrich Didone, the French-Revolution Baskerville, and the Ancestry Hoefler. Austere, lapidary, sermonic — doctrine restacked as prose.",
+  "light": {
+    "bg": "#e7e4da", "panel": "#d7d3c6", "text": "#1c1f1c", "muted": "#5c5f57",
+    "accent": "#6e3d68", "border": "#c6c2b4", "mark": "#d8cfe0", "cover-bg": "#e1ded2",
+    "t1": "#44504c", "t2": "#6e3d68", "t3": "#8a3030", "t4": "#4f6a3c", "t5": "#7a6326"
+  },
+  "dark": {
+    "bg": "#15171a", "panel": "#1e2125", "text": "#e2e0d8", "muted": "#8f928a",
+    "accent": "#b884b0", "border": "#2c3036", "mark": "#3a2a40", "cover-bg": "#1b1e22",
+    "t1": "#8a968f", "t2": "#b884b0", "t3": "#cf6b6b", "t4": "#88ac6a", "t5": "#c6a652"
+  },
+  "fonts": {
+    "display": "Georgia, 'Miller Text', 'Times New Roman', 'Liberation Serif', serif",
+    "body": "'Times New Roman', Tinos, Georgia, 'Liberation Serif', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2014   \\00b7   \\2014'",
+    "fig_radius": "1px"
+  },
+  "cover_palette": ["#44504c", "#6e3d68", "#8a3030", "#7a6326"]
+}

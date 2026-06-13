@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Unresolving Object — a Blue Book case folder read through an amber radar-PPI scope",
+  "anchor": "The declassified U.S. UAP record as a physical object: the Project Blue Book case folder and the 1968-69 Condon Report, the CIA FOIA redaction bar and classification stamp, fused with the two instruments that actually carry the modern argument — the amber circular radar PPI sweep and the ATFLIR/FLIR HUD reticle of the Nimitz 'Tic Tac', Gimbal, and Go Fast tapes. A record caught mid-declassification, watched through a cross-hair that keeps trying, and failing, to resolve the object.",
+  "rationale": "The corpus is not about secrecy in the abstract; its evidence is typewritten case folders, redaction bars, and sensor scopes. Deliberately pushed OFF the green-phosphor terminal of the IPv4 corpus (the documented prior collision) and onto the amber radar-PPI scope and redaction-manila instead: radar amber and ochre on manila-folder tan, with stamp-red, olive-drab, and a dim scope-slate. Typewriter display (American Typewriter, not Courier) is the case-folder hand. Forensic, instrument-cool, deadpan — the deadpan of a record that lists 701 of 12,618 cases as simply 'unidentified' and stops there.",
+  "light": {
+    "bg": "#e9ddc4", "panel": "#dccfb0", "text": "#20211c", "muted": "#615c47",
+    "accent": "#97600c", "border": "#cabfa0", "mark": "#e8c98a", "cover-bg": "#e3d7bd",
+    "t1": "#a8650c", "t2": "#9e2b1c", "t3": "#565e30", "t4": "#3c4a59", "t5": "#6e4a26"
+  },
+  "dark": {
+    "bg": "#0c0d0a", "panel": "#1c1d12", "text": "#e6e0cf", "muted": "#9a917a",
+    "accent": "#d99a2e", "border": "#282619", "mark": "#4a3414", "cover-bg": "#131309",
+    "t1": "#e0a838", "t2": "#e0664a", "t3": "#a8b15a", "t4": "#6f93b5", "t5": "#c79a5a"
+  },
+  "fonts": {
+    "display": "'American Typewriter', 'Courier New', Courier, ui-monospace, monospace",
+    "body": "Arial, 'Helvetica Neue', 'Liberation Sans', system-ui, sans-serif",
+    "mono": "'Courier New', Courier, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\25d0   \\00b7'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": ["#a8650c", "#9e2b1c", "#565e30", "#3c4a59"]
+}
