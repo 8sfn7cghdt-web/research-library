@@ -120,8 +120,24 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   font-family: var(--sans); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em; }
 .gh-folio .gh-folio-c { color: var(--accent); font-weight: 700; }
 
+/* contents — every story + author, clickable to its piece */
+.gh-contents { display: block; margin: 0 0 2.8rem; }
+.gh-contents-h { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .2em;
+  color: var(--muted); border-bottom: 2px solid var(--text); padding-bottom: .5rem; margin: 0 0 .1rem; }
+.gh-toc-item { display: grid; grid-template-columns: 3.2rem 1fr; gap: .8rem; align-items: baseline;
+  text-decoration: none; color: var(--text); padding: .7rem .2rem; border-bottom: 1px solid var(--border); }
+.gh-toc-item:hover { background: var(--panel); }
+.gh-toc-no { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent); white-space: nowrap; padding-top: .15rem; }
+.gh-toc-item.is-lead .gh-toc-no { font-weight: 700; }
+.gh-toc-head { font-family: var(--display); font-size: 1.12rem; line-height: 1.2; display: block;
+  transition: color .15s ease; }
+.gh-toc-item:hover .gh-toc-head { color: var(--accent); }
+.gh-toc-by { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); display: block; margin-top: .25rem; }
+
 /* the op-ed stack */
-.gh-piece { margin: 0; }
+.gh-piece { margin: 0; scroll-margin-top: 1.2rem; }
 .gh-head { font-family: var(--display); font-weight: 800; letter-spacing: -.01em;
   line-height: 1.1; margin: 0 0 .55rem; }
 .gh-piece .gh-head { font-size: clamp(1.55rem, 3.2vw, 2rem); }
@@ -190,6 +206,7 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html" class="active">The Ghost of Times</a>
+    <a href="fingerprint.html">The Fingerprint</a>
   </nav>
 </div>
 <main class="gh-edition">
@@ -202,6 +219,7 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
       <span>5 writers</span>
     </div>
   </header>
+  <nav id="gh-contents"></nav>
   <div id="gh-pieces"></div>
   <section id="gh-facts"></section>
   <footer class="gh-foot">
@@ -234,12 +252,12 @@ const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls)
   if (html != null) n.innerHTML = html; return n; };
 
 // op-eds: lead first, then each section's stories, in render order
-const pieces = [ed.lead].concat((ed.sections || []).flatMap(s => s.stories || []));
+const pieces = [ed.lead].concat((ed.sections || []).flatMap(s => s.stories || [])).filter(Boolean);
 const stack = document.getElementById('gh-pieces');
 pieces.forEach((p, i) => {
-  if (!p) return;
   const isLead = i === 0;
   const art = el('article', 'gh-piece' + (isLead ? ' gh-lead' : ''));
+  art.id = 'piece-' + i;
   art.appendChild(el(isLead ? 'h1' : 'h2', 'gh-head', escapeText(p.headline || '')));
   if (p.dek) art.appendChild(el('p', 'gh-dek', escapeText(p.dek)));
   if (p.author_byline) art.appendChild(el('p', 'gh-byline', escapeText(p.author_byline)));
@@ -250,6 +268,28 @@ pieces.forEach((p, i) => {
   stack.appendChild(art);
   if (i < pieces.length - 1) stack.appendChild(el('hr', 'gh-sep'));
 });
+
+// Contents — every story + author at the top, each jumping to its piece.
+const contents = document.getElementById('gh-contents');
+if (pieces.length > 1) {
+  contents.appendChild(el('p', 'gh-contents-h', 'In this edition'));
+  pieces.forEach((p, i) => {
+    const a = el('a', 'gh-toc-item' + (i === 0 ? ' is-lead' : ''));
+    a.href = '#piece-' + i;
+    a.appendChild(el('span', 'gh-toc-no', i === 0 ? 'Lead' : String(i + 1).padStart(2, '0')));
+    const body = el('span', 'gh-toc-body');
+    body.appendChild(el('span', 'gh-toc-head', escapeText(p.headline || '')));
+    if (p.author_byline) body.appendChild(el('span', 'gh-toc-by', escapeText(p.author_byline)));
+    a.appendChild(body);
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const t = document.getElementById('piece-' + i);
+      if (t) { t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+               history.replaceState(null, '', '#piece-' + i); }
+    });
+    contents.appendChild(a);
+  });
+}
 
 // "The Facts" ledger
 const files = (ed.story_files && ed.story_files.files) || [];

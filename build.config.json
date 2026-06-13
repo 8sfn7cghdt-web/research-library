@@ -8,6 +8,13 @@
     "motto": "Written by those who lived it. Reporting for those who do.",
     "blurb": "A daily paper in which writers across the centuries — Carlyle, Chesterton, Hemingway, Whitman, Jung and the rest — each file one op-ed on the news of the day."
   },
+  "fingerprint": {
+    "enabled": true,
+    "title": "The Fingerprint",
+    "kicker": "The global programmatic & Advanced TV market paper",
+    "motto": "All the news that's fit to Fingerprint",
+    "blurb": "An independent daily wire on the global programmatic and Advanced TV (CTV) market — platforms, performance, partnerships, competition, regulation, political-ad spend, and a five-market global desk, with closing op-eds in the voices of McLuhan and Ogilvy."
+  },
   "descriptions": {
     "jung-research": "Jung's lifelong wrestle with the self, the spirit, and religion — from the numinous and individuation to Christ as a symbol of the Self, Answer to Job, synchronicity, alchemy, and where Jordan Peterson reads him rightly and wrongly.",
     "carlyle-french-revolution-research": "A close reading of Carlyle's The French Revolution: A History (1837) — the manuscript Mill's maid burned and Carlyle rewrote from memory, the prophetic fire of 'Carlylese,' its theory of revolution, and its long shadow over Dickens and the historians who followed.",
