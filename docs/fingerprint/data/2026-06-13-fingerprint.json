@@ -1,0 +1,236 @@
+{
+  "edition_date": "2026-06-13",
+  "edition_number": 26,
+  "weekday": "Saturday",
+  "subtitle": "All the News That's Fit to Fingerprint",
+  "lead": {
+    "kicker": "Above the Fold",
+    "headline": "Roku Explores Sale as $19B Ad Platform Draws Bidders",
+    "dek": "Stock jumps more than 20% on reports of a strategic-options review, including a full sale.",
+    "body": "Roku is weighing a range of strategic options, including a full sale, according to reports citing six sources, after the talks first surfaced this week; the stock closed up more than 20% at $143.66, lifting the company to a roughly $19.4 billion market cap. Roku has held discussions with at least one US media company about a combination and has also explored a PIPE transaction, though no decision has been reached. The company is now a platform business first — its ads and subscriptions threw off roughly ten times the revenue of its hardware in the most recent quarter. Roku is one of the largest at-scale access points for CTV advertising in the US, and its inventory currently flows openly through The Trade Desk, Amazon DSP, DV360 and others. A change in ownership — especially to a media or retail buyer with its own demand stack — could reshape how open that pipeline stays, making this the most consequential CTV-supply story of the week.",
+    "source_publication": "PPC Land",
+    "source_url": "https://ppc.land/roku-explores-a-sale-as-its-19bn-ad-platform-attracts-media-and-tech-buyers/",
+    "filed_date": "2026-06-13"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Netflix Extends Programmatic Pause, Live Ads Across DSPs",
+          "dek": "Dynamic ad insertion reaches pause and live inventory as Amazon DSP targeting goes global.",
+          "body": "At its 2026 upfront, Netflix said it is extending Dynamic Ad Insertion to Pause Ads and live content, available this summer in the US and Canada and buyable programmatically through The Trade Desk, Amazon DSP and Google DV360. Netflix also switched on programmatic audience targeting across all ad-supported countries via Amazon DSP by June 1, with Yahoo DSP to follow, as its ad tier reached 250 million global monthly active viewers. Opening previously manual formats like pause and live to standard programmatic pipes pulls Netflix deeper into the open CTV ecosystem and hands buyers new high-attention inventory to plan against.",
+          "source_publication": "PPC Land",
+          "source_url": "https://ppc.land/netflix-2026-upfront-250m-viewers-ai-agents-and-15-new-ad-markets/",
+          "filed_date": "2026-06-09"
+        },
+        {
+          "headline": "Home Screens Become the Next CTV Ad Battleground",
+          "dek": "A new report argues the TV operating system is now premium real estate, not plumbing.",
+          "body": "A TVREV report argues connected-TV operating systems have evolved from navigation layers into comprehensive advertising and data hubs, with the home screen functioning as premium ad inventory and FAST services wired directly into the interface. Roku's platform business generated roughly ten times more revenue from ads and subscriptions than hardware in the first quarter, while Samsung's Tizen and LG's webOS now anchor broader ad and data operations. As OS owners increasingly control audience discovery and monetization, the strategic stakes rise for every CTV buyer and seller negotiating for screen-level placement and data access.",
+          "source_publication": "The Desk",
+          "source_url": "https://thedesk.net/2026/06/tvrev-streaming-operating-system-report/",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Walmart Ties YouTube Video to In-Store Sales via DV360",
+          "dek": "A closed proof-of-concept measures whether streaming exposure drives Walmart purchases.",
+          "body": "Walmart Connect launched a closed proof-of-concept with Google that lets advertisers activate Walmart shopper audiences in Display & Video 360, run them on YouTube, and measure resulting purchases at Walmart, with CTV and VIZIO inventory in scope to follow. Publicis Media Exchange's Joel Lunenfeld stressed the audiences are built on real purchase data rather than modeled signals. The deal pushes retail-data closed-loop attribution deeper into premium video and raises the bar for CTV sellers to prove outcomes, not just reach.",
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415712/walmart-enables-offline-shopper-measurement-in-you.html",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "PubMatic, Havas Run Spain's First Agentic CTV Campaign",
+          "dek": "Telefónica's Movistar campaign came in 18% below its CPM target.",
+          "body": "PubMatic and Havas announced what they called Spain's first agentic CTV campaign, run for Telefónica's Movistar on PubMatic's AgenticOS platform using autonomous AI agents for inventory selection, frequency, brand safety and bid optimization. The campaign delivered CPMs 18% below target, beat impression goals by 23% and cut setup time by up to 80%, following earlier agentic deployments in the Netherlands and France. The result is an early holding-company proof point that agentic buying can outperform on CTV, accelerating sell-side automation in EMEA.",
+          "source_publication": "StockTitan",
+          "source_url": "https://www.stocktitan.net/news/PUBM/pub-matic-and-havas-launch-the-first-agentic-ctv-campaign-in-spain-el2ju7hv9u6h.html",
+          "filed_date": "2026-06-09"
+        },
+        {
+          "headline": "Acxiom Geo Audiences Go Live on Trade Desk in UK, Germany",
+          "dek": "InfoBase location-derived segments enter TTD's data marketplace in Europe.",
+          "body": "Acxiom made its Geo-Based audience segments, drawn from its InfoBase consumer data asset, available in The Trade Desk's third-party data marketplace in the UK and Germany, activatable within Kokai under TTD's Audience Unlimited pricing. The segments let advertisers target on real-world location patterns rather than purely digital signals in privacy-regulated markets. The move expands TTD's European data supply and feeds the broader push to cut audience waste in CTV and open-internet buys.",
+          "source_publication": "PPC Land",
+          "source_url": "https://ppc.land/acxioms-geo-based-audiences-are-now-live-on-the-trade-desk-in-uk-and-germany/",
+          "filed_date": "2026-06-10"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Magnite Launches Orchestration Layer for AI Buyer Agents",
+          "dek": "Dentsu and DIRECTV Advertising sign on as beta partners.",
+          "body": "Magnite launched Magnite Orchestration, a coordination layer that lets AI buyer agents connect directly to its sell-side infrastructure and transact across CTV, audio and other formats without manual intervention. The system pairs a seller agent that builds custom inventory and audience packages with a buyer agent that generates media plans from RFPs; dentsu integrated proprietary audience segments and DIRECTV Advertising is testing premium TV inventory access. Embedding audience data inside the coordination layer is Magnite's bid to own the plumbing of agentic CTV buying as DSPs race to automate the same workflow.",
+          "source_publication": "PPC Land",
+          "source_url": "https://ppc.land/magnite-orchestration-wants-to-be-the-wiring-behind-ai-ad-buying/",
+          "filed_date": "2026-06-11"
+        },
+        {
+          "headline": "Meta Quietly Lays Groundwork for CTV Ad Expansion",
+          "dek": "Exploratory talks with Magnite, FreeWheel, OEMs and publishers point to a big-screen push.",
+          "body": "Meta, on track to be the industry's largest ad company in 2026, has held a series of exploratory meetings since early 2025 with supply-side players including Magnite and Comcast-owned FreeWheel, plus TV manufacturers and publishers, to assess how it could access CTV inventory at scale. No product has launched, but the outreach signals serious intent to extend Meta's performance-ad machine onto the big screen. A Meta entry would reshape demand-side competition in CTV and pressure incumbents like The Trade Desk and Amazon for premium streaming supply.",
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/future-of-tv/meta-eyes-ctv-expansion-to-fuel-its-next-wave-of-ad-growth/",
+          "filed_date": "2026-06-10"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "EU to Publish Code on Labeling AI-Generated Ad Content",
+          "dek": "Final transparency code due this month, ahead of August 2 binding obligations.",
+          "body": "The EU is scheduled to publish the final Code of Practice on marking and labeling AI-generated content this month, establishing technical standards for watermarking and detecting synthetic media. The code precedes AI Act transparency obligations that become legally binding on August 2, while the Digital Services Act already bans profiling-based advertising to minors and targeting on sensitive data. For CTV and programmatic, the labeling regime will reach AI-generated ad creative and synthetic media, adding disclosure obligations for advertisers and platforms serving European audiences.",
+          "source_publication": "Latham & Watkins",
+          "source_url": "https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines",
+          "filed_date": "2026-06-08"
+        },
+        {
+          "headline": "ICO Urges UK to Loosen Cookie Rules for Advertising",
+          "dek": "Regulator proposes separating lower-risk advertising from intrusive tracking under PECR.",
+          "body": "The UK's Information Commissioner's Office published advice to government recommending targeted changes to online-advertising rules under PECR, proposing that Regulation 6 distinguish lower-risk advertising practices from more intrusive tracking. The advice is designed to support privacy-preserving advertising models and follows the ICO's review of whether blanket consent requirements are hindering innovation. If adopted, the reforms could ease consent friction for UK addressable and CTV advertising while still policing higher-risk identity tracking.",
+          "source_publication": "Bird & Bird",
+          "source_url": "https://www.twobirds.com/en/insights/2026/potential-changes-to-uk-online-advertising-rules-ico-publishes-advice-to-government",
+          "filed_date": "2026-05-18"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "AdImpact Lifts 2026 Cycle to $11.6B; CTV Hits $2.7B",
+          "dek": "Connected TV revised up $300M to a record ~23% share of midterm ad spend.",
+          "body": "AdImpact raised its 2025-26 political ad-spend projection to $11.6 billion, the most expensive midterm cycle on record, with spending already at $4 billion through early June. The firm lifted its CTV estimate by $300 million to $2.7 billion, holding roughly a 23% share of total cycle spend, alongside broadcast TV at $5.6 billion and digital at $1.6 billion. California ($979M), Michigan ($852M) and Texas ($850M) lead state totals, and Senate spend was revised up 23% to $3.4 billion. The upward CTV revision confirms streaming as the fastest-growing political channel, pulling more campaign dollars into programmatic and addressable inventory ahead of November.",
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415747/biggest-midterm-cycle-to-date-political-ad-spend.html",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — UK",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Sky Closes In on £1.6bn ITV Broadcast Takeover",
+          "dek": "Deal would unite ITVX and Sky's UK addressable inventory; £200m of the price hinges on ad performance.",
+          "body": "Sky, owned by Comcast, is reportedly weeks from acquiring ITV's broadcast arm — including the ITVX streaming platform and linear channels — for roughly £1.6 billion, with about £200 million contingent on advertising performance; ITV Studios would remain with current shareholders. ITV's Q1 ad revenue fell just 1.5%, with Q2 growth forecast near 10% on the FIFA World Cup. Combining ITVX with Sky's addressable stack would concentrate UK premium-video supply under one owner and reset the leverage map for the planned Sky-ITV-Channel 4 unified marketplace.",
+          "source_publication": "VideoWeek",
+          "source_url": "https://videoweek.com/2026/05/15/week-in-review-sky-closes-in-on-itv-deal-byron-allen-buys-buzzfeed-and-ofcom-releases-draft-code-for-svod-services/",
+          "filed_date": "2026-05-15"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "JioHotstar Deepens Magnite Tie-Up for Live-Sports Programmatic",
+          "dek": "SpringServe mediation to govern demand across India's biggest sports and entertainment streams.",
+          "body": "JioHotstar expanded its partnership with Magnite, adopting SpringServe to power advanced programmatic mediation across its live sports and entertainment portfolio, including coverage tied to the ICC Men's T20 World Cup. Magnite's technology gives JioHotstar more control and visibility over programmatic creatives to enforce ad quality and brand safety at scale. With CTV the fastest-growing segment on the platform and JioHotstar leading India's CTV ad volumes, the deal cements independent sell-side infrastructure inside the world's largest live-sports streaming audience outside the US.",
+          "source_publication": "GlobeNewswire",
+          "source_url": "https://www.globenewswire.com/news-release/2026/06/04/3306510/0/en/JioHotstar-Deepens-Partnership-with-Magnite-to-Advance-Programmatic-Monetisation-and-Mediation-Across-Live-Sports-and-Entertainment-Portfolio.html",
+          "filed_date": "2026-06-04"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "CazéTV, Not Globo, Holds All 104 World Cup Matches",
+          "dek": "A creator-led streamer out-bid the incumbent broadcaster for full Brazilian 2026 tournament rights.",
+          "body": "CazéTV, the LiveMode-operated streaming service anchored by creator Casimiro Miguel, secured exclusive Brazilian rights to all 104 FIFA World Cup 2026 matches, while incumbent Globo will carry only 55 games. FIFA expanded the deal after CazéTV's 22-match 2022 trial drew younger, highly engaged audiences across YouTube and TikTok. The outcome signals creator-led, ad-supported streaming can now out-compete LATAM's dominant broadcaster for tentpole live sport — redirecting World Cup CTV and digital ad inventory away from traditional TV sales houses.",
+          "source_publication": "Fortune",
+          "source_url": "https://fortune.com/2026/06/11/cazetv-world-cup-brazil-globo-fifa-streaming/",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Ottawa Orders CRTC to Revisit Streamer CanCon Levy Hike",
+          "dek": "Government cites affordability and US trade pressure after the regulator tripled streamers' contribution to 15%.",
+          "body": "The federal government directed the CRTC to review its late-May decision tripling streaming services' Canadian-content contribution from 5% to 15% of Canadian revenue, with the prime minister citing cost-of-living concerns and US trade officials calling the rule discriminatory. The same decision cut domestic private broadcasters' obligations to 25% from as much as 45%, and streamers including Netflix and Disney are already in court. The review keeps the funding structure of Canada's video ecosystem — and the relative ad-economics of Bell, Rogers and Corus versus global streamers — unsettled for CTV sellers and buyers.",
+          "source_publication": "BNN Bloomberg",
+          "source_url": "https://www.bnnbloomberg.ca/business/politics/2026/06/03/ottawa-calls-for-review-of-crtc-decision-on-cancon-contributions/",
+          "filed_date": "2026-06-03"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "iQIYI Ad Revenue Falls 9% as Streamer Looks Overseas",
+          "dek": "China's leading long-form platform posts softer ad sales even as international originals gain traction.",
+          "body": "iQIYI reported quarterly online advertising revenue down 9% year-over-year to RMB 5.19 billion and membership revenue down 5% to RMB 16.81 billion, with total revenue declining about 8% sequentially. The company leaned into international expansion — its first Thai original set variety-show records on its overseas platform — and launched an AI-driven creation tool, Nado Pro, with more than 10,000 active creators. Soft domestic ad demand at China's largest subscription streamer underscores why iQIYI and peers are pushing CTV monetization and ad-supported tiers into Southeast Asia rather than relying on the saturated home market.",
+          "source_publication": "The Motley Fool",
+          "source_url": "https://www.fool.com/earnings/call-transcripts/2026/05/19/iqiyi-iq-q1-2026-earnings-transcript/",
+          "filed_date": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Set Has Become A Place",
+          "dek": "Roku is not selling a box. It is selling the room you have moved into.",
+          "body": "The figure this week is the sale. Roku, valued at nineteen billion dollars, puts itself up for auction — and the number is built almost entirely on advertising and the operating system, not the hardware that bears its name. Samsung's Tizen and LG's webOS now run ad and data businesses larger than the panels they were written for. That is the figure. The figure is not the story. The ground is that the television has stopped being a thing you watch and become a place you inhabit — an environment that greets you, routes you, and reads you the moment the panel wakes.\n\n*Enhance:* discovery, the home screen as storefront and as eye. *Obsolesce:* the channel, the schedule, the antenna, the whole grammar of tuning in. *Retrieve:* the hearth — the glowing center a room was once arranged around, the fire that organized the family without anyone choosing it. *Reverse:* pushed far enough, the set you switch on switches on you; the viewer becomes the inventory, and the program becomes the thing that runs while you are being measured.\n\nWe thought we had bought a screen for the content. The content turns out to be the bait, and the operating system the hook and the line. When a company's whole worth is the layer between you and the show, the layer is the show. The buyer fighting over Roku is not buying distribution. He is buying the doorway, and the doorway now faces inward. You did not turn on the television. You moved into one.\n\n*— Marshall McLuhan*",
+          "source_publication": "Wire Opinion",
+          "source_url": "https://ppc.land/roku-explores-a-sale-as-its-19bn-ad-platform-attracts-media-and-tech-buyers/",
+          "filed_date": "2026-06-13",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "Cheap Is Not A Strategy",
+          "dek": "The machine will make you a thousand spots. It will not make you one idea.",
+          "body": "I read this week that social video is about to grow faster than connected television for the first time — thirteen percent against eleven — and that the trade has settled on an explanation it finds rather comforting. Generative machines have made the spots cheap. A man can now produce fifty films for the price of one, so he produces fifty. The conclusion drawn is that the cheaper medium wins. The conclusion I draw is that we have once again confused the cost of making an advertisement with its power to sell. They are not the same thing. They have never been the same thing.\n\nIn 1958 I wrote an advertisement for Rolls-Royce with the headline, \"At sixty miles an hour the loudest noise in this new Rolls-Royce comes from the electric clock.\" Beneath it sat six hundred and seven words of body copy — thirteen facts, patiently set down. It was not cheap. It took weeks of reading the engineering reports. The following year the company's sales rose by half. One expensive idea outsold an ocean of cheap ones, because the consumer is not a moron; she is your wife, and she can tell the difference between a film made to sell her something and a film made to fill a slot.\n\nA machine that gives you a thousand forgettable spots has not solved your problem. It has multiplied it, and billed you for the privilege. Before you marvel at how little a commercial now costs to produce, ask the only question that has ever mattered: does it sell? If it does not, you have manufactured waste at a remarkable discount. Make one that works. We sell, or else.\n\n*— David Ogilvy*",
+          "source_publication": "Wire Opinion",
+          "source_url": "https://digiday.com/media-buying/social-video-ad-spending-is-set-to-outpace-ctv-in-growth-rate-this-year/",
+          "filed_date": "2026-06-13",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Whether a strategic buyer for Roku emerges — and whether it is a media owner, a retailer, or a Big Tech demand stack. The identity of the acquirer decides whether the largest open CTV pipeline in the US stays open to every DSP or gets pulled behind one buyer's walled garden."
+}

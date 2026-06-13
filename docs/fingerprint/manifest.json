@@ -35,6 +35,24 @@
         "Global Desk"
       ],
       "dispatches": 17
+    },
+    {
+      "date": "2026-06-13",
+      "weekday": "Saturday",
+      "edition_number": 26,
+      "file": "fingerprint/2026-06-13-fingerprint.html",
+      "lead_headline": "Roku Explores Sale as $19B Ad Platform Draws Bidders",
+      "lead_dek": "Stock jumps more than 20% on reports of a strategic-options review, including a full sale.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 16
     }
   ]
 }
