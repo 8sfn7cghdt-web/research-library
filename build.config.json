@@ -92,6 +92,16 @@
             "title": "The Medium Is the Message",
             "subtitle": "Marshall McLuhan — print, the global village, and the forms that remake us",
             "category": "The Modern World"
+        },
+        "piaget-research": {
+            "title": "How Knowledge Grows",
+            "subtitle": "Jean Piaget — genetic epistemology and the faith that shaped it",
+            "category": "Mind & Philosophy"
+        },
+        "dickinson-research": {
+            "title": "Tell It Slant",
+            "subtitle": "Emily Dickinson — the poet, the recluse, and the long war over her text",
+            "category": "Faith & Religion"
         }
     },
     "corpora": [
@@ -108,6 +118,8 @@
         "../phenomenology-pragmatism-research",
         "../uap-research",
         "../us-geopolitics-research",
-        "../mcluhan-research"
+        "../mcluhan-research",
+        "../piaget-research",
+        "../dickinson-research"
     ]
 }
