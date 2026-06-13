@@ -514,6 +514,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <script id="corpus-data" type="application/json">{data_json}</script>
 <script>{marked_js}</script>
 <script>{app_js}</script>
+{shell}
 </body>
 </html>
 """
@@ -678,6 +679,15 @@ function show(i, anchorText) {
   document.getElementById('pager-label').textContent = (current + 1) + ' / ' + docs.length + ' · ' + docs[current].title;
   history.replaceState(null, '', '#ch-' + current);
   localStorage.setItem(key, current);
+  // feed the cross-page library shell: per-corpus read set + global recents
+  try {
+    const rk = 'read:' + corpus.slug;
+    const readArr = JSON.parse(localStorage.getItem(rk) || '[]');
+    if (readArr.indexOf(current) < 0) { readArr.push(current); localStorage.setItem(rk, JSON.stringify(readArr)); }
+    const rec = (JSON.parse(localStorage.getItem('library-recents') || '[]') || []).filter(r => r.slug !== corpus.slug);
+    rec.unshift({ slug: corpus.slug, title: corpus.title, ch: current, chTitle: docs[current].title, ts: Date.now() });
+    localStorage.setItem('library-recents', JSON.stringify(rec.slice(0, 20)));
+  } catch (e) {}
   if (anchorText) {
     const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
     let node; while ((node = walker.nextNode())) {
@@ -738,7 +748,251 @@ function closeMenu() { document.body.classList.remove('menu-open'); }
 // initial chapter: hash > saved progress > 0
 const hash = location.hash.match(/^#ch-(\d+)$/);
 show(hash ? +hash[1] : +(localStorage.getItem(key) || 0));
+
+// respond to in-page hash changes: browser back/forward, and cross-page command
+// palette jumps that land on a chapter of the corpus already open (no reload).
+window.addEventListener('hashchange', () => {
+  const h = location.hash.match(/^#ch-(\d+)$/);
+  if (h && +h[1] !== current) show(+h[1]);
+});
 """
+
+# ---------------------------------------------------------------- the connective shell
+# A thin cross-page layer injected into EVERY page (library, readers, Ghost and
+# Fingerprint section fronts + editions). It carries two things:
+#   1. a baked `library-manifest` (every corpus + its chapter titles, plus the
+#      Ghost/Fingerprint sections and their editions) — inlined, so it works
+#      fully offline, no fetch;
+#   2. SHELL_JS, which turns that manifest into a global ⌘/Ctrl-K command palette
+#      (fuzzy-jump to any corpus, chapter, or edition from anywhere) with a
+#      continue-reading list, and — on the library index only — promotes each
+#      corpus's saved reading progress into a card progress ring + "completed"
+#      trencadís seal, plus a Resume-reading band.
+# Navigation hrefs in the manifest are stored relative to docs/ root; SHELL_BASE
+# ('' for root pages, '../' for edition pages in docs/<section>/) prefixes them.
+
+SHELL_CSS = """
+#cmdk-fab { position: fixed; left: .9rem; bottom: .9rem; z-index: 60; display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--sans); font-size: .72rem; letter-spacing: .03em; color: var(--muted);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 11px; padding: .4rem .7rem; cursor: pointer; }
+#cmdk-fab:hover { color: var(--accent); border-color: var(--accent); }
+#cmdk-fab kbd { font-family: var(--sans); font-size: .7rem; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 5px; padding: .02rem .32rem; color: inherit; }
+#cmdk-back { position: fixed; inset: 0; z-index: 80; background: rgba(20,18,15,.42); -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px); display: none; align-items: flex-start; justify-content: center; padding: 12vh 1rem 1rem; }
+#cmdk-back.open { display: flex; }
+#cmdk { width: 100%; max-width: 560px; background: var(--bg); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,.34); }
+#cmdk-in { display: flex; align-items: center; gap: .6rem; padding: .85rem 1rem; border-bottom: 1px solid var(--border); }
+#cmdk-in svg { width: 18px; height: 18px; flex: none; color: var(--muted); }
+#cmdk-in input { flex: 1; border: none; background: none; outline: none; color: var(--text); font-family: var(--serif); font-size: 1.05rem; }
+#cmdk-in .hint { font-family: var(--sans); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 5px; padding: .12rem .4rem; }
+#cmdk-res { max-height: 52vh; overflow-y: auto; padding: .4rem; }
+.cmdk-grp { font-family: var(--sans); font-size: .6rem; text-transform: uppercase; letter-spacing: .16em; color: var(--muted); padding: .6rem .6rem .25rem; }
+.cmdk-row { display: flex; align-items: center; gap: .7rem; padding: .5rem .6rem; border-radius: 9px; cursor: pointer;
+  text-decoration: none; color: var(--text); }
+.cmdk-row.sel { background: var(--panel); }
+.cmdk-ic { width: 1.3rem; text-align: center; color: var(--accent); flex: none; font-family: var(--sans); font-size: .9rem; }
+.cmdk-t { font-family: var(--display); font-size: .98rem; flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cmdk-t mark { background: var(--mark, #f3dfa0); color: inherit; border-radius: 2px; padding: 0 1px; }
+.cmdk-m { font-family: var(--sans); font-size: .68rem; color: var(--muted); white-space: nowrap; letter-spacing: .02em; }
+.cmdk-none { font-family: var(--sans); font-size: .85rem; color: var(--muted); text-align: center; padding: 1.4rem .6rem; }
+.card .cover { position: relative; }
+.card-ring { position: absolute; left: .5rem; top: .5rem; width: 34px; height: 34px; }
+.card-ring .rbg { stroke: var(--border); }
+.card-ring text { font-family: var(--sans); font-size: 9px; fill: var(--muted); }
+.card-seal { position: absolute; right: .5rem; top: .5rem; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent); color: #fff; display: none; align-items: center; justify-content: center; border: 2px solid var(--cover-bg); }
+.card-seal svg { width: 13px; height: 13px; }
+.card.is-complete .card-seal { display: flex; }
+#resume { display: none; }
+#resume.on { display: block; max-width: 1080px; margin: 1.2rem auto 0; padding: 0 2rem; }
+#resume a { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0 14px 14px 0; padding: 1rem 1.3rem; transition: border-color .15s ease; }
+#resume a:hover { border-color: var(--accent); }
+#resume .rcol { min-width: 0; }
+#resume .rk { display: block; font-family: var(--sans); font-size: .62rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); margin: 0 0 .25rem; }
+#resume .rt { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
+#resume .rs { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .2rem 0 0; }
+#resume .rcta { margin-left: auto; font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--bg); background: var(--accent); border-radius: 11px; padding: .5rem .9rem; white-space: nowrap; }
+@media (max-width: 560px) { #cmdk-fab { font-size: .66rem; } .cmdk-m { display: none; } }
+"""
+
+SHELL_JS = r"""
+(function () {
+  var base = window.SHELL_BASE || '';
+  var mEl = document.getElementById('library-manifest');
+  var LIB = mEl ? JSON.parse(mEl.textContent) : [];
+
+  var ENTRIES = [];
+  // searchable keyword surface — folds in the slug so evocative display titles
+  // ("A God in the Psyche") still match the obvious term ("jung", "ipv6").
+  function kw() { return Array.prototype.join.call(arguments, ' ').toLowerCase(); }
+  LIB.forEach(function (it) {
+    var slugWords = (it.slug || '').replace(/-/g, ' ').replace(/ research$/, '');
+    if (it.kind === 'corpus') {
+      ENTRIES.push({ t: it.title, m: it.category || 'Corpus', grp: 'Corpora', icon: '◆', href: it.href, k: kw(it.title, slugWords, it.category) });
+      (it.chapters || []).forEach(function (ch, i) {
+        ENTRIES.push({ t: ch, m: it.title, grp: 'Chapters', icon: '·', href: it.href + '#ch-' + i, k: kw(ch, it.title, slugWords) });
+      });
+    } else if (it.kind === 'section') {
+      ENTRIES.push({ t: it.title, m: it.meta || 'Section', grp: 'Sections', icon: '§', href: it.href, k: kw(it.title, it.meta) });
+    } else if (it.kind === 'edition') {
+      ENTRIES.push({ t: it.title, m: (it.category || '') + (it.meta ? ' · ' + it.meta : ''), grp: 'Editions', icon: '▤', href: it.href, k: kw(it.title, it.category, it.meta) });
+    }
+  });
+  var GRP_ORDER = ['Continue', 'Corpora', 'Sections', 'Chapters', 'Editions'];
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function fuzzy(q, s) { q = q.toLowerCase(); s = s.toLowerCase(); var i = 0, j = 0; while (i < q.length && j < s.length) { if (q[i] === s[j]) i++; j++; } return i === q.length; }
+  function score(q, e) {
+    q = q.toLowerCase();
+    var t = e.t.toLowerCase(), p = t.indexOf(q);
+    if (p === 0) return 0;
+    if (p > 0) return 1;
+    if ((e.k || '').indexOf(q) >= 0) return 2;
+    if (fuzzy(q, e.k || t)) return 5;  // loose subsequence — fallback rank only
+    return 9;
+  }
+  function hl(t, q) {
+    if (!q) return esc(t);
+    var i = t.toLowerCase().indexOf(q.toLowerCase());
+    if (i < 0) return esc(t);
+    return esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length));
+  }
+  function readRecents() {
+    try { return JSON.parse(localStorage.getItem('library-recents') || '[]') || []; } catch (e) { return []; }
+  }
+  function recentEntries() {
+    return readRecents().slice(0, 4).map(function (r) {
+      return { t: r.title, m: 'Ch ' + (r.ch + 1) + (r.chTitle ? ' · ' + r.chTitle : ''), grp: 'Continue', icon: '▸', href: r.slug + '.html#ch-' + r.ch };
+    });
+  }
+
+  var back, input, resEl, rows = [], sel = 0, built = false;
+  function build() {
+    if (built) return;
+    back = document.createElement('div'); back.id = 'cmdk-back';
+    back.innerHTML = '<div id="cmdk" role="dialog" aria-label="Command palette">'
+      + '<div id="cmdk-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>'
+      + '<input id="cmdk-q" placeholder="Jump to any corpus, chapter, or edition…" autocomplete="off" spellcheck="false" aria-label="Search the library">'
+      + '<span class="hint">esc</span></div><div id="cmdk-res"></div></div>';
+    document.body.appendChild(back);
+    input = back.querySelector('#cmdk-q'); resEl = back.querySelector('#cmdk-res');
+    input.addEventListener('input', render);
+    back.addEventListener('click', function (e) { if (e.target === back) close(); });
+    built = true;
+  }
+  function results(q) {
+    if (!q) return recentEntries().concat(ENTRIES.filter(function (e) { return e.grp === 'Corpora' || e.grp === 'Sections'; }));
+    var subs = [], fuz = [];
+    ENTRIES.forEach(function (e) { var s = score(q, e); if (s < 5) subs.push({ e: e, s: s }); else if (s === 5) fuz.push(e); });
+    if (subs.length) { subs.sort(function (a, b) { return a.s - b.s; }); return subs.slice(0, 14).map(function (x) { return x.e; }); }
+    return fuz.slice(0, 10);  // only when nothing matched directly — graceful typo fallback
+  }
+  function render() {
+    var q = input.value.trim();
+    var list = results(q);
+    if (!list.length) { rows = []; resEl.innerHTML = '<div class="cmdk-none">No matches. Try a title, a chapter, or “ghost”.</div>'; return; }
+    var ordered = [];
+    GRP_ORDER.forEach(function (g) { list.forEach(function (e) { if (e.grp === g) ordered.push(e); }); });
+    list.forEach(function (e) { if (GRP_ORDER.indexOf(e.grp) < 0) ordered.push(e); });
+    rows = ordered; sel = 0;
+    var html = '', lastG = null;
+    ordered.forEach(function (e, i) {
+      if (e.grp !== lastG) { html += '<div class="cmdk-grp">' + esc(e.grp) + '</div>'; lastG = e.grp; }
+      html += '<a class="cmdk-row' + (i === 0 ? ' sel' : '') + '" data-i="' + i + '" href="' + esc(base + e.href) + '">'
+        + '<span class="cmdk-ic">' + e.icon + '</span><span class="cmdk-t">' + hl(e.t, q) + '</span><span class="cmdk-m">' + esc(e.m) + '</span></a>';
+    });
+    resEl.innerHTML = html;
+    [].forEach.call(resEl.querySelectorAll('.cmdk-row'), function (el) {
+      el.addEventListener('mouseenter', function () { sel = +el.getAttribute('data-i'); paint(); });
+      el.addEventListener('click', function (ev) { ev.preventDefault(); go(rows[+el.getAttribute('data-i')]); });
+    });
+  }
+  function paint() {
+    [].forEach.call(resEl.querySelectorAll('.cmdk-row'), function (el, i) {
+      var on = i === sel; el.classList.toggle('sel', on); if (on) el.scrollIntoView({ block: 'nearest' });
+    });
+  }
+  function go(e) { if (!e) return; close(); window.location.href = base + e.href; }
+  function open() { build(); back.classList.add('open'); input.value = ''; render(); setTimeout(function () { input.focus(); }, 10); }
+  function close() { if (back) back.classList.remove('open'); }
+  function isOpen() { return back && back.classList.contains('open'); }
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); isOpen() ? close() : open(); return; }
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(rows.length - 1, sel + 1); paint(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); paint(); }
+    else if (e.key === 'Enter') { e.preventDefault(); go(rows[sel]); }
+  });
+
+  var mac = /Mac|iPhone|iPad/.test(navigator.platform);
+  var fab = document.createElement('button'); fab.id = 'cmdk-fab'; fab.type = 'button';
+  fab.setAttribute('aria-label', 'Search the library');
+  fab.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg> <kbd>' + (mac ? '⌘' : 'Ctrl') + 'K</kbd>';
+  fab.addEventListener('click', open);
+  document.body.appendChild(fab);
+
+  [].forEach.call(document.querySelectorAll('.card[data-slug]'), function (card) {
+    var slug = card.getAttribute('data-slug');
+    var total = +card.getAttribute('data-total') || 0;
+    var accent = card.getAttribute('data-accent') || '--accent';
+    var cover = card.querySelector('.cover');
+    if (!cover || !total) return;
+    var read = 0;
+    try { read = (JSON.parse(localStorage.getItem('read:' + slug) || '[]') || []).filter(function (x) { return x < total; }).length; } catch (e) {}
+    if (read > 0) {
+      var r = 14, cir = 2 * Math.PI * r, off = cir * (1 - read / total);
+      var ring = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      ring.setAttribute('class', 'card-ring'); ring.setAttribute('viewBox', '0 0 36 36');
+      ring.innerHTML = '<circle cx="18" cy="18" r="17.4" fill="var(--bg)" opacity="0.78"/>'
+        + '<circle class="rbg" cx="18" cy="18" r="' + r + '" fill="none" stroke-width="3.4"/>'
+        + '<circle cx="18" cy="18" r="' + r + '" fill="none" stroke="var(' + accent + ')" stroke-width="3.4" stroke-linecap="round" stroke-dasharray="' + cir.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 18 18)"/>'
+        + '<text x="18" y="18" text-anchor="middle" dominant-baseline="central">' + Math.round(read / total * 100) + '</text>';
+      cover.appendChild(ring);
+    }
+    var seal = document.createElement('span'); seal.className = 'card-seal';
+    seal.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+    cover.appendChild(seal);
+    if (read >= total) card.classList.add('is-complete');
+  });
+
+  var resume = document.getElementById('resume');
+  if (resume) {
+    var rec = readRecents();
+    if (rec.length) {
+      var r0 = rec[0];
+      resume.innerHTML = '<a href="' + esc(base + r0.slug + '.html#ch-' + r0.ch) + '">'
+        + '<span class="rcol"><span class="rk">Resume reading</span>'
+        + '<span class="rt">' + esc(r0.title) + '</span>'
+        + '<span class="rs">Chapter ' + (r0.ch + 1) + (r0.chTitle ? ' — ' + esc(r0.chTitle) : '') + '</span></span>'
+        + '<span class="rcta">Continue →</span></a>';
+      resume.classList.add('on');
+    }
+  }
+})();
+"""
+
+
+def shell_html(manifest_json, base):
+    """The cross-page connective shell, injected verbatim into every page template.
+
+    `base` ('' for root pages, '../' for ghost/fingerprint edition pages in
+    subdirs) prefixes every navigation href the palette emits. The manifest is
+    inlined (not fetched) so the whole thing works offline / from file://.
+    """
+    return (
+        f"<style>{SHELL_CSS}</style>"
+        f'<script id="library-manifest" type="application/json">{manifest_json}</script>'
+        f"<script>window.SHELL_BASE={json.dumps(base)};</script>"
+        f"<script>{SHELL_JS}</script>"
+    )
+
 
 LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
@@ -771,6 +1025,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 </header>
 {ghost_band}
 {fingerprint_band}
+{resume}
 <h2 class="section-title" id="library">The Research Library</h2>
 <main class="library">
 {cards}
@@ -781,6 +1036,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <p class="colophon">Every corpus reads anywhere — no server, no tracking, light or dark.</p>
 </footer>
 <script>{theme_js}</script>
+{shell}
 </body>
 </html>
 """
@@ -847,6 +1103,7 @@ LIBRARY_CSS = """
   --t1: #d4795a; --t2: #d8b545; --t3: #6f9bb3; --t4: #93a86f;
 }
 * { box-sizing: border-box; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif); }
 .masthead { max-width: 1080px; margin: 0 auto; padding: .8rem 2rem; display: flex;
   justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
@@ -923,8 +1180,9 @@ header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem)
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
 .card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text);
-  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+  transition: transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .15s ease, border-color .15s ease; }
 .card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.1); border-color: var(--accent); }
+.card:active { transform: translateY(-1px) scale(.992); }
 .cover { background: var(--cover-bg); border-bottom: 1px solid var(--border); }
 .cover svg { width: 100%; height: 124px; display: block; }
 /* Photo covers crop to the card band at any source size/aspect ratio. */
@@ -1060,6 +1318,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
   <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
+{shell}
 </body>
 </html>
 """
@@ -1176,7 +1435,7 @@ def ghost_row_html(ed):
             f'<span class="ged-row-date">{html.escape(when_s)}</span></a>')
 
 
-def build_ghost_page(out_dir, editions, ghost_cfg):
+def build_ghost_page(out_dir, editions, ghost_cfg, shell=""):
     """Render docs/ghost.html — the section front: a featured latest edition + back issues."""
     out = Path(out_dir)
     if editions:
@@ -1204,6 +1463,7 @@ def build_ghost_page(out_dir, editions, ghost_cfg):
         stats=stats,
         editions=body,
         theme_js=LIBRARY_THEME_JS,
+        shell=shell,
     )
     (out / "ghost.html").write_text(page)
     print(f"  ✓ The Ghost of Times  ({len(editions)} editions) → ghost.html")
@@ -1374,6 +1634,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <script id="ghost-edition-data" type="application/json">{data_json}</script>
 <script>{marked_js}</script>
 <script>{app_js}</script>
+{shell}
 </body>
 </html>
 """
@@ -1482,7 +1743,7 @@ def read_ghost_edition_data(out_dir, date):
         return None
 
 
-def build_ghost_edition(out_dir, ed):
+def build_ghost_edition(out_dir, ed, shell=""):
     """Render one edition page (docs/ghost/{date}-ghost-of-times.html) from its data file.
 
     Returns True if rendered, False if the data file is absent (page left untouched)."""
@@ -1522,6 +1783,7 @@ def build_ghost_edition(out_dir, ed):
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
         app_js=GHOST_EDITION_JS,
+        shell=shell,
     )
     (out / "ghost" / f"{date}-ghost-of-times.html").write_text(page)
     return True
@@ -1768,6 +2030,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
   <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
+{shell}
 </body>
 </html>
 """
@@ -1889,7 +2152,7 @@ def fingerprint_row_html(ed):
             f'<span class="fped-row-date">{html.escape(when_s)}</span></a>')
 
 
-def build_fingerprint_page(out_dir, editions, cfg):
+def build_fingerprint_page(out_dir, editions, cfg, shell=""):
     """Render docs/fingerprint.html — the section front."""
     out = Path(out_dir)
     if editions:
@@ -1914,6 +2177,7 @@ def build_fingerprint_page(out_dir, editions, cfg):
         stats=stats,
         editions=body,
         theme_js=LIBRARY_THEME_JS,
+        shell=shell,
     )
     (out / "fingerprint.html").write_text(page)
     print(f"  ✓ The Fingerprint  ({len(editions)} editions) → fingerprint.html")
@@ -1966,6 +2230,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <script id="fp-marks" type="application/json">{marks_json}</script>
 <script>{marked_js}</script>
 <script>{app_js}</script>
+{shell}
 </body>
 </html>
 """
@@ -2371,7 +2636,7 @@ def _fp_dispatch_count(data):
     return n, cols
 
 
-def build_fingerprint_edition(out_dir, ed):
+def build_fingerprint_edition(out_dir, ed, shell=""):
     """Render one edition page (docs/fingerprint/{date}-fingerprint.html) from its data file.
 
     Returns True if rendered, False if the data file is absent."""
@@ -2408,6 +2673,7 @@ def build_fingerprint_edition(out_dir, ed):
         marks_json=json_for_html(FP_MARKS),
         marked_js=MARKED_JS,
         app_js=FINGERPRINT_EDITION_JS,
+        shell=shell,
     )
     (out / "fingerprint" / f"{date}-fingerprint.html").write_text(page)
     return True
@@ -2434,6 +2700,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     titles = titles or {}
     category_order = category_order or []
     cards = []
+    manifest = []          # cross-page command-palette index (corpora + sections + editions)
+    pages = []             # reader renders deferred until the manifest below is complete
     total_chapters = 0
     total_words = 0
 
@@ -2462,17 +2730,16 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             f"{SITE_URL}/{corpus['slug']}.html",
             cover_url or f"{SITE_URL}/{OG_IMAGE}",
         )
-        page = READER_TEMPLATE.format(
-            title=html.escape(corpus["title"]),
-            subtitle=html.escape(corpus["subtitle"]),
-            css=CSS,
-            theme_style=render_theme_style(theme),
-            favicon=FAVICON, og_meta=reader_og,
-            data_json=json_for_html(corpus),
-            marked_js=MARKED_JS,
-            app_js=APP_JS,
-        )
-        (out / f"{corpus['slug']}.html").write_text(page)
+        # Defer the reader render until the full library manifest exists, so the
+        # shared command-palette shell (injected below) can see every corpus.
+        pages.append({
+            "slug": corpus["slug"],
+            "title": corpus["title"],
+            "subtitle": corpus["subtitle"],
+            "theme_style": render_theme_style(theme),
+            "reader_og": reader_og,
+            "data_json": json_for_html(corpus),
+        })
         n = len(corpus["documents"])
         words = sum(len(d["body"].split()) for d in corpus["documents"])
         total_chapters += n
@@ -2489,8 +2756,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         search_text = html.escape(
             " ".join([corpus["title"], card_sub, category]).lower(), quote=True
         )
+        # Tile accent for this card's progress ring (cycles the trencadís palette).
+        accent_var = ["--t1", "--t2", "--t3", "--t4", "--t5"][(n_corpus - 1) % 5]
         card_html = (
             f'<a class="card" href="{corpus["slug"]}.html" data-cat="{html.escape(category, quote=True)}" '
+            f'data-slug="{html.escape(corpus["slug"], quote=True)}" data-total="{n}" data-accent="{accent_var}" '
             f'data-search="{search_text}">'
             f'<div class="cover">{card_cover(corpus["slug"], corpus["title"], theme_cover_palette(theme))}</div>'
             f'<div class="card-body"><h2>{html.escape(corpus["title"])}</h2>'
@@ -2498,24 +2768,77 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             f'<p class="meta">{" · ".join(meta_bits)}</p></div></a>'
         )
         cards.append({"category": category, "html": card_html})
+        manifest.append({
+            "slug": corpus["slug"],
+            "title": corpus["title"],
+            "category": category,
+            "kind": "corpus",
+            "href": f"{corpus['slug']}.html",
+            "chapters": [d["title"] for d in corpus["documents"]],
+        })
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
 
-    # The Ghost of Times section (second top-level section of the site).
+    # Read the Ghost + Fingerprint edition lists up front so their section fronts
+    # and individual editions can join the command-palette manifest before any
+    # page (each of which embeds that manifest via the shared shell) is written.
     editions = read_ghost_manifest(out) if ghost_cfg.get("enabled", True) else []
-    build_ghost_page(out, editions, ghost_cfg)
+    fp_editions = read_fingerprint_manifest(out) if fingerprint_cfg.get("enabled", True) else []
+
+    if ghost_cfg.get("enabled", True):
+        manifest.append({"title": "The Ghost of Times", "kind": "section",
+                         "category": "Daily paper", "href": "ghost.html",
+                         "meta": "writer-voiced op-eds"})
+        for ed in editions:
+            manifest.append({
+                "title": ed.get("lead_headline") or f"Ghost — {ed.get('date', '')}",
+                "kind": "edition", "category": "The Ghost of Times",
+                "href": ed.get("file") or f"ghost/{ed.get('date', '')}-ghost-of-times.html",
+                "meta": ed.get("date", ""),
+            })
+    if fingerprint_cfg.get("enabled", True):
+        manifest.append({"title": "The Fingerprint", "kind": "section",
+                         "category": "Market wire", "href": "fingerprint.html",
+                         "meta": "CTV market paper"})
+        for ed in fp_editions:
+            manifest.append({
+                "title": ed.get("lead_headline") or f"Fingerprint — {ed.get('date', '')}",
+                "kind": "edition", "category": "The Fingerprint",
+                "href": ed.get("file") or f"fingerprint/{ed.get('date', '')}-fingerprint.html",
+                "meta": ed.get("date", ""),
+            })
+
+    manifest_json = json_for_html(manifest)
+    shell_root = shell_html(manifest_json, "")      # pages at docs/ root
+    shell_sub = shell_html(manifest_json, "../")    # edition pages in docs/<section>/
+
+    # Now write the reader pages, each carrying the shared shell.
+    for p in pages:
+        (out / f"{p['slug']}.html").write_text(READER_TEMPLATE.format(
+            title=html.escape(p["title"]),
+            subtitle=html.escape(p["subtitle"]),
+            css=CSS,
+            theme_style=p["theme_style"],
+            favicon=FAVICON, og_meta=p["reader_og"],
+            data_json=p["data_json"],
+            marked_js=MARKED_JS,
+            app_js=APP_JS,
+            shell=shell_root,
+        ))
+
+    # The Ghost of Times section (second top-level section of the site).
+    build_ghost_page(out, editions, ghost_cfg, shell=shell_root)
     ghost_band = ghost_band_html(editions, ghost_cfg)
     # Render each edition page natively from its deposited data (skips any that
     # predate the data-driven renderer and so have no docs/ghost/data/*.json).
-    rendered = sum(build_ghost_edition(out, ed) for ed in editions)
+    rendered = sum(build_ghost_edition(out, ed, shell=shell_sub) for ed in editions)
     if editions:
         print(f"  ✓ Rendered {rendered}/{len(editions)} edition page(s) from data")
 
     # The Fingerprint section (third top-level section of the site).
-    fp_editions = read_fingerprint_manifest(out) if fingerprint_cfg.get("enabled", True) else []
-    build_fingerprint_page(out, fp_editions, fingerprint_cfg)
+    build_fingerprint_page(out, fp_editions, fingerprint_cfg, shell=shell_root)
     fingerprint_band = fingerprint_band_html(fp_editions, fingerprint_cfg)
-    fp_rendered = sum(build_fingerprint_edition(out, ed) for ed in fp_editions)
+    fp_rendered = sum(build_fingerprint_edition(out, ed, shell=shell_sub) for ed in fp_editions)
     if fp_editions:
         print(f"  ✓ Rendered {fp_rendered}/{len(fp_editions)} Fingerprint edition page(s) from data")
 
@@ -2566,8 +2889,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         hero=hero_art(),
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
+        resume='<div id="resume"></div>',
         cards=library_body,
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS,
+        shell=shell_root,
     ))
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html")
 
