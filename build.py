@@ -1069,10 +1069,11 @@ def json_for_html(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
-def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None):
+def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     ghost_cfg = ghost_cfg or {}
+    descriptions = descriptions or {}
     cards = []
     total_chapters = 0
     total_words = 0
@@ -1102,11 +1103,15 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None):
         meta_bits = [f"Nº {n_corpus:02d}", f"{n} chapters"]
         if corpus["generated"]:
             meta_bits.append(corpus["generated"])
+        # An index card's blurb can be overridden per corpus (keyed by slug) via
+        # build.config.json "descriptions" — useful when a corpus has no manifest
+        # subtitle, or its manifest carries a long sharpened_question / boilerplate.
+        card_sub = descriptions.get(corpus["slug"], corpus["subtitle"] or "")
         cards.append(
             f'<a class="card" href="{corpus["slug"]}.html">'
             f'<div class="cover">{card_cover(corpus["slug"], corpus["title"], theme_cover_palette(theme))}</div>'
             f'<div class="card-body"><h2>{html.escape(corpus["title"])}</h2>'
-            f'<p class="sub">{html.escape(corpus["subtitle"] or "")}</p>'
+            f'<p class="sub">{html.escape(card_sub)}</p>'
             f'<p class="meta">{" · ".join(meta_bits)}</p></div></a>'
         )
         fig_note = f", {figs} figures" if figs else ""
@@ -1147,6 +1152,7 @@ def load_config(path):
         "title": cfg.get("title", "Research Library"),
         "subtitle": cfg.get("subtitle", "Deep-research corpora, readable and searchable."),
         "ghost": cfg.get("ghost", {}),
+        "descriptions": cfg.get("descriptions", {}),
     }
 
 
@@ -1171,13 +1177,15 @@ if __name__ == "__main__":
         title = args.title or cfg["title"]
         subtitle = args.subtitle or cfg["subtitle"]
         ghost_cfg = cfg["ghost"]
+        descriptions = cfg["descriptions"]
     elif args.folders:
         folders = args.folders
         out = args.out or "dist"
         title = args.title or "Research Library"
         subtitle = args.subtitle or "Deep-research corpora, readable and searchable."
         ghost_cfg = {}
+        descriptions = {}
     else:
         ap.error("no corpus folders and no --config / build.config.json found")
 
-    build(folders, out, title, subtitle, ghost_cfg=ghost_cfg)
+    build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions)
