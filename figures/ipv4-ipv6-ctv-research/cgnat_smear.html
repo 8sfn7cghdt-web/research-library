@@ -1,0 +1,83 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 520" role="img" aria-label="A two-panel schematic contrasting the US cable ideal against the carrier-grade NAT smear. On the left, the non-CGNAT ideal: one home maps to one dynamic public IPv4 address, native dual-stack, as at Comcast. On the right, the CGNAT smear: dozens of private 100.64.x households fan in behind a single carrier-grade NAT box that presents one shared public IPv4 to the internet, per RFC 6598 of April 2012, which reserved 100.64.0.0 slash 10. CGNAT already covers more than 92 percent of cellular networks and 17 to 20 percent of fixed eyeball networks. A US erosion trajectory rises from 0 percent of households in 2021 to roughly 15 percent in early 2026 — about 20 million connections — toward a carrier-implied 18 to 25 percent by 2030.">
+<text x="44" y="30" class="t-mono" font-size="13" font-weight="bold" style="fill:var(--accent)">INTERNET-DRAFT &#183; HOUSEHOLD-IP RESOLUTION</text>
+<text x="44" y="46" class="t-mono t-muted" font-size="10.5">device.ip &#8594; one home? &#183; the load-bearing abstraction, under carrier-grade NAT</text>
+<line x1="44" y1="54" x2="478" y2="54" class="ln" stroke-width="1" stroke-dasharray="2 3"/>
+<g class="ln-soft" stroke-width=".5">
+<line x1="44" y1="74" x2="44" y2="446"/><line x1="124" y1="74" x2="124" y2="446"/><line x1="204" y1="74" x2="204" y2="446"/><line x1="284" y1="74" x2="284" y2="446"/><line x1="364" y1="74" x2="364" y2="446"/><line x1="444" y1="74" x2="444" y2="446"/><line x1="524" y1="74" x2="524" y2="446"/><line x1="604" y1="74" x2="604" y2="446"/><line x1="656" y1="74" x2="656" y2="446"/>
+</g>
+<line x1="350" y1="74" x2="350" y2="446" class="ln" stroke-width="1" stroke-dasharray="1 4"/>
+<text x="44" y="90" class="t-mono" font-size="11" font-weight="bold" style="fill:var(--text)">[A] THE IDEAL &#8212; 1 HOME &#8658; 1 PUBLIC /32</text>
+<text x="44" y="104" class="t-mono t-muted" font-size="9">Comcast &#183; native dual-stack &#183; one dynamic public IPv4 per home</text>
+<rect x="50" y="142" width="92" height="40" class="f-t1" opacity=".8"/>
+<text x="96" y="160" text-anchor="middle" class="t-mono t-inv" font-size="9.5" font-weight="bold">HOME</text>
+<text x="96" y="173" text-anchor="middle" class="t-mono t-inv" font-size="8">TV &#183; phone &#183; laptop</text>
+<line x1="142" y1="162" x2="206" y2="162" class="s-t1" stroke-width="2"/>
+<polygon points="206,162 198,158 198,166" class="f-t1"/>
+<rect x="210" y="146" width="120" height="32" fill="none" class="s-t1" stroke-width="1.5"/>
+<text x="270" y="160" text-anchor="middle" class="t-mono" font-size="10" font-weight="bold" style="fill:var(--accent)">203.0.113.7</text>
+<text x="270" y="172" text-anchor="middle" class="t-mono t-muted" font-size="8">public /32 &#183; routable &#183; globally unique</text>
+<text x="50" y="214" class="t-mono t-muted" font-size="9">// device.ip resolves to exactly one</text>
+<text x="50" y="226" class="t-mono t-muted" font-size="9">// household. the abstraction holds.</text>
+<rect x="50" y="244" width="280" height="1.5" class="f-t1" opacity=".5"/>
+<text x="50" y="266" class="t-mono" font-size="9.5" font-weight="bold" style="fill:var(--text)">WHERE IT STILL HOLDS</text>
+<text x="50" y="282" class="t-mono t-muted" font-size="9">Legacy-rich US cable &#183; deep /8 reserves &#8594;</text>
+<text x="50" y="294" class="t-mono t-muted" font-size="9">CGNAT stays rare on fixed-line residential.</text>
+<text x="364" y="90" class="t-mono" font-size="11" font-weight="bold" style="fill:var(--text)">[B] THE SMEAR &#8212; N HOMES &#8658; 1 PUBLIC /32</text>
+<text x="364" y="104" class="t-mono t-muted" font-size="9">RFC 6598 (Apr 2012) reserves 100.64.0.0/10 shared space</text>
+<g class="t-mono">
+<rect x="364" y="126" width="74" height="26" class="f-t4" opacity=".7"/>
+<text x="401" y="139" text-anchor="middle" class="t-inv" font-size="8" font-weight="bold">100.64.0.11</text>
+<text x="401" y="148" text-anchor="middle" class="t-inv" font-size="7">home A</text>
+<rect x="364" y="158" width="74" height="26" class="f-t4" opacity=".7"/>
+<text x="401" y="171" text-anchor="middle" class="t-inv" font-size="8" font-weight="bold">100.64.3.40</text>
+<text x="401" y="180" text-anchor="middle" class="t-inv" font-size="7">home B</text>
+<rect x="364" y="190" width="74" height="26" class="f-t4" opacity=".7"/>
+<text x="401" y="203" text-anchor="middle" class="t-inv" font-size="8" font-weight="bold">100.64.9.2</text>
+<text x="401" y="212" text-anchor="middle" class="t-inv" font-size="7">home C</text>
+<rect x="364" y="222" width="74" height="26" class="f-t4" opacity=".7"/>
+<text x="401" y="235" text-anchor="middle" class="t-inv" font-size="8" font-weight="bold">100.64.&#8230;</text>
+<text x="401" y="244" text-anchor="middle" class="t-inv" font-size="7">&#8230; dozens more</text>
+</g>
+<text x="401" y="266" text-anchor="middle" class="t-mono t-muted" font-size="8">private &#183; non-routable &#183; per RFC 6598</text>
+<g class="ln" stroke-width="1.5">
+<line x1="438" y1="139" x2="498" y2="180"/><line x1="438" y1="171" x2="498" y2="184"/><line x1="438" y1="203" x2="498" y2="188"/><line x1="438" y1="235" x2="498" y2="192"/>
+</g>
+<rect x="500" y="156" width="78" height="60" class="f-t3" opacity=".82"/>
+<text x="539" y="180" text-anchor="middle" class="t-mono t-inv" font-size="10" font-weight="bold">CGNAT</text>
+<text x="539" y="193" text-anchor="middle" class="t-mono t-inv" font-size="7.5">carrier-grade</text>
+<text x="539" y="204" text-anchor="middle" class="t-mono t-inv" font-size="7.5">NAT box</text>
+<line x1="578" y1="186" x2="618" y2="186" class="s-t3" stroke-width="2.5"/>
+<polygon points="618,186 609,181 609,191" class="f-t3"/>
+<rect x="600" y="150" width="78" height="32" fill="none" class="s-t3" stroke-width="1.5"/>
+<text x="639" y="164" text-anchor="middle" class="t-mono" font-size="9.5" font-weight="bold" style="fill:var(--t3)">198.51.100.6</text>
+<text x="639" y="175" text-anchor="middle" class="t-mono t-muted" font-size="7.5">one shared public /32</text>
+<text x="364" y="286" class="t-mono t-muted" font-size="9">// device.ip now resolves to a CGNAT</text>
+<text x="364" y="298" class="t-mono t-muted" font-size="9">// pool, not a home. the key shatters.</text>
+<rect x="364" y="312" width="292" height="1.5" class="f-t3" opacity=".5"/>
+<text x="364" y="334" class="t-mono" font-size="9.5" font-weight="bold" style="fill:var(--text)">PREVALENCE TODAY (Richter et al., IMC 2016)</text>
+<rect x="364" y="344" width="8" height="8" class="f-t3"/><text x="380" y="352" class="t-mono" font-size="9" style="fill:var(--text)">&gt;92% of cellular ASes</text>
+<rect x="364" y="360" width="8" height="8" class="f-t5"/><text x="380" y="368" class="t-mono" font-size="9" style="fill:var(--text)">17&#8211;20% of fixed eyeball ASes</text>
+<line x1="44" y1="386" x2="656" y2="386" class="ln" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="44" y="406" class="t-mono" font-size="11" font-weight="bold" style="fill:var(--text)">US FWA / SATELLITE CGNAT &#8212; THE EROSION EDGE</text>
+<text x="44" y="420" class="t-mono t-muted" font-size="9">share of US fixed households behind carrier-grade NAT</text>
+<line x1="60" y1="478" x2="640" y2="478" class="ln" stroke-width="1"/>
+<g class="ln-soft" stroke-width=".5">
+<line x1="60" y1="438" x2="640" y2="438"/><line x1="60" y1="458" x2="640" y2="458"/>
+</g>
+<polyline points="120,476 360,442 600,438" fill="none" class="s-t5" stroke-width="2.5"/>
+<polyline points="600,438 624,433" fill="none" class="s-t3" stroke-width="2.5" stroke-dasharray="5 3"/>
+<circle cx="120" cy="476" r="3.5" class="f-t5"/>
+<circle cx="360" cy="442" r="3.5" class="f-t5"/>
+<circle cx="600" cy="438" r="4" style="fill:var(--accent)"/>
+<circle cx="624" cy="433" r="3.5" class="f-t3"/>
+<text x="120" y="494" text-anchor="middle" class="t-mono" font-size="9" style="fill:var(--text)">0%</text>
+<text x="120" y="506" text-anchor="middle" class="t-mono t-muted" font-size="8">2021</text>
+<text x="360" y="432" text-anchor="middle" class="t-mono" font-size="9" style="fill:var(--text)">~14&#8211;15%</text>
+<text x="360" y="498" text-anchor="middle" class="t-mono t-muted" font-size="8">Q1 2026 &#183; ~20M conns</text>
+<text x="600" y="430" text-anchor="middle" class="t-mono" font-size="9" style="fill:var(--accent)">18&#8211;25%</text>
+<text x="620" y="500" text-anchor="end" class="t-mono t-muted" font-size="8">2030 &#183; carrier targets</text>
+<text x="44" y="514" class="t-mono t-muted" font-size="9.5">// every point of erosion turns one IP from a household into a crowd &#8212; the corpus&#8217;s key, quietly dissolving</text>
+</svg>
+<figcaption><strong>Fig. 2.</strong> The smear is not a glitch but the architecture catching up with scarcity. Where US cable still grants one routable <span style="font-family:var(--mono)">/32</span> per home, carrier-grade NAT &#8212; already on <span style="font-family:var(--mono)">&gt;92%</span> of cellular and creeping from <span style="font-family:var(--mono)">0%</span> toward a fifth of US fixed households &#8212; fans dozens of <span style="font-family:var(--mono)">100.64.x</span> homes behind a single public address, so the IP that ad tech reads as &#8220;a household&#8221; increasingly names a crowd.</figcaption>
+</figure>

@@ -1,0 +1,26 @@
+{
+  "title": "Research Library",
+  "subtitle": "Deep-research corpora, readable and searchable.",
+  "out": "docs",
+  "ghost": {
+    "enabled": true,
+    "title": "The Ghost of Times",
+    "motto": "Written by those who lived it. Reporting for those who do.",
+    "blurb": "A daily paper in which writers across the centuries — Carlyle, Chesterton, Hemingway, Whitman, Jung and the rest — each file one op-ed on the news of the day."
+  },
+  "corpora": [
+    "../ancestry-research",
+    "../carlyle-french-revolution-research",
+    "../carlyle-friedrich-research",
+    "../carlyle-research",
+    "../civil-war-religion-whitman-research",
+    "../deutsch-good-explanations-research",
+    "../ipv4-ipv6-ctv-research",
+    "../jesus-research",
+    "../john-the-baptist-research",
+    "../jung-research",
+    "../phenomenology-pragmatism-research",
+    "../uap-research",
+    "../us-geopolitics-research"
+  ]
+}

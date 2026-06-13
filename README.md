@@ -4,11 +4,27 @@ Turns deep-research corpus folders into an interactive, shareable static website
 a library home page plus a reader per corpus with chapter navigation, full-text
 search, dark mode, and saved reading progress.
 
+The site has two sections, both linked from the home page:
+
+- **The Research Library** — the grid of corpus readers (`docs/index.html`).
+- **The Ghost of Times** — a daily paper of writer-voiced op-eds, with its own
+  index at `docs/ghost.html`. Editions are authored by the `ghost_of_times`
+  skill and published with its `publish_to_site.py` (see below).
+
 ## Build
+
+The simplest build reads `build.config.json` (title, subtitle, output dir, the
+corpus list, and Ghost section settings) — no arguments needed:
+
+```bash
+python3 corpus-app/build.py            # uses corpus-app/build.config.json
+```
+
+You can still pass folders explicitly (this overrides the config's corpus list):
 
 ```bash
 python3 corpus-app/build.py jung-research uap-research ... -o corpus-app/docs \
-  --title "Calvin's Research Library"
+  --title "Research Library"
 ```
 
 Each input folder can be:
@@ -21,6 +37,21 @@ Each input folder can be:
 Output is plain HTML in `docs/`. Every reader page is fully self-contained
 (markdown renderer embedded) — no server, build tools, or internet required
 to read.
+
+## The Ghost of Times section
+
+`build.py` also generates `docs/ghost.html` from `docs/ghost/manifest.json`. Each
+edition is a self-contained HTML file in `docs/ghost/`; the manifest carries the
+date, edition number, lead headline/dek/writer, and writer roster. The home page
+shows a feature band for the most recent edition.
+
+You don't edit the manifest by hand — the `ghost_of_times` skill publishes an
+edition (and rebuilds the site) with:
+
+```bash
+python3 ghost_of_times/scripts/publish_to_site.py --date YYYY-MM-DD          # local
+python3 ghost_of_times/scripts/publish_to_site.py --date YYYY-MM-DD --push   # deploy
+```
 
 ## Preview locally
 

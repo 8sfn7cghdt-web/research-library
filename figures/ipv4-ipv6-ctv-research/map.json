@@ -1,0 +1,9 @@
+[
+  { "file": "01_Origins_And_Protocol_History.md", "after": "## 6. Exhaustion as It Actually Happened", "snippet": "address_block.html" },
+  { "file": "01_Origins_And_Protocol_History.md", "after": "## 7. CGNAT and the Year", "snippet": "cgnat_smear.html" },
+  { "file": "01_Origins_And_Protocol_History.md", "after": "## 10. Master Timeline", "snippet": "collision_timeline.html" },
+  { "file": "04_Technical_Mechanics_Primary_Sources.md", "after": "## 8. OpenRTB 2.6", "snippet": "bid_request_anatomy.html" },
+  { "file": "06_Regional_Landscape.md", "after": "## 9. Cross-Cutting Patterns", "snippet": "tripod_matrix.html" },
+  { "file": "10_Gap_Academic_GeoIP_Accuracy_Counter_Tradition.md", "after": "## 2. The Vendor", "snippet": "accuracy_reckoning.html" },
+  { "file": "Future_Trajectory.md", "after": "## Base Rates", "snippet": "self_maintaining_loop.html" }
+]

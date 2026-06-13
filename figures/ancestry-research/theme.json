@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Emigrant's Atlas — illuminated genealogy on a steamship-manifest ledger",
+  "anchor": "The pre-WWII emigrant archive: Ellis Island ship-manifest ledgers, Griffith's Valuation rolls, copperplate parish registers, the engraved Victorian admiralty sea-chart, and two-tincture heraldry — read by a 2024 consumer-DNA grid.",
+  "rationale": "The corpus is built on a near-perfect 50/50 'by parent' DNA split (Irish Collins / Ó Coiláin vs. Czech-Galician-Baltic Pokorný) — literally a per-pale quartered shield. Its primary sources are ledgers, manifests, and engraved sea-charts; its geography is two Atlantic crossings; its honesty is surname-plus-DNA inference, flagged. Warm where it remembers, cool and ruled where it measures.",
+  "light": {
+    "bg": "#f4ecdb", "panel": "#e7d9ba", "text": "#2a2418", "muted": "#695f4d",
+    "accent": "#9c2b2b", "border": "#cabb96", "mark": "#e8d39a", "cover-bg": "#ece2cc",
+    "t1": "#1f5135", "t2": "#9c2b2b", "t3": "#234a6e", "t4": "#a06a16", "t5": "#6a4a86"
+  },
+  "dark": {
+    "bg": "#181410", "panel": "#262017", "text": "#e9dec8", "muted": "#9c937f",
+    "accent": "#e8746f", "border": "#3c3324", "mark": "#4a3a1e", "cover-bg": "#221c15",
+    "t1": "#5fb986", "t2": "#e8746f", "t3": "#6fa6d6", "t4": "#e6b65a", "t5": "#b699d8"
+  },
+  "fonts": {
+    "display": "'Hoefler Text', 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif",
+    "body": "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', 'Nimbus Mono PS', 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\2726   \\00b7'",
+    "fig_radius": "5px"
+  },
+  "cover_palette": ["#1f5135", "#9c2b2b", "#234a6e", "#a06a16"]
+}

@@ -1,0 +1,20 @@
+{
+  "editions": [
+    {
+      "date": "2026-05-29",
+      "weekday": "Friday",
+      "edition_number": 1,
+      "file": "ghost/2026-05-29-ghost-of-times.html",
+      "lead_headline": "Nobody Ends a War. A Master Persuader Buys Sixty Days.",
+      "lead_dek": "The Iran deal isn't a peace agreement. It's an anchor. And if you know how anchors work, you already know how this ends.",
+      "lead_writer": "Scott Adams",
+      "writers": [
+        "Scott Adams",
+        "Thomas Carlyle",
+        "G.K. Chesterton",
+        "Ernest Hemingway",
+        "Walt Whitman"
+      ]
+    }
+  ]
+}

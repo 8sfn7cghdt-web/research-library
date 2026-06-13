@@ -1,0 +1,66 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 560" role="img" aria-label="An anatomical cutaway of the OpenRTB 2.6 Device object drawn as a JSON struct in an ASCII box frame. The device.ip field, defined as the IPv4 address closest to the device, is highlighted in teal as the load-bearing field present in 100 percent of bid requests and quietly repurposed as the household join key. The separate device.ipv6 field is dimmed because the matching layer treats it as under-matched, with LiveRamp instructing partners to send IPv4 only since IPv6 in most cases will not match. A side panel notes EU truncation practice that zeroes the last IPv4 octet and truncates IPv6 to a /48 to /64 prefix. The field is core since OpenRTB 2.0, the IAB standard of January 2012, preserved through versions 2.2 to 2.6.">
+<text x="40" y="30" class="t-mono" font-size="13" font-weight="bold" style="fill:var(--accent)">IAB TECH LAB &#183; OPENRTB 2.6</text>
+<text x="40" y="46" class="t-mono t-muted" font-size="10.5">Object: Device (&#167;3.2.18) &#183; IP layer enters the auction &#183; core since OpenRTB 2.0 (Jan 2012)</text>
+<line x1="40" y1="54" x2="470" y2="54" class="ln" stroke-width="1" stroke-dasharray="2 3"/>
+<rect x="40" y="74" width="380" height="318" class="f-panel" stroke-width="1.5" style="stroke:var(--border)"/>
+<line x1="40" y1="100" x2="420" y2="100" class="ln" stroke-width="1"/>
+<text x="52" y="92" class="t-mono" font-size="10.5" font-weight="bold" style="fill:var(--text)">"device": {</text>
+<g class="t-mono" font-size="10">
+<text x="64" y="122" class="t-muted">"ua"&#160;&#160;&#160;&#160;&#160;&#160;:</text><text x="150" y="122" class="t-muted">"&#8230;user-agent&#8230;",</text>
+<text x="64" y="140" class="t-muted">"geo"&#160;&#160;&#160;&#160;:</text><text x="150" y="140" class="t-muted">{ ipservice, &#8230; },</text>
+</g>
+<rect x="52" y="150" width="356" height="40" class="f-t1" opacity=".80"/>
+<line x1="52" y1="150" x2="52" y2="190" stroke-width="3" style="stroke:var(--accent)"/>
+<text x="64" y="167" class="t-mono t-inv" font-size="11" font-weight="bold">"ip"&#160;&#160;&#160;&#160;&#160;:</text>
+<text x="150" y="167" class="t-mono t-inv" font-size="11" font-weight="bold">"203.0.113.0",</text>
+<text x="64" y="183" class="t-mono t-inv" font-size="8.5">// "IPv4 address closest to device" &#183; load-bearing</text>
+<rect x="52" y="196" width="356" height="40" class="f-t4" opacity=".26"/>
+<line x1="52" y1="196" x2="52" y2="236" stroke-width="3" style="stroke:var(--t4)"/>
+<text x="64" y="213" class="t-mono" font-size="11" style="fill:var(--muted)">"ipv6"&#160;&#160;&#160;:</text>
+<text x="150" y="213" class="t-mono" font-size="11" style="fill:var(--muted)">"2001:db8::&#8230;",</text>
+<text x="64" y="229" class="t-mono t-muted" font-size="8.5">// separate field &#183; under-matched (see rule, right)</text>
+<g class="t-mono" font-size="10">
+<text x="64" y="256" class="t-muted">"lmt"&#160;&#160;&#160;&#160;:</text><text x="150" y="256" class="t-muted">0,&#160;&#160;// limit-ad-tracking</text>
+<text x="64" y="274" class="t-muted">"devicetype":</text><text x="150" y="274" class="t-muted">3,&#160;&#160;// connected TV</text>
+<text x="64" y="292" class="t-muted">"make"&#160;&#160;&#160;:</text><text x="150" y="292" class="t-muted">"&#8230;", "model": "&#8230;",</text>
+</g>
+<text x="52" y="316" class="t-mono" font-size="10.5" font-weight="bold" style="fill:var(--text)">}</text>
+<line x1="52" y1="332" x2="408" y2="332" class="ln-soft" stroke-width=".75" stroke-dasharray="1 3"/>
+<text x="52" y="352" class="t-mono t-muted" font-size="8.5">// spec defines a FIELD, not a verification mechanism</text>
+<text x="52" y="366" class="t-mono t-muted" font-size="8.5">// "closest to device" &#8212; in SSAI, this value is *declared*</text>
+<text x="52" y="380" class="t-mono t-muted" font-size="8.5">// preserved unchanged through 2.2 &#183; 2.3 &#183; 2.4 &#183; 2.5 &#183; 2.6</text>
+<text x="40" y="424" class="t-mono" font-size="11" font-weight="bold" style="fill:var(--accent)">PRESENCE</text>
+<rect x="40" y="434" width="220" height="22" class="f-bg" stroke-width="1" style="stroke:var(--border)"/>
+<rect x="40" y="434" width="220" height="22" class="f-t1" opacity=".80"/>
+<text x="150" y="449" text-anchor="middle" class="t-mono t-inv" font-size="11" font-weight="bold">device.ip &#8212; 100% of bid requests</text>
+<text x="40" y="478" class="t-mono t-muted" font-size="9">geo &#183; fraud-filter &#183; then quietly repurposed:</text>
+<text x="40" y="492" class="t-mono" font-size="9.5" style="fill:var(--text)">infrastructure colonised as the household join key</text>
+<line x1="448" y1="74" x2="448" y2="492" class="ln-soft" stroke-width=".75"/>
+<text x="466" y="92" class="t-mono" font-size="11" font-weight="bold" style="fill:var(--text)">THE MATCHING RULE</text>
+<text x="466" y="106" class="t-mono t-muted" font-size="9">// the two fields are not treated equally</text>
+<rect x="466" y="120" width="210" height="58" class="f-bg" stroke-width="1.5" style="stroke:var(--accent)"/>
+<line x1="466" y1="120" x2="466" y2="178" stroke-width="3" style="stroke:var(--accent)"/>
+<text x="478" y="138" class="t-mono" font-size="9.5" font-weight="bold" style="fill:var(--accent)">LiveRamp &#8594; partners:</text>
+<text x="478" y="154" class="t-mono" font-size="10" font-weight="bold" style="fill:var(--text)">"send IPv4 only"</text>
+<text x="478" y="170" class="t-mono t-muted" font-size="8.5">IPv6 "in most cases will not match"</text>
+<rect x="466" y="192" width="210" height="40" class="f-t4" opacity=".26"/>
+<line x1="466" y1="192" x2="466" y2="232" stroke-width="3" style="stroke:var(--t4)"/>
+<text x="478" y="210" class="t-mono" font-size="9.5" font-weight="bold" style="fill:var(--muted)">device.ipv6 &#8212; under-matched</text>
+<text x="478" y="224" class="t-mono t-muted" font-size="8">72% under-represented in commercial files</text>
+<text x="466" y="262" class="t-mono" font-size="11" font-weight="bold" style="fill:var(--text)">EU TRUNCATION PRACTICE</text>
+<text x="466" y="276" class="t-mono t-muted" font-size="9">// masking lives in policy, not spec</text>
+<rect x="466" y="288" width="210" height="44" class="f-panel" stroke-width="1" style="stroke:var(--border)"/>
+<text x="478" y="306" class="t-mono" font-size="9.5" style="fill:var(--text)">IPv4 &#8594; last octet zeroed</text>
+<text x="478" y="322" class="t-mono t-muted" font-size="9">203.0.113.<tspan style="fill:var(--t3)" font-weight="bold">0</tspan> &#160;(/24, &#8804;256 homes blurred)</text>
+<rect x="466" y="344" width="210" height="44" class="f-panel" stroke-width="1" style="stroke:var(--border)"/>
+<text x="478" y="362" class="t-mono" font-size="9.5" style="fill:var(--text)">IPv6 &#8594; truncated to /48&#8211;/64</text>
+<text x="478" y="378" class="t-mono t-muted" font-size="8.5">prefix kept &#183; coarser than a household</text>
+<line x1="408" y1="170" x2="466" y2="149" class="ln-soft" stroke-width="1" stroke-dasharray="2 2"/>
+<line x1="408" y1="216" x2="466" y2="212" class="ln-soft" stroke-width="1" stroke-dasharray="2 2"/>
+<line x1="40" y1="512" x2="676" y2="512" class="ln" stroke-width="1" stroke-dasharray="2 3"/>
+<text x="40" y="532" class="t-mono t-muted" font-size="9.5">// one locator, two fields, unequal fates &#8212; the IPv4 octet that geo &amp; fraud needed became the join the graph keeps</text>
+<text x="40" y="548" class="t-mono t-muted" font-size="9.5">// src: OpenRTB 2.6 &#167;3.2.18 (IAB Tech Lab) &#183; LiveRamp partner matching guidance &#183; GDPR-era truncation conventions</text>
+</svg>
+<figcaption><strong>Fig. 4.</strong> The bid request carries the address as two one-line fields, but the matching layer keeps only one: <span style="font-family:var(--mono)">device.ip</span> &#8212; present in every request for geo and fraud &#8212; is the surface where a locator is quietly conscripted as the household join key, while its IPv6 twin, technically richer, is told it &#8220;will not match&#8221; and left to decay.</figcaption>
+</figure>

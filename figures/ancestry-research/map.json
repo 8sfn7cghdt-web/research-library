@@ -1,0 +1,9 @@
+[
+  { "file": "00_Briefing.md", "after": "## In Brief", "snippet": "quartered_shield.html" },
+  { "file": "01_Irish_Origins_And_History.md", "after": "## Munster and the", "snippet": "ocoileain_displacement.html" },
+  { "file": "02_EastEuro_Baltic_Origins_And_History.md", "after": "## Narrative: Partitioned Poland", "snippet": "two_empires.html" },
+  { "file": "03_Genetic_Anthropological_Context.md", "after": "## Narrative: How To Read This Particular Estimate", "snippet": "signal_noise.html" },
+  { "file": "04_Path_To_America.md", "after": "## Narrative I", "snippet": "dual_crossing.html" },
+  { "file": "04_Path_To_America.md", "after": "## Narrative III", "snippet": "quota_door.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenarios (Thread B", "snippet": "heritage_futures.html" }
+]

@@ -76,10 +76,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 #content th { background: var(--panel); }
 #content img { max-width: 100%; }
 #content hr { border: none; margin: 2.6rem 0; text-align: center; height: 1em; }
-#content hr::before { content: "◆ ◆ ◆"; color: var(--accent); opacity: .45; font-size: .7rem; letter-spacing: 1.1em;
+#content hr::before { content: var(--hr-glyph, "◆ ◆ ◆"); color: var(--accent); opacity: .45; font-size: .7rem; letter-spacing: 1.1em;
   padding-left: 1.1em; }
 figure.corpus-fig { margin: 2.2rem 0; padding: 1.1rem 1.1rem .9rem; background: var(--panel);
-  border: 1px solid var(--border); border-radius: 16px; }
+  border: 1px solid var(--border); border-radius: var(--fig-radius, 16px); }
 figure.corpus-fig svg { width: 100%; height: auto; display: block; }
 figure.corpus-fig figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
   text-align: center; margin-top: .7rem; line-height: 1.45; }
@@ -88,6 +88,7 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
 .corpus-fig svg .t-muted { fill: var(--muted); }
 .corpus-fig svg .t-acc { fill: var(--accent); }
 .corpus-fig svg .t-serif { font-family: var(--display); }
+.corpus-fig svg .t-mono { font-family: var(--mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace); }
 .corpus-fig svg .t-inv { fill: #faf8f4; }
 .corpus-fig svg .ln { stroke: var(--muted); }
 .corpus-fig svg .ln-soft { stroke: var(--border); }
@@ -118,6 +119,7 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
   figure.corpus-fig { margin-left: -.6rem; margin-right: -.6rem; padding: .7rem .6rem .7rem; }
 }
 </style>
+
 </head>
 <body>
 <button id="menu-btn" title="Chapters">☰</button>

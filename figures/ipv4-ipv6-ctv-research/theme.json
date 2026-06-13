@@ -1,0 +1,25 @@
+{
+  "aesthetic": "Dotted-Quad — the RFC plaintext & address-space allocation schematic",
+  "anchor": "The IETF/RFC plaintext-memorandum tradition crossed with network-operations cartography: 72-column monospaced RFCs with ASCII box-drawing, the IANA address-allocation block-map, BGP/transit route diagrams, and the green-phosphor terminal.",
+  "rationale": "The corpus's primary sources ARE numbered RFC plaintext memoranda (791, 1631, 6598, 8200, MASQUE 9297/9298/9484) with the 'Network Working Group' masthead and ASCII packet-header diagrams; the address-space story is literally cartographic (IANA block-map). The aesthetic is the artifact, not a costume. Cool, forensic, instrument-grade — never persuasive.",
+  "light": {
+    "bg": "#f4f2ea", "panel": "#e4e0d1", "text": "#1b2127", "muted": "#5f6b70",
+    "accent": "#0c7a6c", "border": "#cbc5b4", "mark": "#cfe6df", "cover-bg": "#ebe8dd",
+    "t1": "#1f6f63", "t2": "#1d6fa5", "t3": "#b1591c", "t4": "#7a4fa3", "t5": "#7c640f"
+  },
+  "dark": {
+    "bg": "#0d1117", "panel": "#161c24", "text": "#d7e0e8", "muted": "#8a98a0",
+    "accent": "#34d6b8", "border": "#2a333d", "mark": "#143a33", "cover-bg": "#161c24",
+    "t1": "#3fc9b0", "t2": "#5bb6e6", "t3": "#e8924a", "t4": "#b79ae0", "t5": "#d6bf52"
+  },
+  "fonts": {
+    "display": "'Courier New', Consolas, 'DejaVu Sans Mono', ui-monospace, monospace",
+    "body": "'Helvetica Neue', Arial, 'Liberation Sans', system-ui, sans-serif",
+    "mono": "'Courier New', Consolas, 'SF Mono', 'DejaVu Sans Mono', ui-monospace, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7\\00b7  /8  \\00b7\\00b7  /16  \\00b7\\00b7  /24  \\00b7\\00b7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#1f6f63", "#1d6fa5", "#b1591c", "#7a4fa3"]
+}

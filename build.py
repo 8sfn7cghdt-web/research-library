@@ -19,14 +19,17 @@ folder, or deploy it to GitHub Pages / Netlify for a URL.
 """
 
 import argparse
+import base64
 import hashlib
 import html
 import json
+import mimetypes
 import re
 import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+COVERS_DIR = HERE / "covers"  # optional per-corpus photo covers: covers/<slug>.<ext>
 MARKED_JS = (HERE / "vendor" / "marked.min.js").read_text()
 
 FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>"
@@ -163,6 +166,76 @@ def inject_figures(corpus, folder):
     return count
 
 
+# ---------------------------------------------------------------- per-corpus theme
+# A corpus opts into its own bespoke visual identity by dropping
+# figures/<folder-name>/theme.json next to its map.json. When present, the
+# reader page for that corpus gets an extra <style> block that overrides the
+# design tokens (palette light+dark, fonts, ornament) — so each corpus reads as
+# its own world. Absent → the default trencadís identity, byte-for-byte unchanged.
+# Authored by the corpus-visuals skill.
+
+# tokens a theme may override (CSS var name == key)
+_THEME_TOKENS = ("bg", "panel", "text", "muted", "accent", "border", "mark",
+                 "t1", "t2", "t3", "t4", "t5", "cover-bg")
+
+
+def _safe_font(stack):
+    """Reject web-font / external references — reader pages are fully offline."""
+    if not stack:
+        return ""
+    return "" if ("url(" in stack or "http" in stack or "@import" in stack) else stack
+
+
+def _theme_vars(palette, fonts=None, ornament=None):
+    """Render the CSS custom-property declarations for one theme (light or dark)."""
+    decls = [f"--{k}: {palette[k]};" for k in _THEME_TOKENS if k in palette]
+    for css_var, key in (("--display", "display"), ("--serif", "body"), ("--mono", "mono")):
+        val = _safe_font((fonts or {}).get(key))
+        if val:
+            decls.append(f"{css_var}: {val};")
+    for css_var, key in (("--hr-glyph", "hr_glyph"), ("--fig-radius", "fig_radius")):
+        val = (ornament or {}).get(key)
+        if val:
+            decls.append(f"{css_var}: {val};")
+    return " ".join(decls)
+
+
+def load_theme_spec(folder):
+    """Return the parsed theme.json dict for a corpus, or None if it has none."""
+    theme_path = HERE / "figures" / Path(folder).name / "theme.json"
+    if not theme_path.exists():
+        return None
+    return json.loads(theme_path.read_text())
+
+
+def render_theme_style(spec):
+    """Build the per-corpus <style> override from a theme.json dict (or '')."""
+    if not spec:
+        return ""
+    fonts, ornament = spec.get("fonts", {}), spec.get("ornament", {})
+    rules = []
+    light = _theme_vars(spec.get("light", {}), fonts, ornament)
+    if light:
+        rules.append(f":root {{ {light} }}")
+    dark = _theme_vars(spec.get("dark", {}))
+    if dark:
+        rules.append(f'[data-theme="dark"] {{ {dark} }}')
+    if _safe_font(fonts.get("mono")):
+        rules.append("#content code, #content pre code { font-family: var(--mono); }")
+    return "<style>" + " ".join(rules) + "</style>" if rules else ""
+
+
+def theme_cover_palette(spec):
+    """A 4-colour tuple for the generative card cover, drawn from the theme (or None)."""
+    if not spec:
+        return None
+    if spec.get("cover_palette"):
+        return tuple(spec["cover_palette"])[:4]
+    light = spec.get("light", {})
+    keys = [k for k in ("t1", "t2", "t3", "t4", "t5", "accent") if k in light]
+    return tuple(light[k] for k in keys[:4]) if len(keys) >= 4 else None
+
+
 # ---------------------------------------------------------------- cover art
 # Deterministic generative covers: every corpus gets its own small piece of
 # trencadís — a rose window, an arch arcade, a shard mosaic, or sun-over-hills.
@@ -257,14 +330,48 @@ def _cover_hills(r, pal):
     return parts
 
 
-def cover_svg(slug):
+def cover_svg(slug, palette=None):
     seed = int(hashlib.md5(slug.encode()).hexdigest()[:8], 16)
     r = _rng(seed)
-    pal = COVER_PALETTES[(seed >> 3) % 4]
+    pal = tuple(palette) if palette and len(palette) >= 4 else COVER_PALETTES[(seed >> 3) % 4]
     variant = seed % 4
     parts = [_cover_rose, _cover_arcade, _cover_shards, _cover_hills][variant](r, pal)
     return ("<svg viewBox='0 0 320 140' preserveAspectRatio='xMidYMid slice' "
             "xmlns='http://www.w3.org/2000/svg' aria-hidden='true'>" + "".join(parts) + "</svg>")
+
+
+COVER_EXTS = (".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif")
+
+
+def find_cover_image(slug):
+    """Return the path of a custom photo cover for this slug, or None.
+
+    A corpus opts into a photo cover by dropping covers/<slug>.<ext> next to
+    build.py. The image only appears on the library card — never in the reader.
+    """
+    if not COVERS_DIR.is_dir():
+        return None
+    for ext in COVER_EXTS:
+        p = COVERS_DIR / f"{slug}{ext}"
+        if p.exists():
+            return p
+    return None
+
+
+def card_cover(slug, title="", palette=None):
+    """The library-card cover: a custom photo if one exists, else generative art.
+
+    The photo is base64-embedded so index.html stays self-contained (shareable as
+    a single folder, works from file://). object-fit:cover in the CSS crops any
+    aspect ratio to the card band, so the source image can be any size.
+    """
+    img = find_cover_image(slug)
+    if img is None:
+        return cover_svg(slug, palette)
+    mime = mimetypes.guess_type(img.name)[0] or "image/png"
+    b64 = base64.b64encode(img.read_bytes()).decode("ascii")
+    alt = html.escape(title or slug)
+    return f'<img class="cover-photo" src="data:{mime};base64,{b64}" alt="{alt}" decoding="async">'
 
 
 def hero_svg():
@@ -315,6 +422,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <link rel="icon" href="{favicon}">
 <style>{css}</style>
+{theme_style}
 </head>
 <body>
 <button id="menu-btn" title="Chapters">☰</button>
@@ -414,10 +522,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 #content th { background: var(--panel); }
 #content img { max-width: 100%; }
 #content hr { border: none; margin: 2.6rem 0; text-align: center; height: 1em; }
-#content hr::before { content: "◆ ◆ ◆"; color: var(--accent); opacity: .45; font-size: .7rem; letter-spacing: 1.1em;
+#content hr::before { content: var(--hr-glyph, "◆ ◆ ◆"); color: var(--accent); opacity: .45; font-size: .7rem; letter-spacing: 1.1em;
   padding-left: 1.1em; }
 figure.corpus-fig { margin: 2.2rem 0; padding: 1.1rem 1.1rem .9rem; background: var(--panel);
-  border: 1px solid var(--border); border-radius: 16px; }
+  border: 1px solid var(--border); border-radius: var(--fig-radius, 16px); }
 figure.corpus-fig svg { width: 100%; height: auto; display: block; }
 figure.corpus-fig figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
   text-align: center; margin-top: .7rem; line-height: 1.45; }
@@ -426,6 +534,7 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
 .corpus-fig svg .t-muted { fill: var(--muted); }
 .corpus-fig svg .t-acc { fill: var(--accent); }
 .corpus-fig svg .t-serif { font-family: var(--display); }
+.corpus-fig svg .t-mono { font-family: var(--mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace); }
 .corpus-fig svg .t-inv { fill: #faf8f4; }
 .corpus-fig svg .ln { stroke: var(--muted); }
 .corpus-fig svg .ln-soft { stroke: var(--border); }
@@ -576,8 +685,11 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span>research · calvincollins · xyz</span>
-  <span>est. may 2026</span>
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="#library">The Research</a>
+  </nav>
 </div>
 <header>
   <div class="hero-text">
@@ -588,6 +700,8 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   </div>
   <div class="hero-art">{hero}</div>
 </header>
+{ghost_band}
+<h2 class="section-title" id="library">The Research Library</h2>
 <main class="grid">
 {cards}
 </main>
@@ -624,8 +738,37 @@ LIBRARY_CSS = """
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif); }
 .masthead { max-width: 1080px; margin: 0 auto; padding: .8rem 2rem; display: flex;
-  justify-content: space-between; font-family: var(--sans); font-size: .68rem; color: var(--muted);
-  text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--border); }
+  justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--border); }
+.mh-nav { display: flex; gap: 1.3rem; }
+.mh-nav a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.mh-nav a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+.section-title { max-width: 1080px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
+  font-size: 1.5rem; scroll-margin-top: 1rem; }
+.section-title::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+/* The Ghost of Times feature band on the home page — inky newspaper contrast to the mosaic library. */
+.ghost-band { max-width: 1080px; margin: 2rem auto 0; padding: 0 2rem; }
+.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+  text-decoration: none; color: #f3ead8; background: #1b1a17; border: 1px solid #322f29; border-radius: 18px;
+  padding: 1.5rem 1.8rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.ghost-band a:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,.28); border-color: var(--t2); }
+.ghost-band .gb-flag { font-family: var(--display); font-size: 2.1rem; line-height: 1; color: #f3ead8;
+  border-right: 1px solid #46423a; padding-right: 1.6rem; }
+.ghost-band .gb-flag small { display: block; font-family: var(--sans); font-size: .58rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--t2); margin-top: .5rem; }
+.ghost-band .gb-mid .gb-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .16em; color: var(--t2); margin: 0 0 .35rem; }
+.ghost-band .gb-mid .gb-lead { font-family: var(--display); font-size: 1.18rem; line-height: 1.28; margin: 0 0 .3rem; color: #f6efe2; }
+.ghost-band .gb-mid .gb-sub { font-family: var(--sans); font-size: .82rem; line-height: 1.45; color: #b9b2a4; margin: 0; }
+.ghost-band .gb-cta { font-family: var(--sans); font-size: .76rem; text-transform: uppercase; letter-spacing: .1em;
+  color: #1b1a17; background: var(--t2); border-radius: 12px; padding: .55rem 1rem; white-space: nowrap; }
+@media (max-width: 680px) {
+  .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
+  .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid #46423a; padding: 0 0 .9rem; }
+  .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
+}
 header { max-width: 1080px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
 .hero-text { flex: 1.1; }
@@ -649,6 +792,8 @@ header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem)
 .card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.1); border-color: var(--accent); }
 .cover { background: var(--cover-bg); border-bottom: 1px solid var(--border); }
 .cover svg { width: 100%; height: 124px; display: block; }
+/* Photo covers crop to the card band at any source size/aspect ratio. */
+.cover .cover-photo { width: 100%; height: 124px; object-fit: cover; object-position: center; display: block; }
 .card-body { padding: 1.05rem 1.2rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
 .card h2 { font-family: var(--display); font-size: 1.13rem; line-height: 1.3; margin: 0 0 .4rem; }
 .card .sub { color: var(--muted); font-size: .8rem; font-family: var(--sans);
@@ -672,15 +817,194 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 """
 
 
+# ---------------------------------------------------------------- ghost of times
+# A second section of the site: "The Ghost of Times" — a daily paper of
+# writer-voiced op-eds, produced by the ghost_of_times skill. Each published
+# edition is a self-contained HTML file dropped into docs/ghost/; this builder
+# reads docs/ghost/manifest.json and renders the section index (ghost.html)
+# plus a feature band on the home page. The edition files themselves are NOT
+# regenerated here — they are authored by the skill and only listed.
+
+WEEKDAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+
+def _weekday(date_str):
+    try:
+        import datetime
+        return WEEKDAYS[datetime.date.fromisoformat(date_str[:10]).weekday()]
+    except Exception:
+        return ""
+
+
+def read_ghost_manifest(out_dir):
+    """Load docs/ghost/manifest.json → list of editions, newest first. Missing → []."""
+    path = Path(out_dir) / "ghost" / "manifest.json"
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read {path}, treating as no editions", file=sys.stderr)
+        return []
+    eds = data.get("editions", data) if isinstance(data, dict) else data
+    eds = [e for e in eds if isinstance(e, dict) and e.get("date")]
+    eds.sort(key=lambda e: (e.get("edition_number", 0), e.get("date", "")), reverse=True)
+    return eds
+
+
+def _writers_line(ed):
+    names = ed.get("writers") or []
+    if not names:
+        return ""
+    n = len(names)
+    return f"{n} writer{'s' if n != 1 else ''} · " + " · ".join(html.escape(x) for x in names)
+
+
+def ghost_band_html(editions, ghost_cfg):
+    """The Ghost of Times feature band for the home page. Always links to ghost.html."""
+    motto = html.escape(ghost_cfg.get("motto", ""))
+    blurb = html.escape(ghost_cfg.get("blurb", ""))
+    flag = (f'<div class="gb-flag">The Ghost<br>of Times'
+            f'<small>{motto}</small></div>')
+    if editions:
+        latest = editions[0]
+        no = latest.get("edition_number")
+        kicker = "The Ghost of Times" + (f" · No. {no:02d}" if isinstance(no, int) else "")
+        when = _weekday(latest.get("date", "")) or ""
+        when = f"{when} · {latest['date']}" if when else latest.get("date", "")
+        lead = html.escape(latest.get("lead_headline") or "Latest edition")
+        sub = html.escape(when)
+        cta = "Read the latest →"
+    else:
+        kicker = "A new section"
+        lead = motto or "The Ghost of Times"
+        sub = blurb
+        cta = "Coming soon →"
+    mid = (f'<div class="gb-mid"><p class="gb-kicker">{kicker}</p>'
+           f'<p class="gb-lead">{lead}</p><p class="gb-sub">{sub}</p></div>')
+    return (f'<div class="ghost-band"><a href="ghost.html">{flag}{mid}'
+            f'<span class="gb-cta">{cta}</span></a></div>')
+
+
+GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Ghost of Times — research · calvincollins · xyz</title>
+<meta name="description" content="{motto}">
+<link rel="icon" href="{favicon}">
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html" class="active">The Ghost of Times</a>
+  </nav>
+</div>
+<header class="ghost-hero">
+  <p class="kicker">A daily paper of writer-voiced op-eds</p>
+  <h1>The Ghost of Times</h1>
+  <p class="motto">“{motto}”</p>
+  <p class="stats">{stats}</p>
+</header>
+<main class="ged-list">
+{editions}
+</main>
+<footer>
+  <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <p class="epigraph">{blurb}</p>
+  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+</footer>
+<script>{theme_js}</script>
+</body>
+</html>
+"""
+
+GHOST_PAGE_CSS = """
+.ghost-hero { display: block; max-width: 820px; margin: 0 auto; padding: 2.8rem 2rem 1rem; text-align: center; }
+.ghost-hero h1 { font-family: var(--display); font-size: clamp(2.4rem, 5vw, 3.4rem); margin: .2rem 0 .5rem; letter-spacing: -.01em; }
+.ghost-hero .motto { font-style: italic; color: var(--muted); font-size: 1.02rem; margin: 0 0 .9rem; }
+.ghost-hero .stats { font-family: var(--sans); font-size: .74rem; color: var(--accent); margin: 0;
+  text-transform: uppercase; letter-spacing: .1em; }
+.ged-list { max-width: 820px; margin: 1.4rem auto 0; padding: 0 2rem 1rem;
+  display: flex; flex-direction: column; gap: 1.1rem; }
+.ged { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.4rem;
+  text-decoration: none; color: var(--text); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.25rem 1.5rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.ged:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.1); border-color: var(--accent); }
+.ged-no { font-family: var(--display); font-size: 1.5rem; color: var(--accent); line-height: 1;
+  border-right: 1px solid var(--border); padding-right: 1.4rem; white-space: nowrap; }
+.ged-date { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--muted); margin: 0 0 .3rem; }
+.ged-head { font-family: var(--display); font-size: 1.24rem; line-height: 1.26; margin: 0 0 .35rem; }
+.ged-dek { font-family: var(--sans); font-size: .85rem; color: var(--muted); line-height: 1.45; margin: 0 0 .5rem; font-style: italic; }
+.ged-writers { font-family: var(--sans); font-size: .72rem; color: var(--accent); letter-spacing: .03em; margin: 0; }
+.ged-go { font-family: var(--sans); font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent); white-space: nowrap; }
+.ged-empty { max-width: 820px; margin: 0 auto; padding: 1rem 2rem 2rem; text-align: center;
+  color: var(--muted); font-family: var(--sans); font-size: .9rem; }
+@media (max-width: 600px) {
+  .ged { grid-template-columns: 1fr; gap: .7rem; }
+  .ged-no { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .7rem; }
+  .ged-go { display: none; }
+}
+"""
+
+
+def ghost_card_html(ed):
+    no = ed.get("edition_number")
+    no_label = f"Nº {no:02d}" if isinstance(no, int) else "Nº —"
+    when = _weekday(ed.get("date", ""))
+    when = f"{when} · {ed['date']}" if when else ed.get("date", "")
+    headline = html.escape(ed.get("lead_headline") or f"Edition of {ed.get('date','')}")
+    dek = html.escape(ed.get("lead_dek") or "")
+    dek_html = f'<p class="ged-dek">{dek}</p>' if dek else ""
+    writers = _writers_line(ed)
+    writers_html = f'<p class="ged-writers">{writers}</p>' if writers else ""
+    href = html.escape(ed.get("file") or f"ghost/{ed.get('date','')}-ghost-of-times.html", quote=True)
+    return (f'<a class="ged" href="{href}"><span class="ged-no">{no_label}</span>'
+            f'<div class="ged-body"><p class="ged-date">{html.escape(when)}</p>'
+            f'<h2 class="ged-head">{headline}</h2>{dek_html}{writers_html}</div>'
+            f'<span class="ged-go">Read →</span></a>')
+
+
+def build_ghost_page(out_dir, editions, ghost_cfg):
+    """Render docs/ghost.html — the section index listing every published edition."""
+    out = Path(out_dir)
+    if editions:
+        cards = "\n".join(ghost_card_html(e) for e in editions)
+        n = len(editions)
+        stats = f"{n} edition{'s' if n != 1 else ''}"
+    else:
+        cards = ('<p class="ged-empty">No editions published yet. Run the Ghost of Times '
+                 'skill and publish an edition to see it here.</p>')
+        stats = "No editions yet"
+    page = GHOST_PAGE_TEMPLATE.format(
+        css=LIBRARY_CSS + GHOST_PAGE_CSS,
+        favicon=FAVICON,
+        motto=html.escape(ghost_cfg.get("motto", "")),
+        blurb=html.escape(ghost_cfg.get("blurb", "")),
+        stats=stats,
+        editions=cards,
+        theme_js=LIBRARY_THEME_JS,
+    )
+    (out / "ghost.html").write_text(page)
+    print(f"  ✓ The Ghost of Times  ({len(editions)} editions) → ghost.html")
+
+
 # ---------------------------------------------------------------- build
 
 def json_for_html(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
-def build(folders, out_dir, site_title, site_subtitle):
+def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
+    ghost_cfg = ghost_cfg or {}
     cards = []
     total_chapters = 0
     total_words = 0
@@ -691,10 +1015,12 @@ def build(folders, out_dir, site_title, site_subtitle):
             print(f"  ! {folder}: no chapters found, skipped", file=sys.stderr)
             continue
         figs = inject_figures(corpus, folder)
+        theme = load_theme_spec(folder)
         page = READER_TEMPLATE.format(
             title=html.escape(corpus["title"]),
             subtitle=html.escape(corpus["subtitle"]),
             css=CSS,
+            theme_style=render_theme_style(theme),
             favicon=FAVICON,
             data_json=json_for_html(corpus),
             marked_js=MARKED_JS,
@@ -710,13 +1036,18 @@ def build(folders, out_dir, site_title, site_subtitle):
             meta_bits.append(corpus["generated"])
         cards.append(
             f'<a class="card" href="{corpus["slug"]}.html">'
-            f'<div class="cover">{cover_svg(corpus["slug"])}</div>'
+            f'<div class="cover">{card_cover(corpus["slug"], corpus["title"], theme_cover_palette(theme))}</div>'
             f'<div class="card-body"><h2>{html.escape(corpus["title"])}</h2>'
             f'<p class="sub">{html.escape(corpus["subtitle"] or "")}</p>'
             f'<p class="meta">{" · ".join(meta_bits)}</p></div></a>'
         )
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
+
+    # The Ghost of Times section (second top-level section of the site).
+    editions = read_ghost_manifest(out) if ghost_cfg.get("enabled", True) else []
+    build_ghost_page(out, editions, ghost_cfg)
+    ghost_band = ghost_band_html(editions, ghost_cfg)
 
     stats = f"{len(cards)} corpora · {total_chapters} chapters · {round(total_words / 1000)}k words"
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(
@@ -726,18 +1057,59 @@ def build(folders, out_dir, site_title, site_subtitle):
         favicon=FAVICON,
         stats=stats,
         hero=hero_svg(),
+        ghost_band=ghost_band,
         cards="\n".join(cards),
         theme_js=LIBRARY_THEME_JS,
     ))
-    print(f"\nBuilt {len(cards)} corpora ({stats}) → {out}/index.html")
+    print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost editions ({stats}) → {out}/index.html")
+
+
+def load_config(path):
+    """Load build.config.json. Corpus paths are resolved relative to the config file."""
+    cfg_path = Path(path)
+    cfg = json.loads(cfg_path.read_text())
+    base = cfg_path.resolve().parent
+    folders = [str((base / c).resolve()) for c in cfg.get("corpora", [])]
+    out = cfg.get("out", "dist")
+    if not Path(out).is_absolute():
+        out = str(base / out)
+    return {
+        "folders": folders,
+        "out": out,
+        "title": cfg.get("title", "Research Library"),
+        "subtitle": cfg.get("subtitle", "Deep-research corpora, readable and searchable."),
+        "ghost": cfg.get("ghost", {}),
+    }
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("folders", nargs="+", help="research corpus folders")
-    ap.add_argument("-o", "--out", default="dist", help="output directory (default: dist)")
-    ap.add_argument("--title", default="Research Library", help="library page title")
-    ap.add_argument("--subtitle", default="Deep-research corpora, readable and searchable.",
-                    help="library page subtitle")
+    ap.add_argument("folders", nargs="*", help="research corpus folders (optional if --config is given)")
+    ap.add_argument("-c", "--config", help="path to build.config.json (title/subtitle/out/corpora/ghost)")
+    ap.add_argument("-o", "--out", default=None, help="output directory (default: dist, or config's out)")
+    ap.add_argument("--title", default=None, help="library page title")
+    ap.add_argument("--subtitle", default=None, help="library page subtitle")
     args = ap.parse_args()
-    build(args.folders, args.out, args.title, args.subtitle)
+
+    # Default to the sibling build.config.json when neither folders nor --config are given.
+    default_cfg = HERE / "build.config.json"
+    if not args.folders and not args.config and default_cfg.exists():
+        args.config = str(default_cfg)
+
+    if args.config:
+        cfg = load_config(args.config)
+        folders = args.folders or cfg["folders"]
+        out = args.out or cfg["out"]
+        title = args.title or cfg["title"]
+        subtitle = args.subtitle or cfg["subtitle"]
+        ghost_cfg = cfg["ghost"]
+    elif args.folders:
+        folders = args.folders
+        out = args.out or "dist"
+        title = args.title or "Research Library"
+        subtitle = args.subtitle or "Deep-research corpora, readable and searchable."
+        ghost_cfg = {}
+    else:
+        ap.error("no corpus folders and no --config / build.config.json found")
+
+    build(folders, out, title, subtitle, ghost_cfg=ghost_cfg)
