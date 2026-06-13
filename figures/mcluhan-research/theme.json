@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Inventory of Effects — Fiore's collage grotesque",
+  "anchor": "Quentin Fiore and Jerome Agel's 1967 paperback design of The Medium is the Massage (and War and Peace in the Global Village, 1968): full-bleed black-and-white photo-collage, oversized Akzidenz/Helvetica grotesque bleeding across the gutter, big numerals and the mosaic page — crossed with McLuhan's own hot/cool axis (a hot signal-red against a cool cyan) and the teletype grid of 'typographic man'.",
+  "rationale": "The corpus's primary artifacts ARE designed typographic objects — the Massage and War and Peace are collage books that enact their own thesis in form, so the aesthetic is the evidence, not a costume. The grotesque display is Fiore's signature; the serif body is the discursive, literary McLuhan of the trivium and Joyce; the teletype mono is 'typographic man'. The five hues are read straight off McLuhan's categories: hot media (red), cool media (cyan), the electric/acoustic (magenta), the printed/visual (ink graphite), and the warm oral (amber). Sharp-cornered, high-contrast, oracular — a page that massages the eye.",
+  "light": {
+    "bg": "#f4f1e7", "panel": "#e7e2d4", "text": "#1a1916", "muted": "#595447",
+    "accent": "#a82d18", "border": "#d4cdbc", "mark": "#ecd9a6", "cover-bg": "#ece6d6",
+    "t1": "#a82d18", "t2": "#196784", "t3": "#2b2a27", "t4": "#8a2c6e", "t5": "#876010"
+  },
+  "dark": {
+    "bg": "#121110", "panel": "#26221c", "text": "#ece6d8", "muted": "#9a9080",
+    "accent": "#f15236", "border": "#332f29", "mark": "#43271a", "cover-bg": "#1d1b18",
+    "t1": "#f15236", "t2": "#48b6d8", "t3": "#cfc9ba", "t4": "#d067ad", "t5": "#d8a83e"
+  },
+  "fonts": {
+    "display": "'Helvetica Neue', Helvetica, Arial, 'Liberation Sans', system-ui, sans-serif",
+    "body": "Georgia, 'Iowan Old Style', Palatino, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', ui-monospace, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25A0  \\25A1  \\25A0  \\25A1  \\25A0'",
+    "fig_radius": "0px"
+  },
+  "cover_palette": ["#a82d18", "#196784", "#8a2c6e", "#2b2a27"]
+}
