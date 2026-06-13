@@ -1354,6 +1354,373 @@ SHARE_JS = r"""
 """
 
 
+# ============================================================================
+# The Atlas — a second cross-page surface (sibling to the ⌘K palette): a
+# pannable world map where every corpus's cover photo is clipped into the
+# region its author or story belongs to. The heavy geometry is baked once by
+# scripts/build_atlas_geo.py into atlas/geo.json (projected, simplified SVG
+# paths); build-time we only group the corpora onto regions and write a small
+# atlas.json that the client renders + makes interactive on first open.
+# ============================================================================
+
+ATLAS_TILES = [TERRA, GOLD, BLUE, OLIVE, PLUM]
+
+# Default placement of each corpus onto a region in atlas/geo.json. A corpus is
+# pinned where its AUTHOR or STORY belongs (Carlyle → Scotland, Whitman → New
+# York, Jesus/John → the Holy Land …). `cell` steers which slice a corpus gets
+# when several share one region; `z:"base"` draws a nation underneath the state
+# insets that sit on top of it. Overridable wholesale via build.config.json
+# "atlas": {"places": {...}, "grow": {...}}.
+ATLAS_PLACEMENTS = {
+    "carlyle-research":                    {"region": "GB-SCT", "cell": "n", "label": "Ecclefechan & Edinburgh, Scotland"},
+    "carlyle-french-revolution-research":  {"region": "GB-SCT", "cell": "c", "label": "Scotland — by the sage of Chelsea"},
+    "carlyle-friedrich-research":          {"region": "GB-SCT", "cell": "s", "label": "Scotland & London"},
+    "deutsch-good-explanations-research":  {"region": "GB-ENG", "label": "Oxford, England"},
+    "ancestry-research":                   {"region": "IE", "label": "Munster, Ireland"},
+    "civil-war-religion-whitman-research": {"region": "US-NY", "label": "Brooklyn & New York"},
+    "dickinson-research":                  {"region": "US-MA", "label": "Amherst, Massachusetts"},
+    "uap-research":                        {"region": "US-NM", "label": "Roswell, New Mexico"},
+    "ipv4-ipv6-ctv-research":              {"region": "US-CA", "label": "Silicon Valley, California"},
+    "us-geopolitics-research":             {"region": "US", "z": "base", "label": "The United States"},
+    "jung-research":                       {"region": "CH", "cell": "e", "label": "Zürich, Switzerland"},
+    "piaget-research":                     {"region": "CH", "cell": "w", "label": "Geneva & Neuchâtel, Switzerland"},
+    "phenomenology-pragmatism-research":   {"region": "DE", "label": "Freiburg, Germany"},
+    "mcluhan-research":                    {"region": "CA-ON", "label": "Toronto, Ontario"},
+    "jesus-research":                      {"region": "IL", "cell": "n", "label": "Galilee"},
+    "john-the-baptist-research":           {"region": "IL", "cell": "s", "label": "The Jordan & the Judean wilderness"},
+}
+# When a small region hosts >1 corpus, grow the footprint to a roomier one so no
+# slice ends up too small (Calvin's rule: several authors in Massachusetts →
+# expand to New England; the two Holy-Land corpora → the wider Levant).
+ATLAS_GROW = {"US-MA": "US-NEWENGLAND", "IL": "LEVANT"}
+
+
+def load_atlas_geo():
+    """Read the baked geometry (atlas/geo.json). Returns None if not authored."""
+    p = HERE / "atlas" / "geo.json"
+    if not p.exists():
+        return None
+    try:
+        return json.loads(p.read_text())
+    except Exception:
+        return None
+
+
+def _cell_order(hint, axis):
+    """Map a compass/index `cell` hint to a sort position along the split axis."""
+    if hint is None:
+        return 1.0
+    if isinstance(hint, (int, float)):
+        return float(hint)
+    h = str(hint).strip().lower()
+    xmap = {"w": 0, "west": 0, "nw": 0, "sw": 0, "l": 0, "left": 0,
+            "c": 1, "center": 1, "centre": 1, "mid": 1,
+            "e": 2, "east": 2, "ne": 2, "se": 2, "r": 2, "right": 2}
+    ymap = {"n": 0, "north": 0, "nw": 0, "ne": 0, "top": 0,
+            "c": 1, "center": 1, "centre": 1, "mid": 1,
+            "s": 2, "south": 2, "sw": 2, "se": 2, "bottom": 2}
+    return float((xmap if axis == "v" else ymap).get(h, 1))
+
+
+def compute_atlas(geo, corpora, placements=None, grow=None):
+    """Group placed corpora onto regions and lay out clipped image cells.
+
+    `corpora` is {slug: {title, href, accent, img, chapters:[{t,href}]}}. Returns
+    the small dict written to atlas.json (viewBox + backdrop + the regions in use
+    + per-corpus placement rectangles), or None if nothing places.
+    """
+    placements = placements or ATLAS_PLACEMENTS
+    grow = grow or ATLAS_GROW
+    regions = geo.get("regions", {})
+
+    groups = {}
+    for slug, pl in placements.items():
+        if slug not in corpora:
+            continue
+        rid = (pl or {}).get("region")
+        if not rid or rid not in regions:
+            if rid:
+                print(f"  ! atlas: region {rid!r} for {slug} not in geo.json", file=sys.stderr)
+            continue
+        groups.setdefault(rid, []).append((slug, pl))
+
+    used, places = {}, []
+    for rid, members in groups.items():
+        footprint = rid
+        if len(members) > 1 and rid in grow and grow[rid] in regions:
+            footprint = grow[rid]
+        reg = regions[footprint]
+        bx0, by0, bx1, by1 = reg["bbox"]
+        bw, bh = bx1 - bx0, by1 - by0
+        axis = "v" if bw >= bh else "h"          # split wide regions L→R, tall ones T→B
+        members.sort(key=lambda m: _cell_order((m[1] or {}).get("cell"), axis))
+        k = len(members)
+        used.setdefault(footprint, {"d": reg["d"], "bbox": reg["bbox"], "name": reg["name"], "dividers": []})
+        for i, (slug, pl) in enumerate(members):
+            if axis == "v":
+                cx0, cx1 = bx0 + bw * i / k, bx0 + bw * (i + 1) / k
+                cy0, cy1 = by0, by1
+                if i:
+                    used[footprint]["dividers"].append([round(cx0, 1), round(by0, 1), round(cx0, 1), round(by1, 1)])
+            else:
+                cy0, cy1 = by0 + bh * i / k, by0 + bh * (i + 1) / k
+                cx0, cx1 = bx0, bx1
+                if i:
+                    used[footprint]["dividers"].append([round(bx0, 1), round(cy0, 1), round(bx1, 1), round(cy0, 1)])
+            c = corpora[slug]
+            places.append({
+                "slug": slug, "title": c["title"], "href": c["href"], "accent": c["accent"],
+                "img": c.get("img"), "region": footprint,
+                "cell": [round(cx0, 1), round(cy0, 1), round(cx1 - cx0, 1), round(cy1 - cy0, 1)],
+                "label": (pl or {}).get("label") or reg["name"],
+                "z": 0 if (pl or {}).get("z") == "base" else 1,
+                "chapters": c.get("chapters", []),
+            })
+    if not places:
+        return None
+    # Base layers first, then larger cells before smaller, so small insets paint
+    # last (on top) and win hit-testing where they overlap a national base layer.
+    places.sort(key=lambda p: (p["z"], -(p["cell"][2] * p["cell"][3])))
+    return {
+        "viewBox": geo["viewBox"], "w": geo["w"], "h": geo["h"],
+        "graticule": geo.get("graticule", []), "backdrop": geo.get("backdrop", []),
+        "regions": used, "places": places,
+    }
+
+
+ATLAS_CSS = """
+#atlas-dock { position: fixed; left: .9rem; bottom: .9rem; z-index: 60; display: flex; gap: .5rem; align-items: center; }
+#atlas-dock #cmdk-fab { position: static; left: auto; bottom: auto; }
+#atlas-fab { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--sans); font-size: .72rem;
+  letter-spacing: .03em; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 11px; padding: .4rem .7rem; cursor: pointer; }
+#atlas-fab:hover { color: var(--accent); border-color: var(--accent); }
+#atlas-fab svg { flex: none; }
+#atlas-back { position: fixed; inset: 0; z-index: 90; background: rgba(20,18,15,.55); -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 3vh 2vw; }
+#atlas-back.open { display: flex; }
+#atlas-panel { position: relative; width: 100%; height: 94vh; max-width: 1500px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 30px 90px rgba(0,0,0,.45);
+  display: flex; flex-direction: column; }
+#atlas-bar { display: flex; align-items: baseline; gap: .8rem; padding: .7rem 1rem; border-bottom: 1px solid var(--border); flex: none; }
+#atlas-title { font-family: var(--display, var(--serif)); font-size: 1.05rem; color: var(--text); white-space: nowrap; }
+#atlas-sub { font-family: var(--sans); font-size: .72rem; color: var(--muted); flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#atlas-tools { display: flex; gap: .35rem; flex: none; }
+#atlas-tools button { font-family: var(--sans); font-size: .74rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 8px; padding: .25rem .55rem; cursor: pointer; min-width: 1.9rem; }
+#atlas-tools button:hover { border-color: var(--accent); color: var(--accent); }
+#atlas-stage { position: relative; flex: 1; overflow: hidden; cursor: grab; background: var(--bg); touch-action: none; }
+#atlas-stage.grab { cursor: grabbing; }
+#atlas-world { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+#atlas-svg { display: block; }
+#atlas-msg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: .9rem; color: var(--muted); pointer-events: none; text-align: center; padding: 2rem; }
+#atlas-grat path { fill: none; stroke: var(--border); stroke-width: .6; opacity: .45; }
+#atlas-bd path { fill: var(--panel); stroke: var(--border); stroke-width: .7; opacity: .7; }
+[data-theme="dark"] #atlas-bd path { fill: #26241f; opacity: .85; }
+.atlas-img { cursor: pointer; transition: opacity .18s ease; }
+.atlas-place.active .atlas-img { opacity: .42; }
+.atlas-ring { opacity: 0; transition: opacity .18s ease; pointer-events: none; }
+.atlas-place.active .atlas-ring { opacity: 1; }
+.atlas-rgn { fill: none; stroke: var(--text); stroke-width: 1.1; opacity: .45; pointer-events: none; }
+.atlas-div { stroke: var(--bg); stroke-width: 1.6; opacity: .65; pointer-events: none; }
+#atlas-card { position: absolute; left: 0; top: 0; z-index: 5; width: 250px; max-width: 76vw; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 12px; padding: .7rem .8rem; box-shadow: 0 14px 40px rgba(0,0,0,.3); display: none; }
+#atlas-card.show { display: block; }
+#atlas-card .ac-title { display: block; font-family: var(--display, var(--serif)); font-size: 1.02rem; line-height: 1.2;
+  text-decoration: none; margin-bottom: .15rem; }
+#atlas-card .ac-title:hover { text-decoration: underline; }
+#atlas-card .ac-place { font-family: var(--sans); font-size: .66rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--muted); margin-bottom: .55rem; }
+#atlas-card .ac-sel { width: 100%; font-family: var(--sans); font-size: .8rem; padding: .42rem .5rem;
+  border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); cursor: pointer; }
+@media (max-width: 640px) { #atlas-sub { display: none; } #atlas-panel { height: 96vh; } #atlas-fab span { display: none; } }
+"""
+
+ATLAS_JS = r"""
+(function () {
+  var base = window.SHELL_BASE || '';
+  var DATA = null, loaded = false, loading = false;
+  var back, stage, world, card, msg;
+  var view = { s: 1, x: 0, y: 0 };
+  var dragging = false, moved = false, lastX = 0, lastY = 0;
+  var active = null, hideT = null, bySlug = {};
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+  // The Atlas FAB, docked beside the ⌘K button (which SHELL_JS already added).
+  var fab = document.createElement('button');
+  fab.id = 'atlas-fab'; fab.type = 'button'; fab.setAttribute('aria-label', 'Open the Atlas');
+  fab.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3.2 3.4 3.2 14.6 0 18M12 3c-3.2 3.4-3.2 14.6 0 18"/></svg> <span>Atlas</span>';
+  fab.addEventListener('click', open);
+  function dock() {
+    var c = document.getElementById('cmdk-fab');
+    var d = document.createElement('div'); d.id = 'atlas-dock';
+    var parent = (c && c.parentNode) || document.body;
+    parent.insertBefore(d, c || null);
+    if (c) d.appendChild(c);
+    d.appendChild(fab);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', dock);
+  else dock();
+
+  function open() { buildShell(); back.classList.add('open'); document.body.style.overflow = 'hidden'; if (!loaded) load(); }
+  function close() { if (back) { back.classList.remove('open'); document.body.style.overflow = ''; } hideCard(); }
+
+  function buildShell() {
+    if (back) return;
+    back = document.createElement('div'); back.id = 'atlas-back';
+    back.innerHTML =
+      '<div id="atlas-panel">'
+      + '<div id="atlas-bar"><span id="atlas-title">The Atlas</span>'
+      + '<span id="atlas-sub">Every corpus, pinned where its author or story belongs — drag to roam, scroll to zoom.</span>'
+      + '<span id="atlas-tools"><button id="atlas-zin" aria-label="Zoom in">+</button>'
+      + '<button id="atlas-zout" aria-label="Zoom out">−</button>'
+      + '<button id="atlas-fit" aria-label="Reset the view">Fit</button>'
+      + '<button id="atlas-x" aria-label="Close the Atlas">Esc</button></span></div>'
+      + '<div id="atlas-stage"><div id="atlas-world"></div>'
+      + '<div id="atlas-card"></div><div id="atlas-msg">Unrolling the map…</div></div></div>';
+    document.body.appendChild(back);
+    stage = back.querySelector('#atlas-stage'); world = back.querySelector('#atlas-world');
+    card = back.querySelector('#atlas-card'); msg = back.querySelector('#atlas-msg');
+    back.addEventListener('click', function (e) { if (e.target === back) close(); });
+    back.querySelector('#atlas-x').onclick = close;
+    back.querySelector('#atlas-zin').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1.3); };
+    back.querySelector('#atlas-zout').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1 / 1.3); };
+    back.querySelector('#atlas-fit').onclick = fit;
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('#atlas-card')) return;
+      dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY;
+      try { stage.setPointerCapture(e.pointerId); } catch (x) {} stage.classList.add('grab');
+    });
+    stage.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - lastX, dy = e.clientY - lastY;
+      if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+      view.x += dx; view.y += dy; lastX = e.clientX; lastY = e.clientY; apply();
+    });
+    function end() { dragging = false; stage.classList.remove('grab'); }
+    stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
+    stage.addEventListener('wheel', function (e) {
+      e.preventDefault(); var r = stage.getBoundingClientRect();
+      zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 1 / 1.12);
+    }, { passive: false });
+    card.addEventListener('pointerenter', function () { if (hideT) { clearTimeout(hideT); hideT = null; } });
+    card.addEventListener('pointerleave', schedHide);
+    document.addEventListener('keydown', function (e) {
+      if (back && back.classList.contains('open') && e.key === 'Escape') { e.preventDefault(); close(); }
+    });
+    window.addEventListener('resize', function () { if (back && back.classList.contains('open')) fit(); });
+  }
+
+  function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
+  function zoomAt(px, py, f) {
+    var ns = Math.max(0.22, Math.min(9, view.s * f)), k = ns / view.s;
+    view.x = px - (px - view.x) * k; view.y = py - (py - view.y) * k; view.s = ns; apply();
+  }
+  function fit() {
+    if (!DATA || !DATA._b) return;
+    var b = DATA._b, sw = stage.clientWidth, sh = stage.clientHeight, pad = 46;
+    var s = Math.max(0.22, Math.min(9, Math.min((sw - pad * 2) / b.w, (sh - pad * 2) / b.h)));
+    view.s = s; view.x = (sw - (2 * b.x + b.w) * s) / 2; view.y = (sh - (2 * b.y + b.h) * s) / 2; apply();
+  }
+
+  function load() {
+    if (loading) return; loading = true;
+    fetch(base + 'atlas.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (j) { DATA = j; render(j); loaded = true; if (msg) msg.remove(); })
+      .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (research.calvincollins.xyz).'; });
+  }
+
+  function render(j) {
+    var s = '<svg id="atlas-svg" viewBox="' + j.viewBox + '" width="' + j.w + '" height="' + j.h
+      + '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
+    s += '<defs>';
+    for (var rid in j.regions) s += '<clipPath id="ar-' + rid + '"><path d="' + j.regions[rid].d + '"/></clipPath>';
+    j.places.forEach(function (p) {
+      var c = p.cell;
+      s += '<clipPath id="ac-' + p.slug + '"><rect x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3] + '"/></clipPath>';
+    });
+    s += '</defs>';
+    s += '<g id="atlas-grat">'; (j.graticule || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
+    s += '<g id="atlas-bd">'; (j.backdrop || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
+    s += '<g id="atlas-places">';
+    j.places.forEach(function (p) {
+      var c = p.cell;
+      s += '<g class="atlas-place" data-slug="' + esc(p.slug) + '"><g clip-path="url(#ar-' + p.region + ')">';
+      if (p.img) {
+        var href = esc(base + p.img);
+        s += '<image class="atlas-img" href="' + href + '" xlink:href="' + href + '" x="' + c[0] + '" y="' + c[1]
+          + '" width="' + c[2] + '" height="' + c[3] + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ac-' + p.slug + ')"/>';
+      }
+      s += '<rect class="atlas-ring" x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3]
+        + '" clip-path="url(#ac-' + p.slug + ')" fill="none" stroke="' + esc(p.accent) + '" stroke-width="3"/>';
+      s += '</g></g>';
+    });
+    s += '</g>';
+    s += '<g id="atlas-lines">';
+    for (var r2 in j.regions) {
+      var R = j.regions[r2];
+      s += '<path class="atlas-rgn" d="' + R.d + '"/>';
+      (R.dividers || []).forEach(function (d) {
+        s += '<line class="atlas-div" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '" clip-path="url(#ar-' + r2 + ')"/>';
+      });
+    }
+    s += '</g></svg>';
+    world.innerHTML = s;
+
+    var X0 = 1e9, Y0 = 1e9, X1 = -1e9, Y1 = -1e9;
+    j.places.forEach(function (p) {
+      bySlug[p.slug] = p; var c = p.cell;
+      X0 = Math.min(X0, c[0]); Y0 = Math.min(Y0, c[1]); X1 = Math.max(X1, c[0] + c[2]); Y1 = Math.max(Y1, c[1] + c[3]);
+    });
+    DATA._b = { x: X0 - 40, y: Y0 - 40, w: (X1 - X0) + 80, h: (Y1 - Y0) + 80 };
+
+    [].forEach.call(world.querySelectorAll('.atlas-place'), function (el) {
+      var p = bySlug[el.getAttribute('data-slug')];
+      el.addEventListener('pointerenter', function () { if (!dragging) activate(p, el); });
+      el.addEventListener('pointermove', function () { if (!dragging && active !== p) activate(p, el); });
+      el.addEventListener('pointerleave', schedHide);
+      el.addEventListener('click', function (e) {
+        if (moved || e.target.closest('#atlas-card')) return;
+        window.location.href = base + p.href;
+      });
+    });
+    fit();
+  }
+
+  function activate(p, el) {
+    if (active && active._el && active._el !== el) active._el.classList.remove('active');
+    active = p; p._el = el; el.classList.add('active');
+    var opts = '<option value="" disabled selected>Jump to a chapter…</option>';
+    (p.chapters || []).forEach(function (ch) { opts += '<option value="' + esc(base + ch.href) + '">' + esc(ch.t) + '</option>'; });
+    card.innerHTML = '<a class="ac-title" href="' + esc(base + p.href) + '" style="color:' + esc(p.accent) + '">' + esc(p.title) + '</a>'
+      + '<div class="ac-place">' + esc(p.label) + '</div>'
+      + (p.chapters && p.chapters.length ? '<select class="ac-sel" aria-label="Jump to a chapter">' + opts + '</select>' : '');
+    var sel = card.querySelector('.ac-sel');
+    if (sel) sel.onchange = function () { if (this.value) window.location.href = this.value; };
+    card.classList.add('show');
+    var r = el.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    card.style.left = '0px'; card.style.top = '0px';
+    var cw = card.offsetWidth, chh = card.offsetHeight;
+    var cx = (r.left + r.right) / 2 - sr.left, cyTop = r.top - sr.top;
+    var left = Math.max(8, Math.min(sr.width - cw - 8, cx - cw / 2));
+    var top = cyTop - chh - 12; if (top < 8) top = (r.bottom - sr.top) + 12;
+    top = Math.max(8, Math.min(sr.height - chh - 8, top));
+    card.style.left = left + 'px'; card.style.top = top + 'px';
+    if (hideT) { clearTimeout(hideT); hideT = null; }
+  }
+  function schedHide() { if (hideT) clearTimeout(hideT); hideT = setTimeout(hideCard, 240); }
+  function hideCard() {
+    if (card) card.classList.remove('show');
+    if (active && active._el) active._el.classList.remove('active');
+    active = null;
+  }
+})();
+"""
+
+
 def shell_html(manifest_json, base):
     """The cross-page connective shell, injected verbatim into every page template.
 
@@ -1367,6 +1734,8 @@ def shell_html(manifest_json, base):
         f"<script>window.SHELL_BASE={json.dumps(base)};</script>"
         f"<script>{SHELL_JS}</script>"
         f"<script>{SHARE_JS}</script>"
+        f"<style>{ATLAS_CSS}</style>"
+        f"<script>{ATLAS_JS}</script>"
     )
 
 
@@ -3453,7 +3822,7 @@ def build_wrapped_page(out_dir, wrapped_stats, shell=""):
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None, titles=None, category_order=None, collections=None):
+          fingerprint_cfg=None, titles=None, category_order=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     # Copy the link-preview image into the served output so the absolute
@@ -3473,6 +3842,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
     all_passages = []      # pull-quotes across every corpus, for Today's Passage
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
+    atlas_corpora = {}     # {slug: {title,href,accent,img,chapters}} for the Atlas map
     wrapped_stats = []     # per-corpus {slug,title,category,chapters,words} for Research Wrapped
     total_chapters = 0
     total_words = 0
@@ -3563,6 +3933,15 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         all_passages += [dict(p, slug=corpus["slug"], title=corpus["title"])
                          for p in extract_passages(corpus)]
         corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
+        _atlas_img = find_cover_image(corpus["slug"])
+        atlas_corpora[corpus["slug"]] = {
+            "title": corpus["title"],
+            "href": f"{corpus['slug']}.html",
+            "accent": ATLAS_TILES[(n_corpus - 1) % len(ATLAS_TILES)],
+            "img": f"covers/{_atlas_img.name}" if _atlas_img else None,
+            "chapters": [{"t": d["title"], "href": f"{corpus['slug']}.html#ch-{di}"}
+                         for di, d in enumerate(corpus["documents"])],
+        }
         wrapped_stats.append({"slug": corpus["slug"], "title": corpus["title"], "category": category,
                               "chapters": n,
                               "words": sum(len(re.sub(r"<[^>]+>", " ", d["body"]).split()) for d in corpus["documents"])})
@@ -3628,6 +4007,25 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     (out / "search-index.json").write_text(json.dumps(search_entries, ensure_ascii=False))
     # Pull-quotes for Today's Passage (also written as a file for later reuse).
     (out / "passages.json").write_text(json.dumps(all_passages, ensure_ascii=False))
+
+    # The Atlas — lay each corpus's cover onto its region and write atlas.json,
+    # which the shared shell's map surface fetches on first open. Skipped (with a
+    # note) if the geometry hasn't been authored (scripts/build_atlas_geo.py).
+    atlas_cfg = atlas_cfg or {}
+    atlas_geo = load_atlas_geo()
+    if atlas_geo:
+        atlas_data = compute_atlas(
+            atlas_geo, atlas_corpora,
+            placements=atlas_cfg.get("places") or ATLAS_PLACEMENTS,
+            grow=atlas_cfg.get("grow") or ATLAS_GROW,
+        )
+        if atlas_data:
+            (out / "atlas.json").write_text(json.dumps(atlas_data, separators=(",", ":"), ensure_ascii=False))
+            print(f"  ✓ Atlas: {len(atlas_data['places'])} corpora across {len(atlas_data['regions'])} regions → atlas.json")
+        else:
+            print("  ! Atlas: no corpora placed (check the 'atlas' placements)", file=sys.stderr)
+    else:
+        print("  ! Atlas: atlas/geo.json not found — run scripts/build_atlas_geo.py", file=sys.stderr)
 
     # Now write the reader pages, each carrying the shared shell.
     for p in pages:
@@ -3754,6 +4152,7 @@ def load_config(path):
         "titles": cfg.get("titles", {}),
         "category_order": cfg.get("category_order", []),
         "collections": cfg.get("collections", []),
+        "atlas": cfg.get("atlas", {}),
     }
 
 
@@ -3783,6 +4182,7 @@ if __name__ == "__main__":
         titles = cfg["titles"]
         category_order = cfg["category_order"]
         collections = cfg["collections"]
+        atlas_cfg = cfg["atlas"]
     elif args.folders:
         folders = args.folders
         out = args.out or "dist"
@@ -3794,9 +4194,10 @@ if __name__ == "__main__":
         titles = {}
         category_order = []
         collections = []
+        atlas_cfg = {}
     else:
         ap.error("no corpus folders and no --config / build.config.json found")
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
           fingerprint_cfg=fingerprint_cfg, titles=titles, category_order=category_order,
-          collections=collections)
+          collections=collections, atlas_cfg=atlas_cfg)

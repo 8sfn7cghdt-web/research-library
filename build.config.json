@@ -160,5 +160,27 @@
         "../mcluhan-research",
         "../piaget-research",
         "../dickinson-research"
-    ]
+    ],
+    "atlas": {
+        "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
+        "places": {
+            "carlyle-research": { "region": "GB-SCT", "cell": "n", "label": "Ecclefechan & Edinburgh, Scotland" },
+            "carlyle-french-revolution-research": { "region": "GB-SCT", "cell": "c", "label": "Scotland — by the sage of Chelsea" },
+            "carlyle-friedrich-research": { "region": "GB-SCT", "cell": "s", "label": "Scotland & London" },
+            "deutsch-good-explanations-research": { "region": "GB-ENG", "label": "Oxford, England" },
+            "ancestry-research": { "region": "IE", "label": "Munster, Ireland" },
+            "civil-war-religion-whitman-research": { "region": "US-NY", "label": "Brooklyn & New York" },
+            "dickinson-research": { "region": "US-MA", "label": "Amherst, Massachusetts" },
+            "uap-research": { "region": "US-NM", "label": "Roswell, New Mexico" },
+            "ipv4-ipv6-ctv-research": { "region": "US-CA", "label": "Silicon Valley, California" },
+            "us-geopolitics-research": { "region": "US", "z": "base", "label": "The United States" },
+            "jung-research": { "region": "CH", "cell": "e", "label": "Zürich, Switzerland" },
+            "piaget-research": { "region": "CH", "cell": "w", "label": "Geneva & Neuchâtel, Switzerland" },
+            "phenomenology-pragmatism-research": { "region": "DE", "label": "Freiburg, Germany" },
+            "mcluhan-research": { "region": "CA-ON", "label": "Toronto, Ontario" },
+            "jesus-research": { "region": "IL", "cell": "n", "label": "Galilee" },
+            "john-the-baptist-research": { "region": "IL", "cell": "s", "label": "The Jordan & the Judean wilderness" }
+        },
+        "grow": { "US-MA": "US-NEWENGLAND", "IL": "LEVANT" }
+    }
 }
