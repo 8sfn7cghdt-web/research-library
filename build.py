@@ -25,6 +25,7 @@ import html
 import json
 import mimetypes
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -37,6 +38,31 @@ FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='
            "<rect x='34' y='2' width='28' height='28' rx='7' fill='%23c9a227'/>"
            "<rect x='2' y='34' width='28' height='28' rx='7' fill='%232e5266'/>"
            "<rect x='34' y='34' width='28' height='28' rx='7' fill='%236b7d4f'/></svg>")
+
+# Canonical public origin (GitHub Pages custom domain, see docs/CNAME). Used to
+# build the ABSOLUTE og:image URL link-preview scrapers (iMessage, Slack, etc.)
+# require — relative paths are ignored by them.
+SITE_URL = "https://research.calvincollins.xyz"
+OG_IMAGE = "aiforhumanities.png"  # source lives in corpus-app/; copied into out/ at build time
+
+# Open Graph + Twitter card tags so a shared link renders a rich preview with an
+# image. Inlined verbatim into every page <head> (no str.format braces here, so
+# it passes through .format() untouched). Site-wide title/description/image —
+# the goal is "share the link, get a picture," not per-page cards.
+OG_META = (
+    '<meta property="og:type" content="website">\n'
+    '<meta property="og:site_name" content="research · calvincollins · xyz">\n'
+    '<meta property="og:title" content="AI for HUMANities — Agentic Scholarship">\n'
+    '<meta property="og:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">\n'
+    f'<meta property="og:url" content="{SITE_URL}/">\n'
+    f'<meta property="og:image" content="{SITE_URL}/{OG_IMAGE}">\n'
+    '<meta property="og:image:width" content="2022">\n'
+    '<meta property="og:image:height" content="778">\n'
+    '<meta name="twitter:card" content="summary_large_image">\n'
+    '<meta name="twitter:title" content="AI for HUMANities — Agentic Scholarship">\n'
+    '<meta name="twitter:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">\n'
+    f'<meta name="twitter:image" content="{SITE_URL}/{OG_IMAGE}">'
+)
 
 # trencadís tile palette (light-theme hexes; readers/library recolor via CSS vars)
 TERRA, GOLD, BLUE, OLIVE, PLUM = "#b3502f", "#c9a227", "#2e5266", "#6b7d4f", "#8a5a7c"
@@ -434,6 +460,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 <link rel="icon" href="{favicon}">
+{og_meta}
 <style>{css}</style>
 {theme_style}
 </head>
@@ -694,6 +721,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <title>{site_title}</title>
 <meta name="description" content="{site_subtitle}">
 <link rel="icon" href="{favicon}">
+{og_meta}
 <style>{css}</style>
 </head>
 <body>
@@ -974,6 +1002,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>The Ghost of Times — research · calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
+{og_meta}
 <style>{css}</style>
 </head>
 <body>
@@ -1141,7 +1170,7 @@ def build_ghost_page(out_dir, editions, ghost_cfg):
                      'alt="The Ghost of Times — masthead engraving">')
     page = GHOST_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + GHOST_PAGE_CSS,
-        favicon=FAVICON,
+        favicon=FAVICON, og_meta=OG_META,
         engraving=engraving,
         motto=html.escape(ghost_cfg.get("motto", "")),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
@@ -1277,6 +1306,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
+{og_meta}
 <style>{css}</style>
 </head>
 <body>
@@ -1443,7 +1473,7 @@ def build_ghost_edition(out_dir, ed):
     page = GHOST_EDITION_TEMPLATE.format(
         title=html.escape(f"{lead_head} — The Ghost of Times"),
         description=html.escape(data.get("lead", {}).get("dek", "") or "The Ghost of Times"),
-        favicon=FAVICON,
+        favicon=FAVICON, og_meta=OG_META,
         css=LIBRARY_CSS + GHOST_EDITION_CSS,
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
@@ -1667,6 +1697,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>The Fingerprint — research · calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
+{og_meta}
 <style>{css}</style>
 </head>
 <body>
@@ -1835,7 +1866,7 @@ def build_fingerprint_page(out_dir, editions, cfg):
         stats = "No editions yet"
     page = FINGERPRINT_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + FINGERPRINT_BAND_CSS + FINGERPRINT_PAGE_CSS,
-        favicon=FAVICON,
+        favicon=FAVICON, og_meta=OG_META,
         kicker=html.escape(cfg.get("kicker", "The global programmatic & Advanced TV market paper")),
         ridges=FP_RIDGES,
         motto=html.escape(cfg.get("motto", "All the news that's fit to Fingerprint")),
@@ -1858,6 +1889,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
+{og_meta}
 <style>{css}</style>
 </head>
 <body>
@@ -2326,7 +2358,7 @@ def build_fingerprint_edition(out_dir, ed):
     page = FINGERPRINT_EDITION_TEMPLATE.format(
         title=html.escape(f"{lead_head} — The Fingerprint"),
         description=html.escape(data.get("lead", {}).get("dek", "") or "The Fingerprint"),
-        favicon=FAVICON,
+        favicon=FAVICON, og_meta=OG_META,
         css=css,
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
@@ -2351,6 +2383,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
           fingerprint_cfg=None, titles=None, category_order=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
+    # Copy the link-preview image into the served output so the absolute
+    # og:image URL (SITE_URL/OG_IMAGE) resolves on the live site.
+    og_src = HERE / OG_IMAGE
+    if og_src.exists():
+        shutil.copy(og_src, out / OG_IMAGE)
     ghost_cfg = ghost_cfg or {}
     fingerprint_cfg = fingerprint_cfg or {}
     descriptions = descriptions or {}
@@ -2380,7 +2417,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             subtitle=html.escape(corpus["subtitle"]),
             css=CSS,
             theme_style=render_theme_style(theme),
-            favicon=FAVICON,
+            favicon=FAVICON, og_meta=OG_META,
             data_json=json_for_html(corpus),
             marked_js=MARKED_JS,
             app_js=APP_JS,
@@ -2474,7 +2511,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         site_title=html.escape(site_title),
         site_subtitle=html.escape(site_subtitle),
         css=library_css,
-        favicon=FAVICON,
+        favicon=FAVICON, og_meta=OG_META,
         stats=stats,
         hero=hero_art(),
         ghost_band=ghost_band,
