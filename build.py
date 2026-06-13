@@ -510,6 +510,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
     <span id="pager-label"></span>
     <button id="next">→</button>
   </div>
+  <section id="related"></section>
 </main>
 <script id="corpus-data" type="application/json">{data_json}</script>
 <script>{marked_js}</script>
@@ -632,6 +633,19 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
   #content { padding-top: 3.6rem; }
   figure.corpus-fig { margin-left: -.6rem; margin-right: -.6rem; padding: .7rem .6rem .7rem; }
 }
+/* a deep-linked passage flashes briefly when the reader scrolls to it */
+@keyframes passageFlash { 0% { background: var(--mark); } 100% { background: transparent; } }
+.passage-flash { animation: passageFlash 2.2s ease; border-radius: 4px; box-decoration-break: clone; }
+/* related reading at the foot of the reading column */
+#related { max-width: 740px; width: 100%; margin: 0 auto; padding: 0 2rem 3rem; }
+.related-h { font-family: var(--display); font-size: 1.08rem; margin: 0 0 .9rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .8rem; }
+.related-card { display: block; background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+  padding: .8rem .9rem; text-decoration: none; color: var(--text); transition: border-color .15s ease, transform .15s ease; }
+.related-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.related-cat { display: block; font-family: var(--sans); font-size: .62rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--accent); margin: 0 0 .3rem; }
+.related-t { display: block; font-family: var(--display); font-size: 1rem; line-height: 1.22; }
 /* distraction-free focus mode (desktop only — leaves the mobile drawer alone) */
 @media (min-width: 861px) {
   #sidebar { transition: transform .22s ease; }
@@ -721,7 +735,12 @@ function show(i, anchorText) {
     const walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT);
     let node; while ((node = walker.nextNode())) {
       const idx = node.textContent.toLowerCase().indexOf(anchorText.toLowerCase());
-      if (idx >= 0) { node.parentElement.scrollIntoView({ block: 'center' }); return; }
+      if (idx >= 0) {
+        const host = node.parentElement;
+        host.scrollIntoView({ block: 'center' });
+        if (!reduceMotion) { host.classList.add('passage-flash'); setTimeout(() => host.classList.remove('passage-flash'), 2200); }
+        return;
+      }
     }
   }
   document.getElementById('main').scrollIntoView();
@@ -816,9 +835,10 @@ const menuBtn = document.getElementById('menu-btn');
 menuBtn.onclick = () => document.body.classList.toggle('menu-open');
 function closeMenu() { document.body.classList.remove('menu-open'); }
 
-// initial chapter: hash > saved progress > 0
+// initial chapter: hash > saved progress > 0; ?q= deep-links to a passage (Today's Passage, share cards)
 const hash = location.hash.match(/^#ch-(\d+)$/);
-show(hash ? +hash[1] : +(localStorage.getItem(key) || 0));
+const anchorQ = new URLSearchParams(location.search).get('q');
+show(hash ? +hash[1] : +(localStorage.getItem(key) || 0), anchorQ || undefined);
 
 // respond to in-page hash changes: browser back/forward, and cross-page command
 // palette jumps that land on a chapter of the corpus already open (no reload).
@@ -826,6 +846,28 @@ window.addEventListener('hashchange', () => {
   const h = location.hash.match(/^#ch-(\d+)$/);
   if (h && +h[1] !== current) show(+h[1]);
 });
+
+// Related reading at the foot of the column — corpus-level, from the inlined
+// library manifest's precomputed similarity graph (no fetch). Deferred to
+// DOMContentLoaded because the shell (which carries #library-manifest) is
+// injected into the page AFTER this script.
+function renderRelated() {
+  const relEl = document.getElementById('related');
+  const mEl = document.getElementById('library-manifest');
+  if (!relEl || !mEl) return;
+  let LIB; try { LIB = JSON.parse(mEl.textContent); } catch (e) { return; }
+  const me = LIB.find(x => x.slug === corpus.slug);
+  const rel = (me && me.related) || [];
+  if (!rel.length) return;
+  const esc = s => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
+  relEl.innerHTML = '<h3 class="related-h">Related reading</h3><div class="related-grid">'
+    + rel.map(r => '<a class="related-card" href="' + esc(r.slug) + '.html">'
+        + '<span class="related-cat">' + esc(r.category || '') + '</span>'
+        + '<span class="related-t">' + esc(r.title) + '</span></a>').join('')
+    + '</div>';
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderRelated);
+else renderRelated();
 """
 
 # ---------------------------------------------------------------- the connective shell
@@ -1144,6 +1186,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   </div>
   <div class="hero-art">{hero}</div>
 </header>
+{daily_passage}
 {ghost_band}
 {fingerprint_band}
 {resume}
@@ -1209,6 +1252,35 @@ LIBRARY_FILTER_JS = """
 })();
 """
 
+# Today's Passage — a date-seeded pull-quote pinned atop the index, preferring
+# corpora the visitor hasn't opened. Reads the inlined #passages-data and links
+# to the exact chapter with ?q=<snippet> so the reader scrolls to (and flashes)
+# the line. Pure client-side: date math + localStorage history, no fetch.
+DAILY_PASSAGE_JS = r"""
+(function () {
+  var el = document.getElementById('daily-passage'), dataEl = document.getElementById('passages-data');
+  if (!el || !dataEl) return;
+  var P; try { P = JSON.parse(dataEl.textContent || '[]'); } catch (e) { return; }
+  if (!P.length) return;
+  var opened = {};
+  try { (JSON.parse(localStorage.getItem('library-recents') || '[]') || []).forEach(function (r) { opened[r.slug] = 1; }); } catch (e) {}
+  P.forEach(function (p) { try { if ((JSON.parse(localStorage.getItem('read:' + p.slug) || '[]') || []).length) opened[p.slug] = 1; } catch (e) {} });
+  var fresh = P.filter(function (p) { return !opened[p.slug]; });
+  var pool = fresh.length ? fresh : P;
+  var day = Math.floor(Date.now() / 864e5);
+  var p = pool[day % pool.length];
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+  var href = esc(p.slug) + '.html?q=' + encodeURIComponent(p.text.slice(0, 42)) + '#ch-' + p.chapter;
+  el.innerHTML = '<a class="dp-quote" href="' + href + '">'
+    + '<span class="dp-kicker">Today’s Passage</span>'
+    + '<span class="dp-mark" aria-hidden="true">“</span>'
+    + '<span class="dp-text">' + esc(p.text) + '</span>'
+    + '<span class="dp-src">— ' + esc(p.title) + ' · ' + esc(p.chapterTitle) + '</span>'
+    + '<span class="dp-cta">Read in context →</span></a>';
+  el.hidden = false;
+})();
+"""
+
 LIBRARY_CSS = """
 :root {
   --bg: #faf8f4; --panel: #f1ede5; --text: #1f1d1a; --muted: #6e6a62;
@@ -1236,6 +1308,21 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   font-size: 1.5rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
   background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+/* Today's Passage — the daily pull-quote hook pinned atop the index. */
+#daily-passage { max-width: 1080px; margin: 1.6rem auto 0; padding: 0 2rem; }
+.dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem 1.9rem 1.4rem;
+  transition: transform .16s cubic-bezier(.34,1.56,.64,1), border-color .16s ease; }
+.dp-quote:hover { transform: translateY(-2px); border-color: var(--accent); }
+.dp-kicker { display: block; font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--accent); margin: 0 0 .55rem; }
+.dp-mark { position: absolute; top: .2rem; right: 1.2rem; font-family: var(--display); font-size: 5rem;
+  line-height: 1; color: var(--accent); opacity: .12; }
+.dp-text { display: block; font-family: var(--display); font-style: italic; font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  line-height: 1.36; margin: 0 0 .8rem; max-width: 46rem; }
+.dp-src { display: block; font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: 0 0 1rem; }
+.dp-cta { font-family: var(--sans); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
 /* The Ghost of Times feature band on the home page — inky newspaper contrast to the mosaic library. */
 .ghost-band { max-width: 1080px; margin: 2rem auto 0; padding: 0 2rem; }
 .ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
@@ -2816,6 +2903,81 @@ def strip_md(body, cap=6000):
     return t[:cap]
 
 
+# ---------------------------------------------------------------- entertainment-layer data (build-time)
+# Two precomputed artifacts the runtime leans on, both static and offline:
+#   * pull-quotes per corpus  -> Today's Passage + (later) shareable passage cards
+#   * a corpus-to-corpus similarity graph -> related-reading + (later) recommendations
+# Zero ML: similarity is a category bonus + Jaccard keyword overlap.
+
+_STOPWORDS = set((
+    "the a an and or but of to in on for with from at by as is are was were be been being this that "
+    "these those it its his her their our your they them we you i he she him not no nor so than then "
+    "thus into over under about between across after before during against within without research "
+    "chapter how what why who when where which whom whose into onto upon"
+).split())
+
+
+def _keywords(text):
+    """Lowercased content-word set for the similarity graph (stopwords/short words dropped)."""
+    return {t for t in re.findall(r"[a-z][a-z'\-]{3,}", text.lower()) if t not in _STOPWORDS}
+
+
+def extract_passages(corpus, limit=5):
+    """A few striking pull-quotes per corpus: epigraph/blockquotes first, then chapter lead sentences.
+
+    Each passage's text exists verbatim in the rendered prose, so Today's Passage
+    can deep-link to it and the reader's TreeWalker can scroll to (and flash) it.
+    """
+    quotes, leads = [], []
+    for di, d in enumerate(corpus["documents"]):
+        body = d["body"]
+        for m in re.finditer(r"(?:^>.*(?:\n|$))+", body, re.MULTILINE):
+            q = strip_md(re.sub(r"(?m)^>\s?", "", m.group(0)), cap=240).strip()
+            if 45 <= len(q) <= 240 and "http" not in q.lower():
+                quotes.append({"chapter": di, "chapterTitle": d["title"], "text": q, "kind": "epigraph"})
+        prose = strip_md(re.sub(r"(?m)^#.*$", "", body), cap=600)
+        ms = re.search(r"([A-Z][^.!?]{45,180}[.!?])", prose)
+        if ms:
+            leads.append({"chapter": di, "chapterTitle": d["title"], "text": ms.group(1).strip(), "kind": "lead"})
+    picked, used_ch = [], set()
+    for pool in (quotes, leads):
+        for p in pool:
+            if len(picked) >= limit:
+                break
+            if p["chapter"] in used_ch:
+                continue
+            picked.append(p)
+            used_ch.add(p["chapter"])
+    for p in quotes + leads:  # backfill if a corpus has few distinct chapters
+        if len(picked) >= limit:
+            break
+        if p not in picked:
+            picked.append(p)
+    return picked[:limit]
+
+
+def build_similarity(corpus_meta, top_k=3):
+    """corpus_meta: list of {slug, title, category, keywords}. Returns {slug: [related entries]}."""
+    out = {}
+    for a in corpus_meta:
+        scored = []
+        for b in corpus_meta:
+            if b["slug"] == a["slug"]:
+                continue
+            inter = len(a["keywords"] & b["keywords"])
+            union = len(a["keywords"] | b["keywords"]) or 1
+            score = (inter / union) * 100
+            if a["category"] == b["category"] and a["category"] != "Other":
+                score += 35
+            scored.append((score, b))
+        scored.sort(key=lambda x: x[0], reverse=True)
+        out[a["slug"]] = [
+            {"slug": b["slug"], "title": b["title"], "category": b["category"]}
+            for s, b in scored[:top_k] if s > 0
+        ]
+    return out
+
+
 def json_for_html(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
@@ -2838,6 +3000,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     manifest = []          # cross-page command-palette index (corpora + sections + editions)
     pages = []             # reader renders deferred until the manifest below is complete
     search_entries = []    # trimmed chapter text for the palette's "in the text" search
+    corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
+    all_passages = []      # pull-quotes across every corpus, for Today's Passage
     total_chapters = 0
     total_words = 0
 
@@ -2919,8 +3083,23 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 for di, d in enumerate(corpus["documents"])
             ],
         })
+        corpus_meta.append({
+            "slug": corpus["slug"], "title": corpus["title"], "category": category,
+            "keywords": _keywords(corpus["title"] + " " + corpus["slug"].replace("-", " ") + " "
+                                  + " ".join(d["title"] for d in corpus["documents"])),
+        })
+        all_passages += [dict(p, slug=corpus["slug"], title=corpus["title"])
+                         for p in extract_passages(corpus)]
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
+
+    # Bake the corpus-to-corpus similarity graph into each corpus manifest entry,
+    # so the reader can render "Related reading" with no fetch (it already has the
+    # inlined manifest via the shell).
+    related_map = build_similarity(corpus_meta)
+    for entry in manifest:
+        if entry.get("kind") == "corpus":
+            entry["related"] = related_map.get(entry["slug"], [])
 
     # Read the Ghost + Fingerprint edition lists up front so their section fronts
     # and individual editions can join the command-palette manifest before any
@@ -2958,6 +3137,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # Lazy global-search payload — the palette fetches this only on an "in the
     # text" query, so it never weighs down first paint. Bodies are trimmed.
     (out / "search-index.json").write_text(json.dumps(search_entries, ensure_ascii=False))
+    # Pull-quotes for Today's Passage (also written as a file for later reuse).
+    (out / "passages.json").write_text(json.dumps(all_passages, ensure_ascii=False))
 
     # Now write the reader pages, each carrying the shared shell.
     for p in pages:
@@ -3027,6 +3208,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     # The Fingerprint band shares the library CSS, so fold its rules in once.
     library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS
+    daily_passage = (
+        '<section id="daily-passage" hidden></section>'
+        f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>'
+    )
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(
         site_title=html.escape(site_title),
         site_subtitle=html.escape(site_subtitle),
@@ -3034,11 +3219,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         favicon=FAVICON, og_meta=OG_META,
         stats=stats,
         hero=hero_art(),
+        daily_passage=daily_passage,
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
         resume='<div id="resume"></div>',
         cards=library_body,
-        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS,
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS,
         shell=shell_root,
     ))
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html")
