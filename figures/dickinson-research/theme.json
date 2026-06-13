@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Fascicle Leaf — pencil, the floating dash, and the variant held open",
+  "anchor": "Dickinson's hand-sewn fascicle leaf: cream laid stationery, iron-gall ink and pencil drafts, the variable floating dash, the unstruck marginal variant marked with a cross, the pressed-flower herbarium sheet, and the Watts common-meter hymnal — later transcribed on Mabel Loomis Todd's Hammond typewriter.",
+  "rationale": "The corpus's structural metaphor is suspension — 'choosing not choosing', the dash that refuses closure, three stanzas held open under one. Its primary artifacts are the fascicle (folded sheets, stabbed holes, thread), the 400-specimen herbarium, the slant of winter light ('a certain Slant of light'), and white-on-cream (the dress, the coffin, the stationery). So the world is deliberately spare and bone-pale where the Emigrant's Atlas is warm and ornate: graphite-and-cream, lots of negative space, the dash as ornament, restrained pressed-flower and slant-amber notes instead of saturated heraldry.",
+  "light": {
+    "bg": "#eae1cd", "panel": "#f9f5ec", "text": "#2b2620", "muted": "#615945",
+    "accent": "#8a5524", "border": "#cdbf9f", "mark": "#ecdca2", "cover-bg": "#e4d9c0",
+    "t1": "#4b4334", "t2": "#8a4a50", "t3": "#5b6747", "t4": "#8a5524", "t5": "#46545f"
+  },
+  "dark": {
+    "bg": "#14110a", "panel": "#252017", "text": "#ebe2d0", "muted": "#978d77",
+    "accent": "#d3a25e", "border": "#3d3324", "mark": "#443618", "cover-bg": "#1d1810",
+    "t1": "#cdbf9f", "t2": "#cf8f93", "t3": "#9aa878", "t4": "#d3a25e", "t5": "#8398a8"
+  },
+  "fonts": {
+    "display": "'Baskerville', 'Baskerville Old Face', 'Palatino Linotype', Palatino, Georgia, serif",
+    "body": "'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', 'Courier', 'Nimbus Mono PS', 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2014   \\2014   \\2014'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#4b4334", "#8a4a50", "#8a5524", "#46545f"]
+}

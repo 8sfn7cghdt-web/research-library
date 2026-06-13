@@ -1,0 +1,45 @@
+{
+  "aesthetic": "The Genevan Plate",
+  "anchor": "The Études d'épistémologie génétique monograph (PUF / Centre, Geneva) crossed with an engraved malacological plate — the conservation-task line diagram, the INRC lattice, and the Limnaea pond-snail shell-spiral as ornament, set in the clean academic type of a mid-century Swiss-French scientific book.",
+  "rationale": "Piaget began as a naturalist drawing Limnaea molluscs and ended building diagrams of the growing mind at the Geneva Centre; the look fuses the engraved naturalist's plate (sepia, spiral) with the Genevan academic monograph (parchment, ink, a clean reasoning-blue and pond-green) and the structural line-art of his conservation tasks and INRC group. Teal-green carries equilibration/growth and the immanence pole; sepia the biological origin; slate-blue the logico-mathematical structure; ochre-gold 'value' and the sacred; crimson transcendence/constraint. The half-filled circle ornament is the balance of assimilation and accommodation.",
+  "light": {
+    "bg": "#f3efe3",
+    "panel": "#e7e1d1",
+    "text": "#20201b",
+    "muted": "#5c574c",
+    "accent": "#166055",
+    "border": "#cdc5b2",
+    "mark": "#ecd49a",
+    "cover-bg": "#ebe4d4",
+    "t1": "#166055",
+    "t2": "#8a5320",
+    "t3": "#2f4a6b",
+    "t4": "#86690f",
+    "t5": "#9c3b46"
+  },
+  "dark": {
+    "bg": "#14130e",
+    "panel": "#201e16",
+    "text": "#e9e3d3",
+    "muted": "#9a9384",
+    "accent": "#56c0ad",
+    "border": "#383228",
+    "mark": "#463a1d",
+    "cover-bg": "#201e16",
+    "t1": "#56c0ad",
+    "t2": "#cf9a5e",
+    "t3": "#7aa6d4",
+    "t4": "#e0bb55",
+    "t5": "#e08a8f"
+  },
+  "fonts": {
+    "display": "Charter, 'Bitstream Charter', Cambria, 'Iowan Old Style', Georgia, serif",
+    "body": "Cambria, Charter, Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', 'Cascadia Mono', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\25D0   \\00b7'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": ["#166055", "#8a5320", "#2f4a6b", "#9c3b46"]
+}

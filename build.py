@@ -953,13 +953,15 @@ SHELL_JS = r"""
       (it.chapters || []).forEach(function (ch, i) {
         ENTRIES.push({ t: ch, m: it.title, grp: 'Chapters', icon: '·', href: it.href + '#ch-' + i, k: kw(ch, it.title, slugWords) });
       });
+    } else if (it.kind === 'collection') {
+      ENTRIES.push({ t: it.title, m: 'Collection · ' + (it.meta || ''), grp: 'Collections', icon: '❖', href: it.href, k: kw(it.title, it.meta) });
     } else if (it.kind === 'section') {
       ENTRIES.push({ t: it.title, m: it.meta || 'Section', grp: 'Sections', icon: '§', href: it.href, k: kw(it.title, it.meta) });
     } else if (it.kind === 'edition') {
       ENTRIES.push({ t: it.title, m: (it.category || '') + (it.meta ? ' · ' + it.meta : ''), grp: 'Editions', icon: '▤', href: it.href, k: kw(it.title, it.category, it.meta) });
     }
   });
-  var GRP_ORDER = ['Continue', 'Corpora', 'Sections', 'Chapters', 'In the text', 'Editions'];
+  var GRP_ORDER = ['Continue', 'Collections', 'Corpora', 'Sections', 'Chapters', 'In the text', 'Editions'];
 
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
   function fuzzy(q, s) { q = q.toLowerCase(); s = s.toLowerCase(); var i = 0, j = 0; while (i < q.length && j < s.length) { if (q[i] === s[j]) i++; j++; } return i === q.length; }
@@ -1030,7 +1032,7 @@ SHELL_JS = r"""
     built = true;
   }
   function results(q) {
-    if (!q) return recentEntries().concat(ENTRIES.filter(function (e) { return e.grp === 'Corpora' || e.grp === 'Sections'; }));
+    if (!q) return recentEntries().concat(ENTRIES.filter(function (e) { return e.grp === 'Collections' || e.grp === 'Corpora' || e.grp === 'Sections'; }));
     var ql = q.toLowerCase();
     if (ql.length >= 3) loadSI();
     var subs = [], fuz = [];
@@ -1092,11 +1094,11 @@ SHELL_JS = r"""
   fab.addEventListener('click', open);
   document.body.appendChild(fab);
 
-  [].forEach.call(document.querySelectorAll('.card[data-slug]'), function (card) {
+  [].forEach.call(document.querySelectorAll('.card[data-slug], .coll-card[data-slug]'), function (card) {
     var slug = card.getAttribute('data-slug');
     var total = +card.getAttribute('data-total') || 0;
     var accent = card.getAttribute('data-accent') || '--accent';
-    var meta = card.querySelector('.meta');
+    var meta = card.querySelector('.meta, .coll-meta');
     if (!meta || !total) return;
     var read = 0;
     try { read = (JSON.parse(localStorage.getItem('read:' + slug) || '[]') || []).filter(function (x) { return x < total; }).length; } catch (e) {}
@@ -1190,6 +1192,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {ghost_band}
 {fingerprint_band}
 {resume}
+{collections}
 <h2 class="section-title" id="library">The Research Library</h2>
 <main class="library">
 {cards}
@@ -1308,6 +1311,27 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   font-size: 1.5rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
   background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+/* Collections — the flagship: curated cross-corpus reading arcs, shown as posters. */
+.collections { max-width: 1080px; margin: 1.9rem auto 0; padding: 0 2rem; }
+.coll-h { font-family: var(--display); font-size: 1.5rem; margin: 0; }
+.coll-h::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.coll-intro { font-family: var(--sans); font-size: .9rem; color: var(--muted); margin: .7rem 0 1.2rem; max-width: 42rem; line-height: 1.5; }
+.coll-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(264px, 1fr)); gap: 1.4rem; }
+.coll-card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text);
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), box-shadow .16s ease, border-color .16s ease; }
+.coll-card:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 10px 30px rgba(0,0,0,.1); }
+.coll-poster { position: relative; background: var(--cover-bg); border-bottom: 1px solid var(--border); }
+.coll-poster svg { width: 100%; height: 138px; display: block; }
+.coll-poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 38%, rgba(20,18,15,.55) 100%); }
+.coll-poster-title { position: absolute; left: 15px; right: 15px; bottom: 12px; z-index: 1; font-family: var(--display);
+  font-weight: 700; color: #f6efe2; font-size: 1.42rem; line-height: 1.08; text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+.coll-body { padding: 1rem 1.2rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
+.coll-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); line-height: 1.5; margin: 0 0 .9rem; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.coll-meta { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--accent); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
 /* Today's Passage — the daily pull-quote hook pinned atop the index. */
 #daily-passage { max-width: 1080px; margin: 1.6rem auto 0; padding: 0 2rem; }
 .dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
@@ -2922,6 +2946,24 @@ def _keywords(text):
     return {t for t in re.findall(r"[a-z][a-z'\-]{3,}", text.lower()) if t not in _STOPWORDS}
 
 
+def _clean_passage(text, max_len=260):
+    """Trim a pull-quote to <= max_len WITHOUT cutting a word: prefer ending at a
+    sentence, then a clause boundary, else a word boundary + an ellipsis."""
+    text = text.strip().strip('"“”‘’\'').strip()
+    if len(text) <= max_len:
+        return text
+    cut = text[:max_len]
+    half = max_len * 0.5
+    s = max(cut.rfind(". "), cut.rfind("! "), cut.rfind("? "))
+    if s >= half:
+        return cut[:s + 1]
+    c = max(cut.rfind("; "), cut.rfind(", "), cut.rfind(": "), cut.rfind("— "))
+    if c >= half:
+        return cut[:c].rstrip(" ,;:—") + "…"
+    w = cut.rfind(" ")
+    return (cut[:w] if w > 0 else cut).rstrip(" ,;:—") + "…"
+
+
 def extract_passages(corpus, limit=5):
     """A few striking pull-quotes per corpus: epigraph/blockquotes first, then chapter lead sentences.
 
@@ -2932,13 +2974,16 @@ def extract_passages(corpus, limit=5):
     for di, d in enumerate(corpus["documents"]):
         body = d["body"]
         for m in re.finditer(r"(?:^>.*(?:\n|$))+", body, re.MULTILINE):
-            q = strip_md(re.sub(r"(?m)^>\s?", "", m.group(0)), cap=240).strip()
-            if 45 <= len(q) <= 240 and "http" not in q.lower():
+            raw = strip_md(re.sub(r"(?m)^>\s?", "", m.group(0)), cap=600).strip()
+            if len(raw) < 45 or "http" in raw.lower():
+                continue
+            q = _clean_passage(raw, 260)
+            if len(q) >= 45:
                 quotes.append({"chapter": di, "chapterTitle": d["title"], "text": q, "kind": "epigraph"})
         prose = strip_md(re.sub(r"(?m)^#.*$", "", body), cap=600)
         ms = re.search(r"([A-Z][^.!?]{45,180}[.!?])", prose)
         if ms:
-            leads.append({"chapter": di, "chapterTitle": d["title"], "text": ms.group(1).strip(), "kind": "lead"})
+            leads.append({"chapter": di, "chapterTitle": d["title"], "text": _clean_passage(ms.group(1).strip(), 240), "kind": "lead"})
     picked, used_ch = [], set()
     for pool in (quotes, leads):
         for p in pool:
@@ -2978,12 +3023,87 @@ def build_similarity(corpus_meta, top_k=3):
     return out
 
 
+# ---------------------------------------------------------------- collections (flagship)
+# A Collection is a hand-authored reading ARC that threads chapters from several
+# corpora into one continuous argument. It reuses the corpus reader wholesale:
+# we assemble a synthetic "corpus" whose documents are the chosen chapters (each
+# carrying a back-link to its source corpus), then render it through
+# READER_TEMPLATE — so the merged arc inherits the TOC, search, pager, keyboard
+# nav, themes, and the command-palette shell for free. Authored in
+# build.config.json under "collections": [{id,title,essay,palette?,chapters:[{slug,chapter}]}].
+
+def resolve_collection(col, corpora_by_slug, idx):
+    """Assemble a collection's merged reader corpus + shelf meta, or None if empty."""
+    cid = col.get("id") or re.sub(r"[^a-z0-9]+", "-", col.get("title", "").lower()).strip("-")
+    slug = "collection-" + cid
+    docs, used = [], []
+    for step in col.get("chapters", []):
+        src = corpora_by_slug.get(step.get("slug"))
+        if not src:
+            print(f"  ! collection {cid}: unknown corpus {step.get('slug')!r}", file=sys.stderr)
+            continue
+        ci = step.get("chapter", 0)
+        if not (0 <= ci < len(src["documents"])):
+            print(f"  ! collection {cid}: {step.get('slug')} has no chapter {ci}", file=sys.stderr)
+            continue
+        d = src["documents"][ci]
+        # rewrite the chapter's intra-corpus .md links to point at the full source corpus
+        f2i = {doc["file"]: j for j, doc in enumerate(src["documents"])}
+        def _rw(m, _slug=step["slug"], _f2i=f2i):
+            j = _f2i.get(m.group(2))
+            return f'[{m.group(1)}]({_slug}.html#ch-{j})' if j is not None else m.group(1)
+        body = re.sub(r"\[([^\]]+)\]\(([^)]+\.md)\)", _rw, d["body"])
+        attrib = f'*From [{src["title"]}]({step["slug"]}.html#ch-{ci}) — chapter {ci + 1}*'
+        docs.append({"order": len(docs), "file": f"{slug}-{len(docs)}.md",
+                     "title": d["title"], "summary": src["title"], "body": attrib + "\n\n" + body})
+        used.append(step["slug"])
+    if not docs:
+        print(f"  ! collection {cid}: no valid chapters, skipped", file=sys.stderr)
+        return None
+    # count prose words only — strip injected figure HTML/SVG so it doesn't inflate the estimate
+    words = sum(len(re.sub(r"<[^>]+>", " ", x["body"]).split()) for x in docs)
+    mins = max(1, round(words / 220))
+    reading = f"~{mins} min" if mins < 90 else f"~{mins / 60:.1f} hr"
+    col_corpus = {"slug": slug, "title": col.get("title", cid), "subtitle": col.get("essay", "")[:160],
+                  "author": "", "generated": "", "documents": docs}
+    meta = {"i": idx, "id": cid, "slug": slug, "title": col.get("title", cid), "essay": col.get("essay", ""),
+            "n_ch": len(docs), "n_corpora": len(set(used)), "reading": reading,
+            "palette": col.get("palette")}
+    return col_corpus, meta
+
+
+def collection_card_html(meta):
+    """One Collection poster card for the index shelf."""
+    poster = cover_svg(meta["slug"], meta.get("palette"))
+    accent = ["--t1", "--t2", "--t3", "--t4", "--t5"][meta["i"] % 5]
+    return (
+        f'<a class="coll-card" href="{meta["slug"]}.html" data-slug="{meta["slug"]}" '
+        f'data-total="{meta["n_ch"]}" data-accent="{accent}">'
+        f'<div class="coll-poster">{poster}<span class="coll-poster-title">{html.escape(meta["title"])}</span></div>'
+        f'<div class="coll-body"><p class="coll-note">{html.escape(meta["essay"])}</p>'
+        f'<p class="coll-meta">{meta["n_corpora"]} corpora · {meta["n_ch"]} chapters · {meta["reading"]}</p>'
+        f'</div></a>'
+    )
+
+
+def collections_section_html(metas):
+    """The Collections shelf for the library index (empty string if none)."""
+    if not metas:
+        return ""
+    cards = "".join(collection_card_html(m) for m in metas)
+    return ('<section class="collections" id="collections">'
+            '<h2 class="coll-h">Collections</h2>'
+            '<p class="coll-intro">Curated reading arcs that thread chapters from several corpora '
+            'into one continuous argument.</p>'
+            f'<div class="coll-shelf">{cards}</div></section>')
+
+
 def json_for_html(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None, titles=None, category_order=None):
+          fingerprint_cfg=None, titles=None, category_order=None, collections=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     # Copy the link-preview image into the served output so the absolute
@@ -3002,6 +3122,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     search_entries = []    # trimmed chapter text for the palette's "in the text" search
     corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
     all_passages = []      # pull-quotes across every corpus, for Today's Passage
+    corpora_by_slug = {}   # full corpus objects, retained for assembling collections
     total_chapters = 0
     total_words = 0
 
@@ -3090,6 +3211,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         })
         all_passages += [dict(p, slug=corpus["slug"], title=corpus["title"])
                          for p in extract_passages(corpus)]
+        corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
 
@@ -3100,6 +3222,17 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     for entry in manifest:
         if entry.get("kind") == "corpus":
             entry["related"] = related_map.get(entry["slug"], [])
+
+    # Resolve Collections (cross-corpus arcs) and register them in the palette
+    # manifest before it is serialized into the shared shell.
+    resolved_collections = []
+    for i, col in enumerate(collections or []):
+        r = resolve_collection(col, corpora_by_slug, i)
+        if r:
+            resolved_collections.append(r)
+    for _cc, _meta in resolved_collections:
+        manifest.append({"title": _meta["title"], "kind": "collection", "category": "Collection",
+                         "href": _meta["slug"] + ".html", "meta": f'{_meta["n_ch"]} chapters'})
 
     # Read the Ghost + Fingerprint edition lists up front so their section fronts
     # and individual editions can join the command-palette manifest before any
@@ -3153,6 +3286,18 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             app_js=APP_JS,
             shell=shell_root,
         ))
+
+    # Collection pages — merged cross-corpus readers, rendered through the same
+    # reader template so they inherit the TOC, search, pager, keyboard nav + shell.
+    for col_corpus, meta in resolved_collections:
+        col_og = og_tags(meta["title"], (meta["essay"][:200] or meta["title"]),
+                         f"{SITE_URL}/{meta['slug']}.html", f"{SITE_URL}/{OG_IMAGE}")
+        (out / f"{meta['slug']}.html").write_text(READER_TEMPLATE.format(
+            title=html.escape(meta["title"]), subtitle=html.escape(col_corpus["subtitle"]),
+            css=CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
+            data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root))
+    if resolved_collections:
+        print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
 
     # The Ghost of Times section (second top-level section of the site).
     build_ghost_page(out, editions, ghost_cfg, shell=shell_root)
@@ -3212,6 +3357,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         '<section id="daily-passage" hidden></section>'
         f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>'
     )
+    collections_html = collections_section_html([m for _cc, m in resolved_collections])
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(
         site_title=html.escape(site_title),
         site_subtitle=html.escape(site_subtitle),
@@ -3223,6 +3369,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
         resume='<div id="resume"></div>',
+        collections=collections_html,
         cards=library_body,
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS,
         shell=shell_root,
@@ -3249,6 +3396,7 @@ def load_config(path):
         "descriptions": cfg.get("descriptions", {}),
         "titles": cfg.get("titles", {}),
         "category_order": cfg.get("category_order", []),
+        "collections": cfg.get("collections", []),
     }
 
 
@@ -3277,6 +3425,7 @@ if __name__ == "__main__":
         descriptions = cfg["descriptions"]
         titles = cfg["titles"]
         category_order = cfg["category_order"]
+        collections = cfg["collections"]
     elif args.folders:
         folders = args.folders
         out = args.out or "dist"
@@ -3287,8 +3436,10 @@ if __name__ == "__main__":
         descriptions = {}
         titles = {}
         category_order = []
+        collections = []
     else:
         ap.error("no corpus folders and no --config / build.config.json found")
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
-          fingerprint_cfg=fingerprint_cfg, titles=titles, category_order=category_order)
+          fingerprint_cfg=fingerprint_cfg, titles=titles, category_order=category_order,
+          collections=collections)

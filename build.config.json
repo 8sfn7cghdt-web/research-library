@@ -22,6 +22,45 @@
         "The Modern World",
         "Heritage"
     ],
+    "collections": [
+        {
+            "id": "faith-and-doubt",
+            "title": "Faith & Doubt",
+            "essay": "Belief at the edge of reason. The historical Jesus and his forerunner; Jung's God-image transformed in Answer to Job; the Calvinist substrate that outlived its creed; and phenomenology's reach toward the holy. Five corpora, read in sequence, become one argument about what survives when faith meets the modern mind.",
+            "palette": ["#b3502f", "#c9a227", "#2e5266", "#8a5a7c"],
+            "chapters": [
+                {"slug": "jesus-research", "chapter": 0},
+                {"slug": "john-the-baptist-research", "chapter": 1},
+                {"slug": "jung-research", "chapter": 3},
+                {"slug": "jung-research", "chapter": 5},
+                {"slug": "carlyle-research", "chapter": 0},
+                {"slug": "phenomenology-pragmatism-research", "chapter": 0}
+            ]
+        },
+        {
+            "id": "medium-and-message",
+            "title": "The Medium & the Message",
+            "essay": "How media remakes the people who make it. McLuhan's probes — the medium as the message — carried forward into the IP address layer that now identifies the watcher. From the global village to the machine that reads your address.",
+            "palette": ["#2e5266", "#b3502f", "#c9a227", "#6b7d4f"],
+            "chapters": [
+                {"slug": "mcluhan-research", "chapter": 3},
+                {"slug": "mcluhan-research", "chapter": 8},
+                {"slug": "ipv4-ipv6-ctv-research", "chapter": 1},
+                {"slug": "ipv4-ipv6-ctv-research", "chapter": 5}
+            ]
+        },
+        {
+            "id": "heroes-and-history",
+            "title": "Heroes & History",
+            "essay": "Carlyle's lifelong wager that history is the biography of great men — traced across his three monuments. The Calvinist formation of the prophet, his theory of revolution as a sea of fire, and the hero-worship of his vast Friedrich.",
+            "palette": ["#6b7d4f", "#b3502f", "#c9a227", "#2e5266"],
+            "chapters": [
+                {"slug": "carlyle-research", "chapter": 0},
+                {"slug": "carlyle-french-revolution-research", "chapter": 5},
+                {"slug": "carlyle-friedrich-research", "chapter": 5}
+            ]
+        }
+    ],
     "titles": {
         "ancestry-research": {
             "title": "The Emigrant's Atlas",
