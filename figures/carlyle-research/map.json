@@ -1,3 +1,8 @@
 [
-  { "file": "06_Drivers_And_Forces.md", "after": "## Bottom Line", "snippet": "transposition.html" }
+  { "file": "01_Origins_And_Deep_History.md", "after": "## The Annandale Inheritance", "snippet": "calv_formation.html" },
+  { "file": "06_Drivers_And_Forces.md", "after": "## Bottom Line", "snippet": "transposition.html" },
+  { "file": "06_Drivers_And_Forces.md", "after": "## 1. Predestination Becomes Providential History", "snippet": "calv_ledger.html" },
+  { "file": "06_Drivers_And_Forces.md", "after": "## 11. The Failure Mode: When the Substrate Goes to Seed", "snippet": "calv_failuremode.html" },
+  { "file": "07_Primary_Sources.md", "after": "## 1. *Sartor Resartus*", "snippet": "calv_ordo.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "calv_forecast.html" }
 ]

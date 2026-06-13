@@ -1,3 +1,8 @@
 [
-  { "file": "04_Live_Debates_And_Dynamics.md", "after": "## Bottom Line", "snippet": "unresolving_object.html" }
+  { "file": "01_Origins_And_Deep_History.md", "after": "## The Air Force's Three Investigations", "snippet": "uap_lineage.html" },
+  { "file": "01_Origins_And_Deep_History.md", "after": "## The Condon Report", "snippet": "uap_residual.html" },
+  { "file": "04_Live_Debates_And_Dynamics.md", "after": "## Bottom Line", "snippet": "unresolving_object.html" },
+  { "file": "04_Live_Debates_And_Dynamics.md", "after": "## Debate 4", "snippet": "uap_ontology.html" },
+  { "file": "06_Drivers_And_Forces.md", "after": "## Synthesis: Driver Stack", "snippet": "uap_drivers.html" },
+  { "file": "04_Live_Debates_And_Dynamics.md", "after": "## Debate 5", "snippet": "uap_belief.html" }
 ]

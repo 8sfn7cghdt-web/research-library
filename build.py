@@ -919,6 +919,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
   </nav>
 </div>
 <header class="ghost-plate">
+  {engraving}
   <p class="gp-kicker">A paper of writer-voiced op-eds</p>
   <h1 class="gp-name">The Ghost of Times</h1>
   <p class="gp-motto">“{motto}”</p>
@@ -944,6 +945,9 @@ GHOST_PAGE_CSS = """
 /* The Ghost of Times — a newspaper section front, sharing the editions'
    warm-paper / serif / double-rule / terracotta language. */
 .ghost-plate { display: block; max-width: 820px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
+.gp-engraving { display: block; width: 100%; max-width: 560px; height: auto; margin: .4rem auto 1.4rem;
+  border-radius: 14px; border: 1px solid var(--border); }
+[data-theme="dark"] .gp-engraving { filter: brightness(.92) contrast(1.02); }
 .gp-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
   letter-spacing: .2em; color: var(--accent); margin: 0 0 .5rem; }
 .gp-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6.5vw, 4.4rem);
@@ -1064,9 +1068,14 @@ def build_ghost_page(out_dir, editions, ghost_cfg):
         body = ('<p class="ged-empty">No editions published yet. Run the Ghost of Times '
                 'skill and publish an edition to see it here.</p>')
         stats = "No editions yet"
+    engraving = ""
+    if (out / "ghost" / "masthead.jpg").exists():
+        engraving = ('<img class="gp-engraving" src="ghost/masthead.jpg" '
+                     'alt="The Ghost of Times — masthead engraving">')
     page = GHOST_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + GHOST_PAGE_CSS,
         favicon=FAVICON,
+        engraving=engraving,
         motto=html.escape(ghost_cfg.get("motto", "")),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
         stats=stats,
@@ -1075,6 +1084,270 @@ def build_ghost_page(out_dir, editions, ghost_cfg):
     )
     (out / "ghost.html").write_text(page)
     print(f"  ✓ The Ghost of Times  ({len(editions)} editions) → ghost.html")
+
+
+# ---------------------------------------------------------------- ghost editions
+# Each published edition is rendered HERE, natively, from its structured content
+# (docs/ghost/data/{date}.json — deposited by the ghost_of_times skill's publish
+# step) rather than shipped as a self-contained print artifact. That means every
+# edition inherits the site's design system — warm-paper tokens, Iowan/Georgia,
+# terracotta, dark mode, the masthead nav — for free, and stays a few KB instead
+# of multiple megabytes of embedded fonts. The op-ed bodies are markdown, parsed
+# client-side by the same marked.js the corpus reader uses.
+#
+# Design register: a site-native reading column (the corpus reader's measure and
+# serif) wearing newspaper chrome — a "Ghost of Times" nameplate with the folio
+# double-rule that echoes ghost.html, the site's 4-colour gradient bar under the
+# lead headline, small-caps bylines, italic deks, drop-cap leads, and a paneled
+# "The Facts" ledger. Different from a corpus chapter, but unmistakably the same
+# site.
+
+GHOST_EDITION_CSS = """
+/* A single Ghost of Times edition — the corpus reader's reading column in
+   newspaper dress. Shares every colour/font token with the rest of the site. */
+.gh-edition { max-width: 760px; margin: 0 auto; padding: 2.2rem 2rem 1rem; }
+
+/* nameplate — a compact echo of ghost.html's section plate. `display:block`
+   overrides the generic `header{display:flex}` rule from LIBRARY_CSS so the
+   kicker / name / folio stack vertically like the section front. */
+.gh-nameplate { display: block; text-align: center; max-width: 640px; margin: 0 auto 2.6rem; padding: 0; }
+.gh-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .2em; color: var(--accent); margin: 0 0 .45rem; }
+.gh-name { display: inline-block; font-family: var(--display); font-weight: 800;
+  font-size: clamp(2.1rem, 5.2vw, 3.1rem); line-height: .98; letter-spacing: -.02em;
+  color: var(--text); text-decoration: none; margin: 0 0 .9rem; }
+.gh-name:hover { color: var(--accent); }
+.gh-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .5rem 0;
+  font-family: var(--sans); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em; }
+.gh-folio .gh-folio-c { color: var(--accent); font-weight: 700; }
+
+/* the op-ed stack */
+.gh-piece { margin: 0; }
+.gh-head { font-family: var(--display); font-weight: 800; letter-spacing: -.01em;
+  line-height: 1.1; margin: 0 0 .55rem; }
+.gh-piece .gh-head { font-size: clamp(1.55rem, 3.2vw, 2rem); }
+.gh-lead .gh-head { font-size: clamp(2rem, 4.6vw, 2.9rem); line-height: 1.06; }
+.gh-lead .gh-head::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .6rem;
+  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.gh-dek { font-family: var(--serif); font-style: italic; color: var(--muted);
+  font-size: 1.16rem; line-height: 1.42; margin: 0 0 .9rem; }
+.gh-lead .gh-dek { font-size: 1.28rem; }
+.gh-byline { font-family: var(--sans); font-size: .72rem; letter-spacing: .14em; color: var(--accent);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: .4rem 0; margin: 0 0 1.3rem; }
+.gh-body { font-size: 1.05rem; line-height: 1.74; }
+.gh-body p { margin: 0 0 1.15rem; }
+.gh-body a { color: var(--accent); }
+.gh-body em { font-style: italic; }
+.gh-body blockquote { margin: 1.4rem 0; padding: .6rem 1.3rem; border-left: 3px solid var(--accent);
+  background: var(--panel); border-radius: 0 14px 14px 0; color: var(--muted); font-style: italic; }
+/* drop cap opens each piece */
+.gh-body > p:first-of-type::first-letter { font-family: var(--display); font-weight: 800;
+  float: left; font-size: 3.1em; line-height: .72; padding: .06em .1em 0 0; color: var(--accent); }
+.gh-sources { font-family: var(--sans); font-size: .76rem; line-height: 1.6; color: var(--muted);
+  margin: 1.2rem 0 0; }
+.gh-sources a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; }
+.gh-sources a:hover { border-bottom-color: var(--accent); }
+.gh-sources .filed { text-transform: uppercase; letter-spacing: .08em; font-size: .7rem; }
+.gh-sep { border: none; height: 1em; margin: 2.6rem 0; text-align: center; }
+.gh-sep::before { content: "◆ ◆ ◆"; color: var(--accent); opacity: .4; font-size: .68rem; letter-spacing: 1em; padding-left: 1em; }
+
+/* "The Facts" — the unfiltered wire ledger, as a paneled artifact */
+.gh-facts { margin: 3rem auto 0; padding: 1.5rem 1.6rem 1.2rem; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 16px; }
+.gh-facts-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .2em;
+  color: var(--accent); margin: 0 0 1.1rem; padding-bottom: .55rem; border-bottom: 2px solid var(--text); }
+.gh-facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem 1.8rem; }
+.gh-fact-head { font-family: var(--display); font-size: 1rem; line-height: 1.25; margin: 0 0 .25rem; }
+.gh-fact-by { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--muted); margin: 0 0 .5rem; }
+.gh-fact ul { margin: 0; padding-left: 1.05rem; }
+.gh-fact li { font-family: var(--sans); font-size: .82rem; line-height: 1.5; color: var(--text); margin: 0 0 .35rem; }
+.gh-fact li::marker { color: var(--accent); }
+
+/* foot */
+.gh-foot { max-width: 760px; margin: 2.6rem auto 0; padding: 1.5rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.gh-watch { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .98rem; margin: 0 0 .7rem; }
+.gh-colophon { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; }
+.gh-colophon a { color: var(--accent); text-decoration: none; }
+.gh-colophon a:hover { text-decoration: underline; }
+
+/* floating theme toggle, same affordance as the corpus reader */
+#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 620px) {
+  .gh-edition { padding: 1.6rem 1.3rem 1rem; }
+  .gh-folio { font-size: .58rem; letter-spacing: .08em; }
+  .gh-facts-grid { grid-template-columns: 1fr; gap: 1.1rem; }
+}
+"""
+
+GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content="{description}">
+<link rel="icon" href="{favicon}">
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html" class="active">The Ghost of Times</a>
+  </nav>
+</div>
+<main class="gh-edition">
+  <header class="gh-nameplate">
+    <p class="gh-kicker">A paper of writer-voiced op-eds</p>
+    <a class="gh-name" href="ghost.html">The Ghost of Times</a>
+    <div class="gh-folio">
+      <span>{folio_no}</span>
+      <span class="gh-folio-c">{folio_date}</span>
+      <span>{folio_writers}</span>
+    </div>
+  </header>
+  <div id="gh-pieces"></div>
+  <section id="gh-facts"></section>
+  <footer class="gh-foot">
+    {watch}
+    <p class="gh-colophon"><a href="ghost.html">← All editions</a> &nbsp;·&nbsp; <a href="index.html">The Research Library</a></p>
+  </footer>
+</main>
+<button id="theme-btn" title="Light / dark">◐ Theme</button>
+<script id="ghost-edition-data" type="application/json">{data_json}</script>
+<script>{marked_js}</script>
+<script>{app_js}</script>
+</body>
+</html>
+"""
+
+GHOST_EDITION_JS = r"""
+// theme (shares the 'corpus-theme' preference with readers + library)
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+document.getElementById('theme-btn').onclick = () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('corpus-theme', next);
+};
+
+const ed = JSON.parse(document.getElementById('ghost-edition-data').textContent);
+const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls;
+  if (html != null) n.innerHTML = html; return n; };
+
+// op-eds: lead first, then each section's stories, in render order
+const pieces = [ed.lead].concat((ed.sections || []).flatMap(s => s.stories || []));
+const stack = document.getElementById('gh-pieces');
+pieces.forEach((p, i) => {
+  if (!p) return;
+  const isLead = i === 0;
+  const art = el('article', 'gh-piece' + (isLead ? ' gh-lead' : ''));
+  art.appendChild(el(isLead ? 'h1' : 'h2', 'gh-head', escapeText(p.headline || '')));
+  if (p.dek) art.appendChild(el('p', 'gh-dek', escapeText(p.dek)));
+  if (p.author_byline) art.appendChild(el('p', 'gh-byline', escapeText(p.author_byline)));
+  const body = el('div', 'gh-body', marked.parse(p.body || ''));
+  body.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+  art.appendChild(body);
+  if (p.byline_html) art.appendChild(el('p', 'gh-sources', p.byline_html));
+  stack.appendChild(art);
+  if (i < pieces.length - 1) stack.appendChild(el('hr', 'gh-sep'));
+});
+
+// "The Facts" ledger
+const files = (ed.story_files && ed.story_files.files) || [];
+const facts = document.getElementById('gh-facts');
+if (files.length) {
+  facts.className = 'gh-facts';
+  facts.appendChild(el('h2', 'gh-facts-h', 'The Facts'));
+  const grid = el('div', 'gh-facts-grid');
+  files.forEach(f => {
+    const d = el('div', 'gh-fact');
+    d.appendChild(el('h3', 'gh-fact-head', escapeText(f.wire_headline || '')));
+    if (f.writer_display_name) d.appendChild(el('p', 'gh-fact-by', 'As filed by ' + escapeText(f.writer_display_name)));
+    const ul = document.createElement('ul');
+    (f.bullets || []).forEach(b => ul.appendChild(el('li', null, escapeText(b.text || ''))));
+    d.appendChild(ul);
+    grid.appendChild(d);
+  });
+  facts.appendChild(grid);
+}
+
+function escapeText(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+"""
+
+
+def _clean_byline_name(byline):
+    """'BY G.K. CHESTERTON' -> 'G.K. Chesterton' for counting/labels (display untouched elsewhere)."""
+    name = re.sub(r"^\s*by\s+", "", byline or "", flags=re.I).strip()
+    if name and name.isupper():
+        name = re.sub(r"[A-Za-z]+", lambda m: m.group(0).capitalize(), name.lower())
+    return name
+
+
+def read_ghost_edition_data(out_dir, date):
+    """Load a single edition's structured content from docs/ghost/data/{date}.json. Missing → None."""
+    path = Path(out_dir) / "ghost" / "data" / f"{date}-ghost-of-times.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read edition data {path}", file=sys.stderr)
+        return None
+
+
+def build_ghost_edition(out_dir, ed):
+    """Render one edition page (docs/ghost/{date}-ghost-of-times.html) from its data file.
+
+    Returns True if rendered, False if the data file is absent (page left untouched)."""
+    out = Path(out_dir)
+    date = ed.get("date", "")
+    data = read_ghost_edition_data(out, date)
+    if data is None:
+        return False
+
+    no = ed.get("edition_number")
+    folio_no = f"No. {no:02d}" if isinstance(no, int) else "No. —"
+    folio_date = _long_date(date)
+    # writer count: prefer the manifest roster, else count the pieces
+    writers = ed.get("writers") or []
+    if not writers:
+        names = [_clean_byline_name(data.get("lead", {}).get("author_byline", ""))]
+        for sec in data.get("sections", []):
+            for st in sec.get("stories", []):
+                names.append(_clean_byline_name(st.get("author_byline", "")))
+        writers = [w for w in names if w]
+    nw = len(writers)
+    folio_writers = f"{nw} writer{'s' if nw != 1 else ''}"
+
+    watch = data.get("what_to_watch") or ""
+    watch_html = f'<p class="gh-watch">{html.escape(watch)}</p>' if watch else ""
+
+    lead_head = data.get("lead", {}).get("headline", "") or f"Edition of {date}"
+    page = GHOST_EDITION_TEMPLATE.format(
+        title=html.escape(f"{lead_head} — The Ghost of Times"),
+        description=html.escape(data.get("lead", {}).get("dek", "") or "The Ghost of Times"),
+        favicon=FAVICON,
+        css=LIBRARY_CSS + GHOST_EDITION_CSS,
+        folio_no=html.escape(folio_no),
+        folio_date=html.escape(folio_date),
+        folio_writers=html.escape(folio_writers),
+        watch=watch_html,
+        data_json=json_for_html(data),
+        marked_js=MARKED_JS,
+        app_js=GHOST_EDITION_JS,
+    )
+    (out / "ghost" / f"{date}-ghost-of-times.html").write_text(page)
+    return True
 
 
 # ---------------------------------------------------------------- build
@@ -1135,6 +1408,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     editions = read_ghost_manifest(out) if ghost_cfg.get("enabled", True) else []
     build_ghost_page(out, editions, ghost_cfg)
     ghost_band = ghost_band_html(editions, ghost_cfg)
+    # Render each edition page natively from its deposited data (skips any that
+    # predate the data-driven renderer and so have no docs/ghost/data/*.json).
+    rendered = sum(build_ghost_edition(out, ed) for ed in editions)
+    if editions:
+        print(f"  ✓ Rendered {rendered}/{len(editions)} edition page(s) from data")
 
     stats = f"{len(cards)} corpora · {total_chapters} chapters · {round(total_words / 1000)}k words"
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(

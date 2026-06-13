@@ -1,3 +1,8 @@
 [
-  { "file": "05_Argument_And_Themes.md", "after": "## 1. The Theory of Revolution", "snippet": "death_birth.html" }
+  { "file": "01_Composition_And_Biography.md", "after": "## 2. The Burned Manuscript", "snippet": "fr_composition.html" },
+  { "file": "04_Allusion_And_Intertextuality.md", "after": "## 1. Why Allusion Is the Engine, Not the Ornament", "snippet": "fr_allusion.html" },
+  { "file": "05_Argument_And_Themes.md", "after": "## 1. The Theory of Revolution", "snippet": "death_birth.html" },
+  { "file": "05_Argument_And_Themes.md", "after": "## 3. Sham vs. Reality", "snippet": "fr_sham_reality.html" },
+  { "file": "05_Argument_And_Themes.md", "after": "## 4. Heroes and Their Absence", "snippet": "fr_pilot.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "fr_forecast.html" }
 ]
