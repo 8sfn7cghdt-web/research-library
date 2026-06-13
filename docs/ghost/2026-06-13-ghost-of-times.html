@@ -70,7 +70,30 @@ header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem)
   line-height: 1.5; max-width: 34rem; }
 .stats { font-family: var(--sans); font-size: .74rem; color: var(--accent); margin: 0;
   text-transform: uppercase; letter-spacing: .1em; }
-.grid { max-width: 1080px; margin: 0 auto; padding: 1.8rem 2rem 3rem;
+.library { max-width: 1080px; margin: 0 auto; padding: 0 0 3rem; }
+/* Library toolbar — search box + category filter pills. */
+.lib-toolbar { padding: 1.2rem 2rem .4rem; display: flex; flex-wrap: wrap; align-items: center;
+  gap: .9rem 1.4rem; }
+.lib-search { flex: 1 1 240px; min-width: 0; max-width: 360px; font-family: var(--sans); font-size: .9rem;
+  color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .85rem; -webkit-appearance: none; appearance: none; }
+.lib-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(140,74,47,.14); }
+.lib-search::placeholder { color: var(--muted); }
+.cat-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cat-pill { font-family: var(--sans); font-size: .76rem; letter-spacing: .02em; color: var(--muted);
+  background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: .4rem .85rem;
+  cursor: pointer; transition: color .15s ease, border-color .15s ease, background .15s ease; }
+.cat-pill:hover { color: var(--accent); border-color: var(--accent); }
+.cat-pill.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.cat-pill .cat-count { opacity: .65; font-size: .9em; }
+.cat-section { padding-top: .6rem; }
+.cat-section[hidden] { display: none; }
+.cat-heading { max-width: 100%; margin: 1.2rem 0 0; padding: 0 2rem; font-family: var(--display);
+  font-size: 1.18rem; color: var(--text); display: flex; align-items: baseline; gap: .5rem; }
+.cat-heading .cat-count { font-family: var(--sans); font-size: .72rem; color: var(--muted);
+  font-weight: normal; letter-spacing: .06em; }
+.lib-empty { font-family: var(--sans); color: var(--muted); text-align: center; padding: 2.5rem 2rem; margin: 0; }
+.grid { padding: 1.1rem 2rem 1.4rem;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
 .card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text);

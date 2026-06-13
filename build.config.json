@@ -15,58 +15,78 @@
     "motto": "All the news that's fit to Fingerprint",
     "blurb": "An independent daily wire on the global programmatic and Advanced TV (CTV) market — platforms, performance, partnerships, competition, regulation, political-ad spend, and a five-market global desk, with closing op-eds in the voices of McLuhan and Ogilvy."
   },
+  "category_order": [
+    "Thomas Carlyle",
+    "Faith & Religion",
+    "Mind & Philosophy",
+    "The Modern World",
+    "Heritage"
+  ],
   "titles": {
     "ancestry-research": {
       "title": "The Emigrant's Atlas",
-      "subtitle": "An Irish and Czech-Galician-Baltic American ancestry"
+      "subtitle": "An Irish and Czech-Galician-Baltic American ancestry",
+      "category": "Heritage"
     },
     "carlyle-french-revolution-research": {
       "title": "The Book That Burned",
-      "subtitle": "Thomas Carlyle's The French Revolution: A History (1837)"
+      "subtitle": "Thomas Carlyle's The French Revolution: A History (1837)",
+      "category": "Thomas Carlyle"
     },
     "carlyle-friedrich-research": {
       "title": "Carlyle's Everest",
-      "subtitle": "Carlyle's History of Friedrich the Great (1858–1865)"
+      "subtitle": "Carlyle's History of Friedrich the Great (1858–1865)",
+      "category": "Thomas Carlyle"
     },
     "carlyle-research": {
       "title": "The Calvinist Without a Creed",
-      "subtitle": "Thomas Carlyle and his Scottish Calvinist formation"
+      "subtitle": "Thomas Carlyle and his Scottish Calvinist formation",
+      "category": "Thomas Carlyle"
     },
     "civil-war-religion-whitman-research": {
       "title": "A Holy War and Its Poet",
-      "subtitle": "The Civil War's religious drivers — and Walt Whitman"
+      "subtitle": "The Civil War's religious drivers — and Walt Whitman",
+      "category": "Faith & Religion"
     },
     "deutsch-good-explanations-research": {
       "title": "Hard to Vary",
-      "subtitle": "David Deutsch and the good explanation"
+      "subtitle": "David Deutsch and the good explanation",
+      "category": "Mind & Philosophy"
     },
     "ipv4-ipv6-ctv-research": {
       "title": "The Address Knows You",
-      "subtitle": "IPv4/IPv6 and the global CTV programmatic landscape"
+      "subtitle": "IPv4/IPv6 and the global CTV programmatic landscape",
+      "category": "The Modern World"
     },
     "jesus-research": {
       "title": "The Man and the Christ",
-      "subtitle": "The message and divinity of Jesus"
+      "subtitle": "The message and divinity of Jesus",
+      "category": "Faith & Religion"
     },
     "john-the-baptist-research": {
       "title": "More Than a Forerunner",
-      "subtitle": "The life, theology, and myth of John the Baptist"
+      "subtitle": "The life, theology, and myth of John the Baptist",
+      "category": "Faith & Religion"
     },
     "jung-research": {
       "title": "A God in the Psyche",
-      "subtitle": "Carl Jung on the self, the spirit, and religion"
+      "subtitle": "Carl Jung on the self, the spirit, and religion",
+      "category": "Mind & Philosophy"
     },
     "phenomenology-pragmatism-research": {
       "title": "Experience and Consequences",
-      "subtitle": "Phenomenology and pragmatism, and their relation to psychology and Christianity"
+      "subtitle": "Phenomenology and pragmatism, and their relation to psychology and Christianity",
+      "category": "Mind & Philosophy"
     },
     "uap-research": {
       "title": "From Roswell to Disclosure",
-      "subtitle": "The U.S. UFO/UAP phenomenon, 1947–2030"
+      "subtitle": "The U.S. UFO/UAP phenomenon, 1947–2030",
+      "category": "The Modern World"
     },
     "us-geopolitics-research": {
       "title": "The Map of American Power",
-      "subtitle": "The US geopolitical position in 2026: grand strategy, alliances, and trajectory"
+      "subtitle": "The US geopolitical position in 2026: grand strategy, alliances, and trajectory",
+      "category": "The Modern World"
     }
   },
   "corpora": [

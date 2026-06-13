@@ -717,7 +717,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {ghost_band}
 {fingerprint_band}
 <h2 class="section-title" id="library">The Research Library</h2>
-<main class="grid">
+<main class="library">
 {cards}
 </main>
 <footer>
@@ -734,6 +734,47 @@ LIBRARY_THEME_JS = """
 const pref = localStorage.getItem('corpus-theme');
 if (pref) document.documentElement.dataset.theme = pref;
 else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+"""
+
+# Live category filter + text search for the library index. Category pills and the
+# search box combine: a card shows only if it matches the active category AND the
+# search term. Empty category sections hide their heading; a message shows if nothing matches.
+LIBRARY_FILTER_JS = """
+(function () {
+  var search = document.getElementById('lib-search');
+  var empty = document.getElementById('lib-empty');
+  var pills = Array.prototype.slice.call(document.querySelectorAll('.cat-pill'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('.cat-section'));
+  if (!search) return;
+  var activeCat = 'all';
+
+  function apply() {
+    var term = search.value.trim().toLowerCase();
+    var anyVisible = false;
+    sections.forEach(function (sec) {
+      var catOk = activeCat === 'all' || sec.dataset.cat === activeCat;
+      var shown = 0;
+      sec.querySelectorAll('.card').forEach(function (card) {
+        var textOk = !term || (card.dataset.search || '').indexOf(term) !== -1;
+        var show = catOk && textOk;
+        card.style.display = show ? '' : 'none';
+        if (show) shown++;
+      });
+      sec.hidden = shown === 0;
+      if (shown) anyVisible = true;
+    });
+    if (empty) empty.hidden = anyVisible;
+  }
+
+  pills.forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      activeCat = pill.dataset.cat;
+      pills.forEach(function (p) { p.classList.toggle('active', p === pill); });
+      apply();
+    });
+  });
+  search.addEventListener('input', apply);
+})();
 """
 
 LIBRARY_CSS = """
@@ -800,7 +841,30 @@ header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem)
   line-height: 1.5; max-width: 34rem; }
 .stats { font-family: var(--sans); font-size: .74rem; color: var(--accent); margin: 0;
   text-transform: uppercase; letter-spacing: .1em; }
-.grid { max-width: 1080px; margin: 0 auto; padding: 1.8rem 2rem 3rem;
+.library { max-width: 1080px; margin: 0 auto; padding: 0 0 3rem; }
+/* Library toolbar — search box + category filter pills. */
+.lib-toolbar { padding: 1.2rem 2rem .4rem; display: flex; flex-wrap: wrap; align-items: center;
+  gap: .9rem 1.4rem; }
+.lib-search { flex: 1 1 240px; min-width: 0; max-width: 360px; font-family: var(--sans); font-size: .9rem;
+  color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .85rem; -webkit-appearance: none; appearance: none; }
+.lib-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(140,74,47,.14); }
+.lib-search::placeholder { color: var(--muted); }
+.cat-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cat-pill { font-family: var(--sans); font-size: .76rem; letter-spacing: .02em; color: var(--muted);
+  background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: .4rem .85rem;
+  cursor: pointer; transition: color .15s ease, border-color .15s ease, background .15s ease; }
+.cat-pill:hover { color: var(--accent); border-color: var(--accent); }
+.cat-pill.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+.cat-pill .cat-count { opacity: .65; font-size: .9em; }
+.cat-section { padding-top: .6rem; }
+.cat-section[hidden] { display: none; }
+.cat-heading { max-width: 100%; margin: 1.2rem 0 0; padding: 0 2rem; font-family: var(--display);
+  font-size: 1.18rem; color: var(--text); display: flex; align-items: baseline; gap: .5rem; }
+.cat-heading .cat-count { font-family: var(--sans); font-size: .72rem; color: var(--muted);
+  font-weight: normal; letter-spacing: .06em; }
+.lib-empty { font-family: var(--sans); color: var(--muted); text-align: center; padding: 2.5rem 2rem; margin: 0; }
+.grid { padding: 1.1rem 2rem 1.4rem;
   display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
 .card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text);
@@ -2284,13 +2348,14 @@ def json_for_html(obj):
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None, titles=None):
+          fingerprint_cfg=None, titles=None, category_order=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     ghost_cfg = ghost_cfg or {}
     fingerprint_cfg = fingerprint_cfg or {}
     descriptions = descriptions or {}
     titles = titles or {}
+    category_order = category_order or []
     cards = []
     total_chapters = 0
     total_words = 0
@@ -2332,13 +2397,20 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         # build.config.json "descriptions" — useful when a corpus has no manifest
         # subtitle, or its manifest carries a long sharpened_question / boilerplate.
         card_sub = descriptions.get(corpus["slug"], corpus["subtitle"] or "")
-        cards.append(
-            f'<a class="card" href="{corpus["slug"]}.html">'
+        category = override.get("category") or "Other"
+        # A lowercase haystack the index search box matches against (title, blurb, category).
+        search_text = html.escape(
+            " ".join([corpus["title"], card_sub, category]).lower(), quote=True
+        )
+        card_html = (
+            f'<a class="card" href="{corpus["slug"]}.html" data-cat="{html.escape(category, quote=True)}" '
+            f'data-search="{search_text}">'
             f'<div class="cover">{card_cover(corpus["slug"], corpus["title"], theme_cover_palette(theme))}</div>'
             f'<div class="card-body"><h2>{html.escape(corpus["title"])}</h2>'
             f'<p class="sub">{html.escape(card_sub)}</p>'
             f'<p class="meta">{" · ".join(meta_bits)}</p></div></a>'
         )
+        cards.append({"category": category, "html": card_html})
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
 
@@ -2361,6 +2433,41 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         print(f"  ✓ Rendered {fp_rendered}/{len(fp_editions)} Fingerprint edition page(s) from data")
 
     stats = f"{len(cards)} corpora · {total_chapters} chapters · {round(total_words / 1000)}k words"
+
+    # Group the cards into category sections. Categories appear in the configured
+    # category_order; any category not listed (and the "Other" catch-all) follows
+    # in first-seen order so a corpus is never silently dropped from the library.
+    seen_order = []
+    for card in cards:
+        if card["category"] not in seen_order:
+            seen_order.append(card["category"])
+    ordered_cats = [c for c in category_order if c in seen_order]
+    ordered_cats += [c for c in seen_order if c not in ordered_cats]
+
+    pills = ['<button class="cat-pill active" data-cat="all">All</button>']
+    sections = []
+    for cat in ordered_cats:
+        cat_cards = [c["html"] for c in cards if c["category"] == cat]
+        pills.append(
+            f'<button class="cat-pill" data-cat="{html.escape(cat, quote=True)}">'
+            f'{html.escape(cat)} <span class="cat-count">{len(cat_cards)}</span></button>'
+        )
+        sections.append(
+            f'<section class="cat-section" data-cat="{html.escape(cat, quote=True)}">'
+            f'<h3 class="cat-heading">{html.escape(cat)} '
+            f'<span class="cat-count">{len(cat_cards)}</span></h3>'
+            f'<div class="grid">{"".join(cat_cards)}</div></section>'
+        )
+    library_body = (
+        '<div class="lib-toolbar">'
+        '<input id="lib-search" class="lib-search" type="search" '
+        'placeholder="Search the library…" aria-label="Search the research library" autocomplete="off">'
+        f'<div class="cat-pills">{"".join(pills)}</div>'
+        '</div>'
+        + "\n".join(sections)
+        + '<p class="lib-empty" id="lib-empty" hidden>No corpora match your search.</p>'
+    )
+
     # The Fingerprint band shares the library CSS, so fold its rules in once.
     library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(
@@ -2372,8 +2479,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         hero=hero_art(),
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
-        cards="\n".join(cards),
-        theme_js=LIBRARY_THEME_JS,
+        cards=library_body,
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS,
     ))
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html")
 
@@ -2396,6 +2503,7 @@ def load_config(path):
         "fingerprint": cfg.get("fingerprint", {}),
         "descriptions": cfg.get("descriptions", {}),
         "titles": cfg.get("titles", {}),
+        "category_order": cfg.get("category_order", []),
     }
 
 
@@ -2423,6 +2531,7 @@ if __name__ == "__main__":
         fingerprint_cfg = cfg["fingerprint"]
         descriptions = cfg["descriptions"]
         titles = cfg["titles"]
+        category_order = cfg["category_order"]
     elif args.folders:
         folders = args.folders
         out = args.out or "dist"
@@ -2432,8 +2541,9 @@ if __name__ == "__main__":
         fingerprint_cfg = {}
         descriptions = {}
         titles = {}
+        category_order = []
     else:
         ap.error("no corpus folders and no --config / build.config.json found")
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
-          fingerprint_cfg=fingerprint_cfg, titles=titles)
+          fingerprint_cfg=fingerprint_cfg, titles=titles, category_order=category_order)
