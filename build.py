@@ -46,22 +46,32 @@ SITE_URL = "https://research.calvincollins.xyz"
 OG_IMAGE = "aiforhumanities.png"  # source lives in corpus-app/; copied into out/ at build time
 
 # Open Graph + Twitter card tags so a shared link renders a rich preview with an
-# image. Inlined verbatim into every page <head> (no str.format braces here, so
-# it passes through .format() untouched). Site-wide title/description/image —
-# the goal is "share the link, get a picture," not per-page cards.
-OG_META = (
-    '<meta property="og:type" content="website">\n'
-    '<meta property="og:site_name" content="research · calvincollins · xyz">\n'
-    '<meta property="og:title" content="AI for HUMANities — Agentic Scholarship">\n'
-    '<meta property="og:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">\n'
-    f'<meta property="og:url" content="{SITE_URL}/">\n'
-    f'<meta property="og:image" content="{SITE_URL}/{OG_IMAGE}">\n'
-    '<meta property="og:image:width" content="2022">\n'
-    '<meta property="og:image:height" content="778">\n'
-    '<meta name="twitter:card" content="summary_large_image">\n'
-    '<meta name="twitter:title" content="AI for HUMANities — Agentic Scholarship">\n'
-    '<meta name="twitter:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">\n'
-    f'<meta name="twitter:image" content="{SITE_URL}/{OG_IMAGE}">'
+# image. The result is passed as a VALUE into each template's .format() (never as
+# part of the format string), so any braces in a title pass through untouched.
+def og_tags(title, description, url, image):
+    """Build a page's Open Graph + Twitter-card <meta> block (a string)."""
+    esc = lambda s: html.escape(str(s), quote=True)
+    return "\n".join([
+        '<meta property="og:type" content="website">',
+        '<meta property="og:site_name" content="research · calvincollins · xyz">',
+        f'<meta property="og:title" content="{esc(title)}">',
+        f'<meta property="og:description" content="{esc(description)}">',
+        f'<meta property="og:url" content="{esc(url)}">',
+        f'<meta property="og:image" content="{esc(image)}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:title" content="{esc(title)}">',
+        f'<meta name="twitter:description" content="{esc(description)}">',
+        f'<meta name="twitter:image" content="{esc(image)}">',
+    ])
+
+
+# Site-wide default (library index, Ghost, Fingerprint section fronts — anything
+# that isn't a single corpus). Per-corpus reader pages build their own below.
+OG_META = og_tags(
+    "AI for HUMANities — Agentic Scholarship",
+    "A library of deep research, plus The Ghost of Times and The Fingerprint.",
+    f"{SITE_URL}/",
+    f"{SITE_URL}/{OG_IMAGE}",
 )
 
 # trencadís tile palette (light-theme hexes; readers/library recolor via CSS vars)
@@ -382,6 +392,23 @@ def find_cover_image(slug):
         if p.exists():
             return p
     return None
+
+
+def publish_cover_for_og(slug, out):
+    """Copy a corpus's photo cover into out/covers/ and return its absolute URL.
+
+    Link-preview scrapers need a real raster file at an absolute https URL — the
+    library card embeds covers as base64 (no served file) and generative covers
+    are SVG (which iMessage/most scrapers won't render), so a corpus without a
+    photo cover returns None and the caller falls back to the site banner.
+    """
+    img = find_cover_image(slug)
+    if img is None:
+        return None
+    dest_dir = out / "covers"
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copy(img, dest_dir / img.name)
+    return f"{SITE_URL}/covers/{img.name}"
 
 
 def card_cover(slug, title="", palette=None):
@@ -1248,6 +1275,13 @@ GHOST_EDITION_CSS = """
 .gh-byline { font-family: var(--sans); font-size: .72rem; letter-spacing: .14em; color: var(--accent);
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   padding: .4rem 0; margin: 0 0 1.3rem; }
+/* objective-voice abstract — neutral framing of what the piece is about, set apart from the body */
+.gh-summary { margin: 0 0 1.5rem; padding: .85rem 1.1rem; background: var(--panel);
+  border-left: 3px solid var(--accent); border-radius: 0 12px 12px 0; }
+.gh-summary-label { display: block; font-family: var(--sans); font-size: .64rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .18em; color: var(--muted); margin: 0 0 .4rem; }
+.gh-summary-text { font-family: var(--sans); font-size: .9rem; line-height: 1.55; color: var(--text); margin: 0; }
+.gh-lead .gh-summary-text { font-size: .96rem; }
 .gh-body { font-size: 1.05rem; line-height: 1.74; }
 .gh-body p { margin: 0 0 1.15rem; }
 .gh-body a { color: var(--accent); }
@@ -1369,6 +1403,12 @@ pieces.forEach((p, i) => {
   art.appendChild(el(isLead ? 'h1' : 'h2', 'gh-head', escapeText(p.headline || '')));
   if (p.dek) art.appendChild(el('p', 'gh-dek', escapeText(p.dek)));
   if (p.author_byline) art.appendChild(el('p', 'gh-byline', escapeText(p.author_byline)));
+  if (p.factual_summary) {
+    const sum = el('aside', 'gh-summary');
+    sum.appendChild(el('span', 'gh-summary-label', 'What this piece is about'));
+    sum.appendChild(el('p', 'gh-summary-text', escapeText(p.factual_summary)));
+    art.appendChild(sum);
+  }
   const body = el('div', 'gh-body', marked.parse(p.body || ''));
   body.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
   art.appendChild(body);
@@ -2412,12 +2452,22 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             corpus["subtitle"] = override["subtitle"]
         figs = inject_figures(corpus, folder)
         theme = load_theme_spec(folder)
+        # Per-corpus link preview: this corpus's photo cover (a real served file)
+        # if it has one, else the site banner. Description prefers the configured
+        # card blurb, then the subtitle, then the title.
+        cover_url = publish_cover_for_og(corpus["slug"], out)
+        reader_og = og_tags(
+            corpus["title"],
+            descriptions.get(corpus["slug"]) or corpus["subtitle"] or corpus["title"],
+            f"{SITE_URL}/{corpus['slug']}.html",
+            cover_url or f"{SITE_URL}/{OG_IMAGE}",
+        )
         page = READER_TEMPLATE.format(
             title=html.escape(corpus["title"]),
             subtitle=html.escape(corpus["subtitle"]),
             css=CSS,
             theme_style=render_theme_style(theme),
-            favicon=FAVICON, og_meta=OG_META,
+            favicon=FAVICON, og_meta=reader_og,
             data_json=json_for_html(corpus),
             marked_js=MARKED_JS,
             app_js=APP_JS,
