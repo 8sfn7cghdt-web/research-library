@@ -904,17 +904,20 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
     <a href="ghost.html" class="active">The Ghost of Times</a>
   </nav>
 </div>
-<header class="ghost-hero">
-  <p class="kicker">A daily paper of writer-voiced op-eds</p>
-  <h1>The Ghost of Times</h1>
-  <p class="motto">“{motto}”</p>
-  <p class="stats">{stats}</p>
+<header class="ghost-plate">
+  <p class="gp-kicker">A paper of writer-voiced op-eds</p>
+  <h1 class="gp-name">The Ghost of Times</h1>
+  <p class="gp-motto">“{motto}”</p>
+  <div class="gp-folio">
+    <span>Vol. 1</span>
+    <span class="gp-folio-c">{stats}</span>
+    <span>Published irregularly</span>
+  </div>
 </header>
-<main class="ged-list">
+<main class="ged-wrap">
 {editions}
 </main>
-<footer>
-  <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<footer class="ghost-foot">
   <p class="epigraph">{blurb}</p>
   <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
 </footer>
@@ -924,63 +927,128 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 """
 
 GHOST_PAGE_CSS = """
-.ghost-hero { display: block; max-width: 820px; margin: 0 auto; padding: 2.8rem 2rem 1rem; text-align: center; }
-.ghost-hero h1 { font-family: var(--display); font-size: clamp(2.4rem, 5vw, 3.4rem); margin: .2rem 0 .5rem; letter-spacing: -.01em; }
-.ghost-hero .motto { font-style: italic; color: var(--muted); font-size: 1.02rem; margin: 0 0 .9rem; }
-.ghost-hero .stats { font-family: var(--sans); font-size: .74rem; color: var(--accent); margin: 0;
-  text-transform: uppercase; letter-spacing: .1em; }
-.ged-list { max-width: 820px; margin: 1.4rem auto 0; padding: 0 2rem 1rem;
-  display: flex; flex-direction: column; gap: 1.1rem; }
-.ged { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.4rem;
-  text-decoration: none; color: var(--text); background: var(--panel); border: 1px solid var(--border);
-  border-radius: 16px; padding: 1.25rem 1.5rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
-.ged:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,.1); border-color: var(--accent); }
-.ged-no { font-family: var(--display); font-size: 1.5rem; color: var(--accent); line-height: 1;
-  border-right: 1px solid var(--border); padding-right: 1.4rem; white-space: nowrap; }
-.ged-date { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .1em;
-  color: var(--muted); margin: 0 0 .3rem; }
-.ged-head { font-family: var(--display); font-size: 1.24rem; line-height: 1.26; margin: 0 0 .35rem; }
-.ged-dek { font-family: var(--sans); font-size: .85rem; color: var(--muted); line-height: 1.45; margin: 0 0 .5rem; font-style: italic; }
-.ged-writers { font-family: var(--sans); font-size: .72rem; color: var(--accent); letter-spacing: .03em; margin: 0; }
-.ged-go { font-family: var(--sans); font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
-  color: var(--accent); white-space: nowrap; }
-.ged-empty { max-width: 820px; margin: 0 auto; padding: 1rem 2rem 2rem; text-align: center;
-  color: var(--muted); font-family: var(--sans); font-size: .9rem; }
-@media (max-width: 600px) {
-  .ged { grid-template-columns: 1fr; gap: .7rem; }
-  .ged-no { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .7rem; }
-  .ged-go { display: none; }
+/* The Ghost of Times — a newspaper section front, sharing the editions'
+   warm-paper / serif / double-rule / terracotta language. */
+.ghost-plate { display: block; max-width: 820px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
+.gp-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .2em; color: var(--accent); margin: 0 0 .5rem; }
+.gp-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+.gp-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0 0 1.3rem; }
+.gp-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
+  font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .14em; color: var(--text); }
+.gp-folio .gp-folio-c { color: var(--accent); font-weight: 700; }
+
+/* featured (latest) edition — reads like a section lead */
+.ged-feature { max-width: 720px; margin: 2.1rem auto 0; padding: 0 2rem; }
+.ged-feature a { display: block; text-decoration: none; color: var(--text); }
+.gedf-meta { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--accent); margin: 0 0 .7rem; }
+.gedf-head { font-family: var(--display); font-weight: 800; font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+  line-height: 1.07; letter-spacing: -.01em; margin: 0 0 .7rem; transition: color .15s ease; }
+.ged-feature a:hover .gedf-head { color: var(--accent); }
+.gedf-dek { font-family: var(--serif); font-style: italic; font-size: 1.2rem; line-height: 1.4;
+  color: var(--muted); margin: 0 0 .9rem; }
+.gedf-writers { font-family: var(--sans); font-size: .74rem; letter-spacing: .04em; color: var(--accent); margin: 0 0 1.1rem; }
+.gedf-cta { font-family: var(--sans); font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+
+/* back issues — newspaper archive rows */
+.ged-issues { max-width: 720px; margin: 2.8rem auto 0; padding: 0 2rem 1rem; }
+.ged-issues-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--muted); border-bottom: 2px solid var(--text); padding-bottom: .5rem; margin: 0 0 .3rem; }
+.ged-row { display: grid; grid-template-columns: auto 1fr auto; gap: 1.2rem; align-items: baseline;
+  text-decoration: none; color: var(--text); padding: .95rem 0; border-bottom: 1px solid var(--border); }
+.ged-row-no { font-family: var(--display); font-size: 1.05rem; color: var(--accent); white-space: nowrap; }
+.ged-row-body { min-width: 0; }
+.ged-row-head { font-family: var(--display); font-size: 1.18rem; line-height: 1.18; display: block; transition: color .15s ease; }
+.ged-row:hover .ged-row-head { color: var(--accent); }
+.ged-row-meta { font-family: var(--sans); font-size: .7rem; letter-spacing: .03em; color: var(--muted); display: block; margin-top: .25rem; }
+.ged-row-date { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); white-space: nowrap; }
+
+.ged-empty { max-width: 720px; margin: 2.1rem auto 0; padding: 2rem; text-align: center;
+  color: var(--muted); font-family: var(--sans); font-size: .9rem; border-top: 3px double var(--border); }
+
+.ghost-foot { max-width: 720px; margin: 3rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.ghost-foot .epigraph { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .95rem; margin: 0 0 .6rem; }
+.ghost-foot .colophon { font-family: var(--sans); font-size: .74rem; margin: 0; }
+.ghost-foot .colophon a { color: var(--accent); text-decoration: none; }
+.ghost-foot .colophon a:hover { text-decoration: underline; }
+
+@media (max-width: 560px) {
+  .gp-folio { font-size: .58rem; letter-spacing: .08em; }
+  .ged-row { grid-template-columns: auto 1fr; gap: .8rem; }
+  .ged-row-date { display: none; }
 }
 """
 
 
-def ghost_card_html(ed):
+MONTHS = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"]
+
+
+def _long_date(date_str):
+    """'2026-05-29' → 'Friday, May 29, 2026'. Falls back to the raw string."""
+    try:
+        import datetime
+        d = datetime.date.fromisoformat(date_str[:10])
+        return f"{WEEKDAYS[d.weekday()]}, {MONTHS[d.month - 1]} {d.day}, {d.year}"
+    except Exception:
+        return date_str
+
+
+def _ed_href(ed):
+    return html.escape(ed.get("file") or f"ghost/{ed.get('date','')}-ghost-of-times.html", quote=True)
+
+
+def _no_label(ed):
     no = ed.get("edition_number")
-    no_label = f"Nº {no:02d}" if isinstance(no, int) else "Nº —"
-    when = _weekday(ed.get("date", ""))
-    when = f"{when} · {ed['date']}" if when else ed.get("date", "")
+    return f"Nº {no:02d}" if isinstance(no, int) else "Nº —"
+
+
+def ghost_feature_html(ed):
+    """The latest edition, rendered like a newspaper section lead."""
+    meta = " · ".join(x for x in ["Latest edition", _no_label(ed), _long_date(ed.get("date", ""))] if x)
     headline = html.escape(ed.get("lead_headline") or f"Edition of {ed.get('date','')}")
     dek = html.escape(ed.get("lead_dek") or "")
-    dek_html = f'<p class="ged-dek">{dek}</p>' if dek else ""
+    dek_html = f'<p class="gedf-dek">{dek}</p>' if dek else ""
     writers = _writers_line(ed)
-    writers_html = f'<p class="ged-writers">{writers}</p>' if writers else ""
-    href = html.escape(ed.get("file") or f"ghost/{ed.get('date','')}-ghost-of-times.html", quote=True)
-    return (f'<a class="ged" href="{href}"><span class="ged-no">{no_label}</span>'
-            f'<div class="ged-body"><p class="ged-date">{html.escape(when)}</p>'
-            f'<h2 class="ged-head">{headline}</h2>{dek_html}{writers_html}</div>'
-            f'<span class="ged-go">Read →</span></a>')
+    writers_html = f'<p class="gedf-writers">{writers}</p>' if writers else ""
+    return (f'<article class="ged-feature"><a href="{_ed_href(ed)}">'
+            f'<p class="gedf-meta">{html.escape(meta)}</p>'
+            f'<h2 class="gedf-head">{headline}</h2>{dek_html}{writers_html}'
+            f'<span class="gedf-cta">Read the edition →</span></a></article>')
+
+
+def ghost_row_html(ed):
+    """A back-issue row in the archive list."""
+    when = _weekday(ed.get("date", ""))
+    when_s = f"{when} · {ed['date']}" if when else ed.get("date", "")
+    headline = html.escape(ed.get("lead_headline") or f"Edition of {ed.get('date','')}")
+    writers = _writers_line(ed)
+    writers_html = f'<span class="ged-row-meta">{writers}</span>' if writers else ""
+    return (f'<a class="ged-row" href="{_ed_href(ed)}">'
+            f'<span class="ged-row-no">{_no_label(ed)}</span>'
+            f'<span class="ged-row-body"><span class="ged-row-head">{headline}</span>{writers_html}</span>'
+            f'<span class="ged-row-date">{html.escape(when_s)}</span></a>')
 
 
 def build_ghost_page(out_dir, editions, ghost_cfg):
-    """Render docs/ghost.html — the section index listing every published edition."""
+    """Render docs/ghost.html — the section front: a featured latest edition + back issues."""
     out = Path(out_dir)
     if editions:
-        cards = "\n".join(ghost_card_html(e) for e in editions)
         n = len(editions)
         stats = f"{n} edition{'s' if n != 1 else ''}"
+        body = ghost_feature_html(editions[0])
+        rest = editions[1:]
+        if rest:
+            rows = "\n".join(ghost_row_html(e) for e in rest)
+            body += f'<section class="ged-issues"><h2 class="ged-issues-h">Back issues</h2>{rows}</section>'
     else:
-        cards = ('<p class="ged-empty">No editions published yet. Run the Ghost of Times '
-                 'skill and publish an edition to see it here.</p>')
+        body = ('<p class="ged-empty">No editions published yet. Run the Ghost of Times '
+                'skill and publish an edition to see it here.</p>')
         stats = "No editions yet"
     page = GHOST_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + GHOST_PAGE_CSS,
@@ -988,7 +1056,7 @@ def build_ghost_page(out_dir, editions, ghost_cfg):
         motto=html.escape(ghost_cfg.get("motto", "")),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
         stats=stats,
-        editions=cards,
+        editions=body,
         theme_js=LIBRARY_THEME_JS,
     )
     (out / "ghost.html").write_text(page)
