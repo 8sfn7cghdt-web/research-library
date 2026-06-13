@@ -1,0 +1,21 @@
+[
+  {"file": "00_Briefing.md", "after": "## How to Read This Corpus", "snippet": "rose_window.html"},
+  {"file": "01_Historical_Jesus.md", "after": "## Key Claims", "snippet": "timeline.html"},
+  {"file": "01_Historical_Jesus.md", "after": "## 2. Galilee in the Early First Century", "snippet": "map_galilee.html"},
+  {"file": "01_Historical_Jesus.md", "after": "## 3. The Sources for the Historical Jesus", "snippet": "sources_flow.html"},
+  {"file": "01_Historical_Jesus.md", "after": "## 4. The Three Quests for the Historical Jesus", "snippet": "quests.html"},
+  {"file": "02_The_Message.md", "after": "## I. The Kingdom of God: Center of Gravity", "snippet": "kingdom_arch.html"},
+  {"file": "02_The_Message.md", "after": "## II. The Parable as Philosophical Form", "snippet": "parables.html"},
+  {"file": "02_The_Message.md", "after": "## III. The Sermon on the Mount: Architecture of the Teaching", "snippet": "sermon_mount.html"},
+  {"file": "02_The_Message.md", "after": "## IV. The Moral Inversion: First Shall Be Last", "snippet": "inversion.html"},
+  {"file": "03_Christological_Development.md", "after": "## Key Claims", "snippet": "councils_road.html"},
+  {"file": "03_Christological_Development.md", "after": "## 8. The Christological Controversies of the Fifth Century", "snippet": "chalcedon.html"},
+  {"file": "03_Christological_Development.md", "after": "## 14. Atonement Theories: What Did Christ's Death Do?", "snippet": "atonement.html"},
+  {"file": "04_Divine_Christ_and_Mystical_Tradition.md", "after": "## 2. Theosis: Deification in the Greek Patristic Tradition", "snippet": "theosis.html"},
+  {"file": "04_Divine_Christ_and_Mystical_Tradition.md", "after": "## 10. The Four Streams, Briefly Compared", "snippet": "four_streams.html"},
+  {"file": "05_Modern_Philosophical_Christologies.md", "after": "## 1. The Setup: Lessing, Kant, and the Closing of the Old Metaphysics", "snippet": "lessings_ditch.html"},
+  {"file": "05_Modern_Philosophical_Christologies.md", "after": "## 21. Sketching the Live Lineages", "snippet": "lineages.html"},
+  {"file": "06_Four_Thinkers.md", "after": "## Key Claims", "snippet": "four_thinkers.html"},
+  {"file": "08_Convergence_Divergence.md", "after": "## 2. Convergences", "snippet": "convergences.html"},
+  {"file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "scenario_fan.html"}
+]

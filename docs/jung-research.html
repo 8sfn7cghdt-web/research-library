@@ -4,16 +4,22 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Carl Jung — The Self, the Spirit, and Religion</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='2' y='2' width='28' height='28' rx='7' fill='%23b3502f'/><rect x='34' y='2' width='28' height='28' rx='7' fill='%23c9a227'/><rect x='2' y='34' width='28' height='28' rx='7' fill='%232e5266'/><rect x='34' y='34' width='28' height='28' rx='7' fill='%236b7d4f'/></svg>">
 <style>
 :root {
   --bg: #faf8f4; --panel: #f1ede5; --text: #1f1d1a; --muted: #6e6a62;
   --accent: #8c4a2f; --border: #ddd6c9; --mark: #f3dfa0;
+  --t1: #b3502f; --t2: #c9a227; --t3: #2e5266; --t4: #6b7d4f; --t5: #8a5a7c;
+  --cover-bg: #f3ead8;
   --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --display: 'Iowan Old Style', Palatino, Georgia, serif;
   --sans: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 [data-theme="dark"] {
   --bg: #161513; --panel: #1f1d1a; --text: #e8e4db; --muted: #968f82;
   --accent: #d98f5f; --border: #35322c; --mark: #5c4a1e;
+  --t1: #d4795a; --t2: #d8b545; --t3: #6f9bb3; --t4: #93a86f; --t5: #b07a9e;
+  --cover-bg: #232019;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif); }
@@ -21,51 +27,87 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   position: fixed; top: 0; left: 0; bottom: 0; width: 320px; overflow-y: auto;
   background: var(--panel); border-right: 1px solid var(--border); padding: 1.2rem 1.2rem 2rem;
 }
-#sidebar h1 { font-size: 1.15rem; line-height: 1.3; margin: .8rem 0 .2rem; }
+.tiles { display: flex; gap: 5px; margin: .9rem 0 .2rem; }
+.tiles span { width: 13px; height: 13px; }
+.tiles span:nth-child(1) { background: var(--t1); border-radius: 3px 8px 4px 7px; transform: rotate(-6deg); }
+.tiles span:nth-child(2) { background: var(--t2); border-radius: 7px 3px 8px 4px; transform: rotate(8deg); }
+.tiles span:nth-child(3) { background: var(--t3); border-radius: 4px 7px 3px 8px; transform: rotate(-4deg); }
+.tiles span:nth-child(4) { background: var(--t4); border-radius: 8px 4px 7px 3px; transform: rotate(5deg); }
+#sidebar h1 { font-family: var(--display); font-size: 1.22rem; line-height: 1.28; margin: .5rem 0 .25rem; }
 #sidebar .subtitle { font-size: .8rem; color: var(--muted); margin: 0 0 1rem; font-family: var(--sans); }
-.back { font-family: var(--sans); font-size: .78rem; color: var(--muted); text-decoration: none; }
+.back { font-family: var(--sans); font-size: .78rem; color: var(--muted); text-decoration: none;
+  text-transform: uppercase; letter-spacing: .08em; }
 .back:hover { color: var(--accent); }
-#search { width: 100%; padding: .45rem .6rem; font-size: .85rem; border: 1px solid var(--border);
-  border-radius: 6px; background: var(--bg); color: var(--text); font-family: var(--sans); }
+#search { width: 100%; padding: .5rem .7rem; font-size: .85rem; border: 1px solid var(--border);
+  border-radius: 10px; background: var(--bg); color: var(--text); font-family: var(--sans); }
+#search:focus { outline: none; border-color: var(--accent); }
 #toc { margin-top: .8rem; }
-#toc a { display: block; padding: .45rem .55rem; margin: .1rem 0; border-radius: 6px;
-  color: var(--text); text-decoration: none; font-family: var(--sans); font-size: .84rem; line-height: 1.35; }
+#toc a { display: block; padding: .45rem .55rem; margin: .1rem 0; border-radius: 8px;
+  color: var(--text); text-decoration: none; font-family: var(--sans); font-size: .84rem; line-height: 1.35;
+  border-left: 2px solid transparent; }
 #toc a .num { color: var(--muted); font-size: .72rem; margin-right: .4rem; }
 #toc a:hover { background: var(--bg); }
-#toc a.active { background: var(--bg); color: var(--accent); font-weight: 600; }
+#toc a.active { background: var(--bg); color: var(--accent); font-weight: 600; border-left-color: var(--accent); }
 #search-results { font-family: var(--sans); font-size: .8rem; }
-#search-results .hit { padding: .5rem .55rem; border-bottom: 1px solid var(--border); cursor: pointer; border-radius: 6px; }
+#search-results .hit { padding: .5rem .55rem; border-bottom: 1px solid var(--border); cursor: pointer; border-radius: 8px; }
 #search-results .hit:hover { background: var(--bg); }
 #search-results .hit b { color: var(--accent); display: block; margin-bottom: .15rem; }
 #search-results mark { background: var(--mark); color: inherit; border-radius: 2px; }
 #search-results .none { color: var(--muted); padding: .5rem .55rem; }
 #theme-btn { margin-top: 1.2rem; font-family: var(--sans); font-size: .78rem; color: var(--muted);
-  background: none; border: 1px solid var(--border); border-radius: 6px; padding: .35rem .7rem; cursor: pointer; }
+  background: none; border: 1px solid var(--border); border-radius: 10px; padding: .35rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
 #main { margin-left: 320px; display: flex; flex-direction: column; min-height: 100vh; }
-#content { max-width: 720px; width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
+#content { max-width: 740px; width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
   font-size: 1.04rem; line-height: 1.72; flex: 1; }
-#content h1 { font-size: 1.9rem; line-height: 1.25; margin-top: 0; }
-#content h2 { font-size: 1.35rem; margin-top: 2.2rem; }
+#content h1 { font-family: var(--display); font-size: 2rem; line-height: 1.22; margin-top: 0; }
+#content h1::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .55rem;
+  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+#content h2 { font-family: var(--display); font-size: 1.38rem; margin-top: 2.4rem; line-height: 1.3; }
 #content h3 { font-size: 1.1rem; }
 #content a { color: var(--accent); }
-#content blockquote { margin: 1.2rem 0; padding: .2rem 1.2rem; border-left: 3px solid var(--accent);
-  color: var(--muted); font-style: italic; }
+#content blockquote { margin: 1.4rem 0; padding: .7rem 1.3rem; border-left: 3px solid var(--accent);
+  background: var(--panel); border-radius: 0 14px 14px 0; color: var(--muted); font-style: italic; }
 #content code { background: var(--panel); padding: .1em .35em; border-radius: 4px; font-size: .88em; }
-#content pre { background: var(--panel); padding: 1rem; border-radius: 8px; overflow-x: auto; }
+#content pre { background: var(--panel); padding: 1rem; border-radius: 10px; overflow-x: auto; }
 #content pre code { background: none; padding: 0; }
 #content table { border-collapse: collapse; font-family: var(--sans); font-size: .85rem; width: 100%; margin: 1.2rem 0; }
 #content th, #content td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
 #content th { background: var(--panel); }
 #content img { max-width: 100%; }
-#content hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
-#pager { max-width: 720px; width: 100%; margin: 0 auto; padding: 1rem 2rem 3rem;
+#content hr { border: none; margin: 2.6rem 0; text-align: center; height: 1em; }
+#content hr::before { content: "◆ ◆ ◆"; color: var(--accent); opacity: .45; font-size: .7rem; letter-spacing: 1.1em;
+  padding-left: 1.1em; }
+figure.corpus-fig { margin: 2.2rem 0; padding: 1.1rem 1.1rem .9rem; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 16px; }
+figure.corpus-fig svg { width: 100%; height: auto; display: block; }
+figure.corpus-fig figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
+  text-align: center; margin-top: .7rem; line-height: 1.45; }
+figure.corpus-fig figcaption strong { color: var(--accent); }
+.corpus-fig svg text { font-family: var(--sans); fill: var(--text); }
+.corpus-fig svg .t-muted { fill: var(--muted); }
+.corpus-fig svg .t-acc { fill: var(--accent); }
+.corpus-fig svg .t-serif { font-family: var(--display); }
+.corpus-fig svg .t-inv { fill: #faf8f4; }
+.corpus-fig svg .ln { stroke: var(--muted); }
+.corpus-fig svg .ln-soft { stroke: var(--border); }
+.corpus-fig svg .f-t1 { fill: var(--t1); } .corpus-fig svg .f-t2 { fill: var(--t2); }
+.corpus-fig svg .f-t3 { fill: var(--t3); } .corpus-fig svg .f-t4 { fill: var(--t4); }
+.corpus-fig svg .f-t5 { fill: var(--t5); }
+.corpus-fig svg .s-t1 { stroke: var(--t1); } .corpus-fig svg .s-t2 { stroke: var(--t2); }
+.corpus-fig svg .s-t3 { stroke: var(--t3); } .corpus-fig svg .s-t4 { stroke: var(--t4); }
+.corpus-fig svg .s-t5 { stroke: var(--t5); }
+.corpus-fig svg .f-bg { fill: var(--bg); }
+.corpus-fig svg .f-panel { fill: var(--panel); }
+#pager { max-width: 740px; width: 100%; margin: 0 auto; padding: 1rem 2rem 3rem;
   display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); }
-#pager button { font-size: 1rem; padding: .4rem 1rem; border: 1px solid var(--border); border-radius: 8px;
-  background: var(--panel); color: var(--text); cursor: pointer; }
+#pager button { font-size: 1rem; padding: .45rem 1.2rem; border: 1px solid var(--border);
+  border-radius: 16px 16px 8px 8px; background: var(--panel); color: var(--text); cursor: pointer; }
+#pager button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
 #pager button:disabled { opacity: .3; cursor: default; }
 #pager-label { font-size: .78rem; color: var(--muted); }
 #menu-btn { display: none; position: fixed; top: .7rem; left: .7rem; z-index: 20; font-size: 1.1rem;
-  background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 8px;
+  background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 10px;
   padding: .3rem .6rem; cursor: pointer; }
 @media (max-width: 860px) {
   #sidebar { transform: translateX(-100%); transition: transform .2s; z-index: 10; width: 300px; }
@@ -73,6 +115,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   #menu-btn { display: block; }
   #main { margin-left: 0; }
   #content { padding-top: 3.6rem; }
+  figure.corpus-fig { margin-left: -.6rem; margin-right: -.6rem; padding: .7rem .6rem .7rem; }
 }
 </style>
 </head>
@@ -80,6 +123,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 <button id="menu-btn" title="Chapters">☰</button>
 <aside id="sidebar">
   <a class="back" href="index.html">← Library</a>
+  <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <h1>Carl Jung — The Self, the Spirit, and Religion</h1>
   <p class="subtitle">A Deep-Research Corpus · June 2026</p>
   <input id="search" type="search" placeholder="Search the corpus…" autocomplete="off">
