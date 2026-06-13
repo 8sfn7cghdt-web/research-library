@@ -18,55 +18,55 @@
   "titles": {
     "ancestry-research": {
       "title": "The Emigrant's Atlas",
-      "subtitle": "Two families — Collins and Pokorný — and the long road from Munster and Galicia to America."
+      "subtitle": "An Irish and Czech-Galician-Baltic American ancestry"
     },
     "carlyle-french-revolution-research": {
       "title": "The Book That Burned",
-      "subtitle": "Carlyle's French Revolution: the manuscript a maid destroyed, rewritten from memory into the history that gave us A Tale of Two Cities."
+      "subtitle": "Thomas Carlyle's The French Revolution: A History (1837)"
     },
     "carlyle-friedrich-research": {
       "title": "Carlyle's Everest",
-      "subtitle": "A close reading of Friedrich the Great — the prose, the battle-pieces, and the long, contested afterlife of Carlyle's biggest book."
+      "subtitle": "Carlyle's History of Friedrich the Great (1858–1865)"
     },
     "carlyle-research": {
       "title": "The Calvinist Without a Creed",
-      "subtitle": "How a lost Scottish Calvinism became the gospel of work, hero-worship, and prophetic fury — and why Carlyle is still fought over."
+      "subtitle": "Thomas Carlyle and his Scottish Calvinist formation"
     },
     "civil-war-religion-whitman-research": {
       "title": "A Holy War and Its Poet",
-      "subtitle": "How religion made the Civil War possible — and how Walt Whitman turned its carnage into America's civil religion."
+      "subtitle": "The Civil War's religious drivers — and Walt Whitman"
     },
     "deutsch-good-explanations-research": {
       "title": "Hard to Vary",
-      "subtitle": "David Deutsch's test for a good explanation — and what it does to science, theology, politics, and the media plan."
+      "subtitle": "David Deutsch and the good explanation"
     },
     "ipv4-ipv6-ctv-research": {
       "title": "The Address Knows You",
-      "subtitle": "How the humble IP address — IPv4, CGNAT, IPv6 — quietly became the identity layer of streaming-TV advertising, and what is breaking it."
+      "subtitle": "IPv4/IPv6 and the global CTV programmatic landscape"
     },
     "jesus-research": {
       "title": "The Man and the Christ",
-      "subtitle": "Jesus as historical figure, philosopher, and divine Son — read through Carlyle, Whitman, Jung, and Peirce, then set on one table."
+      "subtitle": "The message and divinity of Jesus"
     },
     "john-the-baptist-research": {
       "title": "More Than a Forerunner",
-      "subtitle": "John the Baptist as history, theology, and myth — the prophet who baptized Jesus, the sect that still follows him, and the need such figures fill."
+      "subtitle": "The life, theology, and myth of John the Baptist"
     },
     "jung-research": {
       "title": "A God in the Psyche",
-      "subtitle": "Jung's lifelong wrestle with the self, the soul, and God — the numinous, Answer to Job, synchronicity, alchemy, and where Peterson reads him right and wrong."
+      "subtitle": "Carl Jung on the self, the spirit, and religion"
     },
     "phenomenology-pragmatism-research": {
       "title": "Experience and Consequences",
-      "subtitle": "The two great modern philosophies of experience and action — and what they did to psychology and Christianity, from Husserl and James to 2040."
+      "subtitle": "Phenomenology and pragmatism, and their relation to psychology and Christianity"
     },
     "uap-research": {
       "title": "From Roswell to Disclosure",
-      "subtitle": "The American UFO question from 1947 to the disclosure era — the institutions, the evidence and its limits, the Grusch testimony, and where it heads next."
+      "subtitle": "The U.S. UFO/UAP phenomenon, 1947–2030"
     },
     "us-geopolitics-research": {
       "title": "The Map of American Power",
-      "subtitle": "The structural logic of US grand strategy in 2026 — alliances, rivalries, the pivot to Latin America, and a forecast for Taiwan, Ukraine, Iran, and the chip war."
+      "subtitle": "The US geopolitical position in 2026: grand strategy, alliances, and trajectory"
     }
   },
   "corpora": [
