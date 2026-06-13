@@ -1490,25 +1490,15 @@ FP_MARKS = {
 
 
 def _fp_beat_css():
-    """Emit the per-beat accent CSS (light default + dark override) as one block."""
-    rules = []
-    for beat, (light, dark) in FP_BEATS.items():
-        rules.append(f'.fp-sec[data-beat="{beat}"],.fp-jump a[data-beat="{beat}"]{{--sec:{light};}}')
-    rules.append("[data-theme=\"dark\"] {")
-    for beat, (light, dark) in FP_BEATS.items():
-        rules.append(f'  .fp-sec[data-beat="{beat}"], [data-theme="dark"] .fp-jump a[data-beat="{beat}"]{{--sec:{dark};}}')
-    rules.append("}")
-    # dark overrides need their own selectors (the grouped form above won't cascade
-    # correctly), so emit them explicitly:
-    dark = "\n".join(
-        f'[data-theme="dark"] .fp-sec[data-beat="{b}"],'
-        f'[data-theme="dark"] .fp-jump a[data-beat="{b}"]{{--sec:{d};}}'
-        for b, (l, d) in FP_BEATS.items()
-    )
-    light = "\n".join(
-        f'.fp-sec[data-beat="{b}"],.fp-jump a[data-beat="{b}"]{{--sec:{l};}}'
-        for b, (l, d) in FP_BEATS.items()
-    )
+    """Emit each beat's --sec accent: light default, then dark-mode override.
+    Targets the section block, the op-ed panel, and the jump-nav chip alike."""
+    def sel(beat, prefix=""):
+        return (f'{prefix}.fp-sec[data-beat="{beat}"],'
+                f'{prefix}.fp-oped[data-beat="{beat}"],'
+                f'{prefix}.fp-jump a[data-beat="{beat}"]')
+    dark_prefix = '[data-theme="dark"] '
+    light = "\n".join(f'{sel(b)}{{--sec:{l};}}' for b, (l, d) in FP_BEATS.items())
+    dark = "\n".join(f'{sel(b, dark_prefix)}{{--sec:{d};}}' for b, (l, d) in FP_BEATS.items())
     return light + "\n" + dark
 
 
@@ -1584,6 +1574,7 @@ FINGERPRINT_BAND_CSS = """
 .fp-band .fp-band-flag small { display: block; font-family: var(--sans); font-size: .55rem; font-weight: 400;
   letter-spacing: .2em; text-transform: uppercase; color: #0d5b68; margin-top: .5rem; }
 [data-theme="dark"] .fp-band .fp-band-flag small { color: #62aab8; }
+.fp-band .fp-band-mid { min-width: 0; }
 .fp-band .fp-band-kicker { font-family: var(--sans); font-size: .66rem; text-transform: uppercase;
   letter-spacing: .16em; color: #0d5b68; margin: 0 0 .35rem; }
 [data-theme="dark"] .fp-band .fp-band-kicker { color: #62aab8; }
@@ -1809,15 +1800,15 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">research · calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="fingerprint.html" class="active">The Fingerprint</a>
+    <a href="../index.html">The Research</a>
+    <a href="../ghost.html">The Ghost of Times</a>
+    <a href="../fingerprint.html" class="active">The Fingerprint</a>
   </nav>
 </div>
 <main class="fp-edition">
   <header class="fp-nameplate">
     <p class="fp-np-kicker">The global programmatic &amp; Advanced TV market paper</p>
-    <a class="fp-np-name" href="fingerprint.html">The Fingerprint</a>
+    <a class="fp-np-name" href="../fingerprint.html">The Fingerprint</a>
     <div class="fp-folio">
       <span>{folio_no}</span>
       <span class="fp-folio-c">{folio_date}</span>
@@ -1829,7 +1820,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
   <div id="fp-body"></div>
   <footer class="fp-foot">
     {watch}
-    <p class="fp-colophon"><a href="fingerprint.html">← All editions</a> &nbsp;·&nbsp; <a href="index.html">The Research Library</a></p>
+    <p class="fp-colophon"><a href="../fingerprint.html">← All editions</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
@@ -2081,7 +2072,7 @@ sections.forEach((sec, i) => {
   if (isOped) {
     const s = (sec.stories || [])[0] || {};
     const art = el('article', 'fp-oped'); art.id = id; art.dataset.beat = beat;
-    const portrait = s.portrait ? `fingerprint/assets/${esc(s.portrait)}.png` : '';
+    const portrait = s.portrait ? `assets/${esc(s.portrait)}.png` : '';
     const pho = portrait
       ? `<div class="fp-oped-portrait"><img src="${portrait}" alt="${esc(s.portrait_caption||'')}"><div class="fp-oped-cap">${esc(s.portrait_caption||'')}</div></div>`
       : '';
@@ -2146,6 +2137,12 @@ const onScroll = () => {
   bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
 };
 document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+// honor a deep-link hash (#sec-N / #fp-lead) now that the sections exist
+if (location.hash.length > 1) {
+  const t = document.getElementById(location.hash.slice(1));
+  if (t) requestAnimationFrame(() => t.scrollIntoView());
+}
 """
 
 
