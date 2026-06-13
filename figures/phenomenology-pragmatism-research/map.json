@@ -1,0 +1,9 @@
+[
+  { "file": "00_Briefing.md", "after": "## Bottom Line", "snippet": "two_gazes.html" },
+  { "file": "00_Briefing.md", "after": "### 3. The Strange Parallel", "snippet": "strange_parallel.html" },
+  { "file": "00_Briefing.md", "after": "## Part II: The Current State", "snippet": "corpus_grid.html" },
+  { "file": "00_Briefing.md", "after": "### 7. Convergence and Remaining Tensions", "snippet": "four_tensions.html" },
+  { "file": "07_Convergence_Phenomenology_Pragmatism.md", "after": "### 1.1 Husserl reads James", "snippet": "james_husserl_channel.html" },
+  { "file": "04_Pragmatism_Psychology.md", "after": "### 2.2 \"The Reflex Arc", "snippet": "reflex_arc.html" },
+  { "file": "08_Future_Trajectory.md", "after": "## Base Rates", "snippet": "trajectories_2040.html" }
+]
