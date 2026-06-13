@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Annotated Margin — the philosophical manuscript page where two traditions read one another",
+  "anchor": "Husserl's personal copy of James's 'Principles of Psychology', preserved at the Husserl Archives in Leuven, marked in Gabelsberger stenographic shorthand (selective heavy marking in Chs. 9 and 15; five diagonal strokes along Hodgson's footnote) — crossed with the phenomenological epoche bracket and Dewey's reflex-arc circuit redrawn as a closed loop. The page is set in two inks: a Prussian violet-indigo for the descriptive gaze inward (phenomenology) and an iron-gall oxblood for the gaze outward to consequences (pragmatism).",
+  "rationale": "The corpus's load-bearing evidence is literally a marginated manuscript page: one tradition's hand annotating the other's printed text. Its structural metaphor is a bipolar one — experience described from within (phenomenology) and meaning clarified by its practical effects (pragmatism) — two movements that began at the same moment on two continents, read one another, and converged. So the aesthetic is the manuscript page itself: warm laid paper, two inks (indigo + oxblood) for the two gazes, the epoche bracket and the marginal stroke as ornament, sharp printed-page corners. Lucid, two-handed, calibrated — descriptive, never persuasive. Green carries the empirical-psychology register, aubergine the theological register, ochre the late convergence.",
+  "light": {
+    "bg": "#eeeae0", "panel": "#e3ddcd", "text": "#201b15", "muted": "#5b5447",
+    "accent": "#3e2c74", "border": "#cdc5b2", "mark": "#e0d8c2", "cover-bg": "#e7e1d2",
+    "t1": "#3e2c74", "t2": "#7c3a26", "t3": "#3c6438", "t4": "#5e3a6e", "t5": "#7e5a0d"
+  },
+  "dark": {
+    "bg": "#14151b", "panel": "#1d1f28", "text": "#e6ded0", "muted": "#9a9180",
+    "accent": "#a690e0", "border": "#2c2f3a", "mark": "#262a3a", "cover-bg": "#1d1f28",
+    "t1": "#a690e0", "t2": "#d98c6e", "t3": "#7bb06a", "t4": "#b692d2", "t5": "#d9b35e"
+  },
+  "fonts": {
+    "display": "'Palatino Linotype', Palatino, 'Book Antiqua', 'URW Palladio L', Georgia, serif",
+    "body": "Georgia, 'Palatino Linotype', 'Times New Roman', serif",
+    "mono": "'Courier New', Courier, 'Liberation Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'[ / / / ]'",
+    "fig_radius": "0px"
+  },
+  "cover_palette": ["#34306b", "#7c3a26", "#3c6438", "#5e3a6e"]
+}
