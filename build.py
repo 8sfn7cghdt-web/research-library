@@ -501,7 +501,11 @@ READER_TEMPLATE = """<!DOCTYPE html>
   <input id="search" type="search" placeholder="Search the corpus…" autocomplete="off">
   <div id="search-results"></div>
   <nav id="toc"></nav>
-  <button id="theme-btn">◐ Theme</button>
+  <div id="reader-controls">
+    <button id="listen-btn" title="Listen to this chapter">▶ Listen</button>
+    <button id="share-btn" title="Share this chapter">Share ↗</button>
+    <button id="theme-btn">◐ Theme</button>
+  </div>
 </aside>
 <main id="main">
   <article id="content"></article>
@@ -569,9 +573,25 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 #search-results .hit b { color: var(--accent); display: block; margin-bottom: .15rem; }
 #search-results mark { background: var(--mark); color: inherit; border-radius: 2px; }
 #search-results .none { color: var(--muted); padding: .5rem .55rem; }
-#theme-btn { margin-top: 1.2rem; font-family: var(--sans); font-size: .78rem; color: var(--muted);
+#reader-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
+#reader-controls button { margin: 0; font-family: var(--sans); font-size: .76rem; color: var(--muted);
   background: none; border: 1px solid var(--border); border-radius: 10px; padding: .35rem .7rem; cursor: pointer; }
-#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+#reader-controls button:hover { color: var(--accent); border-color: var(--accent); }
+#listen-btn.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
+/* floating Listen bar (Web Speech narration) */
+#listen-bar { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 40; display: none;
+  align-items: center; gap: .7rem; flex-wrap: wrap; max-width: 92vw; background: var(--panel);
+  border: 1px solid var(--border); border-radius: 14px; padding: .5rem .8rem; box-shadow: 0 8px 30px rgba(0,0,0,.18); }
+#listen-bar.show { display: flex; }
+#listen-bar button { font-family: var(--sans); font-size: 1rem; background: none; border: 1px solid var(--border);
+  border-radius: 9px; width: 34px; height: 30px; color: var(--text); cursor: pointer; }
+#listen-bar button:hover { border-color: var(--accent); color: var(--accent); }
+#lb-title { font-family: var(--display); font-size: .9rem; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#listen-bar .lb-ctl { font-family: var(--sans); font-size: .66rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .06em; display: flex; align-items: center; gap: .3rem; }
+#listen-bar select { font-family: var(--sans); font-size: .72rem; background: var(--bg); color: var(--text);
+  border: 1px solid var(--border); border-radius: 7px; padding: .15rem .3rem; }
+@media (max-width: 560px) { #lb-title { display: none; } }
 #main { margin-left: 320px; display: flex; flex-direction: column; min-height: 100vh; }
 #content { max-width: 740px; width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
   font-size: 1.04rem; line-height: 1.72; flex: 1; }
@@ -698,6 +718,7 @@ docs.forEach((d, i) => {
 let firstShow = true;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 function show(i, anchorText) {
+  if (listening && !autoNext) stopListen();  // manual nav stops narration; auto-advance keeps it
   const apply = () => {
   current = Math.max(0, Math.min(docs.length - 1, i));
   content.innerHTML = marked.parse(docs[current].body);
@@ -835,6 +856,94 @@ const menuBtn = document.getElementById('menu-btn');
 menuBtn.onclick = () => document.body.classList.toggle('menu-open');
 function closeMenu() { document.body.classList.remove('menu-open'); }
 
+// ---- Listen mode (browser Web Speech API) + share-this-chapter ----
+const synth = window.speechSynthesis;
+let listening = false, paused = false, autoNext = false, listenIdx = 0, listenRate = 1,
+    listenAuto = true, sleepMode = 'none', sleepTimer = null, lchunks = [], lidx = 0, lbar = null;
+function chapterText(i) {
+  let t = docs[i] ? docs[i].body : '';
+  return t.replace(/```[\s\S]*?```/g, ' ').replace(/<[^>]+>/g, ' ')
+          .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ').replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+          .replace(/[#>*_`~|]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function chunkText(t) {
+  const raw = t.match(/[^.!?]+[.!?]+["')\]”’]*|\S[^.!?]*$/g) || [t];
+  const out = []; let buf = '';
+  raw.forEach(s => { s = s.trim(); if (!s) return;
+    if ((buf + ' ' + s).length > 240 && buf) { out.push(buf); buf = s; } else buf = buf ? buf + ' ' + s : s; });
+  if (buf) out.push(buf);
+  return out;
+}
+function pickVoice() { const vs = synth.getVoices();
+  return vs.find(v => /^en/i.test(v.lang) && v.localService) || vs.find(v => /^en/i.test(v.lang)) || vs[0]; }
+function speakChunk() {
+  if (!listening) return;
+  if (lidx >= lchunks.length) {
+    if (sleepMode === 'chapter') { stopListen(); return; }
+    if (listenAuto && listenIdx < docs.length - 1) {
+      listenIdx++; autoNext = true; show(listenIdx); autoNext = false;
+      lchunks = chunkText(chapterText(listenIdx)); lidx = 0; updateBar(); speakChunk();
+    } else stopListen();
+    return;
+  }
+  const u = new SpeechSynthesisUtterance(lchunks[lidx]);
+  u.rate = listenRate; const vo = pickVoice(); if (vo) u.voice = vo;
+  u.onend = () => { if (listening && !paused) { lidx++; speakChunk(); } };
+  u.onerror = () => { if (listening && !paused) { lidx++; speakChunk(); } };
+  synth.speak(u);
+}
+function startListen() {
+  if (!synth) return;
+  synth.cancel(); listening = true; paused = false; listenIdx = current;
+  lchunks = chunkText(chapterText(listenIdx)); lidx = 0; buildBar(); lbar.classList.add('show'); updateBar();
+  const lb = document.getElementById('listen-btn'); if (lb) lb.classList.add('on');
+  speakChunk();
+}
+function stopListen() {
+  listening = false; paused = false; if (synth) synth.cancel();
+  if (sleepTimer) { clearTimeout(sleepTimer); sleepTimer = null; }
+  if (lbar) lbar.classList.remove('show');
+  const lb = document.getElementById('listen-btn'); if (lb) lb.classList.remove('on');
+}
+function togglePause() { if (!listening) return;
+  if (paused) { synth.resume(); paused = false; } else { synth.pause(); paused = true; } updateBar(); }
+function setSleep(sec) {
+  if (sleepTimer) { clearTimeout(sleepTimer); sleepTimer = null; }
+  sleepMode = sec === 1 ? 'chapter' : 'none';
+  if (sec > 1) sleepTimer = setTimeout(stopListen, sec * 1000);
+}
+function buildBar() {
+  if (lbar) return;
+  lbar = document.createElement('div'); lbar.id = 'listen-bar';
+  lbar.innerHTML = '<button id="lb-toggle" title="Pause">⏸</button><button id="lb-stop" title="Stop">⏹</button>'
+    + '<span id="lb-title"></span>'
+    + '<label class="lb-ctl">Speed <select id="lb-rate"><option value="0.8">0.8×</option><option value="1" selected>1×</option><option value="1.2">1.2×</option><option value="1.5">1.5×</option></select></label>'
+    + '<label class="lb-ctl">Sleep <select id="lb-sleep"><option value="0" selected>Off</option><option value="1">End of chapter</option><option value="900">15 min</option><option value="1800">30 min</option></select></label>';
+  document.body.appendChild(lbar);
+  lbar.querySelector('#lb-toggle').onclick = togglePause;
+  lbar.querySelector('#lb-stop').onclick = stopListen;
+  lbar.querySelector('#lb-rate').onchange = function () { listenRate = +this.value; };
+  lbar.querySelector('#lb-sleep').onchange = function () { setSleep(+this.value); };
+}
+function updateBar() {
+  if (!lbar) return;
+  const t = lbar.querySelector('#lb-title'); if (t) t.textContent = docs[listenIdx] ? docs[listenIdx].title : '';
+  const tg = lbar.querySelector('#lb-toggle'); if (tg) tg.textContent = paused ? '▶' : '⏸';
+}
+const listenBtn = document.getElementById('listen-btn');
+if (listenBtn) {
+  if (!synth) listenBtn.style.display = 'none';
+  else listenBtn.onclick = () => { listening ? stopListen() : startListen(); };
+}
+const shareBtn = document.getElementById('share-btn');
+if (shareBtn) shareBtn.onclick = () => {
+  if (!window.CorpusShare) return;
+  window.CorpusShare.open({ kicker: corpus.title, title: docs[current].title,
+    source: corpus.subtitle || corpus.title,
+    url: location.origin + location.pathname + '#ch-' + current, filename: 'chapter' });
+};
+window.addEventListener('pagehide', () => { if (synth) synth.cancel(); });
+
 // initial chapter: hash > saved progress > 0; ?q= deep-links to a passage (Today's Passage, share cards)
 const hash = location.hash.match(/^#ch-(\d+)$/);
 const anchorQ = new URLSearchParams(location.search).get('q');
@@ -934,6 +1043,16 @@ SHELL_CSS = """
 #resume .rcta { margin-left: auto; font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .08em;
   color: var(--bg); background: var(--accent); border-radius: 11px; padding: .5rem .9rem; white-space: nowrap; }
 @media (max-width: 560px) { #cmdk-fab { font-size: .66rem; } .cmdk-m { display: none; } }
+/* shareable-card preview modal */
+#share-back { position: fixed; inset: 0; z-index: 85; background: rgba(20,18,15,.5); display: none; align-items: center; justify-content: center; padding: 1rem; }
+#share-back.open { display: flex; }
+#share-box { background: var(--bg); border: 1px solid var(--border); border-radius: 16px; padding: 1rem; max-width: 380px; width: 100%; }
+#share-img { width: 100%; border-radius: 10px; display: block; border: 1px solid var(--border); }
+#share-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+#share-actions button { font-family: var(--sans); font-size: .8rem; padding: .5rem .8rem; border: 1px solid var(--border); border-radius: 10px; background: var(--panel); color: var(--text); cursor: pointer; }
+#share-actions button:hover { border-color: var(--accent); color: var(--accent); }
+#share-actions #share-dl { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.share-toast { position: fixed; bottom: 1.3rem; left: 50%; transform: translateX(-50%); background: var(--accent); color: var(--bg); font-family: var(--sans); font-size: .8rem; padding: .5rem .9rem; border-radius: 10px; z-index: 95; }
 """
 
 SHELL_JS = r"""
@@ -1144,6 +1263,97 @@ SHELL_JS = r"""
 """
 
 
+# window.CorpusShare — generate a shareable PNG "card" entirely client-side from
+# the live theme tokens (so it matches light/dark + any per-corpus theme), with a
+# preview modal offering Download / Copy link / native Share. Draws only vector +
+# system-font text, so the canvas never taints and toBlob/toDataURL stay allowed.
+SHARE_JS = r"""
+(function () {
+  function v(name, fb) { var x = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); return x || fb; }
+  function rr(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r);
+    x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+  function wrap(ctx, text, maxW) {
+    var words = String(text).split(/\s+/), lines = [], line = '';
+    for (var i = 0; i < words.length; i++) {
+      var t = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = words[i]; } else line = t;
+    }
+    if (line) lines.push(line); return lines;
+  }
+  function draw(o) {
+    var S = 2, W = 540 * S, H = 675 * S, pad = 54 * S;
+    var c = document.createElement('canvas'); c.width = W; c.height = H;
+    var x = c.getContext('2d');
+    var bg = v('--bg', '#faf8f4'), text = v('--text', '#1f1d1a'), accent = v('--accent', '#8c4a2f'),
+        muted = v('--muted', '#6e6a62'), border = v('--border', '#ddd6c9');
+    var tiles = [v('--t1', '#b3502f'), v('--t2', '#c9a227'), v('--t3', '#2e5266'), v('--t4', '#6b7d4f'), v('--t5', '#8a5a7c')];
+    var SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif";
+    var SERIF = "'Iowan Old Style', Palatino, Georgia, serif";
+    x.fillStyle = bg; x.fillRect(0, 0, W, H);
+    x.strokeStyle = border; x.lineWidth = 2 * S; x.strokeRect(20 * S, 20 * S, W - 40 * S, H - 40 * S);
+    x.textBaseline = 'top';
+    x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
+    x.fillText((o.kicker || 'research · calvincollins · xyz').toUpperCase(), pad, pad);
+    var ty = pad + 32 * S;
+    for (var i = 0; i < 5; i++) { x.save(); x.translate(pad + i * (25 * S) + 8 * S, ty + 8 * S);
+      x.rotate((i % 2 ? 6 : -6) * Math.PI / 180); x.fillStyle = tiles[i % tiles.length];
+      rr(x, -8 * S, -8 * S, 16 * S, 16 * S, 4 * S); x.fill(); x.restore(); }
+    var qy = ty + 56 * S, maxW = W - pad * 2, body = o.quote || o.title || '';
+    var fs = o.quote ? 38 * S : 46 * S;
+    function setf() { x.font = (o.quote ? 'italic ' : '') + fs + 'px ' + SERIF; }
+    setf(); var lines = wrap(x, body, maxW), lh = fs * 1.3;
+    while (lines.length * lh > H - qy - 150 * S && fs > 22 * S) { fs -= 2 * S; setf(); lines = wrap(x, body, maxW); lh = fs * 1.3; }
+    var oy = 0;
+    if (o.quote) { x.fillStyle = accent; x.font = (84 * S) + 'px ' + SERIF; x.fillText('“', pad - 4 * S, qy - 24 * S); oy = 42 * S; setf(); }
+    x.fillStyle = text; setf();
+    for (var j = 0; j < lines.length; j++) x.fillText(lines[j], pad, qy + oy + j * lh);
+    var fy = H - pad - 64 * S;
+    if (o.source) { x.fillStyle = muted; x.font = (16 * S) + 'px ' + SANS;
+      var sl = wrap(x, o.source, maxW); for (var k = 0; k < Math.min(2, sl.length); k++) x.fillText(sl[k], pad, fy + k * 21 * S); }
+    x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
+    x.fillText('research.calvincollins.xyz', pad, H - pad - 16 * S);
+    return c;
+  }
+  var modal;
+  function toast(m) { var t = document.createElement('div'); t.className = 'share-toast'; t.textContent = m;
+    document.body.appendChild(t); setTimeout(function () { t.remove(); }, 1600); }
+  function open(o) {
+    var canvas = draw(o), link = o.url || location.href;
+    if (!modal) {
+      modal = document.createElement('div'); modal.id = 'share-back';
+      modal.innerHTML = '<div id="share-box"><img id="share-img" alt="Shareable card preview">'
+        + '<div id="share-actions"><button id="share-dl">Download</button>'
+        + '<button id="share-copy">Copy link</button><button id="share-go">Share</button>'
+        + '<button id="share-x">Close</button></div></div>';
+      document.body.appendChild(modal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+      document.getElementById('share-x').onclick = function () { modal.classList.remove('open'); };
+    }
+    document.getElementById('share-img').src = canvas.toDataURL('image/png');
+    document.getElementById('share-copy').onclick = function () {
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(function () { toast('Link copied'); }, function () { prompt('Copy link:', link); });
+      else prompt('Copy link:', link);
+    };
+    document.getElementById('share-dl').onclick = function () {
+      canvas.toBlob(function (b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b);
+        a.download = (o.filename || 'research-card') + '.png'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000); });
+    };
+    var go = document.getElementById('share-go');
+    go.style.display = navigator.share ? '' : 'none';
+    go.onclick = function () {
+      canvas.toBlob(function (b) {
+        var file = new File([b], (o.filename || 'research-card') + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({ files: [file], text: o.shareText || o.title || '', url: link }).catch(function () {});
+        else navigator.share({ text: o.shareText || o.title || '', url: link }).catch(function () {});
+      });
+    };
+    modal.classList.add('open');
+  }
+  window.CorpusShare = { open: open };
+})();
+"""
+
+
 def shell_html(manifest_json, base):
     """The cross-page connective shell, injected verbatim into every page template.
 
@@ -1156,6 +1366,7 @@ def shell_html(manifest_json, base):
         f'<script id="library-manifest" type="application/json">{manifest_json}</script>'
         f"<script>window.SHELL_BASE={json.dumps(base)};</script>"
         f"<script>{SHELL_JS}</script>"
+        f"<script>{SHARE_JS}</script>"
     )
 
 
@@ -1176,6 +1387,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="wrapped.html">Wrapped</a>
     <a href="#library">The Research</a>
   </nav>
 </div>
@@ -1192,11 +1404,11 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {ghost_band}
 {fingerprint_band}
 {resume}
-{collections}
 <h2 class="section-title" id="library">The Research Library</h2>
 <main class="library">
 {cards}
 </main>
+{collections}
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">“The medium is the message.” — Marshall McLuhan</p>
@@ -1279,8 +1491,14 @@ DAILY_PASSAGE_JS = r"""
     + '<span class="dp-mark" aria-hidden="true">“</span>'
     + '<span class="dp-text">' + esc(p.text) + '</span>'
     + '<span class="dp-src">— ' + esc(p.title) + ' · ' + esc(p.chapterTitle) + '</span>'
-    + '<span class="dp-cta">Read in context →</span></a>';
+    + '<span class="dp-cta">Read in context →</span>'
+    + '<button class="dp-share" type="button" aria-label="Share this passage">Share ↗</button></a>';
   el.hidden = false;
+  var sb = el.querySelector('.dp-share');
+  if (sb) sb.onclick = function (ev) { ev.preventDefault(); ev.stopPropagation();
+    if (!window.CorpusShare) return;  // the shell (which defines CorpusShare) loads after this script
+    window.CorpusShare.open({ kicker: 'Today’s Passage', quote: p.text, source: p.title + ' · ' + p.chapterTitle,
+      url: new URL(href, location.href).href, filename: 'passage' }); };
 })();
 """
 
@@ -1347,6 +1565,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .dp-src { display: block; font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: 0 0 1rem; }
 .dp-cta { font-family: var(--sans); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em;
   color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+.dp-share { position: absolute; right: 1.5rem; bottom: 1.25rem; font-family: var(--sans); font-size: .7rem;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 9px; padding: .35rem .7rem; cursor: pointer; }
+.dp-share:hover { color: var(--accent); border-color: var(--accent); }
 /* The Ghost of Times feature band on the home page — inky newspaper contrast to the mosaic library. */
 .ghost-band { max-width: 1080px; margin: 2rem auto 0; padding: 0 2rem; }
 .ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
@@ -3102,6 +3324,134 @@ def json_for_html(obj):
     return json.dumps(obj, ensure_ascii=False).replace("</", "<\\/")
 
 
+# ---------------------------------------------------------------- research wrapped
+# A private "year in reading" computed entirely client-side from localStorage
+# (read:{slug} sets, reading-streak) against an inlined per-corpus stats table.
+# Nothing leaves the device; a brand-new visitor gets an empty-state invite.
+
+WRAPPED_CSS = """
+.wr-plate { max-width: 820px; margin: 1.8rem auto 0; padding: 0 2rem; text-align: center; }
+.wr-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); margin: 0 0 .5rem; }
+.wr-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.4rem, 6vw, 4rem); line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+.wr-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0; }
+#wrapped-body { max-width: 820px; margin: 1.8rem auto 0; padding: 0 2rem 2rem; }
+.wr-identity { font-family: var(--display); font-size: 1.35rem; text-align: center; margin: 0 0 1.6rem; }
+.wr-identity strong { color: var(--accent); }
+.wr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+.wr-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 1.3rem 1.4rem; display: flex; flex-direction: column; }
+.wr-val { font-family: var(--display); font-weight: 800; font-size: 2.1rem; color: var(--accent); line-height: 1; }
+.wr-label { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-top: .55rem; }
+.wr-sub { font-family: var(--sans); font-size: .78rem; color: var(--text); margin-top: .2rem; }
+.wr-share { display: block; margin: 1.9rem auto 0; font-family: var(--sans); font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--bg); background: var(--accent); border: none; border-radius: 12px; padding: .7rem 1.4rem; cursor: pointer; }
+.wr-empty { max-width: 540px; margin: 2.5rem auto; text-align: center; font-family: var(--sans); color: var(--muted); line-height: 1.65; }
+.wr-foot { max-width: 820px; margin: 2.5rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.wr-foot a { color: var(--accent); text-decoration: none; font-family: var(--sans); font-size: .74rem; }
+"""
+
+WRAPPED_JS = r"""
+(function () {
+  var stats = [];
+  try { stats = JSON.parse(document.getElementById('wrapped-stats').textContent || '[]'); } catch (e) {}
+  function readCount(slug) { try { return (JSON.parse(localStorage.getItem('read:' + slug) || '[]') || []).length; } catch (e) { return 0; } }
+  var chaptersRead = 0, wordsRead = 0, started = 0, completed = 0, catCount = {}, topCorpus = null, topN = 0;
+  stats.forEach(function (s) {
+    var r = Math.min(readCount(s.slug), s.chapters);
+    if (r <= 0) return;
+    started++; chaptersRead += r;
+    wordsRead += Math.round((r / Math.max(1, s.chapters)) * s.words);
+    catCount[s.category] = (catCount[s.category] || 0) + r;
+    if (r > topN) { topN = r; topCorpus = s; }
+    if (r >= s.chapters) completed++;
+  });
+  var topCat = Object.keys(catCount).sort(function (a, b) { return catCount[b] - catCount[a]; })[0] || '—';
+  var streak = 0; try { streak = (JSON.parse(localStorage.getItem('reading-streak') || '{}') || {}).count || 0; } catch (e) {}
+  var identity = chaptersRead < 1 ? 'The Newcomer' : chaptersRead < 5 ? 'The Browser'
+    : chaptersRead < 15 ? 'The Regular' : chaptersRead < 40 ? 'a Constant Reader' : 'The Omnivore';
+  var host = document.getElementById('wrapped-body');
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
+  if (chaptersRead === 0) {
+    host.innerHTML = '<p class="wr-empty">Your Wrapped fills in as you read. Open any corpus — your chapters, words, streak, and reading identity gather here, computed on this device and stored nowhere else.</p>';
+    return;
+  }
+  var fmt = function (n) { return n.toLocaleString(); };
+  function card(label, value, sub) {
+    return '<div class="wr-card"><span class="wr-val">' + esc(value) + '</span>'
+      + '<span class="wr-label">' + esc(label) + '</span>'
+      + (sub ? '<span class="wr-sub">' + esc(sub) + '</span>' : '') + '</div>';
+  }
+  host.innerHTML = '<p class="wr-identity">This season, you are <strong>' + esc(identity) + '</strong></p>'
+    + '<div class="wr-grid">'
+    + card('chapters read', fmt(chaptersRead))
+    + card('words read', fmt(wordsRead))
+    + card('corpora started', started + ' of ' + stats.length)
+    + card('corpora completed', String(completed))
+    + card('day streak', String(streak))
+    + card('favorite subject', topCat)
+    + (topCorpus ? card('most read', topCorpus.title, topN + ' chapters') : '')
+    + '</div>'
+    + '<button id="wr-share" class="wr-share">Share your Wrapped ↗</button>';
+  var sh = document.getElementById('wr-share');
+  if (sh) sh.onclick = function () {
+    if (!window.CorpusShare) return;  // the shell (which defines CorpusShare) loads after this script
+    window.CorpusShare.open({ kicker: 'My Research Wrapped', title: 'I read like ' + identity,
+      source: fmt(chaptersRead) + ' chapters · ' + fmt(wordsRead) + ' words · ' + streak + '-day streak · favorite subject: ' + topCat,
+      url: location.origin + location.pathname, filename: 'research-wrapped' });
+  };
+})();
+"""
+
+WRAPPED_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Research Wrapped — research · calvincollins · xyz</title>
+<meta name="description" content="Your private year in reading.">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="wrapped.html" class="active">Wrapped</a>
+  </nav>
+</div>
+<header class="wr-plate">
+  <p class="wr-kicker">A private year in reading</p>
+  <h1 class="wr-name">Research Wrapped</h1>
+  <p class="wr-motto">Yours alone — computed on this device, stored nowhere else.</p>
+</header>
+<main id="wrapped-body"></main>
+<footer class="wr-foot"><a href="index.html">← Back to the Research Library</a></footer>
+<script id="wrapped-stats" type="application/json">{stats_json}</script>
+<script>{theme_js}</script>
+<script>{wrapped_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def build_wrapped_page(out_dir, wrapped_stats, shell=""):
+    """Render docs/wrapped.html — a client-side 'year in reading' from localStorage."""
+    out = Path(out_dir)
+    page = WRAPPED_TEMPLATE.format(
+        favicon=FAVICON, og_meta=OG_META,
+        css=LIBRARY_CSS + WRAPPED_CSS,
+        stats_json=json_for_html(wrapped_stats),
+        theme_js=LIBRARY_THEME_JS,
+        wrapped_js=WRAPPED_JS,
+        shell=shell,
+    )
+    (out / "wrapped.html").write_text(page)
+    print("  ✓ Research Wrapped → wrapped.html")
+
+
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
           fingerprint_cfg=None, titles=None, category_order=None, collections=None):
     out = Path(out_dir)
@@ -3123,6 +3473,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
     all_passages = []      # pull-quotes across every corpus, for Today's Passage
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
+    wrapped_stats = []     # per-corpus {slug,title,category,chapters,words} for Research Wrapped
     total_chapters = 0
     total_words = 0
 
@@ -3212,6 +3563,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         all_passages += [dict(p, slug=corpus["slug"], title=corpus["title"])
                          for p in extract_passages(corpus)]
         corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
+        wrapped_stats.append({"slug": corpus["slug"], "title": corpus["title"], "category": category,
+                              "chapters": n,
+                              "words": sum(len(re.sub(r"<[^>]+>", " ", d["body"]).split()) for d in corpus["documents"])})
         fig_note = f", {figs} figures" if figs else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
 
@@ -3263,6 +3617,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 "meta": ed.get("date", ""),
             })
 
+    manifest.append({"title": "Research Wrapped", "kind": "section", "category": "You",
+                     "href": "wrapped.html", "meta": "your year in reading"})
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
     shell_sub = shell_html(manifest_json, "../")    # edition pages in docs/<section>/
@@ -3374,6 +3730,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS,
         shell=shell_root,
     ))
+    build_wrapped_page(out, wrapped_stats, shell=shell_root)
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html")
 
 
