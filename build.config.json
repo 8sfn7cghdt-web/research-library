@@ -15,10 +15,59 @@
     "motto": "All the news that's fit to Fingerprint",
     "blurb": "An independent daily wire on the global programmatic and Advanced TV (CTV) market — platforms, performance, partnerships, competition, regulation, political-ad spend, and a five-market global desk, with closing op-eds in the voices of McLuhan and Ogilvy."
   },
-  "descriptions": {
-    "jung-research": "Jung's lifelong wrestle with the self, the spirit, and religion — from the numinous and individuation to Christ as a symbol of the Self, Answer to Job, synchronicity, alchemy, and where Jordan Peterson reads him rightly and wrongly.",
-    "carlyle-french-revolution-research": "A close reading of Carlyle's The French Revolution: A History (1837) — the manuscript Mill's maid burned and Carlyle rewrote from memory, the prophetic fire of 'Carlylese,' its theory of revolution, and its long shadow over Dickens and the historians who followed.",
-    "uap-research": "The UFO/UAP phenomenon from Roswell to the post-2017 disclosure era — the institutions (AARO, NASA, Congress), the evidence and its limits, the Grusch testimony, and where the disclosure question is likely to head through 2030."
+  "titles": {
+    "ancestry-research": {
+      "title": "The Emigrant's Atlas",
+      "subtitle": "Two families — Collins and Pokorný — and the long road from Munster and Galicia to America."
+    },
+    "carlyle-french-revolution-research": {
+      "title": "The Book That Burned",
+      "subtitle": "Carlyle's French Revolution: the manuscript a maid destroyed, rewritten from memory into the history that gave us A Tale of Two Cities."
+    },
+    "carlyle-friedrich-research": {
+      "title": "Carlyle's Everest",
+      "subtitle": "A close reading of Friedrich the Great — the prose, the battle-pieces, and the long, contested afterlife of Carlyle's biggest book."
+    },
+    "carlyle-research": {
+      "title": "The Calvinist Without a Creed",
+      "subtitle": "How a lost Scottish Calvinism became the gospel of work, hero-worship, and prophetic fury — and why Carlyle is still fought over."
+    },
+    "civil-war-religion-whitman-research": {
+      "title": "A Holy War and Its Poet",
+      "subtitle": "How religion made the Civil War possible — and how Walt Whitman turned its carnage into America's civil religion."
+    },
+    "deutsch-good-explanations-research": {
+      "title": "Hard to Vary",
+      "subtitle": "David Deutsch's test for a good explanation — and what it does to science, theology, politics, and the media plan."
+    },
+    "ipv4-ipv6-ctv-research": {
+      "title": "The Address Knows You",
+      "subtitle": "How the humble IP address — IPv4, CGNAT, IPv6 — quietly became the identity layer of streaming-TV advertising, and what is breaking it."
+    },
+    "jesus-research": {
+      "title": "The Man and the Christ",
+      "subtitle": "Jesus as historical figure, philosopher, and divine Son — read through Carlyle, Whitman, Jung, and Peirce, then set on one table."
+    },
+    "john-the-baptist-research": {
+      "title": "More Than a Forerunner",
+      "subtitle": "John the Baptist as history, theology, and myth — the prophet who baptized Jesus, the sect that still follows him, and the need such figures fill."
+    },
+    "jung-research": {
+      "title": "A God in the Psyche",
+      "subtitle": "Jung's lifelong wrestle with the self, the soul, and God — the numinous, Answer to Job, synchronicity, alchemy, and where Peterson reads him right and wrong."
+    },
+    "phenomenology-pragmatism-research": {
+      "title": "Experience and Consequences",
+      "subtitle": "The two great modern philosophies of experience and action — and what they did to psychology and Christianity, from Husserl and James to 2040."
+    },
+    "uap-research": {
+      "title": "From Roswell to Disclosure",
+      "subtitle": "The American UFO question from 1947 to the disclosure era — the institutions, the evidence and its limits, the Grusch testimony, and where it heads next."
+    },
+    "us-geopolitics-research": {
+      "title": "The Map of American Power",
+      "subtitle": "The structural logic of US grand strategy in 2026 — alliances, rivalries, the pivot to Latin America, and a forecast for Taiwan, Ukraine, Iran, and the chip war."
+    }
   },
   "corpora": [
     "../ancestry-research",

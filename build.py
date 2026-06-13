@@ -2219,12 +2219,13 @@ def json_for_html(obj):
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None):
+          fingerprint_cfg=None, titles=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     ghost_cfg = ghost_cfg or {}
     fingerprint_cfg = fingerprint_cfg or {}
     descriptions = descriptions or {}
+    titles = titles or {}
     cards = []
     total_chapters = 0
     total_words = 0
@@ -2234,6 +2235,14 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         if not corpus["documents"]:
             print(f"  ! {folder}: no chapters found, skipped", file=sys.stderr)
             continue
+        # A punchy display title/tagline can be set per corpus (keyed by slug) via
+        # build.config.json "titles" — this overrides the manifest's research
+        # `topic`/`title` for display only, leaving the corpus metadata untouched.
+        override = titles.get(corpus["slug"], {})
+        if override.get("title"):
+            corpus["title"] = override["title"]
+        if override.get("subtitle"):
+            corpus["subtitle"] = override["subtitle"]
         figs = inject_figures(corpus, folder)
         theme = load_theme_spec(folder)
         page = READER_TEMPLATE.format(
@@ -2321,6 +2330,7 @@ def load_config(path):
         "ghost": cfg.get("ghost", {}),
         "fingerprint": cfg.get("fingerprint", {}),
         "descriptions": cfg.get("descriptions", {}),
+        "titles": cfg.get("titles", {}),
     }
 
 
@@ -2347,6 +2357,7 @@ if __name__ == "__main__":
         ghost_cfg = cfg["ghost"]
         fingerprint_cfg = cfg["fingerprint"]
         descriptions = cfg["descriptions"]
+        titles = cfg["titles"]
     elif args.folders:
         folders = args.folders
         out = args.out or "dist"
@@ -2355,8 +2366,9 @@ if __name__ == "__main__":
         ghost_cfg = {}
         fingerprint_cfg = {}
         descriptions = {}
+        titles = {}
     else:
         ap.error("no corpus folders and no --config / build.config.json found")
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
-          fingerprint_cfg=fingerprint_cfg)
+          fingerprint_cfg=fingerprint_cfg, titles=titles)
