@@ -1,0 +1,9 @@
+[
+  { "file": "00_overture.md", "after": "## The through-line thesis", "snippet": "self_mandala.html" },
+  { "file": "02_self-and-individuation.md", "after": "## The corridor", "snippet": "individuation_corridor.html" },
+  { "file": "03_christ-symbol-of-self.md", "after": "## The half that was left out", "snippet": "christ_half_circle.html" },
+  { "file": "03_christ-symbol-of-self.md", "after": "## The aeon of the Fishes", "snippet": "aeon_of_fishes.html" },
+  { "file": "05_answer-to-job.md", "after": "## The asymmetry", "snippet": "job_asymmetry.html" },
+  { "file": "05_answer-to-job.md", "after": "## The missing fourth", "snippet": "trinity_quaternity.html" },
+  { "file": "07_synchronicity-unus-mundus.md", "after": "## The definition", "snippet": "synchronicity_quaternio.html" }
+]
