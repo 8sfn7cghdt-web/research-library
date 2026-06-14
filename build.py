@@ -23,6 +23,7 @@ import base64
 import hashlib
 import html
 import json
+import math
 import mimetypes
 import re
 import shutil
@@ -492,6 +493,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 {theme_style}
 </head>
 <body>
+<div id="reader-progress" aria-hidden="true"></div>
 <button id="menu-btn" title="Chapters">☰</button>
 <aside id="sidebar">
   <a class="back" href="index.html">← Library</a>
@@ -503,6 +505,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
   <nav id="toc"></nav>
   <div id="reader-controls">
     <button id="listen-btn" title="Listen to this chapter">▶ Listen</button>
+    <button id="type-btn" title="Text size &amp; width" aria-haspopup="true">Aa</button>
     <button id="share-btn" title="Share this chapter">Share ↗</button>
     <button id="theme-btn">◐ Theme</button>
   </div>
@@ -593,8 +596,23 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   border: 1px solid var(--border); border-radius: 7px; padding: .15rem .3rem; }
 @media (max-width: 560px) { #lb-title { display: none; } }
 #main { margin-left: 320px; display: flex; flex-direction: column; min-height: 100vh; }
-#content { max-width: 740px; width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
-  font-size: 1.04rem; line-height: 1.72; flex: 1; }
+#content { max-width: var(--reader-measure, 740px); width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
+  font-size: var(--reader-fs, 1.04rem); line-height: 1.72; flex: 1; }
+/* top reading-progress bar */
+#reader-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 30;
+  background: linear-gradient(90deg, var(--t1), var(--t2), var(--t3), var(--t4)); transition: width .08s linear; }
+/* text size / measure popover (toggled by the Aa button) */
+#type-panel { position: fixed; z-index: 35; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: 0 16px 44px rgba(0,0,0,.28); padding: .8rem; width: 220px; display: none; }
+#type-panel.open { display: block; }
+#type-panel .tp-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .6rem; }
+#type-panel .tp-row:last-child { margin-bottom: 0; }
+#type-panel .tp-lab { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+#type-panel .tp-grp { display: flex; gap: .3rem; }
+#type-panel .tp-grp button { font-family: var(--sans); font-size: .8rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 8px; padding: .3rem .55rem; cursor: pointer; min-width: 2rem; }
+#type-panel .tp-grp button:hover { border-color: var(--accent); color: var(--accent); }
+#type-panel .tp-grp button.on { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 #content h1 { font-family: var(--display); font-size: 2rem; line-height: 1.22; margin-top: 0; }
 #content h1::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .55rem;
   border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
@@ -731,7 +749,8 @@ function show(i, anchorText) {
   toc.querySelectorAll('a').forEach((a, j) => a.classList.toggle('active', j === current));
   document.getElementById('prev').disabled = current === 0;
   document.getElementById('next').disabled = current === docs.length - 1;
-  document.getElementById('pager-label').textContent = (current + 1) + ' / ' + docs.length + ' · ' + docs[current].title;
+  document.getElementById('pager-label').textContent = (current + 1) + ' / ' + docs.length + ' · ' + docs[current].title
+    + ' · ' + Math.max(1, Math.round(docs[current].body.split(/\s+/).length / 220)) + ' min';
   history.replaceState(null, '', '#ch-' + current);
   localStorage.setItem(key, current);
   // feed the cross-page library shell: per-corpus read set + global recents
@@ -977,6 +996,67 @@ function renderRelated() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderRelated);
 else renderRelated();
+
+// top reading-progress bar
+(function () {
+  var bar = document.getElementById('reader-progress'); if (!bar) return;
+  function onScroll() { var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%'; }
+  document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+})();
+
+// reader type controls — text size + measure, persisted across the whole library
+(function () {
+  var contentEl = document.getElementById('content'), btn = document.getElementById('type-btn');
+  if (!contentEl || !btn) return;
+  var SIZES = { s: '0.95rem', m: '1.04rem', l: '1.16rem', xl: '1.28rem' };
+  var MEAS = { narrow: '640px', normal: '740px', wide: '880px' };
+  var fs = SIZES[localStorage.getItem('reader-fs')] ? localStorage.getItem('reader-fs') : 'm';
+  var meas = MEAS[localStorage.getItem('reader-measure')] ? localStorage.getItem('reader-measure') : 'normal';
+  function applyType() {
+    contentEl.style.setProperty('--reader-fs', SIZES[fs]);
+    contentEl.style.setProperty('--reader-measure', MEAS[meas]);
+    var pg = document.getElementById('pager'); if (pg) pg.style.maxWidth = MEAS[meas];
+    var rl = document.getElementById('related'); if (rl) rl.style.maxWidth = MEAS[meas];
+  }
+  applyType();
+  var panel;
+  function mark() {
+    if (!panel) return;
+    [].forEach.call(panel.querySelectorAll('#tp-size button'), function (b) { b.classList.toggle('on', b.getAttribute('data-v') === fs); });
+    [].forEach.call(panel.querySelectorAll('#tp-meas button'), function (b) { b.classList.toggle('on', b.getAttribute('data-v') === meas); });
+  }
+  function build() {
+    panel = document.createElement('div'); panel.id = 'type-panel';
+    panel.innerHTML = '<div class="tp-row"><span class="tp-lab">Text size</span><span class="tp-grp" id="tp-size">'
+      + '<button data-v="s" aria-label="Smaller">A−</button><button data-v="m">A</button>'
+      + '<button data-v="l">A+</button><button data-v="xl" aria-label="Largest">A++</button></span></div>'
+      + '<div class="tp-row"><span class="tp-lab">Width</span><span class="tp-grp" id="tp-meas">'
+      + '<button data-v="narrow">Narrow</button><button data-v="normal">Normal</button><button data-v="wide">Wide</button></span></div>';
+    document.body.appendChild(panel);
+    panel.addEventListener('click', function (e) {
+      var b = e.target.closest('button'); if (!b) return;
+      var v = b.getAttribute('data-v');
+      if (b.parentNode.id === 'tp-size') { fs = v; localStorage.setItem('reader-fs', v); }
+      else { meas = v; localStorage.setItem('reader-measure', v); }
+      applyType(); mark();
+    });
+  }
+  btn.onclick = function (e) {
+    e.stopPropagation();
+    if (!panel) build();
+    if (panel.classList.toggle('open')) {
+      mark();
+      var r = btn.getBoundingClientRect();
+      panel.style.left = Math.min(r.left, window.innerWidth - panel.offsetWidth - 8) + 'px';
+      var top = r.top - panel.offsetHeight - 8;
+      panel.style.top = (top < 8 ? r.bottom + 8 : top) + 'px';
+    }
+  };
+  document.addEventListener('click', function (e) {
+    if (panel && panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) panel.classList.remove('open');
+  });
+})();
 """
 
 # ---------------------------------------------------------------- the connective shell
@@ -1600,30 +1680,47 @@ ATLAS_JS = r"""
       if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
       view.x += dx; view.y += dy; lastX = e.clientX; lastY = e.clientY; apply();
     });
-    function end() { dragging = false; stage.classList.remove('grab'); }
+    function end() { if (dragging && moved) save(); dragging = false; stage.classList.remove('grab'); }
     stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
     stage.addEventListener('wheel', function (e) {
       e.preventDefault(); var r = stage.getBoundingClientRect();
       zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 1 / 1.12);
     }, { passive: false });
+    stage.addEventListener('dblclick', function (e) {
+      if (e.target.closest('#atlas-card')) return;
+      var r = stage.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, 1.5);
+    });
     card.addEventListener('pointerenter', function () { if (hideT) { clearTimeout(hideT); hideT = null; } });
     card.addEventListener('pointerleave', schedHide);
     document.addEventListener('keydown', function (e) {
-      if (back && back.classList.contains('open') && e.key === 'Escape') { e.preventDefault(); close(); }
+      if (!back || !back.classList.contains('open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === '+' || e.key === '=') zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1.3);
+      else if (e.key === '-' || e.key === '_') zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1 / 1.3);
+      else if (e.key === '0') fit();
     });
-    window.addEventListener('resize', function () { if (back && back.classList.contains('open')) fit(); });
   }
 
   function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
+  // Persist where the reader roamed to, so the Atlas reopens exactly as they left it.
+  var SAVE_KEY = 'atlas-view', saveT = null;
+  function save() { if (saveT) clearTimeout(saveT); saveT = setTimeout(function () {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify({ s: view.s, x: view.x, y: view.y })); } catch (e) {} }, 180); }
+  function restore() {
+    try { var v = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+      if (v && isFinite(v.s) && isFinite(v.x) && isFinite(v.y) && v.s > 0) { view.s = v.s; view.x = v.x; view.y = v.y; return true; }
+    } catch (e) {}
+    return false;
+  }
   function zoomAt(px, py, f) {
     var ns = Math.max(0.22, Math.min(9, view.s * f)), k = ns / view.s;
-    view.x = px - (px - view.x) * k; view.y = py - (py - view.y) * k; view.s = ns; apply();
+    view.x = px - (px - view.x) * k; view.y = py - (py - view.y) * k; view.s = ns; apply(); save();
   }
   function fit() {
     if (!DATA || !DATA._b) return;
     var b = DATA._b, sw = stage.clientWidth, sh = stage.clientHeight, pad = 46;
     var s = Math.max(0.22, Math.min(9, Math.min((sw - pad * 2) / b.w, (sh - pad * 2) / b.h)));
-    view.s = s; view.x = (sw - (2 * b.x + b.w) * s) / 2; view.y = (sh - (2 * b.y + b.h) * s) / 2; apply();
+    view.s = s; view.x = (sw - (2 * b.x + b.w) * s) / 2; view.y = (sh - (2 * b.y + b.h) * s) / 2; apply(); save();
   }
 
   function load() {
@@ -1687,7 +1784,7 @@ ATLAS_JS = r"""
         window.location.href = base + p.href;
       });
     });
-    fit();
+    if (!restore()) fit(); else apply();   // reopen exactly where the reader left off
   }
 
   function activate(p, el) {
@@ -1756,6 +1853,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="connections.html">Connections</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="#library">The Research</a>
   </nav>
@@ -3502,6 +3600,200 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
     return True
 
 
+# ---------------------------------------------------------------- connections
+# A "map of ideas": an interactive SVG knowledge graph of how the corpora relate,
+# laid out at build time from the same similarity graph that powers related-reading.
+# Categories sit in a ring; nodes cluster by category; edges are strong similarities.
+# Hover/focus a node to light its links and neighbours; click to open the corpus.
+
+CONNECTIONS_CSS = """
+.cx-wrap { max-width: 1120px; margin: 0 auto; padding: 1.2rem 2rem 3rem; }
+.cx-head { text-align: center; margin: 1.4rem 0 .2rem; }
+.cx-head .kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em; color: var(--accent); margin: 0 0 .5rem; }
+.cx-head h1 { font-family: var(--display); font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; margin: 0; }
+.cx-head p { font-family: var(--sans); color: var(--muted); font-size: .9rem; line-height: 1.5; margin: .55rem auto 0; max-width: 38rem; }
+.cx-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; justify-content: center; margin: 1.1rem 0 1rem;
+  font-family: var(--sans); font-size: .74rem; color: var(--muted); }
+.cx-leg { display: inline-flex; align-items: center; gap: .4rem; }
+.cx-leg i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+.cx-stage { position: relative; background: var(--panel); border: 1px solid var(--border); border-radius: 18px; overflow: hidden; }
+#cx-svg { width: 100%; height: auto; display: block; }
+.cx-edge { stroke: var(--border); stroke-width: 1.2; opacity: .55; transition: opacity .15s ease, stroke .15s ease; }
+.cx-edge.lit { stroke: var(--accent); opacity: .95; stroke-width: 1.9; }
+#cx-svg.dimmed .cx-edge:not(.lit) { opacity: .1; }
+.cx-node { cursor: pointer; }
+.cx-node circle { stroke: var(--panel); stroke-width: 2.5; transition: opacity .15s ease; }
+.cx-node:focus { outline: none; }
+.cx-node:focus circle, .cx-node.hot circle { stroke: var(--accent); stroke-width: 3; }
+.cx-label { font-family: var(--sans); font-size: 10.5px; fill: var(--muted); pointer-events: none; transition: opacity .15s ease, fill .15s ease; }
+.cx-node.hot .cx-label, .cx-node.adj .cx-label { fill: var(--text); }
+#cx-svg.dimmed .cx-node:not(.hot):not(.adj) { opacity: .26; }
+#cx-svg.dimmed .cx-node:not(.hot):not(.adj) .cx-label { opacity: 0; }
+#cx-info { position: absolute; left: 1rem; bottom: 1rem; max-width: min(360px, 72%); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1rem; box-shadow: 0 12px 30px rgba(0,0,0,.16);
+  opacity: 0; transform: translateY(8px); transition: opacity .15s ease, transform .15s ease; pointer-events: none; }
+#cx-info.show { opacity: 1; transform: none; }
+#cx-info .cx-i-t { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
+#cx-info .cx-i-n { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .35rem 0 .45rem; line-height: 1.45; }
+#cx-info .cx-i-cta { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--accent); }
+.cx-hint { text-align: center; font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: .9rem 0 0; }
+@media (max-width: 600px) { .cx-label { font-size: 9px; } #cx-info { left: .6rem; bottom: .6rem; } }
+"""
+
+CONNECTIONS_JS = r"""
+(function () {
+  var svg = document.getElementById('cx-svg'); if (!svg) return;
+  var base = window.SHELL_BASE || '';
+  var dEl = document.getElementById('cx-data');
+  var titles = (dEl && JSON.parse(dEl.textContent || '{}').titles) || {};
+  var info = document.getElementById('cx-info');
+  var nodes = [].slice.call(svg.querySelectorAll('.cx-node'));
+  var edges = [].slice.call(svg.querySelectorAll('.cx-edge'));
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function clear() { svg.classList.remove('dimmed'); nodes.forEach(function (n) { n.classList.remove('hot', 'adj'); });
+    edges.forEach(function (e) { e.classList.remove('lit'); }); if (info) info.classList.remove('show'); }
+  function focusNode(n) {
+    var slug = n.getAttribute('data-slug'), nbr = (n.getAttribute('data-nbr') || '').split(' ').filter(Boolean);
+    svg.classList.add('dimmed');
+    nodes.forEach(function (m) { m.classList.remove('hot', 'adj'); });
+    n.classList.add('hot');
+    nodes.forEach(function (m) { if (nbr.indexOf(m.getAttribute('data-slug')) >= 0) m.classList.add('adj'); });
+    edges.forEach(function (e) { var a = e.getAttribute('data-a'), b = e.getAttribute('data-b'); e.classList.toggle('lit', a === slug || b === slug); });
+    if (info) {
+      var links = nbr.map(function (s) { return titles[s] || s; });
+      info.innerHTML = '<span class="cx-i-t">' + esc(titles[slug] || slug) + '</span>'
+        + '<span class="cx-i-n">' + (links.length ? 'Connects to ' + esc(links.join(' · ')) : 'No strong links yet') + '</span>'
+        + '<span class="cx-i-cta">Open corpus →</span>';
+      info.classList.add('show');
+    }
+  }
+  function go(n) { window.location.href = base + n.getAttribute('data-slug') + '.html'; }
+  nodes.forEach(function (n) {
+    n.addEventListener('mouseenter', function () { focusNode(n); });
+    n.addEventListener('focus', function () { focusNode(n); });
+    n.addEventListener('click', function () { go(n); });
+    n.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(n); } });
+  });
+  svg.addEventListener('mouseleave', clear);
+})();
+"""
+
+CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connections — research · calvincollins · xyz</title>
+<meta name="description" content="A map of ideas: how the research corpora relate by theme.">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="connections.html" class="active">Connections</a>
+  </nav>
+</div>
+<main class="cx-wrap">
+  <header class="cx-head">
+    <p class="kicker">A map of ideas</p>
+    <h1>Connections</h1>
+    <p>How the corpora speak to one another — clustered by subject, linked where they share the most ground. Hover a work to light its threads; open it with a click.</p>
+  </header>
+  <div class="cx-legend">{legend}</div>
+  <div class="cx-stage">{svg}<div id="cx-info"></div></div>
+  <p class="cx-hint">Lines connect works that share the most thematic vocabulary. Tab through the map by keyboard, or open any work to read it.</p>
+</main>
+<footer class="cx-foot" style="max-width:1120px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
+  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
+</footer>
+<script id="cx-data" type="application/json">{data_json}</script>
+<script>{theme_js}</script>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def build_connections_page(out_dir, corpora, category_order, shell=""):
+    """Render docs/connections.html — an interactive theme-graph of the corpora."""
+    out = Path(out_dir)
+    nodes = [c for c in corpora if c.get("kind") == "corpus"]
+    if len(nodes) < 2:
+        return False
+    by = {n["slug"]: n for n in nodes}
+    seen = []
+    for c in (category_order or []):
+        if any(n["category"] == c for n in nodes) and c not in seen:
+            seen.append(c)
+    for n in nodes:
+        if n["category"] not in seen:
+            seen.append(n["category"])
+    cat_color = {c: [TERRA, GOLD, BLUE, OLIVE, PLUM][i % 5] for i, c in enumerate(seen)}
+
+    W, H, cx, cy, R = 1040, 760, 520, 380, 248
+    pos, C = {}, max(1, len(seen))
+    for i, cat in enumerate(seen):
+        members = [n for n in nodes if n["category"] == cat]
+        ang = -math.pi / 2 + 2 * math.pi * i / C
+        ax, ay = cx + R * math.cos(ang), cy + R * math.sin(ang)
+        k = len(members)
+        spread = 30 + 15 * k
+        for j, m in enumerate(members):
+            if k == 1:
+                mx, my = ax, ay
+            else:
+                a2 = ang + 2 * math.pi * j / k
+                mx, my = ax + spread * math.cos(a2) * 0.6, ay + spread * math.sin(a2) * 0.6
+            pos[m["slug"]] = (mx, my)
+
+    edges = set()
+    for n in nodes:
+        for r in n.get("related", []):
+            if r.get("slug") in by:
+                edges.add(tuple(sorted((n["slug"], r["slug"]))))
+    nbr = {n["slug"]: set() for n in nodes}
+    for a, b in edges:
+        nbr[a].add(b); nbr[b].add(a)
+
+    parts = [f'<svg id="cx-svg" viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" '
+             f'role="img" aria-label="A graph of how the research corpora relate by theme"><g id="cx-edges">']
+    for a, b in sorted(edges):
+        ax, ay = pos[a]; bx, by = pos[b]
+        parts.append(f'<line class="cx-edge" data-a="{html.escape(a, quote=True)}" data-b="{html.escape(b, quote=True)}" '
+                     f'x1="{ax:.1f}" y1="{ay:.1f}" x2="{bx:.1f}" y2="{by:.1f}"/>')
+    parts.append('</g><g id="cx-nodes">')
+    for n in nodes:
+        x, y = pos[n["slug"]]
+        rad = 9 + min(15, len(n.get("chapters", [])) * 0.7)
+        parts.append(
+            f'<g class="cx-node" data-slug="{html.escape(n["slug"], quote=True)}" '
+            f'data-nbr="{html.escape(" ".join(sorted(nbr[n["slug"]])), quote=True)}" '
+            f'tabindex="0" role="link" aria-label="{html.escape(n["title"])}">'
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{rad:.1f}" fill="{cat_color[n["category"]]}"/>'
+            f'<text class="cx-label" x="{x:.1f}" y="{y + rad + 12:.1f}" text-anchor="middle">{html.escape(n["title"])}</text>'
+            f'</g>'
+        )
+    parts.append('</g></svg>')
+    legend = "".join(f'<span class="cx-leg"><i style="background:{cat_color[c]}"></i>{html.escape(c)}</span>' for c in seen)
+    titles = {n["slug"]: n["title"] for n in nodes}
+    page = CONNECTIONS_TEMPLATE.format(
+        css=LIBRARY_CSS + CONNECTIONS_CSS, favicon=FAVICON, og_meta=OG_META,
+        svg="".join(parts), legend=legend,
+        data_json=json_for_html({"titles": titles}),
+        theme_js=LIBRARY_THEME_JS, app_js=CONNECTIONS_JS, shell=shell,
+    )
+    (out / "connections.html").write_text(page)
+    print(f"  ✓ Connections  ({len(nodes)} nodes, {len(edges)} links) → connections.html")
+    return True
+
+
 # ---------------------------------------------------------------- build
 
 def strip_md(body, cap=6000):
@@ -3553,6 +3845,18 @@ def _clean_passage(text, max_len=260):
         return cut[:c].rstrip(" ,;:—") + "…"
     w = cut.rfind(" ")
     return (cut[:w] if w > 0 else cut).rstrip(" ,;:—") + "…"
+
+
+READING_WPM = 220  # average adult prose reading speed, for time-to-read estimates
+
+
+def reading_time(words):
+    """Human reading-time label for a word count: '7 min', '1h 12m', '3h'."""
+    m = max(1, round(words / READING_WPM))
+    if m < 60:
+        return f"{m} min"
+    h, mm = divmod(m, 60)
+    return f"{h}h {mm}m" if mm else f"{h}h"
 
 
 def extract_passages(corpus, limit=5):
@@ -3886,7 +4190,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         words = sum(len(d["body"].split()) for d in corpus["documents"])
         total_chapters += n
         total_words += words
-        meta_bits = [f"Nº {n_corpus:02d}", f"{n} chapters"]
+        meta_bits = [f"Nº {n_corpus:02d}", f"{n} chapters", reading_time(words)]
         if corpus["generated"]:
             meta_bits.append(corpus["generated"])
         # An index card's blurb can be overridden per corpus (keyed by slug) via
@@ -3998,6 +4302,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     manifest.append({"title": "Research Wrapped", "kind": "section", "category": "You",
                      "href": "wrapped.html", "meta": "your year in reading"})
+    manifest.append({"title": "Connections", "kind": "section",
+                     "category": "The map of ideas", "href": "connections.html",
+                     "meta": "how the corpora relate"})
+
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
     shell_sub = shell_html(manifest_json, "../")    # edition pages in docs/<section>/
@@ -4052,6 +4360,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root))
     if resolved_collections:
         print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
+
+    # The Connections page — interactive theme-graph of the corpora.
+    build_connections_page(out, [e for e in manifest if e.get("kind") == "corpus"], category_order, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site).
     build_ghost_page(out, editions, ghost_cfg, shell=shell_root)

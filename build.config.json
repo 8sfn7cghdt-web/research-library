@@ -141,6 +141,11 @@
             "title": "Tell It Slant",
             "subtitle": "Emily Dickinson — the poet, the recluse, and the long war over her text",
             "category": "Faith & Religion"
+        },
+        "emerson-research": {
+            "title": "An Original Relation to the Universe",
+            "subtitle": "Ralph Waldo Emerson — Transcendentalism, self-reliance, and the making of the American mind",
+            "category": "Mind & Philosophy"
         }
     },
     "corpora": [
@@ -159,7 +164,8 @@
         "../us-geopolitics-research",
         "../mcluhan-research",
         "../piaget-research",
-        "../dickinson-research"
+        "../dickinson-research",
+        "../emerson-research"
     ],
     "atlas": {
         "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
@@ -170,7 +176,8 @@
             "deutsch-good-explanations-research": { "region": "GB-ENG", "label": "Oxford, England" },
             "ancestry-research": { "region": "IE", "label": "Munster, Ireland" },
             "civil-war-religion-whitman-research": { "region": "US-NY", "label": "Brooklyn & New York" },
-            "dickinson-research": { "region": "US-MA", "label": "Amherst, Massachusetts" },
+            "dickinson-research": { "region": "US-MA", "cell": "s", "label": "Amherst, Massachusetts" },
+            "emerson-research": { "region": "US-MA", "cell": "n", "label": "Concord, Massachusetts" },
             "uap-research": { "region": "US-NM", "label": "Roswell, New Mexico" },
             "ipv4-ipv6-ctv-research": { "region": "US-CA", "label": "Silicon Valley, California" },
             "us-geopolitics-research": { "region": "US", "z": "base", "label": "The United States" },
