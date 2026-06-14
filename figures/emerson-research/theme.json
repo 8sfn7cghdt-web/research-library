@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Transparent Circle — a Concord engraving of the Over-Soul",
+  "anchor": "Emerson's essay 'Circles' (1841) and the Over-Soul read as concentric emanation from the transparent eyeball, set in the type and paper of James Munroe & Co.'s Boston first editions and The Dial (1840-44): granite gray, foxed-paper cream, Walden pond-light, New England autumn russet, harvest/Persian gilt, and the indigo of the 'currents of the Universal Being.'",
+  "rationale": "The corpus's structural metaphor is the concentric circle — 'The eye is the first circle; the horizon which it forms is the second; and throughout nature this primary figure is repeated without end' ('Circles', 1841) — and the Over-Soul within which 'every man's particular being is contained.' Its primary artifacts are the 1840s Boston essay/lecture in Munroe & Co. and Dial type, the transparent-eyeball passage of Nature, and the New England landscape of Concord and Walden. So the world is cool, expansive, nature-flooded and engraved — pond-and-sky teal, pine, russet October, twilight indigo over granite and foxed paper — deliberately the opposite pole from the warm, spare, bone-pale graphite of the Dickinson 'Fascicle Leaf' next door in Massachusetts: a teal accent against her amber, a sturdy Georgia/old-style display against her Baskerville, circles and emanation against her dash and negative space.",
+  "light": {
+    "bg": "#f1ece0", "panel": "#e4dcc6", "text": "#21241f", "muted": "#54584c",
+    "accent": "#1b6a6d", "border": "#cbc5b2", "mark": "#ecdfa6", "cover-bg": "#ece5d4",
+    "t1": "#9c4a2a", "t2": "#2f6d8a", "t3": "#2f5d3f", "t4": "#8f6c1e", "t5": "#4b3f72"
+  },
+  "dark": {
+    "bg": "#11140f", "panel": "#1b1f17", "text": "#e7e3d3", "muted": "#969382",
+    "accent": "#58b7b1", "border": "#32362a", "mark": "#3e3a18", "cover-bg": "#1b1f17",
+    "t1": "#d27c50", "t2": "#6fa6cf", "t3": "#6fae74", "t4": "#d6ad4f", "t5": "#9a8cd0"
+  },
+  "fonts": {
+    "display": "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif",
+    "body": "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
+    "mono": "'Courier New', 'Courier', 'Nimbus Mono PS', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\25d0   \\00b7'",
+    "fig_radius": "9px"
+  },
+  "cover_palette": ["#1b6a6d", "#9c4a2a", "#4b3f72", "#8f6c1e"]
+}

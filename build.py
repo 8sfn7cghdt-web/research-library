@@ -1881,9 +1881,10 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <div class="hero-art">{hero}</div>
 </header>
 {daily_passage}
+{resume}
+{foryou}
 {ghost_band}
 {fingerprint_band}
-{resume}
 <h2 class="section-title" id="library">The Research Library</h2>
 <main class="library">
 {cards}
@@ -1982,6 +1983,67 @@ DAILY_PASSAGE_JS = r"""
 })();
 """
 
+# "For You" — a living, personalized home surface. Runs on the index AFTER the
+# shell has decorated the grid cards (setTimeout defers it past the shell script),
+# then CLONES the relevant already-built cards into discovery rows — so covers,
+# progress rings and themes come along for free. Returning readers get Keep
+# reading / Because you read X / More in <top subject>; newcomers get Start here.
+# Reads localStorage history + the inlined manifest's similarity graph. Static.
+HOME_JS = r"""
+setTimeout(function () {
+  var fy = document.getElementById('foryou');
+  var mEl = document.getElementById('library-manifest');
+  if (!fy || !mEl) return;
+  var LIB; try { LIB = JSON.parse(mEl.textContent); } catch (e) { return; }
+  var corpora = LIB.filter(function (x) { return x.kind === 'corpus'; });
+  var bySlug = {}; corpora.forEach(function (c) { bySlug[c.slug] = c; });
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  var recents = []; try { recents = JSON.parse(localStorage.getItem('library-recents') || '[]') || []; } catch (e) {}
+  function readCount(slug) { try { return (JSON.parse(localStorage.getItem('read:' + slug) || '[]') || []).length; } catch (e) { return 0; } }
+  function total(slug) { var c = bySlug[slug]; return c && c.chapters ? c.chapters.length : 0; }
+  function finished(slug) { var t = total(slug); return t > 0 && readCount(slug) >= t; }
+  var used = {};
+  function fresh(list) { var out = []; list.forEach(function (s) { if (bySlug[s] && !used[s]) { used[s] = 1; out.push(s); } }); return out; }
+  function cardClone(slug, href) { var o = document.querySelector('.card[data-slug="' + slug + '"]'); if (!o) return null; var c = o.cloneNode(true); if (href) c.setAttribute('href', href); return c; }
+  function row(titleHTML, slugs, hrefMap) {
+    if (!slugs.length) return null;
+    var g = document.createElement('div'); g.className = 'fy-group';
+    var h = document.createElement('h3'); h.className = 'fy-h'; h.innerHTML = titleHTML; g.appendChild(h);
+    var strip = document.createElement('div'); strip.className = 'fy-row'; var any = false;
+    slugs.forEach(function (s) { var cc = cardClone(s, hrefMap && hrefMap[s]); if (cc) { strip.appendChild(cc); any = true; } });
+    if (!any) return null;
+    g.appendChild(strip); return g;
+  }
+  var groups = [], kicker, note = '';
+  if (recents.length) {
+    kicker = 'For you';
+    var last = recents[0]; used[last.slug] = 1;
+    var keep = [], hrefMap = {};
+    recents.slice(1, 7).forEach(function (r) { if (bySlug[r.slug] && !finished(r.slug)) { keep.push(r.slug); hrefMap[r.slug] = r.slug + '.html#ch-' + r.ch; } });
+    var g0 = row('Keep reading', fresh(keep), hrefMap); if (g0) groups.push(g0);
+    var rel = (bySlug[last.slug] && bySlug[last.slug].related) || [];
+    var relSlugs = fresh(rel.map(function (r) { return r.slug; }).filter(function (s) { return !finished(s); }));
+    var g1 = row('Because you read <em>' + esc(last.title) + '</em>', relSlugs); if (g1) groups.push(g1);
+    var catCount = {};
+    corpora.forEach(function (c) { var n = readCount(c.slug); if (n) catCount[c.category] = (catCount[c.category] || 0) + n; });
+    var topCat = null, mx = 0; for (var cat in catCount) { if (catCount[cat] > mx) { mx = catCount[cat]; topCat = cat; } }
+    if (topCat) {
+      var inCat = corpora.filter(function (c) { return c.category === topCat && !finished(c.slug); }).map(function (c) { return c.slug; });
+      var g2 = row('More in <em>' + esc(topCat) + '</em>', fresh(inCat).slice(0, 8)); if (g2) groups.push(g2);
+    }
+  } else {
+    kicker = 'Welcome';
+    note = 'Open anything and this space becomes yours — what to read next, drawn from what you’ve read.';
+    var g = row('Start here', fresh(corpora.slice(0, 7).map(function (c) { return c.slug; }))); if (g) groups.push(g);
+  }
+  if (!groups.length) return;
+  var k = document.createElement('p'); k.className = 'fy-kicker'; k.textContent = kicker; fy.appendChild(k);
+  if (note) { var n = document.createElement('p'); n.className = 'fy-note'; n.textContent = note; fy.appendChild(n); }
+  groups.forEach(function (g) { fy.appendChild(g); });
+  fy.hidden = false;
+}, 0);
+"""
+
 LIBRARY_CSS = """
 :root {
   --bg: #faf8f4; --panel: #f1ede5; --text: #1f1d1a; --muted: #6e6a62;
@@ -2049,6 +2111,21 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--bg);
   border: 1px solid var(--border); border-radius: 9px; padding: .35rem .7rem; cursor: pointer; }
 .dp-share:hover { color: var(--accent); border-color: var(--accent); }
+/* "For You" — the living, personalized discovery zone (rows of cloned cards). */
+#foryou { max-width: 1080px; margin: 1.4rem auto 0; padding: 0 2rem; }
+#foryou[hidden] { display: none; }
+.fy-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--accent); margin: 0 0 .15rem; }
+.fy-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .2rem 0 .4rem; max-width: 40rem; line-height: 1.5; }
+.fy-group { margin: 0 0 1.1rem; }
+.fy-h { font-family: var(--display); font-weight: normal; font-size: 1.12rem; margin: .9rem 0 .7rem; }
+.fy-h em { font-style: italic; color: var(--accent); }
+.fy-row { display: flex; gap: 1.1rem; overflow-x: auto; padding: .2rem .1rem 1rem; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.fy-row::-webkit-scrollbar { height: 8px; }
+.fy-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.fy-row::-webkit-scrollbar-track { background: transparent; }
+.fy-row .card { width: 264px; flex: 0 0 264px; scroll-snap-align: start; }
+@media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
 /* The Ghost of Times feature band on the home page — inky newspaper contrast to the mosaic library. */
 .ghost-band { max-width: 1080px; margin: 2rem auto 0; padding: 0 2rem; }
 .ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
@@ -4447,9 +4524,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
         resume='<div id="resume"></div>',
+        foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
         cards=library_body,
-        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS,
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS,
         shell=shell_root,
     ))
     build_wrapped_page(out, wrapped_stats, shell=shell_root)

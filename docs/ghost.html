@@ -83,6 +83,21 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--bg);
   border: 1px solid var(--border); border-radius: 9px; padding: .35rem .7rem; cursor: pointer; }
 .dp-share:hover { color: var(--accent); border-color: var(--accent); }
+/* "For You" — the living, personalized discovery zone (rows of cloned cards). */
+#foryou { max-width: 1080px; margin: 1.4rem auto 0; padding: 0 2rem; }
+#foryou[hidden] { display: none; }
+.fy-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--accent); margin: 0 0 .15rem; }
+.fy-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .2rem 0 .4rem; max-width: 40rem; line-height: 1.5; }
+.fy-group { margin: 0 0 1.1rem; }
+.fy-h { font-family: var(--display); font-weight: normal; font-size: 1.12rem; margin: .9rem 0 .7rem; }
+.fy-h em { font-style: italic; color: var(--accent); }
+.fy-row { display: flex; gap: 1.1rem; overflow-x: auto; padding: .2rem .1rem 1rem; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.fy-row::-webkit-scrollbar { height: 8px; }
+.fy-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.fy-row::-webkit-scrollbar-track { background: transparent; }
+.fy-row .card { width: 264px; flex: 0 0 264px; scroll-snap-align: start; }
+@media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
 /* The Ghost of Times feature band on the home page — inky newspaper contrast to the mosaic library. */
 .ghost-band { max-width: 1080px; margin: 2rem auto 0; padding: 0 2rem; }
 .ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
