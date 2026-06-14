@@ -1060,6 +1060,9 @@ else renderRelated();
       else if (e.key === '-' || e.key === '_') zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1 / 1.3);
       else if (e.key === '0') fit();
     });
+    window.addEventListener('resize', function () {
+      if (back && back.classList.contains('open') && DATA && DATA._b && !enoughVisible()) fit();
+    });
   }
 
   function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
@@ -1072,6 +1075,15 @@ else renderRelated();
       if (v && isFinite(v.s) && isFinite(v.x) && isFinite(v.y) && v.s > 0) { view.s = v.s; view.x = v.x; view.y = v.y; return true; }
     } catch (e) {}
     return false;
+  }
+  // Is enough of the map on-screen? Guards a saved view that lands off-stage when
+  // the Atlas is reopened (or resized) at a very different viewport size.
+  function enoughVisible() {
+    if (!DATA || !DATA._b) return true;
+    var b = DATA._b, sw = stage.clientWidth, sh = stage.clientHeight;
+    var L = view.x + b.x * view.s, T = view.y + b.y * view.s,
+        Rr = view.x + (b.x + b.w) * view.s, B = view.y + (b.y + b.h) * view.s;
+    return view.s > 0 && (Math.min(Rr, sw) - Math.max(L, 0) >= 60) && (Math.min(B, sh) - Math.max(T, 0) >= 60);
   }
   function zoomAt(px, py, f) {
     var ns = Math.max(0.22, Math.min(9, view.s * f)), k = ns / view.s;
@@ -1145,7 +1157,8 @@ else renderRelated();
         window.location.href = base + p.href;
       });
     });
-    if (!restore()) fit(); else apply();   // reopen exactly where the reader left off
+    if (restore()) { apply(); if (!enoughVisible()) fit(); }   // reopen where they left off — unless it's now off-screen
+    else fit();
   }
 
   function activate(p, el) {
