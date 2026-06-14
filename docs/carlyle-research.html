@@ -82,7 +82,8 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   letter-spacing: .06em; display: flex; align-items: center; gap: .3rem; }
 #listen-bar select { font-family: var(--sans); font-size: .72rem; background: var(--bg); color: var(--text);
   border: 1px solid var(--border); border-radius: 7px; padding: .15rem .3rem; }
-@media (max-width: 560px) { #lb-title { display: none; } }
+#lb-voice { max-width: 160px; }
+@media (max-width: 560px) { #lb-title { display: none; } #lb-voice { max-width: 110px; } }
 #main { margin-left: 320px; display: flex; flex-direction: column; min-height: 100vh; }
 #content { max-width: var(--reader-measure, 740px); width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
   font-size: var(--reader-fs, 1.04rem); line-height: 1.72; flex: 1; }
@@ -245,15 +246,15 @@ figure.viz .viz-donutwrap svg { width: 200px; flex: 0 0 auto; }
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <h1>The Calvinist Without a Creed</h1>
   <p class="subtitle">Thomas Carlyle and his Scottish Calvinist formation</p>
-  <input id="search" type="search" placeholder="Search the corpus…" autocomplete="off">
-  <div id="search-results"></div>
-  <nav id="toc"></nav>
   <div id="reader-controls">
     <button id="listen-btn" title="Listen to this chapter">▶ Listen</button>
     <button id="type-btn" title="Text size &amp; width" aria-haspopup="true">Aa</button>
     <button id="share-btn" title="Share this chapter">Share ↗</button>
     <button id="theme-btn">◐ Theme</button>
   </div>
+  <input id="search" type="search" placeholder="Search the corpus…" autocomplete="off">
+  <div id="search-results"></div>
+  <nav id="toc"></nav>
 </aside>
 <main id="main">
   <article id="content"></article>
@@ -462,8 +463,35 @@ function chunkText(t) {
   if (buf) out.push(buf);
   return out;
 }
-function pickVoice() { const vs = synth.getVoices();
-  return vs.find(v => /^en/i.test(v.lang) && v.localService) || vs.find(v => /^en/i.test(v.lang)) || vs[0]; }
+function pickVoice() {
+  const sel = lbar && lbar.querySelector('#lb-voice');
+  const name = sel && sel.value;
+  const vs = synth.getVoices();
+  if (name) { const v = vs.find(v => v.name === name); if (v) return v; }
+  return vs.find(v => /^en/i.test(v.lang) && /enhanced|premium/i.test(v.name) && v.localService)
+    || vs.find(v => /^en/i.test(v.lang) && v.localService)
+    || vs.find(v => /^en/i.test(v.lang)) || vs[0];
+}
+function populateVoices() {
+  const sel = lbar && lbar.querySelector('#lb-voice');
+  if (!sel) return;
+  const vs = synth.getVoices().filter(v => /^en/i.test(v.lang));
+  if (!vs.length) return;
+  vs.sort((a, b) => {
+    const rank = v => /enhanced|premium/i.test(v.name) ? 0 : v.localService ? 1 : 2;
+    return rank(a) - rank(b);
+  });
+  const prev = sel.value;
+  sel.innerHTML = vs.map(v => '<option value="' + v.name + '">' + v.name + '</option>').join('');
+  if (prev && vs.find(v => v.name === prev)) sel.value = prev;
+  if (!localStorage.getItem('listen-voice-tip') && !vs.some(v => /enhanced|premium/i.test(v.name))) {
+    localStorage.setItem('listen-voice-tip', '1');
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:fixed;bottom:5rem;left:50%;transform:translateX(-50%);background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:.65rem 1.1rem;font-family:var(--sans);font-size:.78rem;color:var(--muted);z-index:50;max-width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.18);line-height:1.5';
+    tip.textContent = 'Tip: download Enhanced or Premium voices in your OS accessibility settings for much richer audio.';
+    document.body.appendChild(tip); setTimeout(() => tip.remove(), 8000);
+  }
+}
 function speakChunk() {
   if (!listening) return;
   if (lidx >= lchunks.length) {
@@ -505,6 +533,7 @@ function buildBar() {
   lbar = document.createElement('div'); lbar.id = 'listen-bar';
   lbar.innerHTML = '<button id="lb-toggle" title="Pause">⏸</button><button id="lb-stop" title="Stop">⏹</button>'
     + '<span id="lb-title"></span>'
+    + '<label class="lb-ctl">Voice <select id="lb-voice"><option>Loading…</option></select></label>'
     + '<label class="lb-ctl">Speed <select id="lb-rate"><option value="0.8">0.8×</option><option value="1" selected>1×</option><option value="1.2">1.2×</option><option value="1.5">1.5×</option></select></label>'
     + '<label class="lb-ctl">Sleep <select id="lb-sleep"><option value="0" selected>Off</option><option value="1">End of chapter</option><option value="900">15 min</option><option value="1800">30 min</option></select></label>';
   document.body.appendChild(lbar);
@@ -512,6 +541,8 @@ function buildBar() {
   lbar.querySelector('#lb-stop').onclick = stopListen;
   lbar.querySelector('#lb-rate').onchange = function () { listenRate = +this.value; };
   lbar.querySelector('#lb-sleep').onchange = function () { setSleep(+this.value); };
+  populateVoices();
+  if (synth.onvoiceschanged !== undefined) synth.addEventListener('voiceschanged', populateVoices);
 }
 function updateBar() {
   if (!lbar) return;
