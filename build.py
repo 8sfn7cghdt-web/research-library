@@ -2211,8 +2211,10 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <link rel="icon" href="{favicon}">
 {og_meta}
 <style>{css}</style>
+{overture_head}
 </head>
 <body>
+{overture}
 <div class="masthead">
   <span class="mh-brand">research · calvincollins · xyz</span>
   <nav class="mh-nav">
@@ -2398,6 +2400,79 @@ setTimeout(function () {
   groups.forEach(function (g) { fy.appendChild(g); });
   fy.hidden = false;
 }, 0);
+"""
+
+# First-visit overture — a once-only, flash-free welcome on the home page,
+# assembled entirely from the existing brand (site title/subtitle + the three
+# section names) plus the trencadís mosaic. A tiny synchronous <head> script adds
+# html.show-overture BEFORE first paint when 'seen-overture' is unset, so there's
+# no flash of the library behind it; the overlay is pre-rendered in HTML so it
+# paints instantly. Instantly skippable (Enter / Esc / backdrop) and fully
+# disabled under prefers-reduced-motion (shown without animation).
+OVERTURE_HEAD = (
+    "<script>try{if(!localStorage.getItem('seen-overture'))"
+    "document.documentElement.classList.add('show-overture');}catch(e){}</script>"
+)
+
+OVERTURE_CSS = """
+#overture { display: none; }
+html.show-overture { overflow: hidden; }
+html.show-overture #overture { display: flex; position: fixed; inset: 0; z-index: 200; background: var(--bg);
+  align-items: center; justify-content: center; text-align: center; padding: 2rem; animation: ovFade .55s ease both; }
+#overture.closing { animation: ovOut .5s ease forwards; }
+.ov-inner { max-width: 640px; }
+.ov-tiles { display: flex; gap: 8px; justify-content: center; margin: 0 0 1.7rem; }
+.ov-tiles span { width: 22px; height: 22px; }
+.ov-tiles span:nth-child(1) { background: var(--t1); border-radius: 4px 10px 5px 9px; transform: rotate(-7deg); }
+.ov-tiles span:nth-child(2) { background: var(--t2); border-radius: 9px 4px 10px 5px; transform: rotate(9deg); }
+.ov-tiles span:nth-child(3) { background: var(--t3); border-radius: 5px 9px 4px 10px; transform: rotate(-5deg); }
+.ov-tiles span:nth-child(4) { background: var(--t4); border-radius: 10px 5px 9px 4px; transform: rotate(6deg); }
+.ov-tiles span:nth-child(5) { background: var(--t5); border-radius: 6px 9px 5px 10px; transform: rotate(-9deg); }
+.ov-brand { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .2em; color: var(--accent); margin: 0 0 1rem; }
+.ov-title { font-family: var(--display); font-size: clamp(2.4rem, 7vw, 4.2rem); line-height: 1.04; letter-spacing: -.01em; margin: 0 0 .6rem; }
+.ov-sub { font-family: var(--serif); font-style: italic; font-size: 1.25rem; color: var(--muted); margin: 0 0 1.8rem; }
+.ov-sections { display: flex; flex-wrap: wrap; gap: .55rem 1.7rem; justify-content: center; font-family: var(--sans);
+  font-size: .72rem; text-transform: uppercase; letter-spacing: .13em; color: var(--muted); margin: 0 0 2.2rem; }
+.ov-sections span { position: relative; }
+.ov-sections span:not(:last-child)::after { content: "·"; position: absolute; right: -1rem; color: var(--border); }
+#ov-enter { font-family: var(--sans); font-size: .82rem; text-transform: uppercase; letter-spacing: .08em; color: var(--bg);
+  background: var(--accent); border: none; border-radius: 14px; padding: .8rem 1.8rem; cursor: pointer; transition: transform .15s ease; }
+#ov-enter:hover { transform: translateY(-2px); }
+.ov-skip { font-family: var(--sans); font-size: .68rem; color: var(--muted); margin: 1rem 0 0; }
+html.show-overture .ov-inner > * { animation: ovRise .7s cubic-bezier(.2,.7,.3,1) both; }
+html.show-overture .ov-tiles { animation-delay: .05s; }
+html.show-overture .ov-brand { animation-delay: .14s; }
+html.show-overture .ov-title { animation-delay: .22s; }
+html.show-overture .ov-sub { animation-delay: .34s; }
+html.show-overture .ov-sections { animation-delay: .46s; }
+html.show-overture #ov-enter { animation-delay: .58s; }
+html.show-overture .ov-skip { animation-delay: .7s; }
+@keyframes ovFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes ovOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+@keyframes ovRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  html.show-overture #overture, html.show-overture .ov-inner > * { animation: none !important; }
+}
+"""
+
+OVERTURE_JS = r"""
+(function () {
+  var ov = document.getElementById('overture');
+  if (!ov) return;
+  if (!document.documentElement.classList.contains('show-overture')) { ov.remove(); return; }
+  function dismiss() {
+    if (ov.classList.contains('closing')) return;
+    try { localStorage.setItem('seen-overture', '1'); } catch (e) {}
+    ov.classList.add('closing');
+    setTimeout(function () { document.documentElement.classList.remove('show-overture'); if (ov.parentNode) ov.remove(); }, 520);
+  }
+  var enter = document.getElementById('ov-enter');
+  if (enter) enter.addEventListener('click', dismiss);
+  ov.addEventListener('click', function (e) { if (e.target === ov) dismiss(); });
+  document.addEventListener('keydown', function (e) {
+    if (document.getElementById('overture') && (e.key === 'Escape' || e.key === 'Enter')) { e.preventDefault(); dismiss(); }
+  });
+})();
 """
 
 LIBRARY_CSS = """
@@ -4868,7 +4943,19 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     )
 
     # The Fingerprint band shares the library CSS, so fold its rules in once.
-    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS
+    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + OVERTURE_CSS
+    # First-visit overture markup — built from the existing brand only (no new copy).
+    overture_html = (
+        '<div id="overture"><div class="ov-inner">'
+        '<div class="ov-tiles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>'
+        '<p class="ov-brand">research · calvincollins · xyz</p>'
+        f'<h1 class="ov-title">{html.escape(site_title)}</h1>'
+        f'<p class="ov-sub">{html.escape(site_subtitle)}</p>'
+        '<div class="ov-sections"><span>The Research</span><span>The Ghost of Times</span><span>The Fingerprint</span></div>'
+        '<button id="ov-enter" type="button">Enter the library →</button>'
+        '<p class="ov-skip">Press Esc to skip</p>'
+        '</div></div>'
+    )
     daily_passage = (
         '<section id="daily-passage" hidden></section>'
         f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>'
@@ -4881,6 +4968,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         favicon=FAVICON, og_meta=OG_META,
         stats=stats,
         hero=hero_art(),
+        overture_head=OVERTURE_HEAD,
+        overture=overture_html,
         daily_passage=daily_passage,
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
@@ -4888,7 +4977,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
         cards=library_body,
-        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS,
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS,
         shell=shell_root,
     ))
     build_wrapped_page(out, wrapped_stats, shell=shell_root)

@@ -1,0 +1,9 @@
+[
+  { "file": "00_Briefing.md", "after": "## The Philosophy and the Religion", "snippet": "circles_oversoul.html" },
+  { "file": "02_Transcendentalism_Philosophy_and_Texts.md", "after": "## 8. The Founding Texts as Arguments", "snippet": "founding_texts_arc.html" },
+  { "file": "02_Transcendentalism_Philosophy_and_Texts.md", "after": "## 13. The Genealogy at a Glance", "snippet": "source_confluence.html" },
+  { "file": "06_Democracy_Individualism_and_Abolition.md", "after": "## 2. The Evolution of Emerson", "snippet": "abolition_arc.html" },
+  { "file": "07_Harvard_Lyceum_and_American_Intellectual_Life.md", "after": "## 4. The Reconciliation, 1866", "snippet": "harvard_rupture.html" },
+  { "file": "08_Reception_Reputation_and_Enduring_Influence.md", "after": "## 7. Reputation Cycles I", "snippet": "reputation_wave.html" },
+  { "file": "Future_Trajectory.md", "after": "## The Scenarios", "snippet": "forecast_fan.html" }
+]
