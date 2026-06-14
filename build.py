@@ -2460,18 +2460,23 @@ OVERTURE_JS = r"""
   var ov = document.getElementById('overture');
   if (!ov) return;
   if (!document.documentElement.classList.contains('show-overture')) { ov.remove(); return; }
+  var enter = document.getElementById('ov-enter');
   function dismiss() {
     if (ov.classList.contains('closing')) return;
     try { localStorage.setItem('seen-overture', '1'); } catch (e) {}
     ov.classList.add('closing');
-    setTimeout(function () { document.documentElement.classList.remove('show-overture'); if (ov.parentNode) ov.remove(); }, 520);
+    // honour reduced motion: skip the fade-out dead-time (overlay + scroll-lock go at once)
+    var quick = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(function () { document.documentElement.classList.remove('show-overture'); if (ov.parentNode) ov.remove(); }, quick ? 0 : 520);
   }
-  var enter = document.getElementById('ov-enter');
   if (enter) enter.addEventListener('click', dismiss);
   ov.addEventListener('click', function (e) { if (e.target === ov) dismiss(); });
   document.addEventListener('keydown', function (e) {
-    if (document.getElementById('overture') && (e.key === 'Escape' || e.key === 'Enter')) { e.preventDefault(); dismiss(); }
+    if (!document.getElementById('overture')) return;  // after dismissal this handler no-ops site-wide
+    if (e.key === 'Escape' || e.key === 'Enter') { e.preventDefault(); dismiss(); }
+    else if (e.key === 'Tab') { e.preventDefault(); if (enter) enter.focus(); }  // trap focus on the single control
   });
+  if (enter) try { enter.focus(); } catch (e) {}  // move focus into the dialog on open
 })();
 """
 
@@ -4946,7 +4951,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + OVERTURE_CSS
     # First-visit overture markup — built from the existing brand only (no new copy).
     overture_html = (
-        '<div id="overture"><div class="ov-inner">'
+        '<div id="overture" role="dialog" aria-modal="true" aria-label="Welcome to the library"><div class="ov-inner">'
         '<div class="ov-tiles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>'
         '<p class="ov-brand">research · calvincollins · xyz</p>'
         f'<h1 class="ov-title">{html.escape(site_title)}</h1>'
