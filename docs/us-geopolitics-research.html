@@ -141,6 +141,51 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
 .corpus-fig svg .s-t5 { stroke: var(--t5); }
 .corpus-fig svg .f-bg { fill: var(--bg); }
 .corpus-fig svg .f-panel { fill: var(--panel); }
+/* viz chart fences (build-time SVG/HTML), themed with the same palette tokens
+   as corpus-fig so they recolor in light & dark and per corpus. */
+figure.viz { margin: 2.2rem 0; padding: 1.1rem 1.2rem .95rem; background: var(--panel);
+  border: 1px solid var(--border); border-radius: var(--fig-radius, 16px); }
+figure.viz .viz-title { font-family: var(--sans); font-size: .95rem; font-weight: 700;
+  color: var(--text); margin: 0 0 .9rem; line-height: 1.3; }
+figure.viz svg { width: 100%; height: auto; display: block; }
+figure.viz svg text { font-family: var(--sans); fill: var(--text); }
+figure.viz figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
+  margin-top: .8rem; line-height: 1.5; }
+figure.viz figcaption .credit { font-style: italic; }
+.viz svg .t-muted { fill: var(--muted); }
+.viz svg .ln { stroke: var(--muted); }
+.viz svg .ln-soft { stroke: var(--border); }
+.viz svg .f-t1 { fill: var(--t1); } .viz svg .f-t2 { fill: var(--t2); }
+.viz svg .f-t3 { fill: var(--t3); } .viz svg .f-t4 { fill: var(--t4); }
+.viz svg .f-t5 { fill: var(--t5); }
+.viz svg .s-t1 { stroke: var(--t1); } .viz svg .s-t2 { stroke: var(--t2); }
+.viz svg .s-t3 { stroke: var(--t3); } .viz svg .s-t4 { stroke: var(--t4); }
+.viz svg .s-t5 { stroke: var(--t5); }
+.viz-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 12px;
+  font-family: var(--sans); font-size: .8rem; color: var(--text); }
+.viz-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.viz-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.viz-legend b { color: var(--muted); font-weight: 600; }
+.viz-donutwrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+figure.viz .viz-donutwrap svg { width: 200px; flex: 0 0 auto; }
+.viz-legend-col { flex-direction: column; gap: 8px; margin: 0; }
+.viz-timeline { font-family: var(--sans); font-size: .9rem; }
+.viz-timeline .tlrow { display: grid; grid-template-columns: 104px 1fr; gap: 0 18px; }
+.viz-timeline .tldate { text-align: right; font-weight: 700; color: var(--accent);
+  font-size: .82rem; padding: 2px 0 18px; }
+.viz-timeline .tlbody { position: relative; border-left: 2px solid var(--border);
+  padding: 0 0 18px 18px; line-height: 1.5; }
+.viz-timeline .tlbody::before { content: ""; position: absolute; left: -6px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.viz-timeline .tlrow:last-child .tldate, .viz-timeline .tlrow:last-child .tlbody { padding-bottom: 2px; }
+.viz-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: .85rem; }
+.viz-flow .flowstep { background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 14px; line-height: 1.35; max-width: 230px; }
+.viz-flow .flowarrow { color: var(--accent); font-weight: 700; font-size: 18px; }
+.viz-error { margin: 1.4rem 0; padding: 14px 18px; border: 1px dashed var(--accent);
+  border-radius: 8px; background: var(--panel); font-family: var(--sans); font-size: .8rem; color: var(--text); }
+.viz-error pre { margin: 10px 0 0; font-size: .72rem; white-space: pre-wrap; }
 #pager { max-width: 740px; width: 100%; margin: 0 auto; padding: 1rem 2rem 3rem;
   display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); }
 #pager button { font-size: 1rem; padding: .45rem 1.2rem; border: 1px solid var(--border);

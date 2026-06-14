@@ -203,6 +203,313 @@ def inject_figures(corpus, folder):
     return count
 
 
+# --------------------------------------------------------- ```viz chart fences
+# Deep-research corpora embed small JSON chart specs in fenced ```viz blocks
+# (bar / column / line / donut / range / timeline / flow). The standalone HTML
+# volumes render these in deep-research/scripts/build_html.py; here we do the
+# same at build time, rewriting each fence into an inline SVG/HTML figure that
+# the client markdown renderer (marked.js) passes straight through as one raw
+# HTML block — exactly like the corpus-fig snippets inject_figures splices in.
+# Colors are the per-corpus theme classes (f-t1..f-t5 / t-muted / ln / ln-soft),
+# so every chart recolors in light & dark and adopts each corpus's palette. Bad
+# JSON degrades to a visible box rather than failing the build.
+
+VIZ_FENCE_RE = re.compile(r"```viz[^\S\n]*\n(.*?)\n[ \t]*```", re.S)
+_VIZ_NPAL = 5  # theme accent tokens --t1..--t5 the palette cycles through
+
+
+def _viz_esc(s):
+    return html.escape(str(s), quote=True)
+
+
+def _viz_trunc(s, n):
+    s = str(s)
+    return s if len(s) <= n else s[: n - 1] + "…"
+
+
+def _viz_fmt_num(v):
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return _viz_esc(v)
+    a = abs(f)
+    if a >= 1e9:
+        s = f"{f / 1e9:.1f}".rstrip("0").rstrip(".") + "B"
+    elif a >= 1e6:
+        s = f"{f / 1e6:.1f}".rstrip("0").rstrip(".") + "M"
+    elif a >= 1e4:
+        s = f"{f / 1e3:.1f}".rstrip("0").rstrip(".") + "k"
+    elif f == int(f):
+        s = f"{int(f):,}"
+    else:
+        s = f"{f:,.2f}".rstrip("0").rstrip(".")
+    return s
+
+
+def _viz_nice_max(v):
+    """Smallest 'nice' number >= v, for axis tops; keeps quarter ticks clean."""
+    if v <= 0:
+        return 1.0
+    exp = math.floor(math.log10(v))
+    frac = v / 10 ** exp
+    for n in (1, 2, 3, 4, 6, 8, 10):
+        if frac <= n:
+            return n * 10 ** exp
+    return 10 ** (exp + 1)
+
+
+def _viz_svg_open(w, h):
+    return (f'<svg viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" '
+            f'role="img" preserveAspectRatio="xMidYMid meet">')
+
+
+def _viz_legend(series):
+    spans = "".join(
+        f'<span><i style="background:var(--t{i % _VIZ_NPAL + 1})"></i>{_viz_esc(s)}</span>'
+        for i, s in enumerate(series)
+    )
+    return f'<div class="viz-legend">{spans}</div>'
+
+
+def _viz_bar(spec):
+    """Horizontal bars — comparisons with longish labels."""
+    items = spec["items"]
+    if not items:
+        raise ValueError("bar: items is empty")
+    vals = [float(i["value"]) for i in items]
+    vmax = _viz_nice_max(max(vals))
+    unit = _viz_esc(spec.get("unit", ""))
+    W, LP, RP, TP, bh, gap = 700, 185, 70, 8, 22, 12
+    PW = W - LP - RP
+    H = TP + len(items) * (bh + gap) + 28
+    out = [_viz_svg_open(W, H)]
+    for k in range(5):
+        gx = LP + PW * k / 4
+        out.append(f'<line x1="{gx:.1f}" y1="{TP}" x2="{gx:.1f}" y2="{H - 24}" class="ln-soft" stroke-width="1"/>')
+        out.append(f'<text x="{gx:.1f}" y="{H - 8}" font-size="12" class="t-muted" text-anchor="middle">{_viz_fmt_num(vmax * k / 4)}</text>')
+    y = TP
+    for it in items:
+        v = float(it["value"])
+        bw = PW * v / vmax if vmax else 0
+        out.append(f'<text x="{LP - 10}" y="{y + bh - 6}" font-size="13" text-anchor="end">{_viz_esc(_viz_trunc(it["label"], 27))}</text>')
+        out.append(f'<rect x="{LP}" y="{y}" width="{bw:.1f}" height="{bh}" rx="3" class="f-t1"/>')
+        out.append(f'<text x="{LP + bw + 8:.1f}" y="{y + bh - 6}" font-size="12.5" class="t-muted">{_viz_fmt_num(v)}{unit}</text>')
+        y += bh + gap
+    out.append("</svg>")
+    return "".join(out)
+
+
+def _viz_column(spec):
+    """Vertical bars — short labels, e.g. years or quarters."""
+    items = spec["items"]
+    if not items:
+        raise ValueError("column: items is empty")
+    n = len(items)
+    vals = [float(i["value"]) for i in items]
+    vmax = _viz_nice_max(max(vals))
+    unit = _viz_esc(spec.get("unit", ""))
+    rotate = n > 7 or any(len(str(i["label"])) > 7 for i in items)
+    W, H, LP, RP, TP = 700, 330, 60, 14, 16
+    BP = 80 if rotate else 42
+    PW, PH = W - LP - RP, H - TP - BP
+    slot = PW / n
+    cw = min(56, slot * 0.62)
+    out = [_viz_svg_open(W, H)]
+    for k in range(5):
+        gy = TP + PH * (1 - k / 4)
+        out.append(f'<line x1="{LP}" y1="{gy:.1f}" x2="{W - RP}" y2="{gy:.1f}" class="ln-soft" stroke-width="1"/>')
+        out.append(f'<text x="{LP - 8}" y="{gy + 4:.1f}" font-size="12" class="t-muted" text-anchor="end">{_viz_fmt_num(vmax * k / 4)}</text>')
+    for i, it in enumerate(items):
+        v = float(it["value"])
+        bh = PH * v / vmax if vmax else 0
+        x = LP + slot * i + (slot - cw) / 2
+        y = TP + PH - bh
+        out.append(f'<rect x="{x:.1f}" y="{y:.1f}" width="{cw:.1f}" height="{bh:.1f}" rx="3" class="f-t1"/>')
+        out.append(f'<text x="{x + cw / 2:.1f}" y="{y - 6:.1f}" font-size="12" class="t-muted" text-anchor="middle">{_viz_fmt_num(v)}{unit}</text>')
+        lx, ly = x + cw / 2, TP + PH + 18
+        label = _viz_esc(_viz_trunc(it["label"], 14))
+        if rotate:
+            out.append(f'<text x="{lx:.1f}" y="{ly:.1f}" font-size="12" text-anchor="end" transform="rotate(-35 {lx:.1f} {ly:.1f})">{label}</text>')
+        else:
+            out.append(f'<text x="{lx:.1f}" y="{ly:.1f}" font-size="12.5" text-anchor="middle">{label}</text>')
+    out.append("</svg>")
+    return "".join(out)
+
+
+def _viz_line(spec):
+    """One or more series over an ordered x-axis (trends over time)."""
+    xs = [str(x) for x in spec["x"]]
+    series = spec["series"]
+    if not xs or not series:
+        raise ValueError("line: x and series are required")
+    all_vals = [float(v) for s in series for v in s["values"] if v is not None]
+    vmax = _viz_nice_max(max(all_vals))
+    vmin = min(all_vals)
+    vmin = -_viz_nice_max(-vmin) if vmin < 0 else 0.0
+    W, H, LP, RP, TP, BP = 700, 330, 60, 18, 14, 44
+    PW, PH = W - LP - RP, H - TP - BP
+
+    def X(i):
+        return LP + (PW * i / (len(xs) - 1) if len(xs) > 1 else PW / 2)
+
+    def Y(v):
+        return TP + PH * (1 - (v - vmin) / (vmax - vmin))
+
+    out = [_viz_svg_open(W, H)]
+    for k in range(5):
+        val = vmin + (vmax - vmin) * k / 4
+        gy = Y(val)
+        out.append(f'<line x1="{LP}" y1="{gy:.1f}" x2="{W - RP}" y2="{gy:.1f}" class="ln-soft" stroke-width="1"/>')
+        out.append(f'<text x="{LP - 8}" y="{gy + 4:.1f}" font-size="12" class="t-muted" text-anchor="end">{_viz_fmt_num(val)}</text>')
+    step = max(1, math.ceil(len(xs) / 8))
+    for i in range(0, len(xs), step):
+        out.append(f'<text x="{X(i):.1f}" y="{H - 18}" font-size="12" class="t-muted" text-anchor="middle">{_viz_esc(_viz_trunc(xs[i], 10))}</text>')
+    for si, s in enumerate(series):
+        scls = f"s-t{si % _VIZ_NPAL + 1}"
+        fcls = f"f-t{si % _VIZ_NPAL + 1}"
+        pts = [(X(i), Y(float(v))) for i, v in enumerate(s["values"]) if v is not None]
+        path = " ".join(f"{px:.1f},{py:.1f}" for px, py in pts)
+        out.append(f'<polyline points="{path}" fill="none" class="{scls}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>')
+        if len(pts) <= 30:
+            for px, py in pts:
+                out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="3" class="{fcls}"/>')
+    out.append("</svg>")
+    legend = _viz_legend([s["name"] for s in series]) if len(series) > 1 else ""
+    return legend + "".join(out)
+
+
+def _viz_donut(spec):
+    """Composition / share-of-whole, with a legend."""
+    items = spec["items"]
+    total = sum(float(i["value"]) for i in items)
+    if total <= 0:
+        raise ValueError("donut: values must sum to > 0")
+    cx = cy = 110
+    r, stroke = 72, 42
+    circ = 2 * math.pi * r
+    out = [_viz_svg_open(220, 220)]
+    offset = 0.0
+    legend_rows = []
+    for i, it in enumerate(items):
+        frac = float(it["value"]) / total
+        seg = circ * frac
+        scls = f"s-t{i % _VIZ_NPAL + 1}"
+        out.append(
+            f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="none" class="{scls}" '
+            f'stroke-width="{stroke}" stroke-dasharray="{seg:.2f} {circ - seg:.2f}" '
+            f'stroke-dashoffset="{-offset:.2f}" transform="rotate(-90 {cx} {cy})"/>'
+        )
+        offset += seg
+        legend_rows.append(
+            f'<span><i style="background:var(--t{i % _VIZ_NPAL + 1})"></i>{_viz_esc(it["label"])} '
+            f'<b>{frac * 100:.0f}%</b></span>'
+        )
+    out.append("</svg>")
+    return (f'<div class="viz-donutwrap">{"".join(out)}'
+            f'<div class="viz-legend viz-legend-col">{"".join(legend_rows)}</div></div>')
+
+
+def _viz_range(spec):
+    """Horizontal probability/interval ranges — built for forecast scenarios."""
+    items = spec["items"]
+    if not items:
+        raise ValueError("range: items is empty")
+    scale = 100 if all(float(i["high"]) <= 1 for i in items) else 1
+    W, LP, RP, TP, bh, gap = 700, 185, 24, 8, 20, 16
+    PW = W - LP - RP
+    H = TP + len(items) * (bh + gap) + 28
+    out = [_viz_svg_open(W, H)]
+    for k in range(5):
+        gx = LP + PW * k / 4
+        out.append(f'<line x1="{gx:.1f}" y1="{TP}" x2="{gx:.1f}" y2="{H - 24}" class="ln-soft" stroke-width="1"/>')
+        out.append(f'<text x="{gx:.1f}" y="{H - 8}" font-size="12" class="t-muted" text-anchor="middle">{k * 25}%</text>')
+    y = TP
+    for i, it in enumerate(items):
+        lo, hi = float(it["low"]) * scale, float(it["high"]) * scale
+        x1, x2 = LP + PW * lo / 100, LP + PW * hi / 100
+        fcls = f"f-t{i % _VIZ_NPAL + 1}"
+        out.append(f'<text x="{LP - 10}" y="{y + bh - 5}" font-size="13" text-anchor="end">{_viz_esc(_viz_trunc(it["label"], 27))}</text>')
+        out.append(f'<line x1="{LP}" y1="{y + bh / 2:.1f}" x2="{W - RP}" y2="{y + bh / 2:.1f}" class="ln-soft" stroke-width="1"/>')
+        out.append(f'<rect x="{x1:.1f}" y="{y}" width="{max(x2 - x1, 2):.1f}" height="{bh}" rx="10" class="{fcls}" fill-opacity="0.85"/>')
+        out.append(f'<text x="{x2 + 8:.1f}" y="{y + bh - 5}" font-size="12.5" class="t-muted">{lo:.0f}–{hi:.0f}%</text>')
+        y += bh + gap
+    out.append("</svg>")
+    return "".join(out)
+
+
+def _viz_timeline(spec):
+    """Vertical dated timeline — HTML, so long labels wrap cleanly."""
+    events = spec["events"]
+    if not events:
+        raise ValueError("timeline: events is empty")
+    rows = "".join(
+        f'<div class="tlrow"><div class="tldate">{_viz_esc(e["date"])}</div>'
+        f'<div class="tlbody">{_viz_esc(e["label"])}</div></div>'
+        for e in events
+    )
+    return f'<div class="viz-timeline">{rows}</div>'
+
+
+def _viz_flow(spec):
+    """Linear process / causal-chain diagram — boxes joined by arrows."""
+    steps = spec["steps"]
+    if not steps:
+        raise ValueError("flow: steps is empty")
+    parts = []
+    for i, s in enumerate(steps):
+        if i:
+            parts.append('<span class="flowarrow">→</span>')
+        parts.append(f'<span class="flowstep">{_viz_esc(s)}</span>')
+    return f'<div class="viz-flow">{"".join(parts)}</div>'
+
+
+VIZ_RENDERERS = {
+    "bar": _viz_bar, "column": _viz_column, "line": _viz_line, "donut": _viz_donut,
+    "range": _viz_range, "timeline": _viz_timeline, "flow": _viz_flow,
+}
+
+
+def render_viz_fence(spec_text):
+    """Render one ```viz JSON spec to a single-line <figure class="viz"> block.
+    Single-line output (the renderers join with "") is required so marked.js
+    treats it as one raw HTML block when it parses the chapter body client-side."""
+    try:
+        spec = json.loads(spec_text)
+        vtype = spec.get("type")
+        if vtype not in VIZ_RENDERERS:
+            raise ValueError(f"unknown viz type {vtype!r} "
+                             f"(known: {', '.join(sorted(VIZ_RENDERERS))})")
+        body = VIZ_RENDERERS[vtype](spec)
+    except Exception as e:  # degrade visibly, never break the build
+        esc = html.escape(spec_text).replace("\n", "&#10;")
+        return ('<div class="viz-error"><strong>Unrendered visualization</strong> '
+                f'({_viz_esc(e)})<pre>{esc}</pre></div>')
+    parts = ['<figure class="viz">']
+    if spec.get("title"):
+        parts.append(f'<div class="viz-title">{_viz_esc(spec["title"])}</div>')
+    parts.append(body)
+    cap, cred = spec.get("caption", ""), spec.get("credit", "")
+    if cap or cred:
+        credit = f' <span class="credit">Source: {_viz_esc(cred)}.</span>' if cred else ""
+        parts.append(f"<figcaption>{_viz_esc(cap)}{credit}</figcaption>")
+    parts.append("</figure>")
+    return "".join(parts)
+
+
+def transform_viz(md):
+    """Rewrite every ```viz fence in a chapter body to an inline themed figure.
+    Returns (new_markdown, count). Each figure is blank-line-isolated so the
+    client markdown renderer starts a fresh raw-HTML block for it."""
+    n = 0
+
+    def repl(m):
+        nonlocal n
+        n += 1
+        return "\n\n" + render_viz_fence(m.group(1)) + "\n\n"
+
+    return VIZ_FENCE_RE.sub(repl, md), n
+
+
 # ---------------------------------------------------------------- per-corpus theme
 # A corpus opts into its own bespoke visual identity by dropping
 # figures/<folder-name>/theme.json next to its map.json. When present, the
@@ -653,6 +960,51 @@ figure.corpus-fig figcaption strong { color: var(--accent); }
 .corpus-fig svg .s-t5 { stroke: var(--t5); }
 .corpus-fig svg .f-bg { fill: var(--bg); }
 .corpus-fig svg .f-panel { fill: var(--panel); }
+/* viz chart fences (build-time SVG/HTML), themed with the same palette tokens
+   as corpus-fig so they recolor in light & dark and per corpus. */
+figure.viz { margin: 2.2rem 0; padding: 1.1rem 1.2rem .95rem; background: var(--panel);
+  border: 1px solid var(--border); border-radius: var(--fig-radius, 16px); }
+figure.viz .viz-title { font-family: var(--sans); font-size: .95rem; font-weight: 700;
+  color: var(--text); margin: 0 0 .9rem; line-height: 1.3; }
+figure.viz svg { width: 100%; height: auto; display: block; }
+figure.viz svg text { font-family: var(--sans); fill: var(--text); }
+figure.viz figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
+  margin-top: .8rem; line-height: 1.5; }
+figure.viz figcaption .credit { font-style: italic; }
+.viz svg .t-muted { fill: var(--muted); }
+.viz svg .ln { stroke: var(--muted); }
+.viz svg .ln-soft { stroke: var(--border); }
+.viz svg .f-t1 { fill: var(--t1); } .viz svg .f-t2 { fill: var(--t2); }
+.viz svg .f-t3 { fill: var(--t3); } .viz svg .f-t4 { fill: var(--t4); }
+.viz svg .f-t5 { fill: var(--t5); }
+.viz svg .s-t1 { stroke: var(--t1); } .viz svg .s-t2 { stroke: var(--t2); }
+.viz svg .s-t3 { stroke: var(--t3); } .viz svg .s-t4 { stroke: var(--t4); }
+.viz svg .s-t5 { stroke: var(--t5); }
+.viz-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 12px;
+  font-family: var(--sans); font-size: .8rem; color: var(--text); }
+.viz-legend span { display: inline-flex; align-items: center; gap: 7px; }
+.viz-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+.viz-legend b { color: var(--muted); font-weight: 600; }
+.viz-donutwrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+figure.viz .viz-donutwrap svg { width: 200px; flex: 0 0 auto; }
+.viz-legend-col { flex-direction: column; gap: 8px; margin: 0; }
+.viz-timeline { font-family: var(--sans); font-size: .9rem; }
+.viz-timeline .tlrow { display: grid; grid-template-columns: 104px 1fr; gap: 0 18px; }
+.viz-timeline .tldate { text-align: right; font-weight: 700; color: var(--accent);
+  font-size: .82rem; padding: 2px 0 18px; }
+.viz-timeline .tlbody { position: relative; border-left: 2px solid var(--border);
+  padding: 0 0 18px 18px; line-height: 1.5; }
+.viz-timeline .tlbody::before { content: ""; position: absolute; left: -6px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
+.viz-timeline .tlrow:last-child .tldate, .viz-timeline .tlrow:last-child .tlbody { padding-bottom: 2px; }
+.viz-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+  font-family: var(--sans); font-size: .85rem; }
+.viz-flow .flowstep { background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 8px 14px; line-height: 1.35; max-width: 230px; }
+.viz-flow .flowarrow { color: var(--accent); font-weight: 700; font-size: 18px; }
+.viz-error { margin: 1.4rem 0; padding: 14px 18px; border: 1px dashed var(--accent);
+  border-radius: 8px; background: var(--panel); font-family: var(--sans); font-size: .8rem; color: var(--text); }
+.viz-error pre { margin: 10px 0 0; font-size: .72rem; white-space: pre-wrap; }
 #pager { max-width: 740px; width: 100%; margin: 0 auto; padding: 1rem 2rem 3rem;
   display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); }
 #pager button { font-size: 1rem; padding: .45rem 1.2rem; border: 1px solid var(--border);
@@ -1935,6 +2287,10 @@ LIBRARY_FILTER_JS = """
       if (shown) anyVisible = true;
     });
     if (empty) empty.hidden = anyVisible;
+    // The "For You" rows are a browse-what-to-read surface; hide them while a
+    // category/search filter is active so they don't contradict the filtered grid.
+    var fy = document.getElementById('foryou');
+    if (fy && !fy.hidden) fy.style.display = (activeCat !== 'all' || term) ? 'none' : '';
   }
 
   pills.forEach(function (pill) {
@@ -4255,6 +4611,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         if override.get("subtitle"):
             corpus["subtitle"] = override["subtitle"]
         figs = inject_figures(corpus, folder)
+        vizn = 0
+        for _doc in corpus["documents"]:
+            _doc["body"], _c = transform_viz(_doc["body"])
+            vizn += _c
         theme = load_theme_spec(folder)
         # Per-corpus link preview: this corpus's photo cover (a real served file)
         # if it has one, else the site banner. Description prefers the configured
@@ -4340,7 +4700,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                               "chapters": n,
                               "words": sum(len(re.sub(r"<[^>]+>", " ", d["body"]).split()) for d in corpus["documents"])})
         fig_note = f", {figs} figures" if figs else ""
-        print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note})")
+        viz_note = f", {vizn} charts" if vizn else ""
+        print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note}{viz_note})")
 
     # Bake the corpus-to-corpus similarity graph into each corpus manifest entry,
     # so the reader can render "Related reading" with no fetch (it already has the
