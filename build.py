@@ -33,6 +33,24 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 COVERS_DIR = HERE / "covers"  # optional per-corpus photo covers: covers/<slug>.<ext>
 MARKED_JS = (HERE / "vendor" / "marked.min.js").read_text()
+# GFM strikethrough fires on a SINGLE tilde, so prose tildes meaning
+# "approximately" (~$22B, ~50%, ~12-month-old) get rendered crossed-out — the
+# struck span also swallows any **bold**/*italic* markers caught between the two
+# tildes. Override the `del` tokenizer to require DOUBLE tildes; a lone tilde is
+# left as a literal character. Returning `undefined` (not `false`) is load-
+# bearing: `false` makes marked fall back to its default single-tilde tokenizer.
+# Code spans/fences are tokenized before `del`, so tildes inside code are safe.
+MARKED_JS += r"""
+;(function(){
+  if (typeof marked === 'undefined') return;
+  marked.use({ tokenizer: { del: function(src){
+    var cap = /^~~(?=[^\s~])((?:\\.|[^\\])*?[^\s~])~~(?=[^~]|$)/.exec(src);
+    if (cap) return { type: 'del', raw: cap[0], text: cap[1],
+                      tokens: this.lexer.inlineTokens(cap[1]) };
+    return undefined;
+  } } });
+})();
+"""
 
 FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>"
            "<rect x='2' y='2' width='28' height='28' rx='7' fill='%23b3502f'/>"
