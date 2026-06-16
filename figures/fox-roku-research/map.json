@@ -1,0 +1,7 @@
+[
+  { "file": "00_Briefing.md", "after": "## Why Fox Is Paying for It", "snippet": "the_stack.html" },
+  { "file": "01_The_Deal.md", "after": "## Bottom Line", "snippet": "the_consideration.html" },
+  { "file": "13_Gap_Credit_Rating_Bond_Leveraged_Finance.md", "after": "## Bottom Line", "snippet": "the_leverage_gap.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "the_forecast_fan.html" },
+  { "file": "08_Gap_International_Regulatory_Clearance.md", "after": "## Bottom Line", "snippet": "the_regulatory_clock.html" }
+]

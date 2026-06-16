@@ -8,7 +8,7 @@
     "t1": "#6b34cf", "t2": "#1f5fa8", "t3": "#b26a12", "t4": "#157b72", "t5": "#a8326b"
   },
   "dark": {
-    "bg": "#0d0e12", "panel": "#161820", "text": "#e7e6ea", "muted": "#8b8f99",
+    "bg": "#0d0e12", "panel": "#1d212c", "text": "#e7e6ea", "muted": "#8b8f99",
     "accent": "#9d6cf0", "border": "#262932", "mark": "#2a1f44", "cover-bg": "#171320",
     "t1": "#a884f5", "t2": "#5fa0e6", "t3": "#d99b3e", "t4": "#4fc2b6", "t5": "#db6aa3"
   },
