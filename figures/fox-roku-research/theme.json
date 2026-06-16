@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Home Screen — a living-room operating system, lit in the dark",
+  "anchor": "The deal's whole logic is that the most valuable real estate in television is no longer a network but a surface: the grid of tiles a Roku owner sees when the TV wakes up, glowing in a dark room. So the corpus's world is the connected-TV living room at night — the cool near-black of an unlit room, the violet glow of the Roku interface, the broadcast blue of the channel Fox brings to it, and the amber caution-light of the regulators and the bond market watching from the wings.",
+  "rationale": "The structural metaphor is the home-screen tile grid and the signal path behind it (content → OS → identity graph → ad exchange → measurement), so the figures should read like a modern product UI and a market dashboard rather than a humanities study: rounded tiles, ticker monospace, grotesque chyron type. The brand accent is ROKU VIOLET — deliberately a screen-glow purple, set apart from every other corpus on the shelf (none of which is purple) and from the cooler institutional blues of the other 'Modern World' corpora. The figure palette pairs it with a broadcast/Fox blue (the content side), a regulatory/credit amber (the risk and the bond market), a data-teal (the first-party identity graph), and an ad-tech rose (the programmatic market). Near-black slate on a cool light paper for day reading; a true dark, lit-screen-in-a-dark-room register for night. Sharp modern UI radii, a grotesque sans display (the broadcast chyron), a readable transitional serif for long-form body, and a true monospace for the deal's many numbers.",
+  "light": {
+    "bg": "#edeef1", "panel": "#e1e3e8", "text": "#16181d", "muted": "#585e68",
+    "accent": "#6b34cf", "border": "#d0d3da", "mark": "#d8c9f2", "cover-bg": "#e6e3ec",
+    "t1": "#6b34cf", "t2": "#1f5fa8", "t3": "#b26a12", "t4": "#157b72", "t5": "#a8326b"
+  },
+  "dark": {
+    "bg": "#0d0e12", "panel": "#161820", "text": "#e7e6ea", "muted": "#8b8f99",
+    "accent": "#9d6cf0", "border": "#262932", "mark": "#2a1f44", "cover-bg": "#171320",
+    "t1": "#a884f5", "t2": "#5fa0e6", "t3": "#d99b3e", "t4": "#4fc2b6", "t5": "#db6aa3"
+  },
+  "fonts": {
+    "display": "'Helvetica Neue', 'Arial Nova', 'Segoe UI', Arial, system-ui, sans-serif",
+    "body": "Charter, 'Iowan Old Style', Georgia, 'Times New Roman', serif",
+    "mono": "'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25a2   \\25a0   \\25a2'",
+    "fig_radius": "6px"
+  },
+  "cover_palette": ["#6b34cf", "#1f5fa8", "#b26a12", "#a8326b"]
+}
