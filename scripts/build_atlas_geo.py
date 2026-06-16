@@ -44,7 +44,11 @@ def load(key):
     return json.loads(p.read_text())
 
 # ---- projection: Web Mercator into a fixed lon/lat window over the corpora ----
-WIN = dict(W=-135.0, E=45.0, N=62.0, S=28.0)
+# Near-global window: the Atlas now also plots each corpus's intellectual world
+# (thinkers, institutions, travels) at their real coordinates, which range from
+# California to East Asia and from northern Europe to the equator — so the window
+# must span most of the inhabited world, not just the N-Atlantic the pins sit in.
+WIN = dict(W=-130.0, E=160.0, N=74.0, S=-40.0)
 VIEW_W = 3600.0
 def _mx(lon): return math.radians(lon)
 def _my(lat):
@@ -229,7 +233,7 @@ def main():
     def in_window(geom):
         for ring in _rings_of(geom):
             for lon, lat in ring:
-                if -160 <= lon <= 70 and 12 <= lat <= 78:
+                if -150 <= lon <= 175 and -48 <= lat <= 80:
                     return True
         return False
     backdrop = []
@@ -243,11 +247,11 @@ def main():
 
     # graticule (faint orientation lines), clipped to the viewBox by the renderer
     grat = []
-    for lon in range(-180, 61, 20):
-        pts = [proj(lon, lat) for lat in range(20, 76, 2)]
+    for lon in range(-160, 171, 20):
+        pts = [proj(lon, lat) for lat in range(-40, 76, 2)]
         grat.append("M" + " ".join(f"{x:.0f},{y:.0f}" for x, y in pts))
-    for lat in range(20, 76, 10):
-        pts = [proj(lon, lat) for lon in range(-160, 61, 2)]
+    for lat in range(-40, 76, 10):
+        pts = [proj(lon, lat) for lon in range(-160, 171, 2)]
         grat.append("M" + " ".join(f"{x:.0f},{y:.0f}" for x, y in pts))
 
     out = {

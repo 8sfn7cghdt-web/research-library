@@ -1,0 +1,1464 @@
+{
+ "ancestry-research": {
+  "home": {
+   "name": "The Collins (Ó Coileáin) line of West Cork",
+   "place": "Skibbereen / Clonakilty, West Cork, Ireland",
+   "lon": -9.262,
+   "lat": 51.55,
+   "note": "The surname Collins and the Munster-weighted DNA (29%) converge on West Cork — the firmest single anchor in a corpus reconstructing Calvin's half-Irish, half-Central-European/Baltic ancestry."
+  },
+  "nodes": [
+   {
+    "name": "Ó Coileáin sept homeland (Connello baronies)",
+    "place": "Newcastle West, Co. Limerick, Ireland",
+    "lon": -9.046,
+    "lat": 52.449,
+    "relation": "The original north-Munster territory where the Ó Coileáin ('Collins') sept were lords of the Connello baronies before the thirteenth-century Geraldine expansion drove them south into West Cork — the displacement built into the surname and matched by the southwest-leaning Irish DNA signal.",
+    "kind": "place"
+   },
+   {
+    "name": "The Geraldines (FitzGeralds, Earls of Desmond)",
+    "place": "Tralee / Desmond, Co. Kerry, Ireland",
+    "lon": -9.702,
+    "lat": 52.27,
+    "relation": "The Anglo-Norman magnate house of Munster whose thirteenth-century expansion pushed the Ó Coileáin out of the Connello baronies of Limerick into West Cork — the decisive displacement event the corpus places at the root of the Collins surname story.",
+    "kind": "event"
+   },
+   {
+    "name": "Pokorný surname heartland (Bohemia & Moravia)",
+    "place": "Prague / Central Bohemia, Czech Republic",
+    "lon": 14.418,
+    "lat": 50.073,
+    "relation": "Pokorný ('humble/meek,' attested from 1456) is overwhelmingly Czech — densest in Central Bohemia, South Moravia, and Prague — making a Czech/Moravian patriline the corpus's strongest single hypothesis for Calvin's Central-European line, even though the heaviest DNA region is Southern Poland.",
+    "kind": "place"
+   },
+   {
+    "name": "Austrian Galicia ('the poorest province in Europe')",
+    "place": "Kraków, former West Galicia, Poland",
+    "lon": 19.945,
+    "lat": 50.062,
+    "relation": "The Habsburg crownland read from the 'Southern Poland 19% + Western Ukraine 4%' signal — famine-ridden, land-hungry Galicia (centered on Polish-Catholic Kraków in the west) whose 1880–1924 exodus most plausibly carried the Pokorný line to America before the 1924 cutoff.",
+    "kind": "place"
+   },
+   {
+    "name": "Russian Baltic governorates (Estland/Livland)",
+    "place": "Riga, Latvia",
+    "lon": 24.105,
+    "lat": 56.949,
+    "relation": "The Lutheran, Baltic-German-ruled peasant lands read from the 'Estonia & Latvia 9% + Lithuania 3%' signal — the one possibly Protestant seam in an otherwise Catholic heritage, entering through an un-surnamed northeastern line.",
+    "kind": "place"
+   },
+   {
+    "name": "Queenstown / Cobh emigration port",
+    "place": "Cobh, Cork Harbour, Ireland",
+    "lon": -8.294,
+    "lat": 51.851,
+    "relation": "The Cork Harbour port (renamed Queenstown for Victoria's 1849 visit) that sent ~2.5m of the ~6m North-America-bound Irish abroad between 1848 and 1950 — the natural embarkation point for a West Cork Collins line's Atlantic crossing.",
+    "kind": "travel"
+   },
+   {
+    "name": "Bremen / Bremerhaven embarkation port",
+    "place": "Bremerhaven, Germany",
+    "lon": 8.58,
+    "lat": 53.54,
+    "relation": "The Norddeutscher Lloyd port (with Hamburg) reached overland by rail through the lines' control stations — the modal embarkation route for the Galician/Baltic/Czech 'great wave' the corpus has the Pokorný line riding to America.",
+    "kind": "travel"
+   },
+   {
+    "name": "Ellis Island immigrant station",
+    "place": "Ellis Island, New York Harbor, USA",
+    "lon": -74.039,
+    "lat": 40.699,
+    "relation": "The federal station (from 1892) that processed both lines but recorded the Eastern Europeans by EMPIRE ('Austria'/'Russia') not ethnicity — the single biggest genealogical knot the corpus flags in tracing the Pokorný line.",
+    "kind": "institution"
+   },
+   {
+    "name": "The 'triple melting pot' (white-ethnic Catholic intermarriage)",
+    "place": "Chicago, Illinois, USA",
+    "lon": -87.632,
+    "lat": 41.884,
+    "relation": "The industrial Catholic city, dense with both Irish and Czech/Polish populations, where the corpus's strongest single inference plays out: by the 2nd-3rd generation an Irish Collins and a Czech/Polish Pokorný line plausibly meet and marry within the Catholic bloc (Kennedy/Herberg's 'triple melting pot').",
+    "kind": "movement"
+   }
+  ]
+ },
+ "carlyle-research": {
+  "home": {
+   "name": "Thomas Carlyle",
+   "place": "Ecclefechan, Dumfries and Galloway, Scotland",
+   "lon": -3.282,
+   "lat": 55.06,
+   "note": "Carlyle's Annandale birthplace and Burgher Seceder Calvinist village is the origin of the corpus's load-bearing thesis that his mature thought is 'a Scottish Calvinism that lost its confession and kept its grammar.'"
+  },
+  "nodes": [
+   {
+    "name": "University of Edinburgh & the Burgher Seceder Divinity Hall",
+    "place": "Edinburgh, Scotland",
+    "lon": -3.189,
+    "lat": 55.947,
+    "kind": "institution",
+    "relation": "Carlyle matriculated here in November 1809 (age 13) on the path to the Burgher Seceder ministry, studied mathematics under Sir John Leslie and Scottish Common Sense philosophy under Thomas Brown, and underwent the slow attritional loss of dogmatic faith (the iconic Leith Walk 'Everlasting No') before abandoning the ministry by 1817."
+   },
+   {
+    "name": "Craigenputtock",
+    "place": "Dunscore, Dumfriesshire, Scotland",
+    "lon": -3.857,
+    "lat": 55.135,
+    "kind": "place",
+    "relation": "The isolated Dumfriesshire farmhouse where the Carlyles lived 1828-1834 and where Carlyle wrote 'Signs of the Times' (1829) and 'Sartor Resartus' — the text most central to the Calvinist-substrate reading — and where Emerson made his 1833 pilgrimage."
+   },
+   {
+    "name": "24 (formerly 5) Cheyne Row, Chelsea",
+    "place": "Chelsea, London, England",
+    "lon": -0.169,
+    "lat": 51.483,
+    "kind": "place",
+    "relation": "The Carlyles' London home from 1834 until Carlyle's death on 5 February 1881, where he wrote 'The French Revolution,' 'On Heroes,' 'Past and Present,' 'Latter-Day Pamphlets,' and 'Frederick'; preserved by the National Trust as Carlyle's House since 1895."
+   },
+   {
+    "name": "Concord & Boston (Ralph Waldo Emerson)",
+    "place": "Concord, Massachusetts, USA",
+    "lon": -71.349,
+    "lat": 42.46,
+    "kind": "influence",
+    "relation": "Emerson visited Craigenputtock in 1833 and edited the first US edition of 'Sartor Resartus' (Boston 1836); the corpus frames him as the 'light fork' — liberalized New England Puritanism — to Carlyle's 'dark fork' of the same post-Calvinist road."
+   },
+   {
+    "name": "Weimar (Goethe)",
+    "place": "Weimar, Germany",
+    "lon": 11.329,
+    "lat": 50.98,
+    "kind": "influence",
+    "relation": "Goethe's Weimar, to which Carlyle sent his 1824 'Wilhelm Meister' translation, seeded the German turn that gave him a non-creedal vocabulary for his Calvinist substrate; the corpus reads him as 'Weimar serenity Calvinized into thunder.'"
+   },
+   {
+    "name": "Saint Joseph's University (Carlyle Studies Annual)",
+    "place": "Philadelphia, Pennsylvania, USA",
+    "lon": -75.235,
+    "lat": 39.992,
+    "kind": "institution",
+    "relation": "Home of David R. Sorensen and the 'Carlyle Studies Annual,' the field's single journal of record and central institutional anchor, whose small editorial community is a key driver of the corpus's 2035 'Quiet Recovery' forecast."
+   },
+   {
+    "name": "University of Glasgow (Ralph Jessop)",
+    "place": "Glasgow, Scotland",
+    "lon": -4.288,
+    "lat": 55.872,
+    "kind": "person",
+    "relation": "Glasgow scholar Ralph Jessop, whose 'Carlyle and Scottish Thought' (1997) is the foundational text of the Scottish-Calvinist-substrate reading and the single most-cited scholarly source behind the corpus's central interpretive thesis."
+   },
+   {
+    "name": "Fraser's Magazine & the Mill–Carlyle break",
+    "place": "London, England",
+    "lon": -0.108,
+    "lat": 51.513,
+    "kind": "event",
+    "relation": "The London periodical where Carlyle published the December 1849 'Occasional Discourse on the Negro Question' and Mill published his January 1850 refutation that broke their friendship — the corpus's pivot point for the substrate's 'failure mode,' extended into the 1865-66 Eyre Defence vs. Jamaica Committee split."
+   },
+   {
+    "name": "Berlin / Prussia (Frederick the Great & German-nationalist reception)",
+    "place": "Berlin, Germany",
+    "lon": 13.405,
+    "lat": 52.52,
+    "kind": "movement",
+    "relation": "Subject of Carlyle's thirteen-year 'History of Friedrich II of Prussia' (1858-65), which generated the Bismarckian/Wilhelmine reception that stripped out the Scottish-Calvinist checks and ran into the 1933-45 Nazi appropriation (Goebbels reading 'Frederick' in the Berlin bunker)."
+   }
+  ]
+ },
+ "carlyle-french-revolution-research": {
+  "home": {
+   "name": "Thomas Carlyle writing The French Revolution at 5 Cheyne Row, Chelsea",
+   "place": "Chelsea, London, England",
+   "lon": -0.169,
+   "lat": 51.483,
+   "note": "The whole History was composed here from September 1834, and Volume I rewritten from memory after the burning, in the Cheyne Row house the Carlyles moved into on 10 June 1834 — now the National Trust 'Carlyle's House.'"
+  },
+  "nodes": [
+   {
+    "name": "Ecclefechan, Annandale",
+    "place": "Ecclefechan, Dumfriesshire, Scotland",
+    "lon": -3.281,
+    "lat": 55.058,
+    "relation": "Carlyle's strict-Calvinist Annandale boyhood is the residue from which the History's deepest allusive layer comes — the King James cadence, the Revolution staged as Last Judgment and the wrath-cup of Isaiah poured on a guilty order.",
+    "kind": "place"
+   },
+   {
+    "name": "Craigenputtock",
+    "place": "Dunscore, Dumfriesshire, Scotland",
+    "lon": -3.788,
+    "lat": 55.143,
+    "relation": "The remote Dumfriesshire farmhouse where Sartor Resartus and 'Carlylese' were forged, and whose isolation the Carlyles gave up in June 1834 to move to Chelsea to write the French Revolution.",
+    "kind": "travel"
+   },
+   {
+    "name": "John Stuart Mill",
+    "place": "East India House, City of London, England",
+    "lon": -0.083,
+    "lat": 51.513,
+    "relation": "Mill handed Carlyle the project and a substantial loan of Revolution books in 1834, his keeping then led to the burning of Volume I in March 1835, and his July 1837 review ('an epic poem… the truest of histories') made the book.",
+    "kind": "person"
+   },
+   {
+    "name": "The Bastille / Place de la Révolution",
+    "place": "Paris, France",
+    "lon": 2.347,
+    "lat": 48.853,
+    "relation": "The Revolution itself is the book's subject — its three volumes (The Bastille / The Constitution / The Guillotine) narrate the Paris events of 1774–1795 in a hallucinatory historical present.",
+    "kind": "event"
+   },
+   {
+    "name": "Buchez & Roux, Histoire parlementaire",
+    "place": "Paris, France",
+    "lon": 2.341,
+    "lat": 48.866,
+    "relation": "The forty-volume Histoire parlementaire (1834–38), a portable archive of speeches and decrees appearing in real time as Carlyle wrote, was the documentary spine on which the History's broad factual reliability rests.",
+    "kind": "institution"
+   },
+   {
+    "name": "Jules Michelet",
+    "place": "Paris, France",
+    "lon": 2.345,
+    "lat": 48.849,
+    "relation": "Carlyle's great French Romantic rival in the providential narrative-epic mode, who made 'the People' the collective hero and dismissed Carlyle's book in 1868 as 'a wretched work… devoid of study… full of false flights.'",
+    "kind": "person"
+   },
+   {
+    "name": "Charles Dickens (Tavistock House)",
+    "place": "Tavistock House, Bloomsbury, London",
+    "lon": -0.126,
+    "lat": 51.525,
+    "relation": "Dickens steeped A Tale of Two Cities (1859) in Carlyle's chronology and fire-and-flood imagery — but reversed his theodicy, displacing redemption onto Carton's private Christian sacrifice rather than blessing revolutionary violence.",
+    "kind": "influence"
+   },
+   {
+    "name": "Ralph Waldo Emerson",
+    "place": "Concord, Massachusetts, USA",
+    "lon": -71.349,
+    "lat": 42.46,
+    "relation": "Carlyle's American advocate, Emerson promoted the History and helped arrange its US edition (1837), giving Carlyle a second readership and his first real trade income at the moment he most needed both.",
+    "kind": "person"
+   },
+   {
+    "name": "Oxford critical edition (Cumming/Sorensen/Engel/Kinser, 2019)",
+    "place": "Oxford, England",
+    "lon": -1.252,
+    "lat": 51.755,
+    "relation": "The first comprehensive scholarly edition of the History appeared only in 2019 from Oxford UP, 182 years after publication — the single, recent, non-redundant edition anchor underwriting the book's forecast 'stable niche survival' through 2040.",
+    "kind": "institution"
+   }
+  ]
+ },
+ "carlyle-friedrich-research": {
+  "home": {
+   "name": "Thomas Carlyle writing the History of Friedrich II of Prussia",
+   "place": "Cheyne Row, Chelsea, London, England",
+   "lon": -0.169,
+   "lat": 51.483,
+   "note": "Carlyle wrote the whole six-volume Friedrich (1858-1865) in the soundproof study he had built atop his Cheyne Row house in 1854, calling the thirteen-year labour 'infinitely worse' than Cromwell and a 'desperate dead-lift pull.'"
+  },
+  "nodes": [
+   {
+    "name": "Friedrich II (Frederick the Great) at Sanssouci",
+    "place": "Sanssouci, Potsdam, Germany",
+    "lon": 13.038,
+    "lat": 52.404,
+    "relation": "Friedrich is the corpus's subject; Carlyle introduces him not on a battlefield but as 'a highly interesting lean little old man' with eyes 'as no man or lion or lynx of that Century bore elsewhere,' the king who 'managed not to be a Liar and Charlatan as his Century was.'",
+    "kind": "person"
+   },
+   {
+    "name": "Voltaire and the Frankfurt Affair",
+    "place": "Frankfurt am Main, Germany",
+    "lon": 8.682,
+    "lat": 50.111,
+    "relation": "Voltaire is the magnet of Carlyle's anti-Enlightenment polemic — 'the most brilliant of mankind' in speech yet faithless in honour; Carlyle rewrites the 1753 Frankfurt detention as farce ('done by Fredersdorf') to exonerate Friedrich and indict the 'swindler-century.'",
+    "kind": "person"
+   },
+   {
+    "name": "Battle of Leuthen / Silesian battlefields",
+    "place": "Leuthen (Lutynia), near Wroclaw, Silesia, Poland",
+    "lon": 16.793,
+    "lat": 51.142,
+    "relation": "Carlyle made two German trips (1852, 1858) to walk Friedrich's Silesian battlefields; the Leuthen Te-Deum — the army marching through the dark while 'five-and-twenty thousand other voices' sing 'Nun danket alle Gott' — is the corpus's supreme aural set-piece.",
+    "kind": "travel"
+   },
+   {
+    "name": "Execution of Hans Hermann von Katte",
+    "place": "Kustrin (Kostrzyn nad Odra), Poland",
+    "lon": 14.643,
+    "lat": 52.588,
+    "relation": "The 1730 beheading of Katte before the Crown-Prince's window at Cüstrin is the emotional climax of Carlyle's early volumes — the David-and-Jonathan scene narrated with restraint ('La mort est douce pour un si aimable prince'), then likened to 'the doings of the gods, which are cruel.'",
+    "kind": "event"
+   },
+   {
+    "name": "University of Edinburgh (Lord Rectorship)",
+    "place": "Edinburgh, Scotland",
+    "lon": -3.189,
+    "lat": 55.948,
+    "relation": "The completed Friedrich helped carry Carlyle to the Lord Rectorship of Edinburgh in November 1865, elected over Disraeli by 657 votes to 310; Edinburgh is also the seat of Stewart's 2010 PhD thesis, the corpus's single most-used modern scholarly authority.",
+    "kind": "institution"
+   },
+   {
+    "name": "Joseph Neuberg",
+    "place": "Bonn, Germany",
+    "lon": 7.099,
+    "lat": 50.734,
+    "relation": "Neuberg, the self-effacing 'volunteer amanuensis' introduced to Carlyle by Emerson in 1848, did the German bibliographic legwork and hosted Carlyle at Bonn on the 1858 research journey; he later began the German translation but died before finishing it.",
+    "kind": "person"
+   },
+   {
+    "name": "Ralph Waldo Emerson",
+    "place": "Concord, Massachusetts, USA",
+    "lon": -71.349,
+    "lat": 42.46,
+    "relation": "Emerson was the book's conspicuous transatlantic champion, calling it 'a book that is a Judgment Day' and 'infinitely the wittiest book that ever was written' — praise verified verbatim in the Carlyle-Emerson correspondence against any myth of universal acclaim.",
+    "kind": "influence"
+   },
+   {
+    "name": "German nationalist appropriation (Bismarck to the bunker)",
+    "place": "Berlin, Germany",
+    "lon": 13.405,
+    "lat": 52.52,
+    "relation": "Berlin anchors the militarist 'Frederick cult' the book was enlisted into: Bismarck thanked Carlyle for setting the Prussian king before the Germans 'in his full figure, like a living statue,' and the contested 1945 bunker legend has Goebbels reading Friedrich to Hitler.",
+    "kind": "movement"
+   }
+  ]
+ },
+ "civil-war-religion-whitman-research": {
+  "home": {
+   "name": "Walt Whitman and the religious meaning of the Civil War (the Washington military hospitals)",
+   "place": "Washington, D.C., USA",
+   "lon": -77.024,
+   "lat": 38.901,
+   "note": "Whitman called the Washington hospital years 'the very centre, circumference, umbilicus, of my whole career'; the wards are where the war's religious convulsion and his remaking of it fuse — the crux of this religion-led, Whitman-centered corpus."
+  },
+  "nodes": [
+   {
+    "name": "Brooklyn and rural Long Island",
+    "place": "Brooklyn, New York, USA",
+    "lon": -73.99,
+    "lat": 40.692,
+    "relation": "Whitman's formative ground: born 1819 on rural Long Island and raised partly in Brooklyn, he absorbed the Hicksite Quaker 'inner light' and Free-Soil journalism (Brooklyn Daily Eagle) that produced the antebellum 'religion of the body' the war would chasten.",
+    "kind": "place"
+   },
+   {
+    "name": "Falmouth and Fredericksburg, Virginia",
+    "place": "Fredericksburg / Falmouth, Virginia, USA",
+    "lon": -77.46,
+    "lat": 38.301,
+    "relation": "The corpus's biographical hinge: George Whitman's December 1862 wounding at Fredericksburg pulled the poet to the Army of the Potomac's winter camp at Falmouth, where the cart-load of amputated limbs at the Lacy house seeded 'A Sight in Camp' and began turning the cosmic optimist into an elegist.",
+    "kind": "event"
+   },
+   {
+    "name": "Southern Baptist Convention founding",
+    "place": "Augusta, Georgia, USA",
+    "lon": -81.975,
+    "lat": 33.474,
+    "relation": "The May 1845 meeting at First Baptist Church, Augusta, that constituted the Southern Baptist Convention under William B. Johnson is, with the Methodist (1844) and Presbyterian (1837-38) ruptures, the denominational 'first secession' C.C. Goen calls a dress rehearsal for 1861.",
+    "kind": "event"
+   },
+   {
+    "name": "Methodist Episcopal Church, South organized",
+    "place": "Louisville, Kentucky, USA",
+    "lon": -85.759,
+    "lat": 38.253,
+    "relation": "Slaveholding Methodist conferences met at Louisville in May 1845 to organize the Methodist Episcopal Church, South after the 1844 split over Bishop James O. Andrew's slaveholding — the largest of the pre-war denominational ruptures the corpus folds into the 'first secession.'",
+    "kind": "institution"
+   },
+   {
+    "name": "Concord Transcendentalism (Emerson)",
+    "place": "Concord, Massachusetts, USA",
+    "lon": -71.349,
+    "lat": 42.46,
+    "relation": "Emerson's Concord Transcendentalism is the influence Whitman 'carried out of the lecture hall' and immanentized — sanctifying flesh, sex, and the democratic en-masse rather than Emerson's solitary self-reliant soul, the comparison against which the corpus defines Whitman's bodily religion.",
+    "kind": "movement"
+   },
+   {
+    "name": "Emily Dickinson's Amherst",
+    "place": "Amherst, Massachusetts, USA",
+    "lon": -72.519,
+    "lat": 42.367,
+    "relation": "Dickinson, immersed in Amherst's Calvinism-haunted revival culture, is read in the comparative chapter as the same religious earthquake recorded on a second needle — her private skeptical doubt against Whitman's public cosmic affirmation, the corpus's cleanest reframing.",
+    "kind": "person"
+   },
+   {
+    "name": "Bois Caïman / Haitian emancipation",
+    "place": "Cap-Haïtien (Bois Caïman), Haiti",
+    "lon": -72.198,
+    "lat": 19.76,
+    "relation": "The August 1791 Vodou ceremony at Bois Caïman near Cap-Français is the corpus's transnational decentering case: an emancipation driven by the enslaved's own religion, used to provincialize the entire Anglo-Protestant 'theological crisis' frame.",
+    "kind": "influence"
+   },
+   {
+    "name": "British religious-moral abolition (Clapham Sect)",
+    "place": "Clapham, London, England, UK",
+    "lon": -0.138,
+    "lat": 51.462,
+    "relation": "Britain's compensated, legislative abolition driven by Wilberforce and the evangelical Clapham circle is the comparative foil exposing why the American Scripture-arbitration deadlock had no off-ramp and could only break by war.",
+    "kind": "movement"
+   },
+   {
+    "name": "Whitman's late base and Lincoln cult",
+    "place": "Camden, New Jersey, USA",
+    "lon": -75.119,
+    "lat": 39.945,
+    "relation": "From his Camden home the postwar Whitman tended the lifelong 'Lincoln cult,' delivering his annual 'Death of Abraham Lincoln' lecture and refining Leaves of Grass and Democratic Vistas into the scripture of a post-Protestant 'religion of democracy.'",
+    "kind": "place"
+   }
+  ]
+ },
+ "deutsch-good-explanations-research": {
+  "home": {
+   "name": "David Deutsch & the hard-to-vary criterion",
+   "place": "Oxford, England",
+   "lon": -1.257,
+   "lat": 51.752,
+   "note": "The corpus is built around Deutsch's 'a good explanation is hard to vary' standard, which he developed and defends from Oxford alongside his two contested physics programs."
+  },
+  "nodes": [
+   {
+    "name": "Karl Popper",
+    "place": "London, England",
+    "lon": -0.117,
+    "lat": 51.514,
+    "relation": "Popper's critical rationalism at the LSE — conjecture-and-refutation, the rejection of induction, demarcation by falsifiability — is the lineage Chapters 02 and 07 trace, with the corpus framing 'hard to vary' as the sharpening of Popper's own point that testability alone is not enough.",
+    "kind": "influence"
+   },
+   {
+    "name": "Hugh Everett III (many-worlds)",
+    "place": "Princeton, New Jersey, USA",
+    "lon": -74.659,
+    "lat": 40.349,
+    "relation": "Everett's many-worlds interpretation, conceived at Princeton, is the quantum theory Deutsch defends in Chapter 03 as the hard-to-vary explanation of interference, via his 'where was the number factorized?' Shor's-algorithm argument that a working quantum computer makes the multiverse manifest.",
+    "kind": "influence"
+   },
+   {
+    "name": "Chiara Marletto & constructor theory",
+    "place": "Oxford, England",
+    "lon": -1.244,
+    "lat": 51.755,
+    "relation": "Chapter 03 documents Marletto co-developing constructor theory with Deutsch at Oxford since 2012 — physics recast as which transformations are possible or impossible — which the corpus reads as the hard-to-vary standard pushed to its maximum, while flagging it as under-tested and proponent-dominated.",
+    "kind": "person"
+   },
+   {
+    "name": "Naval Ravikant (chief popularizer)",
+    "place": "San Francisco, California, USA",
+    "lon": -122.419,
+    "lat": 37.775,
+    "relation": "Chapter 04, the Briefing, and the forecast credit Ravikant as the investor-popularizer who carried the criterion out of philosophy of science into founder-investor culture, telling Deutsch it 'upgraded my thinking more than almost anything else' and running the 'Deutsch Files' on-ramp.",
+    "kind": "person"
+   },
+   {
+    "name": "John D. Norton (material theory of induction)",
+    "place": "Pittsburgh, Pennsylvania, USA",
+    "lon": -79.957,
+    "lat": 40.444,
+    "relation": "The University of Pittsburgh philosopher whose material theory of induction supplies what Chapter 03 rates the strongest conceptual objection: granting Deutsch's denial of algorithmic induction, then arguing 'reach' still needs local, case-by-case warrant — renaming the problem of induction rather than abolishing it.",
+    "kind": "person"
+   },
+   {
+    "name": "Dwarkesh Patel & the scaling/Bayesian counter-camp",
+    "place": "Berkeley, California, USA",
+    "lon": -122.273,
+    "lat": 37.871,
+    "relation": "The Bay Area rationalist milieu — Patel's 'Contra David Deutsch on AI' plus the Yudkowsky–Deutsch LessWrong debate — presses the corpus's central live challenge in Chapters 03 and 07: that creativity is a scalable continuum, not a binary 'universal explainer' threshold, making AGI the wildcard for Deutsch's legacy.",
+    "kind": "movement"
+   },
+   {
+    "name": "Friedrich Hayek & the knowledge problem",
+    "place": "Vienna, Austria",
+    "lon": 16.373,
+    "lat": 48.208,
+    "relation": "Chapter 07's 'Hayek Resonance' section pairs Hayek's Austrian-school knowledge problem — that economic knowledge is irreducibly dispersed and tacit — with Deutsch's anti-prophecy view of markets as error-correcting arenas, while marking the limit: Deutsch stresses the creation of new knowledge over Hayek's transmission of existing knowledge.",
+    "kind": "influence"
+   },
+   {
+    "name": "Edward Feser & the classical-theism steelman",
+    "place": "Los Angeles, California, USA",
+    "lon": -118.243,
+    "lat": 34.052,
+    "relation": "Chapter 06 reconstructs theology's only genuine hard-to-vary steelman from Feser's defense of divine simplicity (God as ipsum esse subsistens, attributes mutually entailing) — a system you cannot tweak one attribute of without collapse — explicitly flagged as the corpus's own bridge, not a position Feser published against Deutsch.",
+    "kind": "influence"
+   },
+   {
+    "name": "W. W. Bartley III & pancritical rationalism",
+    "place": "Stanford, California, USA",
+    "lon": -122.17,
+    "lat": 37.427,
+    "relation": "Chapter 06's deepest thread uses Bartley's pancritical rationalism — which answers the 'does reason rest on faith?' tu quoque by decoupling criticism from justification — to show the Münchhausen trilemma stays genuinely open even for Deutsch's own Popperian lineage.",
+    "kind": "influence"
+   }
+  ]
+ },
+ "ipv4-ipv6-ctv-research": {
+  "home": {
+   "name": "The household IP address as CTV's identity spine",
+   "place": "San Francisco Bay Area / Silicon Valley, California, USA",
+   "lon": -122.143,
+   "lat": 37.441,
+   "note": "The US Bay Area is the corpus's gravitational center: home of the OpenRTB/ad-tech identity stack and of LiveRamp's IPv4-only matching, and the one-IP-one-household anomaly the entire 2030 forecast revolves around."
+  },
+  "nodes": [
+   {
+    "name": "RFC 791 / Jon Postel's IP spec (USC-ISI)",
+    "place": "Marina del Rey, California, USA",
+    "lon": -118.451,
+    "lat": 33.98,
+    "relation": "The corpus's foundational Claim 4.1 reads RFC 791 (Postel, ed., USC Information Sciences Institute, Sept 1981) as defining the IPv4 address as a network 'locator' — 'where, not who' — making CTV's use of it as a household identity an operational inference the whole corpus interrogates.",
+    "kind": "place"
+   },
+   {
+    "name": "IETF (Internet Engineering Task Force)",
+    "place": "Fremont, California, USA",
+    "lon": -121.989,
+    "lat": 37.548,
+    "relation": "The IETF authored every protocol layer in the story — IPv4/IPv6, NAT (RFC 1631), CGNAT (RFC 6598), IPv6 privacy extensions, and the finished MASQUE/OHTTP/Privacy Pass obfuscation stack the corpus shows is one toggle from ending IP-as-identity.",
+    "kind": "institution"
+   },
+   {
+    "name": "LiveRamp",
+    "place": "San Francisco, California, USA",
+    "lon": -122.419,
+    "lat": 37.775,
+    "relation": "The dominant US identity-matching vendor whose CTV documentation tells partners to send IPv4 only because it cannot match most IPv6 (Claim 3.6) — the corpus's single most load-bearing operational fact, anchoring CTV identity to a dying address family.",
+    "kind": "institution"
+   },
+   {
+    "name": "Truthset / CIMM / Go Addressable IP-accuracy audit",
+    "place": "New York, New York, USA",
+    "lon": -73.968,
+    "lat": 40.785,
+    "relation": "The CIMM (NY-based measurement coalition) and Go Addressable study, run by Truthset and announced 5 Nov 2025, found commercial IP-to-postal linkages right only ~13% of the time — the accuracy reckoning (Claim 4.14) that detonated the corpus's central live debate.",
+    "kind": "event"
+   },
+   {
+    "name": "CJEU Breyer v Germany (C-582/14)",
+    "place": "Luxembourg City, Luxembourg",
+    "lon": 6.14,
+    "lat": 49.621,
+    "relation": "The Court of Justice of the EU's 19 Oct 2016 Breyer judgment, which the corpus reads in primary source (Claim 4.11) as a conditional test treating dynamic IPs as personal data — grounding the Obfuscation/Regulatory-Shock scenario and the US/EU split.",
+    "kind": "event"
+   },
+   {
+    "name": "LICRA v. Yahoo! (Tribunal de grande instance de Paris)",
+    "place": "Paris, France",
+    "lon": 2.345,
+    "lat": 48.856,
+    "relation": "The 2000 French ruling — whose expert panel included Vint Cerf — that legally blessed IP geolocation as reliable enough to ground jurisdiction, the corpus's origin event for the IP becoming a commercial location signal.",
+    "kind": "event"
+   },
+   {
+    "name": "Deutsche Telekom / German privacy-rotation regime",
+    "place": "Bonn, Germany",
+    "lon": 7.099,
+    "lat": 50.737,
+    "relation": "Germany pairs ~70% IPv6 with privacy-motivated address rotation (Telekom's Zwangstrennung legacy, 180-day renewal, Speedport daily-prefix rotation) — Claim 6.4's exemplar of an IP unstable by design and useless as a household key.",
+    "kind": "movement"
+   },
+   {
+    "name": "Reliance Jio",
+    "place": "Mumbai, India",
+    "lon": 72.878,
+    "lat": 19.076,
+    "relation": "Jio built the world's largest greenfield IPv6-first mobile network (Claim 6 / Regional), making India ~72% IPv6 and heavily CGNAT'd — the corpus's case that the fastest-growing CTV market has essentially no household-stable IP substrate.",
+    "kind": "institution"
+   },
+   {
+    "name": "Apple (iCloud Private Relay / tvOS MASQUE relay)",
+    "place": "Cupertino, California, USA",
+    "lon": -122.009,
+    "lat": 37.335,
+    "relation": "Apple shipped the two-hop relay obfuscation template (Private Relay 2021) and MASQUE-based network relays inside tvOS 17 (2023), making the corpus's Obfuscation-Shock scenario, in its words, one default configuration toggle from ending the CTV IP signal.",
+    "kind": "institution"
+   }
+  ]
+ },
+ "jesus-research": {
+  "home": {
+   "name": "Jesus of Nazareth",
+   "place": "Nazareth, lower Galilee, Israel",
+   "lon": 35.303,
+   "lat": 32.701,
+   "note": "The Galilean Jewish prophet of the Kingdom whose message and divinity the entire corpus interrogates; Nazareth anchors the lower-Galilee village world of his ministry."
+  },
+  "nodes": [
+   {
+    "name": "The Crucifixion under Pontius Pilate",
+    "place": "Jerusalem, Israel",
+    "lon": 35.234,
+    "lat": 31.778,
+    "relation": "Jesus's Temple disruption and execution by crucifixion under the prefect Pilate c. 30 CE happen here — the 'almost certainly' terminus of the historical life and the scandal of a crucified messiah that every later Christology in the corpus is built to interpret.",
+    "kind": "event"
+   },
+   {
+    "name": "Paul of Tarsus",
+    "place": "Tarsus, Mersin, Turkey",
+    "lon": 34.895,
+    "lat": 36.917,
+    "relation": "Paul, the corpus's earliest extant Christian theologian, supplies the Philippians 2 'morphe theou' hymn and the pre-Pauline 1 Cor 15 creed that are its central evidence for high Christology already present in the first decades after the crucifixion.",
+    "kind": "person"
+   },
+   {
+    "name": "Alexandrian Christology (Athanasius and Cyril)",
+    "place": "Alexandria, Egypt",
+    "lon": 29.919,
+    "lat": 31.2,
+    "relation": "Athanasius's anti-Arian 'homoousios' and his theosis formula ('He became human so that we might become divine,' On the Incarnation 54) and Cyril's Theotokos defense of the one-person union make Alexandria the seat of the patristic divinity-of-Christ tradition the corpus traces.",
+    "kind": "movement"
+   },
+   {
+    "name": "The Council of Chalcedon (451)",
+    "place": "Chalcedon (Kadıköy), Istanbul, Turkey",
+    "lon": 29.025,
+    "lat": 40.991,
+    "relation": "Chalcedon's definition of Christ as one person in two natures 'without confusion, change, division, separation' is the corpus's named 'load-bearing wall of historic Christology' against which the four-thinker composite is measured.",
+    "kind": "event"
+   },
+   {
+    "name": "Meister Eckhart's Gottesgeburt mysticism",
+    "place": "Cologne, Germany",
+    "lon": 6.96,
+    "lat": 50.937,
+    "relation": "Eckhart, accused of heresy by the archbishop of Cologne and posthumously condemned in 1329, taught the 'birth of God in the soul' — the inner-Christ ground-mysticism the corpus names as the patristic-mystical root that Carlyle, Whitman, Jung and Peirce all inherit.",
+    "kind": "person"
+   },
+   {
+    "name": "Thomas Carlyle",
+    "place": "London, United Kingdom",
+    "lon": -0.168,
+    "lat": 51.483,
+    "relation": "In London Carlyle delivered the 'On Heroes' lectures (1840) and wrote 'Sartor Resartus', reading Christ as the 'divinest Symbol' and supreme Hero of Sincerity against Sham — the first of the corpus's four chosen thinkers.",
+    "kind": "person"
+   },
+   {
+    "name": "Walt Whitman",
+    "place": "Camden, New Jersey, USA",
+    "lon": -75.119,
+    "lat": 39.945,
+    "relation": "Whitman, who spent his last decades in Camden, reads Christ in 'Song of Myself' §38 as not unique in kind but 'one of an average unending procession' of democratic-cosmic redeemers — the second of the corpus's four chosen thinkers.",
+    "kind": "person"
+   },
+   {
+    "name": "Carl Gustav Jung",
+    "place": "Küsnacht, Zürich, Switzerland",
+    "lon": 8.585,
+    "lat": 47.317,
+    "relation": "From his Küsnacht home and practice Jung wrote 'Aion' and 'Answer to Job', reading Christ as the archetype of the Self for the Pisces aeon that remains 'incomplete' until the shadow is integrated — the third of the corpus's four chosen thinkers.",
+    "kind": "person"
+   },
+   {
+    "name": "Charles Sanders Peirce",
+    "place": "Milford, Pennsylvania, USA",
+    "lon": -74.802,
+    "lat": 41.322,
+    "relation": "At Arisbe near Milford, Peirce wrote 'Evolutionary Love' (1893), reading the 'doctrine of John' as cosmology and Christ as the historical embodiment of agapism — growth by love — the fourth of the corpus's chosen thinkers.",
+    "kind": "person"
+   }
+  ]
+ },
+ "john-the-baptist-research": {
+  "home": {
+   "name": "John the Baptist's Jordan immersion movement",
+   "place": "Al-Maghtas (Bethany-beyond-the-Jordan), Jordan",
+   "lon": 35.648,
+   "lat": 31.837,
+   "note": "The eastern-bank baptism complex at Al-Maghtas — the lowest inhabited place on earth and the structuring fact of the whole corpus — is where John conducted the mass immersion movement the entire study reconstructs."
+  },
+  "nodes": [
+   {
+    "name": "Machaerus",
+    "place": "Machaerus (Mukawir), Jordan",
+    "lon": 35.625,
+    "lat": 31.566,
+    "relation": "The Herodian fortress east of the Dead Sea where Herod Antipas imprisoned and executed John — the corpus's most secure event after the baptism, independently attested by both Josephus (Ant. 18) and Mark 6.",
+    "kind": "event"
+   },
+   {
+    "name": "Mandaean homeland (southern Iraq / Khuzestan)",
+    "place": "Nasiriyah, southern Iraq",
+    "lon": 46.257,
+    "lat": 31.054,
+    "relation": "Southern Iraq and adjacent Khuzestan are the historic seat of the Mandaeans — John's only surviving community, who venerate Yahya-Yuhana as supreme prophet and read Jesus as a deceiver, before the post-2003 scattering.",
+    "kind": "movement"
+   },
+   {
+    "name": "Umayyad Mosque shrine of John's head",
+    "place": "Damascus, Syria",
+    "lon": 36.306,
+    "lat": 33.512,
+    "relation": "The Great Mosque's shrine to the head of Yahya/John — where Pope John Paul II prayed in 2001, the first pope to enter a mosque — is the corpus's model of Abrahamic shared veneration and its interfaith-convergence forecast platform.",
+    "kind": "institution"
+   },
+   {
+    "name": "Qumran (Dead Sea Scrolls community)",
+    "place": "Qumran, West Bank",
+    "lon": 35.459,
+    "lat": 31.741,
+    "relation": "The Essene settlement on the Dead Sea's northwest shore, whose 1947 scrolls sparked the Qumran-John affiliation thesis; the corpus follows Joan Taylor in rejecting a direct link while keeping the shared Isaiah 40:3 charter and apocalyptic milieu.",
+    "kind": "movement"
+   },
+   {
+    "name": "Baptist disciples at Ephesus (Acts 19)",
+    "place": "Ephesus (Selçuk), Türkiye",
+    "lon": 27.341,
+    "lat": 37.941,
+    "relation": "Paul's encounter with disciples 'of John's baptism' who had not heard of the Holy Spirit (Acts 19) is the corpus's hard evidence that an independent Baptist movement survived geographically, decades after John's death and far from the Jordan.",
+    "kind": "event"
+   },
+   {
+    "name": "Sebaste tomb and martyr-cult",
+    "place": "Sebastia, West Bank",
+    "lon": 35.19,
+    "lat": 32.276,
+    "relation": "John's fourth-century tomb-shrine at Sebaste in Samaria — its bones desecrated by partisans of Julian the Apostate in 361-362 CE — is the inaugural event of his relic history, the moment his remains became 'fragmented and in motion' across the later cult.",
+    "kind": "place"
+   },
+   {
+    "name": "Josephus writing in Rome",
+    "place": "Rome, Italy",
+    "lon": 12.483,
+    "lat": 41.893,
+    "relation": "Flavius Josephus composed Antiquities 18.116-119 in Rome in the 90s CE — the only non-Christian first-century attestation of John, whose divergence from the Gospels supplies the corpus's entire historical-critical method.",
+    "kind": "influence"
+   },
+   {
+    "name": "Mandaean diaspora seat (Sweden)",
+    "place": "Södertälje, Sweden",
+    "lon": 17.625,
+    "lat": 59.196,
+    "relation": "Sweden hosts roughly 13,000 post-2003 Mandaean refugees; the corpus's central forecast turns on whether such diaspora cities can sustain priesthood and flowing-water masbuta — the living continuation of John's rite.",
+    "kind": "travel"
+   },
+   {
+    "name": "Caravaggio's Beheading at St John's Co-Cathedral",
+    "place": "Valletta, Malta",
+    "lon": 14.514,
+    "lat": 35.899,
+    "relation": "Caravaggio's signed 1608 'Beheading of Saint John the Baptist' in Valletta is the corpus's hinge in reception history between the medieval relic-John and the modern spectacle-of-violent-death John that fed the Salome craze.",
+    "kind": "place"
+   }
+  ]
+ },
+ "jung-research": {
+  "home": {
+   "name": "Carl Gustav Jung",
+   "place": "Küsnacht, Lake Zürich, Switzerland",
+   "lon": 8.585,
+   "lat": 47.318,
+   "note": "Jung lived, practiced, wrote the Red Book and his late religious works, and died here in 1961 — the corpus locates his entire religious psychology 'in a study in Küsnacht.'"
+  },
+  "nodes": [
+   {
+    "name": "Kesswil parsonage (Paul Achilles Jung)",
+    "place": "Kesswil, Lake Constance, Switzerland",
+    "lon": 9.323,
+    "lat": 47.598,
+    "relation": "Jung was born here in 1875 to a Reformed pastor whose dead, going-through-the-motions faith became the corpus's first referent for Jung's lifelong distinction between living religious experience and ossified creed.",
+    "kind": "place"
+   },
+   {
+    "name": "Basel cathedral vision / University of Basel",
+    "place": "Basel, Switzerland",
+    "lon": 7.593,
+    "lat": 47.564,
+    "relation": "Site of Jung's boyhood vision of God shattering his own cathedral — the seed of Answer to Job — and where he studied medicine (1895–1900) on the very streets Nietzsche had walked.",
+    "kind": "event"
+   },
+   {
+    "name": "Sigmund Freud",
+    "place": "Vienna, Austria",
+    "lon": 16.373,
+    "lat": 48.208,
+    "relation": "Freud was Jung's mentor and made him heir to psychoanalysis (1907–1913); their break over reducing all psychic energy to sexuality and over religion-as-illusion was the 'hinge' the corpus says freed Jung toward the religious question.",
+    "kind": "person"
+   },
+   {
+    "name": "Wolfgang Pauli",
+    "place": "Zürich (ETH Zürich), Switzerland",
+    "lon": 8.548,
+    "lat": 47.376,
+    "relation": "The Nobel physicist arrived in clinical crisis in 1932 and stayed a quarter-century, pressing Jung to publish synchronicity and co-authoring the 1952 volume — the corpus's witness 'from matter's own science' for the unus mundus.",
+    "kind": "person"
+   },
+   {
+    "name": "Nietzsche's collapse into madness",
+    "place": "Turin, Italy",
+    "lon": 7.687,
+    "lat": 45.07,
+    "relation": "Nietzsche's January 1889 breakdown in Turin, signing the Wahnzettel as 'Dionysos' and 'The Crucified,' was for Jung the cautionary endpoint of the death of God — inflation reaching its term, the fate individuation was designed to prevent.",
+    "kind": "event"
+   },
+   {
+    "name": "Jordan B. Peterson",
+    "place": "Toronto, Ontario, Canada",
+    "lon": -79.384,
+    "lat": 43.653,
+    "relation": "The corpus treats Peterson as the door through which most contemporary readers reach Jung, transmitting a 'naturalized' Darwinian archetype while arguably softening Jung's darkest claim that evil belongs to the God-image.",
+    "kind": "influence"
+   },
+   {
+    "name": "Richard Wilhelm & The Secret of the Golden Flower",
+    "place": "Qingdao, China",
+    "lon": 120.382,
+    "lat": 36.067,
+    "relation": "The sinologist sent Jung this Chinese Taoist-alchemical text (joint volume 1929), whose interior-alchemy mandala imagery gave Jung his shock of cross-cultural recognition and turned him toward Western alchemy as a map of individuation.",
+    "kind": "influence"
+   },
+   {
+    "name": "Basilides of Alexandria / Gnosticism",
+    "place": "Alexandria, Egypt",
+    "lon": 29.919,
+    "lat": 31.2,
+    "relation": "Jung attributed his 1916 Seven Sermons to the Dead pseudonymously to the 2nd-century Gnostic Basilides of Alexandria, drawing on Gnosticism's dark godhead (Abraxas) and saving-knowledge-by-experience as the ancient precedent for his two-sided God and esse in anima.",
+    "kind": "movement"
+   }
+  ]
+ },
+ "phenomenology-pragmatism-research": {
+  "home": {
+   "name": "Freiburg — Husserl's phenomenology chair",
+   "place": "Freiburg im Breisgau, Germany",
+   "lon": 7.852,
+   "lat": 47.999,
+   "note": "Freiburg is the single densest locus of the corpus's central tradition — Husserl held the chair and wrote the Crisis there, Heidegger trained as his assistant and succeeded him (Being and Time, 1927), and Edith Stein served as his first assistant from 1916 before her conversion."
+  },
+  "nodes": [
+   {
+    "name": "The Metaphysical Club (Cambridge)",
+    "place": "Cambridge, Massachusetts, USA",
+    "lon": -71.116,
+    "lat": 42.374,
+    "relation": "The informal Cambridge discussion society of Peirce, James, Holmes, and Wright (c. 1872-74) is, in Chapter 02, the birthplace of pragmatism — the corpus's second founding pole — from which Peirce extracted the pragmatic maxim and James later launched the public movement.",
+    "kind": "institution"
+   },
+   {
+    "name": "Franz Brentano's Vienna lectures",
+    "place": "Vienna, Austria",
+    "lon": 16.373,
+    "lat": 48.208,
+    "relation": "Brentano's 1874 Psychology from an Empirical Standpoint rehabilitated intentionality and his Vienna lectures of 1884-86 trained Husserl, making Vienna phenomenology's prehistory and the Aristotelian-scholastic root the corpus traces into Catholic philosophical theology.",
+    "kind": "influence"
+   },
+   {
+    "name": "The French theological turn",
+    "place": "Paris, France",
+    "lon": 2.349,
+    "lat": 48.853,
+    "relation": "Paris is the seat of the late-20th-century 'theological turn' (Marion, Henry, Lacoste, Chrétien, Levinas, Ricoeur) that the corpus treats as phenomenology's most disputed modern development and the target of Janicaud's 1991 critique, presented at full strength.",
+    "kind": "movement"
+   },
+   {
+    "name": "Dewey and the Chicago functionalists",
+    "place": "Chicago, Illinois, USA",
+    "lon": -87.602,
+    "lat": 41.789,
+    "relation": "At the University of Chicago (from 1894) Dewey wrote the 1896 reflex-arc paper and, with Angell, Mead, and Tufts, built the functionalist school that dominated American psychology to 1913 — the corpus's central pragmatism-psychology interface.",
+    "kind": "institution"
+   },
+   {
+    "name": "Jaspers and phenomenological psychiatry",
+    "place": "Heidelberg, Germany",
+    "lon": 8.694,
+    "lat": 49.399,
+    "relation": "Jaspers's General Psychopathology (1913), written in Heidelberg, founded phenomenological psychiatry on the Verstehen/Erklären distinction; the corpus tracks the field's contemporary base back to Heidelberg through Thomas Fuchs's group on the lived body and minimal self.",
+    "kind": "place"
+   },
+   {
+    "name": "Pittsburgh analytic pragmatism",
+    "place": "Pittsburgh, Pennsylvania, USA",
+    "lon": -79.953,
+    "lat": 40.444,
+    "relation": "The Pittsburgh department (Sellars, Brandom, McDowell, Haugeland) produced the 'analytic pragmatism' that reads Heidegger via Sellars — the corpus's canonical institutional convergence of phenomenology and pragmatism.",
+    "kind": "movement"
+   },
+   {
+    "name": "Edith Stein's martyrdom",
+    "place": "Auschwitz-Birkenau, Oświęcim, Poland",
+    "lon": 19.203,
+    "lat": 50.027,
+    "relation": "Husserl's assistant turned Carmelite, Edith Stein was murdered at Auschwitz on 9 August 1942 and canonized in 1998 — the decisive event in the corpus's account of phenomenology's Christian seriousness and her Husserlian-Thomist synthesis.",
+    "kind": "event"
+   },
+   {
+    "name": "Dreyfus and the 4E roots",
+    "place": "Berkeley, California, USA",
+    "lon": -122.259,
+    "lat": 37.872,
+    "relation": "At UC Berkeley, Hubert Dreyfus's Heideggerian critique of GOFAI (What Computers Can't Do, 1972; Being-in-the-World, 1991) became, per Chapter 07, the canonical phenomenology-pragmatism convergence in philosophy of mind and seeded the corpus's most productive contemporary 4E alliance.",
+    "kind": "person"
+   },
+   {
+    "name": "Husserl-Archives",
+    "place": "Leuven (Louvain), Belgium",
+    "lon": 4.7,
+    "lat": 50.879,
+    "relation": "Husserl's 45,000 pages of shorthand were smuggled to Louvain by Herman Van Breda; the Husserl-Archives hold his heavily annotated copy of James's Principles — the archival evidence (via Schuhmann's Husserl-Chronik) for the James-Husserl entanglement the corpus's convergence thesis rests on.",
+    "kind": "institution"
+   }
+  ]
+ },
+ "uap-research": {
+  "home": {
+   "name": "Roswell, 1947 — the founding myth of American ufology",
+   "place": "Roswell, New Mexico, USA",
+   "lon": -104.523,
+   "lat": 33.394,
+   "note": "The corpus opens on the July 1947 Roswell debris flap, which (rediscovered via Jesse Marcel in 1978) became the central mythic anchor against which every later U.S. UAP institution and disclosure fight is measured."
+  },
+  "nodes": [
+   {
+    "name": "The Pentagon / AARO",
+    "place": "Arlington, Virginia, USA",
+    "lon": -77.056,
+    "lat": 38.871,
+    "relation": "Seat of the corpus's central present-day actor, the All-domain Anomaly Resolution Office (AARO), whose 'no extraterrestrial evidence' findings define the post-2017 era against the May 2026 PURSUE declassification push.",
+    "kind": "institution"
+   },
+   {
+    "name": "U.S. Congress — UAP oversight architecture",
+    "place": "Washington, D.C., USA",
+    "lon": -77.009,
+    "lat": 38.89,
+    "relation": "Capitol Hill is where the bipartisan caucus drives the story: the July 26, 2023 House Oversight testimony of Grusch, Fravor, and Graves and the Schumer-Rounds UAP Disclosure Act modeled on the JFK Records Act.",
+    "kind": "institution"
+   },
+   {
+    "name": "Robert Bigelow / BAASS — AAWSAP origin",
+    "place": "Las Vegas, Nevada, USA",
+    "lon": -115.14,
+    "lat": 36.169,
+    "relation": "Harry Reid's Pentagon program (AAWSAP, a $22M DIA contract from 2008) ran through Bigelow's Las Vegas firm BAASS, the AAWSAP/AATIP lineage behind the videos and testimony at the heart of the 2017 NYT story.",
+    "kind": "institution"
+   },
+   {
+    "name": "USS Nimitz 'Tic Tac' encounter (2004)",
+    "place": "Pacific Ocean off Baja California / San Diego",
+    "lon": -118.5,
+    "lat": 31.5,
+    "relation": "Cdr. David Fravor's 2004 'Tic Tac' encounter and its FLIR1 video was the load-bearing case embedded in the December 2017 New York Times article that re-legitimized the topic.",
+    "kind": "event"
+   },
+   {
+    "name": "GEIPAN / CNES — French UAP program",
+    "place": "Toulouse, France",
+    "lon": 1.444,
+    "lat": 43.604,
+    "relation": "Founded 1977 inside CNES, GEIPAN is the corpus's exemplar of continuous, hypothesis-neutral data-collection UAP investigation — one of the foreign models the U.S. is described as 'late to re-institutionalization' beside.",
+    "kind": "institution"
+   },
+   {
+    "name": "Project Hessdalen — methodological model",
+    "place": "Hessdalen valley, Norway",
+    "lon": 11.196,
+    "lat": 62.778,
+    "relation": "The instrumented Norwegian recurring-anomaly site (Strand, 1983– ) is the methodological model the Galileo Project explicitly cites: sustained multi-modal instrumentation of a real UAP hotspot with peer-reviewed output.",
+    "kind": "place"
+   },
+   {
+    "name": "Operação Prato — Colares episode",
+    "place": "Colares, Pará, Brazil",
+    "lon": -48.291,
+    "lat": -0.937,
+    "relation": "The 1977 Brazilian Air Force operation at Colares is the corpus's pick for Latin America's most extensively documented military UAP investigation, treated procedurally rather than as a secrecy scandal.",
+    "kind": "event"
+   },
+   {
+    "name": "CEFAA — 2014 Chilean Navy helicopter case",
+    "place": "Quintero, Valparaíso, Chile",
+    "lon": -71.527,
+    "lat": -32.783,
+    "relation": "Chile's CEFAA reviewed the 2014 WESCAM infrared helicopter footage near Quintero in named expert panels and published the chain — the corpus's exemplar of the transparent process the Pentagon-released videos lacked.",
+    "kind": "institution"
+   },
+   {
+    "name": "Galileo Project — Avi Loeb",
+    "place": "Cambridge, Massachusetts, USA",
+    "lon": -71.116,
+    "lat": 42.381,
+    "relation": "Avi Loeb's privately funded Galileo Project (2021, Harvard) is the corpus's contemporary U.S. bid for SETI-style scientific respectability for UAP, deliberately rejecting the disclosure frame for published data collection.",
+    "kind": "movement"
+   }
+  ]
+ },
+ "us-geopolitics-research": {
+  "home": {
+   "name": "United States grand strategy (Trump II, 2026)",
+   "place": "Washington, D.C., USA",
+   "lon": -77.036,
+   "lat": 38.895,
+   "note": "Washington is the seat of the executive branch, the National Security Strategy documents, the 'Blob' continuity-carriers, and the SOUTHCOM/INDOPACOM commands that direct the strategy the corpus anatomizes."
+  },
+  "nodes": [
+   {
+    "name": "TSMC (Taiwan Semiconductor Manufacturing)",
+    "place": "Hsinchu, Taiwan",
+    "lon": 120.973,
+    "lat": 24.804,
+    "relation": "The corpus states TSMC fabricates >90% of the world's leading-edge logic chips, all on Taiwan, making it the single largest geographic concentration risk in the global economy and a structural driver of US Taiwan-deterrence strategy.",
+    "kind": "institution"
+   },
+   {
+    "name": "NATO Hague Summit (June 2025)",
+    "place": "The Hague, Netherlands",
+    "lon": 4.31,
+    "lat": 52.08,
+    "relation": "The corpus records the June 24-25, 2025 Hague summit (Rutte's first as SecGen) where 31 of 32 members committed to a 5%-of-GDP target by 2035 with an explicit Spain exemption — its decisive test of whether the strained transatlantic alliance still holds.",
+    "kind": "event"
+   },
+   {
+    "name": "Operation Southern Spear / Maduro capture",
+    "place": "Caracas, Venezuela",
+    "lon": -66.917,
+    "lat": 10.5,
+    "relation": "The corpus treats the Caribbean strike campaign (58+ vessels by May 2026) and the reported January 3, 2026 capture of Maduro as the single most distinctive new feature of Trump II strategy — a Monroe Doctrine revival in the hemisphere.",
+    "kind": "event"
+   },
+   {
+    "name": "Operation Midnight Hammer (Fordow strikes)",
+    "place": "Fordow, Qom Province, Iran",
+    "lon": 50.994,
+    "lat": 34.884,
+    "relation": "The corpus anchors its 'weakened-persistent Iran' modal forecast on the June 22, 2025 strikes in which 7 B-2 bombers delivered GBU-57 MOPs against Fordow, Natanz, and Isfahan — the largest direct US-Iran exchange.",
+    "kind": "event"
+   },
+   {
+    "name": "Camp David Trilateral (US-Japan-Korea)",
+    "place": "Camp David, Maryland, USA",
+    "lon": -77.465,
+    "lat": 39.648,
+    "relation": "The corpus cites the August 18, 2023 Camp David summit, which institutionalized US-Japan-Korea trilateral cooperation, as its marquee example of the densifying Indo-Pacific alliance system surviving 2024-2025 government turnover.",
+    "kind": "institution"
+   },
+   {
+    "name": "US withdrawal from Air Base 201",
+    "place": "Agadez, Niger",
+    "lon": 7.991,
+    "lat": 16.973,
+    "relation": "The corpus uses the 2024 US abandonment of the Agadez drone base as the symbolic and operational marker of US retreat from the Sahel, with Russia's Africa Corps and China filling the vacuum.",
+    "kind": "event"
+   },
+   {
+    "name": "John Mearsheimer (structural-realist restrainers)",
+    "place": "Chicago, Illinois, USA",
+    "lon": -87.6,
+    "lat": 41.789,
+    "relation": "The corpus treats the Mearsheimer-Walt thesis (anchored at the University of Chicago) that NATO expansion substantially caused the Ukraine war as a central live debate among serious scholars.",
+    "kind": "person"
+   },
+   {
+    "name": "Kishore Mahbubani (non-Western voice)",
+    "place": "Singapore",
+    "lon": 103.819,
+    "lat": 1.352,
+    "relation": "The corpus names Mahbubani (NUS), author of 'Has China Won?', as its leading non-Western voice, arguing US strategy consistently misreads Asia and risks overreach against a civilizationally-rising China.",
+    "kind": "person"
+   },
+   {
+    "name": "Quincy Institute for Responsible Statecraft",
+    "place": "Washington, D.C., USA",
+    "lon": -77.041,
+    "lat": 38.903,
+    "relation": "The corpus identifies the Quincy Institute — founded 2019 by an unusual Soros-Open-Society/Koch coalition — as the institutional home of the restrainer camp (Bacevich, Wertheim) and the 'Blob' critique.",
+    "kind": "institution"
+   }
+  ]
+ },
+ "mcluhan-research": {
+  "home": {
+   "name": "Marshall McLuhan",
+   "place": "Toronto, Ontario, Canada",
+   "lon": -79.394,
+   "lat": 43.664,
+   "note": "From 1946 to his 1980 death McLuhan was based at St. Michael's College, University of Toronto, where he founded the Centre for Culture and Technology (1963) and ran the Coach House Monday-night seminars in which the mature media theory took shape."
+  },
+  "nodes": [
+   {
+    "name": "Cambridge (Trinity Hall) and Practical Criticism",
+    "place": "Cambridge, England, UK",
+    "lon": 0.119,
+    "lat": 52.205,
+    "relation": "At Trinity Hall (1934-36) McLuhan absorbed the 'practical criticism' of I.A. Richards and F.R. Leavis, and his own line — 'I simply extend this kind of language-of-forms analysis from poetry to the popular media' — is the corpus's named seed of 'the medium is the message.'",
+    "kind": "institution"
+   },
+   {
+    "name": "G.K. Chesterton and the 1937 conversion",
+    "place": "London, England, UK",
+    "lon": -0.128,
+    "lat": 51.507,
+    "relation": "Chesterton's 'What's Wrong with the World' drove McLuhan's 1937 Catholic conversion ('he's responsible for bringing me into the church'), supplying the corpus's Thomist conviction that material forms carry meaning beneath 'the medium is the message.'",
+    "kind": "person"
+   },
+   {
+    "name": "Saint Louis University and Walter Ong",
+    "place": "St. Louis, Missouri, USA",
+    "lon": -90.234,
+    "lat": 38.636,
+    "relation": "At Jesuit Saint Louis University (1937-44) McLuhan taught and supervised Walter Ong — who made the orality-literacy thesis scholarly and introduced him to Teilhard's noosphere behind the 'global village' — and married Corinne Lewis there (1939).",
+    "kind": "institution"
+   },
+   {
+    "name": "Harold Innis and the Toronto School",
+    "place": "Toronto, Ontario, Canada",
+    "lon": -79.405,
+    "lat": 43.659,
+    "relation": "The corpus names Toronto political economist Harold Innis as McLuhan's master — McLuhan called 'The Gutenberg Galaxy' a 'footnote' to Innis's 'bias of communication,' then psychologized it, relocating Innis's media-and-empire argument into the human sensorium.",
+    "kind": "influence"
+   },
+   {
+    "name": "James Joyce and 'applied Joyce'",
+    "place": "Dublin, Ireland",
+    "lon": -6.26,
+    "lat": 53.35,
+    "relation": "McLuhan called his media theory 'applied Joyce' and named the Dublin-set 'Finnegans Wake' 'the greatest guide to the media ever devised,' reading its ten thunderwords (with son Eric) as a coded history of technological epochs.",
+    "kind": "influence"
+   },
+   {
+    "name": "Fordham, the Schweitzer Chair, and the celebrity peak",
+    "place": "Bronx, New York City, USA",
+    "lon": -73.886,
+    "lat": 40.861,
+    "relation": "McLuhan held the Albert Schweitzer Chair at Fordham (1967-68), arranged by Jesuit John Culkin, at the height of his fame — the corporate-consulting, Playboy-interview, 'Medium is the Massage' celebrity years the corpus dates to roughly 1965-70.",
+    "kind": "event"
+   },
+   {
+    "name": "Neil Postman and Media Ecology at NYU",
+    "place": "New York City, USA",
+    "lon": -73.996,
+    "lat": 40.729,
+    "relation": "Postman, not McLuhan, named and institutionalized 'media ecology,' building the NYU doctoral program (by 1971) and turning McLuhan's value-free probes into the moral jeremiad of 'Amusing Ourselves to Death.'",
+    "kind": "movement"
+   },
+   {
+    "name": "Friedrich Kittler and German media science",
+    "place": "Berlin, Germany",
+    "lon": 13.405,
+    "lat": 52.52,
+    "relation": "Kittler, central figure of German Medienwissenschaft, both extended and rebuked McLuhan — reversing 'the extensions of man' into the anti-humanist claim that media produce 'man,' and rooting media in war and hardware rather than the sensorium.",
+    "kind": "influence"
+   },
+   {
+    "name": "Wired and the Silicon Valley revival",
+    "place": "San Francisco, California, USA",
+    "lon": -122.419,
+    "lat": 37.775,
+    "relation": "Wired (launched 1993) crowned McLuhan its 'patron saint,' anchoring the internet-era revival — a sunny 'global village' reading the corpus argues quietly deleted his Catholic pessimism and his warnings of tribal terror.",
+    "kind": "movement"
+   }
+  ]
+ },
+ "piaget-research": {
+  "home": {
+   "name": "Jean Piaget — genetic epistemology and the religious mind",
+   "place": "Geneva, Switzerland",
+   "lon": 6.143,
+   "lat": 46.204,
+   "note": "Geneva was Piaget's base from 1921: the Rousseau Institute, his University of Geneva chairs, and the Centre International d'Epistemologie Genetique he founded in 1955 to pursue 'how does knowledge grow?' until his death and unmarked burial there in 1980."
+  },
+  "nodes": [
+   {
+    "name": "Neuchâtel and its natural-history museum",
+    "place": "Neuchâtel, Switzerland",
+    "lon": 6.931,
+    "lat": 46.99,
+    "relation": "Piaget's 1896 birthplace and naturalist cradle: his albino-sparrow note (~age 10) won a four-year mollusc apprenticeship under Paul Godet at the Neuchatel museum and a 1918 doctorate on Valais snails, the assimilation/adaptation machinery he later asked of knowledge itself.",
+    "kind": "place"
+   },
+   {
+    "name": "Lake Annecy — the 1912 Bergson revelation",
+    "place": "Lake Annecy, Savoy, France",
+    "lon": 6.166,
+    "lat": 45.853,
+    "relation": "Here in summer 1912 Piaget's godfather Samuel Cornut pressed Bergson's 'Creative Evolution' on the 16-year-old; identifying God with Life made biology the road to the sacred and, the corpus argues, set the agenda of his whole life.",
+    "kind": "event"
+   },
+   {
+    "name": "The Binet laboratory and the Sorbonne",
+    "place": "Paris, France",
+    "lon": 2.352,
+    "lat": 48.857,
+    "relation": "In Paris (1919-1921) Piaget absorbed Leon Brunschvicg's historical-critical philosophy and, standardizing test items under Theodore Simon in Alfred Binet's old lab, discovered that children's wrong answers are systematic — fusing the clinical method, child psychology, and the genetic-epistemology program.",
+    "kind": "event"
+   },
+   {
+    "name": "The Burghölzli clinic — the clinical interview",
+    "place": "Zurich, Switzerland",
+    "lon": 8.541,
+    "lat": 47.357,
+    "relation": "In Zurich (1918) Piaget attended Jung's lectures and worked in Eugen Bleuler's psychiatric orbit at the Burgholzli, absorbing the probing follow-the-subject psychiatric interview that became the seed of his own methode clinique.",
+    "kind": "travel"
+   },
+   {
+    "name": "Édition La Concorde — Recherche (1918)",
+    "place": "Lausanne, Switzerland",
+    "lon": 6.633,
+    "lat": 46.519,
+    "relation": "Lausanne's Edition La Concorde published Piaget's 1918 confessional novel 'Recherche', where the mature constructs first appear in the service of reconciling science and Protestant faith — equilibre 229 times, life defined as assimilation of the milieu.",
+    "kind": "event"
+   },
+   {
+    "name": "Fernando Vidal — Piaget Before Piaget",
+    "place": "Cambridge, Massachusetts, USA",
+    "lon": -71.116,
+    "lat": 42.374,
+    "relation": "Vidal's 'Piaget Before Piaget' (Harvard University Press, 1994) is the corpus's load-bearing source for the religion-shaped-epistemology thesis, overturning Piaget's naturalist self-portrait with the archival young Christian-socialist.",
+    "kind": "influence"
+   },
+   {
+    "name": "Lev Vygotsky — the sociocultural critique",
+    "place": "Moscow, Russia",
+    "lon": 37.618,
+    "lat": 55.751,
+    "relation": "In 'Thinking and Speech' (1934) Vygotsky became Piaget's first deep critic, reversing him on egocentric speech (social to egocentric to inner) and making language and culture, not solo construction, the engine of development; the modern verdict is complementarity.",
+    "kind": "person"
+   },
+   {
+    "name": "Renée Baillargeon — infancy competence",
+    "place": "Urbana-Champaign, Illinois, USA",
+    "lon": -88.227,
+    "lat": 40.11,
+    "relation": "Baillargeon's violation-of-expectation 'drawbridge' studies at Illinois found object permanence by ~3.5 months, overturning Piaget's 8-9-month timetable by showing his motor index under-credited infants.",
+    "kind": "person"
+   },
+   {
+    "name": "Rolando García — the parallelism capstone",
+    "place": "Mexico City, Mexico",
+    "lon": -99.133,
+    "lat": 19.432,
+    "relation": "The Argentine physicist-epistemologist, who built his later career in Mexico City, co-authored 'Psychogenesis and the History of Science' (1983) with Piaget — the capstone statement that childhood conceptual growth and the history of science traverse the same intra-inter-trans sequence.",
+    "kind": "person"
+   }
+  ]
+ },
+ "dickinson-research": {
+  "home": {
+   "name": "Emily Dickinson at the Homestead",
+   "place": "Amherst, Massachusetts, USA",
+   "lon": -72.514,
+   "lat": 42.375,
+   "note": "Dickinson was born at, wrote nearly 1,800 poems and sewed her ~40 fascicles in near-total privacy within, and died at the family Homestead on Main Street in Amherst — the single house that contained almost her entire life and work."
+  },
+  "nodes": [
+   {
+    "name": "Susan Gilbert Dickinson (The Evergreens)",
+    "place": "Amherst, Massachusetts, USA",
+    "lon": -72.512,
+    "lat": 42.376,
+    "relation": "Susan — childhood friend, sister-in-law, and next-door neighbor at The Evergreens — was Dickinson's closest lifelong reader and critic (she pushed the revision of 'Safe in their Alabaster Chambers') and the recipient of 250+ poems, more than anyone else; the nature of their bond is the corpus's central unresolved intimacy debate.",
+    "kind": "person"
+   },
+   {
+    "name": "Mount Holyoke Female Seminary",
+    "place": "South Hadley, Massachusetts, USA",
+    "lon": -72.574,
+    "lat": 42.255,
+    "relation": "At Mount Holyoke (1847-48), amid the Second Great Awakening's conversion machinery, Dickinson stayed among the dwindling 'no-hope' students who declined to profess faith — the documented refusal the corpus calls the founding act of her independence.",
+    "kind": "institution"
+   },
+   {
+    "name": "Cambridgeport eye treatment",
+    "place": "Cambridgeport (Cambridge), Massachusetts, USA",
+    "lon": -71.103,
+    "lat": 42.363,
+    "relation": "For ~14 months across 1864-65 Dickinson boarded with Norcross cousins in Cambridgeport for ophthalmic treatment by Dr. Henry Willard Williams ('eight months of Siberia'); these were her last extended trips from Amherst, after which she rarely left the Homestead grounds.",
+    "kind": "travel"
+   },
+   {
+    "name": "Samuel Bowles & the Springfield Republican",
+    "place": "Springfield, Massachusetts, USA",
+    "lon": -72.579,
+    "lat": 42.101,
+    "relation": "Bowles, editor of the Springfield Republican, was one of Dickinson's most charged correspondents and a recurring (unconfirmed) 'Master' candidate; about four of the ~10 poems printed in her lifetime ran anonymously in his paper, with liberties she resented.",
+    "kind": "person"
+   },
+   {
+    "name": "Charles Wadsworth ('my Philadelphia')",
+    "place": "Philadelphia, Pennsylvania, USA",
+    "lon": -75.165,
+    "lat": 39.953,
+    "relation": "Wadsworth, minister of Arch Street Presbyterian Church whom Dickinson first heard preach c.1855, was revered as 'my Philadelphia' and 'my dearest earthly friend'; his 1862 departure for San Francisco is the leading (unproven) hypothesis for her 'terror — since September' and a top 'Master' candidate.",
+    "kind": "person"
+   },
+   {
+    "name": "Judge Otis Phillips Lord ('my lovely Salem')",
+    "place": "Salem, Massachusetts, USA",
+    "lon": -70.897,
+    "lat": 42.519,
+    "relation": "Lord, a Massachusetts Supreme Judicial Court justice and friend of Dickinson's father, was her best-documented romance (c.1878-84), attested in her own amorous drafts ('I confess that I love him… my lovely Salem'); a marriage proposal c.1883 she seems to have declined.",
+    "kind": "person"
+   },
+   {
+    "name": "Houghton Library & the Emily Dickinson Archive",
+    "place": "Cambridge, Massachusetts, USA",
+    "lon": -71.116,
+    "lat": 42.373,
+    "relation": "Harvard acquired the Bianchi/family manuscript line in 1950 (Houghton Library), commissioned Johnson's 1955 variorum, and on 23 Oct 2013 launched the open-access Emily Dickinson Archive that digitally reunified the corpus split between Harvard and Amherst by the family feud.",
+    "kind": "institution"
+   },
+   {
+    "name": "The Atlantic Monthly & T. W. Higginson",
+    "place": "Boston, Massachusetts, USA",
+    "lon": -71.058,
+    "lat": 42.36,
+    "relation": "Higginson, the Boston/Atlantic Monthly man of letters, opened a 24-year correspondence after Dickinson answered his 1862 'Letter to a Young Contributor' ('Are you too deeply occupied to say if my Verse is alive?'); he became her 'preceptor,' steered her from publication, and co-edited the regularized 1890 Poems.",
+    "kind": "person"
+   }
+  ]
+ },
+ "emerson-research": {
+  "home": {
+   "name": "Ralph Waldo Emerson",
+   "place": "Concord, Massachusetts, USA",
+   "lon": -71.349,
+   "lat": 42.46,
+   "note": "Emerson settled at 'Bush' in Concord in 1835 and made his house the gravitational center of the Transcendentalist circle, writing the Essays and lecturing until his death there in 1882."
+  },
+  "nodes": [
+   {
+    "name": "Second Church, Boston (the 1832 resignation)",
+    "place": "Boston, Massachusetts, USA",
+    "lon": -71.058,
+    "lat": 42.36,
+    "relation": "Emerson, ordained junior pastor of Boston's Second Church in 1829, resigned this pulpit in September 1832 rather than administer the Lord's Supper he believed Jesus never meant as a perpetual rite -- the rupture that ended his ministry.",
+    "kind": "event"
+   },
+   {
+    "name": "Harvard Divinity School (the Divinity School Address)",
+    "place": "Cambridge, Massachusetts, USA",
+    "lon": -71.116,
+    "lat": 42.377,
+    "relation": "At his alma mater Emerson delivered the 15 July 1838 Divinity School Address attacking miracles-as-evidence and the 'noxious exaggeration about the person of Jesus,' provoking roughly thirty years of Harvard estrangement before the 1866 reconciliation.",
+    "kind": "institution"
+   },
+   {
+    "name": "Thomas Carlyle at Craigenputtock",
+    "place": "Craigenputtock, Dumfriesshire, Scotland, UK",
+    "lon": -3.832,
+    "lat": 55.155,
+    "relation": "Emerson rode out to Carlyle's isolated farmhouse on 25 August 1833, beginning a forty-year friendship and 190-plus-letter correspondence in which he served as Carlyle's American literary agent before the two split over democracy and slavery.",
+    "kind": "person"
+   },
+   {
+    "name": "The Jardin des Plantes vision",
+    "place": "Paris, France",
+    "lon": 2.359,
+    "lat": 48.843,
+    "relation": "Moving through Cuvier's cabinets of 'organized forms' at the Paris natural-history museum in 1833, Emerson glimpsed 'the hidden order of nature' and vowed 'I will be a naturalist' -- the intellectual hinge that turned him toward Nature (1836).",
+    "kind": "travel"
+   },
+   {
+    "name": "Thoreau's cabin on Emerson's land",
+    "place": "Walden Pond, Concord, Massachusetts, USA",
+    "lon": -71.336,
+    "lat": 42.438,
+    "relation": "Emerson bought the land at Walden Pond in 1844 and lent it to his protege Thoreau, who built his cabin and lived there from July 1845 to 1847 -- the self-reliance experiment running on his patron's borrowed ground.",
+    "kind": "place"
+   },
+   {
+    "name": "Emily Dickinson (influence without acquaintance)",
+    "place": "Amherst, Massachusetts, USA",
+    "lon": -72.519,
+    "lat": 42.367,
+    "relation": "Dickinson absorbed Emerson's aphoristic, nature-as-symbol line from the 1847 Poems Newton gave her, yet the two never met even when he lectured in Amherst in December 1857 and slept next door at the Evergreens.",
+    "kind": "person"
+   },
+   {
+    "name": "Walt Whitman and the 1855 letter",
+    "place": "Brooklyn, New York, USA",
+    "lon": -73.99,
+    "lat": 40.696,
+    "relation": "Whitman sent the self-published Leaves of Grass to Emerson, who replied 'I greet you at the beginning of a great career' (1855) -- a private letter Whitman released to the Tribune and stamped in gold on the book's spine without permission.",
+    "kind": "person"
+   },
+   {
+    "name": "Meeting Lincoln in Washington",
+    "place": "Washington, D.C., USA",
+    "lon": -77.037,
+    "lat": 38.895,
+    "relation": "Emerson's slow turn to militant abolitionism -- the 1844 West Indies address, defiance of the Fugitive Slave Law, the defense of John Brown -- culminated in his early-February 1862 White House meeting with Lincoln, arranged by Senator Charles Sumner.",
+    "kind": "event"
+   }
+  ]
+ },
+ "pareto-research": {
+  "home": {
+   "name": "Vilfredo Pareto and the Lausanne School",
+   "place": "Lausanne, Switzerland",
+   "lon": 6.633,
+   "lat": 46.519,
+   "note": "At Lausanne Pareto succeeded Walras in the chair of political economy in 1893 and produced his entire mature work — the Cours, the Manuale, and the sociology — as 'Professor Pareto of the Lausanne School.'"
+  },
+  "nodes": [
+   {
+    "name": "Paris (birth into a Risorgimento exile family)",
+    "place": "Paris, France",
+    "lon": 2.352,
+    "lat": 48.857,
+    "relation": "Pareto was born in Paris in 1848 to Raffaele Pareto, a Genoese marquis exiled to France for his Mazzinian Risorgimento conspiracy, and a French mother — an origin the corpus reads as giving him both an aristocrat's detachment and a radical's familiarity with opposition.",
+    "kind": "place"
+   },
+   {
+    "name": "Polytechnic of Turin (the engineer's equilibrium)",
+    "place": "Turin, Italy",
+    "lon": 7.686,
+    "lat": 45.07,
+    "relation": "At Turin's engineering school Pareto wrote his thesis on 'the fundamental principles of equilibrium in solid bodies' (1869/70), the master analogy the corpus names as the through-line from mechanical equilibrium to economic general equilibrium to the 'social equilibrium' of the Trattato.",
+    "kind": "institution"
+   },
+   {
+    "name": "Florence and the Peruzzi salon (the formative defeat)",
+    "place": "Florence, Italy",
+    "lon": 11.256,
+    "lat": 43.77,
+    "relation": "Around Florence Pareto spent two decades as a militant Cobdenite free-trader, entered Tuscan liberal society through the Peruzzi salon, and lost his parliamentary contests at Montevarchi and Pistoia — the political defeat the corpus argues turned the liberal activist into the cold analyst of elite power.",
+    "kind": "place"
+   },
+   {
+    "name": "Celigny — the Villa Angora ('hermit of Celigny')",
+    "place": "Celigny, Canton of Geneva, Switzerland",
+    "lon": 6.215,
+    "lat": 46.359,
+    "relation": "Freed by an 1898 inheritance, Pareto withdrew to the Villa Angora at Celigny on Lake Geneva, where the 'hermit of Celigny' among his Angora cats wrote Les Systemes socialistes and the Trattato di sociologia generale (1916), and where he died in August 1923.",
+    "kind": "place"
+   },
+   {
+    "name": "March on Rome (1922)",
+    "place": "Rome, Italy",
+    "lon": 12.496,
+    "lat": 41.903,
+    "relation": "Pareto read Mussolini's 28 October 1922 March on Rome as live confirmation of his circulation-of-elites theory and welcomed it conditionally while warning against the abuse of force — the event at the center of the corpus's 'Marx of Fascism' debate, which his August 1923 death (before the dictatorship and the Matteotti murder) largely defuses.",
+    "kind": "event"
+   },
+   {
+    "name": "Gaetano Mosca (the priority rival)",
+    "place": "Palermo, Sicily, Italy",
+    "lon": 13.361,
+    "lat": 38.116,
+    "relation": "The Sicilian-born Mosca stated the ruling-class doctrine in 1884, sixteen years before Pareto, accused him of appropriating it without credit (Pareto called him 'a balloon full of hot air'), rejected the word 'elite,' and remained a constitutional liberal where Pareto turned cynic.",
+    "kind": "person"
+   },
+   {
+    "name": "James Burnham and The Machiavellians",
+    "place": "New York City, USA",
+    "lon": -73.987,
+    "lat": 40.748,
+    "relation": "From New York the ex-Trotskyist Burnham published The Machiavellians: Defenders of Freedom (John Day, 1943), delivering Pareto's formal/real distinction and lion-fox circulation to the Anglophone world as a paradoxical 'defense of freedom' — the lens this corpus is built to read through and then beyond.",
+    "kind": "influence"
+   },
+   {
+    "name": "Peter Turchin and cliodynamics (elite overproduction)",
+    "place": "Storrs, Connecticut, USA",
+    "lon": -72.252,
+    "lat": 41.808,
+    "relation": "At the University of Connecticut, Turchin built cliodynamics and the 'elite overproduction' thesis (End Times, 2023) as a quantitative descendant of Pareto's circulation-of-elites — which the corpus argues faces the same vagueness-and-unfalsifiability objections that retired classical elitism.",
+    "kind": "person"
+   },
+   {
+    "name": "Hugo Drochon's Elites and Democracy (scholarly revival)",
+    "place": "Princeton, New Jersey, USA",
+    "lon": -74.659,
+    "lat": 40.348,
+    "relation": "Drochon's Elites and Democracy (Princeton University Press, 2026) anchors the corpus's 'scholarly' wing of the elite-theory revival, recovering Mosca/Pareto/Michels as distinct thinkers and reading populism as elite circulation rather than democracy's negation.",
+    "kind": "person"
+   }
+  ]
+ }
+}

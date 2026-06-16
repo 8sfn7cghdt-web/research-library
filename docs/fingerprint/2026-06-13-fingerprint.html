@@ -1109,7 +1109,7 @@ if (location.hash.length > 1) {
     back.innerHTML =
       '<div id="atlas-panel">'
       + '<div id="atlas-bar"><span id="atlas-title">The Atlas</span>'
-      + '<span id="atlas-sub">Every corpus, pinned where its author or story belongs — drag to roam, scroll to zoom.</span>'
+      + '<span id="atlas-sub">Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.</span>'
       + '<select id="atlas-pick" aria-label="Choose a research to map its intellectual world"></select>'
       + '<span id="atlas-tools"><button id="atlas-zin" aria-label="Zoom in">+</button>'
       + '<button id="atlas-zout" aria-label="Zoom out">−</button>'
@@ -1228,7 +1228,7 @@ if (location.hash.length > 1) {
     var sub = back && back.querySelector('#atlas-sub'); if (!sub) return;
     var C = (mode && DATA && DATA.connections && DATA.connections[mode]) ? DATA.connections[mode] : null;
     if (C) sub.textContent = C.home.name + '’s intellectual world — ' + C.nodes.length + ' geographic connections. Hover a place to trace its thread.';
-    else sub.textContent = 'Every corpus, pinned where its author or story belongs — drag to roam, scroll to zoom.';
+    else sub.textContent = 'Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.';
   }
 
   // Repaint the whole surface for the active mode. Cheap enough to rebuild wholesale.
@@ -1283,6 +1283,7 @@ if (location.hash.length > 1) {
     var off = Math.min(170, len * 0.16), cx = mx - dy / len * off, cy = my + dx / len * off;
     return 'M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' Q' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + x2.toFixed(1) + ' ' + y2.toFixed(1);
   }
+  function clipText(t, n) { t = t || ''; return t.length > n ? t.slice(0, n - 1).replace(/[\s,;:&/-]+$/, '') + '…' : t; }
   function connLayer(C) {
     var ac = esc(C.home.accent || '#b3502f'), H = C.home, R = 58;
     var s = '<g id="atlas-lines">';
@@ -1290,21 +1291,28 @@ if (location.hash.length > 1) {
     s += '</g>';
     s += '<g id="atlas-threads" stroke="' + ac + '">';
     C.nodes.forEach(function (n, i) { s += '<path class="atlas-thread" data-i="' + i + '" d="' + arcPath(H.x, H.y, n.x, n.y) + '"/>'; });
-    s += '</g><g id="atlas-cnodes">';
-    C.nodes.forEach(function (n, i) {
-      s += '<g class="atlas-cnode" data-i="' + i + '">';
-      s += '<circle class="atlas-chalo" cx="' + n.x + '" cy="' + n.y + '" r="17" stroke="' + ac + '" fill="none"/>';
-      s += '<circle class="atlas-cdot" cx="' + n.x + '" cy="' + n.y + '" r="9" fill="' + ac + '"/>';
-      s += '<text class="atlas-clabel" x="' + n.x + '" y="' + (n.y - 18) + '" text-anchor="middle">' + esc(n.name) + '</text>';
-      s += '</g>';
-    });
-    s += '</g><g class="atlas-home">';
+    s += '</g>';
+    // home badge drawn UNDER the place nodes, so their dots + labels are never masked
+    s += '<g class="atlas-home">';
     s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + (R + 6) + '" fill="var(--bg)"/>';
     if (H.img) { var href = esc(base + H.img);
       s += '<image href="' + href + '" xlink:href="' + href + '" x="' + (H.x - R) + '" y="' + (H.y - R) + '" width="' + (2 * R) + '" height="' + (2 * R) + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ahome)"/>'; }
     else s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + R + '" fill="' + ac + '"/>';
     s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + R + '" fill="none" stroke="' + ac + '" stroke-width="4.5"/>';
     s += '<text class="atlas-hlabel" x="' + H.x + '" y="' + (H.y + R + 33) + '" text-anchor="middle" fill="' + ac + '">' + esc(H.name) + '</text>';
+    s += '</g>';
+    s += '<g id="atlas-cnodes">';
+    C.nodes.forEach(function (n, i) {
+      // splay each label outward from home so the European cluster doesn't pile up
+      var dx = n.x - H.x, dy = n.y - H.y, L = Math.sqrt(dx * dx + dy * dy) || 1;
+      var lx = n.x + dx / L * 15, ly = n.y + dy / L * 15 + (dy >= 0 ? 16 : -8);
+      var anchor = dx > 30 ? 'start' : (dx < -30 ? 'end' : 'middle');
+      s += '<g class="atlas-cnode" data-i="' + i + '">';
+      s += '<circle class="atlas-chalo" cx="' + n.x + '" cy="' + n.y + '" r="17" stroke="' + ac + '" fill="none"/>';
+      s += '<circle class="atlas-cdot" cx="' + n.x + '" cy="' + n.y + '" r="9" fill="' + ac + '"/>';
+      s += '<text class="atlas-clabel" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '">' + esc(clipText(n.name, 30)) + '</text>';
+      s += '</g>';
+    });
     s += '</g>';
     return s;
   }

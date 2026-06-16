@@ -1951,6 +1951,91 @@ def compute_atlas(geo, corpora, placements=None, grow=None):
     }
 
 
+def _atlas_projector(geo):
+    """Rebuild the Web-Mercator projection geo.json was baked at, so arbitrary
+    lon/lat points (the per-corpus intellectual-world nodes) land in the SAME
+    coordinate space as the regions and backdrop. Mirrors scripts/build_atlas_geo.py;
+    reads the window/width straight off geo.json so the two can never drift."""
+    win = geo.get("window") or {"W": -130.0, "E": 160.0, "N": 74.0, "S": -40.0}
+    w = geo.get("w") or 3600.0
+
+    def _mx(lon):
+        return math.radians(lon)
+
+    def _my(lat):
+        lat = max(min(lat, 84.0), -84.0)
+        return math.log(math.tan(math.pi / 4 + math.radians(lat) / 2))
+
+    x0, x1 = _mx(win["W"]), _mx(win["E"])
+    y0 = _my(win["N"])
+    sx = w / (x1 - x0) if x1 != x0 else 1.0
+
+    def proj(lon, lat):
+        return [round((_mx(lon) - x0) * sx, 1), round((y0 - _my(lat)) * sx, 1)]
+
+    return proj
+
+
+def load_atlas_connections():
+    """Read the authored intellectual-world data (atlas/connections.json).
+
+    Shape: {slug: {home:{name,place,lon,lat,note}, nodes:[{name,place,lon,lat,
+    relation,kind}]}} — WGS84 lon/lat that the build projects. {} if not authored."""
+    p = HERE / "atlas" / "connections.json"
+    if not p.exists():
+        return {}
+    try:
+        return json.loads(p.read_text())
+    except Exception as e:
+        print(f"  ! atlas connections.json unreadable: {e}", file=sys.stderr)
+        return {}
+
+
+def compute_atlas_connections(geo, corpora, conn_raw):
+    """Project each corpus's intellectual world (home + geographic nodes) into the
+    atlas coordinate space, joining the corpus's own cover/accent/link onto its
+    home anchor. Returns {slug: {home, nodes}} for slugs that have both a corpus
+    entry and authored connections; skips the rest with a note."""
+    if not conn_raw:
+        return {}
+    proj = _atlas_projector(geo)
+    out = {}
+    for slug, world in conn_raw.items():
+        if slug not in corpora or not isinstance(world, dict):
+            if slug not in corpora:
+                print(f"  ! atlas connections: {slug!r} has no corpus entry", file=sys.stderr)
+            continue
+        home = world.get("home") or {}
+        nodes_in = world.get("nodes") or []
+        if "lon" not in home or "lat" not in home or not nodes_in:
+            print(f"  ! atlas connections: {slug!r} missing home coords or nodes", file=sys.stderr)
+            continue
+        c = corpora[slug]
+        hx, hy = proj(home["lon"], home["lat"])
+        nodes = []
+        for nd in nodes_in:
+            if "lon" not in nd or "lat" not in nd:
+                continue
+            nx, ny = proj(nd["lon"], nd["lat"])
+            nodes.append({
+                "x": nx, "y": ny,
+                "name": nd.get("name", ""), "place": nd.get("place", ""),
+                "relation": nd.get("relation", ""), "kind": nd.get("kind", "influence"),
+            })
+        if not nodes:
+            continue
+        out[slug] = {
+            "home": {
+                "x": hx, "y": hy,
+                "name": home.get("name", c["title"]), "place": home.get("place", ""),
+                "note": home.get("note", ""),
+                "title": c["title"], "href": c["href"], "accent": c["accent"], "img": c.get("img"),
+            },
+            "nodes": nodes,
+        }
+    return out
+
+
 ATLAS_CSS = """
 #atlas-dock { position: fixed; left: .9rem; bottom: .9rem; z-index: 60; display: flex; gap: .5rem; align-items: center; }
 #atlas-dock #cmdk-fab { position: static; left: auto; bottom: auto; }
@@ -1998,14 +2083,41 @@ ATLAS_CSS = """
   color: var(--muted); margin-bottom: .55rem; }
 #atlas-card .ac-sel { width: 100%; font-family: var(--sans); font-size: .8rem; padding: .42rem .5rem;
   border: 1px solid var(--border); border-radius: 8px; background: var(--panel); color: var(--text); cursor: pointer; }
-@media (max-width: 640px) { #atlas-sub { display: none; } #atlas-panel { height: 96vh; } #atlas-fab span { display: none; } }
+/* the research picker — turns the Atlas from a mosaic into a per-corpus explorer */
+#atlas-pick { font-family: var(--sans); font-size: .76rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 9px; padding: .34rem 1.6rem .34rem .55rem; cursor: pointer;
+  flex: none; max-width: 240px; -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .55rem center; }
+#atlas-pick:hover, #atlas-pick:focus { border-color: var(--accent); color: var(--accent); outline: none; }
+/* per-corpus intellectual world: home badge, radiating threads, and place nodes */
+.atlas-thread { fill: none; stroke-width: 2.4; opacity: .4; transition: opacity .15s ease, stroke-width .15s ease; pointer-events: none; }
+.atlas-thread.lit { opacity: .96; stroke-width: 4.2; }
+.atlas-cnode { cursor: pointer; }
+.atlas-cdot { stroke: var(--bg); stroke-width: 3; transition: opacity .15s ease; }
+.atlas-cnode.active .atlas-cdot { r: 13; }
+.atlas-chalo { fill: none; stroke-width: 2.2; opacity: 0; transition: opacity .15s ease; pointer-events: none; }
+.atlas-cnode.active .atlas-chalo { opacity: .85; }
+.atlas-clabel { font-family: var(--sans); font-size: 23px; fill: var(--text); paint-order: stroke; stroke: var(--bg);
+  stroke-width: 5px; stroke-linejoin: round; pointer-events: none; opacity: .92; transition: opacity .15s ease; }
+.atlas-cnode.active .atlas-clabel { opacity: 1; font-weight: 600; }
+.atlas-home { cursor: pointer; }
+.atlas-hlabel { font-family: var(--display, var(--serif)); font-size: 34px; font-weight: 600; paint-order: stroke;
+  stroke: var(--bg); stroke-width: 7px; stroke-linejoin: round; }
+#atlas-card .ac-kind { font-family: var(--sans); font-size: .58rem; text-transform: uppercase; letter-spacing: .15em;
+  color: var(--muted); margin-bottom: .25rem; }
+#atlas-card .ac-rel { font-family: var(--serif, var(--display)); font-size: .85rem; line-height: 1.42; color: var(--text); margin-top: .15rem; }
+#atlas-card .ac-cta { font-family: var(--sans); font-size: .66rem; text-transform: uppercase; letter-spacing: .09em; margin-top: .55rem; }
+@media (max-width: 640px) { #atlas-sub { display: none; } #atlas-panel { height: 96vh; } #atlas-fab span { display: none; }
+  #atlas-pick { max-width: 44vw; } }
 """
 
 ATLAS_JS = r"""
 (function () {
   var base = window.SHELL_BASE || '';
   var DATA = null, loaded = false, loading = false;
-  var back, stage, world, card, msg;
+  var back, stage, world, card, msg, pick;
+  var mode = '';   // '' = the all-pins mosaic; otherwise a slug -> that corpus's intellectual world
   var view = { s: 1, x: 0, y: 0 };
   var dragging = false, moved = false, lastX = 0, lastY = 0;
   var active = null, hideT = null, bySlug = {};
@@ -2037,7 +2149,8 @@ ATLAS_JS = r"""
     back.innerHTML =
       '<div id="atlas-panel">'
       + '<div id="atlas-bar"><span id="atlas-title">The Atlas</span>'
-      + '<span id="atlas-sub">Every corpus, pinned where its author or story belongs — drag to roam, scroll to zoom.</span>'
+      + '<span id="atlas-sub">Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.</span>'
+      + '<select id="atlas-pick" aria-label="Choose a research to map its intellectual world"></select>'
       + '<span id="atlas-tools"><button id="atlas-zin" aria-label="Zoom in">+</button>'
       + '<button id="atlas-zout" aria-label="Zoom out">−</button>'
       + '<button id="atlas-fit" aria-label="Reset the view">Fit</button>'
@@ -2047,6 +2160,8 @@ ATLAS_JS = r"""
     document.body.appendChild(back);
     stage = back.querySelector('#atlas-stage'); world = back.querySelector('#atlas-world');
     card = back.querySelector('#atlas-card'); msg = back.querySelector('#atlas-msg');
+    pick = back.querySelector('#atlas-pick');
+    pick.addEventListener('change', function () { setMode(pick.value); });
     back.addEventListener('click', function (e) { if (e.target === back) close(); });
     back.querySelector('#atlas-x').onclick = close;
     back.querySelector('#atlas-zin').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1.3); };
@@ -2089,8 +2204,8 @@ ATLAS_JS = r"""
 
   function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
   // Persist where the reader roamed to, so the Atlas reopens exactly as they left it.
-  var SAVE_KEY = 'atlas-view', saveT = null;
-  function save() { if (saveT) clearTimeout(saveT); saveT = setTimeout(function () {
+  var SAVE_KEY = 'atlas-view2', saveT = null;
+  function save() { if (mode) return; if (saveT) clearTimeout(saveT); saveT = setTimeout(function () {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify({ s: view.s, x: view.x, y: view.y })); } catch (e) {} }, 180); }
   function restore() {
     try { var v = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
@@ -2121,70 +2236,173 @@ ATLAS_JS = r"""
   function load() {
     if (loading) return; loading = true;
     fetch(base + 'atlas.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-      .then(function (j) { DATA = j; render(j); loaded = true; if (msg) msg.remove(); })
+      .then(function (j) {
+        DATA = j; buildPick();
+        var sm = ''; try { sm = localStorage.getItem('atlas-pick') || ''; } catch (e) {}
+        if (sm && j.connections && j.connections[sm]) mode = sm;
+        paint(true); loaded = true; if (msg) msg.remove(); syncPick(); updateSub();
+      })
       .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (research.calvincollins.xyz).'; });
   }
 
-  function render(j) {
+  // The research picker turns the Atlas from a single mosaic into a per-corpus
+  // explorer: pick a work and the map redraws as that corpus's intellectual world.
+  function buildPick() {
+    if (!pick || !DATA) return;
+    var conn = DATA.connections || {}, seen = {}, opts = '<option value="">✦ All corpora — the mosaic</option>';
+    (DATA.places || []).filter(function (p) { if (seen[p.slug] || !conn[p.slug]) return false; seen[p.slug] = 1; return true; })
+      .map(function (p) { return { slug: p.slug, title: p.title }; })
+      .sort(function (x, y) { return x.title.localeCompare(y.title); })
+      .forEach(function (it) { opts += '<option value="' + esc(it.slug) + '">' + esc(it.title) + '</option>'; });
+    pick.innerHTML = opts;
+  }
+  function syncPick() { if (pick) pick.value = mode; }
+  function setMode(m) {
+    if (!DATA) return;
+    m = m || ''; if (m && !(DATA.connections && DATA.connections[m])) m = '';
+    if (m === mode) { syncPick(); return; }
+    mode = m; try { localStorage.setItem('atlas-pick', mode); } catch (e) {}
+    hideCard(); paint(true); syncPick(); updateSub();
+  }
+  function updateSub() {
+    var sub = back && back.querySelector('#atlas-sub'); if (!sub) return;
+    var C = (mode && DATA && DATA.connections && DATA.connections[mode]) ? DATA.connections[mode] : null;
+    if (C) sub.textContent = C.home.name + '’s intellectual world — ' + C.nodes.length + ' geographic connections. Hover a place to trace its thread.';
+    else sub.textContent = 'Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.';
+  }
+
+  // Repaint the whole surface for the active mode. Cheap enough to rebuild wholesale.
+  function paint(doFit) {
+    if (!DATA) return;
+    var j = DATA, C = (mode && j.connections && j.connections[mode]) ? j.connections[mode] : null;
     var s = '<svg id="atlas-svg" viewBox="' + j.viewBox + '" width="' + j.w + '" height="' + j.h
       + '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
     s += '<defs>';
     for (var rid in j.regions) s += '<clipPath id="ar-' + rid + '"><path d="' + j.regions[rid].d + '"/></clipPath>';
-    j.places.forEach(function (p) {
-      var c = p.cell;
-      s += '<clipPath id="ac-' + p.slug + '"><rect x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3] + '"/></clipPath>';
-    });
+    if (!C) j.places.forEach(function (p) { var c = p.cell;
+      s += '<clipPath id="ac-' + p.slug + '"><rect x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3] + '"/></clipPath>'; });
+    else s += '<clipPath id="ahome"><circle cx="' + C.home.x + '" cy="' + C.home.y + '" r="58"/></clipPath>';
     s += '</defs>';
     s += '<g id="atlas-grat">'; (j.graticule || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
     s += '<g id="atlas-bd">'; (j.backdrop || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
-    s += '<g id="atlas-places">';
+    s += C ? connLayer(C) : placesLayer(j);
+    s += '</svg>';
+    world.innerHTML = s;
+    bySlug = {};
+    computeBounds(C);
+    if (C) wireConn(C); else wirePlaces(j);
+    if (doFit === false) { apply(); return; }
+    if (!C && restore()) { apply(); if (!enoughVisible()) fit(); }
+    else fit();
+  }
+
+  function placesLayer(j) {
+    var s = '<g id="atlas-places">';
     j.places.forEach(function (p) {
       var c = p.cell;
       s += '<g class="atlas-place" data-slug="' + esc(p.slug) + '"><g clip-path="url(#ar-' + p.region + ')">';
-      if (p.img) {
-        var href = esc(base + p.img);
+      if (p.img) { var href = esc(base + p.img);
         s += '<image class="atlas-img" href="' + href + '" xlink:href="' + href + '" x="' + c[0] + '" y="' + c[1]
-          + '" width="' + c[2] + '" height="' + c[3] + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ac-' + p.slug + ')"/>';
-      }
+          + '" width="' + c[2] + '" height="' + c[3] + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ac-' + p.slug + ')"/>'; }
       s += '<rect class="atlas-ring" x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3]
         + '" clip-path="url(#ac-' + p.slug + ')" fill="none" stroke="' + esc(p.accent) + '" stroke-width="3"/>';
       s += '</g></g>';
     });
-    s += '</g>';
-    s += '<g id="atlas-lines">';
-    for (var r2 in j.regions) {
-      var R = j.regions[r2];
+    s += '</g><g id="atlas-lines">';
+    for (var r2 in j.regions) { var R = j.regions[r2];
       s += '<path class="atlas-rgn" d="' + R.d + '"/>';
       (R.dividers || []).forEach(function (d) {
-        s += '<line class="atlas-div" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '" clip-path="url(#ar-' + r2 + ')"/>';
-      });
+        s += '<line class="atlas-div" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '" clip-path="url(#ar-' + r2 + ')"/>'; });
     }
-    s += '</g></svg>';
-    world.innerHTML = s;
+    s += '</g>';
+    return s;
+  }
 
-    var X0 = 1e9, Y0 = 1e9, X1 = -1e9, Y1 = -1e9;
-    j.places.forEach(function (p) {
-      bySlug[p.slug] = p; var c = p.cell;
-      X0 = Math.min(X0, c[0]); Y0 = Math.min(Y0, c[1]); X1 = Math.max(X1, c[0] + c[2]); Y1 = Math.max(Y1, c[1] + c[3]);
+  function arcPath(x1, y1, x2, y2) {
+    var mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var off = Math.min(170, len * 0.16), cx = mx - dy / len * off, cy = my + dx / len * off;
+    return 'M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' Q' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + x2.toFixed(1) + ' ' + y2.toFixed(1);
+  }
+  function clipText(t, n) { t = t || ''; return t.length > n ? t.slice(0, n - 1).replace(/[\s,;:&/-]+$/, '') + '…' : t; }
+  function connLayer(C) {
+    var ac = esc(C.home.accent || '#b3502f'), H = C.home, R = 58;
+    var s = '<g id="atlas-lines">';
+    for (var rid in DATA.regions) s += '<path class="atlas-rgn" d="' + DATA.regions[rid].d + '"/>';
+    s += '</g>';
+    s += '<g id="atlas-threads" stroke="' + ac + '">';
+    C.nodes.forEach(function (n, i) { s += '<path class="atlas-thread" data-i="' + i + '" d="' + arcPath(H.x, H.y, n.x, n.y) + '"/>'; });
+    s += '</g>';
+    // home badge drawn UNDER the place nodes, so their dots + labels are never masked
+    s += '<g class="atlas-home">';
+    s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + (R + 6) + '" fill="var(--bg)"/>';
+    if (H.img) { var href = esc(base + H.img);
+      s += '<image href="' + href + '" xlink:href="' + href + '" x="' + (H.x - R) + '" y="' + (H.y - R) + '" width="' + (2 * R) + '" height="' + (2 * R) + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ahome)"/>'; }
+    else s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + R + '" fill="' + ac + '"/>';
+    s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + R + '" fill="none" stroke="' + ac + '" stroke-width="4.5"/>';
+    s += '<text class="atlas-hlabel" x="' + H.x + '" y="' + (H.y + R + 33) + '" text-anchor="middle" fill="' + ac + '">' + esc(H.name) + '</text>';
+    s += '</g>';
+    s += '<g id="atlas-cnodes">';
+    C.nodes.forEach(function (n, i) {
+      // splay each label outward from home so the European cluster doesn't pile up
+      var dx = n.x - H.x, dy = n.y - H.y, L = Math.sqrt(dx * dx + dy * dy) || 1;
+      var lx = n.x + dx / L * 15, ly = n.y + dy / L * 15 + (dy >= 0 ? 16 : -8);
+      var anchor = dx > 30 ? 'start' : (dx < -30 ? 'end' : 'middle');
+      s += '<g class="atlas-cnode" data-i="' + i + '">';
+      s += '<circle class="atlas-chalo" cx="' + n.x + '" cy="' + n.y + '" r="17" stroke="' + ac + '" fill="none"/>';
+      s += '<circle class="atlas-cdot" cx="' + n.x + '" cy="' + n.y + '" r="9" fill="' + ac + '"/>';
+      s += '<text class="atlas-clabel" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '">' + esc(clipText(n.name, 30)) + '</text>';
+      s += '</g>';
     });
-    DATA._b = { x: X0 - 40, y: Y0 - 40, w: (X1 - X0) + 80, h: (Y1 - Y0) + 80 };
+    s += '</g>';
+    return s;
+  }
 
+  function computeBounds(C) {
+    var X0 = 1e9, Y0 = 1e9, X1 = -1e9, Y1 = -1e9;
+    if (C) {
+      var pts = C.nodes.map(function (n) { return [n.x, n.y]; }); pts.push([C.home.x, C.home.y]);
+      pts.forEach(function (q) { X0 = Math.min(X0, q[0]); Y0 = Math.min(Y0, q[1]); X1 = Math.max(X1, q[0]); Y1 = Math.max(Y1, q[1]); });
+      var px = 120, py = 150;
+      DATA._b = { x: X0 - px, y: Y0 - py, w: (X1 - X0) + 2 * px, h: (Y1 - Y0) + 2 * py };
+    } else {
+      DATA.places.forEach(function (p) { bySlug[p.slug] = p; var c = p.cell;
+        X0 = Math.min(X0, c[0]); Y0 = Math.min(Y0, c[1]); X1 = Math.max(X1, c[0] + c[2]); Y1 = Math.max(Y1, c[1] + c[3]); });
+      DATA._b = { x: X0 - 40, y: Y0 - 40, w: (X1 - X0) + 80, h: (Y1 - Y0) + 80 };
+    }
+  }
+
+  function wirePlaces(j) {
     [].forEach.call(world.querySelectorAll('.atlas-place'), function (el) {
       var p = bySlug[el.getAttribute('data-slug')];
       el.addEventListener('pointerenter', function () { if (!dragging) activate(p, el); });
       el.addEventListener('pointermove', function () { if (!dragging && active !== p) activate(p, el); });
       el.addEventListener('pointerleave', schedHide);
-      el.addEventListener('click', function (e) {
-        if (moved || e.target.closest('#atlas-card')) return;
-        window.location.href = base + p.href;
-      });
+      el.addEventListener('click', function (e) { if (moved || e.target.closest('#atlas-card')) return; window.location.href = base + p.href; });
     });
-    if (restore()) { apply(); if (!enoughVisible()) fit(); }   // reopen where they left off — unless it's now off-screen
-    else fit();
+  }
+  function wireConn(C) {
+    [].forEach.call(world.querySelectorAll('.atlas-cnode'), function (el) {
+      var i = +el.getAttribute('data-i'), n = C.nodes[i];
+      el.addEventListener('pointerenter', function () { if (!dragging) showNode(C, i, el); });
+      el.addEventListener('pointermove', function () { if (!dragging && active !== n) showNode(C, i, el); });
+      el.addEventListener('pointerleave', function () { lit(i, false); schedHide(); });
+      el.addEventListener('click', function (e) { if (moved) return; window.location.href = base + C.home.href; });
+    });
+    var home = world.querySelector('.atlas-home');
+    if (home) {
+      home.addEventListener('pointerenter', function () { if (!dragging) showHome(C, home); });
+      home.addEventListener('pointermove', function () { if (!dragging && active !== C.home) showHome(C, home); });
+      home.addEventListener('pointerleave', schedHide);
+      home.addEventListener('click', function (e) { if (moved) return; window.location.href = base + C.home.href; });
+    }
+  }
+  function lit(i, on) {
+    var t = world.querySelector('.atlas-thread[data-i="' + i + '"]'); if (t) t.classList.toggle('lit', on);
+    var nn = world.querySelector('.atlas-cnode[data-i="' + i + '"]'); if (nn) nn.classList.toggle('active', on);
   }
 
   function activate(p, el) {
-    if (active && active._el && active._el !== el) active._el.classList.remove('active');
+    clearActive();
     active = p; p._el = el; el.classList.add('active');
     var opts = '<option value="" disabled selected>Jump to a chapter…</option>';
     (p.chapters || []).forEach(function (ch) { opts += '<option value="' + esc(base + ch.href) + '">' + esc(ch.t) + '</option>'; });
@@ -2193,6 +2411,25 @@ ATLAS_JS = r"""
       + (p.chapters && p.chapters.length ? '<select class="ac-sel" aria-label="Jump to a chapter">' + opts + '</select>' : '');
     var sel = card.querySelector('.ac-sel');
     if (sel) sel.onchange = function () { if (this.value) window.location.href = this.value; };
+    showCardAt(el);
+  }
+  function showNode(C, i, el) {
+    clearActive(); var n = C.nodes[i]; active = n; lit(i, true);
+    card.innerHTML = '<div class="ac-kind">' + esc(n.kind) + '</div>'
+      + '<span class="ac-title" style="color:' + esc(C.home.accent) + '">' + esc(n.name) + '</span>'
+      + '<div class="ac-place">' + esc(n.place) + '</div>'
+      + (n.relation ? '<div class="ac-rel">' + esc(n.relation) + '</div>' : '');
+    showCardAt(el);
+  }
+  function showHome(C, el) {
+    clearActive(); var H = C.home; active = H;
+    card.innerHTML = '<a class="ac-title" href="' + esc(base + H.href) + '" style="color:' + esc(H.accent) + '">' + esc(H.title) + '</a>'
+      + '<div class="ac-place">' + esc(H.place) + '</div>'
+      + (H.note ? '<div class="ac-rel">' + esc(H.note) + '</div>' : '')
+      + '<div class="ac-cta" style="color:' + esc(H.accent) + '">Open corpus →</div>';
+    showCardAt(el);
+  }
+  function showCardAt(el) {
     card.classList.add('show');
     var r = el.getBoundingClientRect(), sr = stage.getBoundingClientRect();
     card.style.left = '0px'; card.style.top = '0px';
@@ -2205,11 +2442,12 @@ ATLAS_JS = r"""
     if (hideT) { clearTimeout(hideT); hideT = null; }
   }
   function schedHide() { if (hideT) clearTimeout(hideT); hideT = setTimeout(hideCard, 240); }
-  function hideCard() {
-    if (card) card.classList.remove('show');
-    if (active && active._el) active._el.classList.remove('active');
-    active = null;
+  function clearActive() {
+    if (!world) return;
+    [].forEach.call(world.querySelectorAll('.atlas-place.active, .atlas-cnode.active'), function (e) { e.classList.remove('active'); });
+    [].forEach.call(world.querySelectorAll('.atlas-thread.lit'), function (e) { e.classList.remove('lit'); });
   }
+  function hideCard() { if (card) card.classList.remove('show'); clearActive(); active = null; }
 })();
 """
 
@@ -2275,6 +2513,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {cards}
 </main>
 {collections}
+{quiz}
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">“The medium is the message.” — Marshall McLuhan</p>
@@ -2511,6 +2750,209 @@ OVERTURE_JS = r"""
 })();
 """
 
+# "Test Yourself" — a closing self-quiz built live from the two payloads already
+# inlined on the index: #library-manifest (corpora, their chapter titles, their
+# category) and #passages-data (pull-quotes tagged with corpus slug + chapter).
+# Every question has a ground-truth answer drawn from that data — no fetch, no ML,
+# no authored answer key. Scope is either one corpus (recall of its own chapters)
+# or "across the whole library" (place a passage/chapter/subject to its corpus).
+# Best score per scope is kept in localStorage; results share via CorpusShare.
+QUIZ_JS = r"""
+(function () {
+  function init() {
+  // Deferred to DOMContentLoaded (below): the shell's #library-manifest is parsed
+  // AFTER this bundle's <script>, so reading it inline would find nothing.
+  var sec = document.getElementById('quiz');
+  var mEl = document.getElementById('library-manifest');
+  if (!sec || !mEl) return;
+  var LIB, PAS = [];
+  try { LIB = JSON.parse(mEl.textContent); } catch (e) { return; }
+  var pEl = document.getElementById('passages-data');
+  try { PAS = pEl ? (JSON.parse(pEl.textContent || '[]') || []) : []; } catch (e) { PAS = []; }
+  var corpora = (LIB || []).filter(function (x) { return x.kind === 'corpus' && x.chapters && x.chapters.length; });
+  if (corpora.length < 2) return;                       // need a field of distractors
+  var bySlug = {}; corpora.forEach(function (c) { bySlug[c.slug] = c; });
+  var passBySlug = {}; PAS.forEach(function (p) { if (bySlug[p.slug]) (passBySlug[p.slug] = passBySlug[p.slug] || []).push(p); });
+  // Chapter titles shared by >1 corpus are ambiguous as "which corpus owns it?"
+  // questions — count them so the across-library builder can skip the generic ones.
+  var chTitleCount = {};
+  corpora.forEach(function (c) { c.chapters.forEach(function (ch) { if (ch) { var k = ch.toLowerCase(); chTitleCount[k] = (chTitleCount[k] || 0) + 1; } }); });
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  // Build a 4-way (or fewer) option set: the correct answer plus distinct distractors.
+  function options(correct, pool, n) {
+    var seen = {}; seen[String(correct).toLowerCase()] = 1; var ds = [];
+    shuffle(pool).forEach(function (x) { var k = String(x).toLowerCase(); if (x && !seen[k]) { seen[k] = 1; ds.push(x); } });
+    return shuffle([correct].concat(ds.slice(0, Math.max(1, (n || 4) - 1))));
+  }
+
+  // --- question builders (each returns an array of {prompt, passage?, answer, opts, src?}) ---
+  function buildAcross() {
+    var qs = [], titles = corpora.map(function (c) { return c.title; });
+    PAS.forEach(function (p) {
+      if (!bySlug[p.slug] || !p.text || p.text.length < 40) return;
+      qs.push({ prompt: 'Which corpus is this passage from?', passage: p.text,
+        answer: bySlug[p.slug].title, opts: options(bySlug[p.slug].title, titles, 4),
+        src: { slug: p.slug, chapter: p.chapter, q: p.text } });
+    });
+    corpora.forEach(function (c) {
+      c.chapters.forEach(function (ch, i) {
+        if (!ch || ch.length < 5 || chTitleCount[ch.toLowerCase()] > 1) return;
+        qs.push({ prompt: 'Which corpus has a chapter titled “' + esc(ch) + '”?',
+          answer: c.title, opts: options(c.title, titles, 4), src: { slug: c.slug, chapter: i } });
+      });
+    });
+    var cats = {}; corpora.forEach(function (c) { if (c.category && c.category !== 'Other') cats[c.category] = 1; });
+    var catList = Object.keys(cats);
+    if (catList.length >= 3) corpora.forEach(function (c) {
+      if (!c.category || c.category === 'Other') return;
+      qs.push({ prompt: 'Under which subject is <em>' + esc(c.title) + '</em> shelved?',
+        answer: c.category, opts: options(c.category, catList, 4), src: { slug: c.slug, chapter: 0 } });
+    });
+    return qs;
+  }
+  function buildSingle(slug) {
+    var c = bySlug[slug]; if (!c) return [];
+    var qs = [];
+    var mine = c.chapters.filter(function (ch) { return ch && ch.length >= 3; });
+    var mineLower = {}; mine.forEach(function (ch) { mineLower[ch.toLowerCase()] = 1; });
+    var others = []; corpora.forEach(function (o) { if (o.slug !== slug) o.chapters.forEach(function (ch) { if (ch && !mineLower[ch.toLowerCase()]) others.push(ch); }); });
+    (passBySlug[slug] || []).forEach(function (p) {
+      if (!p.chapterTitle || !p.text || p.text.length < 40 || mine.length < 2) return;
+      qs.push({ prompt: 'Which chapter of <em>' + esc(c.title) + '</em> is this from?', passage: p.text,
+        answer: p.chapterTitle, opts: options(p.chapterTitle, mine, 4), src: { slug: slug, chapter: p.chapter, q: p.text } });
+    });
+    if (others.length >= 3) mine.forEach(function (ch, i) {
+      qs.push({ prompt: 'Which of these is a real chapter in <em>' + esc(c.title) + '</em>?',
+        answer: ch, opts: options(ch, others, 4), src: { slug: slug, chapter: i } });
+    });
+    return qs;
+  }
+
+  // --- setup UI ---
+  var scope = document.getElementById('quiz-scope');
+  var optAll = document.createElement('option'); optAll.value = '__all__'; optAll.textContent = 'Across the whole library'; scope.appendChild(optAll);
+  corpora.slice().sort(function (a, b) { return a.title.localeCompare(b.title); }).forEach(function (c) {
+    var o = document.createElement('option'); o.value = c.slug; o.textContent = c.title; scope.appendChild(o);
+  });
+  sec.hidden = false;
+
+  var setup = document.getElementById('quiz-setup'), stage = document.getElementById('quiz-stage'), bestEl = document.getElementById('quiz-best');
+  var QN = 7, state = null;
+  function bestKey(s) { return 'quiz-best:' + s; }
+  function showBest(s) {
+    var b = null; try { b = JSON.parse(localStorage.getItem(bestKey(s)) || 'null'); } catch (e) {}
+    if (b && b.total) { bestEl.textContent = 'Your best on this selection: ' + b.score + ' / ' + b.total + '.'; bestEl.hidden = false; }
+    else bestEl.hidden = true;
+  }
+  scope.addEventListener('change', function () { showBest(scope.value); });
+  showBest(scope.value);
+
+  document.getElementById('quiz-start').addEventListener('click', function () {
+    var sv = scope.value, pool = sv === '__all__' ? buildAcross() : buildSingle(sv);
+    var seen = {}, uniq = [];
+    shuffle(pool).forEach(function (q) { var k = (q.passage || '') + '|' + q.answer + '|' + q.prompt; if (!seen[k]) { seen[k] = 1; uniq.push(q); } });
+    var qs = uniq.slice(0, QN);
+    setup.hidden = true; stage.hidden = false;
+    if (!qs.length) { stage.innerHTML = '<p class="quiz-empty">There isn’t enough material to build a test on this selection yet. Try “Across the whole library.”</p><p style="margin:1rem 0 0"><button class="quiz-btn quiz-again" type="button">← Back</button></p>'; wireAgain(); return; }
+    state = { sv: sv, qs: qs, i: 0, score: 0, label: sv === '__all__' ? 'the whole library' : (bySlug[sv] ? bySlug[sv].title : '') };
+    renderQ();
+  });
+
+  function renderQ() {
+    var q = state.qs[state.i], h = '';
+    h += '<div class="quiz-progress"><span>Question ' + (state.i + 1) + ' of ' + state.qs.length + '</span><span class="quiz-score">Score ' + state.score + '</span></div>';
+    h += '<div class="quiz-bar"><span style="width:' + (state.i / state.qs.length * 100) + '%"></span></div>';
+    h += '<p class="quiz-q">' + q.prompt + '</p>';
+    if (q.passage) h += '<blockquote class="quiz-passage">' + esc(q.passage) + '</blockquote>';
+    h += '<div class="quiz-opts">';
+    q.opts.forEach(function (o) { h += '<button class="quiz-opt" type="button" data-val="' + esc(o) + '">' + esc(o) + '</button>'; });
+    h += '</div><div class="quiz-feedback" id="quiz-feedback" hidden></div>';
+    stage.innerHTML = h;
+    Array.prototype.forEach.call(stage.querySelectorAll('.quiz-opt'), function (b) {
+      b.addEventListener('click', function () { answer(b.getAttribute('data-val'), q); });
+    });
+  }
+
+  function answer(chosen, q) {
+    var btns = stage.querySelectorAll('.quiz-opt'), got = chosen === q.answer;
+    if (got) state.score++;
+    Array.prototype.forEach.call(btns, function (b) {
+      b.disabled = true; var v = b.getAttribute('data-val');
+      if (v === q.answer) b.classList.add('correct'); else if (v === chosen) b.classList.add('wrong');
+    });
+    var last = state.i >= state.qs.length - 1, fb = document.getElementById('quiz-feedback');
+    var msg = got ? '<span class="quiz-ok">Correct.</span>'
+                  : '<span class="quiz-no">Not quite — it’s <strong>' + esc(q.answer) + '</strong>.</span>';
+    var link = '';
+    if (q.src && q.src.slug) {
+      var href = esc(q.src.slug) + '.html' + (q.src.q ? '?q=' + encodeURIComponent(String(q.src.q).slice(0, 42)) : '') + '#ch-' + (q.src.chapter || 0);
+      link = '<a class="quiz-read" href="' + href + '">Read in context →</a>';
+    }
+    fb.innerHTML = '<p class="quiz-fb-msg">' + msg + ' ' + link + '</p>'
+      + '<button class="quiz-btn quiz-next" type="button">' + (last ? 'See your score →' : 'Next question →') + '</button>';
+    fb.hidden = false;
+    var nx = fb.querySelector('.quiz-next');
+    nx.addEventListener('click', function () { if (last) finish(); else { state.i++; renderQ(); } });
+    try { nx.focus(); } catch (e) {}
+  }
+
+  function finish() {
+    var n = state.qs.length, s = state.score, pct = Math.round(s / n * 100);
+    try {
+      var k = bestKey(state.sv), prev = JSON.parse(localStorage.getItem(k) || 'null');
+      if (!prev || !prev.total || (s / n) > (prev.score / prev.total) || ((s / n) === (prev.score / prev.total) && n > prev.total))
+        localStorage.setItem(k, JSON.stringify({ score: s, total: n }));
+    } catch (e) {}
+    var grade = pct >= 90 ? 'Scholar of the shelf.' : pct >= 70 ? 'Well read.' : pct >= 40 ? 'A page-turner in progress.' : 'Time for a re-read.';
+    stage.innerHTML = '<div class="quiz-result"><p class="quiz-result-k">Your result</p>'
+      + '<p class="quiz-score-big">' + s + '<span>/' + n + '</span></p>'
+      + '<p class="quiz-grade">' + esc(grade) + '</p>'
+      + '<p class="quiz-result-sub">on ' + esc(state.label) + '</p>'
+      + '<div class="quiz-result-actions"><button class="quiz-btn quiz-again" type="button">Play again</button>'
+      + '<button class="quiz-btn quiz-share" type="button">Share result ↗</button></div></div>';
+    showBest(state.sv);
+    wireAgain();
+    var sh = stage.querySelector('.quiz-share');
+    if (sh) sh.addEventListener('click', function () {
+      if (!window.CorpusShare) return;
+      window.CorpusShare.open({ kicker: 'Test Yourself', quote: s + ' / ' + n + ' — ' + grade,
+        source: 'A test on ' + state.label + ' · research.calvincollins.xyz', filename: 'quiz-result',
+        shareText: 'I scored ' + s + '/' + n + ' testing myself on ' + state.label + '.' });
+    });
+  }
+
+  function wireAgain() {
+    var a = stage.querySelector('.quiz-again');
+    if (a) a.addEventListener('click', function () { stage.hidden = true; stage.innerHTML = ''; setup.hidden = false; showBest(scope.value); });
+  }
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();
+"""
+
+# Static scaffold for the quiz; QUIZ_JS populates the <select> and runs the round.
+# Hidden until the script confirms there are ≥2 corpora to build distractors from.
+QUIZ_SECTION_HTML = (
+    '<section class="quiz" id="quiz" hidden>'
+    '<h2 class="quiz-h">Test Yourself</h2>'
+    '<p class="quiz-intro">A short quiz drawn from the library itself — its passages, '
+    'its chapters, its subjects. Pick a single corpus to test how well it stuck, or take '
+    'on the whole shelf at once. Every answer comes straight from the texts; your best '
+    'score is kept on this device and nothing is sent anywhere.</p>'
+    '<div class="quiz-card">'
+    '<div class="quiz-setup" id="quiz-setup">'
+    '<label class="quiz-field"><span class="quiz-label">Test me on</span>'
+    '<select id="quiz-scope" class="quiz-select" aria-label="Choose what to be tested on"></select></label>'
+    '<button id="quiz-start" class="quiz-btn quiz-btn-go" type="button">Begin the test →</button>'
+    '<p class="quiz-best" id="quiz-best" hidden></p>'
+    '</div>'
+    '<div class="quiz-stage" id="quiz-stage" hidden></div>'
+    '</div></section>'
+)
+
 LIBRARY_CSS = """
 :root {
   --bg: #faf8f4; --panel: #f1ede5; --text: #1f1d1a; --muted: #6e6a62;
@@ -2685,6 +3127,75 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   header { flex-direction: column-reverse; gap: 1.2rem; padding-top: 1.6rem; }
   .hero-art { width: 100%; }
 }
+"""
+
+# ---------------------------------------------------------------- "Test Yourself"
+# A closing self-quiz pinned to the bottom of the index. Built entirely from data
+# the page already carries — the inlined #library-manifest (corpora + chapter
+# titles + categories) and #passages-data (pull-quotes tagged with corpus +
+# chapter) — so every answer is ground-truth and nothing is fetched or generated.
+# Two scopes: a single corpus (recall of its chapters) or across the whole shelf.
+QUIZ_CSS = """
+.quiz { max-width: 1080px; margin: 2.2rem auto 0; padding: 0 2rem; }
+.quiz[hidden] { display: none; }
+.quiz-h { font-family: var(--display); font-size: 1.5rem; margin: 0; }
+.quiz-h::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.quiz-intro { font-family: var(--sans); font-size: .9rem; color: var(--muted); margin: .7rem 0 1.2rem; max-width: 44rem; line-height: 1.55; }
+.quiz-card { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem 1.8rem; }
+.quiz-setup { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem 1.4rem; }
+.quiz-field { display: flex; flex-direction: column; gap: .4rem; flex: 1 1 260px; min-width: 0; }
+.quiz-label { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); }
+.quiz-select { font-family: var(--sans); font-size: .92rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px; padding: .6rem .8rem; -webkit-appearance: none; appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 1.15em, calc(100% - 13px) 1.15em; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 2.2rem; }
+.quiz-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(140,74,47,.14); }
+.quiz-btn { font-family: var(--sans); font-size: .8rem; letter-spacing: .04em; cursor: pointer; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text); padding: .65rem 1.2rem;
+  transition: transform .15s ease, border-color .15s ease, color .15s ease, background .15s ease; }
+.quiz-btn:hover { transform: translateY(-2px); border-color: var(--accent); color: var(--accent); }
+.quiz-btn-go { background: var(--accent); border-color: var(--accent); color: var(--bg); text-transform: uppercase; letter-spacing: .08em; }
+.quiz-btn-go:hover { color: var(--bg); }
+.quiz-best { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: 0; flex-basis: 100%; }
+.quiz-progress { display: flex; justify-content: space-between; align-items: baseline; font-family: var(--sans);
+  font-size: .68rem; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); margin: 0 0 .5rem; }
+.quiz-progress .quiz-score { color: var(--accent); }
+.quiz-bar { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; margin: 0 0 1.2rem; }
+.quiz-bar span { display: block; height: 100%; background: var(--accent); transition: width .35s ease; }
+.quiz-q { font-family: var(--display); font-size: 1.22rem; line-height: 1.32; margin: 0 0 .9rem; }
+.quiz-q em { font-style: italic; color: var(--accent); }
+.quiz-passage { font-family: var(--display); font-style: italic; font-size: 1.08rem; line-height: 1.45; color: var(--text);
+  border-left: 3px solid var(--accent); margin: 0 0 1.1rem; padding: .2rem 0 .2rem 1.1rem; }
+.quiz-opts { display: grid; gap: .6rem; }
+.quiz-opt { text-align: left; font-family: var(--sans); font-size: .92rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 12px; padding: .8rem 1rem; cursor: pointer;
+  transition: transform .12s ease, border-color .12s ease, background .12s ease; }
+.quiz-opt:hover:not(:disabled) { transform: translateY(-1px); border-color: var(--accent); }
+.quiz-opt:disabled { cursor: default; }
+.quiz-opt.correct { border-color: #3f8a52; background: rgba(63,138,82,.16); color: var(--text); }
+.quiz-opt.wrong { border-color: #b3502f; background: rgba(179,80,47,.16); color: var(--text); }
+.quiz-opt.correct::after { content: " ✓"; color: #3f8a52; font-weight: 700; }
+.quiz-opt.wrong::after { content: " ✕"; color: #b3502f; font-weight: 700; }
+.quiz-feedback { margin: 1.1rem 0 0; }
+.quiz-feedback[hidden] { display: none; }
+.quiz-fb-msg { font-family: var(--sans); font-size: .88rem; line-height: 1.5; margin: 0 0 .9rem; }
+.quiz-ok { color: #3f8a52; font-weight: 600; }
+.quiz-no { color: var(--muted); }
+.quiz-no strong { color: var(--text); }
+.quiz-read { font-family: var(--sans); font-size: .8rem; color: var(--accent); text-decoration: none;
+  border-bottom: 1.5px solid var(--accent); padding-bottom: 1px; margin-left: .3rem; }
+.quiz-next { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.quiz-next:hover { color: var(--bg); }
+.quiz-empty { font-family: var(--sans); color: var(--muted); margin: 0; }
+.quiz-result { text-align: center; padding: .6rem 0; }
+.quiz-result-k { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--accent); margin: 0 0 .5rem; }
+.quiz-score-big { font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 9vw, 5rem); line-height: 1; margin: 0; }
+.quiz-score-big span { color: var(--muted); font-weight: 400; font-size: .42em; }
+.quiz-grade { font-family: var(--display); font-style: italic; font-size: 1.25rem; margin: .5rem 0 .2rem; }
+.quiz-result-sub { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: 0 0 1.4rem; }
+.quiz-result-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+@media (max-width: 560px) { .quiz { padding: 0 1.2rem; } .quiz-card { padding: 1.3rem 1.2rem; } }
 """
 
 
@@ -4916,8 +5427,13 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             grow=atlas_cfg.get("grow") or ATLAS_GROW,
         )
         if atlas_data:
+            conn = compute_atlas_connections(atlas_geo, atlas_corpora, load_atlas_connections())
+            if conn:
+                atlas_data["connections"] = conn
             (out / "atlas.json").write_text(json.dumps(atlas_data, separators=(",", ":"), ensure_ascii=False))
-            print(f"  ✓ Atlas: {len(atlas_data['places'])} corpora across {len(atlas_data['regions'])} regions → atlas.json")
+            n_nodes = sum(len(v["nodes"]) for v in conn.values()) if conn else 0
+            cmsg = f", {len(conn)} intellectual-world maps ({n_nodes} nodes)" if conn else ""
+            print(f"  ✓ Atlas: {len(atlas_data['places'])} corpora across {len(atlas_data['regions'])} regions{cmsg} → atlas.json")
         else:
             print("  ! Atlas: no corpora placed (check the 'atlas' placements)", file=sys.stderr)
     else:
@@ -5005,7 +5521,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     )
 
     # The Fingerprint band shares the library CSS, so fold its rules in once.
-    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + OVERTURE_CSS
+    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
     # First-visit overture markup — built from the existing brand only (no new copy).
     overture_html = (
         '<div id="overture" role="dialog" aria-modal="true" aria-label="Welcome to the library"><div class="ov-inner">'
@@ -5038,8 +5554,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         resume='<div id="resume"></div>',
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
+        quiz=QUIZ_SECTION_HTML,
         cards=library_body,
-        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS,
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS + QUIZ_JS,
         shell=shell_root,
     ))
     build_wrapped_page(out, wrapped_stats, shell=shell_root)
