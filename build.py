@@ -3881,13 +3881,38 @@ const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls)
 const esc = (s) => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
 const openExternal = (root) => root.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
 
-// ---- source / dateline line ----
+// ---- source / dateline line (multi-source) ----
+// Canonical field is `sources` (a list of {publication, url}); the legacy single
+// source_publication/source_url pair is honoured as a fallback. Mirrors the
+// renderer's _build_byline_html so the web edition cites every outlet too.
 function srcLine(s, beat) {
-  if (!s.source_publication && !s.source_url) return '';
-  const name = esc(s.source_publication || s.source_url);
-  const link = s.source_url ? `<a href="${esc(s.source_url)}">${name}</a>` : name;
+  // esc() (textContent->innerHTML) does NOT escape double-quotes, so a URL must
+  // be quote-escaped before it goes into an href="" attribute (mirrors the
+  // Python renderer's html.escape(url, quote=True)).
+  const escAttr = (v) => esc(v).replace(/"/g, '&quot;');
+  let srcs = [];
+  // Only take the canonical branch when it holds real {publication,url} objects;
+  // otherwise fall back to the legacy pair (mirrors Python _normalize_sources).
+  if (Array.isArray(s.sources) && s.sources.some(x => x && typeof x === 'object')) {
+    srcs = s.sources;
+  } else if (s.source_publication || s.source_url) {
+    srcs = [{publication: s.source_publication, url: s.source_url}];
+  }
+  const seen = new Set(), links = [];
+  for (const x of srcs) {
+    const url = ((x && (x.url || x.source_url)) || '').trim();
+    const pub = ((x && (x.publication || x.source_publication)) || '').trim();
+    if (!url && !pub) continue;
+    const key = (url || pub).toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const label = esc(pub || url);
+    links.push(url ? `<a href="${escAttr(url)}">${label}</a>` : label);
+  }
+  if (!links.length) return '';
+  const verb = links.length > 1 ? 'On reporting in ' : '';
   const filed = s.filed_date ? ` · <span class="fp-filed">Filed ${esc(s.filed_date)}</span>` : '';
-  return `<p class="fp-src">${link}${filed}</p>`;
+  return `<p class="fp-src">${verb}${links.join(' · ')}${filed}</p>`;
 }
 
 // ---- charts (bar | line | donut | stat) ----
@@ -3985,6 +4010,7 @@ sections.forEach((sec, i) => {
     if (s.dek) txt.appendChild(el('p', 'fp-oped-dek', esc(s.dek)));
     const ob = el('div', 'fp-oped-body', marked.parse(s.body || '')); openExternal(ob);
     txt.appendChild(ob);
+    txt.insertAdjacentHTML('beforeend', srcLine(s, beat));  // trend sources, as the PDF shows
     art.innerHTML = pho; art.appendChild(txt);
     body.appendChild(art);
     return;

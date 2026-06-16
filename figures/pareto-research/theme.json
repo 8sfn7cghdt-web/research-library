@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Engineer's Equilibrium — a logico-experimental diagram of power",
+  "anchor": "Pareto trained as an engineer at Turin (his thesis was on equilibrium in solid bodies) and built both his economics and his sociology as systems in moving equilibrium. The corpus's world is therefore the cool, precise register of a continental academic study on the shore of Lake Geneva: the slate-blue of the lake at Céligny where the 'hermit' wrote the Trattato; the oxblood and antique gilt of an Italian marquis's leather-and-gilt library and the Risorgimento red of his exiled father; ink-slate drafting lines; and the unsentimental, mathematical light of a man who measured the balance of forces in a solid body and then in an entire society.",
+  "rationale": "The structural metaphor is the equilibrium diagram — nodes and forces (residues a, interests b, derivations c, circulation d) balancing and restoring — and the signature object is the log–log curve of the income tail. So the world is cool, exact, and patrician rather than warm or organic. The brand accent is LAKE-GENEVA SLATE-BLUE — the lake of Lausanne and Céligny — chosen to sit apart from the warm corpora and, in particular, from the two Swiss neighbours on the library map: distinct from Jung's alchemical register and from Piaget's Genevan teal-green, a colder, greyer, more architectural blue. The figure palette adds an Italian oxblood (the lions and foxes, the Risorgimento, the leather binding), an antique gilt-ochre (the marquisate, the gilt of old Italian/French academic volumes), an ink-slate (the engineer's drafting line), and a muted plum. Near-black slate text on a cool ivory paper; sharp, small-radius figures (the drafting table, not the pond); a humanist Palatino — Hermann Zapf's homage to an Italian Renaissance writing master — for an Italian theorist, set against the rounder serifs of the neighbours.",
+  "light": {
+    "bg": "#ece9e1", "panel": "#e0ddd0", "text": "#1b1f25", "muted": "#555b64",
+    "accent": "#2e6079", "border": "#cac5b4", "mark": "#e7d29a", "cover-bg": "#e3dfd0",
+    "t1": "#9b3322", "t2": "#2e6079", "t3": "#a8842f", "t4": "#3f4a57", "t5": "#6a4a63"
+  },
+  "dark": {
+    "bg": "#13151a", "panel": "#1c1f26", "text": "#e6e2d6", "muted": "#979182",
+    "accent": "#5f9cba", "border": "#2f333c", "mark": "#3a3320", "cover-bg": "#1c1f26",
+    "t1": "#cf6a52", "t2": "#6fb0cf", "t3": "#d3ac51", "t4": "#8c99a9", "t5": "#b08aa6"
+  },
+  "fonts": {
+    "display": "'Hoefler Text', 'Palatino Linotype', Palatino, Georgia, serif",
+    "body": "'Palatino Linotype', Palatino, 'Iowan Old Style', Georgia, serif",
+    "mono": "'Courier New', Courier, 'Nimbus Mono PS', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\25c6   \\00b7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#2e6079", "#9b3322", "#a8842f", "#3f4a57"]
+}

@@ -146,6 +146,11 @@
             "title": "An Original Relation to the Universe",
             "subtitle": "Ralph Waldo Emerson — Transcendentalism, self-reliance, and the making of the American mind",
             "category": "Mind & Philosophy"
+        },
+        "pareto-research": {
+            "title": "A Graveyard of Aristocracies",
+            "subtitle": "Vilfredo Pareto — elite theory and the circulation of elites, through and beyond Burnham",
+            "category": "Mind & Philosophy"
         }
     },
     "corpora": [
@@ -165,7 +170,8 @@
         "../mcluhan-research",
         "../piaget-research",
         "../dickinson-research",
-        "../emerson-research"
+        "../emerson-research",
+        "../pareto-research"
     ],
     "atlas": {
         "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
@@ -183,6 +189,7 @@
             "us-geopolitics-research": { "region": "US", "z": "base", "label": "The United States" },
             "jung-research": { "region": "CH", "cell": "e", "label": "Zürich, Switzerland" },
             "piaget-research": { "region": "CH", "cell": "w", "label": "Geneva & Neuchâtel, Switzerland" },
+            "pareto-research": { "region": "CH", "cell": "c", "label": "Lausanne & Céligny, Switzerland" },
             "phenomenology-pragmatism-research": { "region": "DE", "label": "Freiburg, Germany" },
             "mcluhan-research": { "region": "CA-ON", "label": "Toronto, Ontario" },
             "jesus-research": { "region": "IL", "cell": "n", "label": "Galilee" },
