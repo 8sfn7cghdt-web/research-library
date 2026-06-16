@@ -53,6 +53,24 @@
         "Global Desk"
       ],
       "dispatches": 16
+    },
+    {
+      "date": "2026-06-15",
+      "weekday": "Monday",
+      "edition_number": 27,
+      "file": "fingerprint/2026-06-15-fingerprint.html",
+      "lead_headline": "Fox to Buy Roku for $22 Billion, Redrawing CTV",
+      "lead_dek": "The buyer the market was waiting for is a broadcaster: Fox lands the No. 1 US streaming OS, the OneView DSP, Tubi and The Roku Channel.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 14
     }
   ]
 }
