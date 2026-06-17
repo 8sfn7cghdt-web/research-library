@@ -1,0 +1,45 @@
+{
+  "aesthetic": "The AdEx Ledger",
+  "anchor": "The Pitch Madison Advertising Report's ruled ₹-crore AdEx tables, set in the geometric sans of modernist advertising (Futura) on warm report stock, in the marigold-vermilion-peacock palette of Indian commercial print.",
+  "rationale": "The corpus's intellectual signature is that one market is measured five ways (Madison legacy/expanded, dentsu, WPP, FICCI-EY) — a ledger whose columns disagree. So the world is a measurement-house report: ruled tables, ₹-crore figures in mono, geometric advertising type for the headings, on the cream stock of a printed annual. The palette is read off Indian commercial print and festive color (marigold gold, sindoor vermilion, peacock teal-blue, India-ink indigo, aubergine) rather than any Western adtech house style — deliberately the warm-editorial opposite of the cool monospace 'Dotted-Quad RFC' world of the adjacent IPv4/CTV corpus.",
+  "light": {
+    "bg": "#faf5e8",
+    "panel": "#f1e8d4",
+    "text": "#241c10",
+    "muted": "#6c5e45",
+    "accent": "#b06a07",
+    "border": "#d9c8a4",
+    "mark": "#f0d79a",
+    "cover-bg": "#f3ead6",
+    "t1": "#b5740d",
+    "t2": "#b3331f",
+    "t3": "#15728e",
+    "t4": "#2f366d",
+    "t5": "#7a3b6a"
+  },
+  "dark": {
+    "bg": "#16141d",
+    "panel": "#211f2b",
+    "text": "#efe6d4",
+    "muted": "#a99e8a",
+    "accent": "#e6a23c",
+    "border": "#383443",
+    "mark": "#4a3a1e",
+    "cover-bg": "#211f2b",
+    "t1": "#e6a23c",
+    "t2": "#e8654f",
+    "t3": "#46a6c8",
+    "t4": "#8b94db",
+    "t5": "#c47bad"
+  },
+  "fonts": {
+    "display": "Futura, 'Century Gothic', 'Avenir Next', Avenir, 'Trebuchet MS', system-ui, sans-serif",
+    "body": "Georgia, 'Palatino Linotype', Palatino, 'Times New Roman', serif",
+    "mono": "'DejaVu Sans Mono', 'Courier New', Consolas, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\20b9   \\2766   \\20b9'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#b5740d", "#b3331f", "#15728e", "#2f366d"]
+}
