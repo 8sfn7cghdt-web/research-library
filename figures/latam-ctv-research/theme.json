@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Color-Bar Signal",
+  "anchor": "The SMPTE broadcast color-bar test card and the scrolling FAST electronic program guide — the moment Latin America's free-to-air television, the telenovela-and-football signal that ran the region for a century, became an IP grid of free ad-supported channels. Broadcast-condensed chyron type over a warm reading stock, in the saturated bar colors of a tuned-in signal.",
+  "rationale": "The corpus's signature is a region that leapt from broadcast straight to IP — skipping the addressable-cable step — so the connected living room arrived as a *signal* before it arrived as a market. The world is therefore the television signal itself: the color-bar test card's amber/vermilion/cyan/blue/magenta become the five source tiers; a condensed grotesque carries the broadcast-chyron headings; a warm serif holds the long reading. The palette is deliberately the saturated, tropical-broadcast opposite of the cool 'Dotted-Quad RFC' monospace of the adjacent IPv4/CTV corpus and the warm-print 'AdEx Ledger' of the India corpus — three adtech worlds, three distinct signals.",
+  "light": {
+    "bg": "#f6f3ea",
+    "panel": "#ece6d6",
+    "text": "#1a1c22",
+    "muted": "#5f6472",
+    "accent": "#c23a63",
+    "border": "#d9cfba",
+    "mark": "#f3d9b8",
+    "cover-bg": "#ece5d4",
+    "t1": "#c4861a",
+    "t2": "#c23a30",
+    "t3": "#11788c",
+    "t4": "#2b4a8c",
+    "t5": "#9b3d7a"
+  },
+  "dark": {
+    "bg": "#0e1320",
+    "panel": "#161d2e",
+    "text": "#ece7da",
+    "muted": "#9aa1b3",
+    "accent": "#e2617f",
+    "border": "#283248",
+    "mark": "#3a2632",
+    "cover-bg": "#161d2e",
+    "t1": "#e0a93c",
+    "t2": "#e8654f",
+    "t3": "#3fb0c4",
+    "t4": "#6f8fe0",
+    "t5": "#cd6fa8"
+  },
+  "fonts": {
+    "display": "'Helvetica Neue', 'Arial Nova', 'Roboto Condensed', Arial, system-ui, sans-serif",
+    "body": "Georgia, 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Times New Roman', serif",
+    "mono": "'DejaVu Sans Mono', 'Courier New', Consolas, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25AE \\2003 \\25AE \\2003 \\25AE'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": [
+    "#c4861a",
+    "#c23a30",
+    "#11788c",
+    "#9b3d7a"
+  ]
+}
