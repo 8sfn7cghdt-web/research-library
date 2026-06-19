@@ -23,28 +23,6 @@
   "The Modern World",
   "Heritage"
  ],
- "domains": [
-  {
-   "title": "Politics & Economics",
-   "categories": [
-    "Thomas Carlyle",
-    "The Modern World"
-   ]
-  },
-  {
-   "title": "Ad Tech & Media",
-   "categories": [
-    "Media & Advertising"
-   ]
-  },
-  {
-   "title": "Philosophy, Theology & Psychology",
-   "categories": [
-    "Faith & Religion",
-    "Mind & Philosophy"
-   ]
-  }
- ],
  "collections": [
   {
    "id": "faith-and-doubt",

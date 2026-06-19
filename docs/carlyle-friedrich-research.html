@@ -187,6 +187,40 @@ figure.viz .viz-donutwrap svg { width: 200px; flex: 0 0 auto; }
 .viz-error { margin: 1.4rem 0; padding: 14px 18px; border: 1px dashed var(--accent);
   border-radius: 8px; background: var(--panel); font-family: var(--sans); font-size: .8rem; color: var(--text); }
 .viz-error pre { margin: 10px 0 0; font-size: .72rem; white-space: pre-wrap; }
+/* ── animated reveal on scroll (corpus-visuals) ──────────────────────────────
+   Figures and their marks start hidden ONLY after the page JS adds .reveal-armed
+   (it skips this under prefers-reduced-motion), so with no-JS or reduced motion
+   everything is fully visible by default — motion is purely additive. When a
+   figure scrolls into view the observer adds .is-revealed and CSS does the rest.
+   The cv-* classes are a shared reveal vocabulary used by BOTH the build-time viz
+   charts and hand-authored corpus-fig figures; the per-mark `--d` var staggers
+   them. transform-box:fill-box anchors each SVG mark's scale to its own geometry. */
+figure.viz, figure.corpus-fig { --cv-ease: cubic-bezier(.22,.61,.36,1); }
+.reveal-armed.viz, .reveal-armed.corpus-fig { opacity: 0; transform: translateY(14px);
+  transition: opacity .7s var(--cv-ease), transform .7s var(--cv-ease); will-change: opacity, transform; }
+.reveal-armed.is-revealed { opacity: 1; transform: none; }
+.reveal-armed .cv-fade { opacity: 0; transition: opacity .6s var(--cv-ease) var(--d, 0s); }
+.reveal-armed.is-revealed .cv-fade { opacity: 1; }
+.reveal-armed .cv-rise { opacity: 0; transform: translateY(10px);
+  transition: opacity .6s var(--cv-ease) var(--d, 0s), transform .6s var(--cv-ease) var(--d, 0s); }
+.reveal-armed.is-revealed .cv-rise { opacity: 1; transform: none; }
+.reveal-armed .cv-grow-up { transform: scaleY(0); transform-box: fill-box; transform-origin: bottom;
+  transition: transform .85s var(--cv-ease) var(--d, 0s); }
+.reveal-armed.is-revealed .cv-grow-up { transform: scaleY(1); }
+.reveal-armed .cv-grow-right { transform: scaleX(0); transform-box: fill-box; transform-origin: left;
+  transition: transform .85s var(--cv-ease) var(--d, 0s); }
+.reveal-armed.is-revealed .cv-grow-right { transform: scaleX(1); }
+.reveal-armed .cv-draw { stroke-dasharray: 1; stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.15s var(--cv-ease) var(--d, 0s); }
+.reveal-armed.is-revealed .cv-draw { stroke-dashoffset: 0; }
+.reveal-armed .cv-spin { opacity: 0; transform: rotate(-55deg) scale(.72); transform-box: fill-box;
+  transform-origin: center; transition: transform .95s var(--cv-ease) var(--d, 0s), opacity .7s var(--cv-ease) var(--d, 0s); }
+.reveal-armed.is-revealed .cv-spin { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-armed.viz, .reveal-armed.corpus-fig, .reveal-armed .cv-fade, .reveal-armed .cv-rise,
+  .reveal-armed .cv-grow-up, .reveal-armed .cv-grow-right, .reveal-armed .cv-draw, .reveal-armed .cv-spin {
+    opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; transition: none !important; }
+}
 #pager { max-width: 740px; width: 100%; margin: 0 auto; padding: 1rem 2rem 3rem;
   display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); }
 #pager button { font-size: 1rem; padding: .45rem 1.2rem; border: 1px solid var(--border);
@@ -315,6 +349,35 @@ docs.forEach((d, i) => {
 
 let firstShow = true;
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Animated reveal-on-scroll for charts & figures. Figures stay fully visible
+// unless armed here, so this is purely additive (no-JS / reduced-motion = static).
+// Correctness rule: a figure must NEVER stay hidden. IntersectionObserver only
+// *times* the reveal to scroll; an immediate in-view pass and a backstop timeout
+// guarantee every armed figure reveals even if IO is throttled or unsupported.
+let revealObserver = null, revealBackstop = null;
+function armReveals(root) {
+  if (revealObserver) { revealObserver.disconnect(); revealObserver = null; }
+  if (revealBackstop) { clearTimeout(revealBackstop); revealBackstop = null; }
+  if (reduceMotion) return;
+  const figs = [...root.querySelectorAll('figure.viz, figure.corpus-fig')];
+  if (!figs.length) return;
+  figs.forEach(f => f.classList.add('reveal-armed'));
+  const reveal = f => f.classList.add('is-revealed');
+  if ('IntersectionObserver' in window) {
+    revealObserver = new IntersectionObserver((entries, obs) => {
+      entries.forEach(en => { if (en.isIntersecting) { reveal(en.target); obs.unobserve(en.target); } });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    figs.forEach(f => revealObserver.observe(f));
+  }
+  // reveal anything already on screen once layout settles — uses setTimeout (not
+  // rAF) so above-the-fold figures still reveal where frames/IO are throttled
+  setTimeout(() => {
+    const vh = window.innerHeight || 800;
+    figs.forEach(f => { const r = f.getBoundingClientRect(); if (r.top < vh * 0.92 && r.bottom > 0) reveal(f); });
+  }, 60);
+  // safety net: never leave a figure invisible, even if IO never fires
+  revealBackstop = setTimeout(() => figs.forEach(reveal), 2600);
+}
 function show(i, anchorText) {
   if (listening && !autoNext) stopListen();  // manual nav stops narration; auto-advance keeps it
   const apply = () => {
@@ -326,6 +389,7 @@ function show(i, anchorText) {
     if (target >= 0) { a.href = '#ch-' + target; a.onclick = (e) => { e.preventDefault(); show(target); }; }
   });
   content.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+  armReveals(content);
   toc.querySelectorAll('a').forEach((a, j) => a.classList.toggle('active', j === current));
   document.getElementById('prev').disabled = current === 0;
   document.getElementById('next').disabled = current === docs.length - 1;

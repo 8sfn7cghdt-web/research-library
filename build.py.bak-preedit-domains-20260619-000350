@@ -27,7 +27,6 @@ import math
 import mimetypes
 import re
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
@@ -2623,7 +2622,6 @@ LIBRARY_FILTER_JS = """
   var empty = document.getElementById('lib-empty');
   var pills = Array.prototype.slice.call(document.querySelectorAll('.cat-pill'));
   var sections = Array.prototype.slice.call(document.querySelectorAll('.cat-section'));
-  var groups = Array.prototype.slice.call(document.querySelectorAll('.domain-group'));
   if (!search) return;
   var activeCat = 'all';
 
@@ -2641,13 +2639,6 @@ LIBRARY_FILTER_JS = """
       });
       sec.hidden = shown === 0;
       if (shown) anyVisible = true;
-    });
-    // A domain super-heading hides when every category shelf under it is empty,
-    // so filtering never leaves an orphaned domain title.
-    groups.forEach(function (g) {
-      var vis = 0;
-      g.querySelectorAll('.cat-section').forEach(function (s) { if (!s.hidden) vis++; });
-      g.hidden = vis === 0;
     });
     if (empty) empty.hidden = anyVisible;
     // The "For You" rows are a browse-what-to-read surface; hide them while a
@@ -3180,14 +3171,6 @@ header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem)
 .cat-pill:hover { color: var(--accent); border-color: var(--accent); }
 .cat-pill.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 .cat-pill .cat-count { opacity: .65; font-size: .9em; }
-.domain-group { padding-top: .4rem; }
-.domain-group[hidden] { display: none; }
-.domain-heading { max-width: 100%; margin: 2.2rem 0 .2rem; padding: 0 2rem .55rem;
-  font-family: var(--display); font-size: 1.62rem; letter-spacing: -.01em; color: var(--text);
-  display: flex; align-items: baseline; gap: .6rem; border-bottom: 1px solid var(--border); }
-.domain-heading .domain-count { font-family: var(--sans); font-size: .7rem; color: var(--muted);
-  font-weight: normal; letter-spacing: .08em; }
-.domain-group .cat-heading { font-size: 1.04rem; color: var(--muted); }
 .cat-section { padding-top: .6rem; }
 .cat-section[hidden] { display: none; }
 .cat-heading { max-width: 100%; margin: 1.2rem 0 0; padding: 0 2rem; font-family: var(--display);
@@ -5319,7 +5302,7 @@ def build_wrapped_page(out_dir, wrapped_stats, shell=""):
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
+          fingerprint_cfg=None, titles=None, category_order=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     # Copy the link-preview image into the served output so the absolute
@@ -5332,7 +5315,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     descriptions = descriptions or {}
     titles = titles or {}
     category_order = category_order or []
-    domains = domains or []
     cards = []
     manifest = []          # cross-page command-palette index (corpora + sections + editions)
     pages = []             # reader renders deferred until the manifest below is complete
@@ -5593,52 +5575,13 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     for card in cards:
         if card["category"] not in seen_order:
             seen_order.append(card["category"])
-
-    # Top-level domains (config "domains") group the fine categories into the
-    # three standing shelves — Politics & Economics, Ad Tech & Media, Philosophy/
-    # Theology/Psychology. A category claimed by a domain renders under that
-    # domain's super-heading; categories no domain claims (e.g. Heritage) render
-    # ungrouped after the domains so a corpus is never silently dropped.
-    cat_to_domain = {}
-    for d in domains:
-        for c in d.get("categories", []):
-            cat_to_domain.setdefault(c, d.get("title", ""))
-
-    # Order categories domain-by-domain (config order), each domain's categories
-    # in category_order, then any leftover categories in first-seen order. With no
-    # domains configured this collapses to the prior category_order behavior.
-    ordered_cats = []
-    for d in domains:
-        for c in d.get("categories", []):
-            if c in seen_order and c not in ordered_cats:
-                ordered_cats.append(c)
-    for c in category_order:
-        if c in seen_order and c not in ordered_cats:
-            ordered_cats.append(c)
-    for c in seen_order:
-        if c not in ordered_cats:
-            ordered_cats.append(c)
+    ordered_cats = [c for c in category_order if c in seen_order]
+    ordered_cats += [c for c in seen_order if c not in ordered_cats]
 
     pills = ['<button class="cat-pill active" data-cat="all">All</button>']
     sections = []
-    cur_domain = "\x00"   # sentinel distinct from None (the "no domain" group)
-    group_open = False
     for cat in ordered_cats:
         cat_cards = [c["html"] for c in cards if c["category"] == cat]
-        dom = cat_to_domain.get(cat)
-        if dom != cur_domain:
-            if group_open:
-                sections.append('</div>')
-                group_open = False
-            cur_domain = dom
-            if dom:
-                dom_count = sum(1 for c in cards if cat_to_domain.get(c["category"]) == dom)
-                sections.append(
-                    f'<div class="domain-group" data-domain="{html.escape(dom, quote=True)}">'
-                    f'<h2 class="domain-heading">{html.escape(dom)}'
-                    f'<span class="domain-count">{dom_count}</span></h2>'
-                )
-                group_open = True
         pills.append(
             f'<button class="cat-pill" data-cat="{html.escape(cat, quote=True)}">'
             f'{html.escape(cat)} <span class="cat-count">{len(cat_cards)}</span></button>'
@@ -5649,8 +5592,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             f'<span class="cat-count">{len(cat_cards)}</span></h3>'
             f'<div class="grid">{"".join(cat_cards)}</div></section>'
         )
-    if group_open:
-        sections.append('</div>')
     library_body = (
         '<div class="lib-toolbar">'
         '<input id="lib-search" class="lib-search" type="search" '
@@ -5723,46 +5664,9 @@ def load_config(path):
         "descriptions": cfg.get("descriptions", {}),
         "titles": cfg.get("titles", {}),
         "category_order": cfg.get("category_order", []),
-        "domains": cfg.get("domains", []),
         "collections": cfg.get("collections", []),
         "atlas": cfg.get("atlas", {}),
     }
-
-
-def deploy_to_site(out_dir, message=None):
-    """Commit the built output and push it to the GitHub Pages branch so the live
-    site (research.calvincollins.xyz) updates. Pages serves main:/docs and rebuilds
-    on push, so a successful push IS the deploy. Safe no-op when nothing changed;
-    never raises — reports and returns False on any failure so the build still 'succeeded'."""
-    import datetime
-    out_path = Path(out_dir).resolve()
-    try:
-        repo = subprocess.run(["git", "-C", str(out_path), "rev-parse", "--show-toplevel"],
-                              capture_output=True, text=True, check=True).stdout.strip()
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        print(f"  ! deploy skipped: {out_path} is not inside a git repository", file=sys.stderr)
-        return False
-
-    def git(*a, check=True):
-        return subprocess.run(["git", "-C", repo, *a], capture_output=True, text=True, check=check)
-
-    git("add", "-A")
-    if git("diff", "--cached", "--quiet", check=False).returncode == 0:
-        print("  ✓ deploy: nothing changed since last publish — site already up to date")
-        return True
-    branch = git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip()
-    msg = message or f"Rebuild research library — {datetime.datetime.now():%Y-%m-%d %H:%M}"
-    try:
-        git("commit", "-m", msg)
-        print(f"  ✓ committed: {msg}")
-        git("push", "origin", branch)
-    except subprocess.CalledProcessError as e:
-        detail = (e.stderr or e.stdout or "").strip()
-        print(f"  ! deploy failed during git step:\n    {detail}", file=sys.stderr)
-        print("    The commit (if made) is saved locally; resolve and re-push manually.", file=sys.stderr)
-        return False
-    print(f"  ✓ pushed to origin/{branch} → GitHub Pages is rebuilding research.calvincollins.xyz (~1 min)")
-    return True
 
 
 if __name__ == "__main__":
@@ -5772,11 +5676,6 @@ if __name__ == "__main__":
     ap.add_argument("-o", "--out", default=None, help="output directory (default: dist, or config's out)")
     ap.add_argument("--title", default=None, help="library page title")
     ap.add_argument("--subtitle", default=None, help="library page subtitle")
-    ap.add_argument("--deploy", action="store_true",
-                    help="after building, commit the output and push to the GitHub Pages "
-                         "branch — publishes live to research.calvincollins.xyz")
-    ap.add_argument("-m", "--message", default=None,
-                    help="commit message for --deploy (default: a timestamped message)")
     args = ap.parse_args()
 
     # Default to the sibling build.config.json when neither folders nor --config are given.
@@ -5795,7 +5694,6 @@ if __name__ == "__main__":
         descriptions = cfg["descriptions"]
         titles = cfg["titles"]
         category_order = cfg["category_order"]
-        domains = cfg["domains"]
         collections = cfg["collections"]
         atlas_cfg = cfg["atlas"]
     elif args.folders:
@@ -5808,7 +5706,6 @@ if __name__ == "__main__":
         descriptions = {}
         titles = {}
         category_order = []
-        domains = []
         collections = []
         atlas_cfg = {}
     else:
@@ -5816,7 +5713,4 @@ if __name__ == "__main__":
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
           fingerprint_cfg=fingerprint_cfg, titles=titles, category_order=category_order,
-          domains=domains, collections=collections, atlas_cfg=atlas_cfg)
-
-    if args.deploy:
-        deploy_to_site(out, message=args.message)
+          collections=collections, atlas_cfg=atlas_cfg)

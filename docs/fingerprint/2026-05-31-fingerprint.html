@@ -152,6 +152,14 @@ header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem)
 .cat-pill:hover { color: var(--accent); border-color: var(--accent); }
 .cat-pill.active { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 .cat-pill .cat-count { opacity: .65; font-size: .9em; }
+.domain-group { padding-top: .4rem; }
+.domain-group[hidden] { display: none; }
+.domain-heading { max-width: 100%; margin: 2.2rem 0 .2rem; padding: 0 2rem .55rem;
+  font-family: var(--display); font-size: 1.62rem; letter-spacing: -.01em; color: var(--text);
+  display: flex; align-items: baseline; gap: .6rem; border-bottom: 1px solid var(--border); }
+.domain-heading .domain-count { font-family: var(--sans); font-size: .7rem; color: var(--muted);
+  font-weight: normal; letter-spacing: .08em; }
+.domain-group .cat-heading { font-size: 1.04rem; color: var(--muted); }
 .cat-section { padding-top: .6rem; }
 .cat-section[hidden] { display: none; }
 .cat-heading { max-width: 100%; margin: 1.2rem 0 0; padding: 0 2rem; font-family: var(--display);
