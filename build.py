@@ -5755,11 +5755,24 @@ def deploy_to_site(out_dir, message=None):
     try:
         git("commit", "-m", msg)
         print(f"  ✓ committed: {msg}")
-        git("push", "origin", branch)
     except subprocess.CalledProcessError as e:
-        detail = (e.stderr or e.stdout or "").strip()
-        print(f"  ! deploy failed during git step:\n    {detail}", file=sys.stderr)
-        print("    The commit (if made) is saved locally; resolve and re-push manually.", file=sys.stderr)
+        print(f"  ! deploy failed at commit:\n    {(e.stderr or e.stdout or '').strip()}", file=sys.stderr)
+        return False
+    # This repo has an external auto-committer / parallel sessions that move origin/main,
+    # so rebase onto any remote advance before pushing rather than failing non-fast-forward.
+    pull = git("pull", "--rebase", "origin", branch, check=False)
+    if pull.returncode != 0:
+        git("rebase", "--abort", check=False)
+        print(f"  ! deploy: origin/{branch} diverged and auto-rebase hit a conflict — push skipped.",
+              file=sys.stderr)
+        print(f"    {(pull.stderr or '').strip()}", file=sys.stderr)
+        print("    Your commit is saved locally. Resolve with `git pull --rebase`, then re-run --deploy.",
+              file=sys.stderr)
+        return False
+    push = git("push", "origin", branch, check=False)
+    if push.returncode != 0:
+        print(f"  ! push failed (commit saved locally):\n    {(push.stderr or push.stdout or '').strip()}",
+              file=sys.stderr)
         return False
     print(f"  ✓ pushed to origin/{branch} → GitHub Pages is rebuilding research.calvincollins.xyz (~1 min)")
     return True
