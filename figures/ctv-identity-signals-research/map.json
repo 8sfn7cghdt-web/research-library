@@ -1,0 +1,8 @@
+[
+  { "file": "01_Signal_Taxonomy.md", "after": "## Key Claims", "snippet": "resolution_graph.html" },
+  { "file": "08_IP_Household_Accuracy.md", "after": "## Bottom Line", "snippet": "claimed_vs_verified.html" },
+  { "file": "06_Privacy_Regulation.md", "after": "## Summary Table: CTV Identity Signal Viability", "snippet": "signal_survival.html" },
+  { "file": "03_Activation_Bid_Path.md", "after": "## Part 2: OpenRTB Identity and Geography Fields", "snippet": "bidstream_anatomy.html" },
+  { "file": "07_Identity_Vendor_Landscape.md", "after": "## 3. Walled Gardens vs. Open Ecosystem", "snippet": "garden_vs_open.html" },
+  { "file": "Future_Trajectory.md", "after": "## Bottom Line", "snippet": "two_futures.html" }
+]

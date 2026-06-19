@@ -1,0 +1,92 @@
+<figure class="corpus-fig" role="group">
+  <svg viewBox="0 0 700 452" role="img" aria-label="A stylized OpenRTB CTV bid request rendered as a JSON console card. Four identity-bearing fields are highlighted as rows — user.eids array carrying a cobalt Extended-ID token Ag3f…d2, device.ifa carrying the amber device ad ID, device.geo carrying the cyan geography block, and the top-level ip address in cyan. A callout to the right of each row explains what it carries, and most rows are tagged 'optional / often empty', dramatizing that nearly the whole identity stack in one request is optional and frequently arrives blank." xmlns="http://www.w3.org/2000/svg">
+    <text x="28" y="30" class="t-serif f-t1" font-size="14" font-weight="600">Anatomy of the bid-stream identity payload</text>
+    <text x="28" y="46" class="t-muted" font-size="10">One OpenRTB request &mdash; the entire identity stack in miniature</text>
+    <rect x="28" y="60" width="372" height="356" rx="4" class="f-panel"/>
+    <rect x="28" y="60" width="372" height="356" rx="4" fill="none" style="stroke:var(--border)"/>
+    <line x1="28" y1="84" x2="400" y2="84" class="ln-soft"/>
+    <circle cx="42" cy="72" r="3" class="f-t4"/>
+    <circle cx="54" cy="72" r="3" class="f-t3"/>
+    <circle cx="66" cy="72" r="3" class="f-t5"/>
+    <text x="214" y="76" text-anchor="middle" class="t-mono t-muted" font-size="9">BidRequest &mdash; openrtb 2.6</text>
+    <text x="44" y="106" class="t-mono t-muted" font-size="10.5">{</text>
+    <text x="58" y="126" class="t-mono t-acc" font-size="10.5">"imp"</text><text x="98" y="126" class="t-mono t-muted" font-size="10.5">: [ &hellip; ],</text>
+    <text x="58" y="146" class="t-mono t-acc" font-size="10.5">"user"</text><text x="104" y="146" class="t-mono t-muted" font-size="10.5">: {</text>
+    <g class="cv-grow-right" style="--d:.12s">
+      <rect x="68" y="156" width="318" height="30" rx="3" class="f-t1" opacity=".12"/>
+      <rect x="68" y="156" width="3" height="30" class="f-t1"/>
+      <text x="82" y="170" class="t-mono f-t1" font-size="10.5" font-weight="600">"eids"</text>
+      <text x="126" y="170" class="t-mono t-muted" font-size="10.5">: [ {</text>
+      <text x="82" y="181" class="t-mono t-muted" font-size="9.5">"source":"uidapi.com","id":</text>
+      <text x="262" y="181" class="t-mono f-t1" font-size="9.5" font-weight="600">"Ag3f&hellip;d2"</text>
+      <text x="320" y="181" class="t-mono t-muted" font-size="9.5"> }],</text>
+    </g>
+    <text x="58" y="206" class="t-mono t-muted" font-size="10.5">},</text>
+    <text x="58" y="226" class="t-mono t-acc" font-size="10.5">"device"</text><text x="116" y="226" class="t-mono t-muted" font-size="10.5">: {</text>
+    <g class="cv-grow-right" style="--d:.24s">
+      <rect x="68" y="236" width="318" height="20" rx="3" class="f-t3" opacity=".14"/>
+      <rect x="68" y="236" width="3" height="20" class="f-t3"/>
+      <text x="82" y="250" class="t-mono f-t3" font-size="10.5" font-weight="600">"ifa"</text>
+      <text x="120" y="250" class="t-mono t-muted" font-size="10.5">: </text>
+      <text x="134" y="250" class="t-mono f-t3" font-size="10.5">"7C9e&hellip;A1"</text>
+      <text x="196" y="250" class="t-mono t-muted" font-size="10.5">,</text>
+    </g>
+    <g class="cv-grow-right" style="--d:.36s">
+      <rect x="68" y="262" width="318" height="50" rx="3" class="f-t2" opacity=".12"/>
+      <rect x="68" y="262" width="3" height="50" class="f-t2"/>
+      <text x="82" y="276" class="t-mono f-t2" font-size="10.5" font-weight="600">"geo"</text>
+      <text x="118" y="276" class="t-mono t-muted" font-size="10.5">: {</text>
+      <text x="96" y="289" class="t-mono t-muted" font-size="9.5">"country":"USA","metro":"501",</text>
+      <text x="96" y="301" class="t-mono t-muted" font-size="9.5">"zip":"&empty;",</text>
+      <text x="164" y="301" class="t-mono f-t2" font-size="9.5">"type"</text>
+      <text x="200" y="301" class="t-mono t-muted" font-size="9.5">: null }</text>
+    </g>
+    <text x="58" y="332" class="t-mono t-muted" font-size="10.5">},</text>
+    <g class="cv-grow-right" style="--d:.48s">
+      <rect x="68" y="342" width="318" height="20" rx="3" class="f-t2" opacity=".12"/>
+      <rect x="68" y="342" width="3" height="20" class="f-t2"/>
+      <text x="82" y="356" class="t-mono f-t2" font-size="10.5" font-weight="600">"ip"</text>
+      <text x="112" y="356" class="t-mono t-muted" font-size="10.5">: </text>
+      <text x="126" y="356" class="t-mono f-t2" font-size="10.5">"203.0.113.0"</text>
+    </g>
+    <text x="44" y="386" class="t-mono t-muted" font-size="10.5">}</text>
+    <text x="44" y="404" class="t-mono t-muted" font-size="9" opacity=".7">// solid = present &middot; faint = optional</text>
+    <line x1="406" y1="171" x2="446" y2="171" class="ln" style="stroke-dasharray:2 2"/>
+    <line x1="406" y1="246" x2="446" y2="246" class="ln" style="stroke-dasharray:2 2"/>
+    <line x1="406" y1="287" x2="446" y2="287" class="ln" style="stroke-dasharray:2 2"/>
+    <line x1="406" y1="352" x2="446" y2="352" class="ln" style="stroke-dasharray:2 2"/>
+    <g class="cv-fade" style="--d:.6s">
+      <circle cx="452" cy="171" r="3" class="f-t1"/>
+      <text x="464" y="167" class="t-serif f-t1" font-size="11" font-weight="600">user.eids[ ]</text>
+      <text x="464" y="181" class="t-muted" font-size="9.5">the Extended IDs array &mdash; UID2 token,</text>
+      <text x="464" y="193" class="t-muted" font-size="9.5">LiveRamp RampID, ID5. The verified spine.</text>
+    </g>
+    <g class="cv-fade" style="--d:.72s">
+      <circle cx="452" cy="246" r="3" class="f-t3"/>
+      <text x="464" y="242" class="t-serif f-t3" font-size="11" font-weight="600">device.ifa</text>
+      <rect x="540" y="234" width="46" height="12" rx="2" fill="none" class="ln-soft" stroke-dasharray="2 2"/>
+      <text x="563" y="243" text-anchor="middle" class="t-muted" font-size="8">optional</text>
+      <text x="464" y="256" class="t-muted" font-size="9.5">the mobile / CTV device ad ID</text>
+      <text x="464" y="268" class="t-muted" font-size="9.5">(IDFA, GAID, RIDA, TIFA, AFAI)</text>
+    </g>
+    <g class="cv-fade" style="--d:.84s">
+      <circle cx="452" cy="287" r="3" class="f-t2"/>
+      <text x="464" y="297" class="t-serif f-t2" font-size="11" font-weight="600">device.geo { &hellip; }</text>
+      <rect x="606" y="289" width="46" height="12" rx="2" fill="none" class="ln-soft" stroke-dasharray="2 2"/>
+      <text x="629" y="298" text-anchor="middle" class="t-muted" font-size="8">optional</text>
+      <text x="464" y="311" class="t-muted" font-size="9.5">geography: country, region, metro (DMA),</text>
+      <text x="464" y="323" class="t-muted" font-size="9.5">zip, type. The <tspan class="t-mono">type</tspan> field has only 3 valid</text>
+      <text x="464" y="335" class="t-muted" font-size="9.5">values (GPS / IP / user-provided) &mdash;</text>
+      <text x="464" y="347" class="t-acc" font-size="9.5" font-weight="600">and is usually empty. <tspan class="t-muted" font-weight="400">(Claim 3.2)</tspan></text>
+    </g>
+    <g class="cv-fade" style="--d:.96s">
+      <circle cx="452" cy="370" r="3" class="f-t2"/>
+      <text x="464" y="366" class="t-serif f-t2" font-size="11" font-weight="600">ip</text>
+      <text x="464" y="380" class="t-muted" font-size="9.5">the network address &mdash; an identity hint</text>
+      <text x="464" y="392" class="t-muted" font-size="9.5">AND the source the geo block is built from.</text>
+    </g>
+    <line x1="452" y1="404" x2="672" y2="404" class="ln-soft"/>
+    <text x="452" y="418" class="t-mono t-muted" font-size="8.5">eids &middot; ifa &middot; geo.type all OPTIONAL &mdash; most arrive empty</text>
+  </svg>
+  <figcaption><strong>Fig. 4.</strong> A single CTV bid request is the entire identity stack in miniature &mdash; <span class="t-mono">user.eids[ ]</span>, <span class="t-mono">device.ifa</span>, <span class="t-mono">device.geo</span> and <span class="t-mono">ip</span> &mdash; yet nearly every one of those identity fields is optional and frequently arrives empty (<span class="t-mono">geo.type</span> has just three valid values and is usually null), which is why resolution downstream is so hard.</figcaption>
+</figure>

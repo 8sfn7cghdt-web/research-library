@@ -258,6 +258,11 @@
    "title": "The Long Advent",
    "subtitle": "Western democratic socialism — millenarian Christianity, the Social Gospel, the welfare state, and the movement's future",
    "category": "The Modern World"
+  },
+  "ctv-identity-signals-research": {
+   "title": "The Signal Layer",
+   "subtitle": "Identity in programmatic CTV — hashed emails, MAIDs, IP, ACR, clean rooms, and what survives to 2029",
+   "category": "Media & Advertising"
   }
  },
  "corpora": [
@@ -284,7 +289,8 @@
   "../latam-ctv-research",
   "../ctv-brand-safety-research",
   "../ctv-dsp-ssp-research",
-  "../democratic-socialism-research"
+  "../democratic-socialism-research",
+  "../ctv-identity-signals-research"
  ],
  "atlas": {
   "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",

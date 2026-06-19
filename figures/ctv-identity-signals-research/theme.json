@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Resolution Layer — a household stitched from decaying signals, read on an identity console",
+  "anchor": "The corpus's unit of identity is the pseudonymous token — a hashed email or a UID2 string standing in for a person — and its central tension is the gap between what a signal claims to resolve and what it actually resolves (an IP 'matches' a household 13% of the time; a platform 'reaches' 90% by its own unaudited count). So the world is an identity-resolution console: the OpenRTB user.eids[] array of truncated hex tokens, signal traces of different confidence converging on one household, and a match-rate readout that always shows the claimed bar ghosted behind the verified one. Cobalt is the verified signal; a ghost-grey is the claim that did not land.",
+  "rationale": "The structural metaphor is RESOLUTION — many fragmentary, decaying signals (HEM, MAID, IP, ACR, device ID, login) stitched, or failing to stitch, into one persistent household identity. Figures should read like a modern identity/telemetry console, not a humanities study: thin signal traces, monospace tokens, confidence bands rather than crisp lines, and the recurring claimed-vs-verified gap. The brand accent is SIGNAL COBALT — a true electric blue deliberately absent from the rest of the ad-tech shelf (which runs teal, emerald, violet, rose, amber, red-orange), so this corpus separates at a glance from its siblings while still reading as instrument-grade rather than decorative. The five figure hues map to the five signal families: cobalt (HEM, the deterministic spine), cyan (IP / geolocation), amber (MAID, the decaying signal — caution), rose (ACR / content), green (first-party login, the durable one). Cool console paper for day; a true dark inspector-at-night for evening. Sharp small radii, a technical grotesque for display, a readable transitional serif for the long-form body, and a true monospace for the hashed tokens and OpenRTB field names that recur throughout.",
+  "light": {
+    "bg": "#eef1f6", "panel": "#e2e6ed", "text": "#14171d", "muted": "#4c525d",
+    "accent": "#1346b8", "border": "#cdd3dd", "mark": "#c3d3f0", "cover-bg": "#e6ebf3",
+    "t1": "#1346b8", "t2": "#0e6f9e", "t3": "#9a5a06", "t4": "#9d2f6f", "t5": "#1f7a4d"
+  },
+  "dark": {
+    "bg": "#0c0f16", "panel": "#1b212d", "text": "#e6e8ee", "muted": "#8a909c",
+    "accent": "#5b9bf5", "border": "#252b38", "mark": "#1b2a4a", "cover-bg": "#11151f",
+    "t1": "#5b9bf5", "t2": "#43c0e0", "t3": "#e0a23e", "t4": "#e06aa8", "t5": "#58c07a"
+  },
+  "fonts": {
+    "display": "'Segoe UI', 'SF Pro Display', 'Helvetica Neue', system-ui, Arial, sans-serif",
+    "body": "Charter, 'Iowan Old Style', Georgia, 'Times New Roman', serif",
+    "mono": "'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\27e8 a3f \\00b7\\00b7\\00b7 \\27e9'",
+    "fig_radius": "4px"
+  },
+  "cover_palette": ["#1346b8", "#0e6f9e", "#9a5a06", "#9d2f6f"]
+}
