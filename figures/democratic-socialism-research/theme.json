@@ -1,0 +1,45 @@
+{
+  "aesthetic": "Fabian Tract and Nonconformist Chapel Register",
+  "anchor": "The Fabian Society's Webb-era printed tracts (1889-1920) combined with British nonconformist chapel membership ledgers — the two material forms that jointly authored Labour's founding moral-political culture: dense two-color pamphlet typography (black and socialist brick-red) + the ruled-column copperplate of the dissenting congregation's membership roll.",
+  "rationale": "The corpus traces how democratic socialism was born from the intersection of Victorian political pamphlet culture (Fabian Essays, SPD Erfurt Program, ILP tracts) and Protestant chapel culture (Methodist nonconformism, the Social Gospel, Rauschenbusch's Baptist sermons, Temple's Anglican pastorals). The Fabian tortoise, the red of socialist posters, the ivory of pamphlet paper, and the oak gold of chapel woodwork are the material artifacts this corpus is grounded in. No other corpus in the library addresses this intersection.",
+  "light": {
+    "bg": "#F5F0E8",
+    "panel": "#EDE7D8",
+    "text": "#1C1510",
+    "muted": "#6A5E50",
+    "accent": "#8B2020",
+    "border": "#C0B09A",
+    "mark": "#E8D4A0",
+    "cover-bg": "#EDE7D8",
+    "t1": "#8B2020",
+    "t2": "#1E3A5F",
+    "t3": "#7A5C18",
+    "t4": "#2E5C3A",
+    "t5": "#4A4A52"
+  },
+  "dark": {
+    "bg": "#18151A",
+    "panel": "#241F28",
+    "text": "#E8E0D5",
+    "muted": "#9A9082",
+    "accent": "#C84040",
+    "border": "#3A3040",
+    "mark": "#3A2E14",
+    "cover-bg": "#241F28",
+    "t1": "#E86060",
+    "t2": "#6094C8",
+    "t3": "#C8A840",
+    "t4": "#60B880",
+    "t5": "#9898A8"
+  },
+  "fonts": {
+    "display": "'Palatino Linotype', Palatino, 'Book Antiqua', Georgia, serif",
+    "body": "Georgia, Palatino, 'Times New Roman', Times, serif",
+    "mono": "'Courier New', Courier, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00a7   \\2014   \\00a7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#8B2020", "#1E3A5F", "#7A5C18", "#2E5C3A"]
+}
