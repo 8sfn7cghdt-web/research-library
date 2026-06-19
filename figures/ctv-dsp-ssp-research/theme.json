@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Clearing Desk — a programmatic trading terminal where the spread is made visible",
+  "anchor": "The corpus asks one question — who keeps the spread between the IO/CPM an intermediary charges and the price that actually clears in-platform — so its world is the trading screen on which that spread lives: a bidstream ledger glowing in a dark room, columns of CPMs and take-rate percentages, a deal ID resolving in milliseconds, the green of the price that clears set against the amber of the fee that leaks on the way to the publisher.",
+  "rationale": "The structural metaphor is the auction and the supply path (IO → DSP → exchange → SSP → publisher), every hop skimming a fee, so the figures should read like a market dashboard and an exchange ticker rather than a humanities study: tabular monospace numerals, a grotesque terminal display face, tight sharp radii. The brand accent is CLEARING-GREEN — the green of a money screen and of the spread an intermediary captures — deliberately distinct from every neighbor on the Media & Advertising shelf (Roku violet, the cooler institutional blues, the warm India/LATAM tones). The figure palette pairs it with an IO-side ink-navy (the buyer's gross price), an ad-tax amber (the fee that leaks at each hop), a deal-ID cyan (the curated identity layer), and an auction rose (the open-market bid). Cool light paper with near-black slate for day reading; a true dark, lit-terminal register for night. A grotesque sans display, a readable transitional serif for the long-form argument, and a true monospace because this corpus is, above all, about numbers.",
+  "light": {
+    "bg": "#eceef0", "panel": "#e0e3e7", "text": "#13171a", "muted": "#555c64",
+    "accent": "#1f8a5b", "border": "#cfd4d9", "mark": "#c4e7d4", "cover-bg": "#e4ebe6",
+    "t1": "#1f8a5b", "t2": "#1f4e79", "t3": "#b3781a", "t4": "#137a86", "t5": "#a83260"
+  },
+  "dark": {
+    "bg": "#0b0e0d", "panel": "#161e1a", "text": "#e6eae7", "muted": "#869089",
+    "accent": "#3fc285", "border": "#23302a", "mark": "#143026", "cover-bg": "#101a15",
+    "t1": "#3fc285", "t2": "#5b9bd6", "t3": "#dca33f", "t4": "#43bcc9", "t5": "#dd6a98"
+  },
+  "fonts": {
+    "display": "'Helvetica Neue', 'Arial Nova', 'Segoe UI', Arial, system-ui, sans-serif",
+    "body": "Charter, 'Iowan Old Style', Georgia, 'Times New Roman', serif",
+    "mono": "'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\27e8   \\2219   \\27e9'",
+    "fig_radius": "4px"
+  },
+  "cover_palette": ["#1f8a5b", "#1f4e79", "#b3781a", "#a83260"]
+}
