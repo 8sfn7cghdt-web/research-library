@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Co-located Container — a buyer's sealed bidder seated on the exchange's own metal, deciding beside the auction in under five milliseconds",
+  "anchor": "The corpus's single image is a sealed OCI container lifted off the public internet and set down inside the exchange's data center, running on the host's racks with its ingress and egress welded shut except to the host — the buyer's brain co-located with the seller's auction. So the world is the data-center fabric seen from inside the rack: a sealed compute box pulsing in a dark hall, a bidstream resolving in-cluster with no round-trip, the welded boundary line of the sandbox, the cool teal glow of a process running where it was never allowed to run before.",
+  "rationale": "The structural metaphor is co-location and the sealed boundary — compute moving INSIDE the host rather than round-tripping over the wire — so the figures should read like a data-center schematic and an in-cluster process monitor, not a humanities study: a sealed-container motif, racked grids, a welded seam where ingress/egress is blocked, sub-5ms latency rendered as a near-instant pulse. The brand accent is IN-CLUSTER TEAL-CYAN — the electric green-blue of a process lit up inside the rack — deliberately distinct from every neighbor on the Media & Advertising shelf (the two clearing-greens of the DSP/SSP and agentic-protocol corpora, MiQ's deal-blotter vermilion, the identity corpus's cobalt, Fox–Roku's living-room violet, the warm India/LATAM ledger tones). The figure palette pairs the teal with a host-fabric steel-navy (the exchange's metal), a host-signal amber (the bidstream fields the sandbox lets the container see), an agentic indigo (the rival AdCP topology routing around the auction), and an open-auction rose. Cool steel paper with near-black slate for day reading; a true data-center dark, lit-rack register for night — this corpus's native habitat is the dark hall. A technical grotesque display face, a readable transitional serif for the long-form argument, and a true monospace, because this corpus is, at bottom, about compute, latency, and numbers.",
+  "light": {
+    "bg": "#eceef1", "panel": "#e1e4e8", "text": "#12171b", "muted": "#535b63",
+    "accent": "#0e8f9e", "border": "#cdd3d9", "mark": "#c2e8ec", "cover-bg": "#e3eaec",
+    "t1": "#0e8f9e", "t2": "#20507e", "t3": "#b07818", "t4": "#6a3fb0", "t5": "#b43a5e"
+  },
+  "dark": {
+    "bg": "#0a0e10", "panel": "#141d20", "text": "#e5eaec", "muted": "#84909a",
+    "accent": "#2bc3d4", "border": "#213036", "mark": "#103036", "cover-bg": "#0e1c20",
+    "t1": "#2bc3d4", "t2": "#5b9bd6", "t3": "#d9a23f", "t4": "#9b7ce8", "t5": "#de6a8a"
+  },
+  "fonts": {
+    "display": "'Aptos', 'Segoe UI', 'Helvetica Neue', Arial, system-ui, sans-serif",
+    "body": "'Source Serif Pro', Charter, 'Iowan Old Style', Georgia, 'Times New Roman', serif",
+    "mono": "'JetBrains Mono', 'SF Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\27e6   \\220e   \\27e7'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": ["#0e8f9e", "#20507e", "#b07818", "#b43a5e"]
+}

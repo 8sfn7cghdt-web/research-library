@@ -278,6 +278,11 @@
       "title": "The Recurring Fire",
       "subtitle": "The First and Second Great Awakenings, and the revival form they left America",
       "category": "Faith & Religion"
+    },
+    "containerized-bidding-research": {
+      "title": "Closer to the Metal",
+      "subtitle": "Containerized bidding — when the buyer's bidder moves inside the exchange's data center, and who captures the margin it relocates",
+      "category": "Media & Advertising"
     }
   },
   "corpora": [
@@ -308,7 +313,8 @@
     "../ctv-identity-signals-research",
     "../agentic-advertising-protocols-research",
     "../miq-research",
-    "../great-awakenings-research"
+    "../great-awakenings-research",
+    "../containerized-bidding-research"
   ],
   "atlas": {
     "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
