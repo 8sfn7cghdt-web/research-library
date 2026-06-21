@@ -1,0 +1,45 @@
+{
+  "aesthetic": "Sun of Righteousness",
+  "anchor": "The 1740s-1830s evangelical revival sermon as a printed object: old-style American letterpress with the devotional printer's rubrication (black ink + a single red), the New-Birth sunburst woodcut on the title page, and the camp-meeting broadside, all on laid cream rag paper.",
+  "rationale": "The Awakenings were spread and contested through print — Edwards's 'A Faithful Narrative' (1737), Whitefield's serialized 'Journals' and newspaper machine, Chauncy's 'Seasonable Thoughts' (1743), Finney's 'Lectures on Revivals' (1835). Their controlling image is the New Birth as light breaking — the 'sun of righteousness,' Edwards's 'divine and supernatural light,' the recurring 'outpouring.' So: a rubricated letterpress page (ink black + sermon-rubric vermilion) lit by a sunburst gilt, with a sober Old-Light slate as the critical counter-pole and a 'burned-over' field green — the corpus's own both/and (revival heat vs. sober critique) rendered as two tinctures against fire.",
+  "light": {
+    "bg": "#f4efe3",
+    "panel": "#e9e1cf",
+    "text": "#211a12",
+    "muted": "#6a5d49",
+    "accent": "#b3331c",
+    "border": "#d7ccb4",
+    "mark": "#ead08a",
+    "cover-bg": "#ece3d0",
+    "t1": "#b0701a",
+    "t2": "#a82f18",
+    "t3": "#34476e",
+    "t4": "#4f6a3a",
+    "t5": "#7a3b5e"
+  },
+  "dark": {
+    "bg": "#14110c",
+    "panel": "#271d11",
+    "text": "#ece2cf",
+    "muted": "#a89878",
+    "accent": "#e8693a",
+    "border": "#3c3320",
+    "mark": "#4a3a18",
+    "cover-bg": "#271d11",
+    "t1": "#e6a23c",
+    "t2": "#ec6a4a",
+    "t3": "#7fa0d8",
+    "t4": "#88ac68",
+    "t5": "#c585a0"
+  },
+  "fonts": {
+    "display": "'Iowan Old Style', 'Hoefler Text', Georgia, 'Times New Roman', serif",
+    "body": "'Iowan Old Style', Palatino, Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\2767   \\00b7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#b3331c", "#b0701a", "#34476e", "#211a12"]
+}

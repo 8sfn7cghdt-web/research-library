@@ -1,0 +1,7 @@
+[
+  { "file": "00_Briefing.md", "after": "## How to Read This Corpus", "snippet": "recurring_fire.html" },
+  { "file": "00_Briefing.md", "after": "## Forecast (Brief)", "snippet": "forecast_fan.html" },
+  { "file": "02_Modern_Arc.md", "after": "## VII. The Theological Hinge", "snippet": "theological_hinge.html" },
+  { "file": "02_Modern_Arc.md", "after": "## VIII. The Institutional Outcome", "snippet": "denominational_inversion.html" },
+  { "file": "04_Live_Debates_And_Dynamics.md", "after": "## Synthesis: The Shape of the Field", "snippet": "six_debates.html" }
+]
