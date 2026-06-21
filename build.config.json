@@ -401,6 +401,11 @@
         "region": "IL",
         "cell": "s",
         "label": "The Jordan & the Judean wilderness"
+      },
+      "containerized-bidding-research": {
+        "region": "US-NY",
+        "cell": "e",
+        "label": "IAB Tech Lab & the programmatic exchanges, New York"
       }
     },
     "grow": {

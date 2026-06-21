@@ -1,0 +1,7 @@
+[
+  { "file": "01_Origins_and_Evolution.md", "after": "## 7. The leap", "snippet": "hero_off_the_wire.html" },
+  { "file": "02_Architecture_and_Plumbing.md", "after": "## 4. The Data-Access", "snippet": "sealed_boundary.html" },
+  { "file": "03_Standards_ARTF_AAMP.md", "after": "## 6. THE Protocol Fault", "snippet": "two_topologies.html" },
+  { "file": "04_Market_and_Competitive_Map.md", "after": "## 7. The Competitive Map", "snippet": "fabric_tenants.html" },
+  { "file": "05_Performance_and_Commercial_Model.md", "after": "## 7. The value-chain", "snippet": "unbundling_dsp.html" }
+]

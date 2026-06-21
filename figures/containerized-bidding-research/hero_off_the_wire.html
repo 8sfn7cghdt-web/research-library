@@ -1,0 +1,120 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 486" role="img" aria-label="A before-and-after anatomy of where the buyer's bidder runs. On the left, the traditional path: the buyer's DSP bidder sits in a remote public cloud, and every bid request round-trips over the public internet to the exchange's auction and back. A hard time budget of 80 to 120 milliseconds is almost entirely consumed by network transit, leaving only about 5 milliseconds for the buyer's model to think; cloud egress is billed at roughly nine cents a gigabyte, and a queries-per-second ceiling forces the DSP to evaluate only 20 to 30 percent of the bidstream and throttle the rest — what Index Exchange's CEO calls the cloud tax. On the right, the containerized path: the buyer ships a sealed OCI container holding its model, which is lifted off the internet and set down on the exchange's own racks, running beside the auction inside the data center. The wire is deleted. A decision returns in under 5 milliseconds, egress on the auction round-trip falls to near zero, the throttle disappears, and the buyer evaluates every single impression.">
+<rect x="8" y="8" width="684" height="470" rx="3" class="f-bg" stroke-width="1" style="stroke:var(--border)"/>
+<text x="350" y="32" text-anchor="middle" font-size="16" class="t-mono" font-weight="bold" letter-spacing="1" style="fill:var(--text)">OFF THE WIRE, ONTO THE METAL</text>
+<text x="350" y="50" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">where the buyer&#8217;s bidder runs &#8212; and what the wire costs to cross</text>
+<line x1="350" y1="64" x2="350" y2="408" class="ln-soft" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="186" y="80" text-anchor="middle" font-size="11.5" class="t-mono" font-weight="bold" letter-spacing="1.5" style="fill:var(--t5)">TRADITIONAL &#183; OVER THE WIRE</text>
+<text x="516" y="80" text-anchor="middle" font-size="11.5" class="t-mono" font-weight="bold" letter-spacing="1.5" style="fill:var(--t1)">CONTAINERIZED &#183; ONTO THE METAL</text>
+<g class="cv-fade">
+<rect x="34" y="98" width="118" height="80" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--t5)"/>
+<text x="93" y="116" text-anchor="middle" font-size="9" class="t-mono t-muted" letter-spacing="1">REMOTE PUBLIC CLOUD</text>
+<text x="93" y="130" text-anchor="middle" font-size="9.5" class="t-mono" style="fill:var(--t5)">AWS &#183; GCP</text>
+<rect x="48" y="140" width="90" height="26" rx="2" fill="none" stroke-width="1.2" style="stroke:var(--t5)"/>
+<text x="93" y="152" text-anchor="middle" font-size="9.5" class="t-mono" font-weight="bold" style="fill:var(--text)">DSP BIDDER</text>
+<text x="93" y="162" text-anchor="middle" font-size="8" class="t-mono t-muted">the buyer&#8217;s model</text>
+</g>
+<g class="f-t2">
+<rect x="248" y="98" width="68" height="80" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--t2)"/>
+</g>
+<text x="282" y="116" text-anchor="middle" font-size="9" class="t-mono t-muted" letter-spacing="1">EXCHANGE</text>
+<g style="fill:var(--t2)">
+<rect x="258" y="126" width="48" height="7" rx="1" opacity=".85"/>
+<rect x="258" y="137" width="48" height="7" rx="1" opacity=".7"/>
+<rect x="258" y="148" width="48" height="7" rx="1" opacity=".85"/>
+<rect x="258" y="159" width="48" height="7" rx="1" opacity=".7"/>
+</g>
+<text x="282" y="176" text-anchor="middle" font-size="8" class="t-mono t-muted">auction</text>
+<path d="M138,128 C 188,128 200,128 248,128" fill="none" class="s-t5 cv-draw" pathLength="1" stroke-width="2.4" stroke-dasharray="6 5"/>
+<path d="M248,150 C 200,150 188,150 140,150" fill="none" class="s-t5 cv-draw" pathLength="1" stroke-width="2.4" stroke-dasharray="6 5"/>
+<polygon points="244,123 256,128 244,133" class="f-t5"/>
+<polygon points="146,145 134,150 146,155" class="f-t5"/>
+<text x="193" y="120" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t5)">bid request &#8594;</text>
+<text x="193" y="166" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t5)">&#8592; bid response</text>
+<rect x="118" y="186" width="148" height="20" rx="3" class="f-bg" stroke-width="1.1" style="stroke:var(--t5)"/>
+<text x="192" y="200" text-anchor="middle" font-size="9.5" class="t-mono" font-weight="bold" style="fill:var(--t5)">THE PUBLIC INTERNET</text>
+<g font-size="10" class="t-mono">
+<rect x="34" y="224" width="282" height="58" rx="3" class="f-bg" stroke-width="1.2" style="stroke:var(--border)"/>
+<text x="46" y="242" font-size="9" class="t-mono t-muted" letter-spacing="1">TIME BUDGET &#8212; t&#8202;max</text>
+<rect x="46" y="248" width="258" height="22" rx="2" class="f-t2" opacity=".28"/>
+<rect x="46" y="248" width="244" height="22" rx="2" class="f-t5" opacity=".5"/>
+<rect x="290" y="248" width="14" height="22" rx="1" class="f-t1" opacity=".9"/>
+<text x="168" y="263" text-anchor="middle" font-size="9" class="t-mono" style="fill:var(--text)">network transit</text>
+<text x="305" y="278" text-anchor="end" font-size="8" class="t-mono" style="fill:var(--t1)">&#8593; ~5&#8202;ms to think</text>
+</g>
+<text x="58" y="262" font-size="9.5" class="t-mono" font-weight="bold" style="fill:var(--t5)">80&#8211;120&#8202;ms</text>
+<g font-size="9.5" class="t-mono">
+<rect x="34" y="296" width="282" height="92" rx="3" class="f-bg" stroke-width="1.2" style="stroke:var(--t3)"/>
+<text x="46" y="314" font-size="9" class="t-mono t-muted" letter-spacing="1">WHAT THE WIRE COSTS</text>
+<circle cx="52" cy="332" r="2.4" class="f-t3"/>
+<text x="62" y="335" font-size="10" style="fill:var(--text)">EGRESS billed at <tspan class="t-mono" style="fill:var(--t3)">~$0.09&#8202;/GB</tspan> (AWS)</text>
+<circle cx="52" cy="352" r="2.4" class="f-t3"/>
+<text x="62" y="355" font-size="10" style="fill:var(--text)">QPS ceiling throttles the bidstream</text>
+<circle cx="52" cy="372" r="2.4" class="f-t3"/>
+<text x="62" y="375" font-size="10" style="fill:var(--text)">only <tspan class="t-mono" style="fill:var(--t3)">20&#8211;30%</tspan> of impressions evaluated</text>
+</g>
+<rect x="396" y="98" width="268" height="160" rx="3" class="f-bg" stroke-width="1.4" style="stroke:var(--t2)"/>
+<text x="410" y="116" font-size="9" class="t-mono t-muted" letter-spacing="1">EXCHANGE DATA CENTER &#8212; ON THE RACK</text>
+<g style="fill:var(--t2)" opacity=".5">
+<rect x="410" y="126" width="44" height="6" rx="1"/>
+<rect x="410" y="135" width="44" height="6" rx="1"/>
+<rect x="410" y="144" width="44" height="6" rx="1"/>
+<rect x="410" y="153" width="44" height="6" rx="1"/>
+<rect x="410" y="162" width="44" height="6" rx="1"/>
+<rect x="410" y="171" width="44" height="6" rx="1"/>
+<rect x="410" y="180" width="44" height="6" rx="1"/>
+<rect x="410" y="189" width="44" height="6" rx="1"/>
+<rect x="410" y="198" width="44" height="6" rx="1"/>
+<rect x="410" y="207" width="44" height="6" rx="1"/>
+<rect x="410" y="216" width="44" height="6" rx="1"/>
+<rect x="410" y="225" width="44" height="6" rx="1"/>
+</g>
+<g class="cv-grow-up">
+<rect x="476" y="126" width="100" height="98" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t1)"/>
+<rect x="476" y="126" width="100" height="98" rx="3" fill="none" stroke-width="2.2" style="stroke:var(--t1)" stroke-dasharray="3 3" opacity=".55"/>
+<text x="526" y="146" text-anchor="middle" font-size="9" class="t-mono t-muted" letter-spacing="1">SEALED OCI</text>
+<text x="526" y="158" text-anchor="middle" font-size="9" class="t-mono t-muted" letter-spacing="1">CONTAINER</text>
+<rect x="490" y="168" width="72" height="42" rx="2" fill="none" stroke-width="1.4" style="stroke:var(--t1)"/>
+<text x="526" y="186" text-anchor="middle" font-size="9.5" class="t-mono" font-weight="bold" style="fill:var(--t1)">DSP MODEL</text>
+<text x="526" y="200" text-anchor="middle" font-size="8" class="t-mono t-muted">runs in-cluster</text>
+</g>
+<g class="f-t2">
+<rect x="586" y="126" width="64" height="98" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--t2)"/>
+</g>
+<text x="618" y="146" text-anchor="middle" font-size="9" class="t-mono t-muted" letter-spacing="1">AUCTION</text>
+<g style="fill:var(--t2)">
+<rect x="596" y="156" width="44" height="7" rx="1" opacity=".85"/>
+<rect x="596" y="167" width="44" height="7" rx="1" opacity=".7"/>
+<rect x="596" y="178" width="44" height="7" rx="1" opacity=".85"/>
+<rect x="596" y="189" width="44" height="7" rx="1" opacity=".7"/>
+<rect x="596" y="200" width="44" height="7" rx="1" opacity=".85"/>
+</g>
+<text x="618" y="220" text-anchor="middle" font-size="8" class="t-mono t-muted">beside it</text>
+<path d="M576,162 L 586,162" fill="none" class="s-t1" stroke-width="2.6"/>
+<path d="M586,188 L 576,188" fill="none" class="s-t1" stroke-width="2.6"/>
+<polygon points="583,157 591,162 583,167" class="f-t1"/>
+<polygon points="579,183 571,188 579,193" class="f-t1"/>
+<text x="581" y="178" text-anchor="middle" font-size="8" class="t-mono" style="fill:var(--t1)">in&#8202;&#183;&#8202;out</text>
+<text x="526" y="246" text-anchor="middle" font-size="9.5" class="t-mono" style="fill:var(--text)">no internet round-trip &#8212; the wire is deleted</text>
+<g font-size="10" class="t-mono">
+<rect x="396" y="272" width="268" height="58" rx="3" class="f-bg" stroke-width="1.2" style="stroke:var(--t1)"/>
+<text x="408" y="290" font-size="9" class="t-mono t-muted" letter-spacing="1">DECISION LATENCY</text>
+<rect x="408" y="296" width="244" height="22" rx="2" class="f-t1" opacity=".18"/>
+<rect x="408" y="296" width="16" height="22" rx="2" class="f-t1 cv-grow-right" opacity=".95"/>
+<text x="528" y="311" text-anchor="middle" font-size="9.5" class="t-mono" font-weight="bold" style="fill:var(--t1)">UNDER 5&#8202;ms &#183; in-cluster</text>
+</g>
+<g font-size="10" class="t-mono">
+<rect x="396" y="344" width="268" height="44" rx="3" class="f-bg" stroke-width="1.2" style="stroke:var(--t1)"/>
+<circle cx="414" cy="362" r="2.4" class="f-t1"/>
+<text x="424" y="365" font-size="10" style="fill:var(--text)">egress on the round-trip &#8594; <tspan class="t-mono" style="fill:var(--t1)">~zero</tspan></text>
+<circle cx="414" cy="380" r="2.4" class="f-t1"/>
+<text x="424" y="383" font-size="10" style="fill:var(--text)">throttle gone &#8212; <tspan class="t-mono" style="fill:var(--t1)">every impression</tspan> seen</text>
+</g>
+<line x1="34" y1="404" x2="316" y2="404" class="ln-soft" stroke-width="1"/>
+<text x="175" y="422" text-anchor="middle" font-size="9.5" class="t-mono" style="fill:var(--t5)">the &#8220;cloud tax&#8221; &#8212; Andrew Casale, Index Exchange</text>
+<line x1="40" y1="446" x2="660" y2="446" class="ln-soft" stroke-width="1"/>
+<text x="350" y="466" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">Fifteen years of latency, egress, and throttling collapse the moment the bidder stops crossing the wire</text>
+<text x="350" y="480" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">and starts running on the seller&#8217;s metal.</text>
+</svg>
+<figcaption><strong>Fig. 1.</strong> The whole corpus turns on one move: lifting the buyer&#8217;s sealed bidder off the public internet and setting it down on the exchange&#8217;s own racks. <em>Over the wire, an 80&#8211;120&#8202;ms budget is spent almost entirely on transit &#8212; leaving ~5&#8202;ms to think &#8212; while cloud egress (~$0.09/GB) and a QPS ceiling let the DSP evaluate only 20&#8211;30% of the bidstream, the &#8220;cloud tax.&#8221; Co-located in a sealed OCI container beside the auction, the decision returns in under 5&#8202;ms, egress falls to near zero, and the throttle disappears &#8212; so the buyer sees every impression.</em></figcaption>
+</figure>

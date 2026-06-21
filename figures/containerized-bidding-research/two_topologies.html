@@ -1,0 +1,109 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 470" role="img" aria-label="A forking network-flow diagram showing two competing ad-tech standards that start from the same point but clear the trade two different ways. On the left a single shared node reads: a buyer wants an impression. The flow forks into two rows. The top row, ARTF, keeps the auction in the middle: the chain runs Advertiser slash IO to a DSP-or-buyer-agent container running inside the exchange, into the impression auction as the clearing point, then to the SSP, then to the publisher. ARTF extends OpenRTB, expressing agentic actions as OpenRTB Patch deltas, so the bidstream and the DSP-to-SSP-to-exchange chain stay central; it is backed by IAB Tech Lab, Index Exchange, Chalice, with The Trade Desk as a contributor. The bottom row, AdCP, routes around the auction: a buyer agent and a seller agent negotiate directly over MCP and A2A, with no auction node between them, and the relocated margin flows toward publishers and orchestrating agents; it is a clean-slate protocol launched October 2025, led by a Scope3 coalition including Optable, PubMatic, Swivel, Triton, and Yahoo, and notably excludes the big demand incumbents The Trade Desk, DV360, and Amazon DSP. The diagram makes plain that the two standards differ not in speed but in topology: a fight over who sits in the middle of the next decade of ad buying.">
+<rect x="8" y="8" width="684" height="454" rx="3" class="f-bg" stroke-width="1" style="stroke:var(--border)"/>
+<text x="350" y="32" text-anchor="middle" font-size="16" class="t-mono" font-weight="bold" letter-spacing="1" style="fill:var(--text)">TWO TOPOLOGIES</text>
+<text x="350" y="50" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">same start, two ways the trade clears &#8212; through the auction, or around it</text>
+<g class="cv-fade">
+<rect x="26" y="190" width="96" height="72" rx="3" class="f-panel" stroke-width="1.5" style="stroke:var(--border)"/>
+<text x="74" y="212" text-anchor="middle" font-size="9" class="t-mono t-muted" letter-spacing="1">THE SHARED START</text>
+<text x="74" y="231" text-anchor="middle" font-size="11" font-weight="bold" style="fill:var(--text)">A buyer wants</text>
+<text x="74" y="245" text-anchor="middle" font-size="11" font-weight="bold" style="fill:var(--text)">an impression</text>
+<text x="74" y="257" text-anchor="middle" font-size="8" class="t-mono t-muted">one trade, two routes</text>
+</g>
+<path d="M122,212 C 150,212 150,108 178,108" fill="none" class="s-t1 cv-draw" pathLength="1" stroke-width="2.2"/>
+<polygon points="172,103 184,108 172,113" class="f-t1"/>
+<path d="M122,240 C 150,240 150,344 178,344" fill="none" class="s-t4 cv-draw" pathLength="1" stroke-width="2.2"/>
+<polygon points="172,339 184,344 172,349" class="f-t4"/>
+<line x1="150" y1="100" x2="150" y2="356" class="ln-soft" stroke-width="1" stroke-dasharray="3 4"/>
+<text x="350" y="80" text-anchor="middle" font-size="11.5" class="t-mono" font-weight="bold" letter-spacing="1.5" style="fill:var(--t1)">ARTF &#183; THROUGH THE AUCTION</text>
+<text x="690" y="80" text-anchor="end" font-size="8.5" class="t-mono t-muted">extends OpenRTB &#8212; not revolution</text>
+<g class="cv-rise" style="--d:.1s">
+<rect x="190" y="92" width="80" height="44" rx="3" class="f-panel" stroke-width="1.3" style="stroke:var(--t2)"/>
+<text x="230" y="110" text-anchor="middle" font-size="9.5" font-weight="bold" style="fill:var(--text)">Advertiser</text>
+<text x="230" y="124" text-anchor="middle" font-size="8.5" class="t-mono t-muted">IO</text>
+</g>
+<g class="cv-rise" style="--d:.18s">
+<rect x="294" y="86" width="98" height="56" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t1)"/>
+<rect x="294" y="86" width="98" height="56" rx="3" fill="none" stroke-width="2.2" style="stroke:var(--t1)" stroke-dasharray="3 3" opacity=".5"/>
+<text x="343" y="102" text-anchor="middle" font-size="8" class="t-mono t-muted" letter-spacing="1">CONTAINER &#183; IN-EXCHANGE</text>
+<text x="343" y="118" text-anchor="middle" font-size="10" font-weight="bold" style="fill:var(--t1)">DSP / buyer</text>
+<text x="343" y="131" text-anchor="middle" font-size="10" font-weight="bold" style="fill:var(--t1)">agent</text>
+</g>
+<g class="cv-rise" style="--d:.26s">
+<rect x="416" y="84" width="84" height="60" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t2)"/>
+<text x="458" y="100" text-anchor="middle" font-size="8" class="t-mono t-muted" letter-spacing="1">THE CLEARING POINT</text>
+<g style="fill:var(--t2)">
+<rect x="430" y="108" width="56" height="6" rx="1" opacity=".85"/>
+<rect x="430" y="118" width="56" height="6" rx="1" opacity=".7"/>
+<rect x="430" y="128" width="56" height="6" rx="1" opacity=".85"/>
+</g>
+<text x="458" y="151" text-anchor="middle" font-size="9.5" font-weight="bold" style="fill:var(--t2)">AUCTION</text>
+</g>
+<g class="cv-rise" style="--d:.34s">
+<rect x="524" y="92" width="68" height="44" rx="3" class="f-panel" stroke-width="1.3" style="stroke:var(--t2)"/>
+<text x="558" y="112" text-anchor="middle" font-size="9.5" font-weight="bold" style="fill:var(--text)">SSP</text>
+<text x="558" y="125" text-anchor="middle" font-size="8" class="t-mono t-muted">sell-side</text>
+</g>
+<g class="cv-rise" style="--d:.42s">
+<rect x="616" y="92" width="60" height="44" rx="3" class="f-panel" stroke-width="1.3" style="stroke:var(--border)"/>
+<text x="646" y="110" text-anchor="middle" font-size="9.5" font-weight="bold" style="fill:var(--text)">Publisher</text>
+<text x="646" y="124" text-anchor="middle" font-size="8" class="t-mono t-muted">inventory</text>
+</g>
+<g class="s-t1">
+<line x1="270" y1="114" x2="288" y2="114" stroke-width="2.2" class="cv-draw" pathLength="1"/>
+<line x1="392" y1="114" x2="410" y2="114" stroke-width="2.2" class="cv-draw" pathLength="1"/>
+<line x1="500" y1="114" x2="518" y2="114" stroke-width="2.2" class="cv-draw" pathLength="1"/>
+<line x1="592" y1="114" x2="610" y2="114" stroke-width="2.2" class="cv-draw" pathLength="1"/>
+</g>
+<g class="f-t1">
+<polygon points="284,109 292,114 284,119"/>
+<polygon points="406,109 414,114 406,119"/>
+<polygon points="514,109 522,114 514,119"/>
+<polygon points="606,109 614,114 606,119"/>
+</g>
+<text x="343" y="160" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t3)">agentic actions = &#8220;OpenRTB Patch&#8221; deltas</text>
+<rect x="190" y="170" width="486" height="22" rx="3" class="f-bg" stroke-width="1" style="stroke:var(--t1)"/>
+<text x="200" y="185" font-size="8.5" class="t-mono t-muted" letter-spacing="1">BACKERS</text>
+<text x="278" y="185" font-size="9.5" style="fill:var(--text)">IAB Tech Lab &#183; Index Exchange &#183; Chalice <tspan class="t-muted">&#8212; The Trade Desk contributes</tspan></text>
+<line x1="40" y1="226" x2="660" y2="226" class="ln-soft" stroke-width="1"/>
+<text x="350" y="248" text-anchor="middle" font-size="11.5" class="t-mono" font-weight="bold" letter-spacing="1.5" style="fill:var(--t4)">AdCP &#183; AROUND THE AUCTION</text>
+<text x="690" y="248" text-anchor="end" font-size="8.5" class="t-mono t-muted">clean slate &#183; launched Oct 2025</text>
+<g class="cv-rise" style="--d:.12s">
+<rect x="190" y="304" width="120" height="60" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t4)"/>
+<text x="250" y="322" text-anchor="middle" font-size="8" class="t-mono t-muted" letter-spacing="1">built on MCP / A2A</text>
+<text x="250" y="340" text-anchor="middle" font-size="10.5" font-weight="bold" style="fill:var(--t4)">BUYER AGENT</text>
+<text x="250" y="355" text-anchor="middle" font-size="8.5" class="t-mono t-muted">negotiates directly</text>
+</g>
+<g class="cv-rise" style="--d:.28s">
+<rect x="450" y="304" width="120" height="60" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t4)"/>
+<text x="510" y="322" text-anchor="middle" font-size="8" class="t-mono t-muted" letter-spacing="1">built on MCP / A2A</text>
+<text x="510" y="340" text-anchor="middle" font-size="10.5" font-weight="bold" style="fill:var(--t4)">SELLER AGENT</text>
+<text x="510" y="355" text-anchor="middle" font-size="8.5" class="t-mono t-muted">at the publisher</text>
+</g>
+<g class="s-t4">
+<line x1="310" y1="326" x2="448" y2="326" stroke-width="2.4" class="cv-draw" pathLength="1"/>
+<line x1="448" y1="342" x2="310" y2="342" stroke-width="2.4" class="cv-draw" pathLength="1"/>
+</g>
+<polygon points="442,321 452,326 442,331" class="f-t4"/>
+<polygon points="316,337 306,342 316,347" class="f-t4"/>
+<text x="380" y="320" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t4)">direct negotiation &#8594;</text>
+<text x="380" y="356" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t4)">&#8592; terms</text>
+<g class="cv-fade" style="--d:.4s">
+<rect x="346" y="276" width="128" height="20" rx="3" class="f-bg" stroke-width="1.1" style="stroke:var(--t5)" stroke-dasharray="4 3"/>
+<text x="410" y="290" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" style="fill:var(--t5)">NO IMPRESSION AUCTION</text>
+</g>
+<path d="M384,296 C 392,300 396,300 400,304" fill="none" class="s-t5" stroke-width="1.1" stroke-dasharray="3 3"/>
+<text x="640" y="330" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t3)">margin &#8594;</text>
+<text x="640" y="343" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t3)">publishers</text>
+<line x1="570" y1="334" x2="600" y2="334" class="s-t3" stroke-width="2" stroke-dasharray="3 3"/>
+<polygon points="596,329 606,334 596,339" class="f-t3"/>
+<rect x="190" y="378" width="380" height="22" rx="3" class="f-bg" stroke-width="1" style="stroke:var(--t4)"/>
+<text x="200" y="393" font-size="8.5" class="t-mono t-muted" letter-spacing="1">COALITION</text>
+<text x="266" y="393" font-size="9.5" style="fill:var(--text)">Scope3 &#183; Optable &#183; PubMatic &#183; Swivel &#183; Triton &#183; Yahoo</text>
+<rect x="190" y="404" width="380" height="20" rx="3" class="f-bg" stroke-width="1" style="stroke:var(--t5)" stroke-dasharray="4 3"/>
+<text x="200" y="418" font-size="8.5" class="t-mono t-muted" letter-spacing="1">EXCLUDES</text>
+<text x="266" y="418" font-size="9.5" style="fill:var(--t5)">The Trade Desk &#183; DV360 &#183; Amazon DSP <tspan class="t-muted">&#8212; the demand incumbents</tspan></text>
+<text x="350" y="446" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">Not a speed disagreement but a topology fight &#8212; over who sits in the middle.</text>
+</svg>
+<figcaption><strong>Fig. 3.</strong> The two standards share a starting point &#8212; a buyer wants an impression &#8212; and then disagree about where the trade should clear. <em>ARTF (top) keeps the auction and its intermediaries in the middle, extending OpenRTB so the bidstream and the DSP&#8594;SSP&#8594;exchange chain stay central; containerized bidding is a native citizen of this world. AdCP (bottom) is a clean-slate route-around: a buyer agent and a seller agent negotiate directly over MCP/A2A, deleting the impression auction and relocating margin toward publishers &#8212; and its coalition pointedly excludes the big demand incumbents. The fault line is not latency but topology: who sits in the middle of the next decade of ad buying, and whether the auction survives there at all.</em></figcaption>
+</figure>

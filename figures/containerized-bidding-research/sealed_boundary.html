@@ -1,0 +1,117 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 560" role="img" aria-label="An anatomical cutaway of a single ARTF bidder container welded onto the exchange host's rack. At the center sits the buyer's signed OCI container, holding its machine-learning model, inference code, and bid-shaping rules. A welded boundary seals the box: under the IAB Tech Lab ARTF v1.0 spec all ingress and egress are blocked except one channel. That single channel runs to the host: per bid opportunity the host invokes the container over gRPC and the container returns an OpenRTB-Patch of mutations to the bid object. Two side lanes show what the seal permits and forbids. The allowed lane carries host-held signals the container may read: site quality, ad ratios, video settings, refresh rate, and engagement context. The blocked lane, struck through, is the buyer's own first-party and buy-side data, which the sandbox forbids it from freely bringing in; Aqfer's CTO calls today's pilots Snowpark, not Docker. A callout warns there is no hardware trusted execution environment in ARTF v1.0, so host-opacity rests on cryptographic signing plus the egress lockdown, a policy promise rather than a cryptographic guarantee. The closing line states that the same seal protects the buyer's model and the host's bidstream while stranding the buy-side data that would make the bidder smarter.">
+<rect x="8" y="8" width="684" height="544" rx="3" class="f-bg" stroke-width="1" style="stroke:var(--border)"/>
+<text x="350" y="32" text-anchor="middle" font-size="16" class="t-mono" font-weight="bold" letter-spacing="1" style="fill:var(--text)">THE SEALED BOUNDARY</text>
+<text x="350" y="50" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">anatomy of one ARTF container welded to the host&#8217;s metal</text>
+<line x1="40" y1="62" x2="660" y2="62" class="ln-soft" stroke-width="1"/>
+<text x="40" y="84" font-size="9" class="t-mono t-muted" letter-spacing="1.5">EXCHANGE HOST &#183; ON THE RACK</text>
+<rect x="30" y="92" width="640" height="246" rx="3" class="f-bg" stroke-width="1.4" style="stroke:var(--t2)"/>
+<g style="fill:var(--t2)" opacity=".4">
+<rect x="44" y="104" width="40" height="6" rx="1"/>
+<rect x="44" y="113" width="40" height="6" rx="1"/>
+<rect x="44" y="122" width="40" height="6" rx="1"/>
+<rect x="44" y="131" width="40" height="6" rx="1"/>
+<rect x="44" y="140" width="40" height="6" rx="1"/>
+<rect x="44" y="149" width="40" height="6" rx="1"/>
+<rect x="44" y="158" width="40" height="6" rx="1"/>
+<rect x="44" y="167" width="40" height="6" rx="1"/>
+<rect x="44" y="176" width="40" height="6" rx="1"/>
+<rect x="44" y="185" width="40" height="6" rx="1"/>
+<rect x="616" y="104" width="40" height="6" rx="1"/>
+<rect x="616" y="113" width="40" height="6" rx="1"/>
+<rect x="616" y="122" width="40" height="6" rx="1"/>
+<rect x="616" y="131" width="40" height="6" rx="1"/>
+<rect x="616" y="140" width="40" height="6" rx="1"/>
+<rect x="616" y="149" width="40" height="6" rx="1"/>
+<rect x="616" y="158" width="40" height="6" rx="1"/>
+<rect x="616" y="167" width="40" height="6" rx="1"/>
+<rect x="616" y="176" width="40" height="6" rx="1"/>
+<rect x="616" y="185" width="40" height="6" rx="1"/>
+</g>
+<g class="cv-grow-up">
+<rect x="246" y="104" width="208" height="190" rx="3" class="f-panel" stroke-width="2.6" style="stroke:var(--t1)"/>
+<rect x="252" y="110" width="196" height="178" rx="2" fill="none" stroke-width="1.3" style="stroke:var(--t1)" stroke-dasharray="2 4" opacity=".6"/>
+<text x="350" y="128" text-anchor="middle" font-size="10.5" class="t-mono" font-weight="bold" letter-spacing="1" style="fill:var(--t1)">SIGNED OCI CONTAINER</text>
+<text x="350" y="141" text-anchor="middle" font-size="8.5" class="t-mono t-muted">the buyer&#8217;s image &#183; ingress &amp; egress BLOCKED</text>
+<rect x="270" y="152" width="160" height="30" rx="2" fill="none" stroke-width="1.3" style="stroke:var(--t1)"/>
+<text x="350" y="167" text-anchor="middle" font-size="10" class="t-mono" font-weight="bold" style="fill:var(--text)">ML MODEL</text>
+<text x="350" y="178" text-anchor="middle" font-size="8" class="t-mono t-muted">the buyer trains it; the host never reads it</text>
+<rect x="270" y="190" width="160" height="26" rx="2" fill="none" stroke-width="1.2" style="stroke:var(--t1)"/>
+<text x="350" y="207" text-anchor="middle" font-size="9.5" class="t-mono" style="fill:var(--text)">INFERENCE CODE</text>
+<rect x="270" y="224" width="160" height="26" rx="2" fill="none" stroke-width="1.2" style="stroke:var(--t1)"/>
+<text x="350" y="241" text-anchor="middle" font-size="9.5" class="t-mono" style="fill:var(--text)">BID-SHAPING RULES</text>
+<text x="350" y="270" text-anchor="middle" font-size="8.5" class="t-mono t-muted">runs in-cluster &#183; signing + egress lockdown =</text>
+<text x="350" y="281" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t1)">the welded boundary</text>
+</g>
+<text x="146" y="106" text-anchor="middle" font-size="8.5" class="t-mono t-muted" letter-spacing="1">HOST SIGNALS</text>
+<rect x="96" y="116" width="118" height="124" rx="3" class="f-bg" stroke-width="1.3" style="stroke:var(--t3)"/>
+<text x="155" y="132" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" style="fill:var(--t3)">ALLOWED IN</text>
+<g font-size="8.7" class="t-mono" style="fill:var(--text)">
+<circle cx="106" cy="146" r="1.8" class="f-t3"/>
+<text x="113" y="149">site-quality signals</text>
+<circle cx="106" cy="161" r="1.8" class="f-t3"/>
+<text x="113" y="164">ad ratios</text>
+<circle cx="106" cy="176" r="1.8" class="f-t3"/>
+<text x="113" y="179">video settings</text>
+<circle cx="106" cy="191" r="1.8" class="f-t3"/>
+<text x="113" y="194">refresh rate</text>
+<circle cx="106" cy="206" r="1.8" class="f-t3"/>
+<text x="113" y="209">engagement /</text>
+<text x="113" y="220">context fields</text>
+</g>
+<text x="155" y="236" text-anchor="middle" font-size="7.6" class="t-mono t-muted">host-held &#183; host-exposed</text>
+<g class="cv-grow-right">
+<rect x="214" y="172" width="34" height="14" rx="2" class="f-t3" opacity=".82"/>
+</g>
+<polygon points="246,165 258,179 246,193" class="f-t3"/>
+<text x="231" y="164" text-anchor="middle" font-size="7.6" class="t-mono" style="fill:var(--t3)">read</text>
+<text x="546" y="106" text-anchor="middle" font-size="8.5" class="t-mono t-muted" letter-spacing="1">BUY-SIDE DATA</text>
+<rect x="486" y="116" width="118" height="124" rx="3" class="f-bg" stroke-width="1.3" stroke-dasharray="4 4" style="stroke:var(--t4)"/>
+<text x="545" y="132" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" style="fill:var(--t4)">BLOCKED</text>
+<g font-size="8.7" class="t-mono" style="fill:var(--muted)">
+<text x="545" y="152" text-anchor="middle">first-party data</text>
+<line x1="496" y1="148.5" x2="594" y2="148.5" class="s-t4" stroke-width="1.2"/>
+<text x="545" y="172" text-anchor="middle">buy-side audiences</text>
+<line x1="496" y1="168.5" x2="594" y2="168.5" class="s-t4" stroke-width="1.2"/>
+<text x="545" y="192" text-anchor="middle">CRM / outcomes</text>
+<line x1="496" y1="188.5" x2="594" y2="188.5" class="s-t4" stroke-width="1.2"/>
+</g>
+<text x="545" y="216" text-anchor="middle" font-size="8" class="t-mono" style="fill:var(--t4)">no free bring-your-own</text>
+<text x="545" y="229" text-anchor="middle" font-size="7.8" class="t-mono t-muted" font-style="italic">&#8220;Snowpark, not Docker&#8221;</text>
+<line x1="486" y1="179" x2="454" y2="179" class="s-t4" stroke-width="2" stroke-dasharray="5 4"/>
+<line x1="468" y1="172" x2="476" y2="186" class="s-t4" stroke-width="2"/>
+<line x1="476" y1="172" x2="468" y2="186" class="s-t4" stroke-width="2"/>
+<text x="470" y="166" text-anchor="middle" font-size="7.6" class="t-mono" style="fill:var(--t4)">sealed out</text>
+<g class="cv-draw">
+<path d="M350,294 L 350,316" fill="none" class="s-t2" stroke-width="2.4" pathLength="1"/>
+</g>
+<polygon points="344,312 350,326 356,312" class="f-t2"/>
+<rect x="252" y="300" width="196" height="30" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--t2)"/>
+<text x="350" y="313" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" letter-spacing="1" style="fill:var(--t2)">THE ONE CHANNEL OUT</text>
+<text x="350" y="324" text-anchor="middle" font-size="8" class="t-mono t-muted">the only hole in the weld</text>
+<rect x="30" y="350" width="640" height="120" rx="3" class="f-bg" stroke-width="1.2" style="stroke:var(--border)"/>
+<text x="48" y="370" font-size="9" class="t-mono t-muted" letter-spacing="1.5">PER BID OPPORTUNITY &#8212; THE gRPC HANDSHAKE</text>
+<rect x="48" y="384" width="150" height="64" rx="3" class="f-panel" stroke-width="1.3" style="stroke:var(--t2)"/>
+<text x="123" y="404" text-anchor="middle" font-size="10" class="t-mono" font-weight="bold" style="fill:var(--t2)">HOST</text>
+<text x="123" y="418" text-anchor="middle" font-size="8.3" class="t-mono t-muted">exchange invokes</text>
+<text x="123" y="429" text-anchor="middle" font-size="8.3" class="t-mono t-muted">the container,</text>
+<text x="123" y="440" text-anchor="middle" font-size="8.3" class="t-mono t-muted">one call per bid</text>
+<rect x="502" y="384" width="150" height="64" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t1)"/>
+<text x="577" y="404" text-anchor="middle" font-size="10" class="t-mono" font-weight="bold" style="fill:var(--t1)">CONTAINER</text>
+<text x="577" y="418" text-anchor="middle" font-size="8.3" class="t-mono t-muted">scores the bid,</text>
+<text x="577" y="429" text-anchor="middle" font-size="8.3" class="t-mono t-muted">returns mutations</text>
+<text x="577" y="440" text-anchor="middle" font-size="8.3" class="t-mono t-muted">to the bid object</text>
+<path d="M198,402 L 502,402" fill="none" class="s-t2 cv-draw" stroke-width="2.2" pathLength="1" stroke-dasharray="6 5"/>
+<polygon points="498,397 510,402 498,407" class="f-t2"/>
+<text x="350" y="396" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t2)">gRPC invoke &#8594;</text>
+<path d="M502,432 L 198,432" fill="none" class="s-t1 cv-draw" stroke-width="2.2" pathLength="1" stroke-dasharray="6 5"/>
+<polygon points="202,427 190,432 202,437" class="f-t1"/>
+<text x="350" y="446" text-anchor="middle" font-size="8.5" class="t-mono" style="fill:var(--t1)">&#8592; OpenRTB-Patch &#183; bid-object mutations</text>
+<rect x="30" y="482" width="640" height="46" rx="3" class="f-bg" stroke-width="1.3" stroke-dasharray="4 4" style="stroke:var(--t3)"/>
+<text x="48" y="500" font-size="9" class="t-mono" font-weight="bold" letter-spacing="1" style="fill:var(--t3)">NO HARDWARE TEE IN ARTF v1.0</text>
+<text x="48" y="516" font-size="9" class="t-mono" style="fill:var(--text)">host-opacity rests on cryptographic <tspan style="fill:var(--t3)" font-weight="bold">SIGNING + egress lockdown</tspan> &#8212; a <tspan font-style="italic">policy</tspan> promise, not a cryptographic guarantee</text>
+<text x="350" y="546" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">The welded boundary is the whole story: it guards the buyer&#8217;s model and the host&#8217;s bidstream at once &#8212;</text>
+<text x="350" y="558" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">and in sealing the box, it strands the buy-side data that would make the bidder smarter.</text>
+</svg>
+<figcaption><strong>Fig. 2.</strong> Under IAB Tech Lab&#8217;s ARTF v1.0 the buyer&#8217;s bidder is a <em>sandbox, not open compute</em>: a signed OCI image &#8212; model, inference code, bid-shaping rules &#8212; runs on the exchange&#8217;s metal with all ingress and egress blocked except a single gRPC channel, invoked per bid opportunity and returning an OpenRTB-Patch of mutations. <em>It may read host-held signals (site quality, ad ratios, video settings, refresh rate, context) but cannot freely bring in its own first-party / buy-side data &#8212; Aqfer&#8217;s CTO calls the pilots &#8220;Snowpark, not Docker.&#8221; With no hardware TEE in v1.0, host-opacity rests on signing plus the egress lockdown: a policy promise, not a cryptographic guarantee. The same seal that protects both sides also caps the richer-signal promise &#8212; most live deployments are model-only sandboxes.</em></figcaption>
+</figure>
