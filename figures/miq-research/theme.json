@@ -1,0 +1,45 @@
+{
+  "aesthetic": "The Spread — a private-equity-owned trading desk's deal blotter",
+  "anchor": "The financial-print deal book (FT salmon-stock tombstone tables, LBO sources-and-uses ledgers) crossed with the programmatic bid-waterfall MiQ trades on — read as a thin bright margin captured atop rented infrastructure.",
+  "rationale": "MiQ's defining fact is not a technology but a financial structure: a managed-service trading desk, PE-owned and assembled to sell, that captures a spread between advertiser money and inventory it routes through DSPs it does not own, on data it rents. So the corpus's native world is financial print, not a terminal — a serif deal-book voice (no ad-tech sibling uses serif), tombstone cream and ledger rules, with a single warm vermilion marking the margin layer MiQ keeps.",
+  "light": {
+    "bg": "#f6f1e7",
+    "panel": "#ece4d4",
+    "text": "#221d17",
+    "muted": "#665c4d",
+    "accent": "#b5340f",
+    "border": "#d6cbb4",
+    "mark": "#f1d59a",
+    "t1": "#384a63",
+    "t2": "#b5340f",
+    "t3": "#8a611a",
+    "t4": "#356b71",
+    "t5": "#7a2440",
+    "cover-bg": "#ece4d4"
+  },
+  "dark": {
+    "bg": "#15120e",
+    "panel": "#211c15",
+    "text": "#f0e8d7",
+    "muted": "#a99e8a",
+    "accent": "#f0743a",
+    "border": "#352c21",
+    "mark": "#5a4a1e",
+    "t1": "#90a6c8",
+    "t2": "#f0743a",
+    "t3": "#d6a24a",
+    "t4": "#5fa8a0",
+    "t5": "#d6718e",
+    "cover-bg": "#211c15"
+  },
+  "fonts": {
+    "display": "'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, 'Times New Roman', serif",
+    "body": "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
+    "mono": "'Courier New', Courier, 'DejaVu Sans Mono', ui-monospace, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7 \\25c6 \\00b7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#b5340f", "#384a63", "#8a611a", "#7a2440"]
+}

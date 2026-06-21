@@ -1,0 +1,7 @@
+[
+  { "file": "06_Market_Structure_And_Competition.md", "after": "## 1. The positioning thesis", "snippet": "the_spread.html" },
+  { "file": "06_Market_Structure_And_Competition.md", "after": "## 2. The market map", "snippet": "the_squeeze.html" },
+  { "file": "04_ATV_TV_Intelligence_And_Measurement.md", "after": "## 3. The Rented-Signal Stack", "snippet": "owns_vs_rents.html" },
+  { "file": "01_Origins_And_Strategic_Arc.md", "after": "## 4. Bridgepoint Takes Majority", "snippet": "ownership_clock.html" },
+  { "file": "00_Briefing.md", "after": "## Forecast (Brief)", "snippet": "forecast_bands.html" }
+]

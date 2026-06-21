@@ -268,6 +268,11 @@
       "title": "The Protocol War",
       "subtitle": "How AI agents are being wired into the ad buy — MCP, AdCP, the IAB's ARTF, and what agentic buying does to CTV",
       "category": "Media & Advertising"
+    },
+    "miq-research": {
+      "title": "On Leased Land",
+      "subtitle": "MiQ, the independent programmatic trading desk, and its CTV/ATV bet",
+      "category": "Media & Advertising"
     }
   },
   "corpora": [
@@ -296,7 +301,8 @@
     "../ctv-dsp-ssp-research",
     "../democratic-socialism-research",
     "../ctv-identity-signals-research",
-    "../agentic-advertising-protocols-research"
+    "../agentic-advertising-protocols-research",
+    "../miq-research"
   ],
   "atlas": {
     "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
