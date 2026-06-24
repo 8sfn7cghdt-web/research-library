@@ -1,0 +1,541 @@
+{
+  "edition_date": "2026-06-23",
+  "edition_number": 29,
+  "weekday": "Tuesday",
+  "subtitle": "All the news that's fit to Fingerprint",
+  "lead": {
+    "headline": "Walmart Buys Vibe.co for $1.4B to Pull SMBs Into Streaming",
+    "dek": "The retailer's largest ad-tech deal yet pairs a self-serve CTV platform with Vizio screens and Walmart's commerce data — a direct answer to Amazon.",
+    "body": "Walmart agreed to acquire Vibe.co, a Paris-based self-serve connected-TV advertising platform, in a deal The Wall Street Journal valued at roughly $1.4 billion — the retailer's largest ad-tech purchase yet. Vibe lets small and mid-sized businesses launch, target and measure streaming campaigns in minutes, the kind of advertiser that has long found CTV too complex and too costly to enter. Walmart will plug the platform into its Vizio smart-TV footprint and its first-party commerce data, offering sales-based, closed-loop attribution through Walmart Connect. The move is a direct answer to Amazon, whose retail-media profits bankroll an expanding streaming-ad business, and to The Trade Desk and Google in the contest for self-serve CTV budgets. By pairing a long tail of SMB advertisers with measurable outcomes on its own screens, Walmart accelerates the convergence of retail media and connected TV — and pulls a class of buyer that never bought television into the room. For every CTV seller, it signals that the next pool of streaming demand may be assembled by a retailer, not a broadcaster or a DSP.",
+    "source_publication": "AdExchanger",
+    "source_url": "https://www.adexchanger.com/tv/walmart-buys-vibe-co-to-woo-smbs-to-streaming/",
+    "sources": [
+      {
+        "publication": "AdExchanger",
+        "url": "https://www.adexchanger.com/tv/walmart-buys-vibe-co-to-woo-smbs-to-streaming/",
+        "filed_date": "2026-06-23"
+      },
+      {
+        "publication": "TV Tech",
+        "url": "https://www.tvtechnology.com/business/mergers-acquisitions/walmart-to-pay-usd1-4-billion-to-acquire-ad-tech-firm-vibe-co",
+        "filed_date": "2026-06-23"
+      },
+      {
+        "publication": "Walmart Corporate",
+        "url": "https://corporate.walmart.com/news/2026/06/23/walmart-to-acquire-vibe-co-to-expand-access-to-connected-tv-advertising",
+        "filed_date": "2026-06-23"
+      }
+    ],
+    "filed_date": "2026-06-23"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Warner Bros. Discovery Rebuilds Its Ad Stack for AI Agents",
+          "dek": "An AWS-based overhaul puts autonomous agents across planning, pricing and stewardship — the sell-side answer to the buyer-agent wave.",
+          "body": "Warner Bros. Discovery said it is rebuilding its US advertising technology stack on Amazon Web Services to deploy agentic AI across how its linear and digital inventory is planned, activated, optimized and monetized. Unified media planning is slated to arrive in the third quarter, followed by composable order management, pricing and stewardship in the fourth, dissolving the long-standing silo between the company's linear and digital ad operations. As buy-side agents proliferate, a major programmer building matching seller-side agentic infrastructure shows the autonomous-trading model is being wired into both ends of the CTV pipe.",
+          "sources": [
+            {
+              "publication": "Warner Bros. Discovery",
+              "url": "https://www.wbd.com/news/warner-bros-discovery-announces-agentic-ai-powered-advertising-technology-built-aws-its",
+              "filed_date": "2026-06-19"
+            },
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415929/warner-bros-discovery-moves-to-agentic-ai-with-aw.html",
+              "filed_date": "2026-06-19"
+            },
+            {
+              "publication": "VideoWeek",
+              "url": "https://videoweek.com/2026/06/19/week-in-review-wpp-media-announces-a-video-buying-agent-netflix-eyes-up-broadcaster-partnerships-and-wbd-lays-agentic-trading-groundwork/",
+              "filed_date": "2026-06-19"
+            }
+          ],
+          "source_publication": "Warner Bros. Discovery",
+          "source_url": "https://www.wbd.com/news/warner-bros-discovery-announces-agentic-ai-powered-advertising-technology-built-aws-its",
+          "filed_date": "2026-06-19"
+        },
+        {
+          "headline": "NBCUniversal Unveils Rock Studios Brand-Creative Engine",
+          "dek": "A unified offering bundles sponsorships, custom creative, talent and branded entertainment with outcomes measurement.",
+          "body": "At Cannes Lions, NBCUniversal unveiled Rock Studios, a unified brand-creative engine spanning integrated sponsorships and experiences, custom creative, talent and creators, and branded entertainment, embedding brands inside NBCU programming and live events with measurement tied to outcomes. Advertising president Karen Kovacs framed it as giving brands both breakthrough storytelling and measurable performance in one place, citing more than 300 industry awards over three years. A major programmer packaging branded entertainment, IP and measurement as a single outcomes product reflects Advanced TV's broader turn toward full-funnel, performance-oriented packages.",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/convergent-tv/nbcu-to-rock-brand-partnerships-with-new-unified-creative-offering/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "TV News Check",
+              "url": "https://tvnewscheck.com/business/article/nbcu-looks-to-rock-brand-partnerships-with-new-unified-creative-offering/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "NBCUniversal",
+              "url": "https://www.nbcuniversal.com/article/nbcuniversal-unveils-rock-studios-next-generation-creative-engine-powering-brand-growth-across",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Adweek",
+          "source_url": "https://www.adweek.com/convergent-tv/nbcu-to-rock-brand-partnerships-with-new-unified-creative-offering/",
+          "filed_date": "2026-06-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Samsung TV Plus Lets the Remote Add Amazon Items to Cart",
+          "dek": "Samsung Ads and Amazon Ads bring remote-shoppable interactive video to free, ad-supported streaming.",
+          "body": "Samsung Ads named the first brands activating Amazon Ads' remote-enabled interactive video technology on Samsung TV Plus — Boiron USA, Logitech, PLAION, PMG and Reckitt — letting viewers add a product to an Amazon cart or send an offer to their phone without leaving the ad, the first time this works on FAST content. Samsung TV Plus has surpassed 100 million monthly active users globally, and Amazon cites large lifts in brand search, add-to-cart actions and purchase rates from the interactive format over standard streaming spots. The tie-up extends Amazon's commerce rails into a rival manufacturer's free inventory and pushes shoppable formats further into the performance-CTV conversation.",
+          "sources": [
+            {
+              "publication": "Samsung Newsroom",
+              "url": "https://news.samsung.com/us/samsung-ads-shoppable-ctv-experience-with-flagship-brand-partners/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "TV News Check",
+              "url": "https://tvnewscheck.com/business/article/samsung-ads-brings-shoppable-ctv-to-samsung-tv-plus-with-amazon-ads-technology/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/commerce/samsung-tv-plus-shop-with-remote-amazon-partnership/",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Samsung Newsroom",
+          "source_url": "https://news.samsung.com/us/samsung-ads-shoppable-ctv-experience-with-flagship-brand-partners/",
+          "filed_date": "2026-06-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "Omnicom Becomes Netflix's First Data Partner for AI Ads",
+          "dek": "Acxiom audience data feeds Netflix's AI ad suite to make streaming spots more relevant — a wall opening to agency data.",
+          "body": "At Cannes Lions, Omnicom Media announced it is Netflix's first data-collaboration partner, integrating its Acxiom audience intelligence into Netflix's AI-powered ad suite to deliver more contextually relevant, addressable spots with closed-loop measurement. Advertisers supply Acxiom segments and a brief, and Netflix's AI matches relevant titles and generates ad variations for different audiences and content environments; the deal is live in the US with international expansion planned by year-end, and Bimbo Bakeries signed on as an early client. A holding company plugging proprietary first-party data directly into Netflix's ad tech signals streaming's premium walled gardens opening to agency data for measurable CTV buys.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/omnicom-media-kicks-off-a-series-of-partnerships-at-cannes-lions-with-a-first-time-netflix-deal/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/omnicom-announces-netflix-partnership-cannes-lion-enhance-ctv-ad-relevance",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "PR Newswire",
+              "url": "https://www.prnewswire.com/news-releases/omnicom-media-becomes-netflixs-first-data-collaboration-partner-for-ai-powered-ad-creatives-302806436.html",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/omnicom-media-kicks-off-a-series-of-partnerships-at-cannes-lions-with-a-first-time-netflix-deal/",
+          "filed_date": "2026-06-22"
+        },
+        {
+          "headline": "Omnicom and Disney Bring Sequential Ads to Streaming",
+          "dek": "Innovid-powered creative evolves across a viewing session instead of repeating, across both VOD and live.",
+          "body": "Omnicom Media and Disney Advertising launched a connected-TV solution that delivers dynamic sequential storytelling, with coordinated 15-, 30- and 60-second spots that build narratively across a session rather than repeating, spanning both VOD and live programming. Powered by Innovid and matching Disney's identity graph to Omnicom's Acxiom data, it is live in the US — trade coverage names The Home Depot and State Farm as early clients — with Europe and LATAM rollouts planned for later in 2026. Omnicom cites research that most viewers tire of seeing the same spot more than a handful of times in one session. Sequential messaging tied to a publisher identity graph pushes CTV past frequency capping toward addressable narrative sequencing, a higher-value format for live and on-demand alike.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/omnicom-media-and-disney-advertising-collaborate-to-enable-sequential-ads-in-streaming/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Storyboard18",
+              "url": "https://www.storyboard18.com/advertising/omnicom-media-partners-disney-to-bring-sequential-storytelling-ads-to-streaming-102063.htm",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "PR Newswire",
+              "url": "https://www.prnewswire.com/news-releases/omnicom-and-disney-advertising-team-up-to-enable-smarter-sequential-advertising-in-streaming-302807971.html",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/omnicom-media-and-disney-advertising-collaborate-to-enable-sequential-ads-in-streaming/",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "WPP Media Unveils Buyer Agent and Agentic-Video Standards Push",
+          "dek": "A prototype arrives with a standards initiative spanning Disney, Netflix, Fox, NBCUniversal, Paramount and Comcast.",
+          "body": "WPP Media revealed a prototype \"Buyer Agent for Video\" inside WPP Open and an Agentic Standards Initiative defining how buyer and seller agents communicate, validate decisions and transact across linear, CTV and premium video. Launch partners include Comcast/FreeWheel, Disney Advertising, Fox, NBCUniversal, Netflix and Paramount, alongside IAB Tech Lab and Prebid.org, with a proposed standard targeted for early 2027. By rallying the major TV sellers around shared agentic protocols, the largest holding company is trying to set the rules of automated TV buying before rivals lock in proprietary stacks.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415895/wpp-media-unveils-prototype-for-new-buyer-agent.html",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/convergent-tv/wpp-disney-netflix-fox-agentic-video-standards/",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/humans-at-the-helm-agents-in-the-loop-wpp-is-testing-a-buyer-ageny-for-video-but-its-bigger-bet-is-on-governance/",
+              "filed_date": "2026-06-19"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415895/wpp-media-unveils-prototype-for-new-buyer-agent.html",
+          "filed_date": "2026-06-18"
+        },
+        {
+          "headline": "Horizon Media Bets on an Open Agentic Layer, Not a Proprietary Stack",
+          "dek": "The independent agency wires buying agents into Blu via an open, MCP-based integration layer.",
+          "body": "Horizon Media launched agentic buying capabilities inside Blu, part of HorizonOS, using an open \"agentic integration layer\" that lets partners plug in through APIs and the Model Context Protocol. Named integrations span publishers Disney, Fox, NBCUniversal, TikTok and Snap, plus ad-tech partners including Magnite, Innovid, Kochava, Smartly and Databricks, with agents making real-time decisions while keeping humans in the loop. The independent's open-ecosystem approach is a direct counter to the holding companies' closed agentic stacks, reframing how buy-side automation gets built in CTV and beyond.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415896/horizon-adds-media-buying-agents-to-its-blu-platfo.html",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "PR Newswire",
+              "url": "https://www.prnewswire.com/news-releases/horizon-media-launches-agentic-orchestration-layer-for-real-time-media-decisioning-302803722.html",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "Profectio",
+              "url": "https://profectio.com/2026/06/23/how-horizon-medias-new-agentic-integration-layer-shakes-up-the-proprietary-tech-model/",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415896/horizon-adds-media-buying-agents-to-its-blu-platfo.html",
+          "filed_date": "2026-06-18"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "FTC Weighs Billion-Dollar Suit Over Amazon Ad-Auction Disclosures",
+          "dek": "The probe centers on whether Amazon misled advertisers about reserve pricing in its ad auctions.",
+          "body": "The FTC's consumer-protection staff has drafted a possible complaint against Amazon over whether it misled advertisers about its ad products, including how reserve pricing works in its ad auctions, with a suit or settlement possible as soon as this summer. Reporting indicates the case could carry billions of dollars in civil penalties and draw coordinated action from state attorneys general. A probe into auction transparency at the largest US retail-media and CTV seller signals regulators are now scrutinizing the mechanics of programmatic ad pricing itself, not only consumer data.",
+          "sources": [
+            {
+              "publication": "Bloomberg",
+              "url": "https://www.bloomberg.com/news/articles/2026-06-16/amazon-faces-billions-in-penalties-from-potential-ftc-ad-suit",
+              "filed_date": "2026-06-16"
+            },
+            {
+              "publication": "Bloomberg Law",
+              "url": "https://news.bloomberglaw.com/antitrust/amazon-faces-billions-in-penalties-from-potential-ftc-ad-suit",
+              "filed_date": "2026-06-16"
+            },
+            {
+              "publication": "Claims Journal",
+              "url": "https://www.claimsjournal.com/news/national/2026/06/17/338271.htm",
+              "filed_date": "2026-06-17"
+            }
+          ],
+          "source_publication": "Bloomberg",
+          "source_url": "https://www.bloomberg.com/news/articles/2026-06-16/amazon-faces-billions-in-penalties-from-potential-ftc-ad-suit",
+          "filed_date": "2026-06-16"
+        },
+        {
+          "headline": "EU Publishes AI-Content Labelling Code Ahead of August Deadline",
+          "dek": "A voluntary code sets deepfake-marking rules as the AI Act's transparency duties turn binding on August 2.",
+          "body": "The European Commission published its Code of Practice on Transparency of AI-Generated Content, offering guidance on marking and labelling AI-made video, audio, images and text under Article 50 of the EU AI Act. The code proposes an interim \"AI\" visual label for deepfakes and explicitly excludes commercial advertising from any artistic carve-out, meaning AI-generated celebrity likenesses in ads must be disclosed. With the transparency obligations becoming legally binding on August 2, advertisers and CTV platforms running AI-generated creative in the EU face near-term labelling requirements.",
+          "sources": [
+            {
+              "publication": "European Commission",
+              "url": "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content",
+              "filed_date": "2026-06-10"
+            },
+            {
+              "publication": "Tech Policy Press",
+              "url": "https://www.techpolicy.press/what-the-eus-new-ai-code-of-practice-means-for-labeling-deepfakes/",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "Bird & Bird",
+              "url": "https://www.twobirds.com/en/insights/2026/taking-the-eu-ai-act-to-practice-understanding-the-draft-transparency-code-of-practice",
+              "filed_date": "2026-06-12"
+            }
+          ],
+          "source_publication": "European Commission",
+          "source_url": "https://digital-strategy.ec.europa.eu/en/policies/code-practice-ai-generated-content",
+          "filed_date": "2026-06-10"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "AdImpact Lifts 2026 Cycle Forecast to Record $11.6 Billion",
+          "dek": "Connected TV is projected at $2.7 billion — the only channel meaningfully gaining on 2024.",
+          "body": "AdImpact raised its 2025-26 midterm projection to $11.6 billion, up from $10.8 billion, after spending hit $4 billion through early June — 46% ahead of the 2024 pace and on track to outspend the 2024 presidential year. CTV is now forecast at roughly $2.7 billion, about a quarter of the total and the only major channel meaningfully growing versus 2024, while broadcast remains largest at $5.6 billion. The upgrade confirms streaming has become a core line item for political campaigns, accelerating CTV's structural share gains against linear in an election year.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415747/biggest-midterm-cycle-to-date-political-ad-spend.html",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "CNBC",
+              "url": "https://www.cnbc.com/2026/06/11/2026-elections-ad-spend-adimpact.html",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "Inside Radio",
+              "url": "https://www.insideradio.com/free/political-ad-spending-forecast-raised-to-record-11-6-billion/article_81956bfe-0279-4f67-a449-c0a3292b6c9d.html",
+              "filed_date": "2026-06-12"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415747/biggest-midterm-cycle-to-date-political-ad-spend.html",
+          "filed_date": "2026-06-12"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — United Kingdom",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Comcast's Universal Ads Goes Live in UK Across ITV, C4, Sky",
+          "dek": "One self-service interface now spans all three British broadcaster sales houses, aimed squarely at SME budgets.",
+          "body": "Comcast's Universal Ads platform launched in the UK on June 23 in partnership with Channel 4, ITV and Sky, giving SMEs, DTC brands and digital-native advertisers a single self-service interface to create, buy and measure campaigns across ITV Media, Sky Media and Channel 4 Sales. An advertiser can set a budget, target an audience and upload creative within minutes, pairing social-style simplicity with broadcaster-grade brand safety, and operationalising the joint intent the three broadcasters first signalled in 2025. Pooling three competing UK sales houses into one automated buying surface is a structural bid to make premium CTV inventory as easy to buy as social — and to win back budgets flowing to Meta and YouTube.",
+          "sources": [
+            {
+              "publication": "ExchangeWire",
+              "url": "https://www.exchangewire.com/blog/2026/06/23/comcasts-universal-ads-launches-in-the-uk-with-channel-4-itv-sky-to-simplify-access-to-premium-tv-advertising-for-smes/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "ITV Press Centre",
+              "url": "https://www.itv.com/presscentre/media-releases/comcasts-universal-ads-launches-uk-channel-4-itv-sky-simplify-access-premium-tv",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Broadband TV News",
+              "url": "https://www.broadbandtvnews.com/2026/06/23/universal-ads-launches-in-uk-with-itv-channel-4-and-sky-partnership/",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "ExchangeWire",
+          "source_url": "https://www.exchangewire.com/blog/2026/06/23/comcasts-universal-ads-launches-in-the-uk-with-channel-4-itv-sky-to-simplify-access-to-premium-tv-advertising-for-smes/",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "TAM and VTION Launch Single-Panel CTV Ad Measurement in India",
+          "dek": "\"CTV Ad Pulse\" links connected-TV ad exposure to viewing behaviour on one opted-in panel, debuting during IPL 2026.",
+          "body": "TAM Media Research and audience-measurement firm VTION launched \"CTV Ad Pulse,\" combining TAM's ad monitoring with VTION's passive, consent-based panel of more than 100,000 devices now extended from smartphones to connected TVs drawn from the same panellists. The tool measures audience profiles, reach, frequency and campaign delivery across demographics and geographies, and was introduced live during the IPL 2026 season as app-based and live-sport viewing expand CTV inventory faster than measurement has kept up. Credible cross-screen CTV currency is the precondition for programmatic CTV buying to scale in India, and a single unified panel measuring exposure is the infrastructure advertisers say has been missing to shift budgets from direct deals toward measurable programmatic.",
+          "sources": [
+            {
+              "publication": "Afaqs",
+              "url": "https://www.afaqs.com/news/media/tam-media-research-vtion-launch-ctv-ad-pulse-during-ipl-2026-12063849",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "BestMediaInfo",
+              "url": "https://bestmediainfo.com/mediainfo/mediainfo-digital/tam-vtion-launch-ctv-ad-pulse-beginning-ipl-2026-campaign-measurement-12061994",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "Social Samosa",
+              "url": "https://www.socialsamosa.com/industry-updates/tam-vtion-ctv-ad-measurement-solution-12062872",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Afaqs",
+          "source_url": "https://www.afaqs.com/news/media/tam-media-research-vtion-launch-ctv-ad-pulse-during-ipl-2026-12063849",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Brazil's TV 3.0 Begins Rollout Across 22 Cities Before World Cup",
+          "dek": "The next-generation broadcast standard, branded DTV+, pairs over-the-air signal with broadband — and supports addressable advertising.",
+          "body": "Brazil's TV 3.0 (branded DTV+) began rolling out in June, with coverage confirmed across 22 municipalities in the São Paulo and Rio de Janeiro metropolitan areas — broader than the government's original three-city promise — and timed to the 2026 World Cup, with Globo broadcasting in 4K. The hybrid standard pairs broadcast signal with internet connectivity, and its design enables segmented, addressable advertising so households watching the same programme can receive different commercial breaks, alongside on-demand content and apps. By importing household-level addressability and data-driven targeting into Brazil's mass-reach free-to-air ecosystem, TV 3.0 begins to blur the line between linear and programmatic CTV in Latin America's largest ad market.",
+          "sources": [
+            {
+              "publication": "Oficina da Net",
+              "url": "https://www.oficinadanet.com.br/noticias/70215-tv-3-0-22-cidades-copa-do-mundo-2026",
+              "filed_date": "2026-06-10"
+            },
+            {
+              "publication": "Minha Operadora",
+              "url": "https://www.minhaoperadora.com.br/2026/06/tv-3-0-22-cidades-terao-sinal-no-lancamento-no-brasil.html",
+              "filed_date": "2026-06-09"
+            }
+          ],
+          "source_publication": "Oficina da Net",
+          "source_url": "https://www.oficinadanet.com.br/noticias/70215-tv-3-0-22-cidades-copa-do-mundo-2026",
+          "filed_date": "2026-06-10"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Ottawa Orders CRTC to Reverse 15% Streamer Content Levy",
+          "dek": "The government will inject C$600M into the cultural sector instead, amid US trade pressure and a court challenge.",
+          "body": "The federal government ordered the CRTC to review its ruling that would have required large streamers with C$25M-plus in Canadian revenue to contribute roughly 15% of those revenues to local content — up from about 5% — and will instead inject C$600 million annually into the cultural sector. No money has yet been collected, because Motion Picture Association members including Netflix, Disney, Paramount and Amazon are challenging the levy in Federal Court. A 15% revenue obligation directly compresses the unit economics of ad-supported streaming tiers in Canada — the fastest-growing CTV inventory pool — and the policy whiplash injects fresh planning uncertainty for anyone pricing AVOD inventory or committing local-content spend.",
+          "sources": [
+            {
+              "publication": "Global News",
+              "url": "https://globalnews.ca/news/11888757/crtc-online-streaming-act-rules-ottawa-review/",
+              "filed_date": "2026-06-03"
+            },
+            {
+              "publication": "BNN Bloomberg",
+              "url": "https://www.bnnbloomberg.ca/business/politics/2026/06/03/ottawa-calls-for-review-of-crtc-decision-on-cancon-contributions/",
+              "filed_date": "2026-06-03"
+            },
+            {
+              "publication": "CRTC",
+              "url": "https://crtc.gc.ca/eng/archive/2026/2026-96.htm",
+              "filed_date": "2026-05-22"
+            }
+          ],
+          "source_publication": "Global News",
+          "source_url": "https://globalnews.ca/news/11888757/crtc-online-streaming-act-rules-ottawa-review/",
+          "filed_date": "2026-06-03"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Nexxen Stakes CTV Future on Hisense's VIDAA at Investor Day",
+          "dek": "An ad-tech firm anchors its connected-TV strategy on a Chinese-owned operating system — the world's No. 2 by smart-TV share.",
+          "body": "At its 2026 Investor Day on June 16, ad-tech firm Nexxen foregrounded its connected-TV strategy and its partnership with VIDAA, the Hisense-owned operating system that powers roughly 7.8% of the world's smart TVs, second only to Samsung's Tizen. Nexxen raised its full-year guidance for the second time this year and reiterated the VIDAA-anchored CTV plan, whose terms — set in a 2025 renewal — give it exclusive global access to VIDAA's automatic-content-recognition data and exclusive North American CTV monetisation rights through at least the end of 2029, with Vestel's adoption of VIDAA across Toshiba, JVC and Telefunken sets cited as a lever into Europe. A Western ad-tech company increasingly betting its CTV business on a Chinese manufacturer's operating system and data is the clearest sign yet that Chinese smart-TV platforms are becoming load-bearing infrastructure for global programmatic CTV.",
+          "sources": [
+            {
+              "publication": "Investing.com",
+              "url": "https://www.investing.com/news/analyst-ratings/scotiabank-raises-nexxen-stock-price-target-on-revenue-guidance-boost-93CH-4747043",
+              "filed_date": "2026-06-17"
+            },
+            {
+              "publication": "GlobeNewswire",
+              "url": "https://www.globenewswire.com/news-release/2026/06/16/3312439/0/en/Nexxen-Raises-Full-Year-2026-Contribution-ex-TAC-and-Programmatic-Revenue-Guidance-for-the-Second-Time-This-Year-Ahead-of-Today-s-Investor-Day.html",
+              "filed_date": "2026-06-16"
+            },
+            {
+              "publication": "StockTitan",
+              "url": "https://www.stocktitan.net/news/NEXN/nexxen-raises-full-year-2026-contribution-ex-tac-and-programmatic-1ii8er4uyzb4.html",
+              "filed_date": "2026-06-16"
+            },
+            {
+              "publication": "The Desk",
+              "url": "https://thedesk.net/2026/06/tvrev-streaming-operating-system-report/",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "Investing.com",
+          "source_url": "https://www.investing.com/news/analyst-ratings/scotiabank-raises-nexxen-stock-price-target-on-revenue-guidance-boost-93CH-4747043",
+          "filed_date": "2026-06-16"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Agents Have Their Own Conversation",
+          "dek": "Everyone is watching the buyer agent. No one is watching the conversation it is having.",
+          "body": "The figure this Cannes is the agent — a buyer's robot that plans, bids and clears a television campaign while its maker stands proudly beside it, promising a human stays \"in the loop.\" Everyone is watching the tool. The tool is the figure. The ground is the conversation: the silent, ceaseless exchange between a buyer's agent and a seller's agent, transacting in a protocol no media planner will ever read, at a speed no human can attend. The content of the new medium is the old one — the trader, the haggle, the long lunch — now playing as a recording inside a machine. The agent is not a faster buyer. It is a new place where buying happens, and the buyer is no longer standing in it.\n\nEnhance: the buy raised to a reflex, a campaign that renegotiates itself a thousand times a second across every screen at once. Obsolesce: the insertion order, the rate card, the request for proposal, the trader's hunch, the relationship that took a decade to build. Retrieve: the oldest marketplace of all — the bazaar, the auctioneer's chant, agent calling to agent across a crowded floor — handed back as code. Reverse: pushed far enough, the agent built to execute your intention begins to compose it, and the human \"in the loop\" becomes a ceremony, a signature on a decision made before he woke.\n\nSo the standards bodies now race to write the grammar of a language people will not speak. They call it governance. It is something stranger: the market has stepped behind the glass, and we are left watching our own reflection negotiate. The medium was never the message we sent. The agent is the message, and we have become its content.\n\n— Marshall McLuhan",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415895/wpp-media-unveils-prototype-for-new-buyer-agent.html",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/ad-tech-briefing-agentic-ai-interoperability-and-control-dominate-cannes-lions-announcements/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/convergent-tv/wpp-disney-netflix-fox-agentic-video-standards/",
+              "filed_date": "2026-06-18"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.mediapost.com/publications/article/415895/wpp-media-unveils-prototype-for-new-buyer-agent.html",
+          "filed_date": "2026-06-23",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "Now You Can Count the Sale",
+          "dek": "The trade has rediscovered the buy button. I have been waiting sixty years for it.",
+          "body": "This week the television set grew a checkout. A viewer points the remote at a streaming advertisement and the product drops into a shopping cart without anyone leaving the sofa. The trade calls it the future of connected television. I call it the oldest idea I know, finally handed a screen large enough to do it justice. Direct response was my first love and my secret weapon, and for forty years the brand men treated it as something to be scraped off the shoe.\n\nI began in direct mail, where every advertisement carried a coupon and every coupon told you, by Friday, whether you were a genius or a fool. That cruel arithmetic taught me more than any awards jury on the Croisette ever did. Now one platform reports that a shoppable streaming spot lifts purchases several times over an ordinary one. Several times over. A number you can put in the bank is worth more than a trophy you can only polish, and at last the largest screen in the house can be held to the same account as a coupon in a magazine.\n\nBut do not lose your head. A button is not a reason to buy. You can turn the couch into a counter and still sell nothing if the promise is feeble, the picture dull, the proposition unclear. The machine counts the sale; it cannot conjure one. Give the viewer a single true thing worth crossing the room for — then let them buy it without rising. Measure everything. Worship nothing.\n\n— David Ogilvy",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/walmart-buys-vibe-co-to-woo-smbs-to-streaming/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Samsung Newsroom",
+              "url": "https://news.samsung.com/us/samsung-ads-shoppable-ctv-experience-with-flagship-brand-partners/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "Beet.TV",
+              "url": "https://www.beet.tv/2026/06/ctvs-future-is-shopping-scale-and-a-little-ai-magic-vizios-adam-bergman.html",
+              "filed_date": "2026-06-21"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.adexchanger.com/tv/walmart-buys-vibe-co-to-woo-smbs-to-streaming/",
+          "filed_date": "2026-06-23",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Cannes set the agenda for the second half: watch whether the rival agentic-buying stacks — WPP's standards-led Buyer Agent, Horizon's open MCP layer, Stagwell's Media Machine and Warner Bros. Discovery's sell-side agents — converge on one interoperable protocol (a proposed standard is targeted for early 2027) or fracture into proprietary silos. The nearer cliff is the FTC's possible Amazon ad-auction suit, which reporting says could land as soon as this summer, alongside the EU AI Act's content-labelling duties turning binding on August 2."
+}
