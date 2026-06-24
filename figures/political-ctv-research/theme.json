@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Test Card",
+  "anchor": "The SMPTE/EBU broadcast color-bar test pattern and the master-control tally light \u2014 the iconic image of a television screen under calibration and measurement \u2014 read as the emblem of a corpus whose contested core is the measured screen: automatic content recognition (ACR) silently fingerprinting the living-room glass to target and score political ads.",
+  "rationale": "This corpus is about the smart-TV screen turned into a measurement instrument \u2014 ACR watching the glass, voter files matched to households, 'incrementality' lift graded by the very vendors selling the inventory. The broadcast test card is the literal artifact of a screen being calibrated, and its magenta/cyan/yellow chroma bars are neither red nor blue \u2014 sidestepping partisan clich\u00e9 while staying native to television engineering. Magenta is the calibration spark (the SMPTE bar with no political valence); the chroma bars become the figure ramp; condensed broadcast-chyron type and a scanline rule complete the master-control world. It diverges hard from the warm-serif and cool-teal/cobalt ad-tech siblings.",
+  "light": {
+    "bg": "#f5f3ec",
+    "panel": "#ffffff",
+    "text": "#181a20",
+    "muted": "#565a66",
+    "accent": "#b01f6f",
+    "border": "#dcd7cb",
+    "mark": "#f6d9ec",
+    "cover-bg": "#edeae1",
+    "t1": "#0e7686",
+    "t2": "#946f0e",
+    "t3": "#1f7a44",
+    "t4": "#b5342a",
+    "t5": "#2f53b0"
+  },
+  "dark": {
+    "bg": "#0c0e14",
+    "panel": "#1c2130",
+    "text": "#e9ebf2",
+    "muted": "#969bab",
+    "accent": "#e64fa0",
+    "border": "#2a2f3d",
+    "mark": "#2c1730",
+    "cover-bg": "#141722",
+    "t1": "#34bccb",
+    "t2": "#e2c04a",
+    "t3": "#46c172",
+    "t4": "#e65c52",
+    "t5": "#5f82e6"
+  },
+  "fonts": {
+    "display": "'Arial Narrow', 'Helvetica Neue Condensed', 'Helvetica Neue', Helvetica, sans-serif",
+    "body": "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, sans-serif",
+    "mono": "'Consolas', 'SF Mono', 'DejaVu Sans Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25ae\\25ae\\25ae   \\25ae\\25ae\\25ae   \\25ae\\25ae\\25ae'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": [
+    "#e64fa0",
+    "#34bccb",
+    "#e2c04a",
+    "#5f82e6"
+  ]
+}
