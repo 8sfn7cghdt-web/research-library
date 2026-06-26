@@ -88,7 +88,7 @@ def og_tags(title, description, url, image):
 # Site-wide default (library index, Ghost, Fingerprint section fronts — anything
 # that isn't a single corpus). Per-corpus reader pages build their own below.
 OG_META = og_tags(
-    "AI for HUMANities — Agentic Scholarship",
+    "Machine Humanities — Agentic Scholarship",
     "A library of deep research, plus The Ghost of Times and The Fingerprint.",
     f"{SITE_URL}/",
     f"{SITE_URL}/{OG_IMAGE}",
@@ -801,7 +801,7 @@ def hero_art():
             mime = mimetypes.guess_type(img.name)[0] or "image/png"
             b64 = base64.b64encode(img.read_bytes()).decode("ascii")
             return (f"<img class='hero-img' src='data:{mime};base64,{b64}' "
-                    "alt='AI for HUMANities' decoding='async'>")
+                    "alt='Machine Humanities' decoding='async'>")
     return hero_svg()
 
 
@@ -862,15 +862,26 @@ CSS = """
   --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
   --display: 'Iowan Old Style', Palatino, Georgia, serif;
   --sans: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  /* shared craft layer — layered shadows, motion easings, focus ring */
+  --shadow-1: 0 1px 2px rgba(31,29,26,.05), 0 2px 5px rgba(31,29,26,.05);
+  --shadow-2: 0 2px 6px rgba(31,29,26,.06), 0 10px 24px rgba(31,29,26,.09);
+  --shadow-3: 0 6px 16px rgba(31,29,26,.10), 0 22px 48px rgba(31,29,26,.15);
+  --ease: cubic-bezier(.22,.61,.36,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+  --ring: 0 0 0 3px color-mix(in srgb, var(--accent) 30%, transparent);
 }
 [data-theme="dark"] {
   --bg: #161513; --panel: #1f1d1a; --text: #e8e4db; --muted: #968f82;
   --accent: #d98f5f; --border: #35322c; --mark: #5c4a1e;
   --t1: #d4795a; --t2: #d8b545; --t3: #6f9bb3; --t4: #93a86f; --t5: #b07a9e;
   --cover-bg: #232019;
+  --shadow-1: 0 1px 2px rgba(0,0,0,.30), 0 2px 6px rgba(0,0,0,.32);
+  --shadow-2: 0 3px 10px rgba(0,0,0,.40), 0 12px 30px rgba(0,0,0,.48);
+  --shadow-3: 0 8px 22px rgba(0,0,0,.46), 0 26px 56px rgba(0,0,0,.58);
 }
 * { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif); }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 #sidebar {
   position: fixed; top: 0; left: 0; bottom: 0; width: 320px; overflow-y: auto;
   background: var(--panel); border-right: 1px solid var(--border); padding: 1.2rem 1.2rem 2rem;
