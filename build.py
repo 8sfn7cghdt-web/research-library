@@ -3705,16 +3705,16 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">research · calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html" class="active">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
-    <a href="pamphlets.html">The Pamphlets</a>
+    <a href="../index.html">The Research</a>
+    <a href="../ghost.html" class="active">The Ghost of Times</a>
+    <a href="../fingerprint.html">The Fingerprint</a>
+    <a href="../pamphlets.html">The Pamphlets</a>
   </nav>
 </div>
 <main class="gh-edition">
   <header class="gh-nameplate">
     <p class="gh-kicker">A paper of writer-voiced op-eds</p>
-    <a class="gh-name" href="ghost.html">The Ghost of Times</a>
+    <a class="gh-name" href="../ghost.html">The Ghost of Times</a>
     <div class="gh-folio">
       <span>{folio_no}</span>
       <span class="gh-folio-c">{folio_date}</span>
@@ -3726,7 +3726,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
   <section id="gh-facts"></section>
   <footer class="gh-foot">
     {watch}
-    <p class="gh-colophon"><a href="ghost.html">← All editions</a> &nbsp;·&nbsp; <a href="index.html">The Research Library</a></p>
+    <p class="gh-colophon"><a href="../ghost.html">← All editions</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
