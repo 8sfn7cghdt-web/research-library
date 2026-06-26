@@ -1,0 +1,45 @@
+{
+  "aesthetic": "PSM Letterpress",
+  "anchor": "Popular Science Monthly, Vol. 12 (1877–78) — the double-column Victorian letterpress issues containing Peirce's 'Fixation of Belief' and 'How to Make Our Ideas Clear'; leather-bound annual volumes stamped in gold; double-rule ornament dividers of late-Victorian American philosophical journal typography",
+  "rationale": "Pragmatism was born in a popular-science monthly, not a philosophy quarterly. The PSM's dense upright roman on buff stock, its double-rule section dividers, and its dark leather-spined annual volumes are the physical artifacts of the founding moment. The umber accent descends from those spine boards; the display stack from the American journal serif tradition (Century Schoolbook) that equipped US educational and scientific publishing in exactly the 1877–1910 window. Buff paper for the page, dark ink and warm leather for weight.",
+  "light": {
+    "bg": "#f7f3e8",
+    "panel": "#ece6d4",
+    "text": "#1c1913",
+    "muted": "#686050",
+    "accent": "#6a3820",
+    "border": "#c8c0a8",
+    "mark": "#e8d890",
+    "cover-bg": "#ede6d0",
+    "t1": "#4a3070",
+    "t2": "#8a3a1a",
+    "t3": "#3a5830",
+    "t4": "#6a5018",
+    "t5": "#2e4c6a"
+  },
+  "dark": {
+    "bg": "#171410",
+    "panel": "#231f18",
+    "text": "#e8e2d0",
+    "muted": "#9a9080",
+    "accent": "#c07a50",
+    "border": "#3a3228",
+    "mark": "#4a3a18",
+    "cover-bg": "#231f18",
+    "t1": "#9a80d0",
+    "t2": "#d06040",
+    "t3": "#6a9858",
+    "t4": "#c09040",
+    "t5": "#6a9abf"
+  },
+  "fonts": {
+    "display": "'Century Schoolbook', Century, Georgia, 'Times New Roman', serif",
+    "body": "'Century Schoolbook', Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7  \\2021  \\00b7'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": ["#4a3070", "#8a3a1a", "#3a5830", "#6a5018"]
+}
