@@ -6,15 +6,15 @@
 <title>An Original Relation to the Universe</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='2' y='2' width='28' height='28' rx='7' fill='%23b3502f'/><rect x='34' y='2' width='28' height='28' rx='7' fill='%23c9a227'/><rect x='2' y='34' width='28' height='28' rx='7' fill='%232e5266'/><rect x='34' y='34' width='28' height='28' rx='7' fill='%236b7d4f'/></svg>">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="research · calvincollins · xyz">
+<meta property="og:site_name" content="calvincollins · xyz">
 <meta property="og:title" content="An Original Relation to the Universe">
 <meta property="og:description" content="Ralph Waldo Emerson — Transcendentalism, self-reliance, and the making of the American mind">
-<meta property="og:url" content="https://research.calvincollins.xyz/emerson-research.html">
-<meta property="og:image" content="https://research.calvincollins.xyz/covers/emerson-research.jpg">
+<meta property="og:url" content="https://calvincollins.xyz/emerson-research.html">
+<meta property="og:image" content="https://calvincollins.xyz/covers/emerson-research.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="An Original Relation to the Universe">
 <meta name="twitter:description" content="Ralph Waldo Emerson — Transcendentalism, self-reliance, and the making of the American mind">
-<meta name="twitter:image" content="https://research.calvincollins.xyz/covers/emerson-research.jpg">
+<meta name="twitter:image" content="https://calvincollins.xyz/covers/emerson-research.jpg">
 <style>
 :root {
   --bg: #faf8f4; --panel: #f1ede5; --text: #1f1d1a; --muted: #6e6a62;
@@ -1023,7 +1023,7 @@ else renderRelated();
     x.strokeStyle = border; x.lineWidth = 2 * S; x.strokeRect(20 * S, 20 * S, W - 40 * S, H - 40 * S);
     x.textBaseline = 'top';
     x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
-    x.fillText((o.kicker || 'research · calvincollins · xyz').toUpperCase(), pad, pad);
+    x.fillText((o.kicker || 'calvincollins · xyz').toUpperCase(), pad, pad);
     var ty = pad + 32 * S;
     for (var i = 0; i < 5; i++) { x.save(); x.translate(pad + i * (25 * S) + 8 * S, ty + 8 * S);
       x.rotate((i % 2 ? 6 : -6) * Math.PI / 180); x.fillStyle = tiles[i % tiles.length];
@@ -1041,7 +1041,7 @@ else renderRelated();
     if (o.source) { x.fillStyle = muted; x.font = (16 * S) + 'px ' + SANS;
       var sl = wrap(x, o.source, maxW); for (var k = 0; k < Math.min(2, sl.length); k++) x.fillText(sl[k], pad, fy + k * 21 * S); }
     x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
-    x.fillText('research.calvincollins.xyz', pad, H - pad - 16 * S);
+    x.fillText('calvincollins.xyz', pad, H - pad - 16 * S);
     return c;
   }
   var modal;
@@ -1285,7 +1285,7 @@ else renderRelated();
         if (sm && j.connections && j.connections[sm]) mode = sm;
         paint(true); loaded = true; if (msg) msg.remove(); syncPick(); updateSub();
       })
-      .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (research.calvincollins.xyz).'; });
+      .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (calvincollins.xyz).'; });
   }
 
   // The research picker turns the Atlas from a single mosaic into a per-corpus

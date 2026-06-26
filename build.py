@@ -62,7 +62,7 @@ FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='
 # Canonical public origin (GitHub Pages custom domain, see docs/CNAME). Used to
 # build the ABSOLUTE og:image URL link-preview scrapers (iMessage, Slack, etc.)
 # require — relative paths are ignored by them.
-SITE_URL = "https://research.calvincollins.xyz"
+SITE_URL = "https://calvincollins.xyz"
 OG_IMAGE = "aiforhumanities.png"  # source lives in corpus-app/; copied into out/ at build time
 
 # Open Graph + Twitter card tags so a shared link renders a rich preview with an
@@ -73,7 +73,7 @@ def og_tags(title, description, url, image):
     esc = lambda s: html.escape(str(s), quote=True)
     return "\n".join([
         '<meta property="og:type" content="website">',
-        '<meta property="og:site_name" content="research · calvincollins · xyz">',
+        '<meta property="og:site_name" content="calvincollins · xyz">',
         f'<meta property="og:title" content="{esc(title)}">',
         f'<meta property="og:description" content="{esc(description)}">',
         f'<meta property="og:url" content="{esc(url)}">',
@@ -1839,7 +1839,7 @@ SHARE_JS = r"""
     x.strokeStyle = border; x.lineWidth = 2 * S; x.strokeRect(20 * S, 20 * S, W - 40 * S, H - 40 * S);
     x.textBaseline = 'top';
     x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
-    x.fillText((o.kicker || 'research · calvincollins · xyz').toUpperCase(), pad, pad);
+    x.fillText((o.kicker || 'calvincollins · xyz').toUpperCase(), pad, pad);
     var ty = pad + 32 * S;
     for (var i = 0; i < 5; i++) { x.save(); x.translate(pad + i * (25 * S) + 8 * S, ty + 8 * S);
       x.rotate((i % 2 ? 6 : -6) * Math.PI / 180); x.fillStyle = tiles[i % tiles.length];
@@ -1857,7 +1857,7 @@ SHARE_JS = r"""
     if (o.source) { x.fillStyle = muted; x.font = (16 * S) + 'px ' + SANS;
       var sl = wrap(x, o.source, maxW); for (var k = 0; k < Math.min(2, sl.length); k++) x.fillText(sl[k], pad, fy + k * 21 * S); }
     x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
-    x.fillText('research.calvincollins.xyz', pad, H - pad - 16 * S);
+    x.fillText('calvincollins.xyz', pad, H - pad - 16 * S);
     return c;
   }
   var modal;
@@ -2325,7 +2325,7 @@ ATLAS_JS = r"""
         if (sm && j.connections && j.connections[sm]) mode = sm;
         paint(true); loaded = true; if (msg) msg.remove(); syncPick(); updateSub();
       })
-      .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (research.calvincollins.xyz).'; });
+      .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (calvincollins.xyz).'; });
   }
 
   // The research picker turns the Atlas from a single mosaic into a per-corpus
@@ -2568,7 +2568,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <body>
 {overture}
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
@@ -3011,7 +3011,7 @@ QUIZ_JS = r"""
     if (sh) sh.addEventListener('click', function () {
       if (!window.CorpusShare) return;
       window.CorpusShare.open({ kicker: 'Test Yourself', quote: s + ' / ' + n + ' — ' + grade,
-        source: 'A test on ' + state.label + ' · research.calvincollins.xyz', filename: 'quiz-result',
+        source: 'A test on ' + state.label + ' · calvincollins.xyz', filename: 'quiz-result',
         shareText: 'I scored ' + s + '/' + n + ' testing myself on ' + state.label + '.' });
     });
   }
@@ -3374,7 +3374,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Ghost of Times — research · calvincollins · xyz</title>
+<title>The Ghost of Times — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -3382,7 +3382,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html" class="active">The Ghost of Times</a>
@@ -3703,7 +3703,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html" class="active">The Ghost of Times</a>
@@ -4050,7 +4050,7 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Pamphlets — research · calvincollins · xyz</title>
+<title>The Pamphlets — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -4058,7 +4058,7 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
@@ -4227,7 +4227,7 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html">The Ghost of Times</a>
@@ -4554,7 +4554,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Fingerprint — research · calvincollins · xyz</title>
+<title>The Fingerprint — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -4562,7 +4562,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
@@ -4758,7 +4758,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <body>
 <div id="fp-progress" aria-hidden="true"></div>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html">The Ghost of Times</a>
@@ -5348,7 +5348,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Connections — research · calvincollins · xyz</title>
+<title>Connections — calvincollins · xyz</title>
 <meta name="description" content="A map of ideas: how the research corpora relate by theme.">
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -5356,7 +5356,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
@@ -5744,7 +5744,7 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Research Wrapped — research · calvincollins · xyz</title>
+<title>Research Wrapped — calvincollins · xyz</title>
 <meta name="description" content="Your private year in reading.">
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -5752,7 +5752,7 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">research · calvincollins · xyz</span>
+  <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
@@ -6162,7 +6162,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     overture_html = (
         '<div id="overture" role="dialog" aria-modal="true" aria-label="Welcome to the library"><div class="ov-inner">'
         '<div class="ov-tiles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>'
-        '<p class="ov-brand">research · calvincollins · xyz</p>'
+        '<p class="ov-brand">calvincollins · xyz</p>'
         f'<h1 class="ov-title">{html.escape(site_title)}</h1>'
         f'<p class="ov-sub">{html.escape(site_subtitle)}</p>'
         '<div class="ov-sections"><span>The Research</span><span>The Ghost of Times</span><span>The Fingerprint</span><span>The Pamphlets</span></div>'
@@ -6228,7 +6228,7 @@ def load_config(path):
 
 def deploy_to_site(out_dir, message=None):
     """Commit the built output and push it to the GitHub Pages branch so the live
-    site (research.calvincollins.xyz) updates. Pages serves main:/docs and rebuilds
+    site (calvincollins.xyz) updates. Pages serves main:/docs and rebuilds
     on push, so a successful push IS the deploy. Safe no-op when nothing changed;
     never raises — reports and returns False on any failure so the build still 'succeeded'."""
     import datetime
@@ -6271,7 +6271,7 @@ def deploy_to_site(out_dir, message=None):
         print(f"  ! push failed (commit saved locally):\n    {(push.stderr or push.stdout or '').strip()}",
               file=sys.stderr)
         return False
-    print(f"  ✓ pushed to origin/{branch} → GitHub Pages is rebuilding research.calvincollins.xyz (~1 min)")
+    print(f"  ✓ pushed to origin/{branch} → GitHub Pages is rebuilding calvincollins.xyz (~1 min)")
     return True
 
 
@@ -6284,7 +6284,7 @@ if __name__ == "__main__":
     ap.add_argument("--subtitle", default=None, help="library page subtitle")
     ap.add_argument("--deploy", action="store_true",
                     help="after building, commit the output and push to the GitHub Pages "
-                         "branch — publishes live to research.calvincollins.xyz")
+                         "branch — publishes live to calvincollins.xyz")
     ap.add_argument("-m", "--message", default=None,
                     help="commit message for --deploy (default: a timestamped message)")
     args = ap.parse_args()
