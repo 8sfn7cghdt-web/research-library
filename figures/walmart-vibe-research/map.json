@@ -1,0 +1,8 @@
+[
+  { "file": "03_Walmart_Ad_Flywheel.md", "after": "## 5. The Gap Vibe Fills", "snippet": "01_closed_loop_hero.html" },
+  { "file": "05_Strategic_Logic_Amazon_Contest.md", "after": "## 1. The \"So What\"", "snippet": "02_amazon_gap.html" },
+  { "file": "04_The_Transaction.md", "after": "## 7. What Vibe", "snippet": "03_valuation_jump.html" },
+  { "file": "06_Competitive_Market_Map.md", "after": "## 4. The Value Chain", "snippet": "04_who_keeps_the_spread.html" },
+  { "file": "06_Competitive_Market_Map.md", "after": "## 2. Field A", "snippet": "05_self_serve_field.html" },
+  { "file": "00_Briefing.md", "after": "## Forecast (Brief)", "snippet": "06_forecast_fan.html" }
+]

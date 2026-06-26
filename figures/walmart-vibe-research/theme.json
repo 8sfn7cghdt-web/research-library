@@ -1,0 +1,45 @@
+{
+  "aesthetic": "The Spark and the Receipt — a big-box ad console closing the loop",
+  "anchor": "Walmart's own retail identity — the deep-blue fascia and the six-petal yellow Spark of 'Save Money. Live Better.' — crossed with the two instruments this deal is actually about: the thermal POS receipt (the closed-loop proof that a TV ad drove a measured store sale) and the self-serve media-buying console Vibe sells (the '$50/day, launch a TV ad in minutes' dashboard). The world is a retail-media operations screen: navy ground, a single spark-gold accent, conversion-green and spend-red metrics, a CTV-screen cyan, and receipt-mono numbers.",
+  "rationale": "The corpus's structural metaphor is a CLOSED LOOP and a COMPLETED STACK — Walmart spent two years assembling data (Connect), screen (VIZIO), and pipes, and bought Vibe to snap in the missing self-serve front door, closing a loop from impression to purchase. So the figures should read like a market dashboard and a receipt, not a humanities study: grotesque deck-headline display, a sans brief body, and true monospace for the deal's many numbers. The accent is WALMART SPARK GOLD, deliberately set apart from the cool greens/teals/cobalt and the magentas of the other ad-tech corpora on the shelf, and pushed brighter/purer than the two amber corpora (india-advertising, uap) so it separates in both light and dark. The figure palette pairs the gold (the Spark / Vibe / the deal) with a Walmart true-blue (data and demand), a conversion-green (the measured sale / ROAS), a spend-red (cost and leakage), a CTV-screen cyan (the streaming surface), and a receipt-graphite. Warm receipt-paper for day; a deep retail-navy 'ops screen at night' for dark.",
+  "light": {
+    "bg": "#f6f4ee",
+    "panel": "#ebe7db",
+    "text": "#1a1d22",
+    "muted": "#5c6068",
+    "accent": "#7a5a00",
+    "border": "#d7d1c3",
+    "mark": "#ffe39c",
+    "cover-bg": "#ece7d9",
+    "t1": "#0a4ea8",
+    "t2": "#1f7a47",
+    "t3": "#b03126",
+    "t4": "#1f6f88",
+    "t5": "#3c4048"
+  },
+  "dark": {
+    "bg": "#0c1320",
+    "panel": "#1b2742",
+    "text": "#e8eaf0",
+    "muted": "#8b93a4",
+    "accent": "#ffc220",
+    "border": "#243149",
+    "mark": "#3a2f00",
+    "cover-bg": "#101a2c",
+    "t1": "#4d9bff",
+    "t2": "#46c483",
+    "t3": "#ef6a55",
+    "t4": "#4fc6e0",
+    "t5": "#aeb4c0"
+  },
+  "fonts": {
+    "display": "'Helvetica Neue', Helvetica, 'Segoe UI', Arial, system-ui, sans-serif",
+    "body": "'Inter', 'Helvetica Neue', 'Segoe UI', Roboto, system-ui, sans-serif",
+    "mono": "'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25c6   \\25c7   \\25c6'",
+    "fig_radius": "4px"
+  },
+  "cover_palette": ["#0a4ea8", "#f0b400", "#1f7a47", "#b03126"]
+}
