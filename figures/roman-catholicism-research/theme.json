@@ -1,0 +1,45 @@
+{
+  "aesthetic": "Gold Ground",
+  "anchor": "The illuminated Latin codex and the gilt apse mosaic: cream vellum and black ink, rubricated in liturgical vermilion, jeweled with lapis (Marian blue), imperial violet, and mosaic teal, and lit by burnished gold leaf — the manuscript-and-mosaic visual world in which Roman Catholicism transmitted, governed, and adorned its faith for a millennium.",
+  "rationale": "Document 04 calls Catholicism 'a textual tradition' — a faith carried in conciliar decrees, magisterial documents, and canon law copied and illuminated in the monasteries. Its sacred image is the gold ground: the burnished gilt behind the Ravenna and Vatican mosaics and the icon, the same gold whose modern incarnation — the Rupnik mosaics on the Church's top shrines — doc 13 turns into a crisis. So the corpus's two registers are set as two materials: the black ink of the critical historical record (the contested Petrine claim, the abuse inquiries, the demographic count) against the gold of the sacred and devotional (doc 11's lived religion, the liturgy, the eternal claim). Liturgical color supplies the tinctures — vermilion for martyrs and Pentecost, lapis for the Marian blue, imperial violet for penitence and authority, mosaic teal for the apse — the Church's own visual code, read off the material rather than imposed.",
+  "light": {
+    "bg": "#f3ecdd",
+    "panel": "#e8dec8",
+    "text": "#1c160f",
+    "muted": "#6b5d45",
+    "accent": "#a52a1e",
+    "border": "#d8ccae",
+    "mark": "#e3c878",
+    "cover-bg": "#e6dbc2",
+    "t1": "#a8821f",
+    "t2": "#a52a1e",
+    "t3": "#284b8c",
+    "t4": "#5b3a78",
+    "t5": "#2f6b5e"
+  },
+  "dark": {
+    "bg": "#12100b",
+    "panel": "#221c12",
+    "text": "#ece2cd",
+    "muted": "#a8997a",
+    "accent": "#e0613f",
+    "border": "#382f1e",
+    "mark": "#463715",
+    "cover-bg": "#221c12",
+    "t1": "#e2b34e",
+    "t2": "#e86a48",
+    "t3": "#7f9fda",
+    "t4": "#b095d6",
+    "t5": "#5fae98"
+  },
+  "fonts": {
+    "display": "'Baskerville', 'Hoefler Text', Garamond, 'Times New Roman', serif",
+    "body": "'Baskerville', 'Iowan Old Style', Palatino, Georgia, serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\00b7   \\2720   \\00b7'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#a52a1e", "#a8821f", "#284b8c", "#1c160f"]
+}

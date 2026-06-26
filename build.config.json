@@ -298,6 +298,11 @@
       "title": "The Argument Over Money",
       "subtitle": "The U.S. economy and financial system — from Hamilton's debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar's future through 2035",
       "category": "The Modern World"
+    },
+    "roman-catholicism-research": {
+      "title": "On This Rock",
+      "subtitle": "Roman Catholicism from the apostolic church to Pope Leo XIV — origins, doctrine, the contested Petrine claim, and its trajectory to 2050",
+      "category": "Faith & Religion"
     }
   },
   "corpora": [
@@ -332,7 +337,8 @@
     "../containerized-bidding-research",
     "../political-ctv-research",
     "../american-pragmatism-research",
-    "../us-economy-financial-system-research"
+    "../us-economy-financial-system-research",
+    "../roman-catholicism-research"
   ],
   "atlas": {
     "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
