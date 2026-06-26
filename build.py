@@ -4429,6 +4429,7 @@ FP_BEATS = {
     "regulatory-wire":      ("#7a2230", "#c77380"),
     "campaign-wire":        ("#2e4a78", "#7b9bd0"),
     "global-desk":          ("#4a3570", "#9a82c4"),
+    "festival-desk":        ("#1c5fa8", "#6fa8e0"),
     "watercooler":          ("#8a5a2a", "#c79a63"),
     "wire-opinion-mcluhan": ("#355a6b", "#79a7ba"),
     "wire-opinion-ogilvy":  ("#6b4a2a", "#c39a6b"),
@@ -4477,6 +4478,12 @@ FP_MARKS = {
         '<line x1="3" y1="12" x2="21" y2="12"/>'
         '<path d="M 4.5 7 Q 12 9 19.5 7" stroke-width="1.1"/>'
         '<path d="M 4.5 17 Q 12 15 19.5 17" stroke-width="1.1"/></g></svg>',
+    "festival-desk":
+        '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'
+        '<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">'
+        '<path d="M 9.5 20 Q 4.5 15 7 8"/><path d="M 14.5 20 Q 19.5 15 17 8"/>'
+        '<polygon points="12,5 12.9,7.3 15.3,7.4 13.4,8.95 14.05,11.3 12,9.95 9.95,11.3 10.6,8.95 8.7,7.4 11.1,7.3" '
+        'fill="currentColor" stroke="none"/></g></svg>',
     "watercooler":
         '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">'
         '<g fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="2"/>'
@@ -4874,6 +4881,11 @@ FINGERPRINT_EDITION_CSS = """
   color: var(--text); text-decoration: none; margin: 0 0 .9rem; }
 .fp-np-name:hover { color: #0d5b68; }
 [data-theme="dark"] .fp-np-name:hover { color: #62aab8; }
+/* Special-edition stamp — only shown when an edition carries a non-default subtitle. */
+.fp-np-special { display: inline-block; font-family: var(--sans); font-size: .66rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .18em; color: #fff; background: #1c5fa8;
+  padding: .28rem .72rem; border-radius: 2px; margin: 0 0 1.1rem; }
+[data-theme="dark"] .fp-np-special { background: #2f6aae; color: #f3ede0; }
 .fp-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
   border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .5rem 0;
   font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .64rem; text-transform: uppercase; letter-spacing: .1em; }
@@ -5013,6 +5025,21 @@ document.getElementById('theme-btn').onclick = () => {
 
 const ed = JSON.parse(document.getElementById('fp-edition-data').textContent);
 const MARKS = JSON.parse(document.getElementById('fp-marks').textContent);
+
+// Special-edition stamp: surface a non-default subtitle in the nameplate (regular
+// editions carry the default motto and are untouched).
+(function(){
+  const sub = (ed.subtitle || '').trim();
+  if (sub && sub !== "All the news that's fit to Fingerprint") {
+    const folio = document.querySelector('.fp-nameplate .fp-folio');
+    if (folio) {
+      const badge = document.createElement('span');
+      badge.className = 'fp-np-special';
+      badge.textContent = sub;
+      folio.parentNode.insertBefore(badge, folio);
+    }
+  }
+})();
 const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls;
   if (html != null) n.innerHTML = html; return n; };
 const esc = (s) => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
