@@ -2572,6 +2572,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
     <a href="connections.html">Connections</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="#library">The Research</a>
@@ -2591,6 +2592,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {foryou}
 {ghost_band}
 {fingerprint_band}
+{pamphlets_band}
 <h2 class="section-title" id="library">The Research Library</h2>
 <main class="library">
 {cards}
@@ -3385,12 +3387,13 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
     <a href="index.html">The Research</a>
     <a href="ghost.html" class="active">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
   </nav>
 </div>
 <header class="ghost-plate">
-  {engraving}
   <p class="gp-kicker">A paper of writer-voiced op-eds</p>
   <h1 class="gp-name">The Ghost of Times</h1>
+  <div class="gp-ornament" aria-hidden="true">{ornament}</div>
   <p class="gp-motto">“{motto}”</p>
   <div class="gp-folio">
     <span>Vol. 1</span>
@@ -3411,17 +3414,28 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </html>
 """
 
+# A fountain-pen nib, drawn as stroke-only line art (a sibling to the Fingerprint's
+# broadcast ridges) — the nearest the Ghost's "writer-voiced op-eds" register has
+# to a sigil, and the ornament that replaces the old raster masthead engraving.
+GHOST_NIB = (
+    '<svg viewBox="0 0 240 72" xmlns="http://www.w3.org/2000/svg" class="gp-nib-svg">'
+    '<g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">'
+    '<path d="M 100 14 Q 120 7 140 14 Q 134 36 120 60 Q 106 36 100 14 Z"/>'
+    '<circle cx="120" cy="26" r="4.2"/>'
+    '<line x1="120" y1="30.2" x2="120" y2="55"/>'
+    '</g></svg>'
+)
+
 GHOST_PAGE_CSS = """
 /* The Ghost of Times — a newspaper section front, sharing the editions'
    warm-paper / serif / double-rule / terracotta language. */
-.ghost-plate { display: block; max-width: 820px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
-.gp-engraving { display: block; width: 100%; max-width: 560px; height: auto; margin: .4rem auto 1.4rem;
-  border-radius: 14px; border: 1px solid var(--border); }
-[data-theme="dark"] .gp-engraving { filter: brightness(.92) contrast(1.02); }
+.ghost-plate { display: block; max-width: 820px; margin: 1.8rem auto 0; padding: 0 2rem; text-align: center; }
 .gp-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
   letter-spacing: .2em; color: var(--accent); margin: 0 0 .5rem; }
 .gp-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6.5vw, 4.4rem);
-  line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+  line-height: .98; letter-spacing: -.02em; margin: 0 0 .3rem; }
+.gp-ornament { color: var(--accent); opacity: .85; margin: 0 0 .6rem; }
+.gp-nib-svg { width: 180px; height: 54px; }
 .gp-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0 0 1.3rem; }
 .gp-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
   border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
@@ -3538,14 +3552,10 @@ def build_ghost_page(out_dir, editions, ghost_cfg, shell=""):
         body = ('<p class="ged-empty">No editions published yet. Run the Ghost of Times '
                 'skill and publish an edition to see it here.</p>')
         stats = "No editions yet"
-    engraving = ""
-    if (out / "ghost" / "masthead.jpg").exists():
-        engraving = ('<img class="gp-engraving" src="ghost/masthead.jpg" '
-                     'alt="The Ghost of Times — masthead engraving">')
     page = GHOST_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + GHOST_PAGE_CSS,
         favicon=FAVICON, og_meta=OG_META,
-        engraving=engraving,
+        ornament=GHOST_NIB,
         motto=html.escape(ghost_cfg.get("motto", "")),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
         stats=stats,
@@ -3698,6 +3708,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
     <a href="index.html">The Research</a>
     <a href="ghost.html" class="active">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
   </nav>
 </div>
 <main class="gh-edition">
@@ -3874,6 +3885,465 @@ def build_ghost_edition(out_dir, ed, shell=""):
         shell=shell,
     )
     (out / "ghost" / f"{date}-ghost-of-times.html").write_text(page)
+    return True
+
+
+# ---------------------------------------------------------------- the pamphlets
+# A fourth top-level section: "The Pamphlets" — standalone, single-voice essays
+# (Carlyle, and other writers to come) each taking up one question of the present
+# moment. Unlike the Ghost (a daily, many-writer paper keyed to the news) a
+# pamphlet is one sustained essay in one voice. Each is authored as a small data
+# file — docs/pamphlets/data/{slug}.json, deposited alongside a one-line entry in
+# docs/pamphlets/manifest.json — and rendered NATIVELY here, so it inherits the
+# site's design system (warm-paper tokens, Iowan/Georgia, terracotta, dark mode,
+# the masthead nav) for free and stays a few KB. Bodies are markdown, parsed
+# client-side by the same marked.js the corpus reader uses. No PDF.
+#
+# Design register: the corpus reader's reading column wearing a letterpress
+# pamphlet's coat — a centred measure, a compact "The Pamphlets" nameplate with
+# the folio double-rule that echoes the section front, the site's 4-colour
+# gradient bar under the title, a drop-cap lead, an italic "in the voice of"
+# byline, and a colophon naming the voice. Unmistakably the same site.
+
+PAMPHLETS_BAND_CSS = """
+/* The Pamphlets feature band on the home page — a letterpress paper card, the
+   light counterpoint to the Ghost's inky band; token-driven so dark mode just works. */
+.pamphlet-band { max-width: 1080px; margin: 1.4rem auto 0; padding: 0 2rem; }
+.pamphlet-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+  text-decoration: none; color: var(--text); background: var(--panel); border: 1px solid var(--border);
+  border-left: 5px solid var(--accent); border-radius: 16px; padding: 1.5rem 1.8rem;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.pamphlet-band a:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,.16); border-color: var(--accent); }
+.pamphlet-band .pb-flag { font-family: var(--display); font-weight: 800; font-size: 1.9rem; line-height: 1.02;
+  color: var(--text); border-right: 1px solid var(--border); padding-right: 1.6rem; }
+.pamphlet-band .pb-flag small { display: block; font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: .72rem; letter-spacing: .01em; color: var(--muted); margin-top: .55rem; }
+.pamphlet-band .pb-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .16em; color: var(--accent); margin: 0 0 .35rem; }
+.pamphlet-band .pb-lead { font-family: var(--display); font-weight: 700; font-size: 1.18rem; line-height: 1.28; margin: 0 0 .3rem; }
+.pamphlet-band .pb-sub { font-family: var(--serif); font-style: italic; font-size: .9rem; line-height: 1.45; color: var(--muted); margin: 0; }
+.pamphlet-band .pb-cta { font-family: var(--sans); font-size: .76rem; text-transform: uppercase; letter-spacing: .1em;
+  color: #fff; background: var(--accent); border-radius: 12px; padding: .55rem 1rem; white-space: nowrap; }
+@media (max-width: 680px) {
+  .pamphlet-band a { grid-template-columns: 1fr; gap: .9rem; }
+  .pamphlet-band .pb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+}
+"""
+
+
+def read_pamphlets_manifest(out_dir):
+    """Load docs/pamphlets/manifest.json → list of pamphlets, newest first. Missing → []."""
+    path = Path(out_dir) / "pamphlets" / "manifest.json"
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read {path}, treating as no pamphlets", file=sys.stderr)
+        return []
+    items = data.get("pamphlets", data) if isinstance(data, dict) else data
+    items = [p for p in items if isinstance(p, dict) and p.get("slug")]
+    items.sort(key=lambda p: (p.get("date", ""), p.get("slug", "")), reverse=True)
+    return items
+
+
+def _pamphlet_href(p):
+    return html.escape(p.get("file") or f"pamphlets/{p.get('slug','')}.html", quote=True)
+
+
+def _pamphlet_voice(p):
+    w = p.get("writer", "")
+    return f"In the voice of {w}" if w else ""
+
+
+def _pamphlet_meta(p, lead=False):
+    """A '· '-joined dateline: [Latest ·] subject · long date."""
+    bits = ["Latest pamphlet"] if lead else []
+    if p.get("subject"):
+        bits.append(p["subject"])
+    if p.get("date"):
+        bits.append(_long_date(p["date"]))
+    return " · ".join(bits)
+
+
+def pamphlets_band_html(items, cfg):
+    """The Pamphlets feature band for the home page. Always links to pamphlets.html."""
+    motto = html.escape(cfg.get("motto", ""))
+    blurb = html.escape(cfg.get("blurb", ""))
+    flag = (f'<div class="pb-flag">The<br>Pamphlets<small>{motto}</small></div>')
+    if items:
+        latest = items[0]
+        kicker = "The Pamphlets · Latest"
+        lead = html.escape(latest.get("title") or "Latest pamphlet")
+        sub_bits = [x for x in [latest.get("dek"), _pamphlet_voice(latest)] if x]
+        sub = html.escape(" · ".join(sub_bits))
+        cta = "Read the latest →"
+    else:
+        kicker = "A new section"
+        lead = motto or "The Pamphlets"
+        sub = blurb
+        cta = "Coming soon →"
+    mid = (f'<div class="pb-mid"><p class="pb-kicker">{kicker}</p>'
+           f'<p class="pb-lead">{lead}</p><p class="pb-sub">{sub}</p></div>')
+    return (f'<div class="pamphlet-band"><a href="pamphlets.html">{flag}{mid}'
+            f'<span class="pb-cta">{cta}</span></a></div>')
+
+
+PAMPHLETS_PAGE_CSS = """
+/* The Pamphlets — a section front in the site's letterpress register, sharing
+   the warm-paper / serif / double-rule / terracotta language with the rest. */
+.pam-plate { display: block; max-width: 820px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
+.pam-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .2em; color: var(--accent); margin: 0 0 .5rem; }
+.pam-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+.pam-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0 0 1.3rem; }
+.pam-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
+  font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .14em; color: var(--text); }
+.pam-folio .pam-folio-c { color: var(--accent); font-weight: 700; }
+
+/* featured (latest) pamphlet — reads like a section lead */
+.pam-feature { max-width: 720px; margin: 2.1rem auto 0; padding: 0 2rem; }
+.pam-feature a { display: block; text-decoration: none; color: var(--text); }
+.pamf-meta { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--accent); margin: 0 0 .7rem; }
+.pamf-head { font-family: var(--display); font-weight: 800; font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+  line-height: 1.07; letter-spacing: -.01em; margin: 0 0 .7rem; transition: color .15s ease; }
+.pam-feature a:hover .pamf-head { color: var(--accent); }
+.pamf-dek { font-family: var(--serif); font-style: italic; font-size: 1.2rem; line-height: 1.4;
+  color: var(--muted); margin: 0 0 .9rem; }
+.pamf-by { font-family: var(--sans); font-size: .74rem; letter-spacing: .04em; color: var(--accent); margin: 0 0 1.1rem; }
+.pamf-cta { font-family: var(--sans); font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+
+/* more pamphlets — archive rows */
+.pam-issues { max-width: 720px; margin: 2.8rem auto 0; padding: 0 2rem 1rem; }
+.pam-issues-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--muted); border-bottom: 2px solid var(--text); padding-bottom: .5rem; margin: 0 0 .3rem; }
+.pam-row { display: grid; grid-template-columns: 1fr auto; gap: 1.2rem; align-items: baseline;
+  text-decoration: none; color: var(--text); padding: .95rem 0; border-bottom: 1px solid var(--border); }
+.pam-row-body { min-width: 0; }
+.pam-row-head { font-family: var(--display); font-size: 1.18rem; line-height: 1.18; display: block; transition: color .15s ease; }
+.pam-row:hover .pam-row-head { color: var(--accent); }
+.pam-row-by { font-family: var(--sans); font-size: .7rem; letter-spacing: .03em; color: var(--muted); display: block; margin-top: .25rem; }
+.pam-row-date { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); white-space: nowrap; }
+
+.pam-empty { max-width: 720px; margin: 2.1rem auto 0; padding: 2rem; text-align: center;
+  color: var(--muted); font-family: var(--sans); font-size: .9rem; border-top: 3px double var(--border); }
+
+.pam-foot { max-width: 720px; margin: 3rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.pam-foot .epigraph { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .95rem; margin: 0 0 .6rem; }
+.pam-foot .colophon { font-family: var(--sans); font-size: .74rem; margin: 0; }
+.pam-foot .colophon a { color: var(--accent); text-decoration: none; }
+.pam-foot .colophon a:hover { text-decoration: underline; }
+
+@media (max-width: 560px) {
+  .pam-folio { font-size: .58rem; letter-spacing: .08em; }
+  .pam-row-date { display: none; }
+}
+"""
+
+PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Pamphlets — research · calvincollins · xyz</title>
+<meta name="description" content="{motto}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html" class="active">The Pamphlets</a>
+  </nav>
+</div>
+<header class="pam-plate">
+  <p class="pam-kicker">Writer-voiced essays</p>
+  <h1 class="pam-name">The Pamphlets</h1>
+  <p class="pam-motto">“{motto}”</p>
+  <div class="pam-folio">
+    <span>Vol. 1</span>
+    <span class="pam-folio-c">{stats}</span>
+    <span>Published irregularly</span>
+  </div>
+</header>
+<main class="pam-wrap">
+{body}
+</main>
+<footer class="pam-foot">
+  <p class="epigraph">{blurb}</p>
+  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+</footer>
+<script>{theme_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def pamphlet_feature_html(p):
+    """The latest pamphlet, rendered like a section lead."""
+    meta = _pamphlet_meta(p, lead=True)
+    headline = html.escape(p.get("title") or "Untitled pamphlet")
+    dek = html.escape(p.get("dek") or "")
+    dek_html = f'<p class="pamf-dek">{dek}</p>' if dek else ""
+    voice = html.escape(_pamphlet_voice(p))
+    voice_html = f'<p class="pamf-by">{voice}</p>' if voice else ""
+    return (f'<article class="pam-feature"><a href="{_pamphlet_href(p)}">'
+            f'<p class="pamf-meta">{html.escape(meta)}</p>'
+            f'<h2 class="pamf-head">{headline}</h2>{dek_html}{voice_html}'
+            f'<span class="pamf-cta">Read the pamphlet →</span></a></article>')
+
+
+def pamphlet_row_html(p):
+    """An archive row for an older pamphlet."""
+    headline = html.escape(p.get("title") or "Untitled pamphlet")
+    voice = html.escape(_pamphlet_voice(p))
+    voice_html = f'<span class="pam-row-by">{voice}</span>' if voice else ""
+    when = html.escape(_long_date(p.get("date", "")) if p.get("date") else "")
+    return (f'<a class="pam-row" href="{_pamphlet_href(p)}">'
+            f'<span class="pam-row-body"><span class="pam-row-head">{headline}</span>{voice_html}</span>'
+            f'<span class="pam-row-date">{when}</span></a>')
+
+
+def build_pamphlets_page(out_dir, items, cfg, shell=""):
+    """Render docs/pamphlets.html — the section front: a featured latest essay + the rest."""
+    out = Path(out_dir)
+    if items:
+        n = len(items)
+        stats = f"{n} pamphlet{'s' if n != 1 else ''}"
+        body = pamphlet_feature_html(items[0])
+        rest = items[1:]
+        if rest:
+            rows = "\n".join(pamphlet_row_html(p) for p in rest)
+            body += f'<section class="pam-issues"><h2 class="pam-issues-h">More pamphlets</h2>{rows}</section>'
+    else:
+        body = ('<p class="pam-empty">No pamphlets published yet. Drop an essay into '
+                'docs/pamphlets/data/ and list it in the manifest to see it here.</p>')
+        stats = "No pamphlets yet"
+    page = PAMPHLETS_PAGE_TEMPLATE.format(
+        css=LIBRARY_CSS + PAMPHLETS_PAGE_CSS,
+        favicon=FAVICON, og_meta=OG_META,
+        motto=html.escape(cfg.get("motto", "")),
+        blurb=html.escape(cfg.get("blurb", "")),
+        stats=stats,
+        body=body,
+        theme_js=LIBRARY_THEME_JS,
+        shell=shell,
+    )
+    (out / "pamphlets.html").write_text(page)
+    print(f"  ✓ The Pamphlets  ({len(items)} pamphlet{'s' if len(items) != 1 else ''}) → pamphlets.html")
+
+
+# ---------------------------------------------------------------- pamphlet pages
+# Each pamphlet is rendered natively from docs/pamphlets/data/{slug}.json into
+# docs/pamphlets/{slug}.html, inheriting the site's design system. Subdir pages,
+# so every nav/footer href is ../-relative (the shell base is "../" too).
+
+PAMPHLET_CSS = """
+/* A single pamphlet — the corpus reader's reading column in letterpress dress.
+   Shares every colour/font token with the rest of the site. */
+.pm-essay { max-width: 720px; margin: 0 auto; padding: 2.2rem 2rem 1rem; }
+
+/* nameplate — a compact echo of pamphlets.html's section plate. display:block
+   overrides the generic header{display:flex} rule from LIBRARY_CSS. */
+.pm-nameplate { display: block; text-align: center; max-width: 640px; margin: 0 auto 2.6rem; padding: 0; }
+.pm-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .2em; color: var(--accent); margin: 0 0 .45rem; }
+.pm-name { display: inline-block; font-family: var(--display); font-weight: 800;
+  font-size: clamp(2.1rem, 5.2vw, 3.1rem); line-height: .98; letter-spacing: -.02em;
+  color: var(--text); text-decoration: none; margin: 0 0 .9rem; }
+.pm-name:hover { color: var(--accent); }
+.pm-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .5rem 0;
+  font-family: var(--sans); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em; }
+.pm-folio .pm-folio-c { color: var(--accent); font-weight: 700; }
+.pm-folio span { flex: 1; }
+.pm-folio span:first-child { text-align: left; }
+.pm-folio span:last-child { text-align: right; }
+
+/* the essay head */
+.pm-tagline { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--accent); margin: 0 0 .55rem; }
+.pm-head { font-family: var(--display); font-weight: 800; letter-spacing: -.01em; line-height: 1.06;
+  font-size: clamp(2rem, 4.6vw, 2.9rem); margin: 0 0 .7rem; }
+.pm-head::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .6rem;
+  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.pm-dek { font-family: var(--serif); font-style: italic; color: var(--muted);
+  font-size: 1.28rem; line-height: 1.42; margin: 0 0 .9rem; }
+.pm-byline { font-family: var(--sans); font-size: .72rem; letter-spacing: .14em; color: var(--accent);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: .4rem 0; margin: 0 0 1.6rem; }
+
+/* the body */
+.pm-body { font-size: 1.07rem; line-height: 1.78; }
+.pm-body p { margin: 0 0 1.2rem; }
+.pm-body a { color: var(--accent); }
+.pm-body em { font-style: italic; }
+.pm-body blockquote { margin: 1.4rem 0; padding: .6rem 1.3rem; border-left: 3px solid var(--accent);
+  background: var(--panel); border-radius: 0 14px 14px 0; color: var(--muted); font-style: italic; }
+/* drop cap opens the essay */
+.pm-body > p:first-of-type::first-letter { font-family: var(--display); font-weight: 800;
+  float: left; font-size: 3.1em; line-height: .72; padding: .06em .1em 0 0; color: var(--accent); }
+
+/* foot — names the voice */
+.pm-foot { max-width: 720px; margin: 2.8rem auto 0; padding: 1.5rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.pm-colophon { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .96rem; margin: 0 0 .8rem; }
+.pm-nav { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; }
+.pm-nav a { color: var(--accent); text-decoration: none; }
+.pm-nav a:hover { text-decoration: underline; }
+
+/* floating theme toggle, same affordance as the corpus reader */
+#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+
+@media (max-width: 620px) {
+  .pm-essay { padding: 1.6rem 1.3rem 1rem; }
+  .pm-folio { font-size: .58rem; letter-spacing: .08em; }
+}
+"""
+
+PAMPHLET_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content="{description}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">research · calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="../index.html">The Research</a>
+    <a href="../ghost.html">The Ghost of Times</a>
+    <a href="../fingerprint.html">The Fingerprint</a>
+    <a href="../pamphlets.html" class="active">The Pamphlets</a>
+  </nav>
+</div>
+<main class="pm-essay">
+  <header class="pm-nameplate">
+    <p class="pm-kicker">Writer-voiced essays</p>
+    <a class="pm-name" href="../pamphlets.html">The Pamphlets</a>
+    <div class="pm-folio">
+      <span>{folio_writer}</span>
+      <span class="pm-folio-c">{folio_subject}</span>
+      <span>{folio_date}</span>
+    </div>
+  </header>
+  <article>
+    {tagline}
+    <h1 class="pm-head">{headline}</h1>
+    {dek}
+    {byline}
+    <div id="pm-body" class="pm-body"></div>
+  </article>
+  <footer class="pm-foot">
+    {colophon}
+    <p class="pm-nav"><a href="../pamphlets.html">← All pamphlets</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+  </footer>
+</main>
+<button id="theme-btn" title="Light / dark">◐ Theme</button>
+<script id="pamphlet-data" type="application/json">{data_json}</script>
+<script>{marked_js}</script>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+PAMPHLET_JS = r"""
+// theme (shares the 'corpus-theme' preference with readers + library)
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+document.getElementById('theme-btn').onclick = () => {
+  const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  localStorage.setItem('corpus-theme', next);
+};
+
+const pm = JSON.parse(document.getElementById('pamphlet-data').textContent);
+const body = document.getElementById('pm-body');
+body.innerHTML = marked.parse(pm.body || '');
+body.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+"""
+
+
+def read_pamphlet_data(out_dir, slug):
+    """Load docs/pamphlets/data/{slug}.json → dict, or None if absent/unreadable."""
+    path = Path(out_dir) / "pamphlets" / "data" / f"{slug}.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read {path}, skipping that pamphlet", file=sys.stderr)
+        return None
+
+
+def build_pamphlet(out_dir, item, shell=""):
+    """Render one pamphlet page (docs/pamphlets/{slug}.html) from its data file.
+
+    Returns True if rendered, False if the data file is absent (page left untouched)."""
+    out = Path(out_dir)
+    slug = item.get("slug", "")
+    data = read_pamphlet_data(out, slug)
+    if data is None:
+        return False
+
+    # Manifest entry is the source of truth for list metadata; the data file may
+    # repeat or extend it. Prefer data-file values, fall back to the manifest.
+    def pick(key, default=""):
+        return data.get(key) or item.get(key) or default
+
+    title = pick("title", "Untitled pamphlet")
+    dek = pick("dek")
+    writer = pick("writer")
+    subject = pick("subject")
+    date = pick("date")
+    tagline = pick("kicker")  # e.g. "A Latter-Day Pamphlet"
+    voice_note = pick("voice_note") or (f"Written in the voice of {writer}." if writer else "")
+
+    tagline_html = f'<p class="pm-tagline">{html.escape(tagline)}</p>' if tagline else ""
+    dek_html = f'<p class="pm-dek">{html.escape(dek)}</p>' if dek else ""
+    byline_html = f'<p class="pm-byline">In the voice of {html.escape(writer)}</p>' if writer else ""
+    colophon_html = f'<p class="pm-colophon">{html.escape(voice_note)}</p>' if voice_note else ""
+
+    page = PAMPHLET_TEMPLATE.format(
+        title=html.escape(f"{title} — The Pamphlets"),
+        description=html.escape(dek or subject or "A pamphlet"),
+        favicon=FAVICON, og_meta=OG_META,
+        css=LIBRARY_CSS + PAMPHLET_CSS,
+        folio_writer=html.escape(writer),
+        folio_subject=html.escape(subject),
+        folio_date=html.escape(_long_date(date) if date else ""),
+        tagline=tagline_html,
+        headline=html.escape(title),
+        dek=dek_html,
+        byline=byline_html,
+        colophon=colophon_html,
+        data_json=json_for_html(data),
+        marked_js=MARKED_JS,
+        app_js=PAMPHLET_JS,
+        shell=shell,
+    )
+    (out / "pamphlets").mkdir(parents=True, exist_ok=True)
+    (out / "pamphlets" / f"{slug}.html").write_text(page)
     return True
 
 
@@ -4097,6 +4567,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html" class="active">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
   </nav>
 </div>
 <header class="fpp-plate">
@@ -4292,6 +4763,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
     <a href="../index.html">The Research</a>
     <a href="../ghost.html">The Ghost of Times</a>
     <a href="../fingerprint.html" class="active">The Fingerprint</a>
+    <a href="../pamphlets.html">The Pamphlets</a>
   </nav>
 </div>
 <main class="fp-edition">
@@ -4889,6 +5361,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
     <a href="connections.html" class="active">Connections</a>
   </nav>
 </div>
@@ -5284,6 +5757,7 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
     <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
     <a href="wrapped.html" class="active">Wrapped</a>
   </nav>
 </div>
@@ -5319,7 +5793,7 @@ def build_wrapped_page(out_dir, wrapped_stats, shell=""):
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
+          fingerprint_cfg=None, pamphlets_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     # Copy the link-preview image into the served output so the absolute
@@ -5329,6 +5803,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         shutil.copy(og_src, out / OG_IMAGE)
     ghost_cfg = ghost_cfg or {}
     fingerprint_cfg = fingerprint_cfg or {}
+    pamphlets_cfg = pamphlets_cfg or {}
     descriptions = descriptions or {}
     titles = titles or {}
     category_order = category_order or []
@@ -5475,6 +5950,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # page (each of which embeds that manifest via the shared shell) is written.
     editions = read_ghost_manifest(out) if ghost_cfg.get("enabled", True) else []
     fp_editions = read_fingerprint_manifest(out) if fingerprint_cfg.get("enabled", True) else []
+    pamphlet_items = read_pamphlets_manifest(out) if pamphlets_cfg.get("enabled", True) else []
 
     if ghost_cfg.get("enabled", True):
         manifest.append({"title": "The Ghost of Times", "kind": "section",
@@ -5497,6 +5973,18 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 "kind": "edition", "category": "The Fingerprint",
                 "href": ed.get("file") or f"fingerprint/{ed.get('date', '')}-fingerprint.html",
                 "meta": ed.get("date", ""),
+            })
+    if pamphlets_cfg.get("enabled", True):
+        manifest.append({"title": "The Pamphlets", "kind": "section",
+                         "category": "Essays", "href": "pamphlets.html",
+                         "meta": "writer-voiced essays"})
+        for p in pamphlet_items:
+            voice = f" · {p['writer']}" if p.get("writer") else ""
+            manifest.append({
+                "title": p.get("title") or f"Pamphlet — {p.get('slug', '')}",
+                "kind": "pamphlet", "category": "The Pamphlets",
+                "href": p.get("file") or f"pamphlets/{p.get('slug', '')}.html",
+                "meta": (p.get("dek", "") + voice).strip(" ·"),
             })
 
     manifest.append({"title": "Research Wrapped", "kind": "section", "category": "You",
@@ -5584,6 +6072,13 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     if fp_editions:
         print(f"  ✓ Rendered {fp_rendered}/{len(fp_editions)} Fingerprint edition page(s) from data")
 
+    # The Pamphlets section (fourth top-level section — standalone writer essays).
+    build_pamphlets_page(out, pamphlet_items, pamphlets_cfg, shell=shell_root)
+    pamphlets_band = pamphlets_band_html(pamphlet_items, pamphlets_cfg)
+    pam_rendered = sum(build_pamphlet(out, p, shell=shell_sub) for p in pamphlet_items)
+    if pamphlet_items:
+        print(f"  ✓ Rendered {pam_rendered}/{len(pamphlet_items)} pamphlet page(s) from data")
+
     stats = f"{len(cards)} corpora · {total_chapters} chapters · {round(total_words / 1000)}k words"
 
     # Group the cards into category sections. Categories appear in the configured
@@ -5661,8 +6156,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         + '<p class="lib-empty" id="lib-empty" hidden>No corpora match your search.</p>'
     )
 
-    # The Fingerprint band shares the library CSS, so fold its rules in once.
-    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
+    # The Fingerprint + Pamphlets bands share the library CSS, so fold them in once.
+    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
     # First-visit overture markup — built from the existing brand only (no new copy).
     overture_html = (
         '<div id="overture" role="dialog" aria-modal="true" aria-label="Welcome to the library"><div class="ov-inner">'
@@ -5670,7 +6165,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         '<p class="ov-brand">research · calvincollins · xyz</p>'
         f'<h1 class="ov-title">{html.escape(site_title)}</h1>'
         f'<p class="ov-sub">{html.escape(site_subtitle)}</p>'
-        '<div class="ov-sections"><span>The Research</span><span>The Ghost of Times</span><span>The Fingerprint</span></div>'
+        '<div class="ov-sections"><span>The Research</span><span>The Ghost of Times</span><span>The Fingerprint</span><span>The Pamphlets</span></div>'
         '<button id="ov-enter" type="button">Enter the library →</button>'
         '<p class="ov-skip">Press Esc to skip</p>'
         '</div></div>'
@@ -5692,6 +6187,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         daily_passage=daily_passage,
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
+        pamphlets_band=pamphlets_band,
         resume='<div id="resume"></div>',
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
@@ -5720,6 +6216,7 @@ def load_config(path):
         "subtitle": cfg.get("subtitle", "Deep-research corpora, readable and searchable."),
         "ghost": cfg.get("ghost", {}),
         "fingerprint": cfg.get("fingerprint", {}),
+        "pamphlets": cfg.get("pamphlets", {}),
         "descriptions": cfg.get("descriptions", {}),
         "titles": cfg.get("titles", {}),
         "category_order": cfg.get("category_order", []),
@@ -5805,6 +6302,7 @@ if __name__ == "__main__":
         subtitle = args.subtitle or cfg["subtitle"]
         ghost_cfg = cfg["ghost"]
         fingerprint_cfg = cfg["fingerprint"]
+        pamphlets_cfg = cfg["pamphlets"]
         descriptions = cfg["descriptions"]
         titles = cfg["titles"]
         category_order = cfg["category_order"]
@@ -5818,6 +6316,7 @@ if __name__ == "__main__":
         subtitle = args.subtitle or "Deep-research corpora, readable and searchable."
         ghost_cfg = {}
         fingerprint_cfg = {}
+        pamphlets_cfg = {}
         descriptions = {}
         titles = {}
         category_order = []
@@ -5828,7 +6327,8 @@ if __name__ == "__main__":
         ap.error("no corpus folders and no --config / build.config.json found")
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
-          fingerprint_cfg=fingerprint_cfg, titles=titles, category_order=category_order,
+          fingerprint_cfg=fingerprint_cfg, pamphlets_cfg=pamphlets_cfg, titles=titles,
+          category_order=category_order,
           domains=domains, collections=collections, atlas_cfg=atlas_cfg)
 
     if args.deploy:
