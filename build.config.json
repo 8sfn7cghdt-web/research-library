@@ -15,6 +15,13 @@
     "motto": "All the news that's fit to Fingerprint",
     "blurb": "An independent daily wire on the global programmatic and Advanced TV (CTV) market — platforms, performance, partnerships, competition, regulation, political-ad spend, and a five-market global desk, with closing op-eds in the voices of McLuhan and Ogilvy."
   },
+  "pamphlets": {
+    "enabled": true,
+    "title": "The Pamphlets",
+    "kicker": "Writer-voiced essays",
+    "motto": "Latter-day pamphlets, by the dead and the living.",
+    "blurb": "Standalone essays in the voice of a single writer — Carlyle, and others to come — each taking up one question of the present moment."
+  },
   "category_order": [
     "Thomas Carlyle",
     "Faith & Religion",
