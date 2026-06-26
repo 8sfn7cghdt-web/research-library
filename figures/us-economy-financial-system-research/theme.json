@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Engraved Note",
+  "anchor": "The steel-engraved United States federal note and Treasury security — the guilloché lattice, the intaglio ink, the greenback green of the dollar, and the Treasury seal — read as the literal artifact of the thing this corpus is about: a 235-year fight over what American money is and who controls it.",
+  "rationale": "Every chapter of this corpus is an argument about money itself — Hamilton's funded debt, Jackson's hard coin, the 1862 greenback (the first U.S. fiat note, a load-bearing claim in the history), Bretton Woods gold, the 1971 severing of dollar from metal, and the $39T of Treasury paper the system now rolls every month. The engraved federal note is the physical embodiment of that argument, so the corpus is dressed as one: the deep greenback green and near-black intaglio ink of currency, set on warm currency-paper cream, with a Treasury-seal bronze and a seal-oxblood as secondary inks. A high-contrast banknote Didone carries the display lettering (the denomination type of a bill); a warm body serif and a ledger mono complete the engraver's-and-Treasury-ledger world. Wavy guilloché rules and a central seal lozenge ornament the breaks. It diverges hard from the ad-tech teal/cobalt siblings, the broadcast-magenta Test Card, and the cool-serif philosophy corpora — this one looks like a dollar bill under the loupe.",
+  "light": {
+    "bg": "#f4f1e6",
+    "panel": "#fffdf6",
+    "text": "#16241c",
+    "muted": "#5c6a5f",
+    "accent": "#1f6b46",
+    "border": "#d8d2bf",
+    "mark": "#dcebde",
+    "cover-bg": "#ece8d8",
+    "t1": "#1f6b46",
+    "t2": "#9c7a1e",
+    "t3": "#1d5c6b",
+    "t4": "#9b3526",
+    "t5": "#3a4a78"
+  },
+  "dark": {
+    "bg": "#0c130f",
+    "panel": "#16201a",
+    "text": "#e9ede6",
+    "muted": "#92a094",
+    "accent": "#3fae72",
+    "border": "#26312a",
+    "mark": "#13251b",
+    "cover-bg": "#101a14",
+    "t1": "#46c186",
+    "t2": "#e0bd55",
+    "t3": "#3fb0c4",
+    "t4": "#e06a55",
+    "t5": "#6f86d8"
+  },
+  "fonts": {
+    "display": "'Playfair Display', 'Didot', 'Bodoni MT', Georgia, 'Times New Roman', serif",
+    "body": "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', 'Consolas', 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\223f\\223f\\223f   \\25c8   \\223f\\223f\\223f'",
+    "fig_radius": "1px"
+  },
+  "cover_palette": [
+    "#1f6b46",
+    "#9c7a1e",
+    "#9b3526",
+    "#3a4a78"
+  ]
+}

@@ -288,6 +288,16 @@
       "title": "The Measured Screen",
       "subtitle": "Political advertising migrates to connected TV — the smart-TV ACR and voter-file targeting stack, who captures the spend, the streaming regulatory gap, and whether any of it actually moves votes.",
       "category": "Media & Advertising"
+    },
+    "american-pragmatism-research": {
+      "title": "The Cash-Value of Truth",
+      "subtitle": "American pragmatism — Peirce, James, Dewey, and the tradition's eclipse, revival, and reach",
+      "category": "Mind & Philosophy"
+    },
+    "us-economy-financial-system-research": {
+      "title": "The Argument Over Money",
+      "subtitle": "The U.S. economy and financial system — from Hamilton's debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar's future through 2035",
+      "category": "The Modern World"
     }
   },
   "corpora": [
@@ -320,7 +330,9 @@
     "../miq-research",
     "../great-awakenings-research",
     "../containerized-bidding-research",
-    "../political-ctv-research"
+    "../political-ctv-research",
+    "../american-pragmatism-research",
+    "../us-economy-financial-system-research"
   ],
   "atlas": {
     "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
@@ -412,6 +424,11 @@
         "region": "US-NY",
         "cell": "e",
         "label": "IAB Tech Lab & the programmatic exchanges, New York"
+      },
+      "american-pragmatism-research": {
+        "region": "US-MA",
+        "cell": "c",
+        "label": "Cambridge, Massachusetts"
       }
     },
     "grow": {
