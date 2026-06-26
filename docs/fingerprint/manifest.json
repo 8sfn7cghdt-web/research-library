@@ -108,6 +108,25 @@
         "Global Desk"
       ],
       "dispatches": 16
+    },
+    {
+      "date": "2026-06-26",
+      "weekday": "Friday",
+      "edition_number": 30,
+      "file": "fingerprint/2026-06-26-fingerprint.html",
+      "lead_headline": "Sky Agrees Terms to Buy ITV's Broadcast and Streaming Arm for £1.6bn",
+      "lead_dek": "A Comcast-owned acquisition would fold ITVX and ITV's channels into Sky, concentrating the bulk of UK premium broadcaster ad inventory under one owner — pending CMA, Ofcom and government clearance.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 16
     }
   ]
 }
