@@ -1,0 +1,737 @@
+{
+  "edition_date": "2026-06-26-cannes",
+  "edition_number": 31,
+  "weekday": "",
+  "subtitle": "Special Edition · The Full Cannes Wrap",
+  "lead": {
+    "headline": "OpenAI Debuts at Cannes, Declaring Itself an Advertising Business",
+    "dek": "On the Croisette, the AI lab told marketers the attention economy is giving way to an “intelligence economy” — and that it now sells ads against it.",
+    "body": "Cannes Lions 2026, which ran June 22 to 26, will be remembered as the festival where artificial intelligence stopped being a panel topic and became the business itself — and no moment captured it like OpenAI's first-ever appearance, where an executive told advertisers the company is “clearly in the advertising business now.” The pitch framed a shift from the attention economy to an “intelligence economy,” citing roughly 900 million weekly ChatGPT users, around one in five queries showing commercial intent, a move from CPM to cost-per-click pricing, and a stated ambition to reach $100 billion in ad revenue within four years. It landed amid a festival-long flood of “agentic” announcements, as holding companies, streamers and ad-tech vendors raced to ship software that plans, buys and makes advertising with the human increasingly out of the loop. For a programmatic and Advanced TV market built on auctions and the open web, a conversational ad surface at that scale is a new and non-auction channel for the same brand budgets — one that routes around the supply chain The Trade Desk and the holdcos spent a decade defending. The week's verdict, echoed across the recaps, was that AI has moved from hype to implementation: the tools are now infrastructure decisions, and Cannes was where the bill came due.",
+    "source_publication": "AdExchanger",
+    "source_url": "https://www.adexchanger.com/ai/at-its-first-ever-cannes-openai-says-we-are-clearly-in-the-advertising-business-now/",
+    "sources": [
+      {
+        "publication": "AdExchanger",
+        "url": "https://www.adexchanger.com/ai/at-its-first-ever-cannes-openai-says-we-are-clearly-in-the-advertising-business-now/",
+        "filed_date": "2026-06-23"
+      },
+      {
+        "publication": "The Drum",
+        "url": "https://www.thedrum.com/news/openai-s-cannes-pitch-a-whole-new-channel-for-marketers",
+        "filed_date": "2026-06-23"
+      },
+      {
+        "publication": "eMarketer",
+        "url": "https://www.emarketer.com/content/openai-makes-its-case-chatgpt-ads-cannes-lions",
+        "filed_date": "2026-06-24"
+      },
+      {
+        "publication": "Bloomberg",
+        "url": "https://www.bloomberg.com/news/newsletters/2026-06-26/openai-pitches-ai-chatbot-ads-at-cannes-lions-festival",
+        "filed_date": "2026-06-26"
+      }
+    ],
+    "filed_date": "2026-06-23"
+  },
+  "sections": [
+    {
+      "section_title": "On the Croisette — Awards & Culture",
+      "section_class": "festival-desk",
+      "stories": [
+        {
+          "headline": "Anthropic's Claude Wins Film Grand Prix Mocking AI Ads",
+          "dek": "Mother London's “A Time and a Place” imagines a future where chatbot answers are interrupted by sponsored messages.",
+          "body": "The Film Grand Prix at Cannes Lions 2026 went to Anthropic's “A Time and a Place,” a pair of Super Bowl spots from Mother London that pointedly mocked rivals stuffing advertising into AI chatbot answers, arguing there is a time and a place for ads — and it is not mid-response. The work, Anthropic's Super Bowl debut, also took Gold and Silver in Film and a Silver in Creative Strategy. That an AI lab won advertising's top film honor with a thesis against ads-everywhere crystallized the festival's central tension. For CTV and programmatic strategists, it is a sign that the AI-versus-advertising fight is now being waged in creative, not just in the auction.",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/creativity/claudes-super-bowl-campaign-mocking-ai-ads-wins-cannes-lions-film-grand-prix/",
+              "filed_date": "2026-06-26"
+            },
+            {
+              "publication": "Campaign",
+              "url": "https://www.campaignlive.co.uk/article/claude-mother-win-film-grand-prix-cannes-2026/1962899",
+              "filed_date": "2026-06-26"
+            }
+          ],
+          "source_publication": "Adweek",
+          "source_url": "https://www.adweek.com/creativity/claudes-super-bowl-campaign-mocking-ai-ads-wins-cannes-lions-film-grand-prix/",
+          "filed_date": "2026-06-26"
+        },
+        {
+          "headline": "Cannes Entries Fall 25% After an AI-Fraud Reckoning",
+          "dek": "Tough new integrity rules follow 2025's revoked Grand Prix over AI-manipulated case footage.",
+          "body": "Cannes Lions 2026 drew 20,050 entries from 92 countries, down 25.5% from 26,900 a year earlier, after the festival imposed integrity rules requiring proof-of-impact for every claim and personal sign-off by both the agency CEO and the brand CMO. The crackdown followed the 2025 scandal in which Brazil's DM9 had a Grand Prix and 11 other Lions revoked for AI-manipulated case-study footage; the festival added AI detection, human review, an Integrity Council and the threat of multi-year bans. The collapse in entries is the clearest measure yet of how AI-generated “evidence” is forcing marketing to rebuild trust in what work and what results are real — the same authenticity problem now haunting AI-made ad creative across CTV.",
+          "sources": [
+            {
+              "publication": "Ad Age",
+              "url": "https://adage.com/events-awards/cannes-lions/aa-entries-drop-2026/",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "Campaign US",
+              "url": "https://www.campaignlive.com/article/cannes-lions-award-entries-drop-25-2026/1962403",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "BestMediaInfo",
+              "url": "https://bestmediainfo.com/mediainfo/advertising/cannes-lions-2026-receives-20050-entries-as-submissions-drop-2546-12061505",
+              "filed_date": "2026-06-15"
+            }
+          ],
+          "source_publication": "Ad Age",
+          "source_url": "https://adage.com/events-awards/cannes-lions/aa-entries-drop-2026/",
+          "filed_date": "2026-06-15",
+          "chart": {
+            "type": "bar",
+            "title": "Cannes Lions award entries",
+            "source": "Ad Age; Cannes Lions, Jun 2026",
+            "data": [
+              {
+                "label": "2025",
+                "value": 26900
+              },
+              {
+                "label": "2026",
+                "value": 20050
+              }
+            ]
+          }
+        },
+        {
+          "headline": "Apple's Eddy Cue Named Cannes Entertainment Person of the Year",
+          "dek": "The services chief keynotes with Jerry Bruckheimer on the studio's record-setting “F1.”",
+          "body": "Apple's Eddy Cue accepted the 2026 Entertainment Person of the Year award at the Cannes Lions opening ceremony, hours after a main-stage keynote with producer Jerry Bruckheimer on Apple's Oscar-winning, record-setting film “F1” and a planned follow-up. Cue oversees Apple TV, Apple Music, Apple News and the wider services empire the festival credited with redefining audience engagement. Honoring the executive behind Apple's still-ad-light streaming service spotlighted the one major entertainment platform holding out against the ad-supported, data-driven model now sweeping the rest of CTV — a reminder that the festival's biggest budgets do not all flow to addressable inventory.",
+          "sources": [
+            {
+              "publication": "Variety",
+              "url": "https://variety.com/2026/tv/news/apple-eddy-cue-entertainment-person-cannes-lions-festival-1236754509/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "9to5Mac",
+              "url": "https://9to5mac.com/2026/06/22/eddy-cue-accepts-entertainment-person-of-the-year-award-at-cannes-lions/",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Variety",
+          "source_url": "https://variety.com/2026/tv/news/apple-eddy-cue-entertainment-person-cannes-lions-festival-1236754509/",
+          "filed_date": "2026-06-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Amazon Counters Agentic Hype With Alexa+ Shoppable Ads",
+          "dek": "A new format takes a viewer from ad to purchase inside a single voice conversation, with Fire TV on the roadmap.",
+          "body": "Amazon used Cannes Lions 2026 to unveil Alexa+ Agentic Ads, billed as the first format that takes a customer from seeing an ad to completing a purchase entirely within a conversation, with launch partners Papa Johns and The Orchard and a beta running on Echo Show devices. Amazon leaned on its existing DSP, measurement and transaction-level data to promise self-service and programmatic versions, with Fire TV expansion planned. For the CTV market, the Fire TV roadmap points to conversational, closed-loop commerce arriving on the living-room screen and inside Amazon's DSP — a direct bid to fuse retail-media intent with streaming reach as agentic buying spreads.",
+          "sources": [
+            {
+              "publication": "Marketing Dive",
+              "url": "https://www.marketingdive.com/news/as-agentic-advertising-floods-cannes-amazon-touts-its-alexa-advantage/823730/",
+              "filed_date": "2026-06-25"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/agentic-ad-buying-takes-center-stage-cannes-adoption-expands",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "Marketing Dive",
+          "source_url": "https://www.marketingdive.com/news/as-agentic-advertising-floods-cannes-amazon-touts-its-alexa-advantage/823730/",
+          "filed_date": "2026-06-25"
+        },
+        {
+          "headline": "TikTok Debuts Symphony Agent and Custom Creator Networks",
+          "dek": "An agentic AI builds video ads from prompts; brands curate their own creator pools.",
+          "body": "TikTok used Cannes Lions 2026 to launch Symphony Agent, an agentic AI that generates video ad campaigns from text, image and video prompts on ByteDance's Seedance model, alongside Custom Creator Networks that let brands assemble curated pools of creators and employees for briefs. Starbucks will run the first such network this summer through its Green Apron Creator Program. The tools deepen TikTok's automation of video ad production as it competes for the creative budgets and creator-led inventory flowing through the festival — and push more short-form video toward machine-made, biddable supply.",
+          "sources": [
+            {
+              "publication": "Net Influencer",
+              "url": "https://www.netinfluencer.com/tiktok-unveils-symphony-agent-custom-creator-networks-at-cannes-lions-2026/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Performance Marketing World",
+              "url": "https://www.performancemarketingworld.com/article/1962507/cannes-lions-2026-tiktok-announces-new-ai-agent-three-adland-giants-unveil-creator-partnerships-playbook",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "Net Influencer",
+          "source_url": "https://www.netinfluencer.com/tiktok-unveils-symphony-agent-custom-creator-networks-at-cannes-lions-2026/",
+          "filed_date": "2026-06-23"
+        },
+        {
+          "headline": "YouTube Wires Gemini Into New Creator and Trend Tools",
+          "dek": "Trending Insights, a Creator Insights API and Gemini-powered Demand Gen optimization debut at Cannes.",
+          "body": "At Cannes Lions 2026, YouTube and Google introduced a clutch of advertiser tools, including granular US Trending Insights and Brand Pulse metrics in Google Ads Insights Finder, a Content and Creator Insights API for media planning, and Gemini-powered optimization for Demand Gen campaigns. The release centers on creator marketing and trend discovery, and arrived the same week Forrester named Google agencies' preferred AI partner. It underscores how the largest video platform is threading generative AI through planning and buying as agentic workflows spread across CTV and online video.",
+          "sources": [
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/google-expands-youtube-s-creator-marketing-tools-cannes-lions",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Performance Marketing World",
+              "url": "https://www.performancemarketingworld.com/article/1962640/cannes-lions-2026-google-unveils-new-gemini-powered-youtube-tools-amazon-retail-ad-service-hits-uk",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "BuzzInContent",
+              "url": "https://www.buzzincontent.com/news/youtube-unveils-gemini-powered-insights-tools-for-creator-led-campaigns-at-cannes-lions-2026-12067643",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "eMarketer",
+          "source_url": "https://www.emarketer.com/content/google-expands-youtube-s-creator-marketing-tools-cannes-lions",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Omnicom and NBCUniversal Build Scene-Level Contextual CTV Ads",
+          "dek": "Dynamic Contextual Content matches creative to individual episodes and scenes.",
+          "body": "At Cannes Lions 2026, Omnicom Media and NBCUniversal launched Dynamic Contextual Content, which pairs scene-level signals from NBCU shows — down to specific episodes and moments — with Acxiom audience data to adapt ad messaging in real time. The companies cite research that viewers connect more with ads relevant to what they are watching; the capability is in beta with interest from CPG, financial services and telecom, targeting a US release by the end of 2026. It pushes CTV past audience targeting toward the show- and scene-level contextual planning marketers know from linear, tying relevance directly to measurement — the heart of performance-counted streaming.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/at-cannes-omnicom-media-and-nbcu-say-theyre-crafting-dynamic-contextual-ads-for-content/",
+              "filed_date": "2026-06-24"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/omnicom-nbcu-partner-cannes-bring-contextual-advertising-ctv",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/at-cannes-omnicom-media-and-nbcu-say-theyre-crafting-dynamic-contextual-ads-for-content/",
+          "filed_date": "2026-06-24"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "Omnicom Becomes Netflix's First Data Collaboration Partner",
+          "dek": "Acxiom audience data and AI “digital twins” of products come to the Netflix Ads Suite.",
+          "body": "On the opening day of Cannes Lions 2026, Omnicom Media announced it is Netflix's first data collaboration partner, pairing Acxiom audience data with Netflix's AI-powered ad tech to personalize streaming creative — including AI-generated “digital twin” product placements woven into content so different viewers can see different branded objects. The deal launches in the US with international expansion planned by year-end and includes closed-loop measurement across audiences, creative and programming. It is the marquee CTV deal of the week, and a signal that premium streamers are now opening their walled-garden ad stacks to holding-company data and AI-native creative.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/omnicom-media-kicks-off-a-series-of-partnerships-at-cannes-lions-with-a-first-time-netflix-deal/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/omnicom-announces-netflix-partnership-cannes-lion-enhance-ctv-ad-relevance",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/omnicom-media-kicks-off-a-series-of-partnerships-at-cannes-lions-with-a-first-time-netflix-deal/",
+          "filed_date": "2026-06-22"
+        },
+        {
+          "headline": "WPP Media Unveils Video Buyer Agent and Agentic Standards Push",
+          "dek": "Disney, Netflix, Fox, NBCUniversal, Paramount and Comcast sign on to govern AI buying.",
+          "body": "WPP Media used the run-up to Cannes Lions 2026 to reveal a prototype Buyer Agent for video inside WPP Open, plus an Agentic Standards Initiative to govern how buyer and seller agents transact premium video. Founding participants span Disney Advertising, Netflix, Fox, NBCUniversal, Paramount and Comcast Advertising/FreeWheel, with IAB Tech Lab and Prebid.org on standards and a proposed industry standard targeted for early 2027. If it holds, the effort could become the rails for autonomous CTV and TV buying the way programmatic standards once were for display — a holdco's bid to set the rules before any single vendor's protocol becomes the default.",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/convergent-tv/wpp-disney-netflix-fox-agentic-video-standards/",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415895/wpp-media-unveils-prototype-for-new-buyer-agent.html",
+              "filed_date": "2026-06-18"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/humans-at-the-helm-agents-in-the-loop-wpp-is-testing-a-buyer-ageny-for-video-but-its-bigger-bet-is-on-governance/",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "Adweek",
+          "source_url": "https://www.adweek.com/convergent-tv/wpp-disney-netflix-fox-agentic-video-standards/",
+          "filed_date": "2026-06-18"
+        },
+        {
+          "headline": "Adobe Puts the Holding Companies to Work Running Its Agentic AI",
+          "dek": "Accenture Song, Omnicom, WPP and Stagwell's Code and Theory deploy CX Enterprise.",
+          "body": "Adobe announced at Cannes Lions 2026 that Accenture Song, Omnicom, WPP and Stagwell's Code and Theory — alongside Anthropic and Microsoft — will deploy its content, data and AI platforms to run agentic AI at scale for enterprise clients. The partnerships aim to connect paid-media spend with owned customer-experience data, a loop most marketing stacks still reconcile by hand. For programmatic and CTV, tighter ties between agency activation and first-party CX data feed the identity-and-outcomes loop that increasingly governs where streaming budgets flow.",
+          "sources": [
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/adobe-at-cannes-lions-agency-giants-are-now-running-its-agentic-ai/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/ad-tech-briefing-agentic-ai-interoperability-and-control-dominate-cannes-lions-announcements/",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "PPC Land",
+          "source_url": "https://ppc.land/adobe-at-cannes-lions-agency-giants-are-now-running-its-agentic-ai/",
+          "filed_date": "2026-06-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Publicis's $2.2B LiveRamp Deal Splits the Identity Layer at Cannes",
+          "dek": "“If you don't have the identity, you don't win with AI,” says Sadoun — as WPP vows to drop LiveRamp.",
+          "body": "Publicis's $2.2 billion agreement to buy identity firm LiveRamp framed every data conversation at Cannes Lions 2026, with CEO Arthur Sadoun arguing that identity is “the qualifier for AI” and whoever controls the data owns the agentic era. The fault line opened fast: WPP CEO Cindy Rose said her group would stop using LiveRamp now that a direct holding-company rival owns the “Switzerland of data,” whose RampID spans tens of thousands of publisher domains. For CTV and programmatic buyers who lean on neutral cross-publisher identity to make streaming addressable, a marquee defection signals real fragmentation risk in the connective tissue the whole market relies on.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/identity-is-the-qualifier-for-ai-publicis-2-2-billion-liveramp-deal-is-a-bet-that-whoever-controls-the-data-owns-the-ai-era/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "The Current",
+              "url": "https://www.thecurrent.com/marketing-strategy-publicis-liveramp-rampid-data-industry-ad-tech",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/marketers/publicis-acquires-liveramp-in-a-major-shakeup-for-indie-data-collaboration/",
+              "filed_date": "2026-05-17"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/identity-is-the-qualifier-for-ai-publicis-2-2-billion-liveramp-deal-is-a-bet-that-whoever-controls-the-data-owns-the-ai-era/",
+          "filed_date": "2026-06-23"
+        },
+        {
+          "headline": "Walmart Buys CTV Ad Platform Vibe.co in Cannes-Week Deal",
+          "dek": "The roughly $1.4B purchase folds a self-serve streaming buyer into Walmart Connect.",
+          "body": "Walmart agreed during Cannes Lions week to acquire Vibe.co, a self-serve performance-CTV ad platform aimed at small and mid-market advertisers, in a deal reported around $1.4 billion. Vibe's buying tech will join Walmart Connect alongside the retailer's VIZIO assets and first-party data, simplifying how smaller advertisers activate and measure streaming campaigns. The move deepens Walmart's push to build a full retail-media-plus-CTV stack and intensifies the fight for the long tail of advertisers' streaming budgets — the same SMB demand Disney, Amazon and the broadcasters' new self-serve tools are all chasing.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/future-of-tv/walmart-buys-the-google-ads-of-streaming-vibe-in-a-deal-tipped-at-a-1-billion-plus-valuation/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/walmart-buys-vibe-co-to-woo-smbs-to-streaming/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Variety",
+              "url": "https://variety.com/2026/tv/news/walmart-acquire-vibe-advertising-1236788242/",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/future-of-tv/walmart-buys-the-google-ads-of-streaming-vibe-in-a-deal-tipped-at-a-1-billion-plus-valuation/",
+          "filed_date": "2026-06-23"
+        },
+        {
+          "headline": "Forrester: Google Dethrones OpenAI as Agencies' AI Partner",
+          "dek": "Breadth and integration beat the buzz on the Croisette.",
+          "body": "Two days before OpenAI's Cannes session, Forrester published research finding Google has overtaken OpenAI as agencies' preferred AI partner, citing Google's end-to-end stack across data, measurement, creative, models and activation — from Analytics and Meridian to Gemini, Imagen, Veo, Search and YouTube. At the festival Google then rolled out new Gemini-built creator and Demand Gen tools. The framing matters for CTV and programmatic: the AI partner that owns the full buying-to-measurement workflow, not the flashiest model, is the one positioned to capture agency spend as autonomous buying scales.",
+          "sources": [
+            {
+              "publication": "Forrester",
+              "url": "https://www.forrester.com/blogs/google-dethrones-openai-as-agencies-preferred-ai-partner/",
+              "filed_date": "2026-06-21"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/google-expands-youtube-s-creator-marketing-tools-cannes-lions",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "Forrester",
+          "source_url": "https://www.forrester.com/blogs/google-dethrones-openai-as-agencies-preferred-ai-partner/",
+          "filed_date": "2026-06-21"
+        },
+        {
+          "headline": "Magnite Ships Orchestration to Connect Buyer and Seller Agents",
+          "dek": "A neutral coordination layer for the agentic supply chain, with dentsu and DIRECTV testing.",
+          "body": "Days before Cannes Lions, Magnite introduced Magnite Orchestration, a coordination layer that lets buyers connect their own buyer agents to Magnite's seller agent across its premium omnichannel inventory, with testing partners including dentsu and DIRECTV Advertising. Magnite pitches it as neutral infrastructure that does not force buyers onto its native tools — part of a cluster of agentic ad-tech launches that piled up before the festival, from PubMatic's Creator Marketplace to Index Exchange's autonomous CTV optimization. It positions the largest independent SSP as connective tissue for agentic CTV trading, a sign the sell side is racing to make premium video machine-discoverable as autonomous buying arrives.",
+          "sources": [
+            {
+              "publication": "Magnite (GlobeNewswire)",
+              "url": "https://www.globenewswire.com/news-release/2026/06/11/3310415/0/en/introducing-magnite-orchestration-powering-the-future-of-agentic-advertising.html",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/ad-tech-briefing-agentic-ai-interoperability-and-control-dominate-cannes-lions-announcements/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/agentic-ad-buying-takes-center-stage-cannes-adoption-expands",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "Magnite",
+          "source_url": "https://www.globenewswire.com/news-release/2026/06/11/3310415/0/en/introducing-magnite-orchestration-powering-the-future-of-agentic-advertising.html",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "EU AI Act's Deepfake-Labeling Rules Hit an August 2 Deadline",
+          "dek": "Article 50 transparency duties force disclosure of AI-generated ad creative across the EU.",
+          "body": "As the festival celebrated AI creative, legal advisories underscored that the EU AI Act's Article 50 transparency obligations take effect on August 2, 2026, requiring providers to make synthetic audio, image, video and text machine-readable and detectable, and deployers to clearly disclose deepfakes. The European Commission's voluntary marking-and-labeling code was finalized around June 2026, with machine-readable marking of pre-existing systems extended to December 2, and penalties reaching €15 million or 3% of worldwide turnover. For CTV and programmatic strategists, any AI-generated or AI-manipulated creative running to EU audiences now needs watermarking, metadata and disclosure baked into the production and trafficking workflow within weeks — turning Cannes's AI talk into a hard compliance date.",
+          "sources": [
+            {
+              "publication": "Sidley Austin (Data Matters)",
+              "url": "https://datamatters.sidley.com/2026/06/24/eu-ai-act-transparency-obligations-preparing-for-compliance-by-2-august-2026/",
+              "filed_date": "2026-06-24"
+            },
+            {
+              "publication": "Bratby Law",
+              "url": "https://bratby.law/ai-act-transparency-obligations-2026/",
+              "filed_date": "2026-06-12"
+            }
+          ],
+          "source_publication": "Sidley Austin",
+          "source_url": "https://datamatters.sidley.com/2026/06/24/eu-ai-act-transparency-obligations-preparing-for-compliance-by-2-august-2026/",
+          "filed_date": "2026-06-24",
+          "chart": {
+            "type": "stat",
+            "value": "Aug 2",
+            "caption": "EU AI Act Article 50 AI-labelling duties take effect; fines up to €15M or 3% of global turnover.",
+            "source": "Sidley Austin; EU AI Act, 2026"
+          }
+        },
+        {
+          "headline": "UN Tells Cannes Misinformation Is Now a Brand-Safety Frontier",
+          "dek": "A day-one panel reframes brand safety as information integrity in the AI era.",
+          "body": "On the opening day of Cannes Lions 2026, a panel on rebooting AI and social media featured the UN's senior information-integrity adviser Charlotte Scaddan, who called mis- and disinformation a top global vulnerability and urged advertisers to treat it as a systemic risk. Panelists argued brand safety must expand from keyword blocklists into societal, youth and platform-design safety, and pressed marketers to redirect budgets toward transparent, quality journalism. For CTV and programmatic strategists, the message is that brand-suitability frameworks and supply-path decisions are increasingly judged on information integrity, not just adjacency — a standard that will shape where streaming and open-web dollars are allowed to run.",
+          "sources": [
+            {
+              "publication": "The Hollywood Reporter",
+              "url": "https://www.hollywoodreporter.com/business/business-news/cannes-lions-2026-takeaways-ai-creators-misinformation-1236626784/",
+              "filed_date": "2026-06-25"
+            },
+            {
+              "publication": "Manifest Media",
+              "url": "https://www.manifest-media.in/digital/220626/cannes-lions-2026-misinformation-is-a-terrible-virus-and-we-need-an.html",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "The Hollywood Reporter",
+          "source_url": "https://www.hollywoodreporter.com/business/business-news/cannes-lions-2026-takeaways-ai-creators-misinformation-1236626784/",
+          "filed_date": "2026-06-25"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "AdImpact Raises 2026 Midterm Ad Forecast to $11.6 Billion",
+          "dek": "Connected TV climbs to $2.7B as political spend hits a record pace through June.",
+          "body": "AdImpact raised its 2025–26 midterm-cycle projection to $11.6 billion from $10.8 billion after political advertisers spent a record amount through June, the fastest pace ever for a midterm. Connected TV was revised up $300 million to $2.7 billion, the standout growth channel, while broadcast climbed to $5.6 billion, with the increase driven largely by Senate races. For CTV and programmatic strategists, the upgrade confirms streaming is absorbing an outsized share of incremental political dollars — tightening Q3 and Q4 inventory and CPMs in battleground markets just as brand budgets compete for the same impressions.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415747/fastest-political-ad-spend-through-june-surges-to.html",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "CNBC",
+              "url": "https://www.cnbc.com/2026/06/11/2026-elections-ad-spend-adimpact.html",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415747/fastest-political-ad-spend-through-june-surges-to.html",
+          "filed_date": "2026-06-11",
+          "chart": {
+            "type": "bar",
+            "title": "Projected 2025–26 midterm ad spend by channel",
+            "source": "AdImpact, via MediaPost & CNBC, Jun 2026",
+            "unit": "B",
+            "data": [
+              {
+                "label": "Broadcast",
+                "value": 5.6
+              },
+              {
+                "label": "Connected TV",
+                "value": 2.7
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — United Kingdom",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "ITV, Channel 4 and Sky Launch Universal Ads Self-Serve in the UK",
+          "dek": "Comcast's SME TV-buying tool, unveiled at Cannes 2025, goes live during Cannes 2026 week.",
+          "body": "On June 23, 2026, ITV, Channel 4 and Sky launched Comcast's Universal Ads self-serve platform in Britain, letting small and mid-sized advertisers create, buy and measure premium TV campaigns across ITV Media, Sky Media and Channel 4 Sales from a single interface. First announced by the cohort at Cannes Lions 2025, it aims to make biddable buying of broadcaster inventory as simple as social, with third-party measurement due in 2027. For a global CTV strategist, it shows premium broadcasters collapsing the barrier between linear and BVOD inventory and the self-serve, DTC-style demand that has fueled streaming ad growth — a template for unified broadcaster sales houses in other markets.",
+          "sources": [
+            {
+              "publication": "The Desk",
+              "url": "https://thedesk.net/2026/06/comcast-channel-4-itv-sky-ads-product/",
+              "filed_date": "2026-06-24"
+            },
+            {
+              "publication": "Broadband TV News",
+              "url": "https://www.broadbandtvnews.com/2026/06/23/universal-ads-launches-in-uk-with-itv-channel-4-and-sky-partnership/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Mediashotz",
+              "url": "https://mediashotz.co.uk/universal-ads-launches-in-uk-with-channel-4-itv-and-sky/",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "The Desk",
+          "source_url": "https://thedesk.net/2026/06/comcast-channel-4-itv-sky-ads-product/",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "India Closes Cannes 2026 With Five Lions, Weakest in a Decade",
+          "dek": "Two Silver and three Bronze, no Gold or Grand Prix, on a 31% drop in entries.",
+          "body": "India finished Cannes Lions 2026 with five Lions — two Silver and three Bronze — its weakest showing in ten years, against 32 Lions including a Grand Prix in 2025. The country sent 676 entries, down 31% from 982, as rising travel costs and tighter budgets shrank delegations and on-ground spend. For a global CTV and programmatic strategist, the pullback signals that India's ad economy is reallocating away from awards-season prestige toward performance and measurable digital and streaming channels — the same JioStar- and CTV-led shift reshaping where APAC creative and media budgets actually flow.",
+          "sources": [
+            {
+              "publication": "BestMediaInfo",
+              "url": "https://bestmediainfo.com/mediainfo/advertising/india-draws-a-blank-on-cannes-lions-final-day-closes-2026-with-five-lions-12109660",
+              "filed_date": "2026-06-26"
+            },
+            {
+              "publication": "Exchange4media",
+              "url": "https://www.exchange4media.com/cannes-lions-news/cannes-lions-2026-day-3-india-stays-on-5-lions-after-direct-and-media-draw-a-blank-155745.html",
+              "filed_date": "2026-06-25"
+            }
+          ],
+          "source_publication": "BestMediaInfo",
+          "source_url": "https://bestmediainfo.com/mediainfo/advertising/india-draws-a-blank-on-cannes-lions-final-day-closes-2026-with-five-lions-12109660",
+          "filed_date": "2026-06-26"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Brazil Leads LATAM Cannes Haul With Mercado Livre Outdoor Grand Prix",
+          "dek": "GUT São Paulo's “Field Barcode” turns a stadium pitch into a scannable storefront.",
+          "body": "Latin America took 47 Lions in the first two days of Cannes Lions 2026, more than half from Brazil, which won the Outdoor Grand Prix for Mercado Livre's “Field Barcode” by GUT São Paulo. The activation turned a football pitch into a 104-metre barcode that in-stadium, TV and YouTube viewers could scan for a discount, driving 53,000 coupon uses and $1.78 million in sales; Puerto Rico added the Audio & Radio Grand Prix. For a global CTV strategist, the win is a marquee proof point that LATAM's e-commerce platforms are building shoppable, multi-screen activations that bridge live TV, streaming and retail media.",
+          "sources": [
+            {
+              "publication": "Roastbrief US",
+              "url": "https://roastbrief.us/the-first-day-of-cannes-lions-2026-delivered-119-awards-across-seven-categories-with-grands-prix-for-hyundai-puerto-rico-skf-ab-inbev-the-ordinary-heinz-ketchup-novartis-and-mercado-livre/",
+              "filed_date": "2026-06-22"
+            },
+            {
+              "publication": "Reel 360 News",
+              "url": "https://reel360.com/article/cannes-lions-reveals-first-2026-grand-prix-winners/",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Roastbrief US",
+          "source_url": "https://roastbrief.us/the-first-day-of-cannes-lions-2026-delivered-119-awards-across-seven-categories-with-grands-prix-for-hyundai-puerto-rico-skf-ab-inbev-the-ordinary-heinz-ketchup-novartis-and-mercado-livre/",
+          "filed_date": "2026-06-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Rethink Named Cannes 2026 Independent Agency and Network of the Year",
+          "dek": "Canada lands two Grand Prix and 43 Lions at the festival.",
+          "body": "Toronto-based Rethink led the Canadian field at Cannes Lions 2026 with 14 Lions, including a Grand Prix and three Golds, and was named both Independent Agency of the Year and Independent Network of the Year. Canada took 43 Lions overall across 16 winning agencies, with a second Grand Prix going to TBWA's “Supernova Adaptive” in Innovation. For a global CTV strategist, Canada's independent-shop momentum and innovation wins signal where cross-platform creative talent and challenger budgets are concentrating in a market dominated by Bell, Rogers and Corus.",
+          "sources": [
+            {
+              "publication": "Strategy",
+              "url": "https://strategyonline.ca/2026/06/26/cannes-rethink-indie-aoy/",
+              "filed_date": "2026-06-26"
+            },
+            {
+              "publication": "LBBonline",
+              "url": "https://lbbonline.com/news/Cannes-Lions-2026-Canadian-Winners",
+              "filed_date": "2026-06-25"
+            }
+          ],
+          "source_publication": "Strategy",
+          "source_url": "https://strategyonline.ca/2026/06/26/cannes-rethink-indie-aoy/",
+          "filed_date": "2026-06-26"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "China Posts a Modest Cannes 2026 Haul of Craft and PR Lions",
+          "dek": "Tourism and pharma work win Silver and Bronze, but no Grand Prix — and the TV giants stay home.",
+          "body": "Mainland China registered a handful of metals at Cannes Lions 2026 rather than a Grand Prix, led by a Silver in Audio & Radio for a Yangzhou tourism suite, a Bronze in Industry Craft for a Shenzhen tourism campaign, and a PR Bronze from Ogilvy Shanghai. The result extends China's pattern of winning on government-tourism and craft work while consumer-electronics giants TCL, Hisense and Xiaomi stayed off the winners' lists. For a global CTV strategist, the gap matters because those same TV makers are China's most aggressive exporters of CTV ad inventory abroad — yet are not converting that scale into festival-grade brand creative.",
+          "sources": [
+            {
+              "publication": "Branding in Asia",
+              "url": "https://www.brandinginasia.com/cannes-lions-2026-day-one-grand-prix-apac-winners-and-special-awards/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "adobo Magazine",
+              "url": "https://www.adobomagazine.com/advertising-awards/cannes-lions-2026-media-direct-pr-and-social-creator-lions-winners-1/",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "Branding in Asia",
+          "source_url": "https://www.brandinginasia.com/cannes-lions-2026-day-one-grand-prix-apac-winners-and-special-awards/",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "The Watercooler",
+      "section_class": "watercooler",
+      "stories": [
+        {
+          "headline": "“Cannes Is Not the Creative Spot Anymore — It's Silicon Valley”",
+          "body": "MINT Square CEO Christoph Berg told Digiday the festival has changed character: “The Lions used to be the spot for all the creative minds. Now it's more about technologies. It's Silicon Valley who found a spot there.” It names the structural shift in one line — platforms and ad-tech, not agencies, increasingly own the Croisette.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/marketing/cannes-briefing-the-ad-industrys-power-shifts-mapped-in-sand/",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/marketing/cannes-briefing-the-ad-industrys-power-shifts-mapped-in-sand/",
+          "filed_date": "2026-06-22"
+        },
+        {
+          "headline": "Cannes Cracked Down on AI Fakery, Then Threw AI a Party",
+          "body": "PartnerCentric's Kate Fleming caught the central irony: “The festival that tightened its rules to crack down on AI deception is now hosting its largest-ever celebration of AI creative tools.” It crystallizes the credibility tension Cannes is carrying a year after the AI-faked-results scandal — even as AI usage in entries roughly doubled.",
+          "sources": [
+            {
+              "publication": "Net Influencer",
+              "url": "https://www.netinfluencer.com/the-deals-the-doubts-and-the-ai-tension-27-creator-economy-voices-on-the-biggest-takeaways-from-cannes-lions-2026/",
+              "filed_date": "2026-06-26"
+            }
+          ],
+          "source_publication": "Net Influencer",
+          "source_url": "https://www.netinfluencer.com/the-deals-the-doubts-and-the-ai-tension-27-creator-economy-voices-on-the-biggest-takeaways-from-cannes-lions-2026/",
+          "filed_date": "2026-06-26"
+        },
+        {
+          "headline": "The Bankers Stopped Pretending They're Just Passing Through",
+          "body": "Solomon Partners' Mark Boidman explained why finance now sends senior dealmakers to Cannes: “We could do the same conference in Vegas, but here you're not sending your analysts, you're sending a senior partner or an MD.” Private-equity and M&A bankers treating Cannes as a deal conference foreshadows the consolidation wave expected as model-makers pivot into advertising.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/marketing/cannes-briefing-the-ad-industrys-power-shifts-mapped-in-sand/",
+              "filed_date": "2026-06-22"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/marketing/cannes-briefing-the-ad-industrys-power-shifts-mapped-in-sand/",
+          "filed_date": "2026-06-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Agent Is the Audience Now",
+          "dek": "When buying becomes a conversation between machines, the human is the content that gets amputated.",
+          "body": "Walk the Croisette this year and you saw the figure: beach cabanas, keynote lanyards, the great rosary of awards. But the figure always hides the ground, and the ground at Cannes 2026 was an absence — the disappearing human buyer. Every booth promised an “agent.” What no one said aloud is that an agent is not a tool you use; it is a new audience you serve. The advertisement is no longer a message aimed at a person. It is a handshake between two programs.\n\nWe are told this is automation, a faster horse. It is not. It is a reversal of sense ratios. For a century advertising extended the eye and the ear — it worked by attention, the scarce human faculty. OpenAI arrives to announce the “intelligence economy,” and the phrase is more honest than its authors know: when the medium is intelligence, attention is obsolesced. The query has commercial intent before any human feels a want. The buying machine and the selling machine close the loop, and the percept that used to live in a viewer's nervous system now lives in a latency budget measured in milliseconds.\n\nEvery extension amputates. The wheel extended the foot and numbed it; the agent extends the buyer and numbs the buying. The danger is not that the machines will fail. It is that they will succeed so smoothly that no one in the living room will notice the room is empty. The screen still glows. The ad still plays. Ask only this: who, exactly, is watching whom?\n\n— Marshall McLuhan",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/ai/at-its-first-ever-cannes-openai-says-we-are-clearly-in-the-advertising-business-now/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/ad-tech-briefing-agentic-ai-interoperability-and-control-dominate-cannes-lions-announcements/",
+              "filed_date": "2026-06-24"
+            },
+            {
+              "publication": "eMarketer",
+              "url": "https://www.emarketer.com/content/agentic-ad-buying-takes-center-stage-cannes-adoption-expands",
+              "filed_date": "2026-06-24"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.adexchanger.com/ai/at-its-first-ever-cannes-openai-says-we-are-clearly-in-the-advertising-business-now/",
+          "filed_date": "2026-06-26",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "We Sell, Or Else — Even on the Riviera",
+          "dek": "A festival can hand out a lion for everything except the only thing that matters: did it sell?",
+          "body": "This year the festival gave its top film prize to a campaign about advertising, made by a company that makes software. I am told it was clever. I am sure it was. But cleverness was never the point. When I put a black eyepatch on the man in the Hathaway shirt, I was not being clever. I was selling shirts, and Hathaway sold more of them than in the whole of its previous century. The patch was a hook. The shirt was the point. Never confuse the two.\n\nThe numbers this year ought to sober everyone holding a rosé. Entries fell to 20,050 from 26,900 — a quarter of the work simply gone, after the organizers had to start demanding proof that the case studies were not invented. Read that sentence again. An industry that prides itself on persuasion had to be policed into telling the truth about its own results. A machine can now fake a result more convincingly than a junior account man, and for a while the machines were winning lions for it.\n\nSo here is my instruction, and it costs nothing. Before you buy the agent, the platform, the generative suite that promises a thousand variations by lunch, ask the only question that has ever mattered: will it make the cash register ring? If it will, buy it and say so plainly. If it will not, it is decoration, and you may admire it on the beach. The consumer is not a moron. She is your wife. Sell to her, or else.\n\n— David Ogilvy",
+          "sources": [
+            {
+              "publication": "Ad Age",
+              "url": "https://adage.com/events-awards/cannes-lions/aa-entries-drop-2026/",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "The Hollywood Reporter",
+              "url": "https://www.hollywoodreporter.com/business/business-news/cannes-lions-2026-takeaways-ai-creators-misinformation-1236626784/",
+              "filed_date": "2026-06-25"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/creativity/claudes-super-bowl-campaign-mocking-ai-ads-wins-cannes-lions-film-grand-prix/",
+              "filed_date": "2026-06-26"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://adage.com/events-awards/cannes-lions/aa-entries-drop-2026/",
+          "filed_date": "2026-06-26",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "The Croisette's promises now meet the calendar: the EU AI Act's Article 50 labelling duties bite on August 2, WPP Media's agentic-video standard is pledged for early 2027, and the first Omnicom–Netflix and Amazon Alexa+ deals must prove they work outside a beach cabana before upfront season."
+}

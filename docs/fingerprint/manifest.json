@@ -127,6 +127,26 @@
         "The Watercooler"
       ],
       "dispatches": 16
+    },
+    {
+      "date": "2026-06-26-cannes",
+      "weekday": "",
+      "edition_number": 31,
+      "file": "fingerprint/2026-06-26-cannes-fingerprint.html",
+      "lead_headline": "OpenAI Debuts at Cannes, Declaring Itself an Advertising Business",
+      "lead_dek": "On the Croisette, the AI lab told marketers the attention economy is giving way to an “intelligence economy” — and that it now sells ads against it.",
+      "beats": [
+        "On the Croisette — Awards & Culture",
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 26
     }
   ]
 }
