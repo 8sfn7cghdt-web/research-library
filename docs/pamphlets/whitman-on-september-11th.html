@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fox Bought Roku for Its Identity Graph, Not Its Shows — The Fingerprint</title>
-<meta name="description" content="Three days on, the market reads the $22 billion deal as a play for ACR data, 100 million households and the home screen itself.">
+<title>The Climbing Men — The Pamphlets</title>
+<meta name="description" content="On the eleventh of September">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='2' y='2' width='28' height='28' rx='7' fill='%23b3502f'/><rect x='34' y='2' width='28' height='28' rx='7' fill='%23c9a227'/><rect x='2' y='34' width='28' height='28' rx='7' fill='%232e5266'/><rect x='34' y='34' width='28' height='28' rx='7' fill='%236b7d4f'/></svg>">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="research · calvincollins · xyz">
@@ -199,207 +199,104 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   .hero-art { width: 100%; }
 }
 
-/* A single Fingerprint edition — the site's reading column wearing a market-wire's
-   coat. Every colour/font token is shared with the rest of the site; each beat adds
-   its own --sec accent. */
-.fp-edition { max-width: 880px; margin: 0 auto; padding: 1.4rem 2rem 1rem; }
+/* A single pamphlet — the corpus reader's reading column in letterpress dress.
+   Shares every colour/font token with the rest of the site. */
+.pm-essay { max-width: 720px; margin: 0 auto; padding: 2.2rem 2rem 1rem; }
 
-/* reading-progress bar + theme button — same affordances as the corpus reader */
-#fp-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0;
-  background: linear-gradient(90deg, var(--t1), var(--t2), var(--t3), var(--t4)); z-index: 50; transition: width .1s linear; }
+/* nameplate — a compact echo of pamphlets.html's section plate. display:block
+   overrides the generic header{display:flex} rule from LIBRARY_CSS. */
+.pm-nameplate { display: block; text-align: center; max-width: 640px; margin: 0 auto 2.6rem; padding: 0; }
+.pm-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .2em; color: var(--accent); margin: 0 0 .45rem; }
+.pm-name { display: inline-block; font-family: var(--display); font-weight: 800;
+  font-size: clamp(2.1rem, 5.2vw, 3.1rem); line-height: .98; letter-spacing: -.02em;
+  color: var(--text); text-decoration: none; margin: 0 0 .9rem; }
+.pm-name:hover { color: var(--accent); }
+.pm-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .5rem 0;
+  font-family: var(--sans); font-size: .66rem; text-transform: uppercase; letter-spacing: .14em; }
+.pm-folio .pm-folio-c { color: var(--accent); font-weight: 700; }
+.pm-folio span { flex: 1; }
+.pm-folio span:first-child { text-align: left; }
+.pm-folio span:last-child { text-align: right; }
+
+/* the essay head */
+.pm-tagline { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--accent); margin: 0 0 .55rem; }
+.pm-head { font-family: var(--display); font-weight: 800; letter-spacing: -.01em; line-height: 1.06;
+  font-size: clamp(2rem, 4.6vw, 2.9rem); margin: 0 0 .7rem; }
+.pm-head::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .6rem;
+  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.pm-dek { font-family: var(--serif); font-style: italic; color: var(--muted);
+  font-size: 1.28rem; line-height: 1.42; margin: 0 0 .9rem; }
+.pm-byline { font-family: var(--sans); font-size: .72rem; letter-spacing: .14em; color: var(--accent);
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  padding: .4rem 0; margin: 0 0 1.6rem; }
+
+/* the body */
+.pm-body { font-size: 1.07rem; line-height: 1.78; }
+.pm-body p { margin: 0 0 1.2rem; }
+.pm-body a { color: var(--accent); }
+.pm-body em { font-style: italic; }
+.pm-body blockquote { margin: 1.4rem 0; padding: .6rem 1.3rem; border-left: 3px solid var(--accent);
+  background: var(--panel); border-radius: 0 14px 14px 0; color: var(--muted); font-style: italic; }
+/* drop cap opens the essay */
+.pm-body > p:first-of-type::first-letter { font-family: var(--display); font-weight: 800;
+  float: left; font-size: 3.1em; line-height: .72; padding: .06em .1em 0 0; color: var(--accent); }
+
+/* foot — names the voice */
+.pm-foot { max-width: 720px; margin: 2.8rem auto 0; padding: 1.5rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.pm-colophon { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .96rem; margin: 0 0 .8rem; }
+.pm-nav { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; }
+.pm-nav a { color: var(--accent); text-decoration: none; }
+.pm-nav a:hover { text-decoration: underline; }
+
+/* floating theme toggle, same affordance as the corpus reader */
 #theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
   font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
   border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
 #theme-btn:hover { color: var(--accent); border-color: var(--accent); }
 
-/* nameplate */
-.fp-nameplate { display: block; text-align: center; margin: .6rem 0 1.4rem; }
-.fp-np-kicker { font-family: var(--sans); font-size: .66rem; text-transform: uppercase;
-  letter-spacing: .2em; color: #0d5b68; margin: 0 0 .4rem; }
-[data-theme="dark"] .fp-np-kicker { color: #62aab8; }
-.fp-np-name { display: inline-block; font-family: var(--display); font-weight: 800;
-  font-size: clamp(2.1rem, 5.4vw, 3.2rem); line-height: .98; letter-spacing: -.02em;
-  color: var(--text); text-decoration: none; margin: 0 0 .9rem; }
-.fp-np-name:hover { color: #0d5b68; }
-[data-theme="dark"] .fp-np-name:hover { color: #62aab8; }
-.fp-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
-  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .5rem 0;
-  font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .64rem; text-transform: uppercase; letter-spacing: .1em; }
-.fp-folio .fp-folio-c { color: #0d5b68; font-weight: 700; }
-[data-theme="dark"] .fp-folio .fp-folio-c { color: #62aab8; }
-
-/* sticky beat-navigator — internet-native wayfinding */
-.fp-jump { position: sticky; top: 0; z-index: 15; display: flex; gap: .3rem; overflow-x: auto;
-  margin: 0 -2rem 2rem; padding: .55rem 2rem; background: color-mix(in srgb, var(--bg) 86%, transparent);
-  backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); scrollbar-width: none; }
-.fp-jump::-webkit-scrollbar { display: none; }
-.fp-jump a { display: inline-flex; align-items: center; gap: .42rem; white-space: nowrap; text-decoration: none;
-  font-family: var(--sans); font-size: .7rem; letter-spacing: .04em; text-transform: uppercase;
-  color: var(--muted); padding: .32rem .6rem; border-radius: 8px; transition: color .15s, background .15s; }
-.fp-jump a::before { content: ""; width: 8px; height: 8px; border-radius: 2px; background: var(--sec, var(--muted)); flex: none; }
-.fp-jump a:hover { color: var(--text); background: var(--panel); }
-.fp-jump a.active { color: var(--text); background: var(--panel); box-shadow: inset 0 0 0 1px var(--border); }
-
-/* front-page index — every article listed under its section, as a newspaper
-   contents box. Flows in columns; each block tinted by its beat accent. */
-.fp-frontpage { margin: 0 0 2.6rem; }
-.fp-fp-h { font-family: var(--sans); font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .22em;
-  color: var(--muted); text-align: center; border-top: 1px solid var(--text); border-bottom: 1px solid var(--text);
-  padding: .5rem 0; margin: 0 0 1.5rem; }
-.fp-fp-grid { columns: 2; column-gap: 2.4rem; }
-.fp-fp-sec { break-inside: avoid; -webkit-column-break-inside: avoid; margin: 0 0 1.3rem; }
-.fp-fp-head { display: flex; align-items: center; gap: .45rem; margin: 0 0 .5rem; padding-bottom: .3rem;
-  border-bottom: 1px solid var(--sec); }
-.fp-fp-sigil { width: 15px; height: 15px; color: var(--sec); flex: none; }
-.fp-fp-sigil svg { width: 100%; height: 100%; display: block; }
-.fp-fp-title { font-family: var(--sans); font-size: .67rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .11em; color: var(--sec); }
-.fp-fp-list { list-style: none; margin: 0; padding: 0; }
-.fp-fp-list li { margin: 0 0 .4rem; line-height: 1.28; }
-.fp-fp-list a { font-family: var(--display); font-size: .98rem; color: var(--text); text-decoration: none;
-  border-bottom: 1px solid transparent; transition: color .12s ease; }
-.fp-fp-list a:hover { color: var(--sec); border-bottom-color: var(--sec); }
-.fp-fp-by { font-family: var(--sans); font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
-
-/* the Above-the-Fold lead */
-.fp-lead { margin: 0 0 1rem; }
-.fp-kicker { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .68rem; text-transform: uppercase;
-  letter-spacing: .12em; color: #0d5b68; margin: 0 0 .55rem; }
-[data-theme="dark"] .fp-kicker { color: #62aab8; }
-.fp-lead-head { font-family: var(--display); font-weight: 800; letter-spacing: -.015em; line-height: 1.05;
-  font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 .6rem; }
-.fp-lead-head::after { content: ""; display: block; height: 4px; width: 120px; margin-top: .7rem; border-radius: 2px;
-  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
-.fp-lead-dek { font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.4;
-  color: var(--muted); margin: 0 0 1rem; }
-.fp-lead-body { font-size: 1.08rem; line-height: 1.75; }
-.fp-lead-body > p:first-of-type::first-letter { font-family: var(--display); font-weight: 800;
-  float: left; font-size: 3.1em; line-height: .72; padding: .06em .1em 0 0; color: #0d5b68; }
-[data-theme="dark"] .fp-lead-body > p:first-of-type::first-letter { color: #62aab8; }
-.fp-lead-wrap { border-bottom: 3px double var(--border); padding-bottom: 1.6rem; margin-bottom: 2.4rem; }
-
-/* a beat section */
-.fp-sec { margin: 2.6rem 0 0; scroll-margin-top: 4rem; }
-.fp-sec-head { display: flex; align-items: center; gap: .6rem; margin: 0 0 1.1rem;
-  border-bottom: 2px solid var(--sec); padding-bottom: .5rem; }
-.fp-sec-sigil { width: 22px; height: 22px; color: var(--sec); flex: none; }
-.fp-sec-sigil svg { width: 100%; height: 100%; display: block; }
-.fp-sec-title { font-family: var(--sans); font-size: .8rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .14em; color: var(--sec); margin: 0; }
-
-/* a story card */
-.fp-story { border-left: 3px solid var(--sec); padding: 0 0 0 1.1rem; margin: 0 0 1.7rem; scroll-margin-top: 4rem; }
-.fp-story:last-child { margin-bottom: 0; }
-.fp-story-head { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.22;
-  letter-spacing: -.01em; margin: 0 0 .35rem; }
-.fp-story-dek { font-family: var(--serif); font-style: italic; font-size: 1.02rem; line-height: 1.42;
-  color: var(--muted); margin: 0 0 .55rem; }
-.fp-story-body { font-size: 1.0rem; line-height: 1.68; margin: 0 0 .5rem; }
-.fp-story-body p { margin: 0 0 .7rem; }
-.fp-src { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .68rem; letter-spacing: .02em;
-  color: var(--muted); margin: .2rem 0 0; }
-.fp-src a { color: var(--sec); text-decoration: none; border-bottom: 1px solid transparent; }
-.fp-src a:hover { border-bottom-color: var(--sec); }
-.fp-src .fp-filed { text-transform: uppercase; }
-
-/* inline newspaper-style chart */
-.fp-chart { margin: .8rem 0 .9rem; padding: .9rem 1rem; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; }
-.fp-chart-title { font-family: var(--sans); font-size: .76rem; font-weight: 700; color: var(--text); margin: 0 0 .5rem; }
-.fp-chart svg { width: 100%; height: auto; display: block; }
-.fp-chart-src { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: .62rem; color: var(--muted); margin: .4rem 0 0; }
-.fp-chart text { font-family: var(--sans); fill: var(--muted); }
-.fp-chart .fp-stat-num { font-family: var(--display); font-weight: 800; fill: var(--sec); }
-
-/* op-ed panel */
-.fp-oped { display: grid; grid-template-columns: 132px 1fr; gap: 1.4rem; align-items: start;
-  background: var(--panel); border: 1px solid var(--border); border-left: 4px solid var(--sec);
-  border-radius: 16px; padding: 1.5rem 1.6rem; margin: 2.4rem 0 0; scroll-margin-top: 4rem; }
-.fp-oped-portrait { text-align: center; }
-.fp-oped-portrait img { width: 112px; height: 112px; object-fit: cover; border-radius: 50%;
-  border: 2px solid var(--sec); display: block; margin: 0 auto .5rem; filter: grayscale(.15); }
-.fp-oped-cap { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
-.fp-oped-kicker { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .14em; color: var(--sec); margin: 0 0 .4rem; }
-.fp-oped-head { font-family: var(--display); font-weight: 800; font-size: 1.5rem; line-height: 1.15; margin: 0 0 .45rem; }
-.fp-oped-dek { font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.4; color: var(--muted); margin: 0 0 .8rem; }
-.fp-oped-body { font-size: 1.02rem; line-height: 1.72; }
-.fp-oped-body p { margin: 0 0 .9rem; }
-.fp-oped-body em { font-style: italic; }
-.fp-oped-body p:last-child { color: var(--muted); font-style: italic; }
-
-/* foot */
-.fp-foot { margin: 3rem 0 0; padding: 1.5rem 0 3rem; border-top: 1px solid var(--border); text-align: center; }
-.fp-watch { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: 1.02rem; margin: 0 auto .8rem; max-width: 40rem; }
-.fp-watch b { font-family: var(--sans); font-style: normal; font-size: .68rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .14em; color: #0d5b68; display: block; margin-bottom: .35rem; }
-[data-theme="dark"] .fp-watch b { color: #62aab8; }
-.fp-colophon { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; }
-.fp-colophon a { color: var(--accent); text-decoration: none; }
-.fp-colophon a:hover { text-decoration: underline; }
-
 @media (max-width: 620px) {
-  .fp-edition { padding: 1.2rem 1.2rem 1rem; }
-  .fp-fp-grid { columns: 1; }
-  .fp-jump { margin: 0 -1.2rem 1.6rem; padding: .5rem 1.2rem; }
-  .fp-folio { font-size: .56rem; letter-spacing: .06em; }
-  .fp-oped { grid-template-columns: 1fr; gap: .9rem; }
-  .fp-oped-portrait img { width: 84px; height: 84px; }
+  .pm-essay { padding: 1.6rem 1.3rem 1rem; }
+  .pm-folio { font-size: .58rem; letter-spacing: .08em; }
 }
-.fp-sec[data-beat="platform-watch"],.fp-oped[data-beat="platform-watch"],.fp-fp-sec[data-beat="platform-watch"],.fp-jump a[data-beat="platform-watch"]{--sec:#0d5b68;}
-.fp-sec[data-beat="performance-ctv"],.fp-oped[data-beat="performance-ctv"],.fp-fp-sec[data-beat="performance-ctv"],.fp-jump a[data-beat="performance-ctv"]{--sec:#9c7414;}
-.fp-sec[data-beat="partnership-signals"],.fp-oped[data-beat="partnership-signals"],.fp-fp-sec[data-beat="partnership-signals"],.fp-jump a[data-beat="partnership-signals"]{--sec:#b3502f;}
-.fp-sec[data-beat="competitor-moves"],.fp-oped[data-beat="competitor-moves"],.fp-fp-sec[data-beat="competitor-moves"],.fp-jump a[data-beat="competitor-moves"]{--sec:#2f6340;}
-.fp-sec[data-beat="regulatory-wire"],.fp-oped[data-beat="regulatory-wire"],.fp-fp-sec[data-beat="regulatory-wire"],.fp-jump a[data-beat="regulatory-wire"]{--sec:#7a2230;}
-.fp-sec[data-beat="campaign-wire"],.fp-oped[data-beat="campaign-wire"],.fp-fp-sec[data-beat="campaign-wire"],.fp-jump a[data-beat="campaign-wire"]{--sec:#2e4a78;}
-.fp-sec[data-beat="global-desk"],.fp-oped[data-beat="global-desk"],.fp-fp-sec[data-beat="global-desk"],.fp-jump a[data-beat="global-desk"]{--sec:#4a3570;}
-.fp-sec[data-beat="watercooler"],.fp-oped[data-beat="watercooler"],.fp-fp-sec[data-beat="watercooler"],.fp-jump a[data-beat="watercooler"]{--sec:#8a5a2a;}
-.fp-sec[data-beat="wire-opinion-mcluhan"],.fp-oped[data-beat="wire-opinion-mcluhan"],.fp-fp-sec[data-beat="wire-opinion-mcluhan"],.fp-jump a[data-beat="wire-opinion-mcluhan"]{--sec:#355a6b;}
-.fp-sec[data-beat="wire-opinion-ogilvy"],.fp-oped[data-beat="wire-opinion-ogilvy"],.fp-fp-sec[data-beat="wire-opinion-ogilvy"],.fp-jump a[data-beat="wire-opinion-ogilvy"]{--sec:#6b4a2a;}
-[data-theme="dark"] .fp-sec[data-beat="platform-watch"],[data-theme="dark"] .fp-oped[data-beat="platform-watch"],[data-theme="dark"] .fp-fp-sec[data-beat="platform-watch"],[data-theme="dark"] .fp-jump a[data-beat="platform-watch"]{--sec:#62aab8;}
-[data-theme="dark"] .fp-sec[data-beat="performance-ctv"],[data-theme="dark"] .fp-oped[data-beat="performance-ctv"],[data-theme="dark"] .fp-fp-sec[data-beat="performance-ctv"],[data-theme="dark"] .fp-jump a[data-beat="performance-ctv"]{--sec:#d2ad3f;}
-[data-theme="dark"] .fp-sec[data-beat="partnership-signals"],[data-theme="dark"] .fp-oped[data-beat="partnership-signals"],[data-theme="dark"] .fp-fp-sec[data-beat="partnership-signals"],[data-theme="dark"] .fp-jump a[data-beat="partnership-signals"]{--sec:#d98f5f;}
-[data-theme="dark"] .fp-sec[data-beat="competitor-moves"],[data-theme="dark"] .fp-oped[data-beat="competitor-moves"],[data-theme="dark"] .fp-fp-sec[data-beat="competitor-moves"],[data-theme="dark"] .fp-jump a[data-beat="competitor-moves"]{--sec:#74ab84;}
-[data-theme="dark"] .fp-sec[data-beat="regulatory-wire"],[data-theme="dark"] .fp-oped[data-beat="regulatory-wire"],[data-theme="dark"] .fp-fp-sec[data-beat="regulatory-wire"],[data-theme="dark"] .fp-jump a[data-beat="regulatory-wire"]{--sec:#c77380;}
-[data-theme="dark"] .fp-sec[data-beat="campaign-wire"],[data-theme="dark"] .fp-oped[data-beat="campaign-wire"],[data-theme="dark"] .fp-fp-sec[data-beat="campaign-wire"],[data-theme="dark"] .fp-jump a[data-beat="campaign-wire"]{--sec:#7b9bd0;}
-[data-theme="dark"] .fp-sec[data-beat="global-desk"],[data-theme="dark"] .fp-oped[data-beat="global-desk"],[data-theme="dark"] .fp-fp-sec[data-beat="global-desk"],[data-theme="dark"] .fp-jump a[data-beat="global-desk"]{--sec:#9a82c4;}
-[data-theme="dark"] .fp-sec[data-beat="watercooler"],[data-theme="dark"] .fp-oped[data-beat="watercooler"],[data-theme="dark"] .fp-fp-sec[data-beat="watercooler"],[data-theme="dark"] .fp-jump a[data-beat="watercooler"]{--sec:#c79a63;}
-[data-theme="dark"] .fp-sec[data-beat="wire-opinion-mcluhan"],[data-theme="dark"] .fp-oped[data-beat="wire-opinion-mcluhan"],[data-theme="dark"] .fp-fp-sec[data-beat="wire-opinion-mcluhan"],[data-theme="dark"] .fp-jump a[data-beat="wire-opinion-mcluhan"]{--sec:#79a7ba;}
-[data-theme="dark"] .fp-sec[data-beat="wire-opinion-ogilvy"],[data-theme="dark"] .fp-oped[data-beat="wire-opinion-ogilvy"],[data-theme="dark"] .fp-fp-sec[data-beat="wire-opinion-ogilvy"],[data-theme="dark"] .fp-jump a[data-beat="wire-opinion-ogilvy"]{--sec:#c39a6b;}
 </style>
 </head>
 <body>
-<div id="fp-progress" aria-hidden="true"></div>
 <div class="masthead">
   <span class="mh-brand">research · calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html">The Ghost of Times</a>
-    <a href="../fingerprint.html" class="active">The Fingerprint</a>
-    <a href="../pamphlets.html">The Pamphlets</a>
+    <a href="../fingerprint.html">The Fingerprint</a>
+    <a href="../pamphlets.html" class="active">The Pamphlets</a>
   </nav>
 </div>
-<main class="fp-edition">
-  <header class="fp-nameplate">
-    <p class="fp-np-kicker">The global programmatic &amp; Advanced TV market paper</p>
-    <a class="fp-np-name" href="../fingerprint.html">The Fingerprint</a>
-    <div class="fp-folio">
-      <span>Nº 28</span>
-      <span class="fp-folio-c">Thursday, June 18, 2026</span>
-      <span>16 dispatches · 2 columns</span>
+<main class="pm-essay">
+  <header class="pm-nameplate">
+    <p class="pm-kicker">Writer-voiced essays</p>
+    <a class="pm-name" href="../pamphlets.html">The Pamphlets</a>
+    <div class="pm-folio">
+      <span>Walt Whitman</span>
+      <span class="pm-folio-c">September 11th</span>
+      <span>Friday, June 26, 2026</span>
     </div>
   </header>
-  <nav class="fp-jump" id="fp-jump" aria-label="Sections"></nav>
-  <section id="fp-frontpage" class="fp-frontpage" aria-label="In this edition"></section>
-  <section id="fp-lead" class="fp-lead-wrap"></section>
-  <div id="fp-body"></div>
-  <footer class="fp-foot">
-    <p class="fp-watch"><b>What to watch</b>An August compliance cliff is forming: the EU&#x27;s AI Act labeling duties land August 2, California&#x27;s data-broker deletions become enforceable August 1, and The Trade Desk has set August 31 to move its whole supply path to pod bidding. Together they reset what creative must disclose, what identity data survives, and how CTV breaks are bought — three deadlines that will define the second half.</p>
-    <p class="fp-colophon"><a href="../fingerprint.html">← All editions</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+  <article>
+    <p class="pm-tagline">A Leaf for the Fallen</p>
+    <h1 class="pm-head">The Climbing Men</h1>
+    <p class="pm-dek">On the eleventh of September</p>
+    <p class="pm-byline">In the voice of Walt Whitman</p>
+    <div id="pm-body" class="pm-body"></div>
+  </article>
+  <footer class="pm-foot">
+    <p class="pm-colophon">Written in the voice of Walt Whitman (1819–1892), through the writer-whitman skill. An emulation — the prose and judgments are not the historical Whitman’s own words.</p>
+    <p class="pm-nav"><a href="../pamphlets.html">← All pamphlets</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
-<script id="fp-edition-data" type="application/json">{"edition_date": "2026-06-18", "edition_number": 28, "weekday": "Thursday", "subtitle": "All the news that's fit to Fingerprint", "lead": {"headline": "Fox Bought Roku for Its Identity Graph, Not Its Shows", "dek": "Three days on, the market reads the $22 billion deal as a play for ACR data, 100 million households and the home screen itself.", "body": "Three days after Fox agreed to buy Roku for roughly $22 billion, the trade's verdict has cooled from \"a content grab\" to something more clinical: Fox bought an identity and data engine it had been renting. Roku's programmatic business is about twice the size of Fox's, its third-party DSP spend grew 40% year over year in the first quarter, and it brings automatic content recognition and an audience graph spanning more than 100 million streaming households. Analysts now frame the prize as the home screen — the \"decision layer\" every Roku viewer passes through before a single stream begins — plus the first-party data Fox previously approximated with probabilistic models. Fox has promised Roku will stay an open, partner-friendly platform, even as Netflix, Disney and Amazon all distribute through it. The bet concentrates one of the largest pools of open-programmatic CTV inventory and authenticated identity under a single owner. For every buyer, it redraws who controls the data and the supply path into the living room.", "source_publication": "Digiday", "source_url": "https://digiday.com/future-of-tv/future-of-tv-briefing-fox-finds-its-programmatic-identify-in-roku/", "sources": [{"publication": "Digiday", "url": "https://digiday.com/future-of-tv/future-of-tv-briefing-fox-finds-its-programmatic-identify-in-roku/", "filed_date": "2026-06-17"}, {"publication": "Adweek", "url": "https://www.adweek.com/convergent-tv/the-3-biggest-questions-from-fox-and-rokus-22-billion-deal/", "filed_date": "2026-06-18"}, {"publication": "Advanced Television", "url": "https://www.advanced-television.com/2026/06/16/fox-roku-deal-industry-reaction/", "filed_date": "2026-06-16"}], "filed_date": "2026-06-17"}, "sections": [{"section_title": "Platform Watch", "section_class": "platform-watch", "stories": [{"headline": "Pod-Bidding Push Moves CTV Toward the Live-Sports Ad Model", "dek": "The Trade Desk aims to shift its entire publisher supply path to pod bidding by August 31.", "body": "The industry's pod-bidding effort is advancing the programmatic sale of multi-ad commercial breaks, the structure linear television has always used. The Trade Desk is targeting an August 31 deadline to move its entire publisher supply path to support it, and Index Exchange's James Wilhite has called 2026 \"a big year\" for demand-side partners rolling out podding. Pod bidding lets multiple advertisers compete for the individual slots inside a single CTV ad break rather than buying one impression at a time. Standardizing it pulls programmatic CTV closer to the full-break, live-sports ad model that the largest television budgets still expect.", "sources": [{"publication": "Digiday", "url": "https://digiday.com/future-of-tv/future-of-tv-briefing-ad-techs-pod-bidding-push-moves-ctv-toward-advancing-the-live-sports-ad-model-in-2026/", "filed_date": "2026-06-15"}, {"publication": "PPC Land", "url": "https://ppc.land/a-e-global-media-cuts-ad-server-load-84-with-index-exchange-pod-level-auctions/", "filed_date": "2026-03-24"}, {"publication": "Index Exchange", "url": "https://www.indexexchange.com/2026/03/24/global-media-drove-efficiency-revenue-through-ad-podding/", "filed_date": "2026-03-24"}], "source_publication": "Digiday", "source_url": "https://digiday.com/future-of-tv/future-of-tv-briefing-ad-techs-pod-bidding-push-moves-ctv-toward-advancing-the-live-sports-ad-model-in-2026/", "filed_date": "2026-06-15"}]}, {"section_title": "Performance CTV", "section_class": "performance-ctv", "stories": [{"headline": "Trade Desk Plugs Adsquare Into Audience Unlimited for Store Visits", "dek": "Location data joins the AI-priced marketplace, tying CTV and open-web buys to real-world footfall.", "body": "The Trade Desk integrated Adsquare's consent-based location intelligence into Audience Unlimited, its AI-priced third-party data marketplace, making the segments activatable through its Kokai platform. Adsquare operates across 26 markets and serves more than 2,500 brands and agencies; its data is priced at roughly 3.3% to 4.4% of impression cost in one mode and bundled at no extra charge in another. The move adds real-world movement signals to a marketplace TTD has been repositioning around measurable outcomes. It deepens the push to hold CTV and open-internet buys accountable to store visits, pressuring rivals to prove the same offline conversion.", "sources": [{"publication": "ExchangeWire", "url": "https://www.exchangewire.com/blog/2026/06/16/adsquare-joins-the-trade-desks-audience-unlimited-to-scale-real-world-data-activation/", "filed_date": "2026-06-16"}, {"publication": "PPC Land", "url": "https://ppc.land/the-trade-desk-plugs-adsquare-into-audience-unlimited-for-real-world-outcomes/", "filed_date": "2026-06-17"}], "source_publication": "ExchangeWire", "source_url": "https://www.exchangewire.com/blog/2026/06/16/adsquare-joins-the-trade-desks-audience-unlimited-to-scale-real-world-data-activation/", "filed_date": "2026-06-16"}]}, {"section_title": "Partnership Signals", "section_class": "partnership-signals", "stories": [{"headline": "Gracenote, PubMatic Bring Content-Level Buying to Programmatic CTV", "dek": "Episode-level and live-sports metadata enters the bidstream, letting buyers target the show, not just the impression.", "body": "Gracenote, Nielsen's content-intelligence business, and PubMatic struck a partnership embedding Gracenote's episode-level and live-sports schedule data directly into PubMatic's platform and its AI-driven Live Sports Marketplace. PubMatic can now match bid opportunities against content metadata in real time at auction, adding only a fraction of a millisecond of latency, with deals executable directly or through its agentic buying infrastructure. Gracenote research found 86% of media planners cite limited show- or content-level data as a barrier to shifting budget from linear to CTV. The deal attacks a core transparency gap and pushes content-level targeting toward becoming table stakes in CTV.", "sources": [{"publication": "MarTech Series", "url": "https://martechseries.com/sales-marketing/programmatic-buying/gracenote-and-pubmatic-bring-curated-live-sports-and-content-level-deals-to-programmatic-ctv/", "filed_date": "2026-06-17"}, {"publication": "Martechvibe", "url": "https://martechvibe.com/article/gracenote-pubmatic-partner-to-improve-ctv-inventory-discovery-and-buying/", "filed_date": "2026-06-17"}, {"publication": "afaqs!", "url": "https://www.afaqs.com/news/martech/pubmatic-integrates-gracenote-data-for-smarter-ctv-ad-buys-12050057", "filed_date": "2026-06-18"}, {"publication": "Storyboard18", "url": "https://www.storyboard18.com/brand-marketing/gracenote-pubmatic-team-up-to-bring-content-level-targeting-and-live-sports-deals-to-ctv-101537.htm", "filed_date": "2026-06-17"}], "source_publication": "MarTech Series", "source_url": "https://martechseries.com/sales-marketing/programmatic-buying/gracenote-and-pubmatic-bring-curated-live-sports-and-content-level-deals-to-programmatic-ctv/", "filed_date": "2026-06-17"}]}, {"section_title": "Competitor Moves", "section_class": "competitor-moves", "stories": [{"headline": "Publicis and The Trade Desk Settle Their Fee Dispute", "dek": "Publicis restores its recommendation of the DSP, ending a standoff that began with a fee-transparency audit.", "body": "Publicis reinstated The Trade Desk on its recommended demand-side-platform list, ending a dispute that began in March when a Publicis-commissioned audit by FirmDecisions flagged fee-stacking and transparency concerns the DSP rejected. Neither side disclosed terms or which one conceded, saying only that the audit issues had been addressed; The Trade Desk's shares rose on the news. The fight had become a referendum on fee transparency and audit rights between holding companies and the platforms they route billions through. The détente removes an overhang on the largest independent DSP, but leaves the underlying questions about supply-chain trust unresolved.", "sources": [{"publication": "Ad Age", "url": "https://adage.com/technology/ad-tech/aa-publicis-the-trade-desk-dispute/", "filed_date": "2026-06-12"}, {"publication": "Digiday", "url": "https://digiday.com/media-buying/publicis-and-the-trade-desk-settle-their-dispute-but-tell-no-one-why/", "filed_date": "2026-06-12"}, {"publication": "MediaPost", "url": "https://www.mediapost.com/publications/article/415763/publicis-the-trade-desk-resolve-months-long-dispu.html", "filed_date": "2026-06-15"}], "source_publication": "Ad Age", "source_url": "https://adage.com/technology/ad-tech/aa-publicis-the-trade-desk-dispute/", "filed_date": "2026-06-12"}, {"headline": "DoubleVerify Unveils DV Neura AI Engine for Agentic Buying", "dek": "Verification data becomes queryable through Claude as DV bids to stay in the loop on autonomous campaigns.", "body": "DoubleVerify introduced DV Neura, an AI engine spanning media intelligence, adaptive performance, open connectivity and agentic execution. Its Insight Agent is available immediately via the Model Context Protocol, letting advertisers query DV's media-quality and performance data through Anthropic's Claude in natural language, with an autonomous Activation Agent due in the third quarter and Gemini and Copilot integrations to follow. The launch pushes verification and brand-safety infrastructure into the agentic buying stack. It is a bid by a measurement vendor to remain indispensable as AI agents take over more of campaign execution.", "sources": [{"publication": "Advanced Television", "url": "https://www.advanced-television.com/2026/06/17/doubleverify-brings-data-to-claude-via-new-ai-engine-agent/", "filed_date": "2026-06-17"}, {"publication": "PPC Land", "url": "https://ppc.land/doubleverify-launches-dv-neura-its-ai-engine-for-agentic-ad-campaigns/", "filed_date": "2026-06-17"}, {"publication": "GlobeNewswire", "url": "https://www.globenewswire.com/news-release/2026/06/17/3313458/0/en/DoubleVerify-Introduces-DV-Neura-the-Dynamic-AI-Engine-Powering-the-Future-of-Media-Quality-and-Effectiveness.html", "filed_date": "2026-06-17"}], "source_publication": "Advanced Television", "source_url": "https://www.advanced-television.com/2026/06/17/doubleverify-brings-data-to-claude-via-new-ai-engine-agent/", "filed_date": "2026-06-17"}]}, {"section_title": "Regulatory Wire", "section_class": "regulatory-wire", "stories": [{"headline": "EU Spells Out AI Act Transparency Rules for Deepfakes", "dek": "Labeling duties for AI-generated video, audio and text take effect August 2 — advertising included.", "body": "The European Commission published detailed guidance on the AI Act's Article 50 transparency obligations — marking, watermarking and labeling AI-generated and AI-manipulated content — alongside a Code of Practice being finalized before the rules apply on August 2, 2026. Deployers will have to label deepfakes and AI-generated text on matters of public interest, advertising creative among them. For agencies and platforms operating in the EU, it forces AI-disclosure and provenance signaling into production and ad-serving workflows. With generative tools now flooding CTV and programmatic creative, the compliance clock is short.", "sources": [{"publication": "Greenberg Traurig", "url": "https://www.gtlaw.com/en/insights/2026/6/deepfakes-chatbots-ai-generated-text-european-commission-details-transparency-obligations-under-the-ai-act", "filed_date": "2026-06-10"}, {"publication": "TechPolicy.Press", "url": "https://www.techpolicy.press/what-the-eus-new-ai-code-of-practice-means-for-labeling-deepfakes/", "filed_date": "2026-05-20"}, {"publication": "European Commission", "url": "https://digital-strategy.ec.europa.eu/en/news/commission-publishes-first-draft-code-practice-marking-and-labelling-ai-generated-content", "filed_date": "2026-05-08"}], "source_publication": "Greenberg Traurig", "source_url": "https://www.gtlaw.com/en/insights/2026/6/deepfakes-chatbots-ai-generated-text-european-commission-details-transparency-obligations-under-the-ai-act", "filed_date": "2026-06-10"}, {"headline": "California's Data-Broker Delete Mandate Triggers Penalties August 1", "dek": "The DROP platform lets residents wipe their data from 500-plus brokers at once, with $200-a-day fines looming.", "body": "California's Delete Request and Opt-Out Platform, live since January, enrolled more than 217,000 residents in its first two months, and registered data brokers must begin honoring bulk deletion requests on August 1, when non-fulfillment triggers $200-a-day penalties with no cure period. The state's privacy agency has stood up a Data Broker Enforcement Strike Force and already acted against firms selling sensitive profiles for targeted advertising. The mandate threatens the audience-data supply underpinning much addressable and political targeting. Brokers and the platforms that license their segments face a hard deadline that could shrink the identity data available to buyers.", "sources": [{"publication": "Crowell & Moring", "url": "https://www.crowell.com/en/insights/client-alerts/california-privacy-agency-launches-data-broker-strike-force-amid-delete-act-crackdown", "filed_date": "2026-05-15"}, {"publication": "Frankfurt Kurnit (technologylaw)", "url": "https://technologylaw.fkks.com/post/102m1k8/calprivacy-escalates-data-broker-enforcement-into-health-data-large-multinationa", "filed_date": "2026-05-20"}, {"publication": "CPPA", "url": "https://cppa.ca.gov/announcements/2026/20260108.html", "filed_date": "2026-01-08"}], "source_publication": "Crowell & Moring", "source_url": "https://www.crowell.com/en/insights/client-alerts/california-privacy-agency-launches-data-broker-strike-force-amid-delete-act-crackdown", "filed_date": "2026-06-15"}]}, {"section_title": "Campaign Wire", "section_class": "campaign-wire", "stories": [{"headline": "AdImpact Lifts 2026 Election Forecast to Record $11.6 Billion", "dek": "Connected TV is projected at $2.7 billion — the only major channel growing over the 2024 presidential cycle.", "body": "AdImpact raised its 2026 cycle forecast to $11.6 billion, up from an earlier $10.8 billion and the most expensive midterm on record, with broadcast at $5.6 billion, CTV at $2.7 billion, cable at $1.4 billion and digital at $1.6 billion. Senate races are projected to draw $3.4 billion and gubernatorial contests $2.4 billion, with downballot and state-legislative spend a combined $3.7 billion. CTV is the fastest-growing media type in the forecast and the only one rising over 2024. The upgrade points to a larger-than-expected windfall for streaming inventory owners, programmatic pipes and identity vendors over the next five months.", "sources": [{"publication": "AdImpact", "url": "https://adimpact.com/blogs/adimpact-reveals-2026-election-cycle-to-reach-record-11.6-billion-in-ad-spending", "filed_date": "2026-06-11"}, {"publication": "CNBC", "url": "https://www.cnbc.com/2026/06/11/2026-elections-ad-spend-adimpact.html", "filed_date": "2026-06-11"}, {"publication": "Inside Radio", "url": "https://www.insideradio.com/free/political-ad-spending-forecast-raised-to-record-11-6-billion/article_81956bfe-0279-4f67-a449-c0a3292b6c9d.html", "filed_date": "2026-06-11"}], "source_publication": "AdImpact", "source_url": "https://adimpact.com/blogs/adimpact-reveals-2026-election-cycle-to-reach-record-11.6-billion-in-ad-spending", "filed_date": "2026-06-11"}]}, {"section_title": "Global Desk — UK", "section_class": "global-desk", "stories": [{"headline": "ITV Adds Lead-Gen Pause Ads to Court Performance Brands", "dek": "An ITVX format lets viewers request a brand's offer by remote, then return to the show.", "body": "At its Showcase in Manchester, ITV launched Lead Gen Pause Ads, an ITVX format that lets a viewer pause a programme and request follow-up offers or communications from a brand by remote, then resume watching. The format fuses ITV's Pause Ads with its Lead Gen Ads technology and targets performance advertisers that lack video creative, with a limited beta opening in autumn 2026 alongside a wider suite of commercial tools. It is the latest move by a UK broadcaster to make streaming inventory directly accountable for lead generation, narrowing the performance gap with social and search.", "sources": [{"publication": "Marketing Week", "url": "https://www.marketingweek.com/itv-precision-targeting-ad-format/", "filed_date": "2026-06-18"}, {"publication": "Prolific North", "url": "https://www.prolificnorth.co.uk/news/itv-launches-new-ad-tools-in-manchester/", "filed_date": "2026-06-18"}, {"publication": "Campaign", "url": "https://www.campaignlive.co.uk/article/itv-takes-generation-lead-misattribution-new-ad-tools/1921658", "filed_date": "2026-06-18"}, {"publication": "ITV Press Centre", "url": "https://www.itv.com/presscentre/media-releases/itv-launches-new-commercial-innovations", "filed_date": "2026-06-18"}], "source_publication": "Marketing Week", "source_url": "https://www.marketingweek.com/itv-precision-targeting-ad-format/", "filed_date": "2026-06-18"}]}, {"section_title": "Global Desk — India", "section_class": "global-desk", "stories": [{"headline": "India Reframes Connected TV as a Performance Medium", "dek": "At Mumbai's e4m CTV conference, a base of 129 million screens is pitched as a demand engine, not linear's overflow.", "body": "India's fourth e4m Connected TV Conference, themed \"Attention to Action: The Performance Era of CTV,\" gathered the market in Mumbai around a single argument: connected TV has become a data-rich, addressable performance channel rather than a digital extension of linear. WPP Media's India leadership keynoted on CTV investment strategy as the country's active CTV base is now put above 129 million users, with ad spend climbing toward Rs 3,000 crore in the current fiscal year. Independent trade outlets have tracked the same shift for months, citing CTV's outsized growth in India's video economy. The framing signals Indian advertisers pushing CTV toward measurable, lower-funnel outcomes and accelerating budget into addressable streaming.", "sources": [{"publication": "Exchange4media", "url": "https://www.exchange4media.com/digital-news/ctv-is-no-longer-linear-tvs-extension-it-is-a-demand-engine-lalatendu-das-155395.html", "filed_date": "2026-06-12"}, {"publication": "Storyboard18", "url": "https://www.storyboard18.com/digital/how-ctv-emerged-as-a-leader-in-2025-and-took-control-of-indias-video-economy-86542.htm", "filed_date": "2025-12-26"}, {"publication": "Campaign India", "url": "https://www.campaignindia.in/article/2026-is-set-to-be-the-year-of-connected-tv/4qvk582ycpf2hrecjehmdnbdd3", "filed_date": "2026-01-30"}], "source_publication": "Exchange4media", "source_url": "https://www.exchange4media.com/digital-news/ctv-is-no-longer-linear-tvs-extension-it-is-a-demand-engine-lalatendu-das-155395.html", "filed_date": "2026-06-12"}]}, {"section_title": "Global Desk — LATAM", "section_class": "global-desk", "stories": [{"headline": "World Cup Ends Brazil's Single-Screen Era as Ad Money Splits", "dek": "For the first time since 1982, the tournament scatters across CazéTV, Globo, SBT and N Sports.", "body": "Brazilian trade press marked the World Cup's June 11 kickoff as the end of concentrated television audiences, with rights split for the first time in 44 years across the digital-native CazéTV — streaming all 104 matches free — plus Globo, SBT and N Sports. CazéTV alone drew roughly R$2 billion in sponsorship before the tournament, redirecting money that once flowed only to free-to-air TV as viewers fragment across smart-TV broadcasts, phones and social feeds. With Brazilian digital ad spend already at R$42.7 billion in 2025, the splintering is pushing brands toward programmatic and engagement-measured formats over mass reach. It is a live preview of how a fragmented World Cup reshapes ad buying across every screen.", "sources": [{"publication": "AdNews Brasil", "url": "https://adnews.com.br/post/copa-do-mundo-2026-oficializa-o-fim-da-audiencia-concentrada-na-midia-brasileira", "filed_date": "2026-06-17"}, {"publication": "Poder360", "url": "https://www.poder360.com.br/poder-sportsmkt/cazetv-vende-r-2-bi-em-cotas-de-patrocinio-para-copa-de-2026/", "filed_date": "2026-06-09"}, {"publication": "Máquina do Esporte", "url": "https://maquinadoesporte.com.br/midia/globo-cazetv-sbt-n-sports-e-rede-ronaldo-preparam-estrategias-digitais-para-copa-do-mundo-2026/", "filed_date": "2026-06-10"}], "source_publication": "AdNews Brasil", "source_url": "https://adnews.com.br/post/copa-do-mundo-2026-oficializa-o-fim-da-audiencia-concentrada-na-midia-brasileira", "filed_date": "2026-06-17"}]}, {"section_title": "Global Desk — Canada", "section_class": "global-desk", "stories": [{"headline": "Ottawa Orders CRTC to Walk Back Its 15% Streaming Levy", "dek": "A do-over swaps a tripled Canadian-content obligation for $600 million in direct funding amid US trade pressure.", "body": "The federal government directed the CRTC to reconsider a regulatory policy issued in late May that had tripled the Canadian-content contribution from large foreign streamers such as Netflix to 15% of Canadian revenue, up from a 2024 interim rate of 5%. The culture minister framed the reversal as an affordability measure, warning the obligations \"could ultimately fall on Canadian consumers through higher prices,\" and Ottawa pledged roughly $600 million in direct funding to the sector instead. The move followed sustained US pressure that flagged the Online Streaming Act as a trade irritant. The contribution rate sets the cost base under every ad-supported streaming and CTV service in Canada, so easing it lifts a looming margin and pricing drag on the same inventory now being sold programmatically.", "sources": [{"publication": "The Globe and Mail", "url": "https://www.theglobeandmail.com/business/article-ottawa-orders-crtc-to-review-funding-requirement-streamers/", "filed_date": "2026-06-03"}, {"publication": "Global News", "url": "https://globalnews.ca/news/11888757/crtc-online-streaming-act-rules-ottawa-review/", "filed_date": "2026-06-03"}, {"publication": "CBC News", "url": "https://www.cbc.ca/news/politics/government-crtc-review-online-streaming-9.7221787", "filed_date": "2026-06-03"}, {"publication": "BNN Bloomberg", "url": "https://www.bnnbloomberg.ca/business/politics/2026/06/03/ottawa-calls-for-review-of-crtc-decision-on-cancon-contributions/", "filed_date": "2026-06-03"}], "source_publication": "The Globe and Mail", "source_url": "https://www.theglobeandmail.com/business/article-ottawa-orders-crtc-to-review-funding-requirement-streamers/", "filed_date": "2026-06-03"}]}, {"section_title": "Global Desk — China", "section_class": "global-desk", "stories": [{"headline": "iQIYI International and Viu Pool Southeast Asian Streaming Audiences", "dek": "China's overseas streamer strikes its first cross-regional bundle, stacking ad-reachable viewers across four SEA markets.", "body": "iQIYI International and Hong Kong-based Viu unveiled a bundled subscription at the APOS conference in Bali, combining their libraries across Indonesia, Thailand, the Philippines and Malaysia for a launch in the second half of 2026. It is iQIYI International's first cross-regional streaming alliance, pairing its Chinese-language originals, anime and variety slate with Viu's Korean-led catalog, Southeast Asian productions and short-form dramas. Viu runs a hybrid model anchored by a large ad-supported free tier and has been opening fresh inventory in its micro-drama format. For the CTV and programmatic market, the tie-up concentrates two of Asia's most ad-reachable streaming audiences under one roof, raising the competitive weight of China-rooted streamers chasing advertiser budgets in Southeast Asia against Netflix, Prime Video and Disney+.", "sources": [{"publication": "The Hollywood Reporter", "url": "https://www.hollywoodreporter.com/business/business-news/regional-streamers-viu-iqiyi-southeast-asia-bundle-1236624073/", "filed_date": "2026-06-17"}, {"publication": "Variety", "url": "https://variety.com/2026/tv/news/viu-iqiyi-streaming-bundle-deal-southeast-asia-1236783547/", "filed_date": "2026-06-16"}, {"publication": "Screen Daily", "url": "https://www.screendaily.com/news/viu-iqiyi-international-join-forces-to-launch-streaming-bundle-in-southeast-asia/5217764.article", "filed_date": "2026-06-17"}, {"publication": "Deadline", "url": "https://deadline.com/2026/06/viu-pccw-iqiyi-international-bundle-southeast-asia-1236958104/", "filed_date": "2026-06-16"}], "source_publication": "The Hollywood Reporter", "source_url": "https://www.hollywoodreporter.com/business/business-news/regional-streamers-viu-iqiyi-southeast-asia-bundle-1236624073/", "filed_date": "2026-06-17"}]}, {"section_title": "The Watercooler", "section_class": "watercooler", "stories": [{"headline": "Levin: AI-Tailored Ads Are a 'Multivariate Nightmare'", "body": "Emet Advisory's Erez Levin argues the rush to serve thousands of AI-personalized creative variants breaks measurement: you can cleanly test three or four creative hypotheses, not five thousand. It is a pointed check on the 1:1 personalization thesis just as generative tools flood CTV and programmatic.", "sources": [{"publication": "AdExchanger", "url": "https://www.adexchanger.com/data-driven-thinking/the-paradox-of-personalization-billions-of-ai-tailored-ads-creates-a-measurement-mess/", "filed_date": "2026-06-15"}], "source_publication": "AdExchanger", "source_url": "https://www.adexchanger.com/data-driven-thinking/the-paradox-of-personalization-billions-of-ai-tailored-ads-creates-a-measurement-mess/", "filed_date": "2026-06-15"}, {"headline": "Shields: Is Fox-Roku an Ad-Tech Deal or a Distribution Grab?", "body": "Mike Shields presses the question under the Fox-Roku deal — whether a rough Fox quarter eventually pressures Roku to favor Fox content on the home screen, eroding the neutrality Roku was built on. The home screen is CTV's most valuable real estate, so any tilt there reshapes how every rival streamer reaches viewers.", "sources": [{"publication": "Next in Media (Mike Shields)", "url": "https://mikeshields.substack.com/p/lots-of-burning-questions-for-the", "filed_date": "2026-06-16"}], "source_publication": "Next in Media", "source_url": "https://mikeshields.substack.com/p/lots-of-burning-questions-for-the", "filed_date": "2026-06-16"}]}, {"section_title": "Wire Opinion — McLuhan", "section_class": "wire-opinion-mcluhan", "stories": [{"headline": "The Grid Is the Programme", "dek": "Everyone is fighting over the shows. The shows were never the medium. The grid of tiles is.", "body": "The figure this season is ownership — a network paying twenty-two billion dollars for the box on top of the set, the trade counting a platform's households and its data. The figure is content: who holds the shows, who sells the ad. That is the figure. The ground is the screen that greets you before any show begins — the grid of tiles, the highlighted default, the \"Continue Watching\" rail, the sponsored row that is already a decision made on your behalf. The content of a medium is always another medium; the shows are merely the content of the home screen. The home screen is the message.\n\n*Enhance:* the act of choosing, raised to a glance — a whole evening's viewing laid out as a surface you skim, not a dial you turn. *Obsolesce:* the channel, the schedule, the search box, the wandering thumb that did not yet know what it wanted. *Retrieve:* the old TV Guide open on the carpet, the cover that sorted the week — handed back as software that sorts it for you. *Reverse:* pushed far enough, the grid stops serving your choice and begins to compose it; the tile you \"chose\" was the tile placed in your eye-line, and the viewer is the one being scheduled.\n\nThis is why a network buys an operating system instead of a studio. The studio fills the figure. The operating system owns the ground, and the ground decides what the figure can be. We thought we were buying remote controls. We were buying the right to arrange a person's attention before he is awake enough to spend it. The screen is not where you watch television. The screen is what now watches you decide.\n\n*— Marshall McLuhan*", "sources": [{"publication": "Digiday", "url": "https://digiday.com/future-of-tv/future-of-tv-briefing-fox-finds-its-programmatic-identify-in-roku/", "filed_date": "2026-06-17"}, {"publication": "The Drum", "url": "https://www.thedrum.com/opinion/moe-chughtai-fox-has-bought-its-way-onto-the-tv-decision-layer", "filed_date": "2026-06-17"}, {"publication": "AdExchanger", "url": "https://www.adexchanger.com/tv/home-screen-ads-on-samsung-tvs-will-soon-be-available-programmatically/", "filed_date": "2026-06-10"}], "source_publication": "Wire Opinion", "source_url": "https://digiday.com/future-of-tv/future-of-tv-briefing-fox-finds-its-programmatic-identify-in-roku/", "filed_date": "2026-06-18", "portrait": "mcluhan", "portrait_caption": "Marshall McLuhan"}]}, {"section_title": "Wire Opinion — Ogilvy", "section_class": "wire-opinion-ogilvy", "stories": [{"headline": "The Machine Cannot Supply the Idea", "dek": "The trade is intoxicated by infinite personalised creative. Infinity is not an idea. It is the absence of one.", "body": "The new promise is abundance. Feed the machine a brief and it returns five thousand versions of the advertisement, each one tailored to a single pair of eyes. The press releases call this personalisation. I call it arithmetic. An analyst this week put the problem plainly: you can run a clean test on three or four creative hypotheses; you cannot test five thousand. Five thousand variants are not five thousand ideas. They are one missing idea, multiplied until no one notices it is missing.\n\nI built brands on a single proposition, stated and restated until the consumer could not forget it. Dove was \"one-quarter cleansing cream,\" and we said it for a decade while the competition reinvented itself every season; Dove is still standing. Pepperidge Farm was a horse-drawn wagon and a slow country road, and that one picture of unhurried quality sold bread for thirty years. Neither needed a thousand faces. They needed one true thing, proven, then repeated. A machine can write the thousand faces in an afternoon. It cannot tell you which true thing is worth repeating, because it has never stood in a shop and watched a woman choose.\n\nSo use the machine. Let it set the type, resize the frame, swap the language. But find the idea first, with a human mind, and prove it sells before you ask the software to dress it five thousand ways. An advertisement that says nothing, said five thousand ways, still says nothing. If it doesn't sell, it isn't creative — and a computer that cannot sell is only an expensive way to be ignored. Build the idea. Then multiply it.\n\n*— David Ogilvy*", "sources": [{"publication": "AdExchanger", "url": "https://www.adexchanger.com/data-driven-thinking/the-paradox-of-personalization-billions-of-ai-tailored-ads-creates-a-measurement-mess/", "filed_date": "2026-06-15"}, {"publication": "Advanced Television", "url": "https://www.advanced-television.com/2026/06/17/doubleverify-brings-data-to-claude-via-new-ai-engine-agent/", "filed_date": "2026-06-17"}, {"publication": "PPC Land", "url": "https://ppc.land/doubleverify-launches-dv-neura-its-ai-engine-for-agentic-ad-campaigns/", "filed_date": "2026-06-17"}], "source_publication": "Wire Opinion", "source_url": "https://www.adexchanger.com/data-driven-thinking/the-paradox-of-personalization-billions-of-ai-tailored-ads-creates-a-measurement-mess/", "filed_date": "2026-06-18", "portrait": "ogilvy", "portrait_caption": "David Ogilvy"}]}], "what_to_watch": "An August compliance cliff is forming: the EU's AI Act labeling duties land August 2, California's data-broker deletions become enforceable August 1, and The Trade Desk has set August 31 to move its whole supply path to pod bidding. Together they reset what creative must disclose, what identity data survives, and how CTV breaks are bought — three deadlines that will define the second half."}</script>
-<script id="fp-marks" type="application/json">{"platform-watch": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"14\" r=\"1.4\" fill=\"currentColor\" stroke=\"none\"/><path d=\"M 6 14 A 6 6 0 0 1 18 14\"/><path d=\"M 3 14 A 9 9 0 0 1 21 14\"/><line x1=\"12\" y1=\"17\" x2=\"12\" y2=\"22\"/><\/g><\/svg>", "performance-ctv": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3,18 9,12 13,15 21,6\"/><polyline points=\"16,6 21,6 21,11\"/><\/g><\/svg>", "partnership-signals": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"><circle cx=\"8\" cy=\"12\" r=\"4.2\"/><circle cx=\"16\" cy=\"12\" r=\"4.2\"/><line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\" stroke-width=\"1.6\"/><circle cx=\"8\" cy=\"12\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"/><circle cx=\"16\" cy=\"12\" r=\"1.2\" fill=\"currentColor\" stroke=\"none\"/><\/g><\/svg>", "competitor-moves": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polyline points=\"3,5 11,12 3,19\"/><polyline points=\"21,5 13,12 21,19\"/><line x1=\"11.5\" y1=\"12\" x2=\"12.5\" y2=\"12\" stroke-width=\"2\"/><\/g><\/svg>", "regulatory-wire": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M 6 4 L 4 4 L 4 20 L 6 20\"/><path d=\"M 18 4 L 20 4 L 20 20 L 18 20\"/><line x1=\"9\" y1=\"10\" x2=\"15\" y2=\"10\"/><line x1=\"9\" y1=\"14\" x2=\"15\" y2=\"14\"/><\/g><\/svg>", "campaign-wire": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linejoin=\"round\"><rect x=\"3.5\" y=\"9\" width=\"17\" height=\"11\" rx=\"0.6\"/><line x1=\"8\" y1=\"9\" x2=\"8\" y2=\"6.5\"/><line x1=\"16\" y1=\"9\" x2=\"16\" y2=\"6.5\"/><line x1=\"7\" y1=\"6.5\" x2=\"17\" y2=\"6.5\" stroke-width=\"1.6\"/><polygon points=\"12,11 13.05,13.2 15.5,13.5 13.7,15.2 14.15,17.6 12,16.45 9.85,17.6 10.3,15.2 8.5,13.5 10.95,13.2\" fill=\"currentColor\" stroke=\"none\"/><\/g><\/svg>", "global-desk": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.3\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><ellipse cx=\"12\" cy=\"12\" rx=\"4.5\" ry=\"9\"/><line x1=\"3\" y1=\"12\" x2=\"21\" y2=\"12\"/><path d=\"M 4.5 7 Q 12 9 19.5 7\" stroke-width=\"1.1\"/><path d=\"M 4.5 17 Q 12 15 19.5 17\" stroke-width=\"1.1\"/><\/g><\/svg>", "watercooler": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"currentColor\"><circle cx=\"5\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/><circle cx=\"19\" cy=\"12\" r=\"1.3\"/><\/g><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"0.9\" opacity=\"0.55\"><path d=\"M 6.5 12 Q 9 8 11 12\"/><path d=\"M 13 12 Q 15.5 8 17.5 12\"/><\/g><\/svg>", "wire-opinion-mcluhan": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\"><rect x=\"3\" y=\"6\" width=\"18\" height=\"12\" rx=\"1.2\"/><line x1=\"9\" y1=\"20.5\" x2=\"15\" y2=\"20.5\" stroke-width=\"1.6\"/><line x1=\"12\" y1=\"18\" x2=\"12\" y2=\"20.5\" stroke-width=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"2\" fill=\"currentColor\" stroke=\"none\"/><\/g><\/svg>", "wire-opinion-ogilvy": "<svg viewBox=\"0 0 24 24\" xmlns=\"http://www.w3.org/2000/svg\"><g fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M 5 19 L 5 7 L 12 7 L 14 9 L 19 9 L 19 19 Z\"/><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><\/g><\/svg>"}</script>
+<script id="pamphlet-data" type="application/json">{"slug": "whitman-on-september-11th", "title": "The Climbing Men", "dek": "On the eleventh of September", "kicker": "A Leaf for the Fallen", "writer": "Walt Whitman", "subject": "September 11th", "date": "2026-06-26", "voice_note": "Written in the voice of Walt Whitman (1819–1892), through the writer-whitman skill. An emulation — the prose and judgments are not the historical Whitman’s own words.", "body": "Mannahatta — I was looking for something cool and bright, and the morning gave it: a sky of hard September blue over the harbor, the ferries crossing as they have always crossed, the million-footed island waking to its work. I have sung this city at its trades, and would have sung it again this ordinary forenoon — the clerk at his ledger, the woman at the high window, the cook, the porter, the man selling coffee at the curb — when out of that blue, without a word, the fire came down.\n\nCount them with me, for the catalogue is the only prayer I know. The bond-trader and the dishwasher in the tower’s crown; the firemen of Brooklyn and Mannahatta; the police, the stewards, the cleaners who came before light; the travellers strapped in the bellies of the planes; the man who carried his blind friend down ninety flights, and the friend, and the dog between them. They were of every land that ever poured through this harbor — *en-masse*, the whole roll of nations, dim-descended and bright-descended, working in one building under one sky. The same red-running blood ran in all of them. It runs there yet, in the dust.\n\nAnd here is the thing I cannot let the smoke swallow: while the thousands came down, a column of men in heavy coats went *up*. Up the shaking stair, two by two, the hose on the shoulder, the axe in the hand, breathing what no lungs should breathe, climbing toward the fire that every animal sense said *flee*. Camerados — I have dressed wounds in the army hospitals, I have stood by the cots of boys with the leg gone and made no fuss, and I have seen nothing braver than this plain ascent. They did not climb for a flag or a phrase. They climbed because a stranger was above them, and the hand goes out to the hand. That is the Republic; that, and nothing the orators say.\n\nThen the towers knelt, the one and then the other, and a grey snow that was not snow fell on the living and the dead alike and made them brothers in one colour. For days after, the searchers went over the smoking pile on their knees, asking the wreck a single question. And the walls of the city bloomed with paper — a thousand faces pinned up under one word, *Missing* — the tenderest catalogue ever posted, each leaf a whole life, each asking *have you seen*. I have seen. I see them now.\n\nDo not tell me they are lost. The grass is already coming, faithful, out of their ashes; the harbor still lifts and falls with the old patient breathing; the ferries cross, the island goes again to its work, and the dust of the climbing men is in the lungs of the children now alive. Death is luckier than we are told. Mannahatta, you are not broken — you are enlarged, you contain them, you carry them in your million-footed walk. I stop here, in the blue, among the falling paper, and wait with you."}</script>
 <script>/**
  * marked v12.0.2 - a markdown parser
  * Copyright (c) 2011-2024, Christopher Jeffrey. (MIT Licensed)
@@ -428,245 +325,10 @@ document.getElementById('theme-btn').onclick = () => {
   localStorage.setItem('corpus-theme', next);
 };
 
-const ed = JSON.parse(document.getElementById('fp-edition-data').textContent);
-const MARKS = JSON.parse(document.getElementById('fp-marks').textContent);
-const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls;
-  if (html != null) n.innerHTML = html; return n; };
-const esc = (s) => { const d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; };
-const openExternal = (root) => root.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
-
-// ---- source / dateline line (multi-source) ----
-// Canonical field is `sources` (a list of {publication, url}); the legacy single
-// source_publication/source_url pair is honoured as a fallback. Mirrors the
-// renderer's _build_byline_html so the web edition cites every outlet too.
-function srcLine(s, beat) {
-  // esc() (textContent->innerHTML) does NOT escape double-quotes, so a URL must
-  // be quote-escaped before it goes into an href="" attribute (mirrors the
-  // Python renderer's html.escape(url, quote=True)).
-  const escAttr = (v) => esc(v).replace(/"/g, '&quot;');
-  let srcs = [];
-  // Only take the canonical branch when it holds real {publication,url} objects;
-  // otherwise fall back to the legacy pair (mirrors Python _normalize_sources).
-  if (Array.isArray(s.sources) && s.sources.some(x => x && typeof x === 'object')) {
-    srcs = s.sources;
-  } else if (s.source_publication || s.source_url) {
-    srcs = [{publication: s.source_publication, url: s.source_url}];
-  }
-  const seen = new Set(), links = [];
-  for (const x of srcs) {
-    const url = ((x && (x.url || x.source_url)) || '').trim();
-    const pub = ((x && (x.publication || x.source_publication)) || '').trim();
-    if (!url && !pub) continue;
-    const key = (url || pub).toLowerCase();
-    if (seen.has(key)) continue;
-    seen.add(key);
-    const label = esc(pub || url);
-    links.push(url ? `<a href="${escAttr(url)}">${label}</a>` : label);
-  }
-  if (!links.length) return '';
-  const verb = links.length > 1 ? 'On reporting in ' : '';
-  const filed = s.filed_date ? ` · <span class="fp-filed">Filed ${esc(s.filed_date)}</span>` : '';
-  return `<p class="fp-src">${verb}${links.join(' · ')}${filed}</p>`;
-}
-
-// ---- charts (bar | line | donut | stat) ----
-function renderChart(c) {
-  if (!c || !c.type) return null;
-  const wrap = el('div', 'fp-chart');
-  if (c.title) wrap.appendChild(el('p', 'fp-chart-title', esc(c.title)));
-  let svg = '';
-  const W = 520;
-  if (c.type === 'stat') {
-    svg = `<svg viewBox="0 0 ${W} 120"><text class="fp-stat-num" x="12" y="74" font-size="58">${esc(c.value||'')}</text>`
-        + `<text x="14" y="104" font-size="15">${esc(c.caption||'')}</text></svg>`;
-  } else if (c.type === 'bar') {
-    const data = c.data || []; const max = Math.max(1, ...data.map(d => +d.value || 0));
-    const rh = 30, gap = 12, H = data.length * (rh + gap) + 10;
-    const rows = data.map((d, i) => {
-      const y = 8 + i * (rh + gap), w = (((+d.value||0) / max) * (W - 180));
-      return `<text x="0" y="${y+20}" font-size="13">${esc(d.label||'')}</text>`
-           + `<rect x="150" y="${y}" width="${w.toFixed(1)}" height="${rh}" rx="3" fill="var(--sec)" opacity="0.85"/>`
-           + `<text x="${(150+w+6).toFixed(1)}" y="${y+20}" font-size="13" fill="var(--text)">${esc((d.value)+(c.unit||''))}</text>`;
-    }).join('');
-    svg = `<svg viewBox="0 0 ${W} ${H}">${rows}</svg>`;
-  } else if (c.type === 'line') {
-    const data = c.data || []; const ys = data.map(d => +d.y || 0);
-    const max = Math.max(1, ...ys), min = Math.min(0, ...ys), H = 200, pad = 32;
-    const x = i => pad + i * ((W - pad*2) / Math.max(1, data.length - 1));
-    const y = v => (H - pad) - ((v - min) / (max - min || 1)) * (H - pad*2);
-    const pts = data.map((d, i) => `${x(i).toFixed(1)},${y(+d.y||0).toFixed(1)}`).join(' ');
-    const dots = data.map((d, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(+d.y||0).toFixed(1)}" r="3.2" fill="var(--sec)"/>`
-      + `<text x="${x(i).toFixed(1)}" y="${H-8}" font-size="11" text-anchor="middle">${esc(d.x||'')}</text>`).join('');
-    svg = `<svg viewBox="0 0 ${W} ${H}"><polyline points="${pts}" fill="none" stroke="var(--sec)" stroke-width="2.2" stroke-linejoin="round"/>${dots}</svg>`;
-  } else if (c.type === 'donut') {
-    const data = c.data || []; const total = data.reduce((a, d) => a + (+d.value || 0), 0) || 1;
-    const cx = 100, cy = 100, r = 70, sw = 30; let a0 = -Math.PI / 2; const segs = [];
-    const palette = ['var(--sec)', 'var(--t2)', 'var(--t3)', 'var(--t4)', 'var(--muted)'];
-    data.forEach((d, i) => {
-      const frac = (+d.value || 0) / total, a1 = a0 + frac * 2 * Math.PI;
-      const large = frac > 0.5 ? 1 : 0;
-      const x0 = cx + r*Math.cos(a0), y0 = cy + r*Math.sin(a0), x1 = cx + r*Math.cos(a1), y1 = cy + r*Math.sin(a1);
-      segs.push(`<path d="M ${x0.toFixed(1)} ${y0.toFixed(1)} A ${r} ${r} 0 ${large} 1 ${x1.toFixed(1)} ${y1.toFixed(1)}" fill="none" stroke="${palette[i%palette.length]}" stroke-width="${sw}"/>`);
-      a0 = a1;
-    });
-    const legend = data.map((d, i) => `<text x="210" y="${40 + i*22}" font-size="13"><tspan fill="${palette[i%palette.length]}">■</tspan> ${esc(d.label||'')} — ${esc((d.value)+(c.unit||''))}</text>`).join('');
-    svg = `<svg viewBox="0 0 ${W} 200">${segs.join('')}${legend}</svg>`;
-  }
-  wrap.innerHTML += svg;
-  if (c.source) wrap.appendChild(el('p', 'fp-chart-src', 'Source: ' + esc(c.source)));
-  return wrap;
-}
-
-// ---- lead ----
-(function renderLead() {
-  const p = ed.lead; if (!p) return;
-  const host = document.getElementById('fp-lead');
-  const art = el('article', 'fp-lead');
-  art.appendChild(el('p', 'fp-kicker', esc(p.kicker || 'Above the Fold')));
-  art.appendChild(el('h1', 'fp-lead-head', esc(p.headline || '')));
-  if (p.dek) art.appendChild(el('p', 'fp-lead-dek', esc(p.dek)));
-  const body = el('div', 'fp-lead-body', marked.parse(p.body || '')); openExternal(body);
-  art.appendChild(body);
-  if (p.chart) { const ch = renderChart(p.chart); if (ch) art.appendChild(ch); }
-  art.insertAdjacentHTML('beforeend', srcLine(p));
-  host.appendChild(art);
-})();
-
-// ---- group sections for the jump-nav (collapse Global Desk + Opinion) ----
-function navGroup(sec) {
-  const c = sec.section_class || '';
-  if (c === 'global-desk') return { key: 'global-desk', label: 'Global Desk', beat: 'global-desk' };
-  if (c.indexOf('wire-opinion') === 0) return { key: 'opinion', label: 'Opinion', beat: 'wire-opinion-mcluhan' };
-  return { key: c || sec.section_title, label: sec.section_title, beat: c };
-}
-
-const sections = ed.sections || [];
-const body = document.getElementById('fp-body');
-const navItems = []; const seen = {};
-
-sections.forEach((sec, i) => {
-  const beat = sec.section_class || '';
-  const isOped = beat.indexOf('wire-opinion') === 0;
-  const id = 'sec-' + i;
-  const g = navGroup(sec);
-  if (!seen[g.key]) { seen[g.key] = true; navItems.push({ id, label: g.label, beat: g.beat }); }
-
-  if (isOped) {
-    const s = (sec.stories || [])[0] || {};
-    const art = el('article', 'fp-oped'); art.id = id; art.dataset.beat = beat;
-    const portrait = s.portrait ? `assets/${esc(s.portrait)}.png` : '';
-    const pho = portrait
-      ? `<div class="fp-oped-portrait"><img src="${portrait}" alt="${esc(s.portrait_caption||'')}"><div class="fp-oped-cap">${esc(s.portrait_caption||'')}</div></div>`
-      : '';
-    const txt = el('div', 'fp-oped-text');
-    txt.appendChild(el('p', 'fp-oped-kicker', esc(sec.section_title || 'Wire Opinion')));
-    txt.appendChild(el('h2', 'fp-oped-head', esc(s.headline || '')));
-    if (s.dek) txt.appendChild(el('p', 'fp-oped-dek', esc(s.dek)));
-    const ob = el('div', 'fp-oped-body', marked.parse(s.body || '')); openExternal(ob);
-    txt.appendChild(ob);
-    txt.insertAdjacentHTML('beforeend', srcLine(s, beat));  // trend sources, as the PDF shows
-    art.innerHTML = pho; art.appendChild(txt);
-    body.appendChild(art);
-    return;
-  }
-
-  const sec_el = el('section', 'fp-sec'); sec_el.id = id; sec_el.dataset.beat = beat;
-  const head = el('div', 'fp-sec-head');
-  head.appendChild(el('span', 'fp-sec-sigil', MARKS[beat] || ''));
-  head.appendChild(el('h2', 'fp-sec-title', esc(sec.section_title || '')));
-  sec_el.appendChild(head);
-  (sec.stories || []).forEach((s, j) => {
-    const st = el('article', 'fp-story'); st.id = 'art-' + i + '-' + j;
-    st.appendChild(el('h3', 'fp-story-head', esc(s.headline || '')));
-    if (s.dek) st.appendChild(el('p', 'fp-story-dek', esc(s.dek)));
-    const sb = el('div', 'fp-story-body', marked.parse(s.body || '')); openExternal(sb);
-    st.appendChild(sb);
-    if (s.chart) { const ch = renderChart(s.chart); if (ch) st.appendChild(ch); }
-    st.insertAdjacentHTML('beforeend', srcLine(s, beat));
-    sec_el.appendChild(st);
-  });
-  body.appendChild(sec_el);
-});
-
-// ---- front-page index: every article listed under its section ----
-(function buildFrontPage() {
-  const host = document.getElementById('fp-frontpage');
-  if (!host) return;
-  const blocks = [];
-  if (ed.lead) blocks.push({ beat: 'partnership-signals', title: 'Above the Fold',
-    items: [{ headline: ed.lead.headline || '', href: '#fp-lead' }] });
-  sections.forEach((sec, i) => {
-    const beat = sec.section_class || '';
-    const isOped = beat.indexOf('wire-opinion') === 0;
-    const items = (sec.stories || []).map((s, j) => ({
-      headline: s.headline || '',
-      by: isOped ? (s.portrait_caption || '') : '',
-      href: isOped ? ('#sec-' + i) : ('#art-' + i + '-' + j),
-    }));
-    blocks.push({ beat, title: sec.section_title || '', items });
-  });
-  host.appendChild(el('h2', 'fp-fp-h', 'In This Edition'));
-  const grid = el('div', 'fp-fp-grid');
-  blocks.forEach(b => {
-    const block = el('div', 'fp-fp-sec'); block.dataset.beat = b.beat;
-    const head = el('div', 'fp-fp-head');
-    head.appendChild(el('span', 'fp-fp-sigil', MARKS[b.beat] || ''));
-    head.appendChild(el('span', 'fp-fp-title', esc(b.title)));
-    block.appendChild(head);
-    const ul = el('ul', 'fp-fp-list');
-    b.items.forEach(it => {
-      const li = document.createElement('li');
-      const by = it.by ? ` <span class="fp-fp-by">— ${esc(it.by)}</span>` : '';
-      const a = el('a', null, esc(it.headline) + by);
-      a.href = it.href;
-      a.onclick = (e) => { e.preventDefault();
-        const t = document.querySelector(it.href); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-      li.appendChild(a); ul.appendChild(li);
-    });
-    block.appendChild(ul);
-    grid.appendChild(block);
-  });
-  host.appendChild(grid);
-})();
-
-// ---- build the jump-nav (Above the Fold first) ----
-(function buildNav() {
-  const nav = document.getElementById('fp-jump');
-  const items = [{ id: 'fp-lead', label: 'Above the Fold', beat: 'partnership-signals' }].concat(navItems);
-  items.forEach(it => {
-    const a = el('a', null, esc(it.label));
-    a.href = '#' + it.id; a.dataset.target = it.id; if (it.beat) a.dataset.beat = it.beat;
-    a.onclick = (e) => { e.preventDefault(); document.getElementById(it.id).scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-    nav.appendChild(a);
-  });
-  // active-section tracking
-  const links = [...nav.querySelectorAll('a')];
-  const byId = {}; links.forEach(a => byId[a.dataset.target] = a);
-  const targets = items.map(it => document.getElementById(it.id)).filter(Boolean);
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(en => {
-      if (en.isIntersecting) {
-        links.forEach(a => a.classList.remove('active'));
-        const a = byId[en.target.id]; if (a) { a.classList.add('active'); a.scrollIntoView({ block: 'nearest', inline: 'center' }); }
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
-  targets.forEach(t => io.observe(t));
-})();
-
-// ---- reading-progress bar ----
-const bar = document.getElementById('fp-progress');
-const onScroll = () => {
-  const h = document.documentElement; const max = h.scrollHeight - h.clientHeight;
-  bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-};
-document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
-
-// honor a deep-link hash (#sec-N / #fp-lead) now that the sections exist
-if (location.hash.length > 1) {
-  const t = document.getElementById(location.hash.slice(1));
-  if (t) requestAnimationFrame(() => t.scrollIntoView());
-}
+const pm = JSON.parse(document.getElementById('pamphlet-data').textContent);
+const body = document.getElementById('pm-body');
+body.innerHTML = marked.parse(pm.body || '');
+body.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
 </script>
 <style>
 @view-transition { navigation: auto; }
