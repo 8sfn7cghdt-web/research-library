@@ -5,5 +5,6 @@
   { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "the_forecast_fan.html" },
   { "file": "08_Gap_International_Regulatory_Clearance.md", "after": "## Bottom Line", "snippet": "the_regulatory_clock.html" },
   { "file": "00_Briefing.md", "after": "operating system of the American living room", "snippet": "scene_living_room.html" },
-  { "file": "01_The_Deal.md", "after": "not independently verified fact.", "snippet": "scene_falcons.html" }
+  { "file": "01_The_Deal.md", "after": "not independently verified fact.", "snippet": "scene_falcons.html" },
+  { "file": "02_Strategic_And_AdTech_Rationale.md", "after": "a closed loop from glass to demand", "snippet": "scene_closed_loop.html" }
 ]
