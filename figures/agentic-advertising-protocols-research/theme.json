@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Bid-Request Console — a real-time auction terminal at the protocol layer",
+  "anchor": "The corpus is about the machine-readable handshakes that move advertising: the OpenRTB bid-request JSON, the AdCP negotiation grammar, the ARTF container colocated in the auction host's data center. So the world is a real-time-bidding console seen at the protocol layer — monospace spec text scrolling on a near-black terminal, a latency ticker counting milliseconds, two rival signal-colors for the two camps (AdCP and ARTF) negotiating across the substrate. Read off the OpenRTB/AdCP JSON object and the RTB trading terminal, not a humanities page.",
+  "rationale": "The structural metaphor is the layer stack and the agent-to-agent handshake (substrate MCP -> negotiation AdCP / transport ARTF -> payment AP2/ACP), so figures should read like a protocol diagram and a market console: container tiles, request/response arrows, a latency bar, monospace numerals. The brand accent is a PHOSPHOR / SIGNAL GREEN — the live-terminal, machine-is-trading color — deliberately distinct from every other Media & Advertising corpus on the shelf (the CTV-identity cobalt, the Fox-Roku violet) and from the institutional blues elsewhere. The figure palette pairs the green substrate with a TEAL for the AdCP negotiation camp, an AMBER for the IAB/ARTF transport camp (the latency/incumbent signal), a ROSE for the payment/commerce layer, and a SLATE-INDIGO for the walled-garden enclosure. Cool near-white paper for day; a true terminal near-black, lit-spec-on-dark register for night. Sharp modern UI radii, a grotesque display (the console chyron), a readable serif for long-form, and a true monospace for the protocol's many objects and numbers.",
+  "light": {
+    "bg": "#f3f5f3",
+    "panel": "#dde4de",
+    "text": "#14181a",
+    "muted": "#586169",
+    "accent": "#157a3a",
+    "border": "#c9d0ca",
+    "mark": "#cce9d6",
+    "cover-bg": "#e8efe9",
+    "t1": "#157a3a",
+    "t2": "#0e6c73",
+    "t3": "#955710",
+    "t4": "#a52c6c",
+    "t5": "#3a4a8c"
+  },
+  "dark": {
+    "bg": "#0b0f0c",
+    "panel": "#141b16",
+    "text": "#e6ece7",
+    "muted": "#8b958d",
+    "accent": "#4ad07a",
+    "border": "#232c25",
+    "mark": "#13301e",
+    "cover-bg": "#0f1812",
+    "t1": "#56d886",
+    "t2": "#46c8d1",
+    "t3": "#e0a340",
+    "t4": "#e56caa",
+    "t5": "#8294ec"
+  },
+  "fonts": {
+    "display": "'Arial Nova', 'Helvetica Neue', 'Segoe UI', system-ui, Arial, sans-serif",
+    "body": "Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Times New Roman', serif",
+    "mono": "'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25a1   \\21c4   \\25a1'",
+    "fig_radius": "4px"
+  },
+  "cover_palette": [
+    "#157a3a",
+    "#0e6c73",
+    "#955710",
+    "#a52c6c"
+  ]
+}
