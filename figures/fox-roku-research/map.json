@@ -7,5 +7,6 @@
   { "file": "00_Briefing.md", "after": "operating system of the American living room", "snippet": "scene_living_room.html" },
   { "file": "01_The_Deal.md", "after": "not independently verified fact.", "snippet": "scene_falcons.html" },
   { "file": "02_Strategic_And_AdTech_Rationale.md", "after": "a closed loop from glass to demand", "snippet": "scene_closed_loop.html" },
-  { "file": "03_How_We_Got_Here.md", "after": "sold to buy it", "snippet": "scene_tubi_irony.html" }
+  { "file": "03_How_We_Got_Here.md", "after": "sold to buy it", "snippet": "scene_tubi_irony.html" },
+  { "file": "04_Market_Reaction_And_Debates.md", "after": "The valuation debate", "snippet": "scene_bull_bear.html" }
 ]
