@@ -190,6 +190,43 @@ def load_corpus(folder):
     return corpus
 
 
+def load_glossary(folder):
+    """Reader glossary for a corpus — a list of {term, aliases[], def}. The site
+    turns each first in-text occurrence into a hover/tap definition chip. Source of
+    truth is `manifest.json`'s optional `glossary`; a standalone `glossary.json` in
+    the corpus folder overrides it (hand-authoring / backfill). Returns [] if none.
+    Definitions are reader-facing, so they must be plain-language and carry no
+    pipeline vocabulary (same house rule as the prose)."""
+    folder = Path(folder)
+    raw = []
+    gp = folder / "glossary.json"
+    if gp.exists():
+        try:
+            raw = json.loads(gp.read_text())
+        except Exception:
+            raw = []
+    else:
+        mp = folder / "manifest.json"
+        if mp.exists():
+            try:
+                raw = json.loads(mp.read_text()).get("glossary", []) or []
+            except Exception:
+                raw = []
+    if isinstance(raw, dict):  # tolerate {term: def} shorthand
+        raw = [{"term": k, "def": v} for k, v in raw.items()]
+    out = []
+    for e in raw:
+        if not isinstance(e, dict):
+            continue
+        term = (e.get("term") or "").strip()
+        definition = (e.get("def") or e.get("definition") or "").strip()
+        if not term or not definition:
+            continue
+        aliases = [a.strip() for a in (e.get("aliases") or []) if isinstance(a, str) and a.strip()]
+        out.append({"term": term, "aliases": aliases, "def": definition})
+    return out
+
+
 def inject_figures(corpus, folder):
     """Splice HTML/SVG figure snippets into chapter bodies, per figures/<folder>/map.json."""
     figdir = HERE / "figures" / Path(folder).name
@@ -829,6 +866,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
   <div id="reader-controls">
     <button id="listen-btn" title="Listen to this chapter">▶ Listen</button>
     <button id="type-btn" title="Text size &amp; width" aria-haspopup="true">Aa</button>
+    <button id="terms-btn" title="Glossary of terms" aria-haspopup="true" hidden>❔ Terms</button>
     <button id="share-btn" title="Share this chapter">Share ↗</button>
     <button id="theme-btn">◐ Theme</button>
   </div>
@@ -951,6 +989,34 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   border: 1px solid var(--border); border-radius: 8px; padding: .3rem .55rem; cursor: pointer; min-width: 2rem; }
 #type-panel .tp-grp button:hover { border-color: var(--accent); color: var(--accent); }
 #type-panel .tp-grp button.on { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+/* glossary — inline term chip + hover/tap definition popover + terms panel */
+.gloss { display: inline; appearance: none; -webkit-appearance: none; font: inherit; line-height: inherit;
+  color: inherit; background: none; border: none; padding: 0; margin: 0; cursor: help;
+  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
+  text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.gloss:hover, .gloss:focus-visible { color: var(--accent); border-bottom-color: var(--accent); outline: none; }
+.gloss:focus-visible { box-shadow: var(--ring); border-radius: 3px; }
+.gloss::after { content: ""; }
+#gloss-pop { position: fixed; z-index: 90; max-width: min(300px, calc(100vw - 16px)); width: max-content; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-3); padding: .7rem .8rem;
+  font-family: var(--sans); font-size: .82rem; line-height: 1.5; color: var(--text); display: none;
+  animation: glossIn .14s var(--ease) both; }
+#gloss-pop.open { display: block; }
+#gloss-pop .gp-term { font-family: var(--display); font-weight: 600; color: var(--accent); font-size: .9rem; margin-bottom: .2rem; }
+@keyframes glossIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { #gloss-pop { animation: none; } }
+#gloss-panel { position: fixed; z-index: 36; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow-3); padding: .5rem; width: 320px; max-width: 88vw;
+  max-height: 60vh; overflow-y: auto; display: none; }
+#gloss-panel.open { display: block; }
+#gloss-panel h4 { font-family: var(--sans); font-size: .62rem; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--muted); margin: .3rem .5rem .5rem; }
+#gloss-panel dl { margin: 0; }
+#gloss-panel dt { font-family: var(--display); font-weight: 600; font-size: .9rem; color: var(--accent);
+  padding: .5rem .5rem 0; }
+#gloss-panel dd { font-family: var(--sans); font-size: .8rem; line-height: 1.5; color: var(--text);
+  margin: .12rem 0 .3rem; padding: 0 .5rem .45rem; border-bottom: 1px solid var(--border); }
+#gloss-panel dd:last-child { border-bottom: none; }
 #content h1 { font-family: var(--display); font-size: 2rem; line-height: 1.22; margin-top: 0; }
 #content h1::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .55rem;
   border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
@@ -1126,6 +1192,24 @@ const corpus = JSON.parse(document.getElementById('corpus-data').textContent);
 const docs = corpus.documents;
 const toc = document.getElementById('toc');
 const content = document.getElementById('content');
+// glossary matchers — built up front so the first chapter's render can wrap chips
+// (applyGlossary + the popover/panel wiring live near the end of this script)
+var GLOSS = (corpus.glossary || []).filter(function (e) { return e && e.term && e.def; });
+var GLOSS_M = (function () {
+  if (!GLOSS.length) return [];
+  var items = [];
+  GLOSS.forEach(function (e) {
+    [e.term].concat(e.aliases || []).forEach(function (s) {
+      if (!s) return;
+      var cs = /[A-Z]/.test(s);                                   // acronyms match case-sensitively
+      var q = s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      var re = new RegExp('(^|[^A-Za-z0-9-])(' + q + ')(?![A-Za-z0-9-])', cs ? '' : 'i');
+      items.push({ len: s.length, re: re, def: e.def, term: e.term });
+    });
+  });
+  items.sort(function (a, b) { return b.len - a.len; });          // longest phrase wins
+  return items;
+})();
 const searchBox = document.getElementById('search');
 const results = document.getElementById('search-results');
 const key = 'corpus:' + corpus.slug;
@@ -1193,6 +1277,7 @@ function show(i, anchorText) {
     if (target >= 0) { a.href = '#ch-' + target; a.onclick = (e) => { e.preventDefault(); show(target); }; }
   });
   content.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.rel = 'noopener'; });
+  applyGlossary(content);
   armReveals(content);
   toc.querySelectorAll('a').forEach((a, j) => a.classList.toggle('active', j === current));
   document.getElementById('prev').disabled = current === 0;
@@ -1533,6 +1618,100 @@ else renderRelated();
   };
   document.addEventListener('click', function (e) {
     if (panel && panel.classList.contains('open') && !panel.contains(e.target) && e.target !== btn) panel.classList.remove('open');
+  });
+})();
+
+// ---- glossary: inline definition chips + hover/tap popover + terms panel ----
+// The corpus carries a `glossary` ([{term, aliases[], def}]); the first in-text
+// occurrence of each term (per chapter) becomes a chip that reveals a plain
+// definition on hover (desktop) or tap (touch), with a full terms list behind
+// the sidebar "Terms" button. Definitions never distract from the prose.
+// (GLOSS / GLOSS_M are defined up top so the first render can wrap chips.)
+function applyGlossary(root) {
+  if (!GLOSS_M || !GLOSS_M.length) return;
+  var used = {};
+  var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: function (n) {
+      if (!n.nodeValue || !n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      for (var p = n.parentNode; p && p !== root; p = p.parentNode) {
+        var t = p.nodeName;
+        if (t === 'A' || t === 'CODE' || t === 'PRE' || /^H[1-4]$/.test(t)) return NodeFilter.FILTER_REJECT;
+        if (p.classList && (p.classList.contains('gloss') || p.classList.contains('corpus-fig'))) return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  var nodes = []; for (var nd; (nd = walker.nextNode());) nodes.push(nd);
+  nodes.forEach(function (node) {
+    for (var i = 0; i < GLOSS_M.length; i++) {
+      var m = GLOSS_M[i]; if (used[m.term]) continue;
+      var mt = m.re.exec(node.nodeValue); if (!mt) continue;
+      var pre = mt[1] || '', word = mt[2], start = mt.index + pre.length;
+      var after = node.splitText(start);
+      after.nodeValue = after.nodeValue.slice(word.length);
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'gloss'; b.textContent = word;
+      b.setAttribute('data-term', m.term); b.setAttribute('data-def', m.def);
+      b.setAttribute('aria-label', m.term + ': ' + m.def);
+      node.parentNode.insertBefore(b, after);
+      used[m.term] = 1; break;                                    // one chip per text node
+    }
+  });
+}
+
+(function setupGlossary() {
+  if (!GLOSS.length) return;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  var pop = document.createElement('div'); pop.id = 'gloss-pop'; pop.setAttribute('role', 'tooltip');
+  document.body.appendChild(pop);
+  var hoverCap = !(window.matchMedia && window.matchMedia('(hover: none)').matches);
+  var openFor = null, cEl = document.getElementById('content');
+  function open(btn) {
+    pop.innerHTML = '<div class="gp-term"></div><div class="gp-def"></div>';
+    pop.querySelector('.gp-term').textContent = btn.getAttribute('data-term');
+    pop.querySelector('.gp-def').textContent = btn.getAttribute('data-def');
+    pop.classList.add('open');
+    var r = btn.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight;
+    var left = Math.max(8, Math.min(r.left + r.width / 2 - pw / 2, window.innerWidth - pw - 8));
+    var top = r.top - ph - 8; if (top < 8) top = r.bottom + 8;
+    pop.style.left = left + 'px'; pop.style.top = top + 'px'; openFor = btn;
+  }
+  function close() { pop.classList.remove('open'); openFor = null; }
+  if (hoverCap) {
+    cEl.addEventListener('pointerover', function (e) { var b = e.target.closest && e.target.closest('.gloss'); if (b) open(b); });
+    cEl.addEventListener('pointerout', function (e) { var b = e.target.closest && e.target.closest('.gloss'); if (b && openFor === b) close(); });
+    cEl.addEventListener('focusin', function (e) { var b = e.target.closest && e.target.closest('.gloss'); if (b) open(b); });
+    cEl.addEventListener('focusout', function () { close(); });
+  }
+  cEl.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.gloss'); if (!b) return;
+    e.preventDefault(); if (openFor === b) close(); else open(b);
+  });
+  document.addEventListener('click', function (e) {
+    if (openFor && !(e.target.closest && (e.target.closest('.gloss') || e.target.closest('#gloss-pop')))) close();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  window.addEventListener('scroll', function () { if (openFor) close(); }, { passive: true });
+
+  var tbtn = document.getElementById('terms-btn'); if (!tbtn) return;
+  tbtn.hidden = false; var panel = null;
+  tbtn.addEventListener('click', function () {
+    if (!panel) {
+      panel = document.createElement('div'); panel.id = 'gloss-panel';
+      var sorted = GLOSS.slice().sort(function (a, b) { return a.term.localeCompare(b.term); });
+      var h = '<h4>' + sorted.length + ' terms in this corpus</h4><dl>';
+      sorted.forEach(function (e) { h += '<dt>' + esc(e.term) + '</dt><dd>' + esc(e.def) + '</dd>'; });
+      panel.innerHTML = h + '</dl>'; document.body.appendChild(panel);
+    }
+    var opened = panel.classList.toggle('open');
+    if (opened) {
+      var r = tbtn.getBoundingClientRect();
+      panel.style.left = Math.min(r.left, window.innerWidth - panel.offsetWidth - 8) + 'px';
+      panel.style.top = (r.bottom + 8) + 'px';
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (panel && panel.classList.contains('open') && !panel.contains(e.target) && e.target !== tbtn) panel.classList.remove('open');
   });
 })();
 """
@@ -5928,6 +6107,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         if override.get("subtitle"):
             corpus["subtitle"] = override["subtitle"]
         figs = inject_figures(corpus, folder)
+        corpus["glossary"] = load_glossary(folder)
         vizn = 0
         for _doc in corpus["documents"]:
             _doc["body"], _c = transform_viz(_doc["body"])
