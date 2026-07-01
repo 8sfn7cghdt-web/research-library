@@ -2787,6 +2787,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
     <a href="fingerprint.html">The Fingerprint</a>
     <a href="pamphlets.html">The Pamphlets</a>
     <a href="connections.html">Connections</a>
+    <a href="glossary.html">Glossary</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="#library">The Research</a>
   </nav>
@@ -5627,6 +5628,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
     <a href="fingerprint.html">The Fingerprint</a>
     <a href="pamphlets.html">The Pamphlets</a>
     <a href="connections.html" class="active">Connections</a>
+    <a href="glossary.html">Glossary</a>
   </nav>
 </div>
 <main class="cx-wrap">
@@ -6050,6 +6052,180 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 """
 
 
+# ---------------------------------------------------------------- the Glossary page
+# A single site-wide reference: every term of art across the whole library, merged
+# and de-duplicated, defined in plain language, with links back to the corpora that
+# use each one. Fed by each corpus's `glossary` (see load_glossary / build.py loop).
+GLOSSARY_EXTRA_CSS = """
+.gl-wrap { max-width: 860px; margin: 0 auto; padding: 2.4rem 2rem 4rem; }
+.gl-head { margin-bottom: 1.6rem; }
+.gl-head .kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); margin: 0 0 .3rem; }
+.gl-head h1 { font-family: var(--display); font-size: 2.4rem; margin: 0 0 .5rem; }
+.gl-head > p { color: var(--muted); max-width: 60ch; line-height: 1.6; }
+#gl-q { width: 100%; margin: 1.3rem 0 .9rem; font-family: var(--serif); font-size: 1.02rem; color: var(--text);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: .7rem .9rem; outline: none; }
+#gl-q:focus { border-color: var(--accent); box-shadow: var(--ring); }
+#gl-az { display: flex; flex-wrap: wrap; gap: .15rem; }
+#gl-az a { font-family: var(--sans); font-size: .74rem; color: var(--muted); text-decoration: none;
+  padding: .12rem .38rem; border-radius: 6px; }
+#gl-az a:hover { color: var(--accent); background: var(--panel); }
+.gl-group { margin-top: 1.9rem; scroll-margin-top: 1rem; }
+.gl-group > h2 { font-family: var(--display); font-size: 1.1rem; color: var(--accent); margin: 0 0 .3rem;
+  padding-bottom: .25rem; border-bottom: 2px solid var(--border); }
+.gl-group dl { margin: 0; }
+.gl-item { padding: .8rem 0; border-bottom: 1px solid var(--border); }
+.gl-item dt { font-family: var(--display); font-weight: 600; font-size: 1.06rem; }
+.gl-item .gl-aka { font-family: var(--sans); font-weight: 400; font-size: .78rem; color: var(--muted); }
+.gl-item dd { margin: .3rem 0 0; line-height: 1.6; }
+.gl-src { display: block; margin-top: .35rem; font-family: var(--sans); font-size: .74rem; color: var(--muted); }
+.gl-src a { color: var(--accent); text-decoration: none; }
+.gl-src a:hover { text-decoration: underline; }
+#gl-none { color: var(--muted); font-family: var(--sans); padding: 1.5rem 0; }
+"""
+
+GLOSSARY_JS = r"""
+(function () {
+  var q = document.getElementById('gl-q'), none = document.getElementById('gl-none');
+  var items = [].slice.call(document.querySelectorAll('.gl-item'));
+  var groups = [].slice.call(document.querySelectorAll('.gl-group'));
+  q.addEventListener('input', function () {
+    var s = q.value.trim().toLowerCase(); var shown = 0;
+    items.forEach(function (it) {
+      var hit = !s || it.getAttribute('data-term').indexOf(s) >= 0;
+      it.style.display = hit ? '' : 'none'; if (hit) shown++;
+    });
+    groups.forEach(function (g) {
+      var vis = g.querySelector('.gl-item:not([style*="none"])');
+      g.style.display = vis ? '' : 'none';
+    });
+    none.hidden = shown > 0;
+  });
+  document.querySelectorAll('#gl-az a').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault(); var t = document.getElementById(a.getAttribute('href').slice(1));
+      if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+"""
+
+GLOSSARY_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glossary — calvincollins · xyz</title>
+<meta name="description" content="Every term of art across the research library, defined in plain language.">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}{extra_css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="pamphlets.html">The Pamphlets</a>
+    <a href="connections.html">Connections</a>
+    <a href="glossary.html" class="active">Glossary</a>
+  </nav>
+</div>
+<main class="gl-wrap">
+  <header class="gl-head">
+    <p class="kicker">Reference</p>
+    <h1>Glossary</h1>
+    <p>{intro}</p>
+    <input id="gl-q" type="search" placeholder="Filter {n} terms…" autocomplete="off" spellcheck="false" aria-label="Filter terms">
+    <nav id="gl-az" aria-label="Jump to a letter">{az}</nav>
+  </header>
+  <div id="gl-list">{entries}</div>
+  <p id="gl-none" hidden>No terms match your filter.</p>
+</main>
+<footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
+  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
+</footer>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def build_glossary_page(out_dir, glossary_index, shell=""):
+    """Render docs/glossary.html — one merged, de-duplicated, searchable reference of
+    every term across all corpora, each linking back to the corpora that use it."""
+    out = Path(out_dir)
+    merged = {}
+    for g in glossary_index:
+        for t in g["terms"]:
+            term = (t.get("term") or "").strip()
+            definition = (t.get("def") or "").strip()
+            if not term or not definition:
+                continue
+            key = term.lower()
+            e = merged.setdefault(key, {"term": term, "def": definition,
+                                        "aliases": set(), "sources": {}})
+            # keep the fullest definition; prefer a canonical casing that isn't all-lower
+            if len(definition) > len(e["def"]):
+                e["def"] = definition
+            if term != term.lower() and e["term"] == e["term"].lower():
+                e["term"] = term
+            for a in (t.get("aliases") or []):
+                if a and a.strip().lower() != key:
+                    e["aliases"].add(a.strip())
+            e["sources"][g["slug"]] = (g["title"], g["href"])
+    if not merged:
+        return False
+    entries = sorted(merged.values(), key=lambda e: e["term"].lower())
+
+    def letter_of(term):
+        c = term[:1].upper()
+        return c if c.isalpha() else "#"
+
+    from collections import OrderedDict
+    groups = OrderedDict()
+    for e in entries:
+        groups.setdefault(letter_of(e["term"]), []).append(e)
+
+    az = "".join(f'<a href="#gl-{L}">{L}</a>' for L in groups)
+    blocks = []
+    for L, es in groups.items():
+        rows = []
+        for e in es:
+            aka = ""
+            if e["aliases"]:
+                aka = ' <span class="gl-aka">' + html.escape(", ".join(sorted(e["aliases"]))) + "</span>"
+            srcs = ", ".join(
+                f'<a href="{href}">{html.escape(title)}</a>'
+                for title, href in sorted(e["sources"].values())
+            )
+            # a lowercase haystack for the client filter (term + aliases)
+            hay = html.escape((e["term"] + " " + " ".join(e["aliases"])).lower(), quote=True)
+            rows.append(
+                f'<div class="gl-item" data-term="{hay}">'
+                f'<dt>{html.escape(e["term"])}{aka}</dt>'
+                f'<dd>{html.escape(e["def"])}'
+                f'<span class="gl-src">Appears in {srcs}</span></dd></div>'
+            )
+        blocks.append(f'<section class="gl-group" id="gl-{L}"><h2>{L}</h2><dl>' + "".join(rows) + "</dl></section>")
+
+    n = len(entries)
+    intro = (f"Every acronym, term of art, and named system across the research library — "
+             f"{n} in all, defined in plain language, each linked to the corpora that use it. "
+             f"Filter below, or jump by letter.")
+    og = og_tags("Glossary", "Every term of art across the research library, defined in plain language.",
+                 f"{SITE_URL}/glossary.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = GLOSSARY_TEMPLATE.format(
+        favicon=FAVICON, og_meta=og, css=CSS, extra_css=GLOSSARY_EXTRA_CSS,
+        intro=intro, n=n, az=az, entries="".join(blocks), app_js=GLOSSARY_JS, shell=shell,
+    )
+    (out / "glossary.html").write_text(page)
+    print(f"  ✓ Glossary  ({n} terms across {len(glossary_index)} corpora) → glossary.html")
+    return True
+
+
 def build_wrapped_page(out_dir, wrapped_stats, shell=""):
     """Render docs/wrapped.html — a client-side 'year in reading' from localStorage."""
     out = Path(out_dir)
@@ -6087,6 +6263,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     search_entries = []    # trimmed chapter text for the palette's "in the text" search
     corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
     all_passages = []      # pull-quotes across every corpus, for Today's Passage
+    glossary_index = []    # {slug,title,href,terms[]} per corpus, for the site-wide Glossary page
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
     atlas_corpora = {}     # {slug: {title,href,accent,img,chapters}} for the Atlas map
     wrapped_stats = []     # per-corpus {slug,title,category,chapters,words} for Research Wrapped
@@ -6169,6 +6346,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             "href": f"{corpus['slug']}.html",
             "chapters": [d["title"] for d in corpus["documents"]],
         })
+        if corpus.get("glossary"):
+            glossary_index.append({
+                "slug": corpus["slug"], "title": corpus["title"],
+                "href": f"{corpus['slug']}.html", "terms": corpus["glossary"],
+            })
         search_entries.append({
             "slug": corpus["slug"], "title": corpus["title"],
             "chapters": [
@@ -6266,6 +6448,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     manifest.append({"title": "Connections", "kind": "section",
                      "category": "The map of ideas", "href": "connections.html",
                      "meta": "how the corpora relate"})
+    if glossary_index:
+        _gterms = sum(len({t["term"].lower() for t in g["terms"]}) for g in glossary_index)
+        manifest.append({"title": "Glossary", "kind": "section", "category": "Reference",
+                         "href": "glossary.html",
+                         "meta": "every term across the research, defined"})
 
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
@@ -6329,6 +6516,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     # The Connections page — interactive theme-graph of the corpora.
     build_connections_page(out, [e for e in manifest if e.get("kind") == "corpus"], category_order, shell=shell_root)
+    build_glossary_page(out, glossary_index, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site).
     build_ghost_page(out, editions, ghost_cfg, shell=shell_root)
