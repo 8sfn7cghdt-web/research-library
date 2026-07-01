@@ -6057,30 +6057,45 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 # and de-duplicated, defined in plain language, with links back to the corpora that
 # use each one. Fed by each corpus's `glossary` (see load_glossary / build.py loop).
 GLOSSARY_EXTRA_CSS = """
-.gl-wrap { max-width: 860px; margin: 0 auto; padding: 2.4rem 2rem 4rem; }
-.gl-head { margin-bottom: 1.6rem; }
-.gl-head .kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); margin: 0 0 .3rem; }
-.gl-head h1 { font-family: var(--display); font-size: 2.4rem; margin: 0 0 .5rem; }
-.gl-head > p { color: var(--muted); max-width: 60ch; line-height: 1.6; }
-#gl-q { width: 100%; margin: 1.3rem 0 .9rem; font-family: var(--serif); font-size: 1.02rem; color: var(--text);
-  background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: .7rem .9rem; outline: none; }
+.gl-wrap { max-width: 880px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+.gl-head { display: block; text-align: left; margin: .6rem 0 .4rem; }
+.gl-head .kicker { margin: 0 0 .5rem; }
+.gl-head h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); margin: 0; }
+.gl-head h1::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .7rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.gl-head .tagline { max-width: 56ch; margin: 1rem 0 0; }
+/* sticky toolbar — filter + A-Z jump, frosted so the prose reads under it */
+.gl-tools { position: sticky; top: 0; z-index: 5; margin: 1.4rem 0 .4rem; padding: .8rem 0 .7rem;
+  background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+  border-bottom: 1px solid var(--border); }
+#gl-q { width: 100%; font-family: var(--serif); font-size: 1rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 12px; padding: .68rem .95rem; outline: none;
+  -webkit-appearance: none; appearance: none; box-shadow: var(--shadow-1); }
 #gl-q:focus { border-color: var(--accent); box-shadow: var(--ring); }
-#gl-az { display: flex; flex-wrap: wrap; gap: .15rem; }
-#gl-az a { font-family: var(--sans); font-size: .74rem; color: var(--muted); text-decoration: none;
-  padding: .12rem .38rem; border-radius: 6px; }
-#gl-az a:hover { color: var(--accent); background: var(--panel); }
-.gl-group { margin-top: 1.9rem; scroll-margin-top: 1rem; }
-.gl-group > h2 { font-family: var(--display); font-size: 1.1rem; color: var(--accent); margin: 0 0 .3rem;
-  padding-bottom: .25rem; border-bottom: 2px solid var(--border); }
-.gl-group dl { margin: 0; }
-.gl-item { padding: .8rem 0; border-bottom: 1px solid var(--border); }
-.gl-item dt { font-family: var(--display); font-weight: 600; font-size: 1.06rem; }
-.gl-item .gl-aka { font-family: var(--sans); font-weight: 400; font-size: .78rem; color: var(--muted); }
-.gl-item dd { margin: .3rem 0 0; line-height: 1.6; }
-.gl-src { display: block; margin-top: .35rem; font-family: var(--sans); font-size: .74rem; color: var(--muted); }
-.gl-src a { color: var(--accent); text-decoration: none; }
+#gl-q::placeholder { color: var(--muted); }
+#gl-az { display: flex; flex-wrap: wrap; gap: .1rem; margin-top: .65rem; }
+#gl-az a { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .03em; color: var(--muted);
+  text-decoration: none; padding: .2rem .46rem; border-radius: 7px; transition: color .15s var(--ease), background .15s var(--ease); }
+#gl-az a:hover { color: var(--bg); background: var(--accent); }
+.gl-group { margin-top: 2.4rem; scroll-margin-top: 6rem; }
+.gl-group > h2 { font-family: var(--display); font-size: 1.5rem; font-weight: 600; color: var(--accent); margin: 0; }
+.gl-group > dl { margin: .3rem 0 0; border-top: 1px solid var(--border); }
+.gl-item { display: grid; grid-template-columns: minmax(128px, 208px) 1fr; gap: .25rem 1.9rem;
+  padding: 1.05rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+.gl-item dt { font-family: var(--display); font-weight: 600; font-size: 1.12rem; line-height: 1.28; }
+.gl-item .gl-aka { display: block; font-family: var(--sans); font-weight: 400; font-size: .71rem; color: var(--muted);
+  margin-top: .25rem; line-height: 1.45; }
+.gl-item dd { margin: 0; font-family: var(--serif); font-size: 1.02rem; line-height: 1.62; color: var(--text); }
+.gl-src { display: block; margin-top: .5rem; font-family: var(--sans); font-size: .66rem; text-transform: uppercase;
+  letter-spacing: .09em; color: var(--muted); }
+.gl-src a { text-transform: none; letter-spacing: 0; font-size: .82rem; color: var(--accent); text-decoration: none; }
 .gl-src a:hover { text-decoration: underline; }
-#gl-none { color: var(--muted); font-family: var(--sans); padding: 1.5rem 0; }
+#gl-none { color: var(--muted); font-family: var(--sans); padding: 2.5rem 0; text-align: center; }
+@media (max-width: 640px) {
+  .gl-wrap { padding: 1.4rem 1.3rem 4rem; }
+  .gl-item { grid-template-columns: 1fr; gap: .35rem; padding: .95rem 0; }
+  .gl-item dd { font-size: .98rem; }
+}
 """
 
 GLOSSARY_JS = r"""
@@ -6118,7 +6133,7 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 <meta name="description" content="Every term of art across the research library, defined in plain language.">
 <link rel="icon" href="{favicon}">
 {og_meta}
-<style>{css}{extra_css}</style>
+<style>{css}</style>
 </head>
 <body>
 <div class="masthead">
@@ -6136,10 +6151,12 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
   <header class="gl-head">
     <p class="kicker">Reference</p>
     <h1>Glossary</h1>
-    <p>{intro}</p>
+    <p class="tagline">{intro}</p>
+  </header>
+  <div class="gl-tools">
     <input id="gl-q" type="search" placeholder="Filter {n} terms…" autocomplete="off" spellcheck="false" aria-label="Filter terms">
     <nav id="gl-az" aria-label="Jump to a letter">{az}</nav>
-  </header>
+  </div>
   <div id="gl-list">{entries}</div>
   <p id="gl-none" hidden>No terms match your filter.</p>
 </main>
@@ -6218,7 +6235,7 @@ def build_glossary_page(out_dir, glossary_index, shell=""):
     og = og_tags("Glossary", "Every term of art across the research library, defined in plain language.",
                  f"{SITE_URL}/glossary.html", f"{SITE_URL}/{OG_IMAGE}")
     page = GLOSSARY_TEMPLATE.format(
-        favicon=FAVICON, og_meta=og, css=CSS, extra_css=GLOSSARY_EXTRA_CSS,
+        favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + GLOSSARY_EXTRA_CSS,
         intro=intro, n=n, az=az, entries="".join(blocks), app_js=GLOSSARY_JS, shell=shell,
     )
     (out / "glossary.html").write_text(page)

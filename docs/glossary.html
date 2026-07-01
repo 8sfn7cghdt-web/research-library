@@ -19,13 +19,11 @@
 <style>
 :root {
   --bg: #faf8f4; --panel: #f1ede5; --text: #1f1d1a; --muted: #6e6a62;
-  --accent: #8c4a2f; --border: #ddd6c9; --mark: #f3dfa0;
+  --accent: #8c4a2f; --border: #ddd6c9; --cover-bg: #f3ead8;
   --t1: #b3502f; --t2: #c9a227; --t3: #2e5266; --t4: #6b7d4f; --t5: #8a5a7c;
-  --cover-bg: #f3ead8;
-  --serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --serif: Georgia, 'Iowan Old Style', serif;
   --display: 'Iowan Old Style', Palatino, Georgia, serif;
   --sans: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-  /* shared craft layer — layered shadows, motion easings, focus ring */
   --shadow-1: 0 1px 2px rgba(31,29,26,.05), 0 2px 5px rgba(31,29,26,.05);
   --shadow-2: 0 2px 6px rgba(31,29,26,.06), 0 10px 24px rgba(31,29,26,.09);
   --shadow-3: 0 6px 16px rgba(31,29,26,.10), 0 22px 48px rgba(31,29,26,.15);
@@ -35,306 +33,230 @@
 }
 [data-theme="dark"] {
   --bg: #161513; --panel: #1f1d1a; --text: #e8e4db; --muted: #968f82;
-  --accent: #d98f5f; --border: #35322c; --mark: #5c4a1e;
+  --accent: #d98f5f; --border: #35322c; --cover-bg: #232019;
   --t1: #d4795a; --t2: #d8b545; --t3: #6f9bb3; --t4: #93a86f; --t5: #b07a9e;
-  --cover-bg: #232019;
   --shadow-1: 0 1px 2px rgba(0,0,0,.30), 0 2px 6px rgba(0,0,0,.32);
   --shadow-2: 0 3px 10px rgba(0,0,0,.40), 0 12px 30px rgba(0,0,0,.48);
   --shadow-3: 0 8px 22px rgba(0,0,0,.46), 0 26px 56px rgba(0,0,0,.58);
 }
 * { box-sizing: border-box; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
-#sidebar {
-  position: fixed; top: 0; left: 0; bottom: 0; width: 320px; overflow-y: auto;
-  background: var(--panel); border-right: 1px solid var(--border); padding: 1.2rem 1.2rem 2rem;
+.masthead { max-width: 1080px; margin: 0 auto; padding: .8rem 2rem; display: flex;
+  justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--border); }
+.mh-nav { display: flex; gap: 1.3rem; }
+.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
+.mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: right; transition: transform .28s var(--ease); }
+.mh-nav a:hover { color: var(--accent); }
+.mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+.section-title { max-width: 1080px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
+  font-size: 1.5rem; scroll-margin-top: 1rem; }
+.section-title::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+/* Collections — the flagship: curated cross-corpus reading arcs, shown as posters. */
+.collections { max-width: 1080px; margin: 1.9rem auto 0; padding: 0 2rem; }
+.coll-h { font-family: var(--display); font-size: 1.5rem; margin: 0; }
+.coll-h::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .5rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.coll-intro { font-family: var(--sans); font-size: .9rem; color: var(--muted); margin: .7rem 0 1.2rem; max-width: 42rem; line-height: 1.5; }
+.coll-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(264px, 1fr)); gap: 1.4rem; }
+.coll-card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text); box-shadow: var(--shadow-1);
+  transition: transform .24s var(--ease-spring), box-shadow .2s var(--ease), border-color .16s ease; }
+.coll-card:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: var(--shadow-3); }
+.coll-poster { position: relative; background: var(--cover-bg); border-bottom: 1px solid var(--border); overflow: hidden; }
+.coll-poster svg { width: 100%; height: 138px; display: block; transition: transform .55s var(--ease); transform-origin: center; }
+.coll-card:hover .coll-poster svg { transform: scale(1.05); }
+@media (prefers-reduced-motion: reduce) { .coll-card:hover .coll-poster svg { transform: none; } }
+.coll-poster::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 38%, rgba(20,18,15,.55) 100%); }
+.coll-poster-title { position: absolute; left: 15px; right: 15px; bottom: 12px; z-index: 1; font-family: var(--display);
+  font-weight: 700; color: #f6efe2; font-size: 1.42rem; line-height: 1.08; text-shadow: 0 1px 8px rgba(0,0,0,.5); }
+.coll-body { padding: 1rem 1.2rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
+.coll-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); line-height: 1.5; margin: 0 0 .9rem; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.coll-meta { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .07em;
+  color: var(--accent); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+/* Today's Passage — the daily pull-quote hook pinned atop the index. */
+#daily-passage { max-width: 1080px; margin: 1.6rem auto 0; padding: 0 2rem; }
+.dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem 1.9rem 1.4rem; box-shadow: var(--shadow-1);
+  transition: transform .2s var(--ease-spring), box-shadow .2s var(--ease), border-color .16s ease; }
+.dp-quote:hover { transform: translateY(-2px); border-color: var(--accent); box-shadow: var(--shadow-2); }
+.dp-kicker { display: block; font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--accent); margin: 0 0 .55rem; }
+.dp-mark { position: absolute; top: .2rem; right: 1.2rem; font-family: var(--display); font-size: 5rem;
+  line-height: 1; color: var(--accent); opacity: .12; }
+.dp-text { display: block; font-family: var(--display); font-style: italic; font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  line-height: 1.36; margin: 0 0 .8rem; max-width: 46rem; }
+.dp-src { display: block; font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: 0 0 1rem; }
+.dp-cta { font-family: var(--sans); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+.dp-share { position: absolute; right: 1.5rem; bottom: 1.25rem; font-family: var(--sans); font-size: .7rem;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 9px; padding: .35rem .7rem; cursor: pointer; }
+.dp-share:hover { color: var(--accent); border-color: var(--accent); }
+/* "For You" — the living, personalized discovery zone (rows of cloned cards). */
+#foryou { max-width: 1080px; margin: 1.4rem auto 0; padding: 0 2rem; }
+#foryou[hidden] { display: none; }
+.fy-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--accent); margin: 0 0 .15rem; }
+.fy-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .2rem 0 .4rem; max-width: 40rem; line-height: 1.5; }
+.fy-group { margin: 0 0 1.1rem; }
+.fy-h { font-family: var(--display); font-weight: normal; font-size: 1.12rem; margin: .9rem 0 .7rem; }
+.fy-h em { font-style: italic; color: var(--accent); }
+.fy-row { display: flex; gap: 1.1rem; overflow-x: auto; padding: .2rem .1rem 1rem; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.fy-row::-webkit-scrollbar { height: 8px; }
+.fy-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.fy-row::-webkit-scrollbar-track { background: transparent; }
+.fy-row .card { width: 264px; flex: 0 0 264px; scroll-snap-align: start; }
+@media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
+/* The Ghost of Times feature band on the home page — inky newspaper contrast to the mosaic library. */
+.ghost-band { max-width: 1080px; margin: 2rem auto 0; padding: 0 2rem; }
+.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+  text-decoration: none; color: #f3ead8; background: #1b1a17; border: 1px solid #322f29; border-radius: 18px;
+  padding: 1.5rem 1.8rem; transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.ghost-band a:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,.28); border-color: var(--t2); }
+.ghost-band .gb-flag { font-family: var(--display); font-size: 2.1rem; line-height: 1; color: #f3ead8;
+  border-right: 1px solid #46423a; padding-right: 1.6rem; }
+.ghost-band .gb-flag small { display: block; font-family: var(--sans); font-size: .58rem; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--t2); margin-top: .5rem; }
+.ghost-band .gb-mid .gb-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .16em; color: var(--t2); margin: 0 0 .35rem; }
+.ghost-band .gb-mid .gb-lead { font-family: var(--display); font-size: 1.18rem; line-height: 1.28; margin: 0 0 .3rem; color: #f6efe2; }
+.ghost-band .gb-mid .gb-sub { font-family: var(--sans); font-size: .82rem; line-height: 1.45; color: #b9b2a4; margin: 0; }
+.ghost-band .gb-cta { font-family: var(--sans); font-size: .76rem; text-transform: uppercase; letter-spacing: .1em;
+  color: #1b1a17; background: var(--t2); border-radius: 12px; padding: .55rem 1rem; white-space: nowrap; }
+@media (max-width: 680px) {
+  .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
+  .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid #46423a; padding: 0 0 .9rem; }
+  .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
 }
-.tiles { display: flex; gap: 5px; margin: .9rem 0 .2rem; }
+header { max-width: 1080px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
+  align-items: center; gap: 2.5rem; }
+.hero-text { flex: 1.1; }
+.hero-art { flex: 1; min-width: 0; }
+.hero-art svg { width: 100%; height: auto; display: block; }
+.hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
+[data-theme="dark"] .hero-art .hero-core { fill: #161513; }
+[data-theme="dark"] .hero-art .hero-ground { fill: #e8e4db; }
+.kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--accent); margin: 0 0 .6rem; }
+header h1 { font-family: var(--display); font-size: clamp(2.3rem, 4.6vw, 3.3rem);
+  line-height: 1.08; margin: 0 0 .7rem; letter-spacing: -.01em; }
+.tagline { color: var(--muted); margin: 0 0 1.1rem; font-family: var(--sans); font-size: .95rem;
+  line-height: 1.5; max-width: 34rem; }
+.stats { font-family: var(--sans); font-size: .74rem; color: var(--accent); margin: 0;
+  text-transform: uppercase; letter-spacing: .1em; }
+.library { max-width: 1080px; margin: 0 auto; padding: 0 0 3rem; }
+/* Library toolbar — search box + category filter pills. */
+.lib-toolbar { padding: 1.2rem 2rem .4rem; display: flex; flex-wrap: wrap; align-items: center;
+  gap: .9rem 1.4rem; }
+.lib-search { flex: 1 1 240px; min-width: 0; max-width: 360px; font-family: var(--sans); font-size: .9rem;
+  color: var(--text); background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: .55rem .85rem; -webkit-appearance: none; appearance: none; }
+.lib-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(140,74,47,.14); }
+.lib-search::placeholder { color: var(--muted); }
+.cat-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cat-pill { font-family: var(--sans); font-size: .76rem; letter-spacing: .02em; color: var(--muted);
+  background: transparent; border: 1px solid var(--border); border-radius: 999px; padding: .4rem .85rem;
+  cursor: pointer; transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s var(--ease), box-shadow .15s ease; }
+.cat-pill:hover { color: var(--accent); border-color: var(--accent); transform: translateY(-1px); }
+.cat-pill.active { color: var(--bg); background: var(--accent); border-color: var(--accent); box-shadow: var(--shadow-1); }
+.cat-pill .cat-count { opacity: .65; font-size: .9em; }
+.domain-group { padding-top: .4rem; }
+.domain-group[hidden] { display: none; }
+.domain-heading { max-width: 100%; margin: 2.2rem 0 .2rem; padding: 0 2rem .55rem;
+  font-family: var(--display); font-size: 1.62rem; letter-spacing: -.01em; color: var(--text);
+  display: flex; align-items: baseline; gap: .6rem; border-bottom: 1px solid var(--border); }
+.domain-heading .domain-count { font-family: var(--sans); font-size: .7rem; color: var(--muted);
+  font-weight: normal; letter-spacing: .08em; }
+.domain-group .cat-heading { font-size: 1.04rem; color: var(--muted); }
+.cat-section { padding-top: .6rem; }
+.cat-section[hidden] { display: none; }
+.cat-heading { max-width: 100%; margin: 1.2rem 0 0; padding: 0 2rem; font-family: var(--display);
+  font-size: 1.18rem; color: var(--text); display: flex; align-items: baseline; gap: .5rem; }
+.cat-heading .cat-count { font-family: var(--sans); font-size: .72rem; color: var(--muted);
+  font-weight: normal; letter-spacing: .06em; }
+.lib-empty { font-family: var(--sans); color: var(--muted); text-align: center; padding: 2.5rem 2rem; margin: 0; }
+.grid { padding: 1.1rem 2rem 1.4rem;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.4rem; }
+.card { display: flex; flex-direction: column; background: var(--panel); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden; text-decoration: none; color: var(--text); box-shadow: var(--shadow-1);
+  transition: transform .26s var(--ease-spring), box-shadow .22s var(--ease), border-color .18s ease; }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow-3); border-color: var(--accent); }
+.card:active { transform: translateY(-1px) scale(.992); }
+.cover { background: var(--cover-bg); border-bottom: 1px solid var(--border); overflow: hidden; }
+.cover svg { width: 100%; height: 124px; display: block; }
+/* Photo covers crop to the card band at any source size/aspect ratio. */
+.cover .cover-photo { width: 100%; height: 124px; object-fit: cover; object-position: center; display: block; }
+/* gentle cover push-in on hover — the shelf rewards a moused-over tile */
+.cover svg, .cover .cover-photo { transition: transform .55s var(--ease); transform-origin: center; }
+.card:hover .cover svg, .card:hover .cover .cover-photo { transform: scale(1.05); }
+@media (prefers-reduced-motion: reduce) { .card:hover .cover svg, .card:hover .cover .cover-photo { transform: none; } }
+.card-body { padding: 1.05rem 1.2rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
+.card h2 { font-family: var(--display); font-size: 1.13rem; line-height: 1.3; margin: 0 0 .4rem; }
+.card .sub { color: var(--muted); font-size: .8rem; font-family: var(--sans);
+  margin: 0 0 .9rem; line-height: 1.45; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card .meta { color: var(--accent); font-size: .7rem; font-family: var(--sans);
+  text-transform: uppercase; letter-spacing: .08em; margin: 0; }
+footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top: 1px solid var(--border); }
+.tiles { display: flex; gap: 5px; margin: 1.2rem 0 .9rem; }
 .tiles span { width: 13px; height: 13px; }
 .tiles span:nth-child(1) { background: var(--t1); border-radius: 3px 8px 4px 7px; transform: rotate(-6deg); }
 .tiles span:nth-child(2) { background: var(--t2); border-radius: 7px 3px 8px 4px; transform: rotate(8deg); }
 .tiles span:nth-child(3) { background: var(--t3); border-radius: 4px 7px 3px 8px; transform: rotate(-4deg); }
 .tiles span:nth-child(4) { background: var(--t4); border-radius: 8px 4px 7px 3px; transform: rotate(5deg); }
-#sidebar h1 { font-family: var(--display); font-size: 1.22rem; line-height: 1.28; margin: .5rem 0 .25rem; }
-#sidebar .subtitle { font-size: .8rem; color: var(--muted); margin: 0 0 1rem; font-family: var(--sans); }
-.back { font-family: var(--sans); font-size: .78rem; color: var(--muted); text-decoration: none;
-  text-transform: uppercase; letter-spacing: .08em; }
-.back:hover { color: var(--accent); }
-#search { width: 100%; padding: .5rem .7rem; font-size: .85rem; border: 1px solid var(--border);
-  border-radius: 10px; background: var(--bg); color: var(--text); font-family: var(--sans); }
-#search:focus { outline: none; border-color: var(--accent); }
-#toc { margin-top: .8rem; }
-#toc a { display: block; padding: .45rem .55rem; margin: .1rem 0; border-radius: 8px;
-  color: var(--text); text-decoration: none; font-family: var(--sans); font-size: .84rem; line-height: 1.35;
-  border-left: 2px solid transparent; }
-#toc a .num { color: var(--muted); font-size: .72rem; margin-right: .4rem; }
-#toc a:hover { background: var(--bg); }
-#toc a.active { background: var(--bg); color: var(--accent); font-weight: 600; border-left-color: var(--accent); }
-#search-results { font-family: var(--sans); font-size: .8rem; }
-#search-results .hit { padding: .5rem .55rem; border-bottom: 1px solid var(--border); cursor: pointer; border-radius: 8px; }
-#search-results .hit:hover { background: var(--bg); }
-#search-results .hit b { color: var(--accent); display: block; margin-bottom: .15rem; }
-#search-results mark { background: var(--mark); color: inherit; border-radius: 2px; }
-#search-results .none { color: var(--muted); padding: .5rem .55rem; }
-#reader-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
-#reader-controls button { margin: 0; font-family: var(--sans); font-size: .76rem; color: var(--muted);
-  background: none; border: 1px solid var(--border); border-radius: 10px; padding: .35rem .7rem; cursor: pointer; }
-#reader-controls button:hover { color: var(--accent); border-color: var(--accent); }
-#listen-btn.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
-/* floating Listen bar (Web Speech narration) */
-#listen-bar { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 40; display: none;
-  align-items: center; gap: .7rem; flex-wrap: wrap; max-width: 92vw; background: var(--panel);
-  border: 1px solid var(--border); border-radius: 14px; padding: .5rem .8rem; box-shadow: var(--shadow-3); }
-#listen-bar.show { display: flex; }
-#listen-bar button { font-family: var(--sans); font-size: 1rem; background: none; border: 1px solid var(--border);
-  border-radius: 9px; width: 34px; height: 30px; color: var(--text); cursor: pointer; }
-#listen-bar button:hover { border-color: var(--accent); color: var(--accent); }
-#lb-title { font-family: var(--display); font-size: .9rem; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-#listen-bar .lb-ctl { font-family: var(--sans); font-size: .66rem; color: var(--muted); text-transform: uppercase;
-  letter-spacing: .06em; display: flex; align-items: center; gap: .3rem; }
-#listen-bar select { font-family: var(--sans); font-size: .72rem; background: var(--bg); color: var(--text);
-  border: 1px solid var(--border); border-radius: 7px; padding: .15rem .3rem; }
-#lb-voice { max-width: 160px; }
-@media (max-width: 560px) { #lb-title { display: none; } #lb-voice { max-width: 110px; } }
-#main { margin-left: 320px; display: flex; flex-direction: column; min-height: 100vh; }
-#content { max-width: var(--reader-measure, 740px); width: 100%; margin: 0 auto; padding: 3rem 2rem 2rem;
-  font-size: var(--reader-fs, 1.04rem); line-height: 1.72; flex: 1; }
-/* top reading-progress bar */
-#reader-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0; z-index: 30;
-  background: linear-gradient(90deg, var(--t1), var(--t2), var(--t3), var(--t4)); transition: width .08s linear; }
-/* text size / measure popover (toggled by the Aa button) */
-#type-panel { position: fixed; z-index: 35; background: var(--bg); border: 1px solid var(--border);
-  border-radius: 12px; box-shadow: var(--shadow-3); padding: .8rem; width: 220px; display: none; }
-#type-panel.open { display: block; }
-#type-panel .tp-row { display: flex; align-items: center; justify-content: space-between; gap: .6rem; margin-bottom: .6rem; }
-#type-panel .tp-row:last-child { margin-bottom: 0; }
-#type-panel .tp-lab { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
-#type-panel .tp-grp { display: flex; gap: .3rem; }
-#type-panel .tp-grp button { font-family: var(--sans); font-size: .8rem; color: var(--text); background: var(--panel);
-  border: 1px solid var(--border); border-radius: 8px; padding: .3rem .55rem; cursor: pointer; min-width: 2rem; }
-#type-panel .tp-grp button:hover { border-color: var(--accent); color: var(--accent); }
-#type-panel .tp-grp button.on { background: var(--accent); color: var(--bg); border-color: var(--accent); }
-/* glossary — inline term chip + hover/tap definition popover + terms panel */
-.gloss { display: inline; appearance: none; -webkit-appearance: none; font: inherit; line-height: inherit;
-  color: inherit; background: none; border: none; padding: 0; margin: 0; cursor: help;
-  border-bottom: 1px dashed color-mix(in srgb, var(--accent) 55%, transparent);
-  text-decoration: none; -webkit-tap-highlight-color: transparent; }
-.gloss:hover, .gloss:focus-visible { color: var(--accent); border-bottom-color: var(--accent); outline: none; }
-.gloss:focus-visible { box-shadow: var(--ring); border-radius: 3px; }
-.gloss::after { content: ""; }
-#gloss-pop { position: fixed; z-index: 90; max-width: min(300px, calc(100vw - 16px)); width: max-content; background: var(--bg);
-  border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow-3); padding: .7rem .8rem;
-  font-family: var(--sans); font-size: .82rem; line-height: 1.5; color: var(--text); display: none;
-  animation: glossIn .14s var(--ease) both; }
-#gloss-pop.open { display: block; }
-#gloss-pop .gp-term { font-family: var(--display); font-weight: 600; color: var(--accent); font-size: .9rem; margin-bottom: .2rem; }
-@keyframes glossIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { #gloss-pop { animation: none; } }
-#gloss-panel { position: fixed; z-index: 36; background: var(--bg); border: 1px solid var(--border);
-  border-radius: 12px; box-shadow: var(--shadow-3); padding: .5rem; width: 320px; max-width: 88vw;
-  max-height: 60vh; overflow-y: auto; display: none; }
-#gloss-panel.open { display: block; }
-#gloss-panel h4 { font-family: var(--sans); font-size: .62rem; text-transform: uppercase; letter-spacing: .14em;
-  color: var(--muted); margin: .3rem .5rem .5rem; }
-#gloss-panel dl { margin: 0; }
-#gloss-panel dt { font-family: var(--display); font-weight: 600; font-size: .9rem; color: var(--accent);
-  padding: .5rem .5rem 0; }
-#gloss-panel dd { font-family: var(--sans); font-size: .8rem; line-height: 1.5; color: var(--text);
-  margin: .12rem 0 .3rem; padding: 0 .5rem .45rem; border-bottom: 1px solid var(--border); }
-#gloss-panel dd:last-child { border-bottom: none; }
-#content h1 { font-family: var(--display); font-size: 2rem; line-height: 1.22; margin-top: 0; }
-#content h1::after { content: ""; display: block; height: 4px; width: 110px; margin-top: .55rem;
-  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
-#content h2 { font-family: var(--display); font-size: 1.38rem; margin-top: 2.4rem; line-height: 1.3; }
-#content h3 { font-size: 1.1rem; }
-#content a { color: var(--accent); }
-#content blockquote { margin: 1.4rem 0; padding: .7rem 1.3rem; border-left: 3px solid var(--accent);
-  background: var(--panel); border-radius: 0 14px 14px 0; color: var(--muted); font-style: italic; }
-#content code { background: var(--panel); padding: .1em .35em; border-radius: 4px; font-size: .88em; }
-#content pre { background: var(--panel); padding: 1rem; border-radius: 10px; overflow-x: auto; }
-#content pre code { background: none; padding: 0; }
-#content table { border-collapse: collapse; font-family: var(--sans); font-size: .85rem; width: 100%; margin: 1.2rem 0; }
-#content th, #content td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
-#content th { background: var(--panel); }
-#content img { max-width: 100%; }
-#content hr { border: none; margin: 2.6rem 0; text-align: center; height: 1em; }
-#content hr::before { content: var(--hr-glyph, "◆ ◆ ◆"); color: var(--accent); opacity: .45; font-size: .7rem; letter-spacing: 1.1em;
-  padding-left: 1.1em; }
-figure.corpus-fig { margin: 2.2rem 0; padding: 1.1rem 1.1rem .9rem; background: var(--panel);
-  border: 1px solid var(--border); border-radius: var(--fig-radius, 16px); box-shadow: var(--shadow-1); }
-figure.corpus-fig svg { width: 100%; height: auto; display: block; }
-figure.corpus-fig figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
-  text-align: center; margin-top: .7rem; line-height: 1.45; }
-figure.corpus-fig figcaption strong { color: var(--accent); }
-.corpus-fig svg text { font-family: var(--sans); fill: var(--text); }
-.corpus-fig svg .t-muted { fill: var(--muted); }
-.corpus-fig svg .t-acc { fill: var(--accent); }
-.corpus-fig svg .t-serif { font-family: var(--display); }
-.corpus-fig svg .t-mono { font-family: var(--mono, ui-monospace, 'SF Mono', Menlo, Consolas, monospace); }
-.corpus-fig svg .t-inv { fill: #faf8f4; }
-.corpus-fig svg .ln { stroke: var(--muted); }
-.corpus-fig svg .ln-soft { stroke: var(--border); }
-.corpus-fig svg .f-t1 { fill: var(--t1); } .corpus-fig svg .f-t2 { fill: var(--t2); }
-.corpus-fig svg .f-t3 { fill: var(--t3); } .corpus-fig svg .f-t4 { fill: var(--t4); }
-.corpus-fig svg .f-t5 { fill: var(--t5); }
-.corpus-fig svg .s-t1 { stroke: var(--t1); } .corpus-fig svg .s-t2 { stroke: var(--t2); }
-.corpus-fig svg .s-t3 { stroke: var(--t3); } .corpus-fig svg .s-t4 { stroke: var(--t4); }
-.corpus-fig svg .s-t5 { stroke: var(--t5); }
-.corpus-fig svg .f-bg { fill: var(--bg); }
-.corpus-fig svg .f-panel { fill: var(--panel); }
-/* viz chart fences (build-time SVG/HTML), themed with the same palette tokens
-   as corpus-fig so they recolor in light & dark and per corpus. */
-figure.viz { margin: 2.2rem 0; padding: 1.1rem 1.2rem .95rem; background: var(--panel);
-  border: 1px solid var(--border); border-radius: var(--fig-radius, 16px); box-shadow: var(--shadow-1); }
-figure.viz .viz-title { font-family: var(--sans); font-size: .95rem; font-weight: 700;
-  color: var(--text); margin: 0 0 .9rem; line-height: 1.3; }
-figure.viz svg { width: 100%; height: auto; display: block; }
-figure.viz svg text { font-family: var(--sans); fill: var(--text); }
-figure.viz figcaption { font-family: var(--sans); font-size: .78rem; color: var(--muted);
-  margin-top: .8rem; line-height: 1.5; }
-figure.viz figcaption .credit { font-style: italic; }
-.viz svg .t-muted { fill: var(--muted); }
-.viz svg .ln { stroke: var(--muted); }
-.viz svg .ln-soft { stroke: var(--border); }
-.viz svg .f-t1 { fill: var(--t1); } .viz svg .f-t2 { fill: var(--t2); }
-.viz svg .f-t3 { fill: var(--t3); } .viz svg .f-t4 { fill: var(--t4); }
-.viz svg .f-t5 { fill: var(--t5); }
-.viz svg .s-t1 { stroke: var(--t1); } .viz svg .s-t2 { stroke: var(--t2); }
-.viz svg .s-t3 { stroke: var(--t3); } .viz svg .s-t4 { stroke: var(--t4); }
-.viz svg .s-t5 { stroke: var(--t5); }
-.viz-legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 12px;
-  font-family: var(--sans); font-size: .8rem; color: var(--text); }
-.viz-legend span { display: inline-flex; align-items: center; gap: 7px; }
-.viz-legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
-.viz-legend b { color: var(--muted); font-weight: 600; }
-.viz-donutwrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
-figure.viz .viz-donutwrap svg { width: 200px; flex: 0 0 auto; }
-.viz-legend-col { flex-direction: column; gap: 8px; margin: 0; }
-.viz-timeline { font-family: var(--sans); font-size: .9rem; }
-.viz-timeline .tlrow { display: grid; grid-template-columns: 104px 1fr; gap: 0 18px; }
-.viz-timeline .tldate { text-align: right; font-weight: 700; color: var(--accent);
-  font-size: .82rem; padding: 2px 0 18px; }
-.viz-timeline .tlbody { position: relative; border-left: 2px solid var(--border);
-  padding: 0 0 18px 18px; line-height: 1.5; }
-.viz-timeline .tlbody::before { content: ""; position: absolute; left: -6px; top: 5px;
-  width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-.viz-timeline .tlrow:last-child .tldate, .viz-timeline .tlrow:last-child .tlbody { padding-bottom: 2px; }
-.viz-flow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
-  font-family: var(--sans); font-size: .85rem; }
-.viz-flow .flowstep { background: var(--bg); border: 1px solid var(--border);
-  border-radius: 8px; padding: 8px 14px; line-height: 1.35; max-width: 230px; }
-.viz-flow .flowarrow { color: var(--accent); font-weight: 700; font-size: 18px; }
-.viz-error { margin: 1.4rem 0; padding: 14px 18px; border: 1px dashed var(--accent);
-  border-radius: 8px; background: var(--panel); font-family: var(--sans); font-size: .8rem; color: var(--text); }
-.viz-error pre { margin: 10px 0 0; font-size: .72rem; white-space: pre-wrap; }
-/* ── animated reveal on scroll (corpus-visuals) ──────────────────────────────
-   Figures and their marks start hidden ONLY after the page JS adds .reveal-armed
-   (it skips this under prefers-reduced-motion), so with no-JS or reduced motion
-   everything is fully visible by default — motion is purely additive. When a
-   figure scrolls into view the observer adds .is-revealed and CSS does the rest.
-   The cv-* classes are a shared reveal vocabulary used by BOTH the build-time viz
-   charts and hand-authored corpus-fig figures; the per-mark `--d` var staggers
-   them. transform-box:fill-box anchors each SVG mark's scale to its own geometry. */
-figure.viz, figure.corpus-fig { --cv-ease: cubic-bezier(.22,.61,.36,1); }
-.reveal-armed.viz, .reveal-armed.corpus-fig { opacity: 0; transform: translateY(14px);
-  transition: opacity .7s var(--cv-ease), transform .7s var(--cv-ease); will-change: opacity, transform; }
-.reveal-armed.is-revealed { opacity: 1; transform: none; }
-.reveal-armed .cv-fade { opacity: 0; transition: opacity .6s var(--cv-ease) var(--d, 0s); }
-.reveal-armed.is-revealed .cv-fade { opacity: 1; }
-.reveal-armed .cv-rise { opacity: 0; transform: translateY(10px);
-  transition: opacity .6s var(--cv-ease) var(--d, 0s), transform .6s var(--cv-ease) var(--d, 0s); }
-.reveal-armed.is-revealed .cv-rise { opacity: 1; transform: none; }
-.reveal-armed .cv-grow-up { transform: scaleY(0); transform-box: fill-box; transform-origin: bottom;
-  transition: transform .85s var(--cv-ease) var(--d, 0s); }
-.reveal-armed.is-revealed .cv-grow-up { transform: scaleY(1); }
-.reveal-armed .cv-grow-right { transform: scaleX(0); transform-box: fill-box; transform-origin: left;
-  transition: transform .85s var(--cv-ease) var(--d, 0s); }
-.reveal-armed.is-revealed .cv-grow-right { transform: scaleX(1); }
-.reveal-armed .cv-draw { stroke-dasharray: 1; stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1.15s var(--cv-ease) var(--d, 0s); }
-.reveal-armed.is-revealed .cv-draw { stroke-dashoffset: 0; }
-.reveal-armed .cv-spin { opacity: 0; transform: rotate(-55deg) scale(.72); transform-box: fill-box;
-  transform-origin: center; transition: transform .95s var(--cv-ease) var(--d, 0s), opacity .7s var(--cv-ease) var(--d, 0s); }
-.reveal-armed.is-revealed .cv-spin { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) {
-  .reveal-armed.viz, .reveal-armed.corpus-fig, .reveal-armed .cv-fade, .reveal-armed .cv-rise,
-  .reveal-armed .cv-grow-up, .reveal-armed .cv-grow-right, .reveal-armed .cv-draw, .reveal-armed .cv-spin {
-    opacity: 1 !important; transform: none !important; stroke-dashoffset: 0 !important; transition: none !important; }
+.epigraph { font-style: italic; color: var(--muted); margin: 0 0 .3rem; font-size: .92rem; }
+.colophon { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; }
+@media (max-width: 760px) {
+  header { flex-direction: column-reverse; gap: 1.2rem; padding-top: 1.6rem; }
+  .hero-art { width: 100%; }
 }
-#pager { max-width: 740px; width: 100%; margin: 0 auto; padding: 1rem 2rem 3rem;
-  display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); }
-#pager button { font-size: 1rem; padding: .45rem 1.2rem; border: 1px solid var(--border);
-  border-radius: 16px 16px 8px 8px; background: var(--panel); color: var(--text); cursor: pointer; }
-#pager button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
-#pager button:disabled { opacity: .3; cursor: default; }
-#pager-label { font-size: .78rem; color: var(--muted); }
-#menu-btn { display: none; position: fixed; top: .7rem; left: .7rem; z-index: 20; font-size: 1.1rem;
-  background: var(--panel); color: var(--text); border: 1px solid var(--border); border-radius: 10px;
-  padding: .3rem .6rem; cursor: pointer; }
-@media (max-width: 860px) {
-  #sidebar { transform: translateX(-100%); transition: transform .2s; z-index: 10; width: 300px; }
-  body.menu-open #sidebar { transform: none; box-shadow: 0 0 40px rgba(0,0,0,.3); }
-  #menu-btn { display: block; }
-  #main { margin-left: 0; }
-  #content { padding-top: 3.6rem; }
-  figure.corpus-fig { margin-left: -.6rem; margin-right: -.6rem; padding: .7rem .6rem .7rem; }
-}
-/* a deep-linked passage flashes briefly when the reader scrolls to it */
-@keyframes passageFlash { 0% { background: var(--mark); } 100% { background: transparent; } }
-.passage-flash { animation: passageFlash 2.2s ease; border-radius: 4px; box-decoration-break: clone; }
-/* related reading at the foot of the reading column */
-#related { max-width: 740px; width: 100%; margin: 0 auto; padding: 0 2rem 3rem; }
-.related-h { font-family: var(--display); font-size: 1.08rem; margin: 0 0 .9rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .8rem; }
-.related-card { display: block; background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
-  padding: .8rem .9rem; text-decoration: none; color: var(--text); box-shadow: var(--shadow-1);
-  transition: border-color .15s ease, transform .18s var(--ease-spring), box-shadow .18s ease; }
-.related-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-2); }
-.related-cat { display: block; font-family: var(--sans); font-size: .62rem; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--accent); margin: 0 0 .3rem; }
-.related-t { display: block; font-family: var(--display); font-size: 1rem; line-height: 1.22; }
-/* distraction-free focus mode (desktop only — leaves the mobile drawer alone) */
-@media (min-width: 861px) {
-  #sidebar { transition: transform .22s ease; }
-  #main { transition: margin-left .22s ease; }
-  body.focus-mode #sidebar { transform: translateX(-100%); }
-  body.focus-mode #main { margin-left: 0; }
-  body.focus-mode #content { max-width: 760px; }
-}
-/* keyboard-shortcuts help (toggled with ?) */
-#kbd-help { position: fixed; inset: 0; z-index: 90; background: rgba(20,18,15,.5); display: none;
-  align-items: center; justify-content: center; }
-#kbd-help.open { display: flex; }
-#kbd-help .kh { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; min-width: 250px; }
-#kbd-help h3 { font-family: var(--display); margin: 0 0 .8rem; font-size: 1.05rem; }
-#kbd-help dl { display: grid; grid-template-columns: auto 1fr; gap: .45rem 1rem; margin: 0; font-family: var(--sans); font-size: .82rem; }
-#kbd-help dt { color: var(--accent); font-weight: 600; white-space: nowrap; }
-#kbd-help dd { margin: 0; color: var(--muted); }
 
-.gl-wrap { max-width: 860px; margin: 0 auto; padding: 2.4rem 2rem 4rem; }
-.gl-head { margin-bottom: 1.6rem; }
-.gl-head .kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .18em; color: var(--muted); margin: 0 0 .3rem; }
-.gl-head h1 { font-family: var(--display); font-size: 2.4rem; margin: 0 0 .5rem; }
-.gl-head > p { color: var(--muted); max-width: 60ch; line-height: 1.6; }
-#gl-q { width: 100%; margin: 1.3rem 0 .9rem; font-family: var(--serif); font-size: 1.02rem; color: var(--text);
-  background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: .7rem .9rem; outline: none; }
+.gl-wrap { max-width: 880px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+.gl-head { display: block; text-align: left; margin: .6rem 0 .4rem; }
+.gl-head .kicker { margin: 0 0 .5rem; }
+.gl-head h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); margin: 0; }
+.gl-head h1::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .7rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.gl-head .tagline { max-width: 56ch; margin: 1rem 0 0; }
+/* sticky toolbar — filter + A-Z jump, frosted so the prose reads under it */
+.gl-tools { position: sticky; top: 0; z-index: 5; margin: 1.4rem 0 .4rem; padding: .8rem 0 .7rem;
+  background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+  border-bottom: 1px solid var(--border); }
+#gl-q { width: 100%; font-family: var(--serif); font-size: 1rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 12px; padding: .68rem .95rem; outline: none;
+  -webkit-appearance: none; appearance: none; box-shadow: var(--shadow-1); }
 #gl-q:focus { border-color: var(--accent); box-shadow: var(--ring); }
-#gl-az { display: flex; flex-wrap: wrap; gap: .15rem; }
-#gl-az a { font-family: var(--sans); font-size: .74rem; color: var(--muted); text-decoration: none;
-  padding: .12rem .38rem; border-radius: 6px; }
-#gl-az a:hover { color: var(--accent); background: var(--panel); }
-.gl-group { margin-top: 1.9rem; scroll-margin-top: 1rem; }
-.gl-group > h2 { font-family: var(--display); font-size: 1.1rem; color: var(--accent); margin: 0 0 .3rem;
-  padding-bottom: .25rem; border-bottom: 2px solid var(--border); }
-.gl-group dl { margin: 0; }
-.gl-item { padding: .8rem 0; border-bottom: 1px solid var(--border); }
-.gl-item dt { font-family: var(--display); font-weight: 600; font-size: 1.06rem; }
-.gl-item .gl-aka { font-family: var(--sans); font-weight: 400; font-size: .78rem; color: var(--muted); }
-.gl-item dd { margin: .3rem 0 0; line-height: 1.6; }
-.gl-src { display: block; margin-top: .35rem; font-family: var(--sans); font-size: .74rem; color: var(--muted); }
-.gl-src a { color: var(--accent); text-decoration: none; }
+#gl-q::placeholder { color: var(--muted); }
+#gl-az { display: flex; flex-wrap: wrap; gap: .1rem; margin-top: .65rem; }
+#gl-az a { font-family: var(--sans); font-size: .72rem; font-weight: 600; letter-spacing: .03em; color: var(--muted);
+  text-decoration: none; padding: .2rem .46rem; border-radius: 7px; transition: color .15s var(--ease), background .15s var(--ease); }
+#gl-az a:hover { color: var(--bg); background: var(--accent); }
+.gl-group { margin-top: 2.4rem; scroll-margin-top: 6rem; }
+.gl-group > h2 { font-family: var(--display); font-size: 1.5rem; font-weight: 600; color: var(--accent); margin: 0; }
+.gl-group > dl { margin: .3rem 0 0; border-top: 1px solid var(--border); }
+.gl-item { display: grid; grid-template-columns: minmax(128px, 208px) 1fr; gap: .25rem 1.9rem;
+  padding: 1.05rem 0; border-bottom: 1px solid var(--border); align-items: baseline; }
+.gl-item dt { font-family: var(--display); font-weight: 600; font-size: 1.12rem; line-height: 1.28; }
+.gl-item .gl-aka { display: block; font-family: var(--sans); font-weight: 400; font-size: .71rem; color: var(--muted);
+  margin-top: .25rem; line-height: 1.45; }
+.gl-item dd { margin: 0; font-family: var(--serif); font-size: 1.02rem; line-height: 1.62; color: var(--text); }
+.gl-src { display: block; margin-top: .5rem; font-family: var(--sans); font-size: .66rem; text-transform: uppercase;
+  letter-spacing: .09em; color: var(--muted); }
+.gl-src a { text-transform: none; letter-spacing: 0; font-size: .82rem; color: var(--accent); text-decoration: none; }
 .gl-src a:hover { text-decoration: underline; }
-#gl-none { color: var(--muted); font-family: var(--sans); padding: 1.5rem 0; }
+#gl-none { color: var(--muted); font-family: var(--sans); padding: 2.5rem 0; text-align: center; }
+@media (max-width: 640px) {
+  .gl-wrap { padding: 1.4rem 1.3rem 4rem; }
+  .gl-item { grid-template-columns: 1fr; gap: .35rem; padding: .95rem 0; }
+  .gl-item dd { font-size: .98rem; }
+}
 </style>
 </head>
 <body>
@@ -353,11 +275,13 @@ figure.viz, figure.corpus-fig { --cv-ease: cubic-bezier(.22,.61,.36,1); }
   <header class="gl-head">
     <p class="kicker">Reference</p>
     <h1>Glossary</h1>
-    <p>Every acronym, term of art, and named system across the research library — 17 in all, defined in plain language, each linked to the corpora that use it. Filter below, or jump by letter.</p>
+    <p class="tagline">Every acronym, term of art, and named system across the research library — 17 in all, defined in plain language, each linked to the corpora that use it. Filter below, or jump by letter.</p>
+  </header>
+  <div class="gl-tools">
     <input id="gl-q" type="search" placeholder="Filter 17 terms…" autocomplete="off" spellcheck="false" aria-label="Filter terms">
     <nav id="gl-az" aria-label="Jump to a letter"><a href="#gl-A">A</a><a href="#gl-B">B</a><a href="#gl-C">C</a><a href="#gl-D">D</a><a href="#gl-F">F</a><a href="#gl-H">H</a><a href="#gl-O">O</a><a href="#gl-P">P</a><a href="#gl-S">S</a><a href="#gl-T">T</a><a href="#gl-U">U</a><a href="#gl-W">W</a></nav>
-  </header>
-  <div id="gl-list"><section class="gl-group" id="gl-A"><h2>A</h2><dl><div class="gl-item" data-term="acr automatic content recognition"><dt>ACR <span class="gl-aka">automatic content recognition</span></dt><dd>A feature built into many smart TVs that recognizes what&#x27;s on screen by sampling the picture, so the set knows what you watched and can target ads to it.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-B"><h2>B</h2><dl><div class="gl-item" data-term="backstage yahoo backstage"><dt>Backstage <span class="gl-aka">Yahoo Backstage</span></dt><dd>Yahoo&#x27;s platform for packaging and selling its own ad inventory to buyers, including curated audience deals.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-C"><h2>C</h2><dl><div class="gl-item" data-term="clean room clean rooms data clean room"><dt>clean room <span class="gl-aka">clean rooms, data clean room</span></dt><dd>A secure, neutral space where two companies compare their customer data to find the overlap — without either side handing over its raw list.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="clearline magnite clearline"><dt>ClearLine <span class="gl-aka">Magnite ClearLine</span></dt><dd>Magnite&#x27;s tool that lets advertisers buy its inventory directly, skipping the demand-side platform — the seller reaching straight for the buyer&#x27;s budget.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="ctv connected television connected tv"><dt>CTV <span class="gl-aka">Connected TV, connected television</span></dt><dd>Television watched over the internet — a smart TV, a Roku or Fire Stick, an app like Hulu — as opposed to old cable or broadcast.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-D"><h2>D</h2><dl><div class="gl-item" data-term="dsp demand-side platform demand-side platforms dsps"><dt>DSP <span class="gl-aka">DSPs, demand-side platform, demand-side platforms</span></dt><dd>The software an advertiser uses to buy ad space automatically — it decides, in a fraction of a second, which ad to show which viewer and how much to bid.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-F"><h2>F</h2><dl><div class="gl-item" data-term="first-party data "><dt>first-party data</dt><dd>Information a company collects directly from its own customers — what they watched, bought, or signed up for — as opposed to data bought from outsiders.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-H"><h2>H</h2><dl><div class="gl-item" data-term="header bidding "><dt>header bidding</dt><dd>A trick that lets many buyers bid on a web ad slot at the same time before the page loads, instead of asking them one after another — more competition, higher prices for the publisher.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-O"><h2>O</h2><dl><div class="gl-item" data-term="openpath trade desk openpath the trade desk openpath"><dt>OpenPath <span class="gl-aka">The Trade Desk OpenPath, Trade Desk OpenPath</span></dt><dd>The Trade Desk&#x27;s direct connection into publishers&#x27; ad space — a way for the big buyer to reach inventory without routing through a supply-side platform in between.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="openrtb "><dt>OpenRTB</dt><dd>The shared rulebook — a technical standard — that lets all these buying and selling systems speak the same language during a real-time ad auction.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-P"><h2>P</h2><dl><div class="gl-item" data-term="pmp private marketplace private marketplaces"><dt>PMP <span class="gl-aka">private marketplace, private marketplaces</span></dt><dd>An invitation-only version of the ad auction: a publisher offers select buyers its better inventory at agreed terms — a velvet-rope version of the open market.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="programmatic "><dt>programmatic</dt><dd>Buying and selling ads by automated auction in real time, machine-to-machine, instead of two people negotiating each deal by hand.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-S"><h2>S</h2><dl><div class="gl-item" data-term="spo supply-path optimization supply path optimization"><dt>SPO <span class="gl-aka">supply path optimization, supply-path optimization</span></dt><dd>A buyer&#x27;s effort to reach the same ad through the shortest, cheapest, most trustworthy route — cutting out the redundant middlemen who each take a fee.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="ssp supply-side platforms supply-side platform ssps"><dt>SSP <span class="gl-aka">SSPs, supply-side platform, supply-side platforms</span></dt><dd>The mirror image of a DSP: the software a publisher (say, a streaming app) uses to sell its ad space, auctioning each slot to the highest bidder.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-T"><h2>T</h2><dl><div class="gl-item" data-term="take rate "><dt>take rate</dt><dd>The slice of each advertising dollar a middleman keeps as the money passes through — the platform&#x27;s cut.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-U"><h2>U</h2><dl><div class="gl-item" data-term="universal ads comcast universal ads"><dt>Universal Ads <span class="gl-aka">Comcast Universal Ads</span></dt><dd>Comcast&#x27;s self-serve platform for buying TV and streaming ads across NBCUniversal and partner inventory in one place, aimed especially at smaller advertisers.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-W"><h2>W</h2><dl><div class="gl-item" data-term="walled garden walled gardens"><dt>walled garden <span class="gl-aka">walled gardens</span></dt><dd>A giant platform (think Google, Amazon, a big streamer) that keeps its audience data and ad tools inside its own fences — you can advertise there, but on its terms.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section></div>
+  </div>
+  <div id="gl-list"><section class="gl-group" id="gl-A"><h2>A</h2><dl><div class="gl-item" data-term="acr automatic content recognition"><dt>ACR <span class="gl-aka">automatic content recognition</span></dt><dd>A feature built into many smart TVs that recognizes what&#x27;s on screen by sampling the picture, so the set knows what you watched and can target ads to it.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-B"><h2>B</h2><dl><div class="gl-item" data-term="backstage yahoo backstage"><dt>Backstage <span class="gl-aka">Yahoo Backstage</span></dt><dd>Yahoo&#x27;s platform for packaging and selling its own ad inventory to buyers, including curated audience deals.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-C"><h2>C</h2><dl><div class="gl-item" data-term="clean room clean rooms data clean room"><dt>clean room <span class="gl-aka">clean rooms, data clean room</span></dt><dd>A secure, neutral space where two companies compare their customer data to find the overlap — without either side handing over its raw list.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="clearline magnite clearline"><dt>ClearLine <span class="gl-aka">Magnite ClearLine</span></dt><dd>Magnite&#x27;s tool that lets advertisers buy its inventory directly, skipping the demand-side platform — the seller reaching straight for the buyer&#x27;s budget.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="ctv connected tv connected television"><dt>CTV <span class="gl-aka">Connected TV, connected television</span></dt><dd>Television watched over the internet — a smart TV, a Roku or Fire Stick, an app like Hulu — as opposed to old cable or broadcast.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-D"><h2>D</h2><dl><div class="gl-item" data-term="dsp dsps demand-side platform demand-side platforms"><dt>DSP <span class="gl-aka">DSPs, demand-side platform, demand-side platforms</span></dt><dd>The software an advertiser uses to buy ad space automatically — it decides, in a fraction of a second, which ad to show which viewer and how much to bid.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-F"><h2>F</h2><dl><div class="gl-item" data-term="first-party data "><dt>first-party data</dt><dd>Information a company collects directly from its own customers — what they watched, bought, or signed up for — as opposed to data bought from outsiders.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-H"><h2>H</h2><dl><div class="gl-item" data-term="header bidding "><dt>header bidding</dt><dd>A trick that lets many buyers bid on a web ad slot at the same time before the page loads, instead of asking them one after another — more competition, higher prices for the publisher.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-O"><h2>O</h2><dl><div class="gl-item" data-term="openpath trade desk openpath the trade desk openpath"><dt>OpenPath <span class="gl-aka">The Trade Desk OpenPath, Trade Desk OpenPath</span></dt><dd>The Trade Desk&#x27;s direct connection into publishers&#x27; ad space — a way for the big buyer to reach inventory without routing through a supply-side platform in between.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="openrtb "><dt>OpenRTB</dt><dd>The shared rulebook — a technical standard — that lets all these buying and selling systems speak the same language during a real-time ad auction.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-P"><h2>P</h2><dl><div class="gl-item" data-term="pmp private marketplaces private marketplace"><dt>PMP <span class="gl-aka">private marketplace, private marketplaces</span></dt><dd>An invitation-only version of the ad auction: a publisher offers select buyers its better inventory at agreed terms — a velvet-rope version of the open market.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="programmatic "><dt>programmatic</dt><dd>Buying and selling ads by automated auction in real time, machine-to-machine, instead of two people negotiating each deal by hand.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-S"><h2>S</h2><dl><div class="gl-item" data-term="spo supply-path optimization supply path optimization"><dt>SPO <span class="gl-aka">supply path optimization, supply-path optimization</span></dt><dd>A buyer&#x27;s effort to reach the same ad through the shortest, cheapest, most trustworthy route — cutting out the redundant middlemen who each take a fee.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div><div class="gl-item" data-term="ssp supply-side platform supply-side platforms ssps"><dt>SSP <span class="gl-aka">SSPs, supply-side platform, supply-side platforms</span></dt><dd>The mirror image of a DSP: the software a publisher (say, a streaming app) uses to sell its ad space, auctioning each slot to the highest bidder.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-T"><h2>T</h2><dl><div class="gl-item" data-term="take rate "><dt>take rate</dt><dd>The slice of each advertising dollar a middleman keeps as the money passes through — the platform&#x27;s cut.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-U"><h2>U</h2><dl><div class="gl-item" data-term="universal ads comcast universal ads"><dt>Universal Ads <span class="gl-aka">Comcast Universal Ads</span></dt><dd>Comcast&#x27;s self-serve platform for buying TV and streaming ads across NBCUniversal and partner inventory in one place, aimed especially at smaller advertisers.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section><section class="gl-group" id="gl-W"><h2>W</h2><dl><div class="gl-item" data-term="walled garden walled gardens"><dt>walled garden <span class="gl-aka">walled gardens</span></dt><dd>A giant platform (think Google, Amazon, a big streamer) that keeps its audience data and ad tools inside its own fences — you can advertise there, but on its terms.<span class="gl-src">Appears in <a href="ctv-dsp-ssp-research.html">Who Keeps the Spread</a></span></dd></div></dl></section></div>
   <p id="gl-none" hidden>No terms match your filter.</p>
 </main>
 <footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
