@@ -315,6 +315,11 @@
       "title": "The Missing Front Door",
       "subtitle": "Walmart's $1.4B acquisition of Vibe.co — completing a retail-media + connected-TV ad stack, and the long catch-up to Amazon",
       "category": "Media & Advertising"
+    },
+    "social-ctv-retargeting-research": {
+      "title": "The Living-Room Handoff",
+      "subtitle": "How social platforms — LinkedIn, Pinterest, Reddit, TikTok, Meta — extend their audiences onto Connected TV, and which ones credibly make the jump through 2029",
+      "category": "Media & Advertising"
     }
   },
   "corpora": [
@@ -351,7 +356,8 @@
     "../american-pragmatism-research",
     "../us-economy-financial-system-research",
     "../roman-catholicism-research",
-    "../walmart-vibe-research"
+    "../walmart-vibe-research",
+    "../social-ctv-retargeting-research"
   ],
   "atlas": {
     "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
