@@ -1,0 +1,471 @@
+{
+  "title": "Machine Humanities",
+  "subtitle": "Agentic Scholarship",
+  "out": "docs",
+  "ghost": {
+    "enabled": true,
+    "title": "The Ghost of Times",
+    "motto": "Written by those who lived it. Reporting for those who do.",
+    "blurb": "A daily paper in which writers across the centuries — Carlyle, Chesterton, Hemingway, Whitman, Jung and the rest — each file one op-ed on the news of the day."
+  },
+  "fingerprint": {
+    "enabled": true,
+    "title": "The Fingerprint",
+    "kicker": "The global programmatic & Advanced TV market paper",
+    "motto": "All the news that's fit to Fingerprint",
+    "blurb": "An independent daily wire on the global programmatic and Advanced TV (CTV) market — platforms, performance, partnerships, competition, regulation, political-ad spend, and a five-market global desk, with closing op-eds in the voices of McLuhan and Ogilvy."
+  },
+  "pamphlets": {
+    "enabled": true,
+    "title": "The Pamphlets",
+    "kicker": "Writer-voiced essays",
+    "motto": "Latter-day pamphlets, by the dead and the living.",
+    "blurb": "Standalone essays in the voice of a single writer — Carlyle, and others to come — each taking up one question of the present moment."
+  },
+  "forecast": {
+    "enabled": true,
+    "title": "The Forecast Desk",
+    "kicker": "Predictions, by category",
+    "motto": "Every number earned, every call on the ledger.",
+    "blurb": "Every prediction the research makes, worn like a market board — live Predictive-Council calls with named predictor profiles, and every corpus's forecast scenarios priced as outcomes. Picks are logged, graded, and tracked, so over time you can see which lens is right more often."
+  },
+  "category_order": [
+    "Thomas Carlyle",
+    "Faith & Religion",
+    "Mind & Philosophy",
+    "Media & Advertising",
+    "The Modern World",
+    "Heritage"
+  ],
+  "domains": [
+    {
+      "title": "Politics & Economics",
+      "categories": [
+        "The Modern World"
+      ]
+    },
+    {
+      "title": "Ad Tech & Media",
+      "categories": [
+        "Media & Advertising"
+      ]
+    },
+    {
+      "title": "Philosophy, Theology & Psychology",
+      "categories": [
+        "Thomas Carlyle",
+        "Faith & Religion",
+        "Mind & Philosophy"
+      ]
+    }
+  ],
+  "collections": [
+    {
+      "id": "faith-and-doubt",
+      "title": "Faith & Doubt",
+      "essay": "Belief at the edge of reason. The historical Jesus and his forerunner; Jung's God-image transformed in Answer to Job; the Calvinist substrate that outlived its creed; and phenomenology's reach toward the holy. Five corpora, read in sequence, become one argument about what survives when faith meets the modern mind.",
+      "palette": [
+        "#b3502f",
+        "#c9a227",
+        "#2e5266",
+        "#8a5a7c"
+      ],
+      "chapters": [
+        {
+          "slug": "jesus-research",
+          "chapter": 0
+        },
+        {
+          "slug": "john-the-baptist-research",
+          "chapter": 1
+        },
+        {
+          "slug": "jung-research",
+          "chapter": 3
+        },
+        {
+          "slug": "jung-research",
+          "chapter": 5
+        },
+        {
+          "slug": "carlyle-research",
+          "chapter": 0
+        },
+        {
+          "slug": "phenomenology-pragmatism-research",
+          "chapter": 0
+        }
+      ]
+    },
+    {
+      "id": "medium-and-message",
+      "title": "The Medium & the Message",
+      "essay": "How media remakes the people who make it. McLuhan's probes — the medium as the message — carried forward into the IP address layer that now identifies the watcher. From the global village to the machine that reads your address.",
+      "palette": [
+        "#2e5266",
+        "#b3502f",
+        "#c9a227",
+        "#6b7d4f"
+      ],
+      "chapters": [
+        {
+          "slug": "mcluhan-research",
+          "chapter": 3
+        },
+        {
+          "slug": "mcluhan-research",
+          "chapter": 8
+        },
+        {
+          "slug": "ipv4-ipv6-ctv-research",
+          "chapter": 1
+        },
+        {
+          "slug": "ipv4-ipv6-ctv-research",
+          "chapter": 5
+        }
+      ]
+    },
+    {
+      "id": "heroes-and-history",
+      "title": "Heroes & History",
+      "essay": "Carlyle's lifelong wager that history is the biography of great men — traced across his three monuments. The Calvinist formation of the prophet, his theory of revolution as a sea of fire, and the hero-worship of his vast Friedrich.",
+      "palette": [
+        "#6b7d4f",
+        "#b3502f",
+        "#c9a227",
+        "#2e5266"
+      ],
+      "chapters": [
+        {
+          "slug": "carlyle-research",
+          "chapter": 0
+        },
+        {
+          "slug": "carlyle-french-revolution-research",
+          "chapter": 5
+        },
+        {
+          "slug": "carlyle-friedrich-research",
+          "chapter": 5
+        }
+      ]
+    }
+  ],
+  "titles": {
+    "ancestry-research": {
+      "title": "The Emigrant's Atlas",
+      "subtitle": "An Irish and Czech-Galician-Baltic American ancestry",
+      "category": "Heritage"
+    },
+    "carlyle-french-revolution-research": {
+      "title": "The Book That Burned",
+      "subtitle": "Thomas Carlyle's The French Revolution: A History (1837)",
+      "category": "Thomas Carlyle"
+    },
+    "carlyle-friedrich-research": {
+      "title": "Carlyle's Everest",
+      "subtitle": "Carlyle's History of Friedrich the Great (1858–1865)",
+      "category": "Thomas Carlyle"
+    },
+    "carlyle-research": {
+      "title": "The Calvinist Without a Creed",
+      "subtitle": "Thomas Carlyle and his Scottish Calvinist formation",
+      "category": "Thomas Carlyle"
+    },
+    "civil-war-religion-whitman-research": {
+      "title": "A Holy War and Its Poet",
+      "subtitle": "The Civil War's religious drivers — and Walt Whitman",
+      "category": "Faith & Religion"
+    },
+    "deutsch-good-explanations-research": {
+      "title": "Hard to Vary",
+      "subtitle": "David Deutsch and the good explanation",
+      "category": "Mind & Philosophy"
+    },
+    "ipv4-ipv6-ctv-research": {
+      "title": "The Address Knows You",
+      "subtitle": "IPv4/IPv6 and the global CTV programmatic landscape",
+      "category": "Media & Advertising"
+    },
+    "jesus-research": {
+      "title": "The Man and the Christ",
+      "subtitle": "The message and divinity of Jesus",
+      "category": "Faith & Religion"
+    },
+    "john-the-baptist-research": {
+      "title": "More Than a Forerunner",
+      "subtitle": "The life, theology, and myth of John the Baptist",
+      "category": "Faith & Religion"
+    },
+    "jung-research": {
+      "title": "A God in the Psyche",
+      "subtitle": "Carl Jung on the self, the spirit, and religion",
+      "category": "Mind & Philosophy"
+    },
+    "phenomenology-pragmatism-research": {
+      "title": "Experience and Consequences",
+      "subtitle": "Phenomenology and pragmatism, and their relation to psychology and Christianity",
+      "category": "Mind & Philosophy"
+    },
+    "uap-research": {
+      "title": "From Roswell to Disclosure",
+      "subtitle": "The U.S. UFO/UAP phenomenon, 1947–2030",
+      "category": "The Modern World"
+    },
+    "us-geopolitics-research": {
+      "title": "The Map of American Power",
+      "subtitle": "The US geopolitical position in 2026: grand strategy, alliances, and trajectory",
+      "category": "The Modern World"
+    },
+    "mcluhan-research": {
+      "title": "The Medium Is the Message",
+      "subtitle": "Marshall McLuhan — print, the global village, and the forms that remake us",
+      "category": "Media & Advertising"
+    },
+    "piaget-research": {
+      "title": "How Knowledge Grows",
+      "subtitle": "Jean Piaget — genetic epistemology and the faith that shaped it",
+      "category": "Mind & Philosophy"
+    },
+    "dickinson-research": {
+      "title": "Tell It Slant",
+      "subtitle": "Emily Dickinson — the poet, the recluse, and the long war over her text",
+      "category": "Faith & Religion"
+    },
+    "emerson-research": {
+      "title": "An Original Relation to the Universe",
+      "subtitle": "Ralph Waldo Emerson — Transcendentalism, self-reliance, and the making of the American mind",
+      "category": "Mind & Philosophy"
+    },
+    "pareto-research": {
+      "title": "A Graveyard of Aristocracies",
+      "subtitle": "Vilfredo Pareto — elite theory and the circulation of elites, through and beyond Burnham",
+      "category": "Mind & Philosophy"
+    },
+    "fox-roku-research": {
+      "title": "Buying the Living Room",
+      "subtitle": "Fox's $22B acquisition of Roku and the fight for the connected-TV stack",
+      "category": "Media & Advertising"
+    },
+    "india-advertising-research": {
+      "title": "A Billion Screens",
+      "subtitle": "India's advertising market — the digital tipping point, programmatic CTV, and YouTube",
+      "category": "Media & Advertising"
+    },
+    "latam-ctv-research": {
+      "title": "Reach Ahead of Revenue",
+      "subtitle": "Latin America's programmatic Connected-TV market — Brazil, Mexico, and the gap between attention and money",
+      "category": "Media & Advertising"
+    },
+    "ctv-brand-safety-research": {
+      "title": "Safe Beside What?",
+      "subtitle": "Brand safety in programmatic Connected TV — and the global fight over who sets the floor",
+      "category": "Media & Advertising"
+    },
+    "ctv-dsp-ssp-research": {
+      "title": "Who Keeps the Spread",
+      "subtitle": "Programmatic CTV's DSPs and SSPs — and where the margin really sits for a platform-agnostic intermediary",
+      "category": "Media & Advertising"
+    },
+    "democratic-socialism-research": {
+      "title": "The Long Advent",
+      "subtitle": "Western democratic socialism — millenarian Christianity, the Social Gospel, the welfare state, and the movement's future",
+      "category": "The Modern World"
+    },
+    "ctv-identity-signals-research": {
+      "title": "The Signal Layer",
+      "subtitle": "Identity in programmatic CTV — hashed emails, MAIDs, IP, ACR, clean rooms, and what survives to 2029",
+      "category": "Media & Advertising"
+    },
+    "agentic-advertising-protocols-research": {
+      "title": "The Protocol War",
+      "subtitle": "How AI agents are being wired into the ad buy — MCP, AdCP, the IAB's ARTF, and what agentic buying does to CTV",
+      "category": "Media & Advertising"
+    },
+    "miq-research": {
+      "title": "On Leased Land",
+      "subtitle": "MiQ, the independent programmatic trading desk, and its CTV/ATV bet",
+      "category": "Media & Advertising"
+    },
+    "great-awakenings-research": {
+      "title": "The Recurring Fire",
+      "subtitle": "The First and Second Great Awakenings, and the revival form they left America",
+      "category": "Faith & Religion"
+    },
+    "containerized-bidding-research": {
+      "title": "Closer to the Metal",
+      "subtitle": "Containerized bidding — when the buyer's bidder moves inside the exchange's data center, and who captures the margin it relocates",
+      "category": "Media & Advertising"
+    },
+    "political-ctv-research": {
+      "title": "The Measured Screen",
+      "subtitle": "Political advertising migrates to connected TV — the smart-TV ACR and voter-file targeting stack, who captures the spend, the streaming regulatory gap, and whether any of it actually moves votes.",
+      "category": "Media & Advertising"
+    },
+    "american-pragmatism-research": {
+      "title": "The Cash-Value of Truth",
+      "subtitle": "American pragmatism — Peirce, James, Dewey, and the tradition's eclipse, revival, and reach",
+      "category": "Mind & Philosophy"
+    },
+    "us-economy-financial-system-research": {
+      "title": "The Argument Over Money",
+      "subtitle": "The U.S. economy and financial system — from Hamilton's debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar's future through 2035",
+      "category": "The Modern World"
+    },
+    "roman-catholicism-research": {
+      "title": "On This Rock",
+      "subtitle": "Roman Catholicism from the apostolic church to Pope Leo XIV — origins, doctrine, the contested Petrine claim, and its trajectory to 2050",
+      "category": "Faith & Religion"
+    },
+    "walmart-vibe-research": {
+      "title": "The Missing Front Door",
+      "subtitle": "Walmart's $1.4B acquisition of Vibe.co — completing a retail-media + connected-TV ad stack, and the long catch-up to Amazon",
+      "category": "Media & Advertising"
+    },
+    "social-ctv-retargeting-research": {
+      "title": "The Living-Room Handoff",
+      "subtitle": "How social platforms — LinkedIn, Pinterest, Reddit, TikTok, Meta — extend their audiences onto Connected TV, and which ones credibly make the jump through 2029",
+      "category": "Media & Advertising"
+    }
+  },
+  "corpora": [
+    "../ancestry-research",
+    "../carlyle-french-revolution-research",
+    "../carlyle-friedrich-research",
+    "../carlyle-research",
+    "../civil-war-religion-whitman-research",
+    "../deutsch-good-explanations-research",
+    "../ipv4-ipv6-ctv-research",
+    "../jesus-research",
+    "../john-the-baptist-research",
+    "../jung-research",
+    "../phenomenology-pragmatism-research",
+    "../uap-research",
+    "../us-geopolitics-research",
+    "../mcluhan-research",
+    "../piaget-research",
+    "../dickinson-research",
+    "../emerson-research",
+    "../pareto-research",
+    "../fox-roku-research",
+    "../india-advertising-research",
+    "../latam-ctv-research",
+    "../ctv-brand-safety-research",
+    "../ctv-dsp-ssp-research",
+    "../democratic-socialism-research",
+    "../ctv-identity-signals-research",
+    "../agentic-advertising-protocols-research",
+    "../miq-research",
+    "../great-awakenings-research",
+    "../containerized-bidding-research",
+    "../political-ctv-research",
+    "../american-pragmatism-research",
+    "../us-economy-financial-system-research",
+    "../roman-catholicism-research",
+    "../walmart-vibe-research",
+    "../social-ctv-retargeting-research"
+  ],
+  "atlas": {
+    "_comment": "The Atlas map: pin each corpus to a region id from atlas/geo.json (authored by scripts/build_atlas_geo.py). 'cell' = n/s/e/w/c (or an index) steers which slice a corpus gets when several share a region; 'z':'base' draws a nation under the state insets on top of it. 'grow' swaps a small region for a roomier one once >1 corpus lands there.",
+    "places": {
+      "carlyle-research": {
+        "region": "GB-SCT",
+        "cell": "n",
+        "label": "Ecclefechan & Edinburgh, Scotland"
+      },
+      "carlyle-french-revolution-research": {
+        "region": "GB-SCT",
+        "cell": "c",
+        "label": "Scotland — by the sage of Chelsea"
+      },
+      "carlyle-friedrich-research": {
+        "region": "GB-SCT",
+        "cell": "s",
+        "label": "Scotland & London"
+      },
+      "deutsch-good-explanations-research": {
+        "region": "GB-ENG",
+        "label": "Oxford, England"
+      },
+      "ancestry-research": {
+        "region": "IE",
+        "label": "Munster, Ireland"
+      },
+      "civil-war-religion-whitman-research": {
+        "region": "US-NY",
+        "label": "Brooklyn & New York"
+      },
+      "dickinson-research": {
+        "region": "US-MA",
+        "cell": "s",
+        "label": "Amherst, Massachusetts"
+      },
+      "emerson-research": {
+        "region": "US-MA",
+        "cell": "n",
+        "label": "Concord, Massachusetts"
+      },
+      "uap-research": {
+        "region": "US-NM",
+        "label": "Roswell, New Mexico"
+      },
+      "ipv4-ipv6-ctv-research": {
+        "region": "US-CA",
+        "label": "Silicon Valley, California"
+      },
+      "us-geopolitics-research": {
+        "region": "US",
+        "z": "base",
+        "label": "The United States"
+      },
+      "jung-research": {
+        "region": "CH",
+        "cell": "e",
+        "label": "Zürich, Switzerland"
+      },
+      "piaget-research": {
+        "region": "CH",
+        "cell": "w",
+        "label": "Geneva & Neuchâtel, Switzerland"
+      },
+      "pareto-research": {
+        "region": "CH",
+        "cell": "c",
+        "label": "Lausanne & Céligny, Switzerland"
+      },
+      "phenomenology-pragmatism-research": {
+        "region": "DE",
+        "label": "Freiburg, Germany"
+      },
+      "mcluhan-research": {
+        "region": "CA-ON",
+        "label": "Toronto, Ontario"
+      },
+      "jesus-research": {
+        "region": "IL",
+        "cell": "n",
+        "label": "Galilee"
+      },
+      "john-the-baptist-research": {
+        "region": "IL",
+        "cell": "s",
+        "label": "The Jordan & the Judean wilderness"
+      },
+      "containerized-bidding-research": {
+        "region": "US-NY",
+        "cell": "e",
+        "label": "IAB Tech Lab & the programmatic exchanges, New York"
+      },
+      "american-pragmatism-research": {
+        "region": "US-MA",
+        "cell": "c",
+        "label": "Cambridge, Massachusetts"
+      }
+    },
+    "grow": {
+      "US-MA": "US-NEWENGLAND",
+      "IL": "LEVANT"
+    }
+  }
+}

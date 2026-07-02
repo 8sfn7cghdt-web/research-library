@@ -22,6 +22,13 @@
     "motto": "Latter-day pamphlets, by the dead and the living.",
     "blurb": "Standalone essays in the voice of a single writer — Carlyle, and others to come — each taking up one question of the present moment."
   },
+  "forecast": {
+    "enabled": true,
+    "title": "The Forecast Desk",
+    "kicker": "Predictions, by category",
+    "motto": "Every number earned, every call on the ledger.",
+    "blurb": "Every prediction the research makes, worn like a market board — live Predictive-Council calls with named predictor profiles, and every corpus's forecast scenarios priced as outcomes. Picks are logged, graded, and tracked, so over time you can see which lens is right more often."
+  },
   "category_order": [
     "Thomas Carlyle",
     "Faith & Religion",
@@ -41,7 +48,16 @@
       "title": "Ad Tech & Media",
       "categories": [
         "Media & Advertising"
-      ]
+      ],
+      "page": {
+        "slug": "adtech",
+        "title": "Ad Tech",
+        "kicker": "Programmatic & Advanced TV",
+        "subtitle": "The trade desk of the library — deep research on the programmatic and Connected-TV ad market, alongside The Fingerprint, its daily wire.",
+        "include": [
+          "fingerprint"
+        ]
+      }
     },
     {
       "title": "Philosophy, Theology & Psychology",

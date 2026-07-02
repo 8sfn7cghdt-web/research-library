@@ -1,0 +1,19 @@
+{
+  "forecasts": [
+    {
+      "slug": "world-cup-2026",
+      "title": "Who Will Win the 2026 World Cup",
+      "question": "Who will win the 2026 FIFA World Cup?",
+      "dek": "Six standing predictor profiles each committed to one champion; the council's consensus pick is France at 28–32%, with the Historian's Argentina dissent preserved.",
+      "category": "Sport & Games",
+      "status": "open",
+      "logged": "2026-06-30",
+      "grades": "2026-07-19",
+      "pick": "France",
+      "pick_flag": "🇫🇷",
+      "band": "28–32%",
+      "profiles_n": 6,
+      "file": "forecast/world-cup-2026.html"
+    }
+  ]
+}

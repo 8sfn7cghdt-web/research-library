@@ -1,0 +1,45 @@
+{
+  "aesthetic": "The Living-Room Handoff — a CTV ad-ops console",
+  "anchor": "The demand-side-platform (DSP) campaign console crossed with the warm glow of a living-room screen at night: an instrument panel reading a household 'match' against a streaming slate, where a cool-blue mobile signal is handed across a lossy identity bridge to a warm-amber television. Descends from the two-screen handoff (phone glass → TV glass), the dotted identity-graph match line, and the ad-ops readout of match rates and deal IDs in monospace.",
+  "rationale": "The corpus's structural metaphor is the handoff: an individual first-party signal captured on a phone, resolved through a clean room, and served to a household on the biggest screen in the house — most of the value leaking to toll-keepers in between. So the palette is deliberately two-tone: a cool electric blue for the mobile/programmatic signal (t2) and a warm amber 'screen glow' for the living-room television (accent, t1), with violet for the identity-bridge match (t3), teal for the margin/money (t4), and coral for leakage/loss/refutation (t5). The dark mode is native — a dark living room lit by a screen; the technical-grotesque display font and monospace data strings evoke the ad-ops console, not an essay.",
+  "light": {
+    "bg": "#f5f7fa",
+    "panel": "#dde4ee",
+    "text": "#161a20",
+    "muted": "#586373",
+    "accent": "#b1500a",
+    "border": "#c4cedb",
+    "mark": "#f6e2c2",
+    "cover-bg": "#dde4ee",
+    "t1": "#b1500a",
+    "t2": "#1a58c9",
+    "t3": "#8a2caf",
+    "t4": "#0f766e",
+    "t5": "#c02c2c"
+  },
+  "dark": {
+    "bg": "#0e1116",
+    "panel": "#171c24",
+    "text": "#e6ebf2",
+    "muted": "#8c98a9",
+    "accent": "#f59a3c",
+    "border": "#2a323d",
+    "mark": "#3a2a12",
+    "cover-bg": "#171c24",
+    "t1": "#f59a3c",
+    "t2": "#4f95ff",
+    "t3": "#c07af0",
+    "t4": "#2dd4bf",
+    "t5": "#f56565"
+  },
+  "fonts": {
+    "display": "'Bahnschrift', 'DIN Alternate', 'Franklin Gothic Medium', Tahoma, sans-serif",
+    "body": "Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25A2   \\2192   \\25AD'",
+    "fig_radius": "5px"
+  },
+  "cover_palette": ["#b1500a", "#1a58c9", "#8a2caf", "#0f766e"]
+}

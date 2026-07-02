@@ -1,0 +1,44 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 396" role="img" aria-label="A diagram of the social-to-CTV handoff: a phone on the left holding an individual first-party signal (hashed email and mobile ad ID) is resolved through an identity graph to a household, matched in a clean room at roughly fifty percent, then served as an impression to a television on the right. Coral drips below mark the losses: match-rate leakage and the no-click measurement break.">
+<text x="350" y="30" text-anchor="middle" font-size="15" class="t-serif" letter-spacing="3">THE LIVING-ROOM HANDOFF</text>
+<text x="350" y="49" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">one phone signal, resolved to a household on the big screen — and what leaks between</text>
+<rect x="40" y="150" width="88" height="150" rx="12" class="f-bg" stroke-width="2" style="stroke:var(--t2)"/>
+<rect x="52" y="168" width="64" height="104" rx="3" class="f-t2" opacity=".16"/>
+<text x="84" y="140" text-anchor="middle" font-size="10.5" class="t-acc" font-weight="bold">INDIVIDUAL</text>
+<text x="84" y="212" text-anchor="middle" font-size="11" class="t-mono" style="fill:var(--t2)">HEM</text>
+<text x="84" y="232" text-anchor="middle" font-size="11" class="t-mono" style="fill:var(--t2)">MAID</text>
+<text x="84" y="316" text-anchor="middle" font-size="9.5" class="t-muted">logged-in</text>
+<text x="84" y="328" text-anchor="middle" font-size="9.5" class="t-muted">engagement</text>
+<path d="M134,225 L214,225" fill="none" class="s-t2 cv-draw" stroke-width="10" pathLength="1" opacity=".9"/>
+<polygon points="210,217 226,225 210,233" class="f-t2"/>
+<circle cx="286" cy="225" r="52" class="f-panel" stroke-width="1.5" style="stroke:var(--border)"/>
+<text x="286" y="205" text-anchor="middle" font-size="10.5" font-weight="bold">identity graph</text>
+<text x="286" y="222" text-anchor="middle" font-size="9.5" class="t-muted">HEM · MAID · IP</text>
+<text x="286" y="238" text-anchor="middle" font-size="9.5" class="t-muted">→ one person</text>
+<text x="286" y="255" text-anchor="middle" font-size="9.5" class="t-acc" font-weight="bold">→ household</text>
+<path d="M342,225 L400,225" fill="none" class="s-t3 cv-draw" stroke-width="8" pathLength="1" opacity=".9"/>
+<polygon points="396,217 412,225 396,233" class="f-t3"/>
+<rect x="414" y="196" width="74" height="58" rx="5" class="f-bg" stroke-width="1.5" style="stroke:var(--t3)"/>
+<text x="451" y="219" text-anchor="middle" font-size="10.5" font-weight="bold" style="fill:var(--t3)">clean</text>
+<text x="451" y="233" text-anchor="middle" font-size="10.5" font-weight="bold" style="fill:var(--t3)">room</text>
+<text x="451" y="248" text-anchor="middle" font-size="9" class="t-mono" style="fill:var(--t5)">~50%</text>
+<path d="M492,225 L536,225" fill="none" class="s-t1 cv-draw" stroke-width="6" pathLength="1"/>
+<polygon points="532,218 546,225 532,232" class="f-t1"/>
+<rect x="548" y="150" width="120" height="86" rx="7" class="f-t1" opacity=".9"/>
+<rect x="561" y="163" width="94" height="60" rx="3" class="f-bg" opacity=".22"/>
+<rect x="596" y="236" width="24" height="16" class="f-t1" opacity=".9"/>
+<rect x="576" y="252" width="64" height="6" rx="3" class="f-t1" opacity=".9"/>
+<text x="608" y="140" text-anchor="middle" font-size="10.5" class="t-acc" font-weight="bold">HOUSEHOLD</text>
+<text x="608" y="198" text-anchor="middle" font-size="11" font-weight="bold" class="t-inv">CTV</text>
+<text x="608" y="214" text-anchor="middle" font-size="11" font-weight="bold" class="t-inv">impression</text>
+<line x1="40" y1="330" x2="668" y2="330" class="ln-soft" stroke-width="1"/>
+<text x="60" y="350" font-size="9.5" class="t-muted" font-style="italic">where it leaks ↓</text>
+<circle cx="286" cy="349" r="4" class="f-t5 cv-fade"/>
+<text x="300" y="353" font-size="9.5" style="fill:var(--t5)">resolution loss — an individual becomes a household</text>
+<circle cx="286" cy="368" r="4" class="f-t5 cv-fade" style="--d:.12s"/>
+<text x="300" y="372" font-size="9.5" style="fill:var(--t5)">match loss — ~50% blind, 40–70% via IP</text>
+<circle cx="286" cy="387" r="4" class="f-t5 cv-fade" style="--d:.24s"/>
+<text x="300" y="391" font-size="9.5" style="fill:var(--t5)">no click — measured by incrementality, not a tap</text>
+</svg>
+<figcaption><strong>Fig. 1.</strong> The whole category in one motion: a platform knows an <em>individual</em> on a phone, but a television is a <em>household</em>, so every social-to-CTV buy is a resolution-and-match that leaks at three seams — the individual-to-household roll-up, the ~50% clean-room match, and the click that never comes.</figcaption>
+</figure>

@@ -2784,8 +2784,9 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
     <a href="ghost.html">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
     <a href="connections.html">Connections</a>
     <a href="glossary.html">Glossary</a>
     <a href="wrapped.html">Wrapped</a>
@@ -2807,6 +2808,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {ghost_band}
 {fingerprint_band}
 {pamphlets_band}
+{forecast_band}
 <h2 class="section-title" id="library">The Research Library</h2>
 <main class="library">
 {cards}
@@ -3059,12 +3061,15 @@ OVERTURE_JS = r"""
 })();
 """
 
-# "Test Yourself" — a closing self-quiz built live from the two payloads already
-# inlined on the index: #library-manifest (corpora, their chapter titles, their
-# category) and #passages-data (pull-quotes tagged with corpus slug + chapter).
-# Every question has a ground-truth answer drawn from that data — no fetch, no ML,
-# no authored answer key. Scope is either one corpus (recall of its own chapters)
-# or "across the whole library" (place a passage/chapter/subject to its corpus).
+# "Test Yourself" — a closing self-quiz built live from three payloads already
+# inlined on the index: #quiz-data (per-corpus content facts — glossary terms,
+# key dates, key people/organisations, each located to its chapter), plus
+# #library-manifest (corpora, chapter titles, category) and #passages-data
+# (pull-quotes tagged with corpus slug + chapter). Every question has a
+# ground-truth answer drawn from that data — no fetch, no ML, no authored answer
+# key. Rounds lead with content questions (what the research SAYS: terms, dates,
+# people) so the quiz exercises retention of what was read; the structural
+# questions (chapter titles, shelving, passage placement) only backfill.
 # Best score per scope is kept in localStorage; results share via CorpusShare.
 QUIZ_JS = r"""
 (function () {
@@ -3081,6 +3086,9 @@ QUIZ_JS = r"""
   var corpora = (LIB || []).filter(function (x) { return x.kind === 'corpus' && x.chapters && x.chapters.length; });
   if (corpora.length < 2) return;                       // need a field of distractors
   var bySlug = {}; corpora.forEach(function (c) { bySlug[c.slug] = c; });
+  // Content facts (#quiz-data): {slug, terms:[{t,d,c}], dates:[{d,e,c,a?}], entities:[{n,r,c,a?}]}
+  var QF = {}, qfEl = document.getElementById('quiz-data');
+  try { (qfEl ? (JSON.parse(qfEl.textContent || '[]') || []) : []).forEach(function (f) { if (f && f.slug && bySlug[f.slug]) QF[f.slug] = f; }); } catch (e) {}
   var passBySlug = {}; PAS.forEach(function (p) { if (bySlug[p.slug]) (passBySlug[p.slug] = passBySlug[p.slug] || []).push(p); });
   // Chapter titles shared by >1 corpus are ambiguous as "which corpus owns it?"
   // questions — count them so the across-library builder can skip the generic ones.
@@ -3096,19 +3104,51 @@ QUIZ_JS = r"""
     return shuffle([correct].concat(ds.slice(0, Math.max(1, (n || 4) - 1))));
   }
 
-  // --- question builders (each returns an array of {prompt, passage?, answer, opts, src?}) ---
+  // --- question builders (each returns an array of {kind, fact?, prompt, passage?, answer, opts, src?}) ---
+  // Content questions first-class: what the research says — its terms of art,
+  // its dates, its people. `fact` keys stop both directions of one fact (e.g.
+  // event→date and date→event) landing in the same round. `kind` groups feed
+  // pickRound's rotation. Structural questions get kind 'meta' (backfill only).
+  function buildFacts(slug, across) {
+    var c = bySlug[slug], f = QF[slug]; if (!c || !f) return [];
+    var qs = [], pre = across ? 'In <em>' + esc(c.title) + '</em> — ' : '';
+    var terms = f.terms || [], dates = f.dates || [], ents = f.entities || [];
+    if (terms.length >= 4) terms.forEach(function (t) {
+      var fk = slug + '|t|' + t.t, s = { slug: slug, chapter: t.c || 0, q: t.t };
+      qs.push({ kind: 'k-def', fact: fk, prompt: pre + 'What does “' + esc(t.t) + '” mean?',
+        answer: t.d, opts: options(t.d, terms.map(function (x) { return x.d; }), 4), src: s });
+      qs.push({ kind: 'k-term', fact: fk, prompt: pre + 'Which term does this define?', passage: t.d,
+        answer: t.t, opts: options(t.t, terms.map(function (x) { return x.t; }), 4), src: s });
+    });
+    if (dates.length >= 4) dates.forEach(function (x) {
+      var fk = slug + '|d|' + x.d + x.e, s = { slug: slug, chapter: x.c || 0, q: x.a };
+      qs.push({ kind: 'k-when', fact: fk, prompt: pre + 'When did this happen?', passage: x.e,
+        answer: x.d, opts: options(x.d, dates.map(function (y) { return y.d; }), 4), src: s });
+      qs.push({ kind: 'k-what', fact: fk, prompt: pre + 'What happened ' + (/^\d{1,2} [A-Z]/.test(x.d) ? 'on ' : 'in ') + esc(x.d) + '?',
+        answer: x.e, opts: options(x.e, dates.map(function (y) { return y.e; }), 4), src: s });
+    });
+    if (ents.length >= 4) ents.forEach(function (x) {
+      var fk = slug + '|e|' + x.n, s = { slug: slug, chapter: x.c || 0, q: x.a };
+      qs.push({ kind: 'k-who', fact: fk, prompt: pre + 'Who — or what — is described here?', passage: x.r,
+        answer: x.n, opts: options(x.n, ents.map(function (y) { return y.n; }), 4), src: s });
+      qs.push({ kind: 'k-role', fact: fk, prompt: pre + 'Which description fits <em>' + esc(x.n) + '</em>?',
+        answer: x.r, opts: options(x.r, ents.map(function (y) { return y.r; }), 4), src: s });
+    });
+    return qs;
+  }
   function buildAcross() {
     var qs = [], titles = corpora.map(function (c) { return c.title; });
+    corpora.forEach(function (c) { qs.push.apply(qs, buildFacts(c.slug, true)); });
     PAS.forEach(function (p) {
       if (!bySlug[p.slug] || !p.text || p.text.length < 40) return;
-      qs.push({ prompt: 'Which corpus is this passage from?', passage: p.text,
+      qs.push({ kind: 'meta', fact: 'pas|' + p.text, prompt: 'Which corpus is this passage from?', passage: p.text,
         answer: bySlug[p.slug].title, opts: options(bySlug[p.slug].title, titles, 4),
         src: { slug: p.slug, chapter: p.chapter, q: p.text } });
     });
     corpora.forEach(function (c) {
       c.chapters.forEach(function (ch, i) {
         if (!ch || ch.length < 5 || chTitleCount[ch.toLowerCase()] > 1) return;
-        qs.push({ prompt: 'Which corpus has a chapter titled “' + esc(ch) + '”?',
+        qs.push({ kind: 'meta', prompt: 'Which corpus has a chapter titled “' + esc(ch) + '”?',
           answer: c.title, opts: options(c.title, titles, 4), src: { slug: c.slug, chapter: i } });
       });
     });
@@ -3116,27 +3156,59 @@ QUIZ_JS = r"""
     var catList = Object.keys(cats);
     if (catList.length >= 3) corpora.forEach(function (c) {
       if (!c.category || c.category === 'Other') return;
-      qs.push({ prompt: 'Under which subject is <em>' + esc(c.title) + '</em> shelved?',
+      qs.push({ kind: 'meta', prompt: 'Under which subject is <em>' + esc(c.title) + '</em> shelved?',
         answer: c.category, opts: options(c.category, catList, 4), src: { slug: c.slug, chapter: 0 } });
     });
     return qs;
   }
   function buildSingle(slug) {
     var c = bySlug[slug]; if (!c) return [];
-    var qs = [];
+    var qs = buildFacts(slug, false);
     var mine = c.chapters.filter(function (ch) { return ch && ch.length >= 3; });
     var mineLower = {}; mine.forEach(function (ch) { mineLower[ch.toLowerCase()] = 1; });
     var others = []; corpora.forEach(function (o) { if (o.slug !== slug) o.chapters.forEach(function (ch) { if (ch && !mineLower[ch.toLowerCase()]) others.push(ch); }); });
     (passBySlug[slug] || []).forEach(function (p) {
       if (!p.chapterTitle || !p.text || p.text.length < 40 || mine.length < 2) return;
-      qs.push({ prompt: 'Which chapter of <em>' + esc(c.title) + '</em> is this from?', passage: p.text,
+      qs.push({ kind: 'meta', fact: 'pas|' + p.text, prompt: 'Which chapter of <em>' + esc(c.title) + '</em> is this from?', passage: p.text,
         answer: p.chapterTitle, opts: options(p.chapterTitle, mine, 4), src: { slug: slug, chapter: p.chapter, q: p.text } });
     });
     if (others.length >= 3) mine.forEach(function (ch, i) {
-      qs.push({ prompt: 'Which of these is a real chapter in <em>' + esc(c.title) + '</em>?',
+      qs.push({ kind: 'meta', prompt: 'Which of these is a real chapter in <em>' + esc(c.title) + '</em>?',
         answer: ch, opts: options(ch, others, 4), src: { slug: slug, chapter: i } });
     });
     return qs;
+  }
+  // Assemble a round: dedup, then fill with content questions rotating across
+  // kinds (definitions, dates, people…) so no two questions expose the same
+  // fact; structural 'meta' questions only top up what facts can't fill.
+  function pickRound(pool, n) {
+    var seen = {}, uniq = [];
+    shuffle(pool).forEach(function (q) { var k = (q.passage || '') + '|' + q.answer + '|' + q.prompt; if (!seen[k]) { seen[k] = 1; uniq.push(q); } });
+    var groups = {}, kinds = [];
+    uniq.forEach(function (q) { var g = q.kind || 'meta'; if (!groups[g]) { groups[g] = []; kinds.push(g); } groups[g].push(q); });
+    var know = shuffle(kinds.filter(function (k) { return k !== 'meta'; }));
+    var picked = [], usedFact = {};
+    function take(g) {
+      while (g && g.length) {
+        var q = g.pop();
+        if (!q.fact || !usedFact[q.fact]) { if (q.fact) usedFact[q.fact] = 1; return q; }
+      }
+      return null;
+    }
+    var took = true;
+    while (picked.length < n && took) {
+      took = false;
+      for (var i = 0; i < know.length && picked.length < n; i++) {
+        var q = take(groups[know[i]]);
+        if (q) { picked.push(q); took = true; }
+      }
+    }
+    while (picked.length < n) {
+      var mq = take(groups.meta);
+      if (!mq) break;
+      picked.push(mq);
+    }
+    return shuffle(picked);
   }
 
   // --- setup UI ---
@@ -3160,9 +3232,7 @@ QUIZ_JS = r"""
 
   document.getElementById('quiz-start').addEventListener('click', function () {
     var sv = scope.value, pool = sv === '__all__' ? buildAcross() : buildSingle(sv);
-    var seen = {}, uniq = [];
-    shuffle(pool).forEach(function (q) { var k = (q.passage || '') + '|' + q.answer + '|' + q.prompt; if (!seen[k]) { seen[k] = 1; uniq.push(q); } });
-    var qs = uniq.slice(0, QN);
+    var qs = pickRound(pool, QN);
     setup.hidden = true; stage.hidden = false;
     if (!qs.length) { stage.innerHTML = '<p class="quiz-empty">There isn’t enough material to build a test on this selection yet. Try “Across the whole library.”</p><p style="margin:1rem 0 0"><button class="quiz-btn quiz-again" type="button">← Back</button></p>'; wireAgain(); return; }
     state = { sv: sv, qs: qs, i: 0, score: 0, label: sv === '__all__' ? 'the whole library' : (bySlug[sv] ? bySlug[sv].title : '') };
@@ -3247,10 +3317,11 @@ QUIZ_JS = r"""
 QUIZ_SECTION_HTML = (
     '<section class="quiz" id="quiz" hidden>'
     '<h2 class="quiz-h">Test Yourself</h2>'
-    '<p class="quiz-intro">A short quiz drawn from the library itself — its passages, '
-    'its chapters, its subjects. Pick a single corpus to test how well it stuck, or take '
-    'on the whole shelf at once. Every answer comes straight from the texts; your best '
-    'score is kept on this device and nothing is sent anywhere.</p>'
+    '<p class="quiz-intro">A short quiz on what the research actually says — the dates, '
+    'the people, the terms of art, the passages. Pick a single corpus to test how well it '
+    'stuck, or take on the whole shelf at once. Every answer comes straight from the texts, '
+    'and a missed one links you back to the chapter that has it; your best score is kept on '
+    'this device and nothing is sent anywhere.</p>'
     '<div class="quiz-card">'
     '<div class="quiz-setup" id="quiz-setup">'
     '<label class="quiz-field"><span class="quiz-label">Test me on</span>'
@@ -3467,10 +3538,11 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 
 # ---------------------------------------------------------------- "Test Yourself"
 # A closing self-quiz pinned to the bottom of the index. Built entirely from data
-# the page already carries — the inlined #library-manifest (corpora + chapter
+# the page already carries — the inlined #quiz-data (per-corpus content facts:
+# glossary terms, key dates, key people), #library-manifest (corpora + chapter
 # titles + categories) and #passages-data (pull-quotes tagged with corpus +
 # chapter) — so every answer is ground-truth and nothing is fetched or generated.
-# Two scopes: a single corpus (recall of its chapters) or across the whole shelf.
+# Two scopes: a single corpus (retention of what it says) or across the whole shelf.
 QUIZ_CSS = """
 .quiz { max-width: 1080px; margin: 2.2rem auto 0; padding: 0 2rem; }
 .quiz[hidden] { display: none; }
@@ -3480,6 +3552,7 @@ QUIZ_CSS = """
 .quiz-intro { font-family: var(--sans); font-size: .9rem; color: var(--muted); margin: .7rem 0 1.2rem; max-width: 44rem; line-height: 1.55; }
 .quiz-card { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem 1.8rem; box-shadow: var(--shadow-1); }
 .quiz-setup { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem 1.4rem; }
+.quiz-setup[hidden] { display: none; }  /* the flex rule would otherwise beat the UA [hidden] style */
 .quiz-field { display: flex; flex-direction: column; gap: .4rem; flex: 1 1 260px; min-width: 0; }
 .quiz-label { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); }
 .quiz-select { font-family: var(--sans); font-size: .92rem; color: var(--text); background: var(--bg);
@@ -3621,8 +3694,9 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html" class="active">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <header class="ghost-plate">
@@ -3942,8 +4016,9 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html" class="active">The Ghost of Times</a>
-    <a href="../fingerprint.html">The Fingerprint</a>
+    <a href="../adtech.html">Ad Tech</a>
     <a href="../pamphlets.html">The Pamphlets</a>
+    <a href="../forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <main class="gh-edition">
@@ -4297,8 +4372,9 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="pamphlets.html" class="active">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <header class="pam-plate">
@@ -4466,8 +4542,9 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html">The Ghost of Times</a>
-    <a href="../fingerprint.html">The Fingerprint</a>
+    <a href="../adtech.html">Ad Tech</a>
     <a href="../pamphlets.html" class="active">The Pamphlets</a>
+    <a href="../forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <main class="pm-essay">
@@ -4579,6 +4656,784 @@ def build_pamphlet(out_dir, item, shell=""):
     )
     (out / "pamphlets").mkdir(parents=True, exist_ok=True)
     (out / "pamphlets" / f"{slug}.html").write_text(page)
+    return True
+
+
+# ---------------------------------------------------------------- the forecast desk
+# A fifth top-level section: "The Forecast Desk" — every prediction the research
+# makes, by category, worn like a prediction market's board. Two kinds of entry:
+#   1. NATIVE forecasts (docs/forecast/manifest.json + docs/forecast/data/{slug}.json)
+#      — standalone Predictive-Council runs (e.g. the World Cup pick) rendered as a
+#      full "live market" page: consensus pick, the six-profile predictor roster,
+#      the field board, base rates, the market snapshot, flip triggers.
+#   2. HARVESTED markets — each research corpus's manifest.json `scenarios` become
+#      a multi-outcome market card (scenario = outcome, probability band = price),
+#      deep-linked to that corpus's Future Trajectory chapter.
+# Design register: a dark trading board set into the letterpress site — the same
+# move as the Ghost's inky band. Board tokens are local (--fd*) so both site themes
+# just work; numerals are mono; the leading outcome wears the up-tick green.
+
+FORECAST_BAND_CSS = """
+/* The Forecast Desk band on the home page — a dark board strip with a live tick. */
+.fd-band { max-width: 1080px; margin: 1.4rem auto 0; padding: 0 2rem; }
+.fd-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+  text-decoration: none; color: #e8edf6; background: #10161f; border: 1px solid #232e40;
+  border-left: 5px solid #22c55e; border-radius: 16px; padding: 1.5rem 1.8rem;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.fd-band a:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,.35); border-color: #22c55e; }
+.fd-band .fdb-flag { font-family: var(--display); font-weight: 800; font-size: 1.9rem; line-height: 1.02;
+  color: #e8edf6; border-right: 1px solid #232e40; padding-right: 1.6rem; }
+.fd-band .fdb-flag small { display: block; font-family: var(--serif); font-style: italic; font-weight: 400;
+  font-size: .72rem; color: #93a1b8; margin-top: .55rem; }
+.fd-band .fdb-kicker { font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .16em; color: #22c55e; margin: 0 0 .35rem; }
+.fd-band .fdb-kicker .fdb-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e; margin-right: .45rem; animation: fdb-pulse 1.8s ease infinite; }
+@keyframes fdb-pulse { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .fd-band .fdb-kicker .fdb-dot { animation: none; } }
+.fd-band .fdb-lead { font-family: var(--display); font-weight: 700; font-size: 1.18rem; line-height: 1.28; margin: 0 0 .3rem; color: #e8edf6; }
+.fd-band .fdb-lead .fdb-price { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .92rem; font-weight: 700; color: #0c1117; background: #22c55e; border-radius: 8px;
+  padding: .14rem .5rem; margin-left: .5rem; white-space: nowrap; }
+.fd-band .fdb-sub { font-family: var(--serif); font-style: italic; font-size: .9rem; line-height: 1.45; color: #93a1b8; margin: 0; }
+.fd-band .fdb-cta { font-family: var(--sans); font-size: .76rem; text-transform: uppercase; letter-spacing: .1em;
+  color: #0c1117; background: #22c55e; border-radius: 12px; padding: .55rem 1rem; white-space: nowrap; }
+@media (max-width: 680px) {
+  .fd-band a { grid-template-columns: 1fr; gap: .9rem; }
+  .fd-band .fdb-flag { border-right: none; border-bottom: 1px solid #232e40; padding: 0 0 .9rem; }
+}
+"""
+
+
+def read_forecast_manifest(out_dir):
+    """Load docs/forecast/manifest.json → list of native forecasts, newest first. Missing → []."""
+    path = Path(out_dir) / "forecast" / "manifest.json"
+    if not path.exists():
+        return []
+    try:
+        data = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read {path}, treating as no forecasts", file=sys.stderr)
+        return []
+    items = data.get("forecasts", data) if isinstance(data, dict) else data
+    items = [f for f in items if isinstance(f, dict) and f.get("slug")]
+    items.sort(key=lambda f: (f.get("logged", f.get("date", "")), f.get("slug", "")), reverse=True)
+    return items
+
+
+def read_forecast_data(out_dir, slug):
+    """Load docs/forecast/data/{slug}.json → dict, or None if absent/unreadable."""
+    path = Path(out_dir) / "forecast" / "data" / f"{slug}.json"
+    if not path.exists():
+        return None
+    try:
+        return json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read {path}, skipping that forecast", file=sys.stderr)
+        return None
+
+
+def _prob_band(scenario):
+    """Normalize a scenario's probability to a (low, high) pair of percentages.
+    Accepts {low,high} in 0–1 or 0–100, a bare float, or a prose range like
+    '26–32%' / '~40%'. Returns None when nothing parseable is present."""
+    p = scenario.get("probability")
+    rng = scenario.get("probability_range")
+    if isinstance(rng, str) and rng.strip():          # prose range wins when present
+        nums = re.findall(r"\d+(?:\.\d+)?", rng)
+        if nums:
+            vals = [float(n) for n in nums[:2]]
+            if len(vals) == 1:
+                vals = vals * 2
+            return (min(vals), max(vals))
+    if isinstance(p, dict):
+        lo, hi = p.get("low"), p.get("high")
+        if lo is None and hi is None:
+            return None
+        lo = float(lo if lo is not None else hi)
+        hi = float(hi if hi is not None else lo)
+        if hi <= 1.001:
+            lo, hi = lo * 100, hi * 100
+        return (min(lo, hi), max(lo, hi))
+    if isinstance(p, (int, float)):
+        v = float(p)
+        v = v * 100 if v <= 1.001 else v
+        return (v, v)
+    if isinstance(p, str):
+        nums = re.findall(r"\d+(?:\.\d+)?", p)
+        if nums:
+            vals = [float(n) for n in nums[:2]]
+            if len(vals) == 1:
+                vals = vals * 2
+            return (min(vals), max(vals))
+    return None
+
+
+def _fmt_band(lo, hi):
+    def f(v):
+        return str(int(round(v))) if abs(v - round(v)) < .05 else f"{v:.1f}"
+    return f"{f(lo)}%" if abs(hi - lo) < .05 else f"{f(lo)}–{f(hi)}%"
+
+
+def harvest_corpus_market(folder, corpus, category):
+    """Turn one research corpus's manifest `scenarios` into a Forecast Desk market
+    (scenario = outcome, probability band = price). Returns None when the corpus
+    carries no structured scenarios. The card deep-links to the corpus's Future
+    Trajectory chapter via the reader's #ch-{i} anchors."""
+    try:
+        manifest = json.loads((Path(folder) / "manifest.json").read_text())
+    except (OSError, json.JSONDecodeError):
+        return None
+    scenarios = manifest.get("scenarios") or []
+    outcomes = []
+    for s in scenarios:
+        if not isinstance(s, dict) or not s.get("name"):
+            continue
+        band = _prob_band(s)
+        if band is None:
+            continue
+        outcomes.append({
+            "name": s["name"],
+            "low": band[0], "high": band[1],
+            "mid": (band[0] + band[1]) / 2,
+            "horizon": (s.get("time_horizon") or "").strip(),
+        })
+    if not outcomes:
+        return None
+    outcomes.sort(key=lambda o: o["mid"], reverse=True)
+    ft_i = next((i for i, d in enumerate(corpus["documents"])
+                 if d.get("file") == "Future_Trajectory.md"
+                 or "future trajectory" in d.get("title", "").lower()), None)
+    href = f"{corpus['slug']}.html" + (f"#ch-{ft_i}" if ft_i is not None else "")
+    horizon = (manifest.get("forecast_horizon") or outcomes[0]["horizon"] or "").strip()
+    return {
+        "slug": corpus["slug"],
+        "title": corpus["title"],
+        "subtitle": corpus.get("subtitle", ""),
+        "category": category,
+        "href": href,
+        "horizon": horizon,
+        "outcomes": outcomes,
+    }
+
+
+def forecast_band_html(native_items, markets, cfg):
+    """The Forecast Desk band for the home page. Leads with the latest live native
+    market when one exists; otherwise counts the harvested board."""
+    motto = html.escape(cfg.get("motto", ""))
+    n_markets = len(native_items) + len(markets)
+    n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
+    flag = f'<div class="fdb-flag">The Forecast<br>Desk<small>{motto}</small></div>'
+    live = next((f for f in native_items if f.get("status", "open") == "open"), None)
+    if live:
+        kicker = '<span class="fdb-dot"></span>Live market'
+        q = html.escape(live.get("question") or live.get("title") or "Live forecast")
+        price = ""
+        if live.get("pick"):
+            chip = html.escape(f"{live.get('pick_flag', '')} {live['pick']} {live.get('band', '')}".strip())
+            price = f'<span class="fdb-price">{chip}</span>'
+        lead = f"{q}{price}"
+        sub = f"{n_markets} markets on the board · {n_outcomes} priced outcomes · every one grounded in the research"
+    else:
+        kicker = "Predictions, by category"
+        lead = html.escape(cfg.get("title", "The Forecast Desk"))
+        sub = f"{n_markets} markets · {n_outcomes} priced outcomes across the research library"
+    mid = (f'<div class="fdb-mid"><p class="fdb-kicker">{kicker}</p>'
+           f'<p class="fdb-lead">{lead}</p><p class="fdb-sub">{html.escape(sub) if live else sub}</p></div>')
+    return (f'<div class="fd-band"><a href="forecast.html">{flag}{mid}'
+            f'<span class="fdb-cta">To the board →</span></a></div>')
+
+
+FORECAST_PAGE_CSS = """
+/* The Forecast Desk — a dark trading board set into the letterpress site. Board
+   tokens are local so light and dark site themes both read correctly. */
+.fd-plate { display: block; max-width: 900px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
+.fd-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .2em; color: var(--accent); margin: 0 0 .5rem; }
+.fd-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+.fd-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0 0 1.3rem; }
+.fd-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
+  font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .14em; color: var(--text); }
+.fd-folio .fd-folio-c { color: var(--accent); font-weight: 700; }
+
+/* the board */
+.fd-board { --fdbg: #0e141d; --fdcard: #141c28; --fdline: #232e40; --fdtext: #e8edf6;
+  --fdmut: #93a1b8; --fdup: #22c55e; --fddn: #ef4444; --fdgold: #eab308; --fdblue: #60a5fa;
+  --fdmono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  max-width: 1080px; margin: 2rem auto 0; padding: 1.6rem 1.6rem 2rem; border-radius: 22px;
+  background: var(--fdbg); border: 1px solid var(--fdline); color: var(--fdtext);
+  box-shadow: 0 24px 60px -30px rgba(0,0,0,.5); }
+
+/* ticker tape */
+.fd-tape { overflow: hidden; border: 1px solid var(--fdline); border-radius: 12px;
+  background: #0a0f16; margin: 0 0 1.4rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent); }
+.fd-tape-inner { display: inline-flex; gap: 2.2rem; padding: .55rem 0; white-space: nowrap;
+  animation: fd-tape 55s linear infinite; will-change: transform; }
+.fd-tape:hover .fd-tape-inner { animation-play-state: paused; }
+@keyframes fd-tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .fd-tape-inner { animation: none; } }
+.fd-tk { font-family: var(--fdmono); font-size: .78rem; color: var(--fdmut); }
+.fd-tk b { color: var(--fdtext); font-weight: 600; }
+.fd-tk .up { color: var(--fdup); font-weight: 700; }
+
+/* live native market hero */
+.fd-live { display: block; text-decoration: none; color: var(--fdtext); background:
+  linear-gradient(160deg, #142033, #10161f 55%); border: 1px solid var(--fdline);
+  border-radius: 16px; padding: 1.5rem 1.7rem; margin-bottom: 1.6rem;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.fd-live:hover { transform: translateY(-3px); border-color: var(--fdup); box-shadow: 0 18px 44px -20px rgba(34,197,94,.35); }
+.fd-live-top { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-bottom: .7rem; }
+.fd-chip-live { font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .14em; color: #0c1117; background: var(--fdup); border-radius: 20px; padding: .22rem .6rem; }
+.fd-chip-live .d { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #0c1117;
+  margin-right: .4rem; animation: fdb-pulse 1.8s ease infinite; }
+.fd-chip-cat { font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdblue); border: 1px solid var(--fdblue); border-radius: 20px; padding: .2rem .6rem; }
+.fd-chip-date { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); margin-left: auto; }
+.fd-live-q { font-family: var(--display); font-weight: 800; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  line-height: 1.12; margin: 0 0 .9rem; }
+.fd-live-grid { display: grid; grid-template-columns: auto 1fr; gap: 1.4rem; align-items: center; }
+.fd-live-pick { text-align: center; background: #0c1117; border: 1px solid var(--fdline);
+  border-radius: 14px; padding: .9rem 1.3rem; }
+.fd-live-pick .f { font-size: 2rem; line-height: 1; }
+.fd-live-pick .t { font-family: var(--sans); font-weight: 800; font-size: 1.05rem; margin-top: .25rem; }
+.fd-live-pick .p { font-family: var(--fdmono); font-weight: 700; font-size: 1.05rem; color: var(--fdup); margin-top: .15rem; }
+.fd-live-sub { font-family: var(--serif); font-style: italic; font-size: .95rem; color: var(--fdmut); line-height: 1.5; margin: 0; }
+.fd-live-meta { display: flex; gap: 1.3rem; flex-wrap: wrap; margin-top: .8rem;
+  font-family: var(--fdmono); font-size: .72rem; color: var(--fdmut); }
+.fd-live-meta b { color: var(--fdtext); }
+@media (max-width: 640px) { .fd-live-grid { grid-template-columns: 1fr; } }
+
+/* category shelves + market cards */
+.fd-cat-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--fdmut); border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem; }
+.fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
+.fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
+.fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
+  background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 14px; padding: 1.05rem 1.15rem;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.fd-card:hover { transform: translateY(-3px); border-color: var(--fdup); box-shadow: 0 16px 38px -22px rgba(34,197,94,.4); }
+.fd-card-top { display: flex; align-items: center; gap: .5rem; margin-bottom: .55rem; }
+.fd-chip-open { font-family: var(--sans); font-size: .58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdup); border: 1px solid var(--fdup); border-radius: 20px; padding: .16rem .5rem; }
+.fd-card-hz { font-family: var(--fdmono); font-size: .64rem; color: var(--fdmut); margin-left: auto;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 55%; }
+.fd-card-q { font-family: var(--display); font-weight: 700; font-size: 1.06rem; line-height: 1.22; margin: 0 0 .75rem; }
+.fd-out { margin: 0 0 .55rem; }
+.fd-out-l { display: flex; justify-content: space-between; gap: .8rem; align-items: baseline;
+  font-family: var(--sans); font-size: .78rem; line-height: 1.3; margin-bottom: .28rem; }
+.fd-out-l .nm { color: var(--fdmut); overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+.fd-out.lead .fd-out-l .nm { color: var(--fdtext); font-weight: 600; }
+.fd-out-l .pc { font-family: var(--fdmono); font-size: .76rem; font-weight: 700; color: var(--fdmut); white-space: nowrap; }
+.fd-out.lead .fd-out-l .pc { color: #0c1117; background: var(--fdup); border-radius: 6px; padding: .08rem .38rem; }
+.fd-track { position: relative; height: 7px; border-radius: 4px; background: #0a0f16; overflow: hidden; }
+.fd-fill { position: absolute; top: 0; bottom: 0; border-radius: 4px; background: var(--fdmut); opacity: .55;
+  transform-origin: left; transition: transform .7s cubic-bezier(.22,1,.36,1); }
+.fd-out.lead .fd-fill { background: var(--fdup); opacity: 1; }
+.fd-board[data-armed] .fd-fill { transform: scaleX(1); }
+.fd-fill { transform: scaleX(0); }
+@media (prefers-reduced-motion: reduce) { .fd-fill { transition: none; transform: none !important; } }
+.fd-card-foot { display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+  border-top: 1px solid var(--fdline); margin-top: auto; padding-top: .6rem;
+  font-family: var(--sans); font-size: .68rem; color: var(--fdmut); }
+.fd-card-foot .go { color: var(--fdup); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+
+.fd-foot { max-width: 900px; margin: 2.4rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.fd-foot .epigraph { font-family: var(--serif); font-style: italic; color: var(--muted); margin: 0 0 .8rem; }
+.fd-foot .colophon a { color: var(--accent); }
+@media (max-width: 640px) { .fd-board { padding: 1rem 1rem 1.4rem; border-radius: 16px; margin-left: .6rem; margin-right: .6rem; } }
+"""
+
+FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Forecast Desk — calvincollins · xyz</title>
+<meta name="description" content="{motto}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="adtech.html">Ad Tech</a>
+    <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html" class="active">The Forecast Desk</a>
+  </nav>
+</div>
+<header class="fd-plate">
+  <p class="fd-kicker">Predictions, by category</p>
+  <h1 class="fd-name">The Forecast Desk</h1>
+  <p class="fd-motto">“{motto}”</p>
+  <div class="fd-folio">
+    <span>{n_markets} markets</span>
+    <span class="fd-folio-c">{n_outcomes} priced outcomes</span>
+    <span>{n_cats} categories</span>
+  </div>
+</header>
+<main class="fd-board" id="fd-board">
+{body}
+</main>
+<footer class="fd-foot">
+  <p class="epigraph">{blurb}</p>
+  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+</footer>
+<script>{theme_js}</script>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+FORECAST_PAGE_JS = r"""
+// arm the probability bars once the board scrolls into view (gamified fill-in)
+const board = document.getElementById('fd-board');
+if (board) {
+  const io = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { board.dataset.armed = '1'; io.disconnect(); } });
+  }, { threshold: .08 });
+  io.observe(board);
+}
+// live countdowns: <span data-grades="YYYY-MM-DD">
+document.querySelectorAll('[data-grades]').forEach(el => {
+  const d = new Date(el.dataset.grades + 'T23:59:59');
+  const days = Math.max(0, Math.ceil((d - Date.now()) / 864e5));
+  el.textContent = days === 0 ? 'grades today' : `grades in ${days}d`;
+});
+"""
+
+
+def _fd_outcome_rows(outcomes, cap=5):
+    """Outcome rows for a market card: name + banded bar + price chip. The board
+    x-axis is 0–60% (forecast bands rarely exceed it) so bars stay comparable."""
+    rows = []
+    axis = 60.0
+    for i, o in enumerate(outcomes[:cap]):
+        left = min(o["low"], axis) / axis * 100
+        width = max(min(o["high"], axis) - min(o["low"], axis), 1.5) / axis * 100
+        lead = " lead" if i == 0 else ""
+        rows.append(
+            f'<div class="fd-out{lead}"><div class="fd-out-l">'
+            f'<span class="nm">{html.escape(o["name"])}</span>'
+            f'<span class="pc">{_fmt_band(o["low"], o["high"])}</span></div>'
+            f'<div class="fd-track"><span class="fd-fill" style="left:{left:.1f}%;width:{width:.1f}%"></span></div></div>'
+        )
+    extra = len(outcomes) - cap
+    if extra > 0:
+        rows.append(f'<div class="fd-out-l" style="margin-top:.1rem"><span class="nm">+{extra} more outcomes in the corpus</span></div>')
+    return "".join(rows)
+
+
+def _fd_market_card(m):
+    hz = html.escape(m["horizon"]) if m["horizon"] else ""
+    return (
+        f'<a class="fd-card" href="{html.escape(m["href"], quote=True)}">'
+        f'<div class="fd-card-top"><span class="fd-chip-open">Open</span>'
+        f'<span class="fd-card-hz">{hz}</span></div>'
+        f'<h3 class="fd-card-q">{html.escape(m["title"])}</h3>'
+        f'{_fd_outcome_rows(m["outcomes"])}'
+        f'<div class="fd-card-foot"><span>{len(m["outcomes"])} outcomes · from the research</span>'
+        f'<span class="go">Full forecast →</span></div></a>'
+    )
+
+
+def _fd_live_hero(f):
+    """The featured native market — a live board lead with the consensus pick."""
+    q = html.escape(f.get("question") or f.get("title") or "Live forecast")
+    cat = html.escape(f.get("category", ""))
+    pick = html.escape(f.get("pick", ""))
+    flagc = f.get("pick_flag", "")
+    band = html.escape(f.get("band", ""))
+    dek = html.escape(f.get("dek", ""))
+    logged = html.escape(_long_date(f["logged"]) if f.get("logged") else "")
+    grades = f.get("grades", "")
+    grades_bit = (f'<span>⏳ <b data-grades="{html.escape(grades, quote=True)}">grades {html.escape(_long_date(grades))}</b></span>'
+                  if grades else "")
+    profiles_n = f.get("profiles_n")
+    prof_bit = f"<span>👥 <b>{profiles_n} predictor profiles</b></span>" if profiles_n else ""
+    href = html.escape(f.get("file") or f"forecast/{f['slug']}.html", quote=True)
+    return (
+        f'<a class="fd-live" href="{href}">'
+        f'<div class="fd-live-top"><span class="fd-chip-live"><span class="d"></span>Live market</span>'
+        f'<span class="fd-chip-cat">{cat}</span>'
+        f'<span class="fd-chip-date">logged {logged}</span></div>'
+        f'<h2 class="fd-live-q">{q}</h2>'
+        f'<div class="fd-live-grid"><div class="fd-live-pick">'
+        f'<div class="f">{flagc}</div><div class="t">{pick}</div><div class="p">{band}</div></div>'
+        f'<div><p class="fd-live-sub">{dek}</p>'
+        f'<div class="fd-live-meta">{prof_bit}{grades_bit}<span>📋 <b>on the ledger</b></span></div>'
+        f'</div></div></a>'
+    )
+
+
+def _fd_tape(native_items, markets):
+    """The ticker tape: every market's leading outcome as one tick."""
+    ticks = []
+    for f in native_items:
+        if f.get("pick"):
+            ticks.append(f'<span class="fd-tk"><b>{html.escape(f.get("title", f["slug"]))}</b> · '
+                         f'<span class="up">{html.escape((f.get("pick_flag", "") + " " + f["pick"]).strip())} {html.escape(f.get("band", ""))}</span></span>')
+    for m in markets:
+        o = m["outcomes"][0]
+        ticks.append(f'<span class="fd-tk"><b>{html.escape(m["title"])}</b> · '
+                     f'{html.escape(o["name"][:46])} <span class="up">{_fmt_band(o["low"], o["high"])}</span></span>')
+    if not ticks:
+        return ""
+    row = "".join(ticks)
+    return f'<div class="fd-tape" aria-hidden="true"><div class="fd-tape-inner">{row}{row}</div></div>'
+
+
+def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell=""):
+    """Render docs/forecast.html — the board: ticker, live native markets, then
+    every harvested corpus market shelved by category."""
+    out = Path(out_dir)
+    category_order = category_order or []
+    parts = [_fd_tape(native_items, markets)]
+    for f in native_items:
+        parts.append(_fd_live_hero(f))
+    # Shelve harvested markets by category, config order first, then first-seen.
+    cats = []
+    for c in category_order:
+        if any(m["category"] == c for m in markets) and c not in cats:
+            cats.append(c)
+    for m in markets:
+        if m["category"] not in cats:
+            cats.append(m["category"])
+    for c in cats:
+        group = [m for m in markets if m["category"] == c]
+        cards = "".join(_fd_market_card(m) for m in group)
+        parts.append(f'<h2 class="fd-cat-h">{html.escape(c)} <span class="n">{len(group)}</span></h2>'
+                     f'<div class="fd-grid">{cards}</div>')
+    n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
+    n_markets = len(native_items) + len(markets)
+    og = og_tags("The Forecast Desk",
+                 cfg.get("motto", "Every prediction the research makes, priced and graded."),
+                 f"{SITE_URL}/forecast.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = FORECAST_PAGE_TEMPLATE.format(
+        css=LIBRARY_CSS + FORECAST_PAGE_CSS,
+        favicon=FAVICON, og_meta=og,
+        motto=html.escape(cfg.get("motto", "")),
+        blurb=html.escape(cfg.get("blurb", "")),
+        n_markets=n_markets, n_outcomes=n_outcomes,
+        n_cats=len(cats) + (1 if native_items else 0),
+        body="\n".join(parts),
+        theme_js=LIBRARY_THEME_JS,
+        app_js=FORECAST_PAGE_JS,
+        shell=shell,
+    )
+    (out / "forecast.html").write_text(page)
+    print(f"  ✓ The Forecast Desk  ({n_markets} markets, {n_outcomes} outcomes) → forecast.html")
+
+
+# ------------------------------------------------------------- native forecast pages
+# Each native forecast renders from docs/forecast/data/{slug}.json into
+# docs/forecast/{slug}.html — the full live-market treatment: consensus pick,
+# predictor roster (trader cards), field board, base rates, markets, triggers.
+
+FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
+.fdd-wrap { max-width: 940px; margin: 0 auto; padding: 0 1.2rem; }
+.fd-board.fdd { margin-top: 1.4rem; }
+.fdd-res { font-family: var(--serif); font-style: italic; color: var(--fdmut); font-size: .9rem;
+  line-height: 1.5; margin: .9rem 0 0; }
+.fdd-h { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--fdmut); border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 2rem 0 1rem; }
+.fdd-h .n { color: var(--fdup); font-family: var(--fdmono); margin-right: .5rem; }
+
+/* consensus hero */
+.fdd-hero { background: linear-gradient(160deg, #142033, #10161f 55%); border: 1px solid var(--fdline);
+  border-radius: 16px; padding: 1.5rem 1.7rem; }
+.fdd-pickrow { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; margin-top: 1rem; }
+.fdd-pick { text-align: center; background: #0c1117; border: 1px solid var(--fdup); border-radius: 16px;
+  padding: 1.1rem 1.7rem; box-shadow: 0 0 34px -12px rgba(34,197,94,.45); }
+.fdd-pick .f { font-size: 2.7rem; line-height: 1; }
+.fdd-pick .t { font-family: var(--sans); font-weight: 800; font-size: 1.35rem; margin-top: .3rem; }
+.fdd-pick .p { font-family: var(--fdmono); font-weight: 700; font-size: 1.25rem; color: var(--fdup); margin-top: .2rem; }
+.fdd-pick .ru { font-family: var(--sans); font-size: .7rem; color: var(--fdmut); margin-top: .45rem; }
+.fdd-case { font-family: var(--serif); font-size: .98rem; line-height: 1.62; color: #c6d0e0; margin: 0; }
+@media (max-width: 680px) { .fdd-pickrow { grid-template-columns: 1fr; } }
+
+/* tally leaderboard */
+.fdd-tally { display: flex; height: 14px; border-radius: 8px; overflow: hidden; margin: .9rem 0 .45rem;
+  border: 1px solid var(--fdline); }
+.fdd-tally span { display: block; }
+.fdd-tally .t1 { background: var(--fdup); } .fdd-tally .t2 { background: var(--fdgold); } .fdd-tally .t3 { background: var(--fddn); }
+.fdd-tally-l { display: flex; gap: 1.4rem; flex-wrap: wrap; font-family: var(--sans); font-size: .74rem; color: var(--fdmut); }
+.fdd-tally-l b { color: var(--fdtext); }
+
+/* trader cards */
+.fdd-roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+.fdd-trader { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 14px; padding: 1.05rem 1.15rem;
+  display: flex; flex-direction: column; transition: transform .15s ease, border-color .15s ease; }
+.fdd-trader:hover { transform: translateY(-3px); border-color: var(--fdblue); }
+.fdd-tr-top { display: flex; gap: .8rem; align-items: flex-start; }
+.fdd-tr-av { font-size: 1.6rem; line-height: 1; background: #0c1117; border: 1px solid var(--fdline);
+  border-radius: 12px; padding: .5rem .55rem; }
+.fdd-tr-nm { font-family: var(--sans); font-weight: 800; font-size: 1rem; }
+.fdd-tr-crit { font-family: var(--serif); font-style: italic; font-size: .78rem; color: var(--fdmut); line-height: 1.4; margin-top: .15rem; }
+.fdd-tr-call { margin-left: auto; text-align: center; white-space: nowrap; }
+.fdd-tr-call .f { font-size: 1.4rem; line-height: 1; }
+.fdd-tr-call .t { font-family: var(--sans); font-size: .72rem; font-weight: 800; margin-top: .1rem; }
+.fdd-tr-call .p { font-family: var(--fdmono); font-size: .82rem; font-weight: 700; color: var(--fdup); }
+.fdd-tr-tags { display: flex; gap: .45rem; flex-wrap: wrap; margin: .7rem 0 .55rem; }
+.fdd-tag { font-family: var(--sans); font-size: .58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; border-radius: 20px; padding: .18rem .55rem; }
+.fdd-tag.reg { color: var(--fdgold); border: 1px solid var(--fdgold); }
+.fdd-tag.conf-high { color: #0c1117; background: var(--fdup); }
+.fdd-tag.conf-medium { color: var(--fdtext); border: 1px solid var(--fdmut); }
+.fdd-tag.conf-low { color: var(--fdmut); border: 1px solid var(--fdline); }
+.fdd-tag.rec { color: var(--fdblue); border: 1px solid var(--fdblue); }
+.fdd-tr-blurb { font-family: var(--serif); font-size: .92rem; line-height: 1.6; color: #c6d0e0; margin: 0 0 .7rem; }
+.fdd-tr-ev { border-top: 1px solid var(--fdline); margin-top: auto; padding-top: .6rem;
+  font-family: var(--sans); font-size: .74rem; line-height: 1.45; color: var(--fdmut); }
+.fdd-tr-ev b { color: var(--fdup); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; }
+
+/* consensus + dissent */
+.fdd-cons { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 14px; padding: 1.2rem 1.4rem; }
+.fdd-cons p { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0; margin: 0 0 1rem; }
+.fdd-cons .lbl { display: block; font-family: var(--sans); font-size: .62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--fdup); margin-bottom: .3rem; }
+.fdd-dissent { background: rgba(239,68,68,.07); border: 1px solid rgba(239,68,68,.35); border-radius: 10px;
+  padding: .9rem 1.1rem; font-family: var(--serif); font-size: .9rem; line-height: 1.58; color: #d8c2c2; }
+.fdd-dissent .lbl { color: var(--fddn); }
+
+/* the field price board */
+.fdd-field { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 14px; padding: 1.1rem 1.25rem; }
+.fdd-frow { display: grid; grid-template-columns: 130px 1fr 58px; gap: .9rem; align-items: center; margin: .5rem 0; }
+.fdd-frow .tm { font-family: var(--sans); font-size: .82rem; color: var(--fdmut); text-align: right; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.fdd-frow.lead .tm { color: var(--fdtext); font-weight: 700; }
+.fdd-frow .pv { font-family: var(--fdmono); font-size: .82rem; font-weight: 700; color: var(--fdmut); }
+.fdd-frow.lead .pv { color: var(--fdup); }
+.fdd-frow .fd-track { height: 12px; }
+.fdd-field-foot { font-family: var(--sans); font-size: .68rem; color: var(--fdmut); border-top: 1px solid var(--fdline);
+  margin-top: .8rem; padding-top: .7rem; }
+@media (max-width: 560px) { .fdd-frow { grid-template-columns: 92px 1fr 52px; } }
+
+/* base-rate stat tiles */
+.fdd-rates { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .9rem; }
+.fdd-rate { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 12px; padding: .95rem 1.05rem; }
+.fdd-rate .big { font-family: var(--fdmono); font-weight: 700; font-size: 1.5rem; color: var(--fdup); }
+.fdd-rate .txt { font-family: var(--sans); font-size: .78rem; line-height: 1.5; color: var(--fdmut); margin-top: .3rem; }
+
+/* markets table */
+.fdd-mkts { border: 1px solid var(--fdline); border-radius: 12px; overflow-x: auto; background: var(--fdcard); }
+.fdd-mkts table { border-collapse: collapse; width: 100%; font-size: .8rem; }
+.fdd-mkts th, .fdd-mkts td { text-align: left; padding: .65rem .85rem; border-bottom: 1px solid var(--fdline);
+  vertical-align: top; font-family: var(--sans); color: var(--fdmut); }
+.fdd-mkts thead th { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); background: #0c1117; }
+.fdd-mkts td .plat { font-weight: 700; color: var(--fdtext); }
+.fdd-mkts tbody tr:last-child td { border-bottom: none; }
+
+/* triggers */
+.fdd-trigs { counter-reset: t; margin: 0; padding: 0; list-style: none; }
+.fdd-trigs li { counter-increment: t; position: relative; padding: .75rem 0 .75rem 2.6rem;
+  border-bottom: 1px solid var(--fdline); font-family: var(--serif); font-size: .92rem; line-height: 1.55; color: #c6d0e0; }
+.fdd-trigs li:last-child { border-bottom: none; }
+.fdd-trigs li::before { content: counter(t); position: absolute; left: 0; top: .7rem; width: 1.7rem; height: 1.7rem;
+  border-radius: 50%; background: var(--fdup); color: #0c1117; font-family: var(--fdmono); font-weight: 700;
+  font-size: .8rem; display: flex; align-items: center; justify-content: center; }
+
+.fdd-note { font-family: var(--serif); font-style: italic; font-size: .86rem; line-height: 1.6; color: var(--fdmut); margin: 1.2rem 0 0; }
+.fdd-src { margin: .8rem 0 0; padding: 0; list-style: none; }
+.fdd-src li { font-family: var(--sans); font-size: .76rem; margin: .35rem 0; }
+.fdd-src a { color: var(--fdblue); text-decoration: none; }
+.fdd-src a:hover { text-decoration: underline; }
+"""
+
+FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<meta name="description" content="{description}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="../index.html">The Research</a>
+    <a href="../ghost.html">The Ghost of Times</a>
+    <a href="../adtech.html">Ad Tech</a>
+    <a href="../pamphlets.html">The Pamphlets</a>
+    <a href="../forecast.html" class="active">The Forecast Desk</a>
+  </nav>
+</div>
+<div class="fdd-wrap">
+<header class="fd-plate">
+  <p class="fd-kicker">The Forecast Desk · Live market</p>
+  <h1 class="fd-name" style="font-size:clamp(1.9rem,4.6vw,3rem)">{headline}</h1>
+  <div class="fd-folio">
+    <span>Logged {logged}</span>
+    <span class="fd-folio-c" data-grades="{grades_attr}">Grades {grades}</span>
+    <span>{category}</span>
+  </div>
+</header>
+<main class="fd-board fdd" id="fd-board">
+{body}
+</main>
+<footer class="fd-foot">
+  <p class="epigraph">{method_note}</p>
+  <p class="colophon"><a href="../forecast.html">← The Forecast Desk</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+</footer>
+</div>
+<script>{theme_js}</script>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def _fdd_hero(d):
+    c = d.get("consensus", {})
+    tally = c.get("tally", [])
+    total = sum(t.get("votes", 0) for t in tally) or 1
+    seg = "".join(f'<span class="t{i+1}" style="width:{t["votes"]/total*100:.1f}%" title="{html.escape(t["team"])}"></span>'
+                  for i, t in enumerate(tally[:3]))
+    leg = " ".join(f'<span>{t.get("flag", "")} <b>{html.escape(t["team"])}</b> {t["votes"]}</span>' for t in tally)
+    res = html.escape(d.get("resolution", ""))
+    return (
+        f'<section class="fdd-hero">'
+        f'<div class="fd-live-top"><span class="fd-chip-live"><span class="d"></span>Live</span>'
+        f'<span class="fd-chip-cat">{html.escape(d.get("category", ""))}</span>'
+        f'<span class="fd-chip-date" data-grades="{html.escape(d.get("grades", ""), quote=True)}"></span></div>'
+        f'<div class="fdd-pickrow"><div class="fdd-pick">'
+        f'<div class="f">{c.get("flag", "")}</div><div class="t">{html.escape(c.get("pick", ""))}</div>'
+        f'<div class="p">{html.escape(c.get("band", ""))}</div>'
+        f'<div class="ru">runner-up: {c.get("runner_up_flag", "")} {html.escape(c.get("runner_up", ""))} {html.escape(c.get("runner_up_band", ""))}</div></div>'
+        f'<div><div class="fdd-tally">{seg}</div><div class="fdd-tally-l">{leg}'
+        f'<span style="margin-left:auto">council split · fused by grounding strength, not votes</span></div>'
+        f'<p class="fdd-res">{res}</p></div></div></section>'
+    )
+
+
+def _fdd_roster(profiles):
+    cards = []
+    for p in profiles:
+        rec = p.get("record") or {}
+        rec_tag = (f'<span class="fdd-tag rec">record {rec.get("hits", 0)}–{max(rec.get("graded", 0) - rec.get("hits", 0), 0)}</span>'
+                   if rec.get("graded") else '<span class="fdd-tag rec">first call on the ledger</span>')
+        conf = (p.get("confidence") or "medium").lower()
+        cards.append(
+            f'<article class="fdd-trader">'
+            f'<div class="fdd-tr-top"><span class="fdd-tr-av">{p.get("avatar", "🎯")}</span>'
+            f'<div><div class="fdd-tr-nm">{html.escape(p.get("name", ""))}</div>'
+            f'<div class="fdd-tr-crit">{html.escape(p.get("criterion", ""))}</div></div>'
+            f'<div class="fdd-tr-call"><div class="f">{p.get("flag", "")}</div>'
+            f'<div class="t">{html.escape(p.get("pick", ""))}</div>'
+            f'<div class="p">{html.escape(p.get("prob", ""))}</div></div></div>'
+            f'<div class="fdd-tr-tags"><span class="fdd-tag reg">✍ {html.escape(p.get("register", ""))}</span>'
+            f'<span class="fdd-tag conf-{conf}">{conf} conf.</span>{rec_tag}</div>'
+            f'<p class="fdd-tr-blurb">{html.escape(p.get("blurb", ""))}</p>'
+            f'<div class="fdd-tr-ev"><b>Key evidence</b> · {html.escape(p.get("evidence", ""))}</div>'
+            f'</article>'
+        )
+    return f'<div class="fdd-roster">{"".join(cards)}</div>'
+
+
+def _fdd_field(field):
+    if not field:
+        return ""
+    top = max(f.get("price", 0) for f in field) or 1
+    rows = []
+    for i, f in enumerate(field):
+        w = f.get("price", 0) / top * 100
+        rows.append(
+            f'<div class="fdd-frow{" lead" if i == 0 else ""}">'
+            f'<span class="tm">{f.get("flag", "")} {html.escape(f.get("team", ""))}</span>'
+            f'<div class="fd-track"><span class="fd-fill" style="left:0;width:{w:.1f}%"></span></div>'
+            f'<span class="pv">{f.get("price", 0):g}%</span></div>'
+        )
+    return (f'<div class="fdd-field">{"".join(rows)}'
+            f'<div class="fdd-field-foot">Blended exact-winner price across the liquid books · bars scaled to the leader</div></div>')
+
+
+def build_forecast_item(out_dir, item, shell=""):
+    """Render one native forecast (docs/forecast/{slug}.html) from its data file.
+    Returns True if rendered, False if the data file is absent."""
+    out = Path(out_dir)
+    slug = item.get("slug", "")
+    d = read_forecast_data(out, slug)
+    if d is None:
+        return False
+    c = d.get("consensus", {})
+    parts = [_fdd_hero(d)]
+    if d.get("profiles"):
+        parts.append(f'<h2 class="fdd-h"><span class="n">01</span>The Predictor Roster — {len(d["profiles"])} standing profiles, tracked call by call</h2>')
+        parts.append(_fdd_roster(d["profiles"]))
+    n = 2
+    if c.get("headline_case"):
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Consensus</h2>')
+        cons = [f'<p><span class="lbl">The call</span>{html.escape(c["headline_case"])}</p>']
+        if c.get("why_over_runner_up"):
+            cons.append(f'<p><span class="lbl">Why over the runner-up</span>{html.escape(c["why_over_runner_up"])}</p>')
+        if c.get("dissent"):
+            cons.append(f'<div class="fdd-dissent"><span class="lbl">Strongest surviving dissent</span>{html.escape(c["dissent"])}</div>')
+        parts.append(f'<div class="fdd-cons">{"".join(cons)}</div>')
+        n += 1
+    if d.get("field"):
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Field</h2>')
+        parts.append(_fdd_field(d["field"]))
+        n += 1
+    if d.get("base_rates"):
+        tiles = "".join(f'<div class="fdd-rate"><div class="big">{html.escape(r.get("stat", ""))}</div>'
+                        f'<div class="txt">{html.escape(r.get("text", ""))}</div></div>'
+                        for r in d["base_rates"])
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Base Rates</h2><div class="fdd-rates">{tiles}</div>')
+        n += 1
+    if d.get("markets"):
+        rows = "".join(
+            f'<tr><td><span class="plat">{html.escape(m.get("platform", ""))}</span><br>{html.escape(m.get("market", ""))}</td>'
+            f'<td>{html.escape(m.get("detail", ""))}</td><td>{html.escape(m.get("volume", ""))}</td></tr>'
+            for m in d["markets"])
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Market Snapshot</h2>'
+                     f'<div class="fdd-mkts"><table><thead><tr><th>Market</th><th>Prices</th><th>Volume</th></tr></thead>'
+                     f'<tbody>{rows}</tbody></table></div>')
+        n += 1
+    if d.get("triggers"):
+        lis = "".join(f'<li>{html.escape(t)}</li>' for t in d["triggers"])
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>What Would Flip the Pick</h2><ol class="fdd-trigs">{lis}</ol>')
+        n += 1
+    if d.get("sources"):
+        lis = "".join(f'<li><a href="{html.escape(s.get("url", ""), quote=True)}" target="_blank" rel="noopener">'
+                      f'{html.escape(s.get("label", s.get("url", "")))}</a></li>' for s in d["sources"])
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Sources</h2><ul class="fdd-src">{lis}</ul>')
+    if d.get("honesty_note"):
+        parts.append(f'<p class="fdd-note">{html.escape(d["honesty_note"])}</p>')
+    title = d.get("title") or item.get("title") or slug
+    grades = d.get("grades", item.get("grades", ""))
+    og = og_tags(title, d.get("question", title), f"{SITE_URL}/forecast/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = FORECAST_DETAIL_TEMPLATE.format(
+        title=html.escape(f"{title} — The Forecast Desk"),
+        description=html.escape(d.get("question", title)),
+        favicon=FAVICON, og_meta=og,
+        css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+        headline=html.escape(d.get("question", title)),
+        logged=html.escape(_long_date(d.get("logged", "")) if d.get("logged") else "—"),
+        grades=html.escape(_long_date(grades) if grades else "—"),
+        grades_attr=html.escape(grades, quote=True),
+        category=html.escape(d.get("category", "")),
+        method_note=html.escape(d.get("method_note", "")),
+        body="\n".join(parts),
+        theme_js=LIBRARY_THEME_JS,
+        app_js=FORECAST_PAGE_JS,
+        shell=shell,
+    )
+    (out / "forecast").mkdir(parents=True, exist_ok=True)
+    (out / "forecast" / f"{slug}.html").write_text(page)
     return True
 
 
@@ -4808,8 +5663,10 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="fingerprint.html" class="active">The Fingerprint</a>
     <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <header class="fpp-plate">
@@ -4828,7 +5685,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="fpp-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="index.html">The Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -5004,8 +5861,10 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="../index.html">The Research</a>
     <a href="../ghost.html">The Ghost of Times</a>
+    <a href="../adtech.html">Ad Tech</a>
     <a href="../fingerprint.html" class="active">The Fingerprint</a>
     <a href="../pamphlets.html">The Pamphlets</a>
+    <a href="../forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <main class="fp-edition">
@@ -5625,8 +6484,9 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
     <a href="connections.html" class="active">Connections</a>
     <a href="glossary.html">Glossary</a>
   </nav>
@@ -5832,6 +6692,96 @@ def extract_passages(corpus, limit=5):
     return picked[:limit]
 
 
+_MONTHS = ("January February March April May June July August September October "
+           "November December").split()
+
+
+def _pretty_date(s):
+    """Manifest dates arrive in mixed shapes; ISO ones read badly in a quiz
+    prompt ('What happened in 2015-07-13?'). Render ISO as prose, pass the
+    rest ('c. 1175', '1919–1926') through untouched."""
+    m = re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", s)
+    if not m:
+        return s
+    y, mo, day = m.group(1), int(m.group(2)), m.group(3)
+    if not 1 <= mo <= 12:
+        return s
+    return (f"{int(day)} " if day else "") + f"{_MONTHS[mo - 1]} {y}"
+
+
+def quiz_facts_for(corpus, folder):
+    """Content facts for the index's "Test Yourself" quiz — glossary terms, key
+    dates, and key people/organisations from the research manifest — so the quiz
+    can test what a corpus says, not just what its chapters are called.
+
+    Each fact is located to the first chapter that mentions it (`c` = chapter
+    index, `a` = anchor text) so a missed answer can deep-link into the prose via
+    the reader's ?q= scroll-and-flash. Facts whose wording gives the answer away
+    (an event that states its own year, a description that names its subject) are
+    dropped. Lists are capped: this payload is inlined on the index page.
+    """
+    texts = [strip_md(d["body"], cap=120000).lower() for d in corpus["documents"]]
+
+    def locate(needle):
+        n = (needle or "").strip().lower()
+        if len(n) < 4:
+            return None
+        for i, t in enumerate(texts):
+            if n in t:
+                return i
+        return None
+
+    facts = {"terms": [], "dates": [], "entities": []}
+    for g in (corpus.get("glossary") or [])[:24]:
+        facts["terms"].append({"t": g["term"], "d": g["def"], "c": locate(g["term"]) or 0})
+    try:
+        m = json.loads((Path(folder) / "manifest.json").read_text())
+    except Exception:
+        m = {}
+    for kd in m.get("key_dates") or []:
+        if not isinstance(kd, dict):  # some corpora carry these as plain strings
+            continue
+        if len(facts["dates"]) >= 18:
+            break
+        date = str(kd.get("date") or "").strip()
+        event = _clean_passage(str(kd.get("event") or "").strip(), 170)
+        if not date or not event:
+            continue
+        if any(y in event for y in re.findall(r"\d{3,4}", date)):
+            continue  # the event wording contains its own date
+        entry = {"d": _pretty_date(date), "e": event, "c": 0}
+        # Anchor on the event's most distinctive located word (fewest chapters
+        # mention it), so "Read in context" flashes near the fact rather than
+        # the first occurrence of some common word like "Christianity".
+        best = None
+        for w in set(re.findall(r"[A-Za-z][A-Za-z'\-]{5,}", event)):
+            hits = [i for i, t in enumerate(texts) if w.lower() in t]
+            if hits and (best is None or (len(hits), -len(w)) < (len(best[1]), -len(best[0]))):
+                best = (w, hits)
+        if best:
+            entry["c"], entry["a"] = best[1][0], best[0]
+        facts["dates"].append(entry)
+    for ke in m.get("key_entities") or []:
+        if not isinstance(ke, dict):  # some corpora carry these as plain strings
+            continue
+        if len(facts["entities"]) >= 18:
+            break
+        name = str(ke.get("name") or "").strip()
+        role = _clean_passage(str(ke.get("role") or "").split(";")[0].strip(), 170)
+        if not name or not role:
+            continue
+        if any(w.lower() in role.lower() for w in re.findall(r"[A-Za-z][A-Za-z'\-]{3,}", name)):
+            continue  # the description names its subject
+        entry = {"n": name, "r": role, "c": 0}
+        for cand in (name, name.split()[-1]):
+            ch = locate(cand)
+            if ch is not None:
+                entry["c"], entry["a"] = ch, cand
+                break
+        facts["entities"].append(entry)
+    return facts
+
+
 def build_similarity(corpus_meta, top_k=3):
     """corpus_meta: list of {slug, title, category, keywords}. Returns {slug: [related entries]}."""
     out = {}
@@ -5915,6 +6865,163 @@ def collection_card_html(meta):
         f'<p class="coll-meta">{meta["n_corpora"]} corpora · {meta["n_ch"]} chapters · {meta["reading"]}</p>'
         f'</div></a>'
     )
+
+
+# ---- detached domain fronts: a config domain with a "page" key becomes its
+# own top-level section of the site (e.g. Ad Tech — docs/adtech.html). Its
+# category shelves move off the home page onto the section front, and any bands
+# named in page.include (currently just "fingerprint") move with them, keeping
+# the trade desk separate from the liberal-arts library. ----
+
+DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title} — calvincollins · xyz</title>
+<meta name="description" content="{subtitle}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="pamphlets.html">The Pamphlets</a>
+    <a href="{slug}.html" class="active">{title}</a>
+  </nav>
+</div>
+<header class="dk-plate">
+  <p class="dk-kicker">{kicker}</p>
+  <h1 class="dk-name">{title}</h1>
+  <p class="dk-motto">{subtitle}</p>
+  <div class="dk-folio">
+    <span>{folio_left}</span>
+    <span class="dk-folio-c">{stats}</span>
+    <span>{folio_right}</span>
+  </div>
+</header>
+{bands}
+<h2 class="section-title" id="library">The Research</h2>
+<main class="library">
+{cards}
+</main>
+<footer>
+  <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <p class="epigraph">{epigraph}</p>
+  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+</footer>
+<script>{theme_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+DOMAIN_PAGE_CSS = """
+/* A detached domain front (the Ad Tech desk) — a working-desk nameplate signed
+   in the Fingerprint's petrol teal, over the shared library card grid. */
+.dk-plate { display: block; max-width: 860px; margin: 1.9rem auto 0; padding: 0 2rem; text-align: center; }
+.dk-kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .2em; color: #0d5b68; margin: 0 0 .5rem; }
+[data-theme="dark"] .dk-kicker { color: #62aab8; }
+.dk-name { font-family: var(--display); font-weight: 800; font-size: clamp(2.6rem, 6.8vw, 4.4rem);
+  line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+.dk-motto { font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.5;
+  color: var(--muted); max-width: 640px; margin: 0 auto 1.4rem; }
+.dk-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
+  font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .14em; color: var(--text); }
+.dk-folio .dk-folio-c { color: #0d5b68; font-weight: 700; }
+[data-theme="dark"] .dk-folio .dk-folio-c { color: #62aab8; }
+footer .colophon a { color: var(--accent); text-decoration: none; }
+footer .colophon a:hover { text-decoration: underline; }
+@media (max-width: 560px) { .dk-folio { font-size: .58rem; letter-spacing: .08em; } }
+"""
+
+
+def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
+    """Home-page band pointing at a detached domain front. Wears the market-wire
+    .fp-band dress so the Ad Tech desk keeps the Fingerprint's teal signature;
+    when the desk took the Fingerprint with it, the band tickers the latest wire."""
+    title = page_cfg.get("title") or dom.get("title", "The Desk")
+    slug = page_cfg.get("slug", "adtech")
+    words = title.split()
+    flag_title = ("<br>".join(html.escape(w) for w in words[:2])
+                  if len(words) > 1 else html.escape(title))
+    flag = (f'<div class="fp-band-flag">{flag_title}'
+            f'<small>{html.escape(page_cfg.get("kicker", "a separate desk"))}</small></div>')
+    if fp_editions:
+        latest = fp_editions[0]
+        no = latest.get("edition_number")
+        wire = "The Fingerprint" + (f" Nº {no:02d}" if isinstance(no, int) else "")
+        kicker = f"{title} · {n_corpora} research corpora + the daily wire"
+        lead = html.escape(latest.get("lead_headline") or "The desk is open")
+        beats = latest.get("beats") or []
+        ticker = html.escape(f"On the wire · {wire}")
+        if beats:
+            ticker += " — " + " · ".join(html.escape(b) for b in beats[:4])
+    else:
+        kicker = f"{title} · {n_corpora} research corpora"
+        lead = html.escape(page_cfg.get("subtitle") or dom.get("title", ""))
+        ticker = html.escape(page_cfg.get("kicker", ""))
+    mid = (f'<div class="fp-band-mid"><p class="fp-band-kicker">{html.escape(kicker)}</p>'
+           f'<p class="fp-band-lead">{lead}</p>'
+           f'<p class="fp-band-ticker">{ticker}</p></div>')
+    return (f'<div class="fp-band"><a href="{slug}.html">{flag}{mid}'
+            f'<span class="fp-band-cta">Enter the desk →</span></a></div>')
+
+
+def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", shell=""):
+    """Render a detached domain front (docs/<slug>.html): nameplate, any bands it
+    pulled off the home page, then its category shelves as the standard card grid
+    (with the live search box; category headings only when it shelves >1 category)."""
+    out = Path(out_dir)
+    slug = page_cfg.get("slug", "adtech")
+    title = page_cfg.get("title") or dom.get("title", "The Desk")
+    kicker = page_cfg.get("kicker", "A separate desk")
+    subtitle = page_cfg.get("subtitle", dom.get("title", ""))
+    cats = [c for c in (cat_order or []) if any(cc["category"] == c for cc in dom_cards)]
+    for cc in dom_cards:  # any category the config order missed, in first-seen order
+        if cc["category"] not in cats:
+            cats.append(cc["category"])
+    multi = len(cats) > 1
+    sections = []
+    for cat in cats:
+        cat_cards = [c["html"] for c in dom_cards if c["category"] == cat]
+        head = (f'<h3 class="cat-heading">{html.escape(cat)} '
+                f'<span class="cat-count">{len(cat_cards)}</span></h3>') if multi else ""
+        sections.append(
+            f'<section class="cat-section" data-cat="{html.escape(cat, quote=True)}">{head}'
+            f'<div class="grid">{"".join(cat_cards)}</div></section>')
+    body = (
+        '<div class="lib-toolbar">'
+        '<input id="lib-search" class="lib-search" type="search" '
+        'placeholder="Search the desk…" aria-label="Search this desk" autocomplete="off">'
+        '</div>'
+        + "\n".join(sections)
+        + '<p class="lib-empty" id="lib-empty" hidden>No corpora match your search.</p>'
+    )
+    og = og_tags(title, subtitle or title, f"{SITE_URL}/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
+    (out / f"{slug}.html").write_text(DOMAIN_PAGE_TEMPLATE.format(
+        title=html.escape(title),
+        subtitle=html.escape(subtitle),
+        kicker=html.escape(kicker),
+        slug=slug,
+        favicon=FAVICON,
+        og_meta=og,
+        css=LIBRARY_CSS + FINGERPRINT_BAND_CSS + DOMAIN_PAGE_CSS,
+        folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
+        stats=html.escape(stats),
+        folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
+        bands=bands,
+        cards=body,
+        epigraph=html.escape(page_cfg.get("epigraph", "“We sell — or else.” — David Ogilvy")),
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS,
+        shell=shell,
+    ))
 
 
 def collections_section_html(metas):
@@ -6031,8 +7138,9 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
     <a href="wrapped.html" class="active">Wrapped</a>
   </nav>
 </div>
@@ -6057,6 +7165,10 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 # and de-duplicated, defined in plain language, with links back to the corpora that
 # use each one. Fed by each corpus's `glossary` (see load_glossary / build.py loop).
 GLOSSARY_EXTRA_CSS = """
+#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
 .gl-wrap { max-width: 880px; margin: 0 auto; padding: 2rem 2rem 5rem; }
 .gl-head { display: block; text-align: left; margin: .6rem 0 .4rem; }
 .gl-head .kicker { margin: 0 0 .5rem; }
@@ -6100,6 +7212,17 @@ GLOSSARY_EXTRA_CSS = """
 
 GLOSSARY_JS = r"""
 (function () {
+  // theme (shares the 'corpus-theme' preference with readers + library)
+  var pref = localStorage.getItem('corpus-theme');
+  if (pref) document.documentElement.dataset.theme = pref;
+  else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+  document.getElementById('theme-btn').onclick = function () {
+    var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = next;
+    localStorage.setItem('corpus-theme', next);
+  };
+})();
+(function () {
   var q = document.getElementById('gl-q'), none = document.getElementById('gl-none');
   var items = [].slice.call(document.querySelectorAll('.gl-item'));
   var groups = [].slice.call(document.querySelectorAll('.gl-group'));
@@ -6141,8 +7264,9 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
-    <a href="fingerprint.html">The Fingerprint</a>
+    <a href="adtech.html">Ad Tech</a>
     <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
     <a href="connections.html">Connections</a>
     <a href="glossary.html" class="active">Glossary</a>
   </nav>
@@ -6163,6 +7287,7 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 <footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
   <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
 </footer>
+<button id="theme-btn" title="Light / dark">◐ Theme</button>
 <script>{app_js}</script>
 {shell}
 </body>
@@ -6259,7 +7384,7 @@ def build_wrapped_page(out_dir, wrapped_stats, shell=""):
 
 
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
-          fingerprint_cfg=None, pamphlets_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
+          fingerprint_cfg=None, pamphlets_cfg=None, forecast_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     # Copy the link-preview image into the served output so the absolute
@@ -6270,6 +7395,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     ghost_cfg = ghost_cfg or {}
     fingerprint_cfg = fingerprint_cfg or {}
     pamphlets_cfg = pamphlets_cfg or {}
+    forecast_cfg = forecast_cfg or {}
     descriptions = descriptions or {}
     titles = titles or {}
     category_order = category_order or []
@@ -6280,10 +7406,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     search_entries = []    # trimmed chapter text for the palette's "in the text" search
     corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
     all_passages = []      # pull-quotes across every corpus, for Today's Passage
+    quiz_facts = []        # {slug, terms, dates, entities} per corpus, for Test Yourself
     glossary_index = []    # {slug,title,href,terms[]} per corpus, for the site-wide Glossary page
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
     atlas_corpora = {}     # {slug: {title,href,accent,img,chapters}} for the Atlas map
     wrapped_stats = []     # per-corpus {slug,title,category,chapters,words} for Research Wrapped
+    fd_markets = []        # harvested Forecast Desk markets (one per corpus with scenarios)
     total_chapters = 0
     total_words = 0
 
@@ -6382,6 +7510,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         })
         all_passages += [dict(p, slug=corpus["slug"], title=corpus["title"])
                          for p in extract_passages(corpus)]
+        _qf = quiz_facts_for(corpus, folder)
+        if any(_qf.values()):
+            quiz_facts.append(dict(_qf, slug=corpus["slug"]))
         corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
         _atlas_img = find_cover_image(corpus["slug"])
         atlas_corpora[corpus["slug"]] = {
@@ -6395,6 +7526,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         wrapped_stats.append({"slug": corpus["slug"], "title": corpus["title"], "category": category,
                               "chapters": n,
                               "words": sum(len(re.sub(r"<[^>]+>", " ", d["body"]).split()) for d in corpus["documents"])})
+        fd_m = harvest_corpus_market(folder, corpus, category)
+        if fd_m:
+            fd_markets.append(fd_m)
         fig_note = f", {figs} figures" if figs else ""
         viz_note = f", {vizn} charts" if vizn else ""
         print(f"  ✓ {corpus['title']}  ({n} chapters{fig_note}{viz_note})")
@@ -6424,6 +7558,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     editions = read_ghost_manifest(out) if ghost_cfg.get("enabled", True) else []
     fp_editions = read_fingerprint_manifest(out) if fingerprint_cfg.get("enabled", True) else []
     pamphlet_items = read_pamphlets_manifest(out) if pamphlets_cfg.get("enabled", True) else []
+    forecast_items = read_forecast_manifest(out) if forecast_cfg.get("enabled", True) else []
 
     if ghost_cfg.get("enabled", True):
         manifest.append({"title": "The Ghost of Times", "kind": "section",
@@ -6459,6 +7594,27 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 "href": p.get("file") or f"pamphlets/{p.get('slug', '')}.html",
                 "meta": (p.get("dek", "") + voice).strip(" ·"),
             })
+
+    if forecast_cfg.get("enabled", True):
+        manifest.append({"title": "The Forecast Desk", "kind": "section",
+                         "category": "Predictions", "href": "forecast.html",
+                         "meta": "every prediction, priced and graded"})
+        for f in forecast_items:
+            manifest.append({
+                "title": f.get("question") or f.get("title") or f"Forecast — {f.get('slug', '')}",
+                "kind": "forecast", "category": "The Forecast Desk",
+                "href": f.get("file") or f"forecast/{f.get('slug', '')}.html",
+                "meta": " · ".join(x for x in [f.get("pick", ""), f.get("band", "")] if x),
+            })
+
+    # Detached domain fronts (config domains carrying a "page" key) — e.g. the
+    # Ad Tech desk — join the palette as sections so ⌘K can jump to them.
+    for d in domains:
+        p = d.get("page")
+        if p:
+            manifest.append({"title": p.get("title") or d.get("title", ""), "kind": "section",
+                             "category": "The desk", "href": f"{p.get('slug', 'adtech')}.html",
+                             "meta": p.get("kicker", "a separate desk")})
 
     manifest.append({"title": "Research Wrapped", "kind": "section", "category": "You",
                      "href": "wrapped.html", "meta": "your year in reading"})
@@ -6558,13 +7714,50 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     if pamphlet_items:
         print(f"  ✓ Rendered {pam_rendered}/{len(pamphlet_items)} pamphlet page(s) from data")
 
-    stats = f"{len(cards)} corpora · {total_chapters} chapters · {round(total_words / 1000)}k words"
+    # The Forecast Desk (fifth top-level section — predictions by category).
+    build_forecast_page(out, forecast_items, fd_markets, forecast_cfg,
+                        category_order=category_order, shell=shell_root)
+    forecast_band = forecast_band_html(forecast_items, fd_markets, forecast_cfg)
+    fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub) for f in forecast_items)
+    if forecast_items:
+        print(f"  ✓ Rendered {fd_rendered}/{len(forecast_items)} live forecast page(s) from data")
+
+    # ---- Detached domain fronts: a config domain carrying a "page" object is
+    # lifted off the home page onto its own top-level section of the site (e.g.
+    # Ad Tech — docs/adtech.html), keeping the trade desk separate from the
+    # liberal-arts library. Its category shelves render there instead of the
+    # index, and any bands named in page.include (currently "fingerprint") move
+    # with it; the home page gets a desk band pointing at the section instead. ----
+    detached = [d for d in domains if d.get("page")]
+    detached_cats = {c for d in detached for c in d.get("categories", [])}
+    index_cards = [c for c in cards if c["category"] not in detached_cats]
+    home_bands = []
+    for d in detached:
+        pcfg = d["page"]
+        dcats = d.get("categories", [])
+        dcards = [c for c in cards if c["category"] in dcats]
+        dws = [w for w in wrapped_stats if w["category"] in dcats]
+        dstats = (f"{len(dcards)} corpora · {sum(w['chapters'] for w in dws)} chapters · "
+                  f"{round(sum(w['words'] for w in dws) / 1000)}k words")
+        takes_fp = "fingerprint" in (pcfg.get("include") or [])
+        bands = fingerprint_band if takes_fp else ""
+        if takes_fp:
+            fingerprint_band = ""   # the wire band now lives on the desk, not the index
+        build_domain_page(out, pcfg, d, dcards, dcats, dstats, bands=bands, shell=shell_root)
+        home_bands.append(domain_band_html(pcfg, d, len(dcards), fp_editions if takes_fp else None))
+        print(f"  ✓ Detached desk: {pcfg.get('title') or d.get('title', '')} — {dstats} → {pcfg.get('slug', 'adtech')}.html")
+    fingerprint_band += "".join(home_bands)
+
+    index_ws = [w for w in wrapped_stats if w["category"] not in detached_cats]
+    stats = (f"{len(index_cards)} corpora · {sum(w['chapters'] for w in index_ws)} chapters · "
+             f"{round(sum(w['words'] for w in index_ws) / 1000)}k words")
 
     # Group the cards into category sections. Categories appear in the configured
     # category_order; any category not listed (and the "Other" catch-all) follows
     # in first-seen order so a corpus is never silently dropped from the library.
+    # Detached domains' cards shelve on their own section front, not here.
     seen_order = []
-    for card in cards:
+    for card in index_cards:
         if card["category"] not in seen_order:
             seen_order.append(card["category"])
 
@@ -6575,6 +7768,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # ungrouped after the domains so a corpus is never silently dropped.
     cat_to_domain = {}
     for d in domains:
+        if d.get("page"):
+            continue  # detached domains front their own page, not an index shelf
         for c in d.get("categories", []):
             cat_to_domain.setdefault(c, d.get("title", ""))
 
@@ -6583,6 +7778,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # domains configured this collapses to the prior category_order behavior.
     ordered_cats = []
     for d in domains:
+        if d.get("page"):
+            continue
         for c in d.get("categories", []):
             if c in seen_order and c not in ordered_cats:
                 ordered_cats.append(c)
@@ -6598,7 +7795,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     cur_domain = "\x00"   # sentinel distinct from None (the "no domain" group)
     group_open = False
     for cat in ordered_cats:
-        cat_cards = [c["html"] for c in cards if c["category"] == cat]
+        cat_cards = [c["html"] for c in index_cards if c["category"] == cat]
         dom = cat_to_domain.get(cat)
         if dom != cur_domain:
             if group_open:
@@ -6606,7 +7803,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 group_open = False
             cur_domain = dom
             if dom:
-                dom_count = sum(1 for c in cards if cat_to_domain.get(c["category"]) == dom)
+                dom_count = sum(1 for c in index_cards if cat_to_domain.get(c["category"]) == dom)
                 sections.append(
                     f'<div class="domain-group" data-domain="{html.escape(dom, quote=True)}">'
                     f'<h2 class="domain-heading">{html.escape(dom)}'
@@ -6636,15 +7833,22 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     )
 
     # The Fingerprint + Pamphlets bands share the library CSS, so fold them in once.
-    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
+    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + FORECAST_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
     # First-visit overture markup — built from the existing brand only (no new copy).
+    # The Fingerprint bills under its desk's name once a detached domain takes it.
+    fp_moved = any("fingerprint" in ((d.get("page") or {}).get("include") or []) for d in domains)
+    ov_names = (["The Research", "The Ghost of Times"]
+                + ([] if fp_moved else ["The Fingerprint"])
+                + ["The Pamphlets", "The Forecast Desk"]
+                + [(d["page"].get("title") or d.get("title", "")) for d in detached])
+    ov_sections = "".join("<span>%s</span>" % html.escape(s) for s in ov_names)
     overture_html = (
         '<div id="overture" role="dialog" aria-modal="true" aria-label="Welcome to the library"><div class="ov-inner">'
         '<div class="ov-tiles" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>'
         '<p class="ov-brand">calvincollins · xyz</p>'
         f'<h1 class="ov-title">{html.escape(site_title)}</h1>'
         f'<p class="ov-sub">{html.escape(site_subtitle)}</p>'
-        '<div class="ov-sections"><span>The Research</span><span>The Ghost of Times</span><span>The Fingerprint</span><span>The Pamphlets</span></div>'
+        f'<div class="ov-sections">{ov_sections}</div>'
         '<button id="ov-enter" type="button">Enter the library →</button>'
         '<p class="ov-skip">Press Esc to skip</p>'
         '</div></div>'
@@ -6667,10 +7871,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         ghost_band=ghost_band,
         fingerprint_band=fingerprint_band,
         pamphlets_band=pamphlets_band,
+        forecast_band=forecast_band,
         resume='<div id="resume"></div>',
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
-        quiz=QUIZ_SECTION_HTML,
+        quiz=QUIZ_SECTION_HTML
+        + f'<script id="quiz-data" type="application/json">{json_for_html(quiz_facts)}</script>',
         cards=library_body,
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS + QUIZ_JS,
         shell=shell_root,
@@ -6696,6 +7902,7 @@ def load_config(path):
         "ghost": cfg.get("ghost", {}),
         "fingerprint": cfg.get("fingerprint", {}),
         "pamphlets": cfg.get("pamphlets", {}),
+        "forecast": cfg.get("forecast", {}),
         "descriptions": cfg.get("descriptions", {}),
         "titles": cfg.get("titles", {}),
         "category_order": cfg.get("category_order", []),
@@ -6782,6 +7989,7 @@ if __name__ == "__main__":
         ghost_cfg = cfg["ghost"]
         fingerprint_cfg = cfg["fingerprint"]
         pamphlets_cfg = cfg["pamphlets"]
+        forecast_cfg = cfg["forecast"]
         descriptions = cfg["descriptions"]
         titles = cfg["titles"]
         category_order = cfg["category_order"]
@@ -6796,6 +8004,7 @@ if __name__ == "__main__":
         ghost_cfg = {}
         fingerprint_cfg = {}
         pamphlets_cfg = {}
+        forecast_cfg = {}
         descriptions = {}
         titles = {}
         category_order = []
@@ -6806,8 +8015,8 @@ if __name__ == "__main__":
         ap.error("no corpus folders and no --config / build.config.json found")
 
     build(folders, out, title, subtitle, ghost_cfg=ghost_cfg, descriptions=descriptions,
-          fingerprint_cfg=fingerprint_cfg, pamphlets_cfg=pamphlets_cfg, titles=titles,
-          category_order=category_order,
+          fingerprint_cfg=fingerprint_cfg, pamphlets_cfg=pamphlets_cfg, forecast_cfg=forecast_cfg,
+          titles=titles, category_order=category_order,
           domains=domains, collections=collections, atlas_cfg=atlas_cfg)
 
     if args.deploy:
