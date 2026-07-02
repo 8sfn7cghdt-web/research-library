@@ -3059,12 +3059,15 @@ OVERTURE_JS = r"""
 })();
 """
 
-# "Test Yourself" — a closing self-quiz built live from the two payloads already
-# inlined on the index: #library-manifest (corpora, their chapter titles, their
-# category) and #passages-data (pull-quotes tagged with corpus slug + chapter).
-# Every question has a ground-truth answer drawn from that data — no fetch, no ML,
-# no authored answer key. Scope is either one corpus (recall of its own chapters)
-# or "across the whole library" (place a passage/chapter/subject to its corpus).
+# "Test Yourself" — a closing self-quiz built live from three payloads already
+# inlined on the index: #quiz-data (per-corpus content facts — glossary terms,
+# key dates, key people/organisations, each located to its chapter), plus
+# #library-manifest (corpora, chapter titles, category) and #passages-data
+# (pull-quotes tagged with corpus slug + chapter). Every question has a
+# ground-truth answer drawn from that data — no fetch, no ML, no authored answer
+# key. Rounds lead with content questions (what the research SAYS: terms, dates,
+# people) so the quiz exercises retention of what was read; the structural
+# questions (chapter titles, shelving, passage placement) only backfill.
 # Best score per scope is kept in localStorage; results share via CorpusShare.
 QUIZ_JS = r"""
 (function () {
@@ -3081,6 +3084,9 @@ QUIZ_JS = r"""
   var corpora = (LIB || []).filter(function (x) { return x.kind === 'corpus' && x.chapters && x.chapters.length; });
   if (corpora.length < 2) return;                       // need a field of distractors
   var bySlug = {}; corpora.forEach(function (c) { bySlug[c.slug] = c; });
+  // Content facts (#quiz-data): {slug, terms:[{t,d,c}], dates:[{d,e,c,a?}], entities:[{n,r,c,a?}]}
+  var QF = {}, qfEl = document.getElementById('quiz-data');
+  try { (qfEl ? (JSON.parse(qfEl.textContent || '[]') || []) : []).forEach(function (f) { if (f && f.slug && bySlug[f.slug]) QF[f.slug] = f; }); } catch (e) {}
   var passBySlug = {}; PAS.forEach(function (p) { if (bySlug[p.slug]) (passBySlug[p.slug] = passBySlug[p.slug] || []).push(p); });
   // Chapter titles shared by >1 corpus are ambiguous as "which corpus owns it?"
   // questions — count them so the across-library builder can skip the generic ones.
@@ -3096,19 +3102,51 @@ QUIZ_JS = r"""
     return shuffle([correct].concat(ds.slice(0, Math.max(1, (n || 4) - 1))));
   }
 
-  // --- question builders (each returns an array of {prompt, passage?, answer, opts, src?}) ---
+  // --- question builders (each returns an array of {kind, fact?, prompt, passage?, answer, opts, src?}) ---
+  // Content questions first-class: what the research says — its terms of art,
+  // its dates, its people. `fact` keys stop both directions of one fact (e.g.
+  // event→date and date→event) landing in the same round. `kind` groups feed
+  // pickRound's rotation. Structural questions get kind 'meta' (backfill only).
+  function buildFacts(slug, across) {
+    var c = bySlug[slug], f = QF[slug]; if (!c || !f) return [];
+    var qs = [], pre = across ? 'In <em>' + esc(c.title) + '</em> — ' : '';
+    var terms = f.terms || [], dates = f.dates || [], ents = f.entities || [];
+    if (terms.length >= 4) terms.forEach(function (t) {
+      var fk = slug + '|t|' + t.t, s = { slug: slug, chapter: t.c || 0, q: t.t };
+      qs.push({ kind: 'k-def', fact: fk, prompt: pre + 'What does “' + esc(t.t) + '” mean?',
+        answer: t.d, opts: options(t.d, terms.map(function (x) { return x.d; }), 4), src: s });
+      qs.push({ kind: 'k-term', fact: fk, prompt: pre + 'Which term does this define?', passage: t.d,
+        answer: t.t, opts: options(t.t, terms.map(function (x) { return x.t; }), 4), src: s });
+    });
+    if (dates.length >= 4) dates.forEach(function (x) {
+      var fk = slug + '|d|' + x.d + x.e, s = { slug: slug, chapter: x.c || 0, q: x.a };
+      qs.push({ kind: 'k-when', fact: fk, prompt: pre + 'When did this happen?', passage: x.e,
+        answer: x.d, opts: options(x.d, dates.map(function (y) { return y.d; }), 4), src: s });
+      qs.push({ kind: 'k-what', fact: fk, prompt: pre + 'What happened ' + (/^\d{1,2} [A-Z]/.test(x.d) ? 'on ' : 'in ') + esc(x.d) + '?',
+        answer: x.e, opts: options(x.e, dates.map(function (y) { return y.e; }), 4), src: s });
+    });
+    if (ents.length >= 4) ents.forEach(function (x) {
+      var fk = slug + '|e|' + x.n, s = { slug: slug, chapter: x.c || 0, q: x.a };
+      qs.push({ kind: 'k-who', fact: fk, prompt: pre + 'Who — or what — is described here?', passage: x.r,
+        answer: x.n, opts: options(x.n, ents.map(function (y) { return y.n; }), 4), src: s });
+      qs.push({ kind: 'k-role', fact: fk, prompt: pre + 'Which description fits <em>' + esc(x.n) + '</em>?',
+        answer: x.r, opts: options(x.r, ents.map(function (y) { return y.r; }), 4), src: s });
+    });
+    return qs;
+  }
   function buildAcross() {
     var qs = [], titles = corpora.map(function (c) { return c.title; });
+    corpora.forEach(function (c) { qs.push.apply(qs, buildFacts(c.slug, true)); });
     PAS.forEach(function (p) {
       if (!bySlug[p.slug] || !p.text || p.text.length < 40) return;
-      qs.push({ prompt: 'Which corpus is this passage from?', passage: p.text,
+      qs.push({ kind: 'meta', fact: 'pas|' + p.text, prompt: 'Which corpus is this passage from?', passage: p.text,
         answer: bySlug[p.slug].title, opts: options(bySlug[p.slug].title, titles, 4),
         src: { slug: p.slug, chapter: p.chapter, q: p.text } });
     });
     corpora.forEach(function (c) {
       c.chapters.forEach(function (ch, i) {
         if (!ch || ch.length < 5 || chTitleCount[ch.toLowerCase()] > 1) return;
-        qs.push({ prompt: 'Which corpus has a chapter titled “' + esc(ch) + '”?',
+        qs.push({ kind: 'meta', prompt: 'Which corpus has a chapter titled “' + esc(ch) + '”?',
           answer: c.title, opts: options(c.title, titles, 4), src: { slug: c.slug, chapter: i } });
       });
     });
@@ -3116,27 +3154,59 @@ QUIZ_JS = r"""
     var catList = Object.keys(cats);
     if (catList.length >= 3) corpora.forEach(function (c) {
       if (!c.category || c.category === 'Other') return;
-      qs.push({ prompt: 'Under which subject is <em>' + esc(c.title) + '</em> shelved?',
+      qs.push({ kind: 'meta', prompt: 'Under which subject is <em>' + esc(c.title) + '</em> shelved?',
         answer: c.category, opts: options(c.category, catList, 4), src: { slug: c.slug, chapter: 0 } });
     });
     return qs;
   }
   function buildSingle(slug) {
     var c = bySlug[slug]; if (!c) return [];
-    var qs = [];
+    var qs = buildFacts(slug, false);
     var mine = c.chapters.filter(function (ch) { return ch && ch.length >= 3; });
     var mineLower = {}; mine.forEach(function (ch) { mineLower[ch.toLowerCase()] = 1; });
     var others = []; corpora.forEach(function (o) { if (o.slug !== slug) o.chapters.forEach(function (ch) { if (ch && !mineLower[ch.toLowerCase()]) others.push(ch); }); });
     (passBySlug[slug] || []).forEach(function (p) {
       if (!p.chapterTitle || !p.text || p.text.length < 40 || mine.length < 2) return;
-      qs.push({ prompt: 'Which chapter of <em>' + esc(c.title) + '</em> is this from?', passage: p.text,
+      qs.push({ kind: 'meta', fact: 'pas|' + p.text, prompt: 'Which chapter of <em>' + esc(c.title) + '</em> is this from?', passage: p.text,
         answer: p.chapterTitle, opts: options(p.chapterTitle, mine, 4), src: { slug: slug, chapter: p.chapter, q: p.text } });
     });
     if (others.length >= 3) mine.forEach(function (ch, i) {
-      qs.push({ prompt: 'Which of these is a real chapter in <em>' + esc(c.title) + '</em>?',
+      qs.push({ kind: 'meta', prompt: 'Which of these is a real chapter in <em>' + esc(c.title) + '</em>?',
         answer: ch, opts: options(ch, others, 4), src: { slug: slug, chapter: i } });
     });
     return qs;
+  }
+  // Assemble a round: dedup, then fill with content questions rotating across
+  // kinds (definitions, dates, people…) so no two questions expose the same
+  // fact; structural 'meta' questions only top up what facts can't fill.
+  function pickRound(pool, n) {
+    var seen = {}, uniq = [];
+    shuffle(pool).forEach(function (q) { var k = (q.passage || '') + '|' + q.answer + '|' + q.prompt; if (!seen[k]) { seen[k] = 1; uniq.push(q); } });
+    var groups = {}, kinds = [];
+    uniq.forEach(function (q) { var g = q.kind || 'meta'; if (!groups[g]) { groups[g] = []; kinds.push(g); } groups[g].push(q); });
+    var know = shuffle(kinds.filter(function (k) { return k !== 'meta'; }));
+    var picked = [], usedFact = {};
+    function take(g) {
+      while (g && g.length) {
+        var q = g.pop();
+        if (!q.fact || !usedFact[q.fact]) { if (q.fact) usedFact[q.fact] = 1; return q; }
+      }
+      return null;
+    }
+    var took = true;
+    while (picked.length < n && took) {
+      took = false;
+      for (var i = 0; i < know.length && picked.length < n; i++) {
+        var q = take(groups[know[i]]);
+        if (q) { picked.push(q); took = true; }
+      }
+    }
+    while (picked.length < n) {
+      var mq = take(groups.meta);
+      if (!mq) break;
+      picked.push(mq);
+    }
+    return shuffle(picked);
   }
 
   // --- setup UI ---
@@ -3160,9 +3230,7 @@ QUIZ_JS = r"""
 
   document.getElementById('quiz-start').addEventListener('click', function () {
     var sv = scope.value, pool = sv === '__all__' ? buildAcross() : buildSingle(sv);
-    var seen = {}, uniq = [];
-    shuffle(pool).forEach(function (q) { var k = (q.passage || '') + '|' + q.answer + '|' + q.prompt; if (!seen[k]) { seen[k] = 1; uniq.push(q); } });
-    var qs = uniq.slice(0, QN);
+    var qs = pickRound(pool, QN);
     setup.hidden = true; stage.hidden = false;
     if (!qs.length) { stage.innerHTML = '<p class="quiz-empty">There isn’t enough material to build a test on this selection yet. Try “Across the whole library.”</p><p style="margin:1rem 0 0"><button class="quiz-btn quiz-again" type="button">← Back</button></p>'; wireAgain(); return; }
     state = { sv: sv, qs: qs, i: 0, score: 0, label: sv === '__all__' ? 'the whole library' : (bySlug[sv] ? bySlug[sv].title : '') };
@@ -3247,10 +3315,11 @@ QUIZ_JS = r"""
 QUIZ_SECTION_HTML = (
     '<section class="quiz" id="quiz" hidden>'
     '<h2 class="quiz-h">Test Yourself</h2>'
-    '<p class="quiz-intro">A short quiz drawn from the library itself — its passages, '
-    'its chapters, its subjects. Pick a single corpus to test how well it stuck, or take '
-    'on the whole shelf at once. Every answer comes straight from the texts; your best '
-    'score is kept on this device and nothing is sent anywhere.</p>'
+    '<p class="quiz-intro">A short quiz on what the research actually says — the dates, '
+    'the people, the terms of art, the passages. Pick a single corpus to test how well it '
+    'stuck, or take on the whole shelf at once. Every answer comes straight from the texts, '
+    'and a missed one links you back to the chapter that has it; your best score is kept on '
+    'this device and nothing is sent anywhere.</p>'
     '<div class="quiz-card">'
     '<div class="quiz-setup" id="quiz-setup">'
     '<label class="quiz-field"><span class="quiz-label">Test me on</span>'
@@ -3467,10 +3536,11 @@ footer { max-width: 1080px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 
 # ---------------------------------------------------------------- "Test Yourself"
 # A closing self-quiz pinned to the bottom of the index. Built entirely from data
-# the page already carries — the inlined #library-manifest (corpora + chapter
+# the page already carries — the inlined #quiz-data (per-corpus content facts:
+# glossary terms, key dates, key people), #library-manifest (corpora + chapter
 # titles + categories) and #passages-data (pull-quotes tagged with corpus +
 # chapter) — so every answer is ground-truth and nothing is fetched or generated.
-# Two scopes: a single corpus (recall of its chapters) or across the whole shelf.
+# Two scopes: a single corpus (retention of what it says) or across the whole shelf.
 QUIZ_CSS = """
 .quiz { max-width: 1080px; margin: 2.2rem auto 0; padding: 0 2rem; }
 .quiz[hidden] { display: none; }
@@ -3480,6 +3550,7 @@ QUIZ_CSS = """
 .quiz-intro { font-family: var(--sans); font-size: .9rem; color: var(--muted); margin: .7rem 0 1.2rem; max-width: 44rem; line-height: 1.55; }
 .quiz-card { background: var(--panel); border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem 1.8rem; box-shadow: var(--shadow-1); }
 .quiz-setup { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 1rem 1.4rem; }
+.quiz-setup[hidden] { display: none; }  /* the flex rule would otherwise beat the UA [hidden] style */
 .quiz-field { display: flex; flex-direction: column; gap: .4rem; flex: 1 1 260px; min-width: 0; }
 .quiz-label { font-family: var(--sans); font-size: .68rem; text-transform: uppercase; letter-spacing: .16em; color: var(--accent); }
 .quiz-select { font-family: var(--sans); font-size: .92rem; color: var(--text); background: var(--bg);
@@ -5832,6 +5903,96 @@ def extract_passages(corpus, limit=5):
     return picked[:limit]
 
 
+_MONTHS = ("January February March April May June July August September October "
+           "November December").split()
+
+
+def _pretty_date(s):
+    """Manifest dates arrive in mixed shapes; ISO ones read badly in a quiz
+    prompt ('What happened in 2015-07-13?'). Render ISO as prose, pass the
+    rest ('c. 1175', '1919–1926') through untouched."""
+    m = re.fullmatch(r"(\d{4})-(\d{2})(?:-(\d{2}))?", s)
+    if not m:
+        return s
+    y, mo, day = m.group(1), int(m.group(2)), m.group(3)
+    if not 1 <= mo <= 12:
+        return s
+    return (f"{int(day)} " if day else "") + f"{_MONTHS[mo - 1]} {y}"
+
+
+def quiz_facts_for(corpus, folder):
+    """Content facts for the index's "Test Yourself" quiz — glossary terms, key
+    dates, and key people/organisations from the research manifest — so the quiz
+    can test what a corpus says, not just what its chapters are called.
+
+    Each fact is located to the first chapter that mentions it (`c` = chapter
+    index, `a` = anchor text) so a missed answer can deep-link into the prose via
+    the reader's ?q= scroll-and-flash. Facts whose wording gives the answer away
+    (an event that states its own year, a description that names its subject) are
+    dropped. Lists are capped: this payload is inlined on the index page.
+    """
+    texts = [strip_md(d["body"], cap=120000).lower() for d in corpus["documents"]]
+
+    def locate(needle):
+        n = (needle or "").strip().lower()
+        if len(n) < 4:
+            return None
+        for i, t in enumerate(texts):
+            if n in t:
+                return i
+        return None
+
+    facts = {"terms": [], "dates": [], "entities": []}
+    for g in (corpus.get("glossary") or [])[:24]:
+        facts["terms"].append({"t": g["term"], "d": g["def"], "c": locate(g["term"]) or 0})
+    try:
+        m = json.loads((Path(folder) / "manifest.json").read_text())
+    except Exception:
+        m = {}
+    for kd in m.get("key_dates") or []:
+        if not isinstance(kd, dict):  # some corpora carry these as plain strings
+            continue
+        if len(facts["dates"]) >= 18:
+            break
+        date = str(kd.get("date") or "").strip()
+        event = _clean_passage(str(kd.get("event") or "").strip(), 170)
+        if not date or not event:
+            continue
+        if any(y in event for y in re.findall(r"\d{3,4}", date)):
+            continue  # the event wording contains its own date
+        entry = {"d": _pretty_date(date), "e": event, "c": 0}
+        # Anchor on the event's most distinctive located word (fewest chapters
+        # mention it), so "Read in context" flashes near the fact rather than
+        # the first occurrence of some common word like "Christianity".
+        best = None
+        for w in set(re.findall(r"[A-Za-z][A-Za-z'\-]{5,}", event)):
+            hits = [i for i, t in enumerate(texts) if w.lower() in t]
+            if hits and (best is None or (len(hits), -len(w)) < (len(best[1]), -len(best[0]))):
+                best = (w, hits)
+        if best:
+            entry["c"], entry["a"] = best[1][0], best[0]
+        facts["dates"].append(entry)
+    for ke in m.get("key_entities") or []:
+        if not isinstance(ke, dict):  # some corpora carry these as plain strings
+            continue
+        if len(facts["entities"]) >= 18:
+            break
+        name = str(ke.get("name") or "").strip()
+        role = _clean_passage(str(ke.get("role") or "").split(";")[0].strip(), 170)
+        if not name or not role:
+            continue
+        if any(w.lower() in role.lower() for w in re.findall(r"[A-Za-z][A-Za-z'\-]{3,}", name)):
+            continue  # the description names its subject
+        entry = {"n": name, "r": role, "c": 0}
+        for cand in (name, name.split()[-1]):
+            ch = locate(cand)
+            if ch is not None:
+                entry["c"], entry["a"] = ch, cand
+                break
+        facts["entities"].append(entry)
+    return facts
+
+
 def build_similarity(corpus_meta, top_k=3):
     """corpus_meta: list of {slug, title, category, keywords}. Returns {slug: [related entries]}."""
     out = {}
@@ -6280,6 +6441,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     search_entries = []    # trimmed chapter text for the palette's "in the text" search
     corpus_meta = []       # {slug,title,category,keywords} for the similarity graph
     all_passages = []      # pull-quotes across every corpus, for Today's Passage
+    quiz_facts = []        # {slug, terms, dates, entities} per corpus, for Test Yourself
     glossary_index = []    # {slug,title,href,terms[]} per corpus, for the site-wide Glossary page
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
     atlas_corpora = {}     # {slug: {title,href,accent,img,chapters}} for the Atlas map
@@ -6382,6 +6544,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         })
         all_passages += [dict(p, slug=corpus["slug"], title=corpus["title"])
                          for p in extract_passages(corpus)]
+        _qf = quiz_facts_for(corpus, folder)
+        if any(_qf.values()):
+            quiz_facts.append(dict(_qf, slug=corpus["slug"]))
         corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
         _atlas_img = find_cover_image(corpus["slug"])
         atlas_corpora[corpus["slug"]] = {
@@ -6670,7 +6835,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         resume='<div id="resume"></div>',
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
-        quiz=QUIZ_SECTION_HTML,
+        quiz=QUIZ_SECTION_HTML
+        + f'<script id="quiz-data" type="application/json">{json_for_html(quiz_facts)}</script>',
         cards=library_body,
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS + QUIZ_JS,
         shell=shell_root,
