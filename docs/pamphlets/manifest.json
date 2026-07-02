@@ -1,6 +1,14 @@
 {
   "pamphlets": [
     {
+      "slug": "hemingway-on-the-world-cup",
+      "title": "The Cooling Break",
+      "dek": "On the 2026 World Cup",
+      "writer": "Ernest Hemingway",
+      "subject": "The 2026 World Cup",
+      "date": "2026-07-02"
+    },
+    {
       "slug": "whitman-on-september-11th",
       "title": "The Climbing Men",
       "dek": "On the eleventh of September",
