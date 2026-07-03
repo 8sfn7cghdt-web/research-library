@@ -1,19 +1,34 @@
 {
-  "forecasts": [
-    {
-      "slug": "world-cup-2026",
-      "title": "Who Will Win the 2026 World Cup",
-      "question": "Who will win the 2026 FIFA World Cup?",
-      "dek": "Six standing predictor profiles each committed to one champion; the council's consensus pick is France at 28–32%, with the Historian's Argentina dissent preserved.",
-      "category": "Sport & Games",
-      "status": "open",
-      "logged": "2026-06-30",
-      "grades": "2026-07-19",
-      "pick": "France",
-      "pick_flag": "🇫🇷",
-      "band": "28–32%",
-      "profiles_n": 6,
-      "file": "forecast/world-cup-2026.html"
-    }
-  ]
+ "forecasts": [
+  {
+   "slug": "world-cup-2026",
+   "title": "Who Will Win the 2026 World Cup",
+   "question": "Who will win the 2026 FIFA World Cup?",
+   "dek": "Six standing predictor profiles each committed to one champion; the council's consensus pick is France at 28–32%, with the Historian's Argentina dissent preserved.",
+   "category": "Sport & Games",
+   "status": "open",
+   "logged": "2026-06-30",
+   "grades": "2026-07-19",
+   "pick": "France",
+   "pick_flag": "🇫🇷",
+   "band": "28–32%",
+   "profiles_n": 6,
+   "file": "forecast/world-cup-2026.html"
+  },
+  {
+   "slug": "iran-war",
+   "title": "The Iran War Through 2028",
+   "question": "How does the Iran war resolve — settlement, another round, frozen standoff, regime change, or the bomb?",
+   "dek": "Five priced scenarios for the US–Israel–Iran confrontation: a funded settlement is the favorite at 31–41%, with a third war round overlapping at 27–37% — the six standing profiles split 3–2–1.",
+   "category": "The Modern World",
+   "status": "open",
+   "logged": "2026-07-03",
+   "grades": "2028-12-31",
+   "pick": "Settlement Holds",
+   "pick_flag": "🕊️",
+   "band": "31–41%",
+   "profiles_n": 6,
+   "file": "forecast/iran-war.html"
+  }
+ ]
 }
