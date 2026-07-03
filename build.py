@@ -903,6 +903,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
     <button id="listen-btn" title="Listen to this chapter">▶ Listen</button>
     <button id="type-btn" title="Text size &amp; width" aria-haspopup="true">Aa</button>
     <button id="terms-btn" title="Glossary of terms" aria-haspopup="true" hidden>❔ Terms</button>
+    <a id="quiz-btn" href="quiz.html" title="Test yourself on this corpus">✏ Quiz</a>
     <button id="share-btn" title="Share this chapter">Share ↗</button>
     <button id="theme-btn">◐ Theme</button>
   </div>
@@ -1015,10 +1016,11 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 #search-results mark { background: var(--mark); color: inherit; border-radius: 2px; }
 #search-results .none { color: var(--muted); padding: .5rem .55rem; }
 #reader-controls { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem; }
-#reader-controls button { margin: 0; font-family: var(--sans); font-size: .66rem; font-weight: 600;
+#reader-controls button, #reader-controls a { margin: 0; font-family: var(--sans); font-size: .66rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: .08em; color: var(--muted);
-  background: transparent; border: 1px solid var(--border); border-radius: 2px; padding: .35rem .7rem; cursor: pointer; }
-#reader-controls button:hover { color: var(--accent); border-color: var(--text); }
+  background: transparent; border: 1px solid var(--border); border-radius: 2px; padding: .35rem .7rem; cursor: pointer;
+  text-decoration: none; display: inline-block; }
+#reader-controls button:hover, #reader-controls a:hover { color: var(--accent); border-color: var(--text); }
 #listen-btn.on { color: var(--bg); background: var(--accent); border-color: var(--accent); }
 /* floating Listen bar (Web Speech narration) */
 #listen-bar { position: fixed; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 40; display: none;
@@ -1273,6 +1275,9 @@ const corpus = JSON.parse(document.getElementById('corpus-data').textContent);
 const docs = corpus.documents;
 const toc = document.getElementById('toc');
 const content = document.getElementById('content');
+// sidebar Quiz link → the Test Yourself page with this corpus preselected
+(function () { var qb = document.getElementById('quiz-btn');
+  if (qb && corpus.slug) qb.href = 'quiz.html?on=' + encodeURIComponent(corpus.slug); })();
 // glossary matchers — built up front so the first chapter's render can wrap chips
 // (applyGlossary + the popover/panel wiring live near the end of this script)
 var GLOSS = (corpus.glossary || []).filter(function (e) { return e && e.term && e.def; });
@@ -3020,6 +3025,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
     <a href="forecast.html">The Forecast Desk</a>
     <a href="connections.html">Connections</a>
     <a href="glossary.html">Glossary</a>
+    <a href="quiz.html">Quiz</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="#library">The Research</a>
   </nav>
@@ -3328,16 +3334,20 @@ OVERTURE_JS = r"""
 })();
 """
 
-# "Test Yourself" — a closing self-quiz built live from three payloads already
-# inlined on the index: #quiz-data (per-corpus content facts — glossary terms,
-# key dates, key people/organisations, each located to its chapter), plus
-# #library-manifest (corpora, chapter titles, category) and #passages-data
-# (pull-quotes tagged with corpus slug + chapter). Every question has a
-# ground-truth answer drawn from that data — no fetch, no ML, no authored answer
-# key. Rounds lead with content questions (what the research SAYS: terms, dates,
-# people) so the quiz exercises retention of what was read; the structural
-# questions (chapter titles, shelving, passage placement) only backfill.
-# Best score per scope is kept in localStorage; results share via CorpusShare.
+# "Test Yourself" — the self-quiz that lives on its own page (quiz.html), built
+# live from three payloads inlined there: #quiz-data (per-corpus content facts —
+# glossary terms, key dates, key people/organisations, each located to its
+# chapter), plus #library-manifest (corpora, chapter titles, category — carried
+# by the shared shell) and #passages-data (pull-quotes tagged with corpus slug +
+# chapter). Every question has a ground-truth answer drawn from that data — no
+# fetch, no ML, no authored answer key. Rounds lead with content questions (what
+# the research SAYS: terms, dates, people) so the quiz exercises retention of
+# what was read; the structural questions (chapter titles, shelving, passage
+# placement) only backfill. Three challenge levels change the round length, the
+# option count, which question directions qualify, and how confusable the
+# distractors are. Readers arrive via quiz.html?on=<slug> from a corpus's
+# sidebar. Best score per level+scope is kept in localStorage; results share via
+# CorpusShare.
 QUIZ_JS = r"""
 (function () {
   function init() {
@@ -3362,14 +3372,41 @@ QUIZ_JS = r"""
   var chTitleCount = {};
   corpora.forEach(function (c) { c.chapters.forEach(function (ch) { if (ch) { var k = ch.toLowerCase(); chTitleCount[k] = (chTitleCount[k] || 0) + 1; } }); });
 
+  // Challenge levels. n = questions per round, opts = choices per question,
+  // rot = which question kinds rotate into the round (easy keeps to the
+  // recognition directions and lets structural questions mix in; hard leads
+  // with the recall directions and bans them), backfill = whether structural
+  // 'meta' questions may top up a short round. Distractor selection also keys
+  // off the level: easy picks candidates far from the answer, hard the nearest.
+  var LEVELS = {
+    easy:   { n: 5,  opts: 3, rot: ['k-who', 'k-when', 'k-def', 'meta'], backfill: true },
+    medium: { n: 7,  opts: 4, rot: ['k-def', 'k-term', 'k-when', 'k-what', 'k-who', 'k-role'], backfill: true },
+    hard:   { n: 10, opts: 5, rot: ['k-what', 'k-role', 'k-term', 'k-when', 'k-who', 'k-def'], backfill: false }
+  };
+  var level = 'medium';
+
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
   function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  // Build a 4-way (or fewer) option set: the correct answer plus distinct distractors.
-  function options(correct, pool, n) {
+  // Option set: the correct answer plus distinct distractors. An `ordered` pool
+  // is consumed front-to-back (already ranked for the level); else random.
+  function options(correct, pool, n, ordered) {
     var seen = {}; seen[String(correct).toLowerCase()] = 1; var ds = [];
-    shuffle(pool).forEach(function (x) { var k = String(x).toLowerCase(); if (x && !seen[k]) { seen[k] = 1; ds.push(x); } });
+    (ordered ? pool : shuffle(pool)).forEach(function (x) { var k = String(x).toLowerCase(); if (x && !seen[k]) { seen[k] = 1; ds.push(x); } });
     return shuffle([correct].concat(ds.slice(0, Math.max(1, (n || 4) - 1))));
   }
+  // Distractor ranking. closeness(candidate) — higher = more confusable with
+  // the answer. hard leads with the closest, easy with the farthest; medium
+  // passes through unranked (options() shuffles). Ties stay shuffled.
+  function ranked(cands, closeness) {
+    if (level === 'medium') return { pool: cands, ord: false };
+    var arr = shuffle(cands).map(function (c) { return { c: c, s: closeness(c) }; });
+    arr.sort(function (p, q) { return q.s - p.s; });
+    if (level === 'easy') arr.reverse();
+    return { pool: arr.map(function (o) { return o.c; }), ord: true };
+  }
+  function yrOf(s) { var m = String(s).match(/\d{3,4}/); return m ? +m[0] : null; }
+  function toks(s) { var o = {}; String(s).toLowerCase().replace(/[^a-z0-9\s'-]/g, ' ').split(/\s+/).forEach(function (w) { if (w.length >= 4) o[w] = 1; }); return o; }
+  function overlap(a, b) { var n = 0, k; for (k in a) if (b[k]) n++; return n; }
 
   // --- question builders (each returns an array of {kind, fact?, prompt, passage?, answer, opts, src?}) ---
   // Content questions first-class: what the research says — its terms of art,
@@ -3378,45 +3415,56 @@ QUIZ_JS = r"""
   // pickRound's rotation. Structural questions get kind 'meta' (backfill only).
   function buildFacts(slug, across) {
     var c = bySlug[slug], f = QF[slug]; if (!c || !f) return [];
+    var K = (LEVELS[level] || LEVELS.medium).opts;
     var qs = [], pre = across ? 'In <em>' + esc(c.title) + '</em> — ' : '';
     var terms = f.terms || [], dates = f.dates || [], ents = f.entities || [];
-    if (terms.length >= 4) terms.forEach(function (t) {
+    if (terms.length >= K) terms.forEach(function (t) {
       var fk = slug + '|t|' + t.t, s = { slug: slug, chapter: t.c || 0, q: t.t };
+      var td = toks(t.d);
+      var r = ranked(terms.filter(function (x) { return x !== t; }),
+                     function (x) { return overlap(toks(x.d), td); });
       qs.push({ kind: 'k-def', fact: fk, prompt: pre + 'What does “' + esc(t.t) + '” mean?',
-        answer: t.d, opts: options(t.d, terms.map(function (x) { return x.d; }), 4), src: s });
+        answer: t.d, opts: options(t.d, r.pool.map(function (x) { return x.d; }), K, r.ord), src: s });
       qs.push({ kind: 'k-term', fact: fk, prompt: pre + 'Which term does this define?', passage: t.d,
-        answer: t.t, opts: options(t.t, terms.map(function (x) { return x.t; }), 4), src: s });
+        answer: t.t, opts: options(t.t, r.pool.map(function (x) { return x.t; }), K, r.ord), src: s });
     });
-    if (dates.length >= 4) dates.forEach(function (x) {
+    if (dates.length >= K) dates.forEach(function (x) {
       var fk = slug + '|d|' + x.d + x.e, s = { slug: slug, chapter: x.c || 0, q: x.a };
+      var y0 = yrOf(x.d);
+      var r = ranked(dates.filter(function (y) { return y !== x; }),
+                     function (y) { var yy = yrOf(y.d); return (y0 == null || yy == null) ? -1e9 : -Math.abs(yy - y0); });
       qs.push({ kind: 'k-when', fact: fk, prompt: pre + 'When did this happen?', passage: x.e,
-        answer: x.d, opts: options(x.d, dates.map(function (y) { return y.d; }), 4), src: s });
+        answer: x.d, opts: options(x.d, r.pool.map(function (y) { return y.d; }), K, r.ord), src: s });
       qs.push({ kind: 'k-what', fact: fk, prompt: pre + 'What happened ' + (/^\d{1,2} [A-Z]/.test(x.d) ? 'on ' : 'in ') + esc(x.d) + '?',
-        answer: x.e, opts: options(x.e, dates.map(function (y) { return y.e; }), 4), src: s });
+        answer: x.e, opts: options(x.e, r.pool.map(function (y) { return y.e; }), K, r.ord), src: s });
     });
-    if (ents.length >= 4) ents.forEach(function (x) {
+    if (ents.length >= K) ents.forEach(function (x) {
       var fk = slug + '|e|' + x.n, s = { slug: slug, chapter: x.c || 0, q: x.a };
+      var xr = toks(x.r);
+      var r = ranked(ents.filter(function (y) { return y !== x; }),
+                     function (y) { return overlap(toks(y.r), xr); });
       qs.push({ kind: 'k-who', fact: fk, prompt: pre + 'Who — or what — is described here?', passage: x.r,
-        answer: x.n, opts: options(x.n, ents.map(function (y) { return y.n; }), 4), src: s });
+        answer: x.n, opts: options(x.n, r.pool.map(function (y) { return y.n; }), K, r.ord), src: s });
       qs.push({ kind: 'k-role', fact: fk, prompt: pre + 'Which description fits <em>' + esc(x.n) + '</em>?',
-        answer: x.r, opts: options(x.r, ents.map(function (y) { return y.r; }), 4), src: s });
+        answer: x.r, opts: options(x.r, r.pool.map(function (y) { return y.r; }), K, r.ord), src: s });
     });
     return qs;
   }
   function buildAcross() {
     var qs = [], titles = corpora.map(function (c) { return c.title; });
+    var K = (LEVELS[level] || LEVELS.medium).opts;
     corpora.forEach(function (c) { qs.push.apply(qs, buildFacts(c.slug, true)); });
     PAS.forEach(function (p) {
       if (!bySlug[p.slug] || !p.text || p.text.length < 40) return;
       qs.push({ kind: 'meta', fact: 'pas|' + p.text, prompt: 'Which corpus is this passage from?', passage: p.text,
-        answer: bySlug[p.slug].title, opts: options(bySlug[p.slug].title, titles, 4),
+        answer: bySlug[p.slug].title, opts: options(bySlug[p.slug].title, titles, K),
         src: { slug: p.slug, chapter: p.chapter, q: p.text } });
     });
     corpora.forEach(function (c) {
       c.chapters.forEach(function (ch, i) {
         if (!ch || ch.length < 5 || chTitleCount[ch.toLowerCase()] > 1) return;
         qs.push({ kind: 'meta', prompt: 'Which corpus has a chapter titled “' + esc(ch) + '”?',
-          answer: c.title, opts: options(c.title, titles, 4), src: { slug: c.slug, chapter: i } });
+          answer: c.title, opts: options(c.title, titles, K), src: { slug: c.slug, chapter: i } });
       });
     });
     var cats = {}; corpora.forEach(function (c) { if (c.category && c.category !== 'Other') cats[c.category] = 1; });
@@ -3424,36 +3472,39 @@ QUIZ_JS = r"""
     if (catList.length >= 3) corpora.forEach(function (c) {
       if (!c.category || c.category === 'Other') return;
       qs.push({ kind: 'meta', prompt: 'Under which subject is <em>' + esc(c.title) + '</em> shelved?',
-        answer: c.category, opts: options(c.category, catList, 4), src: { slug: c.slug, chapter: 0 } });
+        answer: c.category, opts: options(c.category, catList, K), src: { slug: c.slug, chapter: 0 } });
     });
     return qs;
   }
   function buildSingle(slug) {
     var c = bySlug[slug]; if (!c) return [];
     var qs = buildFacts(slug, false);
+    var K = (LEVELS[level] || LEVELS.medium).opts;
     var mine = c.chapters.filter(function (ch) { return ch && ch.length >= 3; });
     var mineLower = {}; mine.forEach(function (ch) { mineLower[ch.toLowerCase()] = 1; });
     var others = []; corpora.forEach(function (o) { if (o.slug !== slug) o.chapters.forEach(function (ch) { if (ch && !mineLower[ch.toLowerCase()]) others.push(ch); }); });
     (passBySlug[slug] || []).forEach(function (p) {
       if (!p.chapterTitle || !p.text || p.text.length < 40 || mine.length < 2) return;
       qs.push({ kind: 'meta', fact: 'pas|' + p.text, prompt: 'Which chapter of <em>' + esc(c.title) + '</em> is this from?', passage: p.text,
-        answer: p.chapterTitle, opts: options(p.chapterTitle, mine, 4), src: { slug: slug, chapter: p.chapter, q: p.text } });
+        answer: p.chapterTitle, opts: options(p.chapterTitle, mine, K), src: { slug: slug, chapter: p.chapter, q: p.text } });
     });
     if (others.length >= 3) mine.forEach(function (ch, i) {
       qs.push({ kind: 'meta', prompt: 'Which of these is a real chapter in <em>' + esc(c.title) + '</em>?',
-        answer: ch, opts: options(ch, others, 4), src: { slug: slug, chapter: i } });
+        answer: ch, opts: options(ch, others, K), src: { slug: slug, chapter: i } });
     });
     return qs;
   }
-  // Assemble a round: dedup, then fill with content questions rotating across
-  // kinds (definitions, dates, people…) so no two questions expose the same
-  // fact; structural 'meta' questions only top up what facts can't fill.
-  function pickRound(pool, n) {
+  // Assemble a round: dedup, then fill by rotating across the level's question
+  // kinds so no two questions expose the same fact. Easy admits structural
+  // 'meta' questions to its rotation; medium keeps them as backfill only; hard
+  // excludes them entirely (a thin corpus just yields a shorter hard round).
+  function pickRound(pool) {
+    var L = LEVELS[level] || LEVELS.medium;
     var seen = {}, uniq = [];
     shuffle(pool).forEach(function (q) { var k = (q.passage || '') + '|' + q.answer + '|' + q.prompt; if (!seen[k]) { seen[k] = 1; uniq.push(q); } });
-    var groups = {}, kinds = [];
-    uniq.forEach(function (q) { var g = q.kind || 'meta'; if (!groups[g]) { groups[g] = []; kinds.push(g); } groups[g].push(q); });
-    var know = shuffle(kinds.filter(function (k) { return k !== 'meta'; }));
+    var groups = {};
+    uniq.forEach(function (q) { var g = q.kind || 'meta'; (groups[g] = groups[g] || []).push(q); });
+    var rot = shuffle(L.rot.filter(function (g) { return (groups[g] || []).length; }));
     var picked = [], usedFact = {};
     function take(g) {
       while (g && g.length) {
@@ -3463,14 +3514,14 @@ QUIZ_JS = r"""
       return null;
     }
     var took = true;
-    while (picked.length < n && took) {
+    while (picked.length < L.n && took) {
       took = false;
-      for (var i = 0; i < know.length && picked.length < n; i++) {
-        var q = take(groups[know[i]]);
+      for (var i = 0; i < rot.length && picked.length < L.n; i++) {
+        var q = take(groups[rot[i]]);
         if (q) { picked.push(q); took = true; }
       }
     }
-    while (picked.length < n) {
+    if (L.backfill) while (picked.length < L.n) {
       var mq = take(groups.meta);
       if (!mq) break;
       picked.push(mq);
@@ -3487,22 +3538,38 @@ QUIZ_JS = r"""
   sec.hidden = false;
 
   var setup = document.getElementById('quiz-setup'), stage = document.getElementById('quiz-stage'), bestEl = document.getElementById('quiz-best');
-  var QN = 7, state = null;
-  function bestKey(s) { return 'quiz-best:' + s; }
+  var state = null;
+  var lvlBtns = Array.prototype.slice.call(document.querySelectorAll('.quiz-level'));
+  function setLevel(lv) {
+    if (!LEVELS[lv]) return;
+    level = lv;
+    lvlBtns.forEach(function (b) { b.classList.toggle('is-on', b.getAttribute('data-level') === lv); });
+    showBest(scope.value);
+  }
+  lvlBtns.forEach(function (b) { b.addEventListener('click', function () { setLevel(b.getAttribute('data-level')); }); });
+  function bestKey(s) { return 'quiz-best:' + level + ':' + s; }
   function showBest(s) {
     var b = null; try { b = JSON.parse(localStorage.getItem(bestKey(s)) || 'null'); } catch (e) {}
-    if (b && b.total) { bestEl.textContent = 'Your best on this selection: ' + b.score + ' / ' + b.total + '.'; bestEl.hidden = false; }
+    if (b && b.total) { bestEl.textContent = 'Your best here on ' + level + ': ' + b.score + ' / ' + b.total + '.'; bestEl.hidden = false; }
     else bestEl.hidden = true;
   }
   scope.addEventListener('change', function () { showBest(scope.value); });
+  // Deep links: a corpus's sidebar arrives at quiz.html?on=<slug> (and an
+  // optional &level=) with that corpus preselected, one click from a round.
+  try {
+    var usp = new URLSearchParams(location.search);
+    if (usp.get('level')) setLevel(usp.get('level'));
+    var on = usp.get('on');
+    if (on && bySlug[on]) scope.value = on;
+  } catch (e) {}
   showBest(scope.value);
 
   document.getElementById('quiz-start').addEventListener('click', function () {
     var sv = scope.value, pool = sv === '__all__' ? buildAcross() : buildSingle(sv);
-    var qs = pickRound(pool, QN);
+    var qs = pickRound(pool);
     setup.hidden = true; stage.hidden = false;
     if (!qs.length) { stage.innerHTML = '<p class="quiz-empty">There isn’t enough material to build a test on this selection yet. Try “Across the whole library.”</p><p style="margin:1rem 0 0"><button class="quiz-btn quiz-again" type="button">← Back</button></p>'; wireAgain(); return; }
-    state = { sv: sv, qs: qs, i: 0, score: 0, label: sv === '__all__' ? 'the whole library' : (bySlug[sv] ? bySlug[sv].title : '') };
+    state = { sv: sv, lv: level, qs: qs, i: 0, score: 0, label: sv === '__all__' ? 'the whole library' : (bySlug[sv] ? bySlug[sv].title : '') };
     renderQ();
   });
 
@@ -3555,7 +3622,7 @@ QUIZ_JS = r"""
     stage.innerHTML = '<div class="quiz-result"><p class="quiz-result-k">Your result</p>'
       + '<p class="quiz-score-big">' + s + '<span>/' + n + '</span></p>'
       + '<p class="quiz-grade">' + esc(grade) + '</p>'
-      + '<p class="quiz-result-sub">on ' + esc(state.label) + '</p>'
+      + '<p class="quiz-result-sub">on ' + esc(state.label) + ' · ' + esc(state.lv) + '</p>'
       + '<div class="quiz-result-actions"><button class="quiz-btn quiz-again" type="button">Play again</button>'
       + '<button class="quiz-btn quiz-share" type="button">Share result ↗</button></div></div>';
     showBest(state.sv);
@@ -3564,8 +3631,8 @@ QUIZ_JS = r"""
     if (sh) sh.addEventListener('click', function () {
       if (!window.CorpusShare) return;
       window.CorpusShare.open({ kicker: 'Test Yourself', quote: s + ' / ' + n + ' — ' + grade,
-        source: 'A test on ' + state.label + ' · calvincollins.xyz', filename: 'quiz-result',
-        shareText: 'I scored ' + s + '/' + n + ' testing myself on ' + state.label + '.' });
+        source: 'The ' + state.lv + ' test on ' + state.label + ' · calvincollins.xyz', filename: 'quiz-result',
+        shareText: 'I scored ' + s + '/' + n + ' on the ' + state.lv + ' test on ' + state.label + '.' });
     });
   }
 
@@ -3579,25 +3646,37 @@ QUIZ_JS = r"""
 })();
 """
 
-# Static scaffold for the quiz; QUIZ_JS populates the <select> and runs the round.
-# Hidden until the script confirms there are ≥2 corpora to build distractors from.
-QUIZ_SECTION_HTML = (
+# Static scaffold for the quiz page's card; QUIZ_JS populates the <select>, wires
+# the level pills, and runs the round. Hidden until the script confirms there are
+# ≥2 corpora to build distractors from.
+QUIZ_CARD_HTML = (
     '<section class="quiz" id="quiz" hidden>'
-    '<h2 class="quiz-h">Test Yourself</h2>'
-    '<p class="quiz-intro">A short quiz on what the research actually says — the dates, '
-    'the people, the terms of art, the passages. Pick a single corpus to test how well it '
-    'stuck, or take on the whole shelf at once. Every answer comes straight from the texts, '
-    'and a missed one links you back to the chapter that has it; your best score is kept on '
-    'this device and nothing is sent anywhere.</p>'
     '<div class="quiz-card">'
     '<div class="quiz-setup" id="quiz-setup">'
     '<label class="quiz-field"><span class="quiz-label">Test me on</span>'
     '<select id="quiz-scope" class="quiz-select" aria-label="Choose what to be tested on"></select></label>'
+    '<div class="quiz-field quiz-field-lv"><span class="quiz-label">Challenge</span>'
+    '<div class="quiz-levels" role="group" aria-label="Choose a difficulty">'
+    '<button type="button" class="quiz-level" data-level="easy">Easy</button>'
+    '<button type="button" class="quiz-level is-on" data-level="medium">Medium</button>'
+    '<button type="button" class="quiz-level" data-level="hard">Hard</button>'
+    '</div></div>'
     '<button id="quiz-start" class="quiz-btn quiz-btn-go" type="button">Begin the test →</button>'
     '<p class="quiz-best" id="quiz-best" hidden></p>'
     '</div>'
     '<div class="quiz-stage" id="quiz-stage" hidden></div>'
     '</div></section>'
+)
+
+# The index keeps only an invitation band; the quiz itself lives on quiz.html.
+QUIZ_CTA_HTML = (
+    '<section class="quiz quiz-cta">'
+    '<h2 class="quiz-h">Test Yourself</h2>'
+    '<p class="quiz-intro">A quiz on what the research actually says — the dates, the people, '
+    'the terms of art. Three challenge levels, on any single corpus or the whole shelf at once; '
+    'every missed answer links back to the chapter that has it.</p>'
+    '<p class="quiz-cta-row"><a class="quiz-btn quiz-btn-go" href="quiz.html">Take the quiz →</a></p>'
+    '</section>'
 )
 
 LIBRARY_CSS = """
@@ -3849,12 +3928,15 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 """
 
 # ---------------------------------------------------------------- "Test Yourself"
-# A closing self-quiz pinned to the bottom of the index. Built entirely from data
-# the page already carries — the inlined #quiz-data (per-corpus content facts:
-# glossary terms, key dates, key people), #library-manifest (corpora + chapter
-# titles + categories) and #passages-data (pull-quotes tagged with corpus +
-# chapter) — so every answer is ground-truth and nothing is fetched or generated.
-# Two scopes: a single corpus (retention of what it says) or across the whole shelf.
+# The self-quiz's styles. The quiz lives on its own page (quiz.html, built by
+# build_quiz_page) and is reached from the masthead, the ⌘K palette, an index
+# invitation band, and each corpus reader's sidebar (quiz.html?on=<slug>). Built
+# entirely from data the page carries — the inlined #quiz-data (per-corpus
+# content facts: glossary terms, key dates, key people), #library-manifest
+# (corpora + chapter titles + categories, via the shared shell) and
+# #passages-data (pull-quotes tagged with corpus + chapter) — so every answer is
+# ground-truth and nothing is fetched or generated. Two scopes (a single corpus
+# or the whole shelf) × three challenge levels.
 QUIZ_CSS = """
 .quiz { max-width: 1120px; margin: 2.2rem auto 0; padding: 0 2rem; }
 .quiz[hidden] { display: none; }
@@ -3926,6 +4008,17 @@ QUIZ_CSS = """
 .quiz-result-sub { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: 0 0 1.4rem; }
 .quiz-result-actions { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+/* challenge-level pills (quiz page) */
+.quiz-field-lv { flex: 0 0 auto; }
+.quiz-levels { display: inline-flex; border: 1px solid var(--border); border-radius: 2px; overflow: hidden; background: var(--bg); }
+.quiz-level { font-family: var(--sans); font-size: .8rem; letter-spacing: .03em; color: var(--muted);
+  background: none; border: none; padding: .55rem .95rem; cursor: pointer; transition: color .15s ease, background .15s ease; }
+.quiz-level + .quiz-level { border-left: 1px solid var(--border); }
+.quiz-level:hover:not(.is-on) { color: var(--accent); }
+.quiz-level.is-on { background: var(--accent); color: var(--bg); }
+/* index invitation band (the quiz itself lives on quiz.html) */
+a.quiz-btn { text-decoration: none; display: inline-block; }
+.quiz-cta-row { margin: 0; }
 @media (max-width: 560px) { .quiz { padding: 0 1.2rem; } .quiz-card { padding: 1.3rem 1.2rem; } }
 """
 
@@ -7044,6 +7137,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
     <a href="forecast.html">The Forecast Desk</a>
     <a href="connections.html" class="active">Connections</a>
     <a href="glossary.html">Glossary</a>
+    <a href="quiz.html">Quiz</a>
   </nav>
 </div>
 <main class="cx-wrap">
@@ -7941,7 +8035,8 @@ GLOSSARY_NAV_DEFAULT = (
     '    <a href="pamphlets.html">The Pamphlets</a>\n'
     '    <a href="forecast.html">The Forecast Desk</a>\n'
     '    <a href="connections.html">Connections</a>\n'
-    '    <a href="glossary.html" class="active">Glossary</a>'
+    '    <a href="glossary.html" class="active">Glossary</a>\n'
+    '    <a href="quiz.html">Quiz</a>'
 )
 
 
@@ -8059,6 +8154,91 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
     (out / fname).write_text(page_html)
     print(f"  ✓ {h1}  ({n} terms across {len(glossary_index)} corpora, {len(gloss_cat_order)} categories) → {fname}")
     return True
+
+
+QUIZ_PAGE_CSS = """
+#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+.qz-wrap { max-width: 1080px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+.qz-head { display: block; text-align: left; margin: .6rem 0 .4rem; }
+.qz-head .kicker { margin: 0 0 .5rem; }
+.qz-head h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); margin: 0; }
+.qz-head h1::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .7rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.qz-head .tagline { max-width: 56ch; margin: 1rem 0 0; }
+.qz-wrap .quiz { padding: 0; margin-top: 1.8rem; }
+@media (max-width: 640px) { .qz-wrap { padding: 1.4rem 1.3rem 4rem; } }
+"""
+
+QUIZ_PAGE_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Test Yourself — calvincollins · xyz</title>
+<meta name="description" content="A quiz on what the research library actually says — three challenge levels, any corpus or the whole shelf.">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="adtech.html">Ad Tech</a>
+    <a href="pamphlets.html">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
+    <a href="connections.html">Connections</a>
+    <a href="glossary.html">Glossary</a>
+    <a href="quiz.html" class="active">Quiz</a>
+  </nav>
+</div>
+<main class="qz-wrap">
+  <header class="qz-head">
+    <p class="kicker">Retention</p>
+    <h1>Test Yourself</h1>
+    <p class="tagline">{intro}</p>
+  </header>
+  {card}
+</main>
+<footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
+  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
+</footer>
+<button id="theme-btn" title="Light / dark">◐ Theme</button>
+{payloads}
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def build_quiz_page(out_dir, quiz_facts, all_passages, shell=""):
+    """Render docs/quiz.html — the Test Yourself section: a self-quiz on what the
+    research says (terms, dates, people, passages) at three challenge levels,
+    scoped to one corpus or the whole shelf. Fact payloads are inlined here;
+    questions build client-side, and readers deep-link in via ?on=<slug>."""
+    out = Path(out_dir)
+    intro = ("A short quiz on what the research actually says — the dates, the people, the "
+             "terms of art, the passages. Pick a corpus or take on the whole shelf, choose a "
+             "challenge level, and every missed answer links back to the chapter that has it. "
+             "Your best scores stay on this device; nothing is sent anywhere.")
+    og = og_tags("Test Yourself",
+                 "A quiz on what the research library actually says — three challenge levels, any corpus or the whole shelf.",
+                 f"{SITE_URL}/quiz.html", f"{SITE_URL}/{OG_IMAGE}")
+    payloads = (f'<script id="quiz-data" type="application/json">{json_for_html(quiz_facts)}</script>'
+                f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>')
+    page = QUIZ_PAGE_TEMPLATE.format(
+        favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + QUIZ_CSS + QUIZ_PAGE_CSS,
+        intro=intro, card=QUIZ_CARD_HTML, payloads=payloads,
+        app_js=LIBRARY_THEME_JS + QUIZ_JS, shell=shell,
+    )
+    (out / "quiz.html").write_text(page)
+    print(f"  ✓ Test Yourself  ({len(quiz_facts)} corpora with facts) → quiz.html")
 
 
 def holdings_chart_svg(stats, category_order=None):
@@ -8356,6 +8536,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         manifest.append({"title": "Glossary", "kind": "section", "category": "Reference",
                          "href": "glossary.html",
                          "meta": "every term across the research, defined"})
+    if quiz_facts:
+        manifest.append({"title": "Test Yourself", "kind": "section", "category": "Reference",
+                         "href": "quiz.html",
+                         "meta": "a quiz on the research — three levels"})
 
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
@@ -8433,6 +8617,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     build_glossary_page(out, [g for g in glossary_index if g.get("category") not in gl_desk_cats],
                         category_order=category_order, shell=shell_root)
+    # Test Yourself quizzes the WHOLE library — desk corpora included; a quiz on
+    # what you read spans every shelf, unlike the desk-scoped reference pages.
+    build_quiz_page(out, quiz_facts, all_passages, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site).
     build_ghost_page(out, editions, ghost_cfg, shell=shell_root)
@@ -8676,10 +8863,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         resume='<div id="resume"></div>',
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
-        quiz=QUIZ_SECTION_HTML
-        + f'<script id="quiz-data" type="application/json">{json_for_html(quiz_facts)}</script>',
+        quiz=QUIZ_CTA_HTML,
         cards=library_body,
-        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS + QUIZ_JS,
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS,
         shell=shell_root,
     ))
     build_wrapped_page(out, wrapped_stats, shell=shell_root, category_order=category_order)
