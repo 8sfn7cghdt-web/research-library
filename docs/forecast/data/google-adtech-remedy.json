@@ -1,0 +1,379 @@
+{
+ "kind": "native_forecast",
+ "slug": "google-adtech-remedy",
+ "question": "Will the remedies ruling in US v. Google (ad-tech antitrust) order a structural divestiture of Google's ad-tech assets (AdX and/or DFP), rather than behavioral-only remedies?",
+ "title": "Google Ad-Tech Remedy: Breakup or Behavioral?",
+ "category": "Media & Advertising",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2027-01-31",
+ "resolution": "Grades on Judge Brinkema's ad-tech remedies order: a mandated forced sale of AdX and/or the DFP/Google Ad Manager ad server resolves YES; a conduct-only order — or divestiture merely reserved or contingent — resolves NO. If no order issues by January 31, 2027, it grades on posture, which with no divestiture ordered grades NO.",
+ "consensus": {
+  "headline_case": "The honest read is a near-tie, with the structural question just under a coin flip. Liability rests partly on Google unlawfully tying DFP to AdX, and owning both sides of one auction is the exact conflict structural separation is the textbook cure for — so a forced AdX-only sale, with conduct fences on DFP, is the most likely YES path (33-42%). But the nearest sibling cuts the other way: months earlier the same defendant kept Chrome and drew behavioral relief, and the one modern tech breakup to reach appeal was vacated (34-42% NO). We rank partial first by a hair: her findings sit inside the AdX/DFP markets and she called the offers window dressing.",
+  "runner_up": "Behavioral / conduct-only order (NO)",
+  "runner_up_band": "34-42%",
+  "why_over_runner_up": "Partial-structural edges ahead only because the tying finding maps a divestiture onto exactly the in-scope market conflict, and the scope defect that denied Chrome does not apply to tied products that ARE the divestiture targets. The behavioral case is nearly as strong on appeal-durability and same-defendant precedent, which is why the ranges overlap rather than separate — a coin-flip on the fork, not a clean call.",
+  "dissent": "The Historian's case is the sharpest survivor: count the record and NO leads. The nearest marquee tech remedy — same defendant, same era — went behavioral 1 of 1; modern big-tech monopolization cases imposed a standing divestiture 0 of 2; the one trial-court tech breakup to reach appeal survived 0 of 1; even tying wins were cured by conduct. A judge who just watched a breakup order get vacated has every reason to reach for the least-restrictive, appeal-survivable remedy.",
+  "pick": "Forced AdX sale (YES)",
+  "flag": "⚖️",
+  "band": "33–42%",
+  "band_low": 33,
+  "band_high": 42,
+  "runner_up_flag": "🚧",
+  "tally": [
+   {
+    "name": "Forced AdX sale (YES)",
+    "flag": "⚖️",
+    "votes": 3
+   },
+   {
+    "name": "Conduct-only order (NO)",
+    "flag": "🚧",
+    "votes": 2
+   },
+   {
+    "name": "No ruling by Jan 31 2027 (NO)",
+    "flag": "⏳",
+    "votes": 1
+   },
+   {
+    "name": "Full AdX + DFP breakup (YES)",
+    "flag": "💥",
+    "votes": 1
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Conduct-only order (NO)",
+   "pick_scenario": "Behavioral / hard-conduct-only order, no forced sale (resolves NO)",
+   "prob": "34-42%",
+   "prob_num": 38,
+   "confidence": "low",
+   "register": "terse tape-reading",
+   "flag": "🚧",
+   "blurb": "No market prices this question. The closest tape is thin play-money on the wrong case — the Search breakup — and it reads structural proxies at ~19-26% against conduct remedies up near ~77-86%. That is the market telling you separation is the long side and conduct is the base case. I take the behavioral order at 34-42%. When the only prices point one way, you don't argue with them.",
+   "evidence": "Manifold structural proxies ~19-26% vs conduct remedies ~77-86% (Search case); no market prices the ad-tech remedy directly.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the structured decomposition over recency and sentiment.",
+   "pick": "Forced AdX sale (YES)",
+   "pick_scenario": "Partial structural — forced AdX divestiture, DFP handled by conduct terms (resolves YES)",
+   "prob": "33-42%",
+   "prob_num": 37,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "flag": "⚖️",
+   "blurb": "Build it up rather than feel it out. A gate of ~0.85 for a gradeable order or posture, a structural fork the evidence lands at ~0.48, and an AdX-only share of ~0.78 multiply to ~0.32, ranged to 33-42%. The fork is the whole argument: a 0.55 estimate leaned on a consent decree, not a litigated breakup, and a 0.40 over-deferred to a 0/2 floor whose cases both failed a scope test that does not bind an in-scope tie. The geometric mean of the four structural-YES totals sits near 47% — decomposition and cross-check agree.",
+   "evidence": "0.85 x 0.48 x 0.78 = 0.32 → 33-42%; geometric mean of four structural-YES totals ~47%.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Conduct-only order (NO)",
+   "pick_scenario": "Behavioral / hard-conduct-only order, no forced sale (resolves NO)",
+   "prob": "34-42%",
+   "prob_num": 38,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "flag": "🚧",
+   "blurb": "Count them and the ledger speaks. The nearest sibling — same defendant, same season — went behavioral, one of one; modern big-tech monopolization cases imposed a standing divestiture zero of two; the one trial-court tech breakup to reach the appeals bench survived zero of one, vacated in 2001; and even a proven tie, as with Microsoft's browser, was cured by conduct, not sale. Across the long roll of the Sherman Act, full breakups number some three to five in over a century. The record does not forbid a forced sale — it just rarely delivers one. I stand with the conduct-only order at 34-42%.",
+   "evidence": "Search remedy behavioral 1/1; modern structural 0/2; appellate durability 0/1; ~3-5 full breakups in 120+ years.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "Forced AdX sale (YES)",
+   "pick_scenario": "Partial structural — forced AdX divestiture, DFP handled by conduct terms (resolves YES)",
+   "prob": "33-42%",
+   "prob_num": 37,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "flag": "⚖️",
+   "blurb": "Read the route, not the reputation. The tie is the mechanism: Google owns both sides of the auction, and conduct fences on a same-owner conflict are the exact cure a judge can be told is insufficient. Unlike Chrome, this asset sits inside the liability. Feasibility caps the cut — no named buyer, a multi-year migration, a near-certain appeal — so the route runs to the smallest stay-resistant sale: AdX out, DFP fenced. That is the partial-structural path at 33-42%. It is the one door that fits the lock the liability built.",
+   "evidence": "In-scope tying findings; scope objection that denied Chrome inapplicable; AdX-only share ~0.78 as smallest stay-resistant cut.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "Forced AdX sale (YES)",
+   "pick_scenario": "Partial structural — forced AdX divestiture, DFP handled by conduct terms (resolves YES)",
+   "prob": "33-42%",
+   "prob_num": 37,
+   "confidence": "medium",
+   "register": "bardic-incantatory, archetypal",
+   "flag": "⚖️",
+   "blurb": "The order will bear one judge's hand, and that hand has already shown itself. She called Google's behavioral offers window dressing; she recalled aloud how the company once smothered header bidding. That is a jurist who has seen the evader and named him, and such a temper does not close with a monitor and a promise. Yet the same steady will that distrusts cosmetics also weighs the buyer, the migration, the appeal — and steers to the cut that holds: AdX sold, DFP fenced. The forced AdX sale, 33-42%, is the shape her resolve makes.",
+   "evidence": "Brinkema's 'window dressing' remark and header-bidding-suppression recall — a revealed preference against a conduct-only package.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "No ruling by Jan 31 2027 (NO)",
+   "pick_scenario": "No ruling by Jan 31 2027 — graded on then-current posture (resolves NO)",
+   "prob": "14-22%",
+   "prob_num": 18,
+   "confidence": "low",
+   "register": "wry contrarian-desk",
+   "flag": "⏳",
+   "blurb": "Everyone is busy arguing structural versus behavioral, which is precisely why the underpriced live path is that she doesn't rule in time at all. She already blew a self-imposed March 2026 target with the order still pending, and the kind of opinion she must write — appeal-durable, with a buyer, a migration timeline, and a monitor — is exactly the sort that slips six to fifteen-plus months. At 14-22% the calendar is the cheapest ticket on the board, and it quietly grades NO. I'll take the outcome nobody is watching.",
+   "evidence": "Missed ~March 2026 self-imposed target; complex remedy opinions run 6-15+ months from Nov 2025 closings; no-ruling band 14-22%.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Divine providence; backs the fated, story-shaped ending — however long the odds.",
+   "pick": "Full AdX + DFP breakup (YES)",
+   "pick_scenario": "Full structural — forced sale of both AdX AND DFP/Google Ad Manager (resolves YES)",
+   "prob": "7-13%",
+   "prob_num": 10,
+   "confidence": "medium",
+   "register": "oracular destiny-reading",
+   "flag": "💥",
+   "blurb": "Read the story and it bends toward the whole cure, not the half. A firm found to have tied both sides of the market, a judge who named the evasion aloud, a witness who conceded competition could survive a great unbundling — these are not the notes of a tale that ends with a monitor and a fence. Once a century the law reaches for the true breakup: Standard Oil, American Tobacco. The odds sit at 7-13%, and I will not pretend they are larger — but the arc of a proven evader has a way of ending in the fuller judgment, and that is the ending I read.",
+   "evidence": "In-scope tie on both products; 'window dressing' distrust; Google witness conceded competition 'could survive great unbundling'; full-breakup floor 7-13%.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Partial structural — forced AdX divestiture, DFP handled by conduct terms (resolves YES)",
+   "low": 33,
+   "high": 42,
+   "description": "Brinkema orders a forced sale or spin-off of AdX (the ad exchange) to a court-approved buyer — likely staged, with a divestiture trustee and migration timeline — bundled with behavioral terms on the DFP/Google Ad Manager side (open-sourced final-auction logic, interoperability, self-preferencing bans, and injunctions against Unified Pricing Rules / First Look / Last Look). She stops short of forcing a sale of the DFP publisher ad server. A forced AdX sale alone resolves the structural question YES. This is the most-cited middle path and the single most likely YES outcome, because it targets exactly the tie the liability rests on while sidestepping the hardest feasibility objections a full breakup would face.",
+   "derivation": "Decomposition: P = P(gradeable order/posture by Jan 31 2027) x P(some divestiture | order) x P(AdX-only | divestiture). Gate ~0.85 (order overdue, reported imminent, plus grades-on-posture backstop). The structural fork was the key dispute: a ~0.55 estimate had no counted class behind it (the cure-fit analogy leans on AT&T, a consent decree, not a litigated breakup); a ~0.40 estimate over-defers to a 0/2 modern-tech floor whose cases both failed a scope test that does not bind an in-scope tying case. Grounded midpoint ~0.48. AdX-only share ~0.78 (feasibility, buyer, appeal-durability favor the smallest stay-resistant cut). 0.85 x 0.48 x 0.78 = 0.32, ranged up to 33-42% for gradeable structural posture. Geometric mean of the four independent structural-YES totals is ~47%, consistent with this split.",
+   "drivers": [
+    "Tying-liability logic: liability rests partly on Google unlawfully tying DFP to AdX, and owning both sides of the auction is the exact same-owner conflict structural separation is the textbook cure for — a conduct-only order risks being ruled an insufficient cure for the tie",
+    "Scope alignment: unlike the Search case, where Chrome divestiture was denied partly as beyond the liability theory, Brinkema's findings sit squarely inside the ad-exchange and ad-server markets the government wants divested",
+    "'Window dressing' distrust: Brinkema called Google's behavioral offers cosmetic and recalled its header-bidding suppression, a revealed preference against a purely conduct package",
+    "Feasibility caps the scope to AdX: no identified buyer, multi-year migration estimates, and a near-certain appeal push toward the smallest stay-resistant structural cut rather than a full Ad Manager breakup"
+   ],
+   "signals_to_watch": [
+    "Order or briefing that treats AdX (exchange) separately from DFP (ad server) — a partial-structural design tell",
+    "Language ordering a 'divestiture' or 'sale' of AdX specifically, even if staged or conditional",
+    "Appointment of a divestiture trustee or a defined buyer-approval process for AdX",
+    "Opinion framing conduct-only relief as an inadequate cure for the tie"
+   ],
+   "time_horizon": "Through Q1 2027; resolves on Brinkema's remedies order (expected mid-to-late 2026), graded on posture if no ruling by Jan 31 2027"
+  },
+  {
+   "name": "Behavioral / hard-conduct-only order, no forced sale (resolves NO)",
+   "low": 34,
+   "high": 42,
+   "description": "Brinkema declines any forced sale and imposes an aggressive conduct package — AdX open-access to rival ad servers, injunctions against Unified Pricing Rules / First Look / Last Look, open-sourced DFP final-auction logic, DFP–Prebid interoperability, data-sharing, and a monitoring or technical committee — with divestiture reserved or made contingent on conduct failure. It is structurally aggressive but orders no asset sale, so the strict structural question resolves NO. This is the outcome the appeal-durability and feasibility pressures most naturally produce, and it closely tracks the sister Search-case remedy imposed on the same defendant months earlier.",
+   "derivation": "Complement of the structural fork within the gate. P = P(gradeable order/posture, ~0.85) x P(no forced divestiture | order, ~0.52) = ~0.44 gross; carving out the share that grades NO via the timing scenario leaves the clean-behavioral-order band at 34-42%. The 0.52 no-divestiture factor is anchored on the nearest sibling (the Search case went behavioral, 1 of 1 recent) and on appellate durability (the one modern tech breakup order to reach appeal was vacated, 0 of 1 survived), discounted from a naive 75%+ behavioral ceiling because the in-scope tying finding erodes the Search analogy. Held near, not above, the partial scenario: the two are genuinely co-modal once the structural gate sits at ~0.48, so their ranges overlap rather than being forced apart.",
+   "drivers": [
+    "Appeal-durability calculus stated on the record: behavioral relief bites immediately during Google's near-certain Fourth Circuit appeal, whereas a structural order can be stayed or vacated (the 2001 Microsoft vacatur is the cautionary template)",
+    "Same-defendant anchor: the Search remedy (Chrome/Android divestiture denied, behavioral ordered) is a fresh sister ruling a judge would have to break sharply from",
+    "Feasibility friction: no identified AdX buyer, a big-tech acquirer would trigger fresh antitrust review, and migration estimates run 18-24 months (government expert) to ~4 years (Google)",
+    "Courts' preference for the least-restrictive effective, appeal-survivable remedy"
+   ],
+   "signals_to_watch": [
+    "Order enjoins conduct and opens AdX access but contains no mandate to sell AdX or DFP",
+    "Divestiture explicitly reserved or made contingent on conduct-remedy failure",
+    "Reliance on a technical committee or monitor rather than a divestiture trustee",
+    "Opinion citing the Search remedy or the 2001 Microsoft vacatur approvingly on remedy design"
+   ],
+   "time_horizon": "Through Q1 2027; resolves on the remedies order or graded posture"
+  },
+  {
+   "name": "No ruling by Jan 31 2027 — graded on then-current posture (resolves NO)",
+   "low": 14,
+   "high": 22,
+   "description": "Brinkema issues no remedies order before the Jan 31 2027 resolution date; the question grades on then-current posture, which — with no divestiture ordered — most naturally grades the strict structural question NO. She has already blown past a self-imposed target while the order remains pending, and a remedies opinion that must survive a near-certain Fourth Circuit appeal, resolve a contested buyer and feasibility record, and thread a tying finding is exactly the kind of heavily-reasoned order that slips.",
+   "derivation": "Timing decomposition reconciled from a wide spread. The independent estimates ranged from ~12-16% (crediting imminent/drafting reporting, a completed trial record, ~14 months of runway from Nov 2025 closings) to ~20-28% (crediting one already-blown self-imposed target and the 6-15+ month norm for complex antitrust remedy opinions). Two corrections narrowed the gap: the high end was inflated by counting issued-but-ambiguous orders that, if they contain a divestiture mandate, grade YES not NO; the low end conflated a near-certain gradeable posture with a contested actual order. Reconciled band 14-22%, geometric mean of the four midpoints ~17%. When it grades, a no-order posture with no divestiture grades NO.",
+   "drivers": [
+    "Demonstrated slippage: a ~March 2026 self-imposed target already passed with the order still pending",
+    "Opinion complexity: an appeal-durable divestiture record (buyer approval, migration timeline, monitor) takes longer to write than a conduct order",
+    "Counter-pressure that caps this: the order is widely described as overdue and imminent, with clerks reportedly drafting and mid-2026 the consensus estimate"
+   ],
+   "signals_to_watch": [
+    "Docket silence through the second half of 2026 with no opinion filed",
+    "Any new scheduling order, supplemental-briefing request, or reopened testimony (especially on buyer feasibility) that resets the clock",
+    "Any signal of bifurcating a liability-remedy order from an implementation-phase order"
+   ],
+   "time_horizon": "The Jan 31 2027 grading date itself"
+  },
+  {
+   "name": "Full structural — forced sale of both AdX AND DFP/Google Ad Manager (resolves YES)",
+   "low": 7,
+   "high": 13,
+   "description": "Brinkema grants close to the government's maximal ask: divest AdX and force a sale or phased divestiture of the DFP publisher ad server (Google Ad Manager), plus open-sourcing and self-preferencing bans — a genuine breakup of the publisher-side stack. It resolves YES emphatically and is the least likely structural outcome, because forcing a sale of the entangled ad server re-imports every feasibility, buyer, and appeal-durability objection that the AdX-only path sidesteps.",
+   "derivation": "Reference-class floor lifted modestly, then capped. Litigated non-merger Section 2 cases ending in a court-ordered full enterprise breakup number ~3-5 across 120+ years of hundreds of cases (Standard Oil, American Tobacco, arguably United Shoe; AT&T was a consent decree) — a low-single-digit raw floor. Within the ~0.48 structural mass, the full AdX+DFP share is ~0.20-0.25, since the maximal version collides hardest with the feasibility and appeal-durability objections and DFP divestiture was pled as secondary. 0.85 x 0.48 x ~0.22 = ~0.09. Lifted slightly for both tied products being in-scope, but held single-to-low-double digits: the ~19-26% proxy caps maximal breakup, and estimates fattening this past the mid-teens used an eyeballed multiplier. Geometric mean of midpoints ~10%.",
+   "drivers": [
+    "The government's maximal 'behavioral invites evasion' argument plus amici pressing full separation of a proven evader",
+    "The tie finding as justification for separating both sides of the market, not just the exchange",
+    "Google witnesses' concession that competition 'could survive great unbundling,' which cuts the feasibility objection somewhat",
+    "Brinkema's 'window dressing' distrust potentially hardening into a demand for comprehensive separation"
+   ],
+   "signals_to_watch": [
+    "Order mandating divestiture or phased sale of BOTH AdX and DFP with a trustee and migration schedule",
+    "Opinion treating DFP and AdX as an inseverable tied unit that must be broken as a whole",
+    "A structured buyer or auction process spanning both assets",
+    "Adoption of the government's expert migration timeline over the ~4-year feasibility record"
+   ],
+   "time_horizon": "Through Q1 2027; resolves on the remedies order"
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Manifold",
+   "market": "US v Google: which remedies will be ordered? (tracks the SEARCH case, not EDVA ad-tech)",
+   "detail": "Structural proxies: 'Separate Chrome and Search' ~26%, 'Separate Android and Search' ~19%; conduct remedies far higher (end exclusive dealing ~86%, ban defaults ~77%, choice screen ~76%). No AdX/DFP option — caps maximal breakup, not partial AdX-only.",
+   "volume": "Very thin play-money: ~18 holders, ~44 trades, ~M1.3k mana"
+  },
+  {
+   "platform": "Manifold",
+   "market": "Will Google be broken up as a company due to the antitrust lawsuit?",
+   "detail": "Resolved NO (~0%) on the April 2025 liability ruling, not the pending remedies order. Stale for the through-Q1-2027 horizon.",
+   "volume": "Very thin play-money: ~14 holders, ~16 trades"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Google forced to sell Chrome?",
+   "detail": "Resolved NO (~0%). About the Chrome browser in the SEARCH case with a May 31 2025 deadline — off-target and stale for ad-tech assets.",
+   "volume": "~$299.7K total volume since Nov 19 2024"
+  },
+  {
+   "platform": "Metaculus",
+   "market": "Will the US break up Google before 1 January 2026?",
+   "detail": "Time-boxed to a now-past deadline, framed as a broad breakup, not ad-tech-specific. Page returned 403 — no current number retrievable, treat as unverified.",
+   "volume": "Play-money community forecasters; count not verified"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Courts consider Google a monopoly?",
+   "detail": "A liability proxy — the April 2025 EDVA ruling already found monopoly. Not the remedies order or a forced AdX/DFP divestiture. Page returned 429 — no current number retrievable, treat as unverified.",
+   "volume": "Not verified"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "1 of 1",
+   "text": "Nearest sibling — US v. Google (Search), same defendant, Judge Mehta, Sept 2025: Chrome/Android divestiture denied, behavioral relief ordered. Strong anchor toward NO, but Chrome was denied partly as beyond the liability theory — unlike the in-scope AdX/DFP tie."
+  },
+  {
+   "stat": "0 of 2",
+   "text": "Modern litigated big-tech monopolization cases where structural divestiture was sought: zero imposed a standing divestiture (Microsoft 2000 breakup vacated 2001; Search denied 2025). Both failed a scope test that does NOT bind an in-scope tie — so the gate lands ~0.48."
+  },
+  {
+   "stat": "~3-5",
+   "text": "Litigated Section 2 cases ending in a court-ordered FULL enterprise breakup, ever — across 120+ years (Standard Oil, American Tobacco, arguably United Shoe; AT&T was a consent decree). A low-single-digit floor for the maximal AdX+DFP outcome."
+  },
+  {
+   "stat": "0 of 1",
+   "text": "Appellate durability of a modern trial-court tech breakup order: the Microsoft breakup was vacated June 28, 2001 — the risk Brinkema cited on the record, cutting hardest against the slowest, most stay-fragile full-breakup version."
+  },
+  {
+   "stat": "6-15+ mo",
+   "text": "Complex antitrust remedy opinions commonly run 6-15+ months from closings (Nov 2025 closings place Jan 31 2027 inside the tail); Brinkema already missed a self-imposed ~March 2026 target — supporting a 14-22% no-ruling band."
+  },
+  {
+   "stat": "€2.95B",
+   "text": "EU/EC ad-tech parallel: a Sept 2025 fine with the Commission leaning structural after repeated Google evasion, but 0 of 1 divestiture imposed as of H1 2026 — regulators view behavioral relief as inadequate, but no realized structural precedent."
+  }
+ ],
+ "triggers": [
+  "Brinkema's remedies order issues — resolves on its face: any mandated AdX or DFP sale is YES; conduct-only or reserved/contingent divestiture is NO.",
+  "A qualified, antitrust-clean non-big-tech AdX buyer publicly emerges before the ruling — removes the buyer objection Brinkema stressed and shifts mass from behavioral toward the structural scenarios.",
+  "Order or interim language explicitly rejecting divestiture as infeasible or appeal-fragile — shifts mass toward behavioral.",
+  "Opinion adopts a 'behavioral invites evasion / only separation cures the tie' framing — shifts mass toward structural, and toward full structural if it treats DFP and AdX as inseverable.",
+  "Fourth Circuit or Supreme Court activity tightening antitrust remedy-scope doctrine before the ruling — shifts mass toward behavioral and away from the maximal breakup.",
+  "Continued docket silence, a newly slipped self-imposed deadline, or reopened evidence through H2 2026 — raises the no-ruling scenario."
+ ],
+ "sources": [
+  {
+   "label": "AdExchanger — Brinkema Calls For Less Ad Tech 'Window Dressing' in the AdX/DFP divestiture debate",
+   "url": "https://www.adexchanger.com/online-advertising/doj-v-google-judge-brinkema-calls-for-less-ad-tech-window-dressing-in-the-adx-and-dfp-divestiture-debate/"
+  },
+  {
+   "label": "Digiday — Google's ad-tech antitrust remedy phase explained, and where the judge might land",
+   "url": "https://digiday.com/marketing/googles-ad-tech-antitrust-remedy-phase-explained-doj-wants-googles-offerings-and-where-the-judge-might-land/"
+  },
+  {
+   "label": "Norton Rose Fulbright — What you need to know from closing arguments in US v. Google",
+   "url": "https://www.nortonrosefulbright.com/en/knowledge/publications/cb2c3ded/what-you-need-to-know-from-closing-arguments-in-us-v-google"
+  },
+  {
+   "label": "Simpson Thacher — District Court Rules Google Is a Monopolist in Ad Tech",
+   "url": "https://www.stblaw.com/about-us/publications/view/2025/04/25/district-court-rules-google-is-a-monopolist-in-ad-tech"
+  },
+  {
+   "label": "NPR — A judge lets Google keep Chrome but levies other penalties (Search remedy, Sept 2 2025)",
+   "url": "https://www.npr.org/2025/09/02/nx-s1-5478625/google-chrome-doj-antitrust-ruling"
+  },
+  {
+   "label": "DLA Piper — Federal court orders remedies in Google antitrust case, rejects DOJ call for breakup (Search)",
+   "url": "https://www.dlapiper.com/en/insights/publications/2025/09/federal-court-orders-remedies-in-google-antitrust-case"
+  },
+  {
+   "label": "Washington Post — Microsoft Breakup Order Reversed (D.C. Cir., June 28 2001)",
+   "url": "https://www.washingtonpost.com/archive/politics/2001/06/29/microsoft-breakup-order-reversed/81e9118f-0c4e-40a9-8cc5-0775e9377f4e/"
+  },
+  {
+   "label": "Brookings — The Failure of Structural Remedies in Sherman Act Monopolization Cases",
+   "url": "https://www.brookings.edu/articles/the-failure-of-structural-remedies-in-sherman-act-monopolization-cases/"
+  },
+  {
+   "label": "Courthouse News — Judge signals hesitancy to divest Google's ad tech business",
+   "url": "https://www.courthousenews.com/judge-signals-hesitancy-to-divest-googles-ad-tech-business/"
+  },
+  {
+   "label": "TechPolicy.Press — Breaking Down the EU Antitrust Decision on Google Adtech",
+   "url": "https://www.techpolicy.press/breaking-down-the-eu-antitrust-decision-on-google-adtech/"
+  },
+  {
+   "label": "Manifold — US v Google: which remedies will be ordered? (Search-case proxy)",
+   "url": "https://manifold.markets/costlySignal/us-v-google-which-of-the-following"
+  },
+  {
+   "label": "Polymarket — Google forced to sell Chrome? (resolved NO, Search case)",
+   "url": "https://polymarket.com/event/google-forced-to-sell-chrome"
+  }
+ ],
+ "method_note": "No market prices the exact question (swept July 3, 2026); the nearest proxies track the separate Search-case breakup, capping a maximal AdX+DFP breakup, not a partial AdX-only sale. The numbers rest on base rates plus a decomposition: a ~0.85 gate for a gradeable order or posture by Jan 31, 2027, times a structural fork near 0.48, times an AdX-only share of ~0.78. That fork drives the shape: partial (33-42%) and behavioral (34-42%) are co-modal; full breakup floors at 7-13%, no-ruling at 14-22%.",
+ "honesty_note": "This is a coin-flip on the structural fork, not a confident call. Even the leading outcome — a forced AdX sale resolving YES — sits at only 33-42%, so it is more likely than not NOT to happen; the behavioral outcome at 34-42% is its near-equal. One line in Brinkema's opinion — tie curable by conduct, or requiring a sale — will decide it."
+}

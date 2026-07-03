@@ -1,0 +1,301 @@
+{
+ "kind": "native_forecast",
+ "slug": "wimbledon-2026-mens",
+ "question": "Who will win the 2026 Wimbledon Gentlemen's Singles title?",
+ "title": "Who Wins Wimbledon 2026 — Men",
+ "category": "Sport & Games",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-07-12",
+ "resolution": "Resolves to the player who wins the 2026 Wimbledon Gentlemen's Singles final on 12 July 2026, per official AELTC result.",
+ "consensus": {
+  "headline_case": "Jannik Sinner defends. He is world No. 1 and defending champion at the most seed-friendly major of the modern game — all 22 played editions since 2003 went to a top-3 seed — and Alcaraz, his only recent conqueror in a grass major final, has withdrawn, shifting that title share straight to the No. 1 and shortening the price. The two deep exact-question books blend near 57-58% and, being live, have already absorbed his five-set opener and skipped grass prep. We shade a few points below that mean to a 53-59% band centered near 56% for the Roland Garros scar, but reject sitting lower: a naive four-match multiply to ~48% double-counts fragilities the market has already priced.",
+  "why_over_runner_up": "The bottom-half challenger tops out near 16-22% because its own mechanism class is unkind: open-half big servers reached ~3 of the last 15 finals but went 0-for-title, so most of that mass is reach-final, not win-final. Sinner is a live No. 1 with the shortest path; the challenger must both string a clean fortnight and then finish a job a whole class of predecessors could not.",
+  "runner_up": "A bottom-half challenger (Zverev/Fritz region)",
+  "runner_up_band": "16–22%",
+  "dissent": "The Path Reader's case is the sharpest surviving dissent: forget reputation and read the route. Sinner skipped every grass tune-up for the first time, arrives off a shock French second-round loss and a five-set opener, and the bottom half hands a fresh Fritz or Zverev a final against a man who may have spent himself beating Djokovic in the semifinal. On a high-variance grass day, first-strike serving from the open half is exactly the mechanism that topples a rusty favorite — which pushes the challenger toward the top of its band.",
+  "pick": "Sinner",
+  "flag": "🇮🇹",
+  "band": "53–59%",
+  "band_low": 53,
+  "band_high": 59,
+  "runner_up_flag": "🎾",
+  "tally": [
+   {
+    "team": "Sinner defends",
+    "flag": "🇮🇹",
+    "votes": 3
+   },
+   {
+    "team": "Bottom-half challenger",
+    "flag": "🎾",
+    "votes": 2
+   },
+   {
+    "team": "Djokovic №25",
+    "flag": "🇷🇸",
+    "votes": 2
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Sinner defends",
+   "pick_scenario": "Sinner defends — the favorite converts",
+   "prob": "53-59%",
+   "prob_num": 56,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "flag": "🇮🇹",
+   "blurb": "Two books. Fourteen million each. They blend to 56-57% on Polymarket and 59-60% on Kalshi. That is the read. The price already ate his five-set opener and his skipped grass. I take the tape at 53-59% and I do not argue with it.",
+   "evidence": "Polymarket 56-57% and Kalshi 59-60% on the exact question, ~$14M each, both live mid-tournament."
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts simulation models and structured decompositions over recency and sentiment.",
+   "pick": "Sinner defends",
+   "pick_scenario": "Sinner defends — the favorite converts",
+   "prob": "53-59%",
+   "prob_num": 56,
+   "confidence": "high",
+   "register": "measured analytic contrarian",
+   "flag": "🇮🇹",
+   "blurb": "The seductive error is the four-match multiply that lands near 48%; it treats a peak No. 1 against sub-elite foes as if each round were a lightly weighted coin, and double-counts fragilities the live book has already absorbed. Decompose it properly and the geometric mean of the independent midpoints settles at 55-56%. The structure and the price agree, which is rare enough to trust. I sit at 53-59%.",
+   "evidence": "Geometric mean of independent Sinner midpoints ~55-56%; naive four-match product ~0.43 rejected as double-counting priced-in fragilities."
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Sinner defends",
+   "pick_scenario": "Sinner defends — the favorite converts",
+   "prob": "53-59%",
+   "prob_num": 56,
+   "confidence": "high",
+   "register": "prophetic bardic catalog",
+   "flag": "🇮🇹",
+   "blurb": "Count the lawns and see how they fall: twenty-two played editions since 2003, twenty-two champions seeded in the top three, twenty-one in the top two — no other major so faithfully crowns its favorites. The world No. 1 himself has taken roughly thirteen of the last twenty-two, near 59%. Yet the ledger keeps one honest asterisk, the 2024 miss when the top seed did not win, and so I hold to the market's low edge rather than above it: 53-59%.",
+   "evidence": "22/22 champions top-3 seeded since 2003; No.1 wins ~13 of 22 (~59%); the lone 2024 top-2 miss keeps conversion from being automatic."
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "A bottom-half challenger",
+   "pick_scenario": "A bottom-half challenger takes the title",
+   "prob": "16-22%",
+   "prob_num": 19,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "flag": "",
+   "blurb": "Read the route, not the ranking. Sinner skipped every grass warm-up for the first time, came in off a French second-round loss and a five-set opener. The bottom half is clean of both co-favorites until the final, and a fresh Fritz serve or Zverev meets a man who may have emptied the tank on Djokovic. Grass rewards first-strike serving. I take the open half: 16-22%.",
+   "evidence": "Sinner skipped Halle/Queen's for the first time off a French R2 loss and a 5-set R1; bottom-half seeds sum to ~20% and avoid both co-favorites until the final."
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "Djokovic wins No. 25",
+   "pick_scenario": "Djokovic wins a record 25th major",
+   "prob": "11-15%",
+   "prob_num": 13,
+   "confidence": "medium",
+   "register": "bardic-incantatory, archetypal",
+   "flag": "",
+   "blurb": "There is one man who owns this lawn eight times over and hunts a twenty-fifth major that no one has ever held, and the draw has laid Sinner directly in his path so the crown must be taken by hand, not inherited. Grass forgives the years age has stolen elsewhere; the low-effort point suits the aging body, and the great closer still rises in the fifth set. The tape gives him only 11-15%, and I will not inflate it — but motivation like this is its own weapon.",
+   "evidence": "Priced 11-15% (Polymarket ~15%, Kalshi ~11-15%); 8 Wimbledon titles, chasing a record 25th Slam, drawn in Sinner's half."
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "A bottom-half challenger",
+   "pick_scenario": "A bottom-half challenger takes the title",
+   "prob": "16-22%",
+   "prob_num": 19,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "flag": "",
+   "blurb": "Everyone crowds the No. 1, so let me stand where the room isn't. Zverev's ~9% is puffed up by a man who has never once cleared the fourth round here — but Fritz's serve is the genuine grass weapon, and the whole bottom half gets to dodge both co-favorites until the last day. The market gives the open half about 20% outright, and against a favorite who forgot to practice on grass, that floor is where I plant my flag: 16-22%.",
+   "evidence": "Bottom-half seeds ~20% outright (Zverev ~9% + Fritz ~8% + others ~3-4%); Zverev's ~9% inflated by never passing R16 at Wimbledon."
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Backs the fated, story-shaped outcome — the ending the events seem to be scripting, however long the odds.",
+   "pick": "Djokovic wins No. 25",
+   "pick_scenario": "Djokovic wins a record 25th major",
+   "prob": "11-15%",
+   "prob_num": 13,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "flag": "",
+   "blurb": "Feel how the story has arranged itself: the one rival who could end him withdrawn from the far side, and the draw setting the old king in the young champion's own half, so the number that has never been reached — the twenty-fifth — can only be seized by running straight through the man who holds the throne. Eight titles on this grass, thirty-nine years old, and a record that has waited its whole history for exactly this hand. The tape whispers 11-15%; endings like this do not consult the tape.",
+   "evidence": "8 Wimbledon titles at 39 chasing an unprecedented 25th Slam; Alcaraz withdrawn and the draw placing him in Sinner's half so the title runs through beating Sinner — priced 11-15%."
+  }
+ ],
+ "field": [
+  {
+   "team": "Sinner",
+   "flag": "🇮🇹",
+   "price": 57
+  },
+  {
+   "team": "Djokovic",
+   "flag": "🇷🇸",
+   "price": 14
+  },
+  {
+   "team": "Zverev",
+   "flag": "🇩🇪",
+   "price": 9
+  },
+  {
+   "team": "Fritz",
+   "flag": "🇺🇸",
+   "price": 8
+  },
+  {
+   "team": "Draper",
+   "flag": "🇬🇧",
+   "price": 2
+  },
+  {
+   "team": "Field (others)",
+   "flag": "🎾",
+   "price": 10
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "2026 Men's Wimbledon Winner (resolves to the title winner)",
+   "detail": "Sinner 56-57%; Djokovic ~15%; Zverev ~9%; Fritz ~8%; Medvedev ~2% — 41 player outcomes",
+   "volume": "~$13.7M-$14M volume; ~$1.22M liquidity; ~$497k open interest"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Wimbledon Men's Singles Winner 2026 (KXATP-26WIM)",
+   "detail": "Sinner ~59-60%; Djokovic ~11-15%; Zverev ~8-10%; Fritz ~8%; Draper/Medvedev ~0%",
+   "volume": "~$14.1M volume; ~$1.2M liquidity"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Wimbledon: Sinner vs. Djokovic (head-to-head framed)",
+   "detail": "Consistent with Sinner heavily favored (Sinner ~56% vs Djokovic ~15% outright); secondary market",
+   "volume": "Lower than the main outright market"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Per-match winner markets (R16/QF/SF under KXATPMATCH)",
+   "detail": "Sinner a strong favorite in each remaining match (reached last 16 by Jul 3); the title is the product of winning each match through the July 12 final",
+   "volume": "Active mid-tournament; individually thinner than the outright"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "22 of 22",
+   "text": "Every played Wimbledon edition since 2003 was won by a top-3 seed (21 of 22 by a top-2 seed) — the most seed-friendly major of the modern era, capping the underdog tail and lifting Sinner's floor."
+  },
+  {
+   "stat": "~59%",
+   "text": "The top seed / world No. 1 has won Wimbledon in roughly 13 of 22 editions since 2004 — squarely in line with the ~56-60% market price on Sinner."
+  },
+  {
+   "stat": "78.5%",
+   "text": "Pre-match favorites win 78.5% of all Grand Slam matches (~4,838 matches). Best-of-five damps variance, but a champion must win seven straight, so upset risk compounds across the fortnight."
+  },
+  {
+   "stat": "0 of ~3",
+   "text": "Big-serving open-half finalists (Berdych 2010, Raonic 2016, Kyrgios 2022) reached ~3 of the last 15 finals but went 0-for-title — a bottom-half challenger usually reaches the final and loses it."
+  },
+  {
+   "stat": "~0 of many",
+   "text": "No 38/39-year-old has won a Slam in the Open era outside Djokovic's own late peaks — which caps his real-but-low 11-15% price and holds his reach-semifinal-healthy odds under ~0.80."
+  },
+  {
+   "stat": "~1 in 20",
+   "text": "Deep-underdog / unseeded Wimbledon champions number just ~2-3 (Becker 1985, Ivanisevic 2001) across 55+ Open-era editions — bounding the chaos tail near 4-7%, fattened only slightly by the Alcaraz/Draper withdrawals."
+  },
+  {
+   "stat": "9 ever",
+   "text": "Only 9 men have defended a Wimbledon title in the Open era; Sinner is a first-time defender — the softer sub-class, mild downward pressure supporting the low end of his band."
+  }
+ ],
+ "triggers": [
+  "Sinner retires, is visibly hampered by heat/injury, or blows a two-set (or set-and-break) lead in the Roland Garros collapse pattern — slashes the base case and fattens the field.",
+  "Sinner exits before the final — collapses the base case, redistributing mass to the surviving-half challenger or Djokovic.",
+  "The Sinner-Djokovic per-match market moves inside 60/40 as their semifinal nears, or opens with Djokovic favored — lifts the Djokovic scenario above its 11-15% band.",
+  "Zverev reaches his first-ever Wimbledon quarterfinal/semifinal (breaks his R16 wall) — strengthens the bottom-half challenger scenario.",
+  "An unseeded or lowly-seeded player reaches the semifinals, or both co-favorites exit before the final — moves mass into the deep-underdog tail.",
+  "The exact-question market on Sinner falls below ~48% or climbs above ~68% intra-tournament — recalibrate the base case to the new anchor.",
+  "Sinner wins the Djokovic semifinal in straight sets — collapses the field scenarios and pushes the base case toward 70%+."
+ ],
+ "sources": [
+  {
+   "label": "Polymarket — 2026 Men's Wimbledon Winner",
+   "url": "https://polymarket.com/event/2026-mens-wimbledon-winner"
+  },
+  {
+   "label": "Kalshi — Wimbledon Men's Singles Winner 2026 (KXATP-26WIM)",
+   "url": "https://kalshi.com/markets/kxatp/mens-tournament-winner/kxatp-26wim"
+  },
+  {
+   "label": "pdata.world — Polymarket snapshot (event 139122): Sinner ~56%, $14M vol, 41 outcomes",
+   "url": "https://pdata.world/events/polymarket/139122"
+  },
+  {
+   "label": "Sports Illustrated Betting — 2026 Men's Wimbledon Odds and Prediction",
+   "url": "https://www.si.com/betting/2026-mens-wimbledon-odds-and-prediction-jannik-sinner-set-as-odds-on-favorite-01kw4nztpmng"
+  },
+  {
+   "label": "ATP Tour — Wimbledon 2026 draw: Djokovic in Sinner's half",
+   "url": "https://www.atptour.com/en/news/wimbledon-2026-draw"
+  },
+  {
+   "label": "ATP Tour — Jannik Sinner: Wimbledon 2026 results, stats, grass record",
+   "url": "https://www.atptour.com/en/news/jannik-sinner-wimbledon-2026-results-stats-titles-record"
+  },
+  {
+   "label": "Olympics.com — Sinner survives five-set first-round scare",
+   "url": "https://www.olympics.com/en/news/wimbledon-2026-defending-champion-jannik-sinner-survives-first-round-scare"
+  },
+  {
+   "label": "Tennis Majors — Sinner confirms intention to skip a grass warm-up",
+   "url": "https://www.tennismajors.com/atp/sinner-confirms-his-intention-to-skip-a-grass-warm-up-851812.html"
+  },
+  {
+   "label": "tennis365 — The 9 men to defend their Wimbledon titles in the Open Era",
+   "url": "https://www.tennis365.com/facts-stats/the-men-to-defend-wimbledon-title-novak-djokovic-roger-federer"
+  },
+  {
+   "label": "Smarkets — Tennis Grand Slam trading strategy (favorites win 78.5%)",
+   "url": "https://help.smarkets.com/hc/en-gb/articles/115000821689-Tennis-Grand-Slam-trading-strategy"
+  },
+  {
+   "label": "India TV — Wimbledon's only three unseeded champions of the Open Era",
+   "url": "https://www.indiatvnews.com/sports/tennis/wimbledon-who-are-the-only-three-unseeded-champions-of-the-open-era-details-2025-06-30-996843"
+  },
+  {
+   "label": "E! News — Why Isn't Carlos Alcaraz at Wimbledon 2026: Wrist Injury",
+   "url": "https://www.eonline.com/news/1433360/why-isnt-carlos-alcaraz-at-wimbledon-2026-wrist-injury-recovery"
+  },
+  {
+   "label": "Wikipedia — 2026 Wimbledon Championships, Men's singles",
+   "url": "https://en.wikipedia.org/wiki/2026_Wimbledon_Championships_%E2%80%93_Men's_singles"
+  }
+ ],
+ "method_note": "Anchored on two liquid exact-question markets — Polymarket (Sinner 56-57%) and Kalshi (Sinner 59-60%), ~$14M each — pulled July 3, 2026 with the event at the last 16 and the final on July 12. Being live, those books already price Sinner's five-set opener and skipped grass prep, so cutting again below the band double-counts; a modest shade to the low edge survived (53-59%). Cross-checked against seed concentration (22/22 top-3 seeded since 2003) and the ~59% top-seed rate. Horizon: 9 days.",
+ "honesty_note": "The modal call — Sinner defends — sits at 53-59%, barely better than a coin flip. Read it plainly: the title is likelier his than not, but roughly two times in five it goes to someone else. A favorite this short at the sport's most seed-friendly major is still beaten often enough that a Djokovic, a Fritz, or a chaos run is a real, not remote, ending."
+}

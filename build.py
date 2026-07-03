@@ -5625,8 +5625,9 @@ FD_PERSONA_PROFILES = {
         "model": "Builds the answer from parts. Decomposes a question into independent factors, "
                  "assigns each a number it can defend, and multiplies — trusting a structured model "
                  "over the mood of the tape or the last loud headline.",
-        "doctrine": "Bets the mathematically optimal fraction, halved for safety, and only when its "
-                    "own number says the market is wrong. Often the smallest bet on the board; never the reckless one.",
+        "doctrine": "Bets the mathematically optimal fraction, halved for safety, when its own number "
+                    "says the market is wrong — and a token ante when the price already agrees. Often the "
+                    "smallest bet on the board; never the reckless one.",
         "signature": "the cold decomposition",
     },
     "historian": {
@@ -5634,8 +5635,8 @@ FD_PERSONA_PROFILES = {
         "model": "Counts. Finds the reference class — the last N times something like this came up — "
                  "and reads the ledger of what usually happened. The base rate is the anchor, and the "
                  "story of the day rarely beats it.",
-        "doctrine": "Stakes the same disciplined unit on its pick every time, win or lose, as long as "
-                    "the price isn't absurd. The consistency is the edge.",
+        "doctrine": "Stakes the same disciplined unit on its pick every time, win or lose. "
+                    "The consistency is the edge.",
         "signature": "the counted precedent",
     },
     "market-reader": {
@@ -5643,8 +5644,8 @@ FD_PERSONA_PROFILES = {
         "model": "Reads the tape. The deepest, most liquid market price is the best estimate anyone "
                  "has; the job is to respect it and lean only when a real gap opens between the price "
                  "and the evidence.",
-        "doctrine": "Barely bets. Tiny stakes, and only when the market visibly disagrees with itself "
-                    "— content, most nights, to stake nothing and simply be right.",
+        "doctrine": "The smallest player at the table: a token stake riding the market's own price most "
+                    "nights, and a real lean only when the tape visibly disagrees with itself.",
         "signature": "siding with the price",
     },
     "path-reader": {
@@ -5668,8 +5669,8 @@ FD_PERSONA_PROFILES = {
         "spectrum": 0.82, "zone": "Creative hypothesis",
         "model": "Starts from the premise that favorites are overrated and the crowd is a step behind. "
                  "Hunts the live path everyone has written off and asks what the board is mispricing.",
-        "doctrine": "Only fades the favorite, and bets bigger the longer the odds on the underdog it "
-                    "likes — its worst nights are quiet, its best nights are loud.",
+        "doctrine": "Bets bigger the longer the odds on the underdog it likes — half-size when the board "
+                    "already agrees with it. Its worst nights are quiet, its best nights are loud.",
         "signature": "fading the chalk",
     },
     "prophet": {
@@ -5913,9 +5914,10 @@ def build_forecast_ledger(native_items, markets):
 # it stakes on its own pick at the market's implied odds — but each persona sizes
 # that stake by its OWN doctrine (FD_DOCTRINES / _fd_persona_bet), drawn from where
 # it sits on the rigor→creative spectrum: the Quant sizes half-Kelly on its edge,
-# the Historian a flat unit, the Market Reader barely bets, the Contrarian and the
-# Prophet swing for the fences on long odds. A win pays the book's decimal odds; a
-# loss costs the stake; a doctrine with no reason to play sits the market out.
+# the Historian a flat unit, the Market Reader rides the tape for token money,
+# the Contrarian and the Prophet swing for the fences on long odds. A win pays the
+# book's decimal odds; a loss costs the stake; every persona antes on every market
+# it has a pick on — the doctrines differ in size, never in absence.
 # Bankrolls compound: settled bets apply in resolution-date order, so a hot streak
 # stakes more real dollars. It is scored from the same graded ledger as the Brier
 # records — never hand-maintained. This turns the desk's scoreboard from
@@ -5930,9 +5932,9 @@ FD_CCY = "$"
 # how they SIZE the stake and when they PASS. `style` selects the sizing rule in
 # _fd_persona_bet; `cap` is that persona's personal ceiling (≤ FD_KELLY_CAP).
 FD_DOCTRINES = {
-    "quant":         {"style": "half_kelly",  "cap": 0.18, "how": "Half-Kelly on its model edge — only when its number beats the price"},
+    "quant":         {"style": "half_kelly",  "cap": 0.18, "how": "Half-Kelly on its model edge; a token ante when the price already agrees"},
     "historian":     {"style": "flat_base",   "cap": 0.10, "how": "A flat reference-class unit, the same every time"},
-    "market-reader": {"style": "tape_tail",   "cap": 0.06, "how": "Tiny stakes; tails the tape, leans only on a real gap"},
+    "market-reader": {"style": "tape_tail",   "cap": 0.06, "how": "Small tape-following stakes; leans only on a real gap"},
     "path-reader":   {"style": "conviction",  "cap": 0.14, "how": "A fixed unit on the mechanism, odds be damned"},
     "talisman":      {"style": "belief",      "cap": 0.20, "how": "Sized to its faith in the key actor"},
     "contrarian":    {"style": "longshot",    "cap": 0.22, "how": "Bigger the longer the odds on the underdog it fades to"},
@@ -5972,15 +5974,19 @@ def _fd_persona_bet(key, p_pct, q_pct, bankroll, confidence="medium"):
     """One persona's bet on its own pick, sized by its DOCTRINE (FD_DOCTRINES[key]).
     p_pct = the persona's stated probability; q_pct = the market's implied price
     for that pick, giving decimal odds 1/q at which every persona is paid. The
-    doctrines differ only in the staked fraction and when they sit out:
-      half_kelly  (Quant)         — ½·(p−q)/(1−q), only on a positive edge
-      tape_tail   (Market Reader) — ¼-Kelly, and only when the edge clears 3 pts
-      flat_base   (Historian)     — a flat confidence-scaled unit unless badly overpriced
+    doctrines differ only in how they size — every persona antes something on
+    every market it has a pick on; nobody rides the rail:
+      half_kelly  (Quant)         — ½·(p−q)/(1−q) on a positive edge; a token
+                                    2.5% ante when the price already agrees
+      tape_tail   (Market Reader) — ¼-Kelly past a 3-pt gap; otherwise a small
+                                    1.5% tape-follow at the market's own price
+      flat_base   (Historian)     — a flat confidence-scaled unit, every time
       conviction  (Path Reader)   — a fixed unit whatever the odds
       belief      (Talisman)      — scaled to its own stated conviction p
-      longshot    (Contrarian)    — grows with the odds, only on an underpriced pick
+      longshot    (Contrarian)    — grows with the odds; half-size when the
+                                    board already agrees with it
       all_in_fate (Prophet)       — a heavy flat stake, edge no object
-    Returns {q, p, edge, dec_odds, frac, stake, to_win, style}; stake 0 is a pass.
+    Returns {q, p, edge, dec_odds, frac, stake, to_win, style}.
     Every fraction is clamped to the persona's own cap (≤ FD_KELLY_CAP)."""
     if not (isinstance(p_pct, (int, float)) and isinstance(q_pct, (int, float))):
         return None
@@ -5992,19 +5998,19 @@ def _fd_persona_bet(key, p_pct, q_pct, bankroll, confidence="medium"):
     style, cap = doc["style"], doc["cap"]
     cm = FD_CONF_MULT.get((confidence or "medium").strip().lower(), 1.0)
     if style == "tape_tail":
-        frac = 0.25 * edge / (1 - q) if edge > 0.03 and q < 1 else 0.0
+        frac = 0.25 * edge / (1 - q) if edge > 0.03 and q < 1 else 0.015
     elif style == "flat_base":
-        frac = 0.06 * cm if edge >= -0.02 else 0.0
+        frac = 0.06 * cm
     elif style == "conviction":
         frac = 0.10 * cm
     elif style == "belief":
         frac = p * 0.22 * cm
     elif style == "longshot":
-        frac = 0.035 * (dec - 1) * cm if edge > 0 else 0.0
+        frac = (0.035 if edge > 0 else 0.0175) * (dec - 1) * cm
     elif style == "all_in_fate":
         frac = 0.20 * cm
     else:  # half_kelly — the Quant and any unknown persona
-        frac = 0.5 * edge / (1 - q) if edge > 0 and q < 1 else 0.0
+        frac = (0.5 * edge / (1 - q)) * cm if edge > 0 and q < 1 else 0.025 * cm
     frac = max(0.0, min(frac, cap))
     stake = round(bankroll * frac, 2)
     return {"q": q_pct, "p": p_pct, "edge": p_pct - q_pct, "dec_odds": dec,
@@ -7048,12 +7054,13 @@ def _fdt_book_section(book, n):
         summ = (f'The book is open and even — every predictor holds {_fd_money(start)}. '
                 f'{book["open_n"]} live bet(s), {_fd_money(book["at_risk"])} staked at risk; '
                 f'the first settles when its market grades.')
-    note = ('<p class="fdt-note">Each predictor opens with $1,000 and every bet pays at the market’s own '
-            'decimal odds — but each one <b>bets in its own style, drawn from where it sits on the spectrum</b>. '
-            'The Quant sizes half-Kelly and only with an edge; the Historian stakes a flat unit every time; '
-            'the Market Reader barely bets; the Prophet and the Contrarian swing for the fences on long odds. '
-            'A win pays the decimal odds, a loss costs the stake, and bankrolls compound — so the standings '
-            'are the running verdict on rigor versus revelation.</p>')
+    note = ('<p class="fdt-note">Each predictor opens with $1,000, plays every market it has a pick on, and '
+            'every bet pays at the market’s own decimal odds — but each one <b>sizes in its own style, drawn '
+            'from where it sits on the spectrum</b>. The Quant goes half-Kelly on an edge and antes small without '
+            'one; the Historian stakes the same flat unit every time; the Market Reader rides the tape for token '
+            'money; the Prophet and the Contrarian swing for the fences on long odds. A win pays the decimal odds, '
+            'a loss costs the stake, and bankrolls compound — so the standings are the running verdict on rigor '
+            'versus revelation.</p>')
     return (f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Book — the roster bets fake money at the market’s odds</h2>'
             f'<p class="fdt-lead">{summ}</p>{tbl}{note}{pos_html}')
 

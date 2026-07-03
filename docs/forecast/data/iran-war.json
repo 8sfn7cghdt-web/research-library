@@ -21,9 +21,26 @@
     "why_over_runner_up": "The deal markets are the deepest signal on the board and they point at signature — 70–76% by the horizon on Kalshi, with an extension of the negotiating window priced at 62.5%. And unlike all three violated truces before it, this instrument is funded: the $6B via Qatar, the $300B fund, and the oil waiver are reversible carrots that pay for compliance. The war path must find a proximate spark AND defeat the mediator channels that have so far caught every escalation within days. Still, the margin is four points of midpoint, not a verdict.",
     "dissent": "The war-first read survived scrutiny and is preserved in the overlapping bands: a signature is not a settlement when the likeliest shooter — Israel — is a non-signatory facing an October 27 election, and a 6–12-month implementation gap leaves the 440.9 kg casus belli standing before inspectors are physically inside Isfahan. On that reading Reignition runs 32–42% and the top two scenarios trade places. The discriminators are observable: IAEA speed into the tunnels after any signature, and what Israel elects.",
     "tally": [
-      { "name": "Settlement Holds", "flag": "🕊️", "votes": 3 },
-      { "name": "Reignition — Round Three", "flag": "💥", "votes": 2 },
-      { "name": "Cold Truce / Frozen Standoff", "flag": "🧊", "votes": 1 }
+      {
+        "name": "Settlement Holds",
+        "flag": "🕊️",
+        "votes": 3
+      },
+      {
+        "name": "Reignition — Round Three",
+        "flag": "💥",
+        "votes": 2
+      },
+      {
+        "name": "Cold Truce / Frozen Standoff",
+        "flag": "🧊",
+        "votes": 1
+      },
+      {
+        "name": "Regime Change in Tehran",
+        "flag": "🏛️",
+        "votes": 1
+      }
     ]
   },
   "profiles": [
@@ -40,7 +57,10 @@
       "register": "Terse tape-reading",
       "blurb": "The tape is not subtle. Kalshi says 70% a deal signs before 2028 and 76% before the handover, on real money. Invasion trades at 13.5%. Regime fall at 7.5%. The nuke at 6.25%. Signed is not held, so I shade the 76 for the thin far book and for the distance between a signature and a settlement. That still leaves the deal as the only thing the deep money believes in. I take it at 38 and I don't argue with the book.",
       "evidence": "Kalshi deal-before-Jan-2029 at 76% (shaded for a 76/79 spread on ~60k contracts); every war and collapse market prices below 14%.",
-      "record": { "graded": 0, "hits": 0 },
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
       "persona": "market-reader"
     },
     {
@@ -56,7 +76,10 @@
       "register": "Measured analytic contrarian",
       "blurb": "Multiply, don't feel: 0.66–0.74 that a deal signs, 0.75–0.88 that no war round precedes the signature, 0.55–0.65 that a signed instrument survives hot and cold through 2028. The product is 31–41, midpoint near 35 — and the paradox is that this modest number is the largest one on the board. Whoever feels the deal is safe is wrong; whoever feels war is certain is wrong twice. The model holds both without flinching.",
       "evidence": "Three-factor product ≈ 0.70 × 0.82 × 0.60 ≈ 0.35; the geometric mean of the four independent scenario trees' midpoints lands on the same 35%.",
-      "record": { "graded": 0, "hits": 0 },
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
       "persona": "quant"
     },
     {
@@ -72,7 +95,10 @@
       "register": "Prophetic bardic catalog",
       "blurb": "Count the ledger of this quarrel: three ceasefires since June 2025 — three violated; two stalled negotiations — two ended in strikes; five Western attempts at a comprehensive deal — one signed; twice in twelve months the bombs fell while the diplomats were still seated. Against that catalog stands one lonely clean precedent, JPOA to JCPOA. I hear the drum under the signatures — six clashes since 1988, each one ended, each one returned. Round three is not prophecy; it is the arithmetic of recurrence, 34 in the hundred.",
       "evidence": "In-dyad record: 3-of-3 truces violated, 2-of-2 stalled stretches ended in strikes, escalation cycles compressing to 6–8 months since April 2024.",
-      "record": { "graded": 0, "hits": 0 },
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
       "persona": "historian"
     },
     {
@@ -88,7 +114,10 @@
       "register": "Terse verdict-driven",
       "blurb": "Walk the road. August 16, the window closes and the Hormuz toll holiday with it. October 27, Israel votes, and the likeliest shooter never signed anything. Past that, a six-to-twelve-month gap where the deal exists on paper and the inspectors are not yet inside the mountain. Lebanon is already burning at the edges — four failed ceasefires in June alone. Four tripwires on one stretch of road, and this driver has hit two of the last two. The road says another round. 35.",
       "evidence": "Aug 16 MOU expiry + Oct 27 Israeli election + the Lebanon fuse + the 6–12-month implementation gap — four live tripwires inside eighteen months.",
-      "record": { "graded": 0, "hits": 0 },
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
       "persona": "path-reader"
     },
     {
@@ -104,7 +133,10 @@
       "register": "Bardic-incantatory, archetypal",
       "blurb": "I read the men, and the men want the pen. Trump, carrying this war on a $113 billion ledger, hungers for the signature the way every builder hungers for the ribbon — his deputies sit in Doha saying it goes well, and meaning it. And in Tehran an unseen son rules from behind a curtain, wounded, needing money more than martyrdom: the $6 billion is his consolidation, not his surrender. When both thrones need the same treaty, the treaty tends to come. I hold Settlement at 36 — though a hidden king is the hardest actor to read, and I say so plainly.",
       "evidence": "Trump's signature-win incentive; the Doha technical track running (\"going well,\" July 1); relief tranches doubling as Mojtaba's regime glue.",
-      "record": { "graded": 0, "hits": 0 },
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
       "persona": "talisman"
     },
     {
@@ -120,8 +152,30 @@
       "register": "Wry contrarian-desk",
       "blurb": "Everyone on this desk believes something dramatic — a signing ceremony or a third war. History's favorite trick is neither. This same rivalry spent 2018 to 2024, six full years, with no deal and no major war: just process. The instrument on the table is built for exactly that — waivers instead of repeal, extensions instead of endings, a toll holiday sold sixty days at a time. Nobody prices perpetual almost. I do. Nineteen percent that in December 2028 we are still watching the extension announcements.",
       "evidence": "The 2018–24 JCPOA-collapse purgatory — six years, no deal, no major direct war — plus an architecture of waivers built for serial renewal.",
-      "record": { "graded": 0, "hits": 0 },
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
       "persona": "contrarian"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Regime Change in Tehran",
+      "pick_scenario": "Regime Change in Tehran",
+      "flag": "🏛️",
+      "prob": "5–11%",
+      "prob_num": 8,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "A settlement is not an ending; it is an intermission with the house lights up. An old order that has twice been bombed to the table, and twice signed what it despises, is not consolidating — it is concluding. The scenario band says 5 to 11 in 100 and the markets price the fall below 8. Long odds are where fate does its quiet work. Every armistice in this story reads as the interval before the turning of the age.",
+      "evidence": "The dossier's own band prices Regime Change at 5–11%; war markets price regime fall ~7.5% — the lone scenario that would make both ceasefires read as foreshadowing.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet"
     }
   ],
   "outcomes": [
@@ -303,13 +357,34 @@
     }
   ],
   "base_rates": [
-    { "stat": "3 of 3", "text": "Ceasefires in this conflict since June 2025 that were violated; one collapsed into full-scale war at ~8 months, broken by a strike during live talks. All three were unpaid truces — no data point yet tests a funded one." },
-    { "stat": "6 of 6", "text": "Direct US/Israel–Iran clashes since 1988 that ended in Iranian de-escalation within months. Wars in this dyad recur — and terminate." },
-    { "stat": "1 of 5", "text": "Western–Iran negotiation rounds that produced a signed comprehensive deal. The one success took ~20 months, interim to final — the 30-month horizon clears it." },
-    { "stat": "0 of 3", "text": "US-adversary nuclear frameworks that collapsed directly into a shooting war. Two of three survived their first ~2.5 years; the failures were cold erosion." },
-    { "stat": "0 of 7", "text": "Shocks that toppled the Islamic Republic — including this war and a Supreme Leader's assassination. Security-force defection has never been observed in five protest waves." },
-    { "stat": "~1 of 8", "text": "Threshold states under counter-proliferation pressure that crossed to a nuclear test. North Korea took ~3.7 years from NPT exit — with unbombed plants." },
-    { "stat": "3 firsts", "text": "This war already broke three never-happened records: Hormuz closed, a Supreme Leader assassinated, strikes during live talks — twice. Zero-counts widen the ranges here; they are not floors." }
+    {
+      "stat": "3 of 3",
+      "text": "Ceasefires in this conflict since June 2025 that were violated; one collapsed into full-scale war at ~8 months, broken by a strike during live talks. All three were unpaid truces — no data point yet tests a funded one."
+    },
+    {
+      "stat": "6 of 6",
+      "text": "Direct US/Israel–Iran clashes since 1988 that ended in Iranian de-escalation within months. Wars in this dyad recur — and terminate."
+    },
+    {
+      "stat": "1 of 5",
+      "text": "Western–Iran negotiation rounds that produced a signed comprehensive deal. The one success took ~20 months, interim to final — the 30-month horizon clears it."
+    },
+    {
+      "stat": "0 of 3",
+      "text": "US-adversary nuclear frameworks that collapsed directly into a shooting war. Two of three survived their first ~2.5 years; the failures were cold erosion."
+    },
+    {
+      "stat": "0 of 7",
+      "text": "Shocks that toppled the Islamic Republic — including this war and a Supreme Leader's assassination. Security-force defection has never been observed in five protest waves."
+    },
+    {
+      "stat": "~1 of 8",
+      "text": "Threshold states under counter-proliferation pressure that crossed to a nuclear test. North Korea took ~3.7 years from NPT exit — with unbombed plants."
+    },
+    {
+      "stat": "3 firsts",
+      "text": "This war already broke three never-happened records: Hormuz closed, a Supreme Leader assassinated, strikes during live talks — twice. Zero-counts widen the ranges here; they are not floors."
+    }
   ],
   "triggers": [
     "The ~Aug 16 2026 MOU deadline: a formal extension (priced 62.5%) or announced final terms shifts mass to Settlement; a lapse with no extension plus Hormuz toll reimposition shifts 10–15 points to Reignition — the sharpest near-term discriminator.",
@@ -323,17 +398,50 @@
     "Market tripwires: Kalshi deal-before-2027 sustained above 60% or below 30% re-anchors the Settlement/Cold-Truce split; Polymarket invasion above 25%, regime-fall above 15%, or nuke above 12% each force a re-derivation of their branch."
   ],
   "sources": [
-    { "label": "Arab Center Washington DC — Full text of the US–Iran Memorandum of Understanding", "url": "https://arabcenterdc.org/resource/memorandum-of-understanding-between-the-united-states-of-america-and-the-islamic-republic-of-iran/" },
-    { "label": "CNN — US releases official agreement with Iran: the 14-point text", "url": "https://www.cnn.com/2026/06/17/middleeast/us-iran-war-mou-text-intl" },
-    { "label": "Institute for Science and International Security — IAEA Iran verification analysis, June 2026", "url": "https://isis-online.org/isis-reports/analysis-of-iaea-iran-verification-and-monitoring-and-npt-safeguards-reports-june-2026" },
-    { "label": "House of Commons Library — US–Iran ceasefire and nuclear talks in 2026 (CBP-10637)", "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10637/" },
-    { "label": "Foreign Affairs — The New Khamenei", "url": "https://www.foreignaffairs.com/iran/new-khamenei" },
-    { "label": "Al Jazeera — US–Iran negotiations: What's the latest? (Jul 1 2026)", "url": "https://www.aljazeera.com/news/2026/7/1/us-iran-negotiations-whats-the-latest" },
-    { "label": "Britannica — 2026 Israeli Elections", "url": "https://www.britannica.com/event/2026-Israeli-Elections" },
-    { "label": "Kalshi — Will the US agree to a new Iranian nuclear deal?", "url": "https://kalshi.com/markets/kxusairanagreement/us-iran-nuclear-deal" },
-    { "label": "Polymarket — Will the U.S. invade Iran before 2027?", "url": "https://polymarket.com/event/will-the-us-invade-iran-before-2027" },
-    { "label": "Polymarket — Will the Iranian regime fall before 2027?", "url": "https://polymarket.com/event/will-the-iranian-regime-fall-by-the-end-of-2026" },
-    { "label": "Polymarket — US–Iran Final Nuclear Deal by", "url": "https://polymarket.com/event/us-iran-final-nuclear-deal-by-20260621201254412" }
+    {
+      "label": "Arab Center Washington DC — Full text of the US–Iran Memorandum of Understanding",
+      "url": "https://arabcenterdc.org/resource/memorandum-of-understanding-between-the-united-states-of-america-and-the-islamic-republic-of-iran/"
+    },
+    {
+      "label": "CNN — US releases official agreement with Iran: the 14-point text",
+      "url": "https://www.cnn.com/2026/06/17/middleeast/us-iran-war-mou-text-intl"
+    },
+    {
+      "label": "Institute for Science and International Security — IAEA Iran verification analysis, June 2026",
+      "url": "https://isis-online.org/isis-reports/analysis-of-iaea-iran-verification-and-monitoring-and-npt-safeguards-reports-june-2026"
+    },
+    {
+      "label": "House of Commons Library — US–Iran ceasefire and nuclear talks in 2026 (CBP-10637)",
+      "url": "https://commonslibrary.parliament.uk/research-briefings/cbp-10637/"
+    },
+    {
+      "label": "Foreign Affairs — The New Khamenei",
+      "url": "https://www.foreignaffairs.com/iran/new-khamenei"
+    },
+    {
+      "label": "Al Jazeera — US–Iran negotiations: What's the latest? (Jul 1 2026)",
+      "url": "https://www.aljazeera.com/news/2026/7/1/us-iran-negotiations-whats-the-latest"
+    },
+    {
+      "label": "Britannica — 2026 Israeli Elections",
+      "url": "https://www.britannica.com/event/2026-Israeli-Elections"
+    },
+    {
+      "label": "Kalshi — Will the US agree to a new Iranian nuclear deal?",
+      "url": "https://kalshi.com/markets/kxusairanagreement/us-iran-nuclear-deal"
+    },
+    {
+      "label": "Polymarket — Will the U.S. invade Iran before 2027?",
+      "url": "https://polymarket.com/event/will-the-us-invade-iran-before-2027"
+    },
+    {
+      "label": "Polymarket — Will the Iranian regime fall before 2027?",
+      "url": "https://polymarket.com/event/will-the-iranian-regime-fall-by-the-end-of-2026"
+    },
+    {
+      "label": "Polymarket — US–Iran Final Nuclear Deal by",
+      "url": "https://polymarket.com/event/us-iran-final-nuclear-deal-by-20260621201254412"
+    }
   ],
   "method_note": "Grounded research-first: a fresh sweep of the war's current state, drivers, and reference classes, plus 28 prediction-market prices pulled 2026-07-03, fed four independent scenario trees that were argued against each other and fused by grounding strength, not vote count. Every probability is the output of a market price, a counted base rate, or a multiplied decomposition — the full derivations sit on each outcome card. The six standing profiles then each committed to one scenario; the roster split 3–2–1.",
   "honesty_note": "Settlement Holds is the single most likely path at 31–41% — which also means it is more likely than not that the settlement does not hold through 2028. The runner-up war scenario overlaps the favorite by design: the evidence genuinely cannot rank them further apart than four points of midpoint, and the discriminators (IAEA speed into Isfahan, the Israeli election) are events, not opinions."
