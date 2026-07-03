@@ -29,6 +29,21 @@
    "band": "31–41%",
    "profiles_n": 6,
    "file": "forecast/iran-war.html"
+  },
+  {
+   "slug": "lebron-2026-27",
+   "title": "LeBron's Next Team, 2026-27",
+   "question": "Which NBA team will LeBron James play for during the 2026-27 regular season?",
+   "dek": "Six standing predictor profiles each committed to one team; the consensus is a Cleveland homecoming at 36–44%, with the Warriors' clean-money case the live dissent at 24–31%.",
+   "category": "Sport & Games",
+   "status": "open",
+   "logged": "2026-07-03",
+   "grades": "2026-10-31",
+   "pick": "Cleveland Cavaliers",
+   "pick_flag": "🍷",
+   "band": "36–44%",
+   "profiles_n": 6,
+   "file": "forecast/lebron-2026-27.html"
   }
  ]
 }

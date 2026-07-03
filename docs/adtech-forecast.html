@@ -526,6 +526,42 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fdt-pend .w { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); white-space: nowrap; }
 @media (max-width: 640px) { .fdt-pend { grid-template-columns: 1fr; } }
 
+/* ---- The Book: the roster's fake-money accounts ---- */
+.fdt-lead { font-family: var(--serif); font-size: .98rem; line-height: 1.6; color: var(--fdtext); margin: .2rem 0 1rem; }
+.fdt-lead .up { color: var(--fdup); font-weight: 700; } .fdt-lead .dn { color: var(--fddn); font-weight: 700; }
+.fdt-bk-tbl table { font-variant-numeric: tabular-nums; }
+.fdt-bk-tbl td, .fdt-bk-tbl th { white-space: nowrap; }
+.fdt-bk-tbl .num.up { color: var(--fdup); font-weight: 700; } .fdt-bk-tbl .num.dn { color: var(--fddn); font-weight: 700; }
+.fdt-bk-who { font-family: var(--sans); font-weight: 700; color: var(--fdtext) !important; }
+.fdt-bk-who .av { font-size: 1rem; margin-right: .45rem; background: #0c1117; border: 1px solid var(--fdline);
+  border-left-width: 3px; border-radius: 2px; padding: .12rem .32rem; }
+.fdt-bk-worth { position: relative; min-width: 150px; }
+.fdt-bk-worth .wbar { position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 60%;
+  border-radius: 1px; opacity: .18; }
+.fdt-bk-worth b { position: relative; color: var(--fdtext); }
+.fdt-bk-sub { font-family: var(--sans); font-size: .72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--fdmut); margin: 1.4rem 0 .7rem; }
+.fdt-bk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: .7rem; }
+.fdt-bk-pos { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: .7rem .8rem; }
+.fdt-bk-pos .who { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
+  font-family: var(--sans); font-weight: 700; font-size: .82rem; color: var(--fdtext); }
+.fdt-bk-pos .who .odds { font-family: var(--fdmono); font-weight: 700; font-size: .92rem; color: var(--fdgold);
+  font-variant-numeric: tabular-nums; }
+.fdt-bk-pos .mk { font-family: var(--serif); font-style: italic; font-size: .74rem; color: var(--fdmut);
+  margin: .25rem 0 .35rem; line-height: 1.3; }
+.fdt-bk-pos .call { font-family: var(--sans); font-size: .82rem; font-weight: 600; color: var(--fdtext); }
+.fdt-bk-pos .stake { display: flex; justify-content: space-between; gap: .5rem; margin-top: .4rem;
+  padding-top: .4rem; border-top: 1px dotted var(--fdline); font-family: var(--fdmono); font-size: .72rem;
+  color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fdt-bk-pos .stake .w b { color: var(--fdup); } .fdt-bk-pos .stake b { color: var(--fdtext); }
+.fdt-p-bank { display: flex; align-items: baseline; gap: .5rem; border-top: 1px solid var(--fdline);
+  margin-top: .7rem; padding-top: .6rem; font-variant-numeric: tabular-nums; }
+.fdt-p-bank .lbl { font-family: var(--sans); font-size: .58rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--fdmut); }
+.fdt-p-bank .nw { font-family: var(--fdmono); font-weight: 700; font-size: 1rem; color: var(--fdtext); }
+.fdt-p-bank .pl { font-family: var(--fdmono); font-size: .76rem; margin-left: auto; color: var(--fdmut); }
+.fdt-p-bank .pl.up { color: var(--fdup); font-weight: 700; } .fdt-p-bank .pl.dn { color: var(--fddn); font-weight: 700; }
+
 /* verdict banner on graded detail pages */
 .fdd-verdict { border: 1px solid var(--fdup); background: rgba(34,197,94,.07); border-radius: 2px;
   padding: 1.1rem 1.3rem; }
@@ -538,6 +574,27 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fdd-verdict .src a { color: var(--fdblue); }
 .fdd-tag.hit { color: #0c1117; background: var(--fdup); }
 .fdd-tag.missed { color: #fff; background: var(--fddn); }
+
+/* The Forecasters — the spectrum hero + richer profile cards */
+.fdt-fc-lead { font-family: var(--serif); font-size: 1rem; line-height: 1.68; color: #c6ccd6; margin: 0 0 1.2rem; }
+.fdt-spectrum { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: 1.2rem 1.1rem .8rem; overflow-x: auto; }
+.fdt-spectrum svg { display: block; width: 100%; height: auto; min-width: 560px; }
+.fdt-p-zone { font-family: var(--sans); font-size: .56rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; padding: .16rem .5rem; border-radius: 999px; border: 1px solid currentColor;
+  white-space: nowrap; }
+.fdt-p-model { font-family: var(--serif); font-size: .82rem; line-height: 1.56; color: #b8bec9;
+  border-top: 1px solid var(--fdline); margin-top: .7rem; padding-top: .6rem; }
+.fdt-p-doc { display: flex; gap: .5rem; align-items: baseline; margin-top: .55rem; }
+.fdt-p-doc .k { font-family: var(--sans); font-size: .55rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .11em; color: var(--fdmut); flex: none; padding-top: .1rem; }
+.fdt-p-doc .v { font-family: var(--sans); font-size: .8rem; font-weight: 600; color: var(--fdtext); line-height: 1.42; }
+.fdt-p-spx { display: flex; align-items: center; gap: .5rem; margin-top: .6rem; }
+.fdt-p-spx .track { position: relative; flex: 1; height: 4px; border-radius: 999px;
+  background: linear-gradient(90deg, #6ea8ff33, #9aa1af33, #eab30833); }
+.fdt-p-spx .pip { position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%;
+  transform: translate(-50%, -50%); border: 2px solid var(--fdbg); }
+.fdt-p-spx .ends { font-family: var(--fdmono); font-size: .5rem; color: var(--fdmut); }
 </style>
 </head>
 <body>
@@ -560,7 +617,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     <span class="fd-folio-c">63 priced outcomes</span>
     <span>1 categories</span>
   </div>
-  <a class="fd-rec-link" href="adtech-record.html">📒 The Track Record — every graded call, scored →</a>
+  <a class="fd-rec-link" href="adtech-record.html">📒 The Track Record — the roster’s bankrolls, every graded call scored →</a>
 </header>
 <main class="fd-board" id="fd-board">
 <div class="fd-tape" aria-hidden="true"><div class="fd-tape-inner" style="animation-duration:120s"><span class="fd-tk"><b>The Address Knows You</b> · Managed Degradation (Dual-Stack Equilibrium —  <span class="up" style="color:#2dd4bf">48–58%</span></span><span class="fd-tk"><b>The Medium Is the Message</b> · Bifurcated Consolidation <span class="up" style="color:#2dd4bf">40–50%</span></span><span class="fd-tk"><b>Buying the Living Room</b> · Clears and grinds (base case) <span class="up" style="color:#2dd4bf">50%</span></span><span class="fd-tk"><b>A Billion Screens</b> · Steady digital-led grind (base case) <span class="up" style="color:#2dd4bf">48–60%</span></span><span class="fd-tk"><b>Reach Ahead of Revenue</b> · Reach compounds into revenue (base case) <span class="up" style="color:#2dd4bf">50–60%</span></span><span class="fd-tk"><b>Safe Beside What?</b> · Fragmented Floor (base case) <span class="up" style="color:#2dd4bf">35–45%</span></span><span class="fd-tk"><b>Who Keeps the Spread</b> · Curation eats the stack (sell-side ascendancy) <span class="up" style="color:#2dd4bf">35–45%</span></span><span class="fd-tk"><b>The Signal Layer</b> · Messy Continuity — durable plural multi-signal <span class="up" style="color:#2dd4bf">38–48%</span></span><span class="fd-tk"><b>The Protocol War</b> · Layered Coexistence on an MCP Substrate (negot <span class="up" style="color:#2dd4bf">36–44%</span></span><span class="fd-tk"><b>On Leased Land</b> · Strategic Sale / Absorption — Bridgepoint exit <span class="up" style="color:#2dd4bf">35–43%</span></span><span class="fd-tk"><b>Closer to the Metal</b> · Absorbed / Bounded Plumbing (MODAL) — containe <span class="up" style="color:#2dd4bf">40–46%</span></span><span class="fd-tk"><b>The Measured Screen</b> · On-Curve Continuation — CTV climbs the flatten <span class="up" style="color:#2dd4bf">34–44%</span></span><span class="fd-tk"><b>The Missing Front Door</b> · Absorbed Front Door, Gap Narrows on Rate Not L <span class="up" style="color:#2dd4bf">38–46%</span></span><span class="fd-tk"><b>The Living-Room Handoff</b> · Bifurcation / Split Verdict — LinkedIn durable <span class="up" style="color:#2dd4bf">36–46%</span></span><span class="fd-tk"><b>The Address Knows You</b> · Managed Degradation (Dual-Stack Equilibrium —  <span class="up" style="color:#2dd4bf">48–58%</span></span><span class="fd-tk"><b>The Medium Is the Message</b> · Bifurcated Consolidation <span class="up" style="color:#2dd4bf">40–50%</span></span><span class="fd-tk"><b>Buying the Living Room</b> · Clears and grinds (base case) <span class="up" style="color:#2dd4bf">50%</span></span><span class="fd-tk"><b>A Billion Screens</b> · Steady digital-led grind (base case) <span class="up" style="color:#2dd4bf">48–60%</span></span><span class="fd-tk"><b>Reach Ahead of Revenue</b> · Reach compounds into revenue (base case) <span class="up" style="color:#2dd4bf">50–60%</span></span><span class="fd-tk"><b>Safe Beside What?</b> · Fragmented Floor (base case) <span class="up" style="color:#2dd4bf">35–45%</span></span><span class="fd-tk"><b>Who Keeps the Spread</b> · Curation eats the stack (sell-side ascendancy) <span class="up" style="color:#2dd4bf">35–45%</span></span><span class="fd-tk"><b>The Signal Layer</b> · Messy Continuity — durable plural multi-signal <span class="up" style="color:#2dd4bf">38–48%</span></span><span class="fd-tk"><b>The Protocol War</b> · Layered Coexistence on an MCP Substrate (negot <span class="up" style="color:#2dd4bf">36–44%</span></span><span class="fd-tk"><b>On Leased Land</b> · Strategic Sale / Absorption — Bridgepoint exit <span class="up" style="color:#2dd4bf">35–43%</span></span><span class="fd-tk"><b>Closer to the Metal</b> · Absorbed / Bounded Plumbing (MODAL) — containe <span class="up" style="color:#2dd4bf">40–46%</span></span><span class="fd-tk"><b>The Measured Screen</b> · On-Curve Continuation — CTV climbs the flatten <span class="up" style="color:#2dd4bf">34–44%</span></span><span class="fd-tk"><b>The Missing Front Door</b> · Absorbed Front Door, Gap Narrows on Rate Not L <span class="up" style="color:#2dd4bf">38–46%</span></span><span class="fd-tk"><b>The Living-Room Handoff</b> · Bifurcation / Split Verdict — LinkedIn durable <span class="up" style="color:#2dd4bf">36–46%</span></span></div></div>

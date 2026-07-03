@@ -5498,7 +5498,7 @@ def build_pamphlet(out_dir, item, shell=""):
 # makes, by category, worn like a prediction market's board. Two kinds of entry:
 #   1. NATIVE forecasts (docs/forecast/manifest.json + docs/forecast/data/{slug}.json)
 #      — standalone Predictive-Council runs (e.g. the World Cup pick) rendered as a
-#      full "live market" page: consensus pick, the six-profile predictor roster,
+#      full "live market" page: consensus pick, the seven-profile predictor roster,
 #      the field board, base rates, the market snapshot, flip triggers.
 #   2. HARVESTED markets — each research corpus's manifest.json `scenarios` become
 #      a multi-outcome market card (scenario = outcome, probability band = price),
@@ -5596,7 +5596,7 @@ def read_forecast_data(out_dir, slug):
 # records are never hand-maintained. A native data file that carries its own
 # `result` block (status graded/resolved) is honored as a second source.
 
-# The six standing desk personas (see the-forecaster skill). Profiles in native
+# The seven standing desk personas (see the-forecaster skill). Profiles in native
 # data files carry a stable `persona` id so a market-localized display name
 # ("The Bracket Surgeon") still accrues to its standing persona's record.
 FD_PERSONAS = [
@@ -5606,8 +5606,82 @@ FD_PERSONAS = [
     ("path-reader", "The Path Reader", "🔪", "Ignores reputation; reads the actual route, draw, and path."),
     ("talisman", "The Talisman", "⭐", "Elite individual actors, motivation, proven leadership."),
     ("contrarian", "The Contrarian", "🎭", "Favorites usually fail; hunts the underpriced live path."),
+    ("prophet", "The Prophet", "🕊", "Divine providence — backs the fated, story-shaped ending, however long the odds."),
 ]
 FD_PERSONA_ALIASES = {"the bracket surgeon": "path-reader"}
+
+# ---- The spectrum: rigor → intuition → creative hypothesis -------------------
+# The roster is not a committee of equals — it is a spectrum. On the left sit the
+# calculators (decomposition, base rates, the tape); in the middle the readers of
+# route and character; on the right the imaginers who back a story over a number.
+# Each persona's forecasting MODEL and its play-money BETTING DOCTRINE are both
+# drawn from where it sits, so the desk's fake-money P&L becomes the running
+# answer to one question: over a season, does disciplined rigor or inspired
+# long-shotting build the bigger roll? `spectrum` is 0.0 (pure rigor) → 1.0
+# (pure creative hypothesis); `zone` is the band it falls in.
+FD_PERSONA_PROFILES = {
+    "quant": {
+        "spectrum": 0.05, "zone": "Mathematical rigor",
+        "model": "Builds the answer from parts. Decomposes a question into independent factors, "
+                 "assigns each a number it can defend, and multiplies — trusting a structured model "
+                 "over the mood of the tape or the last loud headline.",
+        "doctrine": "Bets the mathematically optimal fraction, halved for safety, and only when its "
+                    "own number says the market is wrong. Often the smallest bet on the board; never the reckless one.",
+        "signature": "the cold decomposition",
+    },
+    "historian": {
+        "spectrum": 0.20, "zone": "Mathematical rigor",
+        "model": "Counts. Finds the reference class — the last N times something like this came up — "
+                 "and reads the ledger of what usually happened. The base rate is the anchor, and the "
+                 "story of the day rarely beats it.",
+        "doctrine": "Stakes the same disciplined unit on its pick every time, win or lose, as long as "
+                    "the price isn't absurd. The consistency is the edge.",
+        "signature": "the counted precedent",
+    },
+    "market-reader": {
+        "spectrum": 0.33, "zone": "Mathematical rigor",
+        "model": "Reads the tape. The deepest, most liquid market price is the best estimate anyone "
+                 "has; the job is to respect it and lean only when a real gap opens between the price "
+                 "and the evidence.",
+        "doctrine": "Barely bets. Tiny stakes, and only when the market visibly disagrees with itself "
+                    "— content, most nights, to stake nothing and simply be right.",
+        "signature": "siding with the price",
+    },
+    "path-reader": {
+        "spectrum": 0.50, "zone": "Intuition & reading",
+        "model": "Ignores reputation and reads the actual route — the draw, the mechanism, the path "
+                 "dependence. Who does the favorite actually have to get past, and does the road really "
+                 "go through?",
+        "doctrine": "Puts a fixed, unbothered stake on its read of the mechanism whatever the odds say. "
+                    "It is buying the route, not the price.",
+        "signature": "reading the draw",
+    },
+    "talisman": {
+        "spectrum": 0.66, "zone": "Intuition & reading",
+        "model": "Looks for the individual who bends the outcome — the proven leader, the elite actor, "
+                 "the figure who has done it before. Systems matter, but at the hinge a person decides.",
+        "doctrine": "Bets in proportion to its faith in that actor: sure of the hero, it loads up; "
+                    "unsure, it barely shows.",
+        "signature": "backing the man",
+    },
+    "contrarian": {
+        "spectrum": 0.82, "zone": "Creative hypothesis",
+        "model": "Starts from the premise that favorites are overrated and the crowd is a step behind. "
+                 "Hunts the live path everyone has written off and asks what the board is mispricing.",
+        "doctrine": "Only fades the favorite, and bets bigger the longer the odds on the underdog it "
+                    "likes — its worst nights are quiet, its best nights are loud.",
+        "signature": "fading the chalk",
+    },
+    "prophet": {
+        "spectrum": 0.96, "zone": "Creative hypothesis",
+        "model": "Reads the story, not the tape. Asks which ending would make everything so far look "
+                 "like foreshadowing, and backs the fated outcome however long the odds — the call "
+                 "everyone swears, afterward, was obvious.",
+        "doctrine": "Stakes heavy on the pick it believes is written, odds no object. It goes broke, "
+                    "or it goes down in legend.",
+        "signature": "backing the ending",
+    },
+}
 
 
 def _persona_key(profile):
@@ -5740,7 +5814,7 @@ def attach_market_resolution(m, resolutions):
 def build_forecast_ledger(native_items, markets):
     """Everything the record pages and board chips need, computed in one pass:
     - personas: {key: {name, avatar, criterion, graded, hits, briers[], calls[]}}
-      for the six standing personas (plus any guest), in roster order
+      for the seven standing personas (plus any guest), in roster order
     - calls: every graded call (council + personas + research lead calls)
     - desk: {graded, hits} — the desk's own record (consensus + lead calls)
     - pending: open positions, native first by grade date, then research by horizon
@@ -5832,6 +5906,219 @@ def build_forecast_ledger(native_items, markets):
     calls.sort(key=lambda c: c.get("date", ""), reverse=True)
     pending.sort(key=lambda p: (p["kind"] != "native", p.get("due", "") or "~", p.get("title", "")))
     return {"personas": personas, "calls": calls, "desk": desk, "pending": pending}
+
+
+# ---- The Book: the roster bets fake money at the market's own odds ----------
+# Every standing persona opens an account with FD_BANKROLL_START. On each market
+# it stakes on its own pick at the market's implied odds — but each persona sizes
+# that stake by its OWN doctrine (FD_DOCTRINES / _fd_persona_bet), drawn from where
+# it sits on the rigor→creative spectrum: the Quant sizes half-Kelly on its edge,
+# the Historian a flat unit, the Market Reader barely bets, the Contrarian and the
+# Prophet swing for the fences on long odds. A win pays the book's decimal odds; a
+# loss costs the stake; a doctrine with no reason to play sits the market out.
+# Bankrolls compound: settled bets apply in resolution-date order, so a hot streak
+# stakes more real dollars. It is scored from the same graded ledger as the Brier
+# records — never hand-maintained. This turns the desk's scoreboard from
+# wins-and-losses into economic value, and into a running test of the spectrum
+# itself: does disciplined rigor or inspired long-shotting build the bigger roll?
+FD_BANKROLL_START = 1000.0   # every persona opens the book with $1,000
+FD_KELLY_CAP = 0.25          # hard ceiling — no persona stakes more than a quarter of its roll
+FD_CCY = "$"
+
+# Each persona bets in its own style, drawn from its place on the spectrum. All
+# bets pay at the market's own decimal odds (1/price) — personas differ only in
+# how they SIZE the stake and when they PASS. `style` selects the sizing rule in
+# _fd_persona_bet; `cap` is that persona's personal ceiling (≤ FD_KELLY_CAP).
+FD_DOCTRINES = {
+    "quant":         {"style": "half_kelly",  "cap": 0.18, "how": "Half-Kelly on its model edge — only when its number beats the price"},
+    "historian":     {"style": "flat_base",   "cap": 0.10, "how": "A flat reference-class unit, the same every time"},
+    "market-reader": {"style": "tape_tail",   "cap": 0.06, "how": "Tiny stakes; tails the tape, leans only on a real gap"},
+    "path-reader":   {"style": "conviction",  "cap": 0.14, "how": "A fixed unit on the mechanism, odds be damned"},
+    "talisman":      {"style": "belief",      "cap": 0.20, "how": "Sized to its faith in the key actor"},
+    "contrarian":    {"style": "longshot",    "cap": 0.22, "how": "Bigger the longer the odds on the underdog it fades to"},
+    "prophet":       {"style": "all_in_fate", "cap": 0.25, "how": "A heavy fixed stake on the fated pick, odds no object"},
+}
+FD_CONF_MULT = {"high": 1.2, "medium": 1.0, "low": 0.7}
+
+
+def _fd_money(x):
+    """A grouped dollar string, no sign: 1234.5 → $1,234."""
+    return f"{FD_CCY}{x:,.0f}"
+
+
+def _fd_signed(x):
+    """A signed dollar string with a proper minus glyph: -50 → −$50."""
+    return f"+{FD_CCY}{x:,.0f}" if x >= 0 else f"−{FD_CCY}{abs(x):,.0f}"
+
+
+def _fd_book_from_native(d):
+    """Implied-price book for a native forecast: pick name (casefold) → price %.
+    Team markets carry a `field` (team→price); scenario markets fall back to
+    `outcomes` band midpoints. Empty when neither is present."""
+    book = {}
+    for o in d.get("field") or []:
+        nm = (o.get("team") or o.get("name") or "").strip().casefold()
+        if nm and isinstance(o.get("price"), (int, float)):
+            book[nm] = float(o["price"])
+    for o in d.get("outcomes") or []:
+        nm = (o.get("name") or "").strip().casefold()
+        lo, hi = o.get("low"), o.get("high")
+        if nm and nm not in book and isinstance(lo, (int, float)) and isinstance(hi, (int, float)):
+            book[nm] = (float(lo) + float(hi)) / 2
+    return book
+
+
+def _fd_persona_bet(key, p_pct, q_pct, bankroll, confidence="medium"):
+    """One persona's bet on its own pick, sized by its DOCTRINE (FD_DOCTRINES[key]).
+    p_pct = the persona's stated probability; q_pct = the market's implied price
+    for that pick, giving decimal odds 1/q at which every persona is paid. The
+    doctrines differ only in the staked fraction and when they sit out:
+      half_kelly  (Quant)         — ½·(p−q)/(1−q), only on a positive edge
+      tape_tail   (Market Reader) — ¼-Kelly, and only when the edge clears 3 pts
+      flat_base   (Historian)     — a flat confidence-scaled unit unless badly overpriced
+      conviction  (Path Reader)   — a fixed unit whatever the odds
+      belief      (Talisman)      — scaled to its own stated conviction p
+      longshot    (Contrarian)    — grows with the odds, only on an underpriced pick
+      all_in_fate (Prophet)       — a heavy flat stake, edge no object
+    Returns {q, p, edge, dec_odds, frac, stake, to_win, style}; stake 0 is a pass.
+    Every fraction is clamped to the persona's own cap (≤ FD_KELLY_CAP)."""
+    if not (isinstance(p_pct, (int, float)) and isinstance(q_pct, (int, float))):
+        return None
+    q = min(max(q_pct / 100.0, 0.001), 0.999)
+    p = min(max(p_pct / 100.0, 0.0), 1.0)
+    dec = 1.0 / q
+    edge = p - q
+    doc = FD_DOCTRINES.get(key, {"style": "half_kelly", "cap": FD_KELLY_CAP})
+    style, cap = doc["style"], doc["cap"]
+    cm = FD_CONF_MULT.get((confidence or "medium").strip().lower(), 1.0)
+    if style == "tape_tail":
+        frac = 0.25 * edge / (1 - q) if edge > 0.03 and q < 1 else 0.0
+    elif style == "flat_base":
+        frac = 0.06 * cm if edge >= -0.02 else 0.0
+    elif style == "conviction":
+        frac = 0.10 * cm
+    elif style == "belief":
+        frac = p * 0.22 * cm
+    elif style == "longshot":
+        frac = 0.035 * (dec - 1) * cm if edge > 0 else 0.0
+    elif style == "all_in_fate":
+        frac = 0.20 * cm
+    else:  # half_kelly — the Quant and any unknown persona
+        frac = 0.5 * edge / (1 - q) if edge > 0 and q < 1 else 0.0
+    frac = max(0.0, min(frac, cap))
+    stake = round(bankroll * frac, 2)
+    return {"q": q_pct, "p": p_pct, "edge": p_pct - q_pct, "dec_odds": dec,
+            "frac": frac, "stake": stake, "to_win": round(stake * (dec - 1), 2), "style": style}
+
+
+def _fd_bet_rows(native_items, markets, native_data):
+    """Every persona bet on the board — one row per (persona, market): {key,
+    name, avatar, market, href, pick, flag, p, q, graded, hit, date, due}.
+    Graded rows carry hit/date; open rows carry due. native_data maps slug → the
+    full native data dict (for its book + roster probabilities)."""
+    rows = []
+    native_data = native_data or {}
+    for f in native_items:
+        d = native_data.get(f.get("slug", ""))
+        if not d:
+            continue
+        book = _fd_book_from_native(d)
+        g = f.get("_graded")
+        wkey = (g["winner"].strip().casefold() if g else None)
+        title = f.get("title", f.get("slug", ""))
+        href = f.get("file") or f"forecast/{f.get('slug', '')}.html"
+        for p in d.get("profiles", []):
+            pick = (p.get("pick_scenario") or p.get("pick") or "").strip()
+            q = book.get(pick.casefold())
+            pp = p.get("prob_num")
+            if q is None or not isinstance(pp, (int, float)):
+                continue
+            rows.append({"key": _persona_key(p), "name": p.get("name", ""),
+                         "avatar": p.get("avatar", "🎯"), "market": title, "href": href,
+                         "pick": pick, "flag": p.get("flag", ""), "p": float(pp), "q": float(q),
+                         "conf": p.get("confidence", "medium"),
+                         "graded": bool(g), "hit": (pick.casefold() == wkey) if g else None,
+                         "date": (g.get("resolved", "") if g else ""), "due": f.get("grades", "")})
+    for m in markets:
+        book = {o["name"].strip().casefold(): o["mid"] for o in m["outcomes"]}
+        r = m.get("resolution")
+        wkey = (r["name"].strip().casefold() if r else None)
+        for p in (m.get("desk") or {}).get("profiles", []):
+            pick = (p.get("pick_scenario") or p.get("pick") or "").strip()
+            q = book.get(pick.casefold())
+            pp = p.get("prob_num")
+            if not isinstance(pp, (int, float)):
+                band = _prob_band({"probability_range": p.get("prob", "")})
+                pp = (band[0] + band[1]) / 2 if band else None
+            if q is None or not isinstance(pp, (int, float)):
+                continue
+            rows.append({"key": _persona_key(p), "name": p.get("name", ""),
+                         "avatar": p.get("avatar", "🎯"), "market": m["title"], "href": m["href"],
+                         "pick": pick, "flag": p.get("flag", ""), "p": float(pp), "q": float(q),
+                         "conf": p.get("confidence", "medium"),
+                         "graded": bool(r), "hit": (pick.casefold() == wkey) if r else None,
+                         "date": (r.get("resolved", "") if r else ""),
+                         "due": (m.get("desk") or {}).get("grades", "") or m.get("horizon", "")})
+    return rows
+
+
+def build_book(native_items, markets, native_data):
+    """The Book: each standing persona's fake-money account, settled from the
+    graded ledger and marked-to-market on open positions. Returns
+    {personas: {key: account}, ranked: [account, …], start, settled, open_n,
+     at_risk, leader}. Accounts seed in roster order so the leaderboard is
+     complete even before a single bet settles. account = {key, name, avatar,
+     color, bankroll, pnl, staked, settled, wins, passes, biggest, bets[],
+     open[], at_risk}."""
+    def _seed(key, name, avatar):
+        return {"key": key, "name": name, "avatar": avatar,
+                "color": FDT_SERIES_COLORS.get(key, "#9aa1af"),
+                "bankroll": FD_BANKROLL_START, "pnl": 0.0, "staked": 0.0,
+                "settled": 0, "wins": 0, "passes": 0, "biggest": None,
+                "bets": [], "open": [], "at_risk": 0.0}
+    accounts = {k: _seed(k, n, a) for k, n, a, c in FD_PERSONAS}
+
+    def acct(row):
+        return accounts.setdefault(row["key"], _seed(row["key"], row["name"], row["avatar"]))
+
+    rows = _fd_bet_rows(native_items, markets, native_data)
+    settled = 0
+    for r in sorted([r for r in rows if r["graded"]], key=lambda r: r.get("date") or "9999"):
+        a = acct(r)
+        bet = _fd_persona_bet(r["key"], r["p"], r["q"], a["bankroll"], r.get("conf"))
+        if not bet or bet["stake"] <= 0:      # its doctrine sat this one out
+            a["passes"] += 1
+            a["bets"].append({**r, "stake": 0.0, "pnl": 0.0,
+                              "dec_odds": (bet["dec_odds"] if bet else 0.0), "pass": True})
+            continue
+        pnl = bet["to_win"] if r["hit"] else -bet["stake"]
+        a["bankroll"] += pnl
+        a["pnl"] += pnl
+        a["staked"] += bet["stake"]
+        a["settled"] += 1
+        a["wins"] += 1 if r["hit"] else 0
+        settled += 1
+        rec = {**r, "stake": bet["stake"], "dec_odds": bet["dec_odds"], "pnl": pnl, "pass": False}
+        a["bets"].append(rec)
+        if r["hit"] and (a["biggest"] is None or pnl > a["biggest"]["pnl"]):
+            a["biggest"] = rec
+    open_n, at_risk = 0, 0.0
+    for r in [r for r in rows if not r["graded"]]:
+        a = acct(r)
+        bet = _fd_persona_bet(r["key"], r["p"], r["q"], a["bankroll"], r.get("conf"))
+        if not bet:
+            continue
+        pos = {**r, "stake": bet["stake"], "dec_odds": bet["dec_odds"],
+               "to_win": bet["to_win"], "edge": bet["edge"], "pass": bet["stake"] <= 0}
+        a["open"].append(pos)
+        if bet["stake"] > 0:
+            a["at_risk"] += bet["stake"]
+            at_risk += bet["stake"]
+            open_n += 1
+    ranked = sorted(accounts.values(), key=lambda a: (a["bankroll"], a["settled"]), reverse=True)
+    leader = next((a for a in ranked if a["settled"]), None)
+    return {"personas": accounts, "ranked": ranked, "start": FD_BANKROLL_START,
+            "settled": settled, "open_n": open_n, "at_risk": at_risk, "leader": leader}
 
 
 def _prob_band(scenario):
@@ -6187,6 +6474,42 @@ FORECAST_PAGE_CSS = """
 .fdt-pend .w { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); white-space: nowrap; }
 @media (max-width: 640px) { .fdt-pend { grid-template-columns: 1fr; } }
 
+/* ---- The Book: the roster's fake-money accounts ---- */
+.fdt-lead { font-family: var(--serif); font-size: .98rem; line-height: 1.6; color: var(--fdtext); margin: .2rem 0 1rem; }
+.fdt-lead .up { color: var(--fdup); font-weight: 700; } .fdt-lead .dn { color: var(--fddn); font-weight: 700; }
+.fdt-bk-tbl table { font-variant-numeric: tabular-nums; }
+.fdt-bk-tbl td, .fdt-bk-tbl th { white-space: nowrap; }
+.fdt-bk-tbl .num.up { color: var(--fdup); font-weight: 700; } .fdt-bk-tbl .num.dn { color: var(--fddn); font-weight: 700; }
+.fdt-bk-who { font-family: var(--sans); font-weight: 700; color: var(--fdtext) !important; }
+.fdt-bk-who .av { font-size: 1rem; margin-right: .45rem; background: #0c1117; border: 1px solid var(--fdline);
+  border-left-width: 3px; border-radius: 2px; padding: .12rem .32rem; }
+.fdt-bk-worth { position: relative; min-width: 150px; }
+.fdt-bk-worth .wbar { position: absolute; left: 0; top: 50%; transform: translateY(-50%); height: 60%;
+  border-radius: 1px; opacity: .18; }
+.fdt-bk-worth b { position: relative; color: var(--fdtext); }
+.fdt-bk-sub { font-family: var(--sans); font-size: .72rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--fdmut); margin: 1.4rem 0 .7rem; }
+.fdt-bk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(215px, 1fr)); gap: .7rem; }
+.fdt-bk-pos { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: .7rem .8rem; }
+.fdt-bk-pos .who { display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
+  font-family: var(--sans); font-weight: 700; font-size: .82rem; color: var(--fdtext); }
+.fdt-bk-pos .who .odds { font-family: var(--fdmono); font-weight: 700; font-size: .92rem; color: var(--fdgold);
+  font-variant-numeric: tabular-nums; }
+.fdt-bk-pos .mk { font-family: var(--serif); font-style: italic; font-size: .74rem; color: var(--fdmut);
+  margin: .25rem 0 .35rem; line-height: 1.3; }
+.fdt-bk-pos .call { font-family: var(--sans); font-size: .82rem; font-weight: 600; color: var(--fdtext); }
+.fdt-bk-pos .stake { display: flex; justify-content: space-between; gap: .5rem; margin-top: .4rem;
+  padding-top: .4rem; border-top: 1px dotted var(--fdline); font-family: var(--fdmono); font-size: .72rem;
+  color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fdt-bk-pos .stake .w b { color: var(--fdup); } .fdt-bk-pos .stake b { color: var(--fdtext); }
+.fdt-p-bank { display: flex; align-items: baseline; gap: .5rem; border-top: 1px solid var(--fdline);
+  margin-top: .7rem; padding-top: .6rem; font-variant-numeric: tabular-nums; }
+.fdt-p-bank .lbl { font-family: var(--sans); font-size: .58rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--fdmut); }
+.fdt-p-bank .nw { font-family: var(--fdmono); font-weight: 700; font-size: 1rem; color: var(--fdtext); }
+.fdt-p-bank .pl { font-family: var(--fdmono); font-size: .76rem; margin-left: auto; color: var(--fdmut); }
+.fdt-p-bank .pl.up { color: var(--fdup); font-weight: 700; } .fdt-p-bank .pl.dn { color: var(--fddn); font-weight: 700; }
+
 /* verdict banner on graded detail pages */
 .fdd-verdict { border: 1px solid var(--fdup); background: rgba(34,197,94,.07); border-radius: 2px;
   padding: 1.1rem 1.3rem; }
@@ -6199,6 +6522,27 @@ FORECAST_PAGE_CSS = """
 .fdd-verdict .src a { color: var(--fdblue); }
 .fdd-tag.hit { color: #0c1117; background: var(--fdup); }
 .fdd-tag.missed { color: #fff; background: var(--fddn); }
+
+/* The Forecasters — the spectrum hero + richer profile cards */
+.fdt-fc-lead { font-family: var(--serif); font-size: 1rem; line-height: 1.68; color: #c6ccd6; margin: 0 0 1.2rem; }
+.fdt-spectrum { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: 1.2rem 1.1rem .8rem; overflow-x: auto; }
+.fdt-spectrum svg { display: block; width: 100%; height: auto; min-width: 560px; }
+.fdt-p-zone { font-family: var(--sans); font-size: .56rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; padding: .16rem .5rem; border-radius: 999px; border: 1px solid currentColor;
+  white-space: nowrap; }
+.fdt-p-model { font-family: var(--serif); font-size: .82rem; line-height: 1.56; color: #b8bec9;
+  border-top: 1px solid var(--fdline); margin-top: .7rem; padding-top: .6rem; }
+.fdt-p-doc { display: flex; gap: .5rem; align-items: baseline; margin-top: .55rem; }
+.fdt-p-doc .k { font-family: var(--sans); font-size: .55rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .11em; color: var(--fdmut); flex: none; padding-top: .1rem; }
+.fdt-p-doc .v { font-family: var(--sans); font-size: .8rem; font-weight: 600; color: var(--fdtext); line-height: 1.42; }
+.fdt-p-spx { display: flex; align-items: center; gap: .5rem; margin-top: .6rem; }
+.fdt-p-spx .track { position: relative; flex: 1; height: 4px; border-radius: 999px;
+  background: linear-gradient(90deg, #6ea8ff33, #9aa1af33, #eab30833); }
+.fdt-p-spx .pip { position: absolute; top: 50%; width: 10px; height: 10px; border-radius: 50%;
+  transform: translate(-50%, -50%); border: 2px solid var(--fdbg); }
+.fdt-p-spx .ends { font-family: var(--fdmono); font-size: .5rem; color: var(--fdmut); }
 """
 
 FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
@@ -6441,7 +6785,7 @@ FORECAST_NAV_DEFAULT = (
 )
 
 
-def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None):
+def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None, native_data=None):
     """Render a Forecast board — docs/forecast.html by default: ticker, live
     native markets, then every harvested corpus market shelved by category
     (graded markets shelve last on their shelf, wearing their verdict).
@@ -6488,8 +6832,14 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     if n_graded:
         folio += (f'\n    <span class="fd-folio-g">{n_graded} graded · '
                   f'record {hits}–{n_graded - hits}</span>')
+    book = build_book(native_items, markets, native_data)
+    if book["settled"] and book["leader"]:
+        folio += (f'\n    <span class="fd-folio-g">book leader {html.escape(book["leader"]["name"])} '
+                  f'{_fd_money(book["leader"]["bankroll"])}</span>')
+    elif book["at_risk"]:
+        folio += f'\n    <span>the book: {_fd_money(book["at_risk"])} at risk</span>'
     plate_extra = (f'  <a class="fd-rec-link" href="{html.escape(record_fname, quote=True)}">'
-                   f'📒 The Track Record — every graded call, scored →</a>')
+                   f'📒 The Track Record — the roster’s bankrolls, every graded call scored →</a>')
     og = og_tags(h1,
                  cfg.get("motto", "Every prediction the research makes, priced and graded."),
                  f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
@@ -6520,6 +6870,7 @@ FDT_SERIES_COLORS = {
     "council": "#eab308", "research": "#60a5fa",
     "market-reader": "#22c55e", "quant": "#c084fc", "historian": "#f4715c",
     "path-reader": "#2dd4bf", "talisman": "#f472b6", "contrarian": "#9bb24f",
+    "prophet": "#e2e8f0",
 }
 
 
@@ -6593,7 +6944,130 @@ def _fdt_fmt_brier(briers):
     return f"{sum(briers) / len(briers):.3f}" if briers else "—"
 
 
-def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
+def _fdt_book_section(book, n):
+    """The Book section for the track record: a fake-money standings table (net
+    worth, P&L, ROI, record, stake at risk) over the roster, a plain-English note
+    on the mechanic, and the live open positions sorted by potential payout —
+    the longshots the roster is backing against the book, biggest score first."""
+    ranked = book["ranked"]
+    start = book["start"]
+    maxworth = max((a["bankroll"] for a in ranked), default=start) or start
+    trows = []
+    for i, a in enumerate(ranked, 1):
+        pnl, roi = a["pnl"], (a["pnl"] / a["staked"] * 100) if a["staked"] else 0.0
+        pcls = "up" if pnl > 0.5 else ("dn" if pnl < -0.5 else "")
+        wl = f'{a["wins"]}–{a["settled"] - a["wins"]}' if a["settled"] else "—"
+        barw = max(4.0, a["bankroll"] / maxworth * 100)
+        pnl_txt = _fd_signed(pnl) if a["settled"] else "—"
+        roi_txt = f'{roi:+.0f}%' if a["staked"] else "—"
+        trows.append(
+            f'<tr><td class="num">{i}</td>'
+            f'<td class="fdt-bk-who"><span class="av" style="border-color:{a["color"]}">{a["avatar"]}</span>'
+            f'{html.escape(a["name"])}</td>'
+            f'<td class="fdt-bk-worth"><span class="wbar" style="width:{barw:.0f}%;background:{a["color"]}"></span>'
+            f'<b class="num">{_fd_money(a["bankroll"])}</b></td>'
+            f'<td class="num {pcls}">{pnl_txt}</td>'
+            f'<td class="num {pcls}">{roi_txt}</td>'
+            f'<td class="num">{wl}</td>'
+            f'<td class="num">{_fd_money(a["at_risk"]) if a["at_risk"] else "—"}</td></tr>')
+    tbl = (f'<div class="fdt-ledger fdt-bk-tbl"><table><thead><tr><th>#</th><th>Predictor</th>'
+           f'<th>Net worth</th><th>P&amp;L</th><th>ROI</th><th>Record</th><th>At risk</th>'
+           f'</tr></thead><tbody>{"".join(trows)}</tbody></table></div>')
+    positions = sorted([p for a in ranked for p in a["open"] if not p["pass"]],
+                       key=lambda p: p["to_win"], reverse=True)
+    pcards = []
+    for p in positions[:12]:
+        col = FDT_SERIES_COLORS.get(p["key"], "#9aa1af")
+        call = html.escape((p.get("flag", "") + " " + p["pick"]).strip())
+        pcards.append(
+            f'<div class="fdt-bk-pos" style="border-left:3px solid {col}">'
+            f'<div class="who"><span>{p["avatar"]} {html.escape(p["name"])}</span>'
+            f'<span class="odds">{p["dec_odds"]:.1f}×</span></div>'
+            f'<div class="mk">{html.escape(p["market"])}</div>'
+            f'<div class="call">{call}</div>'
+            f'<div class="stake"><span class="s">stakes <b>{_fd_money(p["stake"])}</b></span>'
+            f'<span class="w">to win <b>{_fd_money(p["to_win"])}</b></span></div></div>')
+    more = len(positions) - len(pcards)
+    pos_html = ((f'<h3 class="fdt-bk-sub">Live positions — the roster’s open bets, longest payout first</h3>'
+                 f'<div class="fdt-bk-grid">{"".join(pcards)}</div>'
+                 + (f'<p class="fdt-note">+{more} more open position(s) on the board.</p>' if more > 0 else ""))
+                if pcards else "")
+    if book["settled"]:
+        lead = book["leader"]
+        summ = (f'The book has settled {book["settled"]} bet(s). Out front: '
+                f'{lead["avatar"]} <b>{html.escape(lead["name"])}</b> at {_fd_money(lead["bankroll"])} '
+                f'(<span class="{"up" if lead["pnl"] >= 0 else "dn"}">{_fd_signed(lead["pnl"])}</span>).')
+    else:
+        summ = (f'The book is open and even — every predictor holds {_fd_money(start)}. '
+                f'{book["open_n"]} live bet(s), {_fd_money(book["at_risk"])} staked at risk; '
+                f'the first settles when its market grades.')
+    note = ('<p class="fdt-note">Each predictor opens with $1,000 and every bet pays at the market’s own '
+            'decimal odds — but each one <b>bets in its own style, drawn from where it sits on the spectrum</b>. '
+            'The Quant sizes half-Kelly and only with an edge; the Historian stakes a flat unit every time; '
+            'the Market Reader barely bets; the Prophet and the Contrarian swing for the fences on long odds. '
+            'A win pays the decimal odds, a loss costs the stake, and bankrolls compound — so the standings '
+            'are the running verdict on rigor versus revelation.</p>')
+    return (f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Book — the roster bets fake money at the market’s odds</h2>'
+            f'<p class="fdt-lead">{summ}</p>{tbl}{note}{pos_html}')
+
+
+def _fdt_spectrum_svg():
+    """The roster laid out on one axis — mathematical rigor → intuition → creative
+    hypothesis — each persona a marker at its `spectrum` position, colored to match
+    its series everywhere else on the page. Labels stagger above/below to breathe."""
+    W, H = 660, 208
+    x0, x1, ax = 42, 618, 116
+    width = x1 - x0
+    def X(s):
+        return x0 + max(0.0, min(1.0, s)) * width
+    zb1, zb2 = 0.385, 0.72
+    zones = [(0.0, zb1, "MATHEMATICAL RIGOR", "#6ea8ff"),
+             (zb1, zb2, "INTUITION & READING", "#9aa1af"),
+             (zb2, 1.0, "CREATIVE HYPOTHESIS", "#eab308")]
+    parts = []
+    for a, b, lbl, col in zones:
+        parts.append(f'<rect x="{X(a):.0f}" y="30" width="{X(b) - X(a):.0f}" height="152" fill="{col}" opacity=".06"/>')
+        parts.append(f'<text x="{(X(a) + X(b)) / 2:.0f}" y="22" text-anchor="middle" fill="{col}" opacity=".9" '
+                     f'font-family="-apple-system,sans-serif" font-size="10.5" font-weight="700" letter-spacing="1.4">{lbl}</text>')
+    for zb in (zb1, zb2):
+        parts.append(f'<line x1="{X(zb):.0f}" y1="30" x2="{X(zb):.0f}" y2="182" stroke="#2c303a" stroke-width="1" stroke-dasharray="3 4"/>')
+    parts.append(f'<line x1="{x0}" y1="{ax}" x2="{x1}" y2="{ax}" stroke="#3a3f4b" stroke-width="1.5"/>')
+    parts.append(f'<text x="{x0}" y="{ax + 24}" fill="#9aa1af" font-family="ui-monospace,monospace" font-size="9">← trust the number</text>')
+    parts.append(f'<text x="{x1}" y="{ax + 24}" text-anchor="end" fill="#9aa1af" font-family="ui-monospace,monospace" font-size="9">trust the story →</text>')
+    # Stagger labels along SPECTRUM order (not roster order) so two personas that
+    # sit close on the axis never share a row and collide.
+    ordered = sorted(FD_PERSONAS, key=lambda t: FD_PERSONA_PROFILES.get(t[0], {}).get("spectrum", 0.5))
+    for i, (key, name, av, _crit) in enumerate(ordered):
+        s = FD_PERSONA_PROFILES.get(key, {}).get("spectrum", 0.5)
+        col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        x = X(s)
+        above = (i % 2 == 0)
+        ny = ax - 32 if above else ax + 40
+        y_conn = ny + (11 if above else -13)
+        parts.append(f'<line x1="{x:.0f}" y1="{ax}" x2="{x:.0f}" y2="{y_conn:.0f}" stroke="{col}" stroke-width="1" opacity=".4"/>')
+        parts.append(f'<circle cx="{x:.0f}" cy="{ax}" r="13" fill="#10161f" stroke="{col}" stroke-width="2"/>')
+        parts.append(f'<text x="{x:.0f}" y="{ax + 5:.0f}" text-anchor="middle" font-size="14">{av}</text>')
+        parts.append(f'<text x="{x:.0f}" y="{ny:.0f}" text-anchor="middle" fill="{col}" '
+                     f'font-family="-apple-system,sans-serif" font-size="10" font-weight="700">{html.escape(name)}</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
+            f'aria-label="The forecaster roster arranged from mathematical rigor to creative hypothesis">'
+            f'{"".join(parts)}</svg>')
+
+
+def _fdt_forecasters_section(n):
+    """The lead section of the Track Record: who the forecasters are, laid out as a
+    spectrum from rigor to revelation. The per-persona detail (model, doctrine,
+    live bankroll) rides on the roster cards further down."""
+    intro = ("Seven forecasters work the desk, and they do not think alike. They sit on a single spectrum — "
+             "from the calculators who build a number out of parts, through the readers of route and "
+             "character, to the imaginers who back a story over a price. Each now bets play money in its own "
+             "style, drawn from where it stands. The standings below are the spectrum arguing with itself.")
+    return (f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Forecasters — one desk, across the spectrum</h2>'
+            f'<p class="fdt-fc-lead">{intro}</p>'
+            f'<div class="fdt-spectrum">{_fdt_spectrum_svg()}</div>')
+
+
+def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, native_data=None):
     """Render a Track Record page from the graded ledger: desk summary, the
     standing predictor roster with cumulative records and Brier scores, the
     calibration diagram, every graded call as a ledger table, and the open
@@ -6609,14 +7083,19 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
     board_title = page.get("board_title", "The Forecast Desk")
     back = page.get("back", f'<a href="{board_href}">← Back to {board_title}</a>')
     led = build_forecast_ledger(native_items, markets)
+    book = build_book(native_items, markets, native_data)
+    bet_lookup = {(b["name"].casefold(), b["market"]): b
+                  for a in book["personas"].values() for b in a["bets"]}
     desk, calls, pending = led["desk"], led["calls"], led["pending"]
     n_open = len(pending)
     parts = []
-    # 01 — the desk's own record.
+    # 01 — the forecasters, laid out on the spectrum.
+    parts.append(_fdt_forecasters_section(1))
+    # 02 — the desk's own record.
     rec_txt = f'{desk["hits"]}–{desk["graded"] - desk["hits"]}' if desk["graded"] else "0–0"
     hitrate = f'{desk["hits"] / desk["graded"] * 100:.0f}%' if desk["graded"] else "—"
     next_due = next((p for p in pending if p.get("due")), None)
-    parts.append('<h2 class="fdd-h"><span class="n">01</span>The Desk Record — the house call on every graded market</h2>')
+    parts.append('<h2 class="fdd-h"><span class="n">02</span>The Desk Record — the house call on every graded market</h2>')
     parts.append(
         f'<div class="fdt-sum">'
         f'<div class="fdt-stat"><div class="big">{desk["graded"]}</div><div class="lbl">markets graded</div></div>'
@@ -6632,14 +7111,39 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
                      f'frozen at log time and will be scored against the official result, no retro-edits.{opens_line}</p>')
     parts.append('<p class="fdt-note">Brier score = (stated probability − what happened)², averaged over calls. '
                  '0 is clairvoyance, 0.25 is a coin flip, 1 is confident wrongness. Lower is better.</p>')
-    n = 2
-    # 02 — the standing personas' cumulative records.
+    n = 3
+    # 03 — The Book: the roster's fake-money accounts, bet at the market's odds.
+    parts.append(_fdt_book_section(book, n))
+    n += 1
+    # 04 — the standing personas' cumulative records.
     personas = [p for p in led["personas"].values() if p["graded"] or p["criterion"]]
     if personas:
         parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Standing Roster — cumulative, market over market</h2>')
         cards = []
         for p in personas:
             col = FDT_SERIES_COLORS.get(p["key"], "#9aa1af")
+            prof = FD_PERSONA_PROFILES.get(p["key"], {})
+            model_html = f'<div class="fdt-p-model">{html.escape(prof["model"])}</div>' if prof.get("model") else ""
+            doc_html = (f'<div class="fdt-p-doc"><span class="k">How it bets</span>'
+                        f'<span class="v">{html.escape(prof["doctrine"])}</span></div>') if prof.get("doctrine") else ""
+            if prof.get("spectrum") is not None:
+                sx = max(0.0, min(1.0, prof["spectrum"])) * 100
+                spx_html = (f'<div class="fdt-p-spx"><span class="ends">rigor</span>'
+                            f'<span class="track"><span class="pip" style="left:{sx:.0f}%;background:{col}"></span></span>'
+                            f'<span class="ends">story</span></div>')
+            else:
+                spx_html = ""
+            bk = book["personas"].get(p["key"])
+            if bk:
+                bpnl = bk["pnl"]
+                bcls = "up" if bpnl > 0.5 else ("dn" if bpnl < -0.5 else "")
+                bpl = (_fd_signed(bpnl) if bk["settled"]
+                       else (f'{_fd_money(bk["at_risk"])} at risk' if bk["at_risk"] else "no bet yet"))
+                bankline = (f'<div class="fdt-p-bank"><span class="lbl">the book</span>'
+                            f'<span class="nw">{_fd_money(bk["bankroll"])}</span>'
+                            f'<span class="pl {bcls}">{bpl}</span></div>')
+            else:
+                bankline = ""
             if p["graded"]:
                 losses = p["graded"] - p["hits"]
                 cls = "up" if p["hits"] > losses else ("dn" if losses > p["hits"] else "")
@@ -6658,7 +7162,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
                 f'<div class="fdt-p-top"><span class="fdt-p-av">{p["avatar"]}</span>'
                 f'<div><div class="fdt-p-nm">{html.escape(p["name"])}</div>'
                 f'<div class="fdt-p-crit">{html.escape(p["criterion"])}</div></div>{rec}</div>'
-                f'{tail}</article>')
+                f'{model_html}{doc_html}{spx_html}{bankline}{tail}</article>')
         parts.append(f'<div class="fdt-roster">{"".join(cards)}</div>')
         n += 1
     # 03 — calibration.
@@ -6671,6 +7175,14 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
                  f'<div class="fdt-cal-leg">{"".join(leg_items)}</div></div>')
     n += 1
     # 04 — the graded ledger.
+    def _pl_cell(c):
+        b = bet_lookup.get((c["caller"].casefold(), c["market"]))
+        if not b:
+            return '<td class="num" style="color:var(--fdmut)">—</td>'
+        if b.get("pass"):
+            return '<td class="num" style="color:var(--fdmut)">pass</td>'
+        color = "var(--fdup)" if b["pnl"] >= 0 else "var(--fddn)"
+        return f'<td class="num" style="color:{color};font-weight:700">{_fd_signed(b["pnl"])}</td>'
     parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Ledger — every graded call, scored</h2>')
     if calls:
         rows = "".join(
@@ -6681,10 +7193,10 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
             f'<td class="num">{c["prob"]:g}%</td>'
             f'<td>{html.escape((c.get("result_flag", "") + " " + c["result"]).strip())}</td>'
             f'<td class="{"v-hit" if c["hit"] else "v-miss"}">{"✓ hit" if c["hit"] else "✗ miss"}</td>'
-            f'<td class="num">{c["brier"]:.3f}</td></tr>'
+            f'<td class="num">{c["brier"]:.3f}</td>{_pl_cell(c)}</tr>'
             for c in calls)
         parts.append(f'<div class="fdt-ledger"><table><thead><tr><th>Graded</th><th>Market</th><th>Caller</th>'
-                     f'<th>The call</th><th>Price</th><th>Result</th><th>Verdict</th><th>Brier</th></tr></thead>'
+                     f'<th>The call</th><th>Price</th><th>Result</th><th>Verdict</th><th>Brier</th><th>Book P&amp;L</th></tr></thead>'
                      f'<tbody>{rows}</tbody></table></div>')
     else:
         first = (f' Next up: <a href="{html.escape(next_due["href"], quote=True)}" '
@@ -6704,10 +7216,16 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
                     f'<span class="w">{html.escape(p.get("horizon", "") or "horizon open")}</span>')
             rows.append(f'<a href="{html.escape(p["href"], quote=True)}"><span class="t">{html.escape(p["title"])}</span>{when}</a>')
         parts.append(f'<div class="fdt-pend">{"".join(rows)}</div>')
+    if book["settled"] and book["leader"]:
+        book_folio = (f'    <span class="fd-folio-g">book leader {html.escape(book["leader"]["name"])} '
+                      f'{_fd_money(book["leader"]["bankroll"])}</span>')
+    else:
+        book_folio = f'    <span>book: {_fd_money(book["at_risk"])} at risk</span>'
     folio = (f'    <span>{desk["graded"]} graded</span>\n'
              f'    <span class="fd-folio-c">record {rec_txt}</span>\n'
              f'    <span>mean Brier {_fdt_fmt_brier(desk["briers"])}</span>\n'
-             f'    <span>{n_open} open</span>')
+             f'    <span>{n_open} open</span>\n'
+             f'{book_folio}')
     plate_extra = (f'  <a class="fd-rec-link" href="{html.escape(board_href, quote=True)}">'
                    f'📊 {html.escape(board_title)} — the live board →</a>')
     og = og_tags(h1, "Every graded call, scored — records, Brier scores, and calibration.",
@@ -9908,10 +10426,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # harvested markets carry `resolution`. Cumulative per-persona records are
     # computed here — never hand-maintained — and worn by every roster.
     fd_resolutions = read_forecast_resolutions(out) if forecast_cfg.get("enabled", True) else {}
+    fd_native_data = {}
     for f in forecast_items:
         d = read_forecast_data(out, f.get("slug", ""))
         if not d:
             continue
+        fd_native_data[f.get("slug", "")] = d   # slug → full data, for The Book's odds
         res = _native_resolution(d, fd_resolutions)
         if res:
             f["_graded"] = grade_native_forecast(d, res)
@@ -10144,7 +10664,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     fd_main = [m for m in fd_markets if m["category"] not in fc_desk_cats]
     fd_native_main = [f for f in forecast_items if f.get("category") not in fc_desk_cats]
     build_forecast_page(out, fd_native_main, fd_main, forecast_cfg,
-                        category_order=category_order, shell=shell_root)
+                        category_order=category_order, shell=shell_root, native_data=fd_native_data)
     forecast_band = forecast_band_html(fd_native_main, fd_main, forecast_cfg)
     fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub, records=persona_records)
                       for f in forecast_items)
@@ -10156,7 +10676,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         print(f"  ✓ Rendered {fd_rendered}/{len(forecast_items)} live forecast page(s) from data")
     # The Track Record — the site-wide accountability page covers EVERY market,
     # desk-scoped ones included; each detached desk also gets its own scoped copy.
-    build_record_page(out, forecast_items, fd_markets, forecast_cfg, shell=shell_root)
+    build_record_page(out, forecast_items, fd_markets, forecast_cfg, shell=shell_root,
+                       native_data=fd_native_data)
 
     # ---- Detached domain fronts: a config domain carrying a "page" object is
     # lifted off the home page onto its own top-level section of the site (e.g.
@@ -10196,7 +10717,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             if dmarkets or dnative:
                 fc_title = pcfg.get("forecast_title", f"The {title} Board")
                 build_forecast_page(out, dnative, dmarkets, forecast_cfg, category_order=dcats,
-                                    shell=shell_root,
+                                    shell=shell_root, native_data=fd_native_data,
                                     page={"fname": f"{slug}-forecast.html", "title": fc_title,
                                           "kicker": "The desk's predictions, by category",
                                           "nav": desk_nav, "back": desk_back,
@@ -10210,6 +10731,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 # The desk's own track record, scoped to its markets.
                 rec_title = pcfg.get("record_title", f"The {title} Track Record")
                 build_record_page(out, dnative, dmarkets, forecast_cfg, shell=shell_root,
+                                  native_data=fd_native_data,
                                   page={"fname": f"{slug}-record.html", "title": rec_title,
                                         "kicker": "The desk, graded call by call",
                                         "nav": desk_nav, "back": desk_back,
