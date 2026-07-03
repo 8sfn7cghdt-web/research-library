@@ -2221,34 +2221,79 @@ SHARE_JS = r"""
 
 ATLAS_TILES = [TERRA, GOLD, BLUE, OLIVE, PLUM]
 
-# Default placement of each corpus onto a region in atlas/geo.json. A corpus is
-# pinned where its AUTHOR or STORY belongs (Carlyle → Scotland, Whitman → New
-# York, Jesus/John → the Holy Land …). `cell` steers which slice a corpus gets
-# when several share one region; `z:"base"` draws a nation underneath the state
-# insets that sit on top of it. Overridable wholesale via build.config.json
-# "atlas": {"places": {...}, "grow": {...}}.
+# Every corpus is one uniform STAMP (same size for all — no research is ever
+# bigger than another), pinned by lon/lat where its AUTHOR or STORY belongs and
+# grouped into a named callout PLATE (a vintage-atlas inset) whose leader line
+# points at the true anchor dots on the map. Adding a new corpus = one line
+# here (lon/lat + label + group). Overridable wholesale via build.config.json
+# "atlas": {"places": {...}, "groups": {...}}.
 ATLAS_PLACEMENTS = {
-    "carlyle-research":                    {"region": "GB-SCT", "cell": "n", "label": "Ecclefechan & Edinburgh, Scotland"},
-    "carlyle-french-revolution-research":  {"region": "GB-SCT", "cell": "c", "label": "Scotland — by the sage of Chelsea"},
-    "carlyle-friedrich-research":          {"region": "GB-SCT", "cell": "s", "label": "Scotland & London"},
-    "deutsch-good-explanations-research":  {"region": "GB-ENG", "label": "Oxford, England"},
-    "ancestry-research":                   {"region": "IE", "label": "Munster, Ireland"},
-    "civil-war-religion-whitman-research": {"region": "US-NY", "label": "Brooklyn & New York"},
-    "dickinson-research":                  {"region": "US-MA", "label": "Amherst, Massachusetts"},
-    "uap-research":                        {"region": "US-NM", "label": "Roswell, New Mexico"},
-    "ipv4-ipv6-ctv-research":              {"region": "US-CA", "label": "Silicon Valley, California"},
-    "us-geopolitics-research":             {"region": "US", "z": "base", "label": "The United States"},
-    "jung-research":                       {"region": "CH", "cell": "e", "label": "Zürich, Switzerland"},
-    "piaget-research":                     {"region": "CH", "cell": "w", "label": "Geneva & Neuchâtel, Switzerland"},
-    "phenomenology-pragmatism-research":   {"region": "DE", "label": "Freiburg, Germany"},
-    "mcluhan-research":                    {"region": "CA-ON", "label": "Toronto, Ontario"},
-    "jesus-research":                      {"region": "IL", "cell": "n", "label": "Galilee"},
-    "john-the-baptist-research":           {"region": "IL", "cell": "s", "label": "The Jordan & the Judean wilderness"},
+    # — The Pacific Coast —
+    "ipv4-ipv6-ctv-research":              {"lon": -122.14, "lat": 37.44, "group": "pacific", "label": "Silicon Valley, California"},
+    "ctv-identity-signals-research":       {"lon": -122.40, "lat": 37.79, "group": "pacific", "label": "San Francisco — the identity stack"},
+    "agentic-advertising-protocols-research": {"lon": -122.42, "lat": 37.77, "group": "pacific", "label": "San Francisco — where the protocols are drafted"},
+    "social-ctv-retargeting-research":     {"lon": -122.04, "lat": 37.37, "group": "pacific", "label": "Sunnyvale, California — LinkedIn's handoff"},
+    "fox-roku-research":                   {"lon": -118.24, "lat": 34.05, "group": "pacific", "label": "Century City, Los Angeles"},
+    # — the American interior —
+    "uap-research":                        {"lon": -104.52, "lat": 33.39, "group": "newmexico", "label": "Roswell, New Mexico"},
+    "walmart-vibe-research":               {"lon": -94.21,  "lat": 36.37, "group": "bentonville", "label": "Bentonville, Arkansas"},
+    # — Washington —
+    "us-geopolitics-research":             {"lon": -77.04,  "lat": 38.90, "group": "washington", "label": "Washington, D.C."},
+    "political-ctv-research":              {"lon": -77.01,  "lat": 38.89, "group": "washington", "label": "Washington, D.C. — the measured screen"},
+    # — New York —
+    "civil-war-religion-whitman-research": {"lon": -73.99,  "lat": 40.69, "group": "newyork", "label": "Brooklyn & New York"},
+    "us-economy-financial-system-research": {"lon": -74.01, "lat": 40.71, "group": "newyork", "label": "Wall Street & the Treasury"},
+    "containerized-bidding-research":      {"lon": -74.00,  "lat": 40.72, "group": "newyork", "label": "IAB Tech Lab & the programmatic exchanges, New York"},
+    "ctv-dsp-ssp-research":                {"lon": -73.99,  "lat": 40.73, "group": "newyork", "label": "The exchanges, New York"},
+    "ctv-brand-safety-research":           {"lon": -73.97,  "lat": 40.76, "group": "newyork", "label": "Madison Avenue, New York"},
+    # — New England —
+    "dickinson-research":                  {"lon": -72.52,  "lat": 42.37, "group": "newengland", "label": "Amherst, Massachusetts"},
+    "emerson-research":                    {"lon": -71.35,  "lat": 42.46, "group": "newengland", "label": "Concord, Massachusetts"},
+    "american-pragmatism-research":        {"lon": -71.11,  "lat": 42.37, "group": "newengland", "label": "Cambridge, Massachusetts"},
+    "great-awakenings-research":           {"lon": -72.63,  "lat": 42.32, "group": "newengland", "label": "Northampton, Massachusetts — Edwards's revival"},
+    # — Canada —
+    "mcluhan-research":                    {"lon": -79.38,  "lat": 43.65, "group": "toronto", "label": "Toronto, Ontario"},
+    # — Britain & Ireland —
+    "carlyle-research":                    {"lon": -3.19,   "lat": 55.95, "group": "britain", "label": "Ecclefechan & Edinburgh, Scotland"},
+    "carlyle-french-revolution-research":  {"lon": -0.17,   "lat": 51.48, "group": "britain", "label": "Cheyne Row, Chelsea — where the manuscript burned"},
+    "deutsch-good-explanations-research":  {"lon": -1.26,   "lat": 51.75, "group": "britain", "label": "Oxford, England"},
+    "miq-research":                        {"lon": -0.09,   "lat": 51.52, "group": "britain", "label": "London — MiQ's home office"},
+    "ancestry-research":                   {"lon": -8.47,   "lat": 51.90, "group": "munster", "label": "Munster, Ireland"},
+    # — the Continent —
+    "jung-research":                       {"lon": 8.54,    "lat": 47.37, "group": "alps", "label": "Zürich, Switzerland"},
+    "piaget-research":                     {"lon": 6.14,    "lat": 46.20, "group": "alps", "label": "Geneva & Neuchâtel, Switzerland"},
+    "pareto-research":                     {"lon": 6.63,    "lat": 46.52, "group": "alps", "label": "Lausanne & Céligny, Switzerland"},
+    "phenomenology-pragmatism-research":   {"lon": 7.85,    "lat": 47.99, "group": "alps", "label": "Freiburg, Germany"},
+    "democratic-socialism-research":       {"lon": 13.40,   "lat": 52.52, "group": "berlin", "label": "Berlin & the Second International"},
+    "carlyle-friedrich-research":          {"lon": 13.06,   "lat": 52.39, "group": "berlin", "label": "Potsdam — Friedrich's Prussia"},
+    "roman-catholicism-research":          {"lon": 12.45,   "lat": 41.90, "group": "rome", "label": "Rome & the Vatican"},
+    # — the Levant —
+    "jesus-research":                      {"lon": 35.57,   "lat": 32.88, "group": "levant", "label": "Galilee"},
+    "john-the-baptist-research":           {"lon": 35.55,   "lat": 31.84, "group": "levant", "label": "The Jordan & the Judean wilderness"},
+    # — the wider world —
+    "india-advertising-research":          {"lon": 72.88,   "lat": 19.08, "group": "mumbai", "label": "Mumbai — a billion screens"},
+    "latam-ctv-research":                  {"lon": -46.63,  "lat": -23.55, "group": "saopaulo", "label": "São Paulo — reach ahead of revenue"},
 }
-# When a small region hosts >1 corpus, grow the footprint to a roomier one so no
-# slice ends up too small (Calvin's rule: several authors in Massachusetts →
-# expand to New England; the two Holy-Land corpora → the wider Levant).
-ATLAS_GROW = {"US-MA": "US-NEWENGLAND", "IL": "LEVANT"}
+# The callout plates: display name + where the plate itself sits (lon/lat of its
+# CENTER — parked over open ocean or empty land near its anchors) + optional
+# column count for the stamp grid inside.
+ATLAS_GROUPS = {
+    "pacific":     {"name": "The Pacific Coast", "plate": [-117.0, 13.0], "cols": 3},
+    "newmexico":   {"name": "New Mexico",        "plate": [-104.5, 26.0]},
+    "bentonville": {"name": "Bentonville",       "plate": [-91.0, 28.5]},
+    "washington":  {"name": "Washington",        "plate": [-73.0, 26.0]},
+    "newyork":     {"name": "New York",          "plate": [-57.0, 35.0], "cols": 3},
+    "newengland":  {"name": "New England",       "plate": [-78.0, 55.0], "cols": 2},
+    "toronto":     {"name": "Toronto",           "plate": [-96.0, 50.5]},
+    "britain":     {"name": "Britain",           "plate": [-16.5, 58.0], "cols": 2},
+    "munster":     {"name": "Munster",           "plate": [-14.0, 48.5]},
+    "alps":        {"name": "The Alps",          "plate": [-1.0, 36.0], "cols": 2},
+    "berlin":      {"name": "Berlin & Potsdam",  "plate": [22.0, 58.5], "cols": 2},
+    "rome":        {"name": "Rome",              "plate": [6.0, 37.5]},
+    "levant":      {"name": "The Levant",        "plate": [26.0, 24.0], "cols": 2},
+    "mumbai":      {"name": "Mumbai",            "plate": [66.0, 11.0]},
+    "saopaulo":    {"name": "São Paulo",         "plate": [-37.0, -29.0]},
+}
 
 
 def load_atlas_geo():
@@ -2262,85 +2307,147 @@ def load_atlas_geo():
         return None
 
 
-def _cell_order(hint, axis):
-    """Map a compass/index `cell` hint to a sort position along the split axis."""
-    if hint is None:
-        return 1.0
-    if isinstance(hint, (int, float)):
-        return float(hint)
-    h = str(hint).strip().lower()
-    xmap = {"w": 0, "west": 0, "nw": 0, "sw": 0, "l": 0, "left": 0,
-            "c": 1, "center": 1, "centre": 1, "mid": 1,
-            "e": 2, "east": 2, "ne": 2, "se": 2, "r": 2, "right": 2}
-    ymap = {"n": 0, "north": 0, "nw": 0, "ne": 0, "top": 0,
-            "c": 1, "center": 1, "centre": 1, "mid": 1,
-            "s": 2, "south": 2, "sw": 2, "se": 2, "bottom": 2}
-    return float((xmap if axis == "v" else ymap).get(h, 1))
+# Stamp geometry, in map units (the geo.json viewBox is 3600×1938). Every
+# corpus gets exactly this footprint — the whole point of the redesign.
+ATLAS_STAMP_W = 84      # cover width
+ATLAS_STAMP_H = 112     # cover height (3:4 portrait, like the library cards)
+ATLAS_CAP_H = 32        # caption strip under the cover (≤2 title lines)
+ATLAS_GAP = 10          # gutter between stamps in a plate
+ATLAS_PAD = 14          # plate inner padding
+ATLAS_HEAD = 38         # plate header band (place name)
 
 
-def compute_atlas(geo, corpora, placements=None, grow=None):
-    """Group placed corpora onto regions and lay out clipped image cells.
+def _atlas_caption(title, max_chars=14, max_lines=2):
+    """Wrap a corpus title into ≤2 short caption lines for under its stamp."""
+    words, lines, cur = (title or "").split(), [], ""
+    for w in words:
+        cand = (cur + " " + w).strip()
+        if len(cand) <= max_chars or not cur:
+            cur = cand
+        else:
+            lines.append(cur)
+            cur = w
+            if len(lines) == max_lines:
+                break
+    if cur and len(lines) < max_lines:
+        lines.append(cur)
+    # ellipsize if we ran out of room
+    used = " ".join(lines)
+    if len(used) < len(" ".join(words)):
+        last = lines[-1]
+        lines[-1] = (last[:max_chars - 1].rstrip(" ,;:&/-") + "…") if len(last) >= max_chars - 1 else last + "…"
+    return [ln[:max_chars + 2] for ln in lines]
+
+
+def _plate_cols(k, hint=None):
+    """Column count for a plate's stamp grid: explicit hint, else compact."""
+    if hint:
+        return max(1, int(hint))
+    return {1: 1, 2: 2, 3: 3, 4: 2, 5: 3, 6: 3}.get(k, 3)
+
+
+def compute_atlas(geo, corpora, placements=None, groups=None):
+    """Lay every placed corpus out as a uniform stamp inside its group's plate.
 
     `corpora` is {slug: {title, href, accent, img, chapters:[{t,href}]}}. Returns
-    the small dict written to atlas.json (viewBox + backdrop + the regions in use
-    + per-corpus placement rectangles), or None if nothing places.
+    the dict written to atlas.json: viewBox + backdrop + plates (callout boxes
+    with name/leader) + places (one equal-size stamp per corpus, each carrying
+    its true anchor point), or None if nothing places. Warns on unpinned
+    corpora and on plate-vs-plate / plate-vs-anchor collisions so new pins are
+    honest about where they land.
     """
     placements = placements or ATLAS_PLACEMENTS
-    grow = grow or ATLAS_GROW
-    regions = geo.get("regions", {})
+    groups = groups or ATLAS_GROUPS
+    proj = _atlas_projector(geo)
 
-    groups = {}
+    for slug in corpora:
+        if slug not in placements:
+            print(f"  ! atlas: no pin for {slug} — add it to ATLAS_PLACEMENTS", file=sys.stderr)
+
+    by_group = {}
     for slug, pl in placements.items():
         if slug not in corpora:
             continue
-        rid = (pl or {}).get("region")
-        if not rid or rid not in regions:
-            if rid:
-                print(f"  ! atlas: region {rid!r} for {slug} not in geo.json", file=sys.stderr)
+        gid = (pl or {}).get("group")
+        if not gid or gid not in groups:
+            print(f"  ! atlas: {slug} has unknown group {gid!r}", file=sys.stderr)
             continue
-        groups.setdefault(rid, []).append((slug, pl))
+        by_group.setdefault(gid, []).append((slug, pl))
 
-    used, places = {}, []
-    for rid, members in groups.items():
-        footprint = rid
-        if len(members) > 1 and rid in grow and grow[rid] in regions:
-            footprint = grow[rid]
-        reg = regions[footprint]
-        bx0, by0, bx1, by1 = reg["bbox"]
-        bw, bh = bx1 - bx0, by1 - by0
-        axis = "v" if bw >= bh else "h"          # split wide regions L→R, tall ones T→B
-        members.sort(key=lambda m: _cell_order((m[1] or {}).get("cell"), axis))
+    plates, places = [], []
+    cell_h = ATLAS_STAMP_H + ATLAS_CAP_H
+    for gid, g in groups.items():
+        members = by_group.get(gid)
+        if not members:
+            continue
+        members.sort(key=lambda m: m[0])
         k = len(members)
-        used.setdefault(footprint, {"d": reg["d"], "bbox": reg["bbox"], "name": reg["name"], "dividers": []})
+        cols = _plate_cols(k, g.get("cols"))
+        rows = math.ceil(k / cols)
+        pw = ATLAS_PAD * 2 + cols * ATLAS_STAMP_W + (cols - 1) * ATLAS_GAP
+        ph = ATLAS_HEAD + rows * cell_h + (rows - 1) * ATLAS_GAP + ATLAS_PAD
+        pcx, pcy = proj(g["plate"][0], g["plate"][1])
+        px, py = pcx - pw / 2, pcy - ph / 2
+
+        anchors = []
         for i, (slug, pl) in enumerate(members):
-            if axis == "v":
-                cx0, cx1 = bx0 + bw * i / k, bx0 + bw * (i + 1) / k
-                cy0, cy1 = by0, by1
-                if i:
-                    used[footprint]["dividers"].append([round(cx0, 1), round(by0, 1), round(cx0, 1), round(by1, 1)])
-            else:
-                cy0, cy1 = by0 + bh * i / k, by0 + bh * (i + 1) / k
-                cx0, cx1 = bx0, bx1
-                if i:
-                    used[footprint]["dividers"].append([round(bx0, 1), round(cy0, 1), round(bx1, 1), round(cy0, 1)])
+            r, cidx = divmod(i, cols)
+            in_row = min(cols, k - r * cols)             # center a short last row
+            row_w = in_row * ATLAS_STAMP_W + (in_row - 1) * ATLAS_GAP
+            sx = px + (pw - row_w) / 2 + cidx * (ATLAS_STAMP_W + ATLAS_GAP)
+            sy = py + ATLAS_HEAD + r * (cell_h + ATLAS_GAP)
+            ax, ay = proj(pl["lon"], pl["lat"])
+            anchors.append((ax, ay))
             c = corpora[slug]
             places.append({
                 "slug": slug, "title": c["title"], "href": c["href"], "accent": c["accent"],
-                "img": c.get("img"), "region": footprint,
-                "cell": [round(cx0, 1), round(cy0, 1), round(cx1 - cx0, 1), round(cy1 - cy0, 1)],
-                "label": (pl or {}).get("label") or reg["name"],
-                "z": 0 if (pl or {}).get("z") == "base" else 1,
+                "img": c.get("img"), "plate": gid,
+                "x": round(sx, 1), "y": round(sy, 1), "w": ATLAS_STAMP_W, "h": ATLAS_STAMP_H,
+                "ax": ax, "ay": ay,
+                "cap": _atlas_caption(c["title"]),
+                "label": (pl or {}).get("label") or g["name"],
                 "chapters": c.get("chapters", []),
             })
+
+        # Leader: from the plate's rim toward the anchors' centroid; the client
+        # draws thin spokes from that centroid to each anchor dot.
+        cx = sum(a[0] for a in anchors) / k
+        cy = sum(a[1] for a in anchors) / k
+        leader = None
+        if not (px <= cx <= px + pw and py <= cy <= py + ph):
+            dx, dy = cx - pcx, cy - pcy
+            tx = (pw / 2) / abs(dx) if dx else float("inf")
+            ty = (ph / 2) / abs(dy) if dy else float("inf")
+            t = min(tx, ty)
+            leader = [round(pcx + dx * t, 1), round(pcy + dy * t, 1), round(cx, 1), round(cy, 1)]
+        plates.append({
+            "id": gid, "name": g["name"],
+            "x": round(px, 1), "y": round(py, 1), "w": pw, "h": ph,
+            "cx": round(cx, 1), "cy": round(cy, 1), "leader": leader,
+        })
+
     if not places:
         return None
-    # Base layers first, then larger cells before smaller, so small insets paint
-    # last (on top) and win hit-testing where they overlap a national base layer.
-    places.sort(key=lambda p: (p["z"], -(p["cell"][2] * p["cell"][3])))
+
+    # Honesty checks: overlapping plates, plates covering someone's anchor, and
+    # plates escaping the map sheet all print as build warnings for re-tuning.
+    def _overlap(a, b, pad=6):
+        return not (a["x"] + a["w"] + pad < b["x"] or b["x"] + b["w"] + pad < a["x"]
+                    or a["y"] + a["h"] + pad < b["y"] or b["y"] + b["h"] + pad < a["y"])
+    for i, a in enumerate(plates):
+        for b in plates[i + 1:]:
+            if _overlap(a, b):
+                print(f"  ! atlas: plates {a['id']!r} and {b['id']!r} overlap — move one in ATLAS_GROUPS", file=sys.stderr)
+        if a["x"] < 4 or a["y"] < 4 or a["x"] + a["w"] > geo["w"] - 4 or a["y"] + a["h"] > geo["h"] - 4:
+            print(f"  ! atlas: plate {a['id']!r} runs off the map sheet", file=sys.stderr)
+        for p in places:
+            if p["plate"] != a["id"] and a["x"] - 8 <= p["ax"] <= a["x"] + a["w"] + 8 and a["y"] - 8 <= p["ay"] <= a["y"] + a["h"] + 8:
+                print(f"  ! atlas: plate {a['id']!r} covers the anchor of {p['slug']}", file=sys.stderr)
+
     return {
         "viewBox": geo["viewBox"], "w": geo["w"], "h": geo["h"],
         "graticule": geo.get("graticule", []), "backdrop": geo.get("backdrop", []),
-        "regions": used, "places": places,
+        "plates": plates, "places": places,
     }
 
 
@@ -2461,12 +2568,23 @@ ATLAS_CSS = """
 #atlas-grat path { fill: none; stroke: var(--border); stroke-width: .6; opacity: .45; }
 #atlas-bd path { fill: var(--panel); stroke: var(--border); stroke-width: .7; opacity: .7; }
 [data-theme="dark"] #atlas-bd path { fill: #221f1b; opacity: .85; }
-.atlas-img { cursor: pointer; transition: opacity .18s ease; }
-.atlas-place.active .atlas-img { opacity: .42; }
-.atlas-ring { opacity: 0; transition: opacity .18s ease; pointer-events: none; }
-.atlas-place.active .atlas-ring { opacity: 1; }
-.atlas-rgn { fill: none; stroke: var(--text); stroke-width: 1.1; opacity: .45; pointer-events: none; }
-.atlas-div { stroke: var(--bg); stroke-width: 1.6; opacity: .65; pointer-events: none; }
+/* the callout plates — every corpus one uniform stamp, grouped under a place name */
+.atlas-plbg { fill: var(--bg); stroke: var(--border); stroke-width: 1.2;
+  filter: drop-shadow(0 3px 9px rgba(24,22,18,.16)); }
+[data-theme="dark"] .atlas-plbg { filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)); }
+.atlas-plname { font-family: var(--sans); font-size: 19px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .16em; fill: var(--muted); cursor: pointer; }
+.atlas-plate:hover .atlas-plname { fill: var(--accent); }
+.atlas-plrule { stroke: var(--border); stroke-width: 1; }
+.atlas-leader { fill: none; stroke: var(--muted); stroke-width: 1.6; opacity: .55; pointer-events: none; }
+.atlas-spoke { stroke: var(--muted); stroke-width: 1.1; stroke-dasharray: 3 4; opacity: .5; pointer-events: none; }
+.atlas-anchor { stroke: var(--bg); stroke-width: 2; pointer-events: none; }
+.atlas-img { cursor: pointer; }
+.atlas-fallback { cursor: pointer; opacity: .22; }
+.atlas-initial { font-family: var(--display, var(--serif)); font-size: 52px; pointer-events: none; }
+.atlas-ring { fill: none; opacity: .6; transition: opacity .15s ease, stroke-width .15s ease; pointer-events: none; }
+.atlas-place.active .atlas-ring { opacity: 1; stroke-width: 5; }
+.atlas-cap { font-family: var(--sans); font-size: 12.5px; fill: var(--text); opacity: .85; pointer-events: none; }
 #atlas-card { position: absolute; left: 0; top: 0; z-index: 5; width: 250px; max-width: 76vw; background: var(--bg);
   border: 1px solid var(--border); border-radius: 0; padding: .7rem .8rem; box-shadow: var(--shadow-2); display: none; }
 #atlas-card.show { display: block; }
@@ -2544,7 +2662,7 @@ ATLAS_JS = r"""
     back.innerHTML =
       '<div id="atlas-panel">'
       + '<div id="atlas-bar"><span id="atlas-title">The Atlas</span>'
-      + '<span id="atlas-sub">Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.</span>'
+      + '<span id="atlas-sub">Every research is one equal stamp, pinned to its place. Click a place name to zoom in — or pick a research above to trace its intellectual world.</span>'
       + '<select id="atlas-pick" aria-label="Choose a research to map its intellectual world"></select>'
       + '<span id="atlas-tools"><button id="atlas-zin" aria-label="Zoom in">+</button>'
       + '<button id="atlas-zout" aria-label="Zoom out">−</button>'
@@ -2562,18 +2680,38 @@ ATLAS_JS = r"""
     back.querySelector('#atlas-zin').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1.3); };
     back.querySelector('#atlas-zout').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1 / 1.3); };
     back.querySelector('#atlas-fit').onclick = fit;
+    var ptrs = {};   // active pointers, so two fingers pinch-zoom on touch
     stage.addEventListener('pointerdown', function (e) {
       if (e.target.closest('#atlas-card')) return;
+      ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
       dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY;
       try { stage.setPointerCapture(e.pointerId); } catch (x) {} stage.classList.add('grab');
     });
     stage.addEventListener('pointermove', function (e) {
+      if (!(e.pointerId in ptrs)) { if (!dragging) return; }
+      var ids = Object.keys(ptrs);
+      if (ids.length === 2 && (e.pointerId in ptrs)) {
+        var a = ptrs[ids[0]], b = ptrs[ids[1]];
+        var d0 = Math.hypot(a.x - b.x, a.y - b.y);
+        ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
+        a = ptrs[ids[0]]; b = ptrs[ids[1]];
+        var d1 = Math.hypot(a.x - b.x, a.y - b.y);
+        var r = stage.getBoundingClientRect();
+        if (d0 > 0 && d1 > 0) zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, d1 / d0);
+        moved = true; return;
+      }
       if (!dragging) return;
+      if (e.pointerId in ptrs) ptrs[e.pointerId] = { x: e.clientX, y: e.clientY };
       var dx = e.clientX - lastX, dy = e.clientY - lastY;
       if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
       view.x += dx; view.y += dy; lastX = e.clientX; lastY = e.clientY; apply();
     });
-    function end() { if (dragging && moved) save(); dragging = false; stage.classList.remove('grab'); }
+    function end(e) {
+      delete ptrs[e.pointerId];
+      var ids = Object.keys(ptrs);
+      if (ids.length === 1) { lastX = ptrs[ids[0]].x; lastY = ptrs[ids[0]].y; }
+      if (!ids.length) { dragging = false; stage.classList.remove('grab'); }
+    }
     stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
     stage.addEventListener('wheel', function (e) {
       e.preventDefault(); var r = stage.getBoundingClientRect();
@@ -2598,16 +2736,6 @@ ATLAS_JS = r"""
   }
 
   function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
-  // Persist where the reader roamed to, so the Atlas reopens exactly as they left it.
-  var SAVE_KEY = 'atlas-view2', saveT = null;
-  function save() { if (mode) return; if (saveT) clearTimeout(saveT); saveT = setTimeout(function () {
-    try { localStorage.setItem(SAVE_KEY, JSON.stringify({ s: view.s, x: view.x, y: view.y })); } catch (e) {} }, 180); }
-  function restore() {
-    try { var v = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
-      if (v && isFinite(v.s) && isFinite(v.x) && isFinite(v.y) && v.s > 0) { view.s = v.s; view.x = v.x; view.y = v.y; return true; }
-    } catch (e) {}
-    return false;
-  }
   // Is enough of the map on-screen? Guards a saved view that lands off-stage when
   // the Atlas is reopened (or resized) at a very different viewport size.
   function enoughVisible() {
@@ -2619,13 +2747,18 @@ ATLAS_JS = r"""
   }
   function zoomAt(px, py, f) {
     var ns = Math.max(0.22, Math.min(9, view.s * f)), k = ns / view.s;
-    view.x = px - (px - view.x) * k; view.y = py - (py - view.y) * k; view.s = ns; apply(); save();
+    view.x = px - (px - view.x) * k; view.y = py - (py - view.y) * k; view.s = ns; apply();
   }
   function fit() {
     if (!DATA || !DATA._b) return;
     var b = DATA._b, sw = stage.clientWidth, sh = stage.clientHeight, pad = 46;
     var s = Math.max(0.22, Math.min(9, Math.min((sw - pad * 2) / b.w, (sh - pad * 2) / b.h)));
-    view.s = s; view.x = (sw - (2 * b.x + b.w) * s) / 2; view.y = (sh - (2 * b.y + b.h) * s) / 2; apply(); save();
+    view.s = s; view.x = (sw - (2 * b.x + b.w) * s) / 2; view.y = (sh - (2 * b.y + b.h) * s) / 2; apply();
+  }
+  function zoomToRect(x, y, w, h) {
+    var sw = stage.clientWidth, sh = stage.clientHeight;
+    var s = Math.max(0.22, Math.min(4.5, Math.min(sw / w, sh / h)));
+    view.s = s; view.x = (sw - (2 * x + w) * s) / 2; view.y = (sh - (2 * y + h) * s) / 2; apply();
   }
 
   function load() {
@@ -2673,9 +2806,8 @@ ATLAS_JS = r"""
     var s = '<svg id="atlas-svg" viewBox="' + j.viewBox + '" width="' + j.w + '" height="' + j.h
       + '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
     s += '<defs>';
-    for (var rid in j.regions) s += '<clipPath id="ar-' + rid + '"><path d="' + j.regions[rid].d + '"/></clipPath>';
-    if (!C) j.places.forEach(function (p) { var c = p.cell;
-      s += '<clipPath id="ac-' + p.slug + '"><rect x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3] + '"/></clipPath>'; });
+    if (!C) j.places.forEach(function (p) {
+      s += '<clipPath id="ac-' + p.slug + '"><rect x="' + p.x + '" y="' + p.y + '" width="' + p.w + '" height="' + p.h + '" rx="7"/></clipPath>'; });
     else s += '<clipPath id="ahome"><circle cx="' + C.home.x + '" cy="' + C.home.y + '" r="58"/></clipPath>';
     s += '</defs>';
     s += '<g id="atlas-grat">'; (j.graticule || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
@@ -5013,11 +5145,12 @@ def _fmt_band(lo, hi):
     return f"{f(lo)}%" if abs(hi - lo) < .05 else f"{f(lo)}–{f(hi)}%"
 
 
-def harvest_corpus_market(folder, corpus, category):
+def harvest_corpus_market(folder, corpus, category, cover=None):
     """Turn one research corpus's manifest `scenarios` into a Forecast Desk market
     (scenario = outcome, probability band = price). Returns None when the corpus
-    carries no structured scenarios. The card deep-links to the corpus's Future
-    Trajectory chapter via the reader's #ch-{i} anchors."""
+    carries no structured scenarios. Board cards open the market's own desk page
+    (forecast/{slug}.html); the desk page carries the deep link into the corpus's
+    Future Trajectory chapter (reader #ch-{i} anchors)."""
     try:
         manifest = json.loads((Path(folder) / "manifest.json").read_text())
     except (OSError, json.JSONDecodeError):
@@ -5030,11 +5163,19 @@ def harvest_corpus_market(folder, corpus, category):
         band = _prob_band(s)
         if band is None:
             continue
+        def _lst(key):
+            v = s.get(key)
+            return [str(x).strip() for x in v if str(x).strip()] if isinstance(v, list) else []
         outcomes.append({
             "name": s["name"],
             "low": band[0], "high": band[1],
             "mid": (band[0] + band[1]) / 2,
             "horizon": (s.get("time_horizon") or "").strip(),
+            "description": (s.get("description") or "").strip(),
+            "derivation": (s.get("derivation") or "").strip(),
+            "drivers": _lst("drivers"),
+            "signals": _lst("signals_to_watch"),
+            "conditions": _lst("conditions"),
         })
     if not outcomes:
         return None
@@ -5042,14 +5183,16 @@ def harvest_corpus_market(folder, corpus, category):
     ft_i = next((i for i, d in enumerate(corpus["documents"])
                  if d.get("file") == "Future_Trajectory.md"
                  or "future trajectory" in d.get("title", "").lower()), None)
-    href = f"{corpus['slug']}.html" + (f"#ch-{ft_i}" if ft_i is not None else "")
+    research_href = f"{corpus['slug']}.html" + (f"#ch-{ft_i}" if ft_i is not None else "")
     horizon = (manifest.get("forecast_horizon") or outcomes[0]["horizon"] or "").strip()
     return {
         "slug": corpus["slug"],
         "title": corpus["title"],
         "subtitle": corpus.get("subtitle", ""),
         "category": category,
-        "href": href,
+        "href": f"forecast/{corpus['slug']}.html",   # the market's own desk page
+        "research_href": research_href,              # root-relative reader deep link
+        "cover": cover,                              # root-relative covers/{name}, or None
         "horizon": horizon,
         "outcomes": outcomes,
     }
@@ -5110,7 +5253,7 @@ FORECAST_PAGE_CSS = """
   background: #0a0f16; margin: 0 0 1.4rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent); }
 .fd-tape-inner { display: inline-flex; gap: 2.2rem; padding: .55rem 0; white-space: nowrap;
-  animation: fd-tape 55s linear infinite; will-change: transform; }
+  animation: fd-tape 240s linear infinite; will-change: transform; }
 .fd-tape:hover .fd-tape-inner { animation-play-state: paused; }
 @keyframes fd-tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) { .fd-tape-inner { animation: none; } }
@@ -5157,6 +5300,8 @@ FORECAST_PAGE_CSS = """
   transition: border-color .15s var(--ease); }
 .fd-card:hover { border-color: var(--fdup); }
 .fd-card-top { display: flex; align-items: center; gap: .5rem; margin-bottom: .55rem; }
+.fd-card-cover { width: 40px; height: 40px; object-fit: cover; border-radius: 2px;
+  border: 1px solid var(--fdline); flex: none; }
 .fd-chip-open { font-family: var(--sans); font-size: .58rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; color: var(--fdup); border: 1px solid var(--fdup); border-radius: 2px; padding: .16rem .5rem; }
 .fd-card-hz { font-family: var(--fdmono); font-size: .64rem; color: var(--fdmut); margin-left: auto;
@@ -5199,7 +5344,7 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Forecast Desk — calvincollins · xyz</title>
+<title>{page_title} — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -5209,16 +5354,12 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html" class="active">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <header class="fd-plate">
-  <p class="fd-kicker">Predictions, by category</p>
-  <h1 class="fd-name">The Forecast Desk</h1>
+  <p class="fd-kicker">{kicker}</p>
+  <h1 class="fd-name">{h1}</h1>
   <p class="fd-motto">“{motto}”</p>
   <div class="fd-folio">
     <span>{n_markets} markets</span>
@@ -5231,7 +5372,7 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="fd-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+  <p class="colophon">{back}</p>
 </footer>
 <script>{theme_js}</script>
 <script>{app_js}</script>
@@ -5278,9 +5419,11 @@ def _fd_outcome_rows(outcomes, cap=5):
 
 def _fd_market_card(m):
     hz = html.escape(m["horizon"]) if m["horizon"] else ""
+    cover = (f'<img class="fd-card-cover" src="{html.escape(m["cover"], quote=True)}" alt="" loading="lazy">'
+             if m.get("cover") else "")
     return (
         f'<a class="fd-card" href="{html.escape(m["href"], quote=True)}">'
-        f'<div class="fd-card-top"><span class="fd-chip-open">Open</span>'
+        f'<div class="fd-card-top">{cover}<span class="fd-chip-open">Open</span>'
         f'<span class="fd-card-hz">{hz}</span></div>'
         f'<h3 class="fd-card-q">{html.escape(m["title"])}</h3>'
         f'{_fd_outcome_rows(m["outcomes"])}'
@@ -5332,13 +5475,33 @@ def _fd_tape(native_items, markets):
     if not ticks:
         return ""
     row = "".join(ticks)
-    return f'<div class="fd-tape" aria-hidden="true"><div class="fd-tape-inner">{row}{row}</div></div>'
+    # A calm crawl: ~8s per tick so a full loop of a 30-market board takes ~4min.
+    dur = max(120, len(ticks) * 8)
+    return (f'<div class="fd-tape" aria-hidden="true">'
+            f'<div class="fd-tape-inner" style="animation-duration:{dur}s">{row}{row}</div></div>')
 
 
-def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell=""):
-    """Render docs/forecast.html — the board: ticker, live native markets, then
-    every harvested corpus market shelved by category."""
+FORECAST_NAV_DEFAULT = (
+    '    <a href="index.html">The Research</a>\n'
+    '    <a href="ghost.html">The Ghost of Times</a>\n'
+    '    <a href="adtech.html">Ad Tech</a>\n'
+    '    <a href="pamphlets.html">The Pamphlets</a>\n'
+    '    <a href="forecast.html" class="active">The Forecast Desk</a>'
+)
+
+
+def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None):
+    """Render a Forecast board — docs/forecast.html by default: ticker, live
+    native markets, then every harvested corpus market shelved by category.
+    A `page` override scopes the board to a detached desk's own edition (e.g.
+    the Ad Tech Board): {fname, title (h1), kicker, nav, back}."""
     out = Path(out_dir)
+    page = page or {}
+    fname = page.get("fname", "forecast.html")
+    h1 = page.get("title", "The Forecast Desk")
+    kicker = page.get("kicker", "Predictions, by category")
+    nav = page.get("nav", FORECAST_NAV_DEFAULT)
+    back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
     category_order = category_order or []
     parts = [_fd_tape(native_items, markets)]
     for f in native_items:
@@ -5358,10 +5521,12 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
                      f'<div class="fd-grid">{cards}</div>')
     n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
     n_markets = len(native_items) + len(markets)
-    og = og_tags("The Forecast Desk",
+    og = og_tags(h1,
                  cfg.get("motto", "Every prediction the research makes, priced and graded."),
-                 f"{SITE_URL}/forecast.html", f"{SITE_URL}/{OG_IMAGE}")
-    page = FORECAST_PAGE_TEMPLATE.format(
+                 f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
+    page_html = FORECAST_PAGE_TEMPLATE.format(
+        page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
+        nav=nav, back=back,
         css=LIBRARY_CSS + FORECAST_PAGE_CSS,
         favicon=FAVICON, og_meta=og,
         motto=html.escape(cfg.get("motto", "")),
@@ -5373,8 +5538,8 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         app_js=FORECAST_PAGE_JS,
         shell=shell,
     )
-    (out / "forecast.html").write_text(page)
-    print(f"  ✓ The Forecast Desk  ({n_markets} markets, {n_outcomes} outcomes) → forecast.html")
+    (out / fname).write_text(page_html)
+    print(f"  ✓ {h1}  ({n_markets} markets, {n_outcomes} outcomes) → {fname}")
 
 
 # ------------------------------------------------------------- native forecast pages
@@ -5494,6 +5659,40 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
 .fdd-src li { font-family: var(--sans); font-size: .76rem; margin: .35rem 0; }
 .fdd-src a { color: var(--fdblue); text-decoration: none; }
 .fdd-src a:hover { text-decoration: underline; }
+
+/* research-market pages — the harvested corpora in the same live-market dress */
+.fdd-pick.cvr { padding: 0; border-color: var(--fdline); overflow: hidden; }
+.fdd-pick.cvr img { display: block; width: 132px; height: 132px; object-fit: cover; }
+.fdd-pick.cvr .p { padding: .5rem .6rem .6rem; }
+.fdr-leadlbl { font-family: var(--sans); font-size: .62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdup); margin: 0 0 .3rem; }
+.fdr-leadnm { font-family: var(--display); font-weight: 700; font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+  line-height: 1.18; margin: 0 0 .55rem; color: var(--fdtext); }
+.fdr-cta { display: inline-block; font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; color: #0c1117; background: var(--fdup);
+  border-radius: 2px; padding: .55rem 1rem; text-decoration: none; margin-top: .8rem; }
+.fdr-cta:hover { filter: brightness(1.1); }
+.fdr-out { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: 1.1rem 1.25rem; margin: 0 0 1rem; }
+.fdr-out.lead { border-color: rgba(34,197,94,.55); }
+.fdr-oh { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .55rem; }
+.fdr-oh .nm { font-family: var(--sans); font-weight: 800; font-size: 1.02rem; line-height: 1.3; color: var(--fdtext); }
+.fdr-oh .pc { font-family: var(--fdmono); font-size: .88rem; font-weight: 700; color: var(--fdmut);
+  white-space: nowrap; font-variant-numeric: tabular-nums; }
+.fdr-out.lead .fdr-oh .pc { color: #0c1117; background: var(--fdup); border-radius: 2px; padding: .1rem .45rem; }
+.fdr-out .fd-track { height: 12px; margin-bottom: .8rem; }
+.fdr-desc { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0; margin: 0 0 .8rem; }
+.fdr-deriv { background: #0c1117; border: 1px dashed var(--fdline); border-radius: 2px; padding: .7rem .85rem;
+  font-family: var(--sans); font-size: .76rem; line-height: 1.5; color: var(--fdmut); margin: 0 0 .8rem; }
+.fdr-deriv b { color: var(--fdup); font-size: .58rem; text-transform: uppercase; letter-spacing: .1em; }
+.fdr-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fdr-l h4 { font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); margin: 0 0 .4rem; }
+.fdr-l ul { margin: 0; padding: 0 0 0 1rem; }
+.fdr-l li { font-family: var(--sans); font-size: .78rem; line-height: 1.5; color: var(--fdmut); margin: .25rem 0; }
+.fdr-hz { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); border-top: 1px solid var(--fdline);
+  margin-top: .85rem; padding-top: .65rem; }
+@media (max-width: 620px) { .fdr-lists { grid-template-columns: 1fr; } .fdd-pick.cvr img { width: 100%; height: 110px; } }
 """
 
 FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
@@ -5520,12 +5719,10 @@ FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
 </div>
 <div class="fdd-wrap">
 <header class="fd-plate">
-  <p class="fd-kicker">The Forecast Desk · Live market</p>
+  <p class="fd-kicker">{kicker}</p>
   <h1 class="fd-name" style="font-size:clamp(1.9rem,4.6vw,3rem)">{headline}</h1>
   <div class="fd-folio">
-    <span>Logged {logged}</span>
-    <span class="fd-folio-c" data-grades="{grades_attr}">Grades {grades}</span>
-    <span>{category}</span>
+{folio}
   </div>
 </header>
 <main class="fd-board fdd" id="fd-board">
@@ -5663,16 +5860,19 @@ def build_forecast_item(out_dir, item, shell=""):
     title = d.get("title") or item.get("title") or slug
     grades = d.get("grades", item.get("grades", ""))
     og = og_tags(title, d.get("question", title), f"{SITE_URL}/forecast/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
+    logged = html.escape(_long_date(d.get("logged", "")) if d.get("logged") else "—")
+    folio = (f'    <span>Logged {logged}</span>\n'
+             f'    <span class="fd-folio-c" data-grades="{html.escape(grades, quote=True)}">'
+             f'Grades {html.escape(_long_date(grades) if grades else "—")}</span>\n'
+             f'    <span>{html.escape(d.get("category", ""))}</span>')
     page = FORECAST_DETAIL_TEMPLATE.format(
         title=html.escape(f"{title} — The Forecast Desk"),
         description=html.escape(d.get("question", title)),
         favicon=FAVICON, og_meta=og,
         css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+        kicker="The Forecast Desk · Live market",
         headline=html.escape(d.get("question", title)),
-        logged=html.escape(_long_date(d.get("logged", "")) if d.get("logged") else "—"),
-        grades=html.escape(_long_date(grades) if grades else "—"),
-        grades_attr=html.escape(grades, quote=True),
-        category=html.escape(d.get("category", "")),
+        folio=folio,
         method_note=html.escape(d.get("method_note", "")),
         body="\n".join(parts),
         theme_js=LIBRARY_THEME_JS,
@@ -5681,6 +5881,89 @@ def build_forecast_item(out_dir, item, shell=""):
     )
     (out / "forecast").mkdir(parents=True, exist_ok=True)
     (out / "forecast" / f"{slug}.html").write_text(page)
+    return True
+
+
+def build_corpus_market_page(out_dir, m, shell=""):
+    """Render a harvested research market's own desk page — forecast/{slug}.html —
+    in the same live-market dress as a native forecast: hero with the corpus cover
+    as the square panel, every outcome priced with a filled bar plus its
+    description / derivation / drivers / signals, and the deep link into the
+    corpus's Future Trajectory chapter."""
+    out = Path(out_dir)
+    lead = m["outcomes"][0]
+    research = "../" + m["research_href"]
+    cover_sq = (f'<div class="fdd-pick cvr"><img src="../{html.escape(m["cover"], quote=True)}" alt="">'
+                f'<div class="p">{_fmt_band(lead["low"], lead["high"])}</div></div>'
+                if m.get("cover") else
+                f'<div class="fdd-pick"><div class="f">📚</div>'
+                f'<div class="p">{_fmt_band(lead["low"], lead["high"])}</div></div>')
+    hero = (
+        f'<section class="fdd-hero">'
+        f'<div class="fd-live-top"><span class="fd-chip-open">Open</span>'
+        f'<span class="fd-chip-cat">{html.escape(m["category"])}</span>'
+        f'<span class="fd-chip-date">{html.escape(m["horizon"])}</span></div>'
+        f'<div class="fdd-pickrow">{cover_sq}'
+        f'<div><p class="fdr-leadlbl">Most likely outcome</p>'
+        f'<p class="fdr-leadnm">{html.escape(lead["name"])}</p>'
+        f'<p class="fdd-res">{html.escape(m.get("subtitle", ""))}</p>'
+        f'<a class="fdr-cta" href="{html.escape(research, quote=True)}">Read the full research →</a>'
+        f'</div></div></section>'
+    )
+    outs = []
+    for i, o in enumerate(m["outcomes"]):
+        low = max(min(o["low"], 100.0), 0.0)
+        high = max(min(o["high"], 100.0), low)
+        bars = f'<span class="fd-fill" style="width:{max(low, 1.5):.1f}%"></span>'
+        if high - low >= .5:
+            bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{high - low:.1f}%"></span>'
+        bits = [f'<div class="fdr-oh"><span class="nm">{html.escape(o["name"])}</span>'
+                f'<span class="pc">{_fmt_band(o["low"], o["high"])}</span></div>'
+                f'<div class="fd-track">{bars}</div>']
+        if o.get("description"):
+            bits.append(f'<p class="fdr-desc">{html.escape(o["description"])}</p>')
+        if o.get("derivation"):
+            bits.append(f'<div class="fdr-deriv"><b>How this number was derived</b><br>{html.escape(o["derivation"])}</div>')
+        lists = []
+        if o.get("drivers"):
+            lis = "".join(f'<li>{html.escape(x)}</li>' for x in o["drivers"])
+            lists.append(f'<div class="fdr-l"><h4>Drivers</h4><ul>{lis}</ul></div>')
+        if o.get("signals"):
+            lis = "".join(f'<li>{html.escape(x)}</li>' for x in o["signals"])
+            lists.append(f'<div class="fdr-l"><h4>Signals to watch</h4><ul>{lis}</ul></div>')
+        if lists:
+            bits.append(f'<div class="fdr-lists">{"".join(lists)}</div>')
+        if o.get("horizon"):
+            bits.append(f'<div class="fdr-hz">Horizon · {html.escape(o["horizon"])}</div>')
+        outs.append(f'<article class="fdr-out{" lead" if i == 0 else ""}">{"".join(bits)}</article>')
+    parts = [hero,
+             f'<h2 class="fdd-h"><span class="n">01</span>The Outcomes — {len(m["outcomes"])} scenarios, priced by the research</h2>',
+             "".join(outs),
+             f'<p class="fdd-note">Probabilities are the research\'s own scenario bands, priced as outcomes. '
+             f'The full argument — history, current state, drivers, and sources — lives in the corpus: '
+             f'<a href="{html.escape(research, quote=True)}" style="color:var(--fdblue)">read the Future Trajectory chapter</a>.</p>']
+    og_img = f"{SITE_URL}/{m['cover']}" if m.get("cover") else f"{SITE_URL}/{OG_IMAGE}"
+    og = og_tags(m["title"], m.get("subtitle") or m["title"],
+                 f"{SITE_URL}/forecast/{m['slug']}.html", og_img)
+    folio = (f'    <span>{html.escape(m["horizon"] or "Open")}</span>\n'
+             f'    <span class="fd-folio-c">{len(m["outcomes"])} priced outcomes</span>\n'
+             f'    <span>{html.escape(m["category"])}</span>')
+    page = FORECAST_DETAIL_TEMPLATE.format(
+        title=html.escape(f"{m['title']} — The Forecast Desk"),
+        description=html.escape(m.get("subtitle") or m["title"]),
+        favicon=FAVICON, og_meta=og,
+        css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+        kicker="The Forecast Desk · Research market",
+        headline=html.escape(m["title"]),
+        folio=folio,
+        method_note="Priced from the corpus’s forecast scenarios — every band grounded in the research it links to.",
+        body="\n".join(parts),
+        theme_js=LIBRARY_THEME_JS,
+        app_js=FORECAST_PAGE_JS,
+        shell=shell,
+    )
+    (out / "forecast").mkdir(parents=True, exist_ok=True)
+    (out / "forecast" / f"{m['slug']}.html").write_text(page)
     return True
 
 
@@ -7180,6 +7463,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
   </div>
 </header>
 {bands}
+{tools}
 <h2 class="section-title" id="library">The Research</h2>
 <main class="library">
 {cards}
@@ -7215,7 +7499,41 @@ DOMAIN_PAGE_CSS = """
 footer .colophon a { color: var(--accent); text-decoration: none; }
 footer .colophon a:hover { text-decoration: underline; }
 @media (max-width: 560px) { .dk-folio { font-size: .58rem; letter-spacing: .04em; } }
+
+/* the desk's own apparatus — its forecaster + dictionary, as tool cards */
+.dk-tools { max-width: 1080px; margin: 1.1rem auto 0; padding: 0 2rem; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.1rem; }
+.dk-tool { display: flex; flex-direction: column; text-decoration: none; color: var(--text);
+  background: var(--panel); border: 1px solid var(--border); border-left: 4px solid #0d5b68;
+  border-radius: 18px; padding: 1.15rem 1.4rem;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease; }
+.dk-tool:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(0,0,0,.14); border-left-color: #11808f; }
+[data-theme="dark"] .dk-tool { border-left-color: #62aab8; }
+.dk-tool-k { font-family: var(--sans); font-size: .64rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: #0d5b68; margin: 0 0 .35rem; }
+[data-theme="dark"] .dk-tool-k { color: #62aab8; }
+.dk-tool-t { font-family: var(--display); font-weight: 600; font-size: 1.28rem; line-height: 1.15; margin: 0 0 .3rem; }
+.dk-tool-m { font-family: var(--sans); font-size: .78rem; color: var(--muted); margin: 0 0 .75rem; line-height: 1.45; }
+.dk-tool-cta { margin-top: auto; font-family: var(--sans); font-size: .7rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .1em; color: #0d5b68; }
+[data-theme="dark"] .dk-tool-cta { color: #62aab8; }
 """
+
+
+def _desk_tools_html(tools):
+    """The desk's apparatus row (its own forecaster / dictionary), rendered as
+    tool cards between the bands and the card grid. Empty list → empty string."""
+    if not tools:
+        return ""
+    cards = "".join(
+        f'<a class="dk-tool" href="{html.escape(t["href"], quote=True)}">'
+        f'<p class="dk-tool-k">{html.escape(t["kicker"])}</p>'
+        f'<p class="dk-tool-t">{html.escape(t["title"])}</p>'
+        f'<p class="dk-tool-m">{html.escape(t["meta"])}</p>'
+        f'<span class="dk-tool-cta">{html.escape(t["cta"])}</span></a>'
+        for t in tools
+    )
+    return f'<div class="dk-tools">{cards}</div>'
 
 
 def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
@@ -7250,10 +7568,11 @@ def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
             f'<span class="fp-band-cta">Enter the desk →</span></a></div>')
 
 
-def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", shell=""):
+def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", shell=""):
     """Render a detached domain front (docs/<slug>.html): nameplate, any bands it
-    pulled off the home page, then its category shelves as the standard card grid
-    (with the live search box; category headings only when it shelves >1 category)."""
+    pulled off the home page, its own apparatus row (tools — the desk's forecaster
+    and dictionary), then its category shelves as the standard card grid (with the
+    live search box; category headings only when it shelves >1 category)."""
     out = Path(out_dir)
     slug = page_cfg.get("slug", "adtech")
     title = page_cfg.get("title") or dom.get("title", "The Desk")
@@ -7293,6 +7612,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         stats=html.escape(stats),
         folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
         bands=bands,
+        tools=tools,
         cards=body,
         epigraph=html.escape(page_cfg.get("epigraph", "“We sell — or else.” — David Ogilvy")),
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS,
@@ -7574,8 +7894,8 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Glossary — calvincollins · xyz</title>
-<meta name="description" content="Every term of art across the research library, defined in plain language.">
+<title>{page_title} — calvincollins · xyz</title>
+<meta name="description" content="{descr}">
 <link rel="icon" href="{favicon}">
 {og_meta}
 <style>{css}</style>
@@ -7584,19 +7904,13 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
-    <a href="connections.html">Connections</a>
-    <a href="glossary.html" class="active">Glossary</a>
+{nav}
   </nav>
 </div>
 <main class="gl-wrap">
   <header class="gl-head">
-    <p class="kicker">Reference</p>
-    <h1>Glossary</h1>
+    <p class="kicker">{kicker}</p>
+    <h1>{h1}</h1>
     <p class="tagline">{intro}</p>
   </header>
   <div class="gl-tools">
@@ -7611,7 +7925,7 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
   <p id="gl-none" hidden>No terms match your filter.</p>
 </main>
 <footer class="cx-foot">
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+  <p class="colophon">{back}</p>
 </footer>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
 <script>{app_js}</script>
@@ -7620,13 +7934,32 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 </html>
 """
 
+GLOSSARY_NAV_DEFAULT = (
+    '    <a href="index.html">The Research</a>\n'
+    '    <a href="ghost.html">The Ghost of Times</a>\n'
+    '    <a href="adtech.html">Ad Tech</a>\n'
+    '    <a href="pamphlets.html">The Pamphlets</a>\n'
+    '    <a href="forecast.html">The Forecast Desk</a>\n'
+    '    <a href="connections.html">Connections</a>\n'
+    '    <a href="glossary.html" class="active">Glossary</a>'
+)
 
-def build_glossary_page(out_dir, glossary_index, category_order=None, shell=""):
-    """Render docs/glossary.html — one merged, de-duplicated, searchable reference of
-    every term across all corpora, each linking back to the corpora that use it.
-    Filterable by category (any category a source corpus belongs to) and by article
-    (a specific corpus) in addition to the free-text search."""
+
+def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", page=None):
+    """Render a Glossary — docs/glossary.html by default: one merged, de-duplicated,
+    searchable reference of every term across the given corpora, each linking back
+    to the corpora that use it. Filterable by category (any category a source corpus
+    belongs to) and by article (a specific corpus) in addition to the free-text
+    search. A `page` override scopes it to a detached desk's own dictionary (e.g.
+    the Ad Tech Glossary): {fname, title (h1), kicker, scope, nav, back}."""
     out = Path(out_dir)
+    page = page or {}
+    fname = page.get("fname", "glossary.html")
+    h1 = page.get("title", "Glossary")
+    kicker = page.get("kicker", "Reference")
+    scope = page.get("scope", "across the research library")
+    nav = page.get("nav", GLOSSARY_NAV_DEFAULT)
+    back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
     merged = {}
     for g in glossary_index:
         for t in g["terms"]:
@@ -7711,18 +8044,20 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell=""):
         )
 
     n = len(entries)
-    intro = (f"Every acronym, term of art, and named system across the research library — "
+    intro = (f"Every acronym, term of art, and named system {scope} — "
              f"{n} in all, defined in plain language, each linked to the corpora that use it. "
              f"Filter by category, article, or search below, or jump by letter.")
-    og = og_tags("Glossary", "Every term of art across the research library, defined in plain language.",
-                 f"{SITE_URL}/glossary.html", f"{SITE_URL}/{OG_IMAGE}")
-    page = GLOSSARY_TEMPLATE.format(
+    descr = f"Every term of art {scope}, defined in plain language."
+    og = og_tags(h1, descr, f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
+    page_html = GLOSSARY_TEMPLATE.format(
+        page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
+        descr=html.escape(descr), nav=nav, back=back,
         favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + GLOSSARY_EXTRA_CSS,
         intro=intro, n=n, az=az, entries="".join(blocks), app_js=GLOSSARY_JS, shell=shell,
         cat_pills="".join(cat_pills), article_options="".join(article_opts),
     )
-    (out / "glossary.html").write_text(page)
-    print(f"  ✓ Glossary  ({n} terms across {len(glossary_index)} corpora, {len(gloss_cat_order)} categories) → glossary.html")
+    (out / fname).write_text(page_html)
+    print(f"  ✓ {h1}  ({n} terms across {len(glossary_index)} corpora, {len(gloss_cat_order)} categories) → {fname}")
     return True
 
 
@@ -7904,7 +8239,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         wrapped_stats.append({"slug": corpus["slug"], "title": corpus["title"], "category": category,
                               "chapters": n,
                               "words": sum(len(re.sub(r"<[^>]+>", " ", d["body"]).split()) for d in corpus["documents"])})
-        fd_m = harvest_corpus_market(folder, corpus, category)
+        fd_m = harvest_corpus_market(folder, corpus, category,
+                                     cover=f"covers/{_atlas_img.name}" if _atlas_img else None)
         if fd_m:
             fd_markets.append(fd_m)
         fig_note = f", {figs} figures" if figs else ""
@@ -7986,13 +8322,29 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             })
 
     # Detached domain fronts (config domains carrying a "page" key) — e.g. the
-    # Ad Tech desk — join the palette as sections so ⌘K can jump to them.
+    # Ad Tech desk — join the palette as sections so ⌘K can jump to them, along
+    # with any apparatus of their own (page.include: "forecast" / "glossary").
     for d in domains:
         p = d.get("page")
-        if p:
-            manifest.append({"title": p.get("title") or d.get("title", ""), "kind": "section",
-                             "category": "The desk", "href": f"{p.get('slug', 'adtech')}.html",
-                             "meta": p.get("kicker", "a separate desk")})
+        if not p:
+            continue
+        _slug = p.get("slug", "adtech")
+        _title = p.get("title") or d.get("title", "")
+        _cats = set(d.get("categories", []))
+        _inc = p.get("include") or []
+        manifest.append({"title": _title, "kind": "section",
+                         "category": "The desk", "href": f"{_slug}.html",
+                         "meta": p.get("kicker", "a separate desk")})
+        if "forecast" in _inc and any(m["category"] in _cats for m in fd_markets):
+            manifest.append({"title": p.get("forecast_title", f"The {_title} Board"),
+                             "kind": "section", "category": "The desk",
+                             "href": f"{_slug}-forecast.html",
+                             "meta": "the desk's predictions, priced"})
+        if "glossary" in _inc and any(g.get("category") in _cats for g in glossary_index):
+            manifest.append({"title": p.get("glossary_title", f"The {_title} Glossary"),
+                             "kind": "section", "category": "The desk",
+                             "href": f"{_slug}-glossary.html",
+                             "meta": "the trade's terms, defined"})
 
     manifest.append({"title": "Research Wrapped", "kind": "section", "category": "You",
                      "href": "wrapped.html", "meta": "your year in reading"})
@@ -8024,7 +8376,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         atlas_data = compute_atlas(
             atlas_geo, atlas_corpora,
             placements=atlas_cfg.get("places") or ATLAS_PLACEMENTS,
-            grow=atlas_cfg.get("grow") or ATLAS_GROW,
+            groups=atlas_cfg.get("groups") or ATLAS_GROUPS,
         )
         if atlas_data:
             conn = compute_atlas_connections(atlas_geo, atlas_corpora, load_atlas_connections())
@@ -8033,7 +8385,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             (out / "atlas.json").write_text(json.dumps(atlas_data, separators=(",", ":"), ensure_ascii=False))
             n_nodes = sum(len(v["nodes"]) for v in conn.values()) if conn else 0
             cmsg = f", {len(conn)} intellectual-world maps ({n_nodes} nodes)" if conn else ""
-            print(f"  ✓ Atlas: {len(atlas_data['places'])} corpora across {len(atlas_data['regions'])} regions{cmsg} → atlas.json")
+            print(f"  ✓ Atlas: {len(atlas_data['places'])} stamps across {len(atlas_data['plates'])} plates{cmsg} → atlas.json")
         else:
             print("  ! Atlas: no corpora placed (check the 'atlas' placements)", file=sys.stderr)
     else:
@@ -8067,7 +8419,20 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     # The Connections page — interactive theme-graph of the corpora.
     build_connections_page(out, [e for e in manifest if e.get("kind") == "corpus"], category_order, shell=shell_root)
-    build_glossary_page(out, glossary_index, category_order=category_order, shell=shell_root)
+
+    # Detached domain fronts (config domains carrying a "page" object, e.g. the
+    # Ad Tech desk) can claim site apparatus via page.include: the categories of
+    # a desk that lists "glossary" / "forecast" come OFF the site-wide pages and
+    # get desk-scoped editions instead (built alongside the desk, further down).
+    detached = [d for d in domains if d.get("page")]
+    detached_cats = {c for d in detached for c in d.get("categories", [])}
+    gl_desk_cats = {c for d in detached if "glossary" in (d["page"].get("include") or [])
+                    for c in d.get("categories", [])}
+    fc_desk_cats = {c for d in detached if "forecast" in (d["page"].get("include") or [])
+                    for c in d.get("categories", [])}
+
+    build_glossary_page(out, [g for g in glossary_index if g.get("category") not in gl_desk_cats],
+                        category_order=category_order, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site).
     build_ghost_page(out, editions, ghost_cfg, shell=shell_root)
@@ -8093,10 +8458,16 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         print(f"  ✓ Rendered {pam_rendered}/{len(pamphlet_items)} pamphlet page(s) from data")
 
     # The Forecast Desk (fifth top-level section — predictions by category).
-    build_forecast_page(out, forecast_items, fd_markets, forecast_cfg,
+    # Markets whose category belongs to a desk that runs its own board stay off
+    # the site-wide board (they trade on the desk's edition instead).
+    fd_main = [m for m in fd_markets if m["category"] not in fc_desk_cats]
+    build_forecast_page(out, forecast_items, fd_main, forecast_cfg,
                         category_order=category_order, shell=shell_root)
-    forecast_band = forecast_band_html(forecast_items, fd_markets, forecast_cfg)
+    forecast_band = forecast_band_html(forecast_items, fd_main, forecast_cfg)
     fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub) for f in forecast_items)
+    fdm_rendered = sum(build_corpus_market_page(out, m, shell=shell_sub) for m in fd_markets)
+    if fd_markets:
+        print(f"  ✓ Rendered {fdm_rendered} research market page(s) → forecast/")
     if forecast_items:
         print(f"  ✓ Rendered {fd_rendered}/{len(forecast_items)} live forecast page(s) from data")
 
@@ -8104,26 +8475,72 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # lifted off the home page onto its own top-level section of the site (e.g.
     # Ad Tech — docs/adtech.html), keeping the trade desk separate from the
     # liberal-arts library. Its category shelves render there instead of the
-    # index, and any bands named in page.include (currently "fingerprint") move
-    # with it; the home page gets a desk band pointing at the section instead. ----
-    detached = [d for d in domains if d.get("page")]
-    detached_cats = {c for d in detached for c in d.get("categories", [])}
+    # index; page.include moves the Fingerprint band with it and grants the desk
+    # its own apparatus — a scoped Forecast board and Glossary — rendered as a
+    # tools row. The home page gets a desk band pointing at the section instead.
     index_cards = [c for c in cards if c["category"] not in detached_cats]
     home_bands = []
     for d in detached:
         pcfg = d["page"]
+        slug = pcfg.get("slug", "adtech")
+        title = pcfg.get("title") or d.get("title", "The Desk")
         dcats = d.get("categories", [])
         dcards = [c for c in cards if c["category"] in dcats]
         dws = [w for w in wrapped_stats if w["category"] in dcats]
         dstats = (f"{len(dcards)} corpora · {sum(w['chapters'] for w in dws)} chapters · "
                   f"{round(sum(w['words'] for w in dws) / 1000)}k words")
-        takes_fp = "fingerprint" in (pcfg.get("include") or [])
+        inc = pcfg.get("include") or []
+        takes_fp = "fingerprint" in inc
         bands = fingerprint_band if takes_fp else ""
         if takes_fp:
             fingerprint_band = ""   # the wire band now lives on the desk, not the index
-        build_domain_page(out, pcfg, d, dcards, dcats, dstats, bands=bands, shell=shell_root)
+        # The desk's own apparatus, scoped to just its categories.
+        desk_nav = (
+            '    <a href="index.html">The Research</a>\n'
+            '    <a href="ghost.html">The Ghost of Times</a>\n'
+            f'    <a href="{slug}.html" class="active">{html.escape(title)}</a>\n'
+            '    <a href="pamphlets.html">The Pamphlets</a>\n'
+            '    <a href="forecast.html">The Forecast Desk</a>')
+        desk_back = f'<a href="{slug}.html">← Back to the {html.escape(title)} desk</a>'
+        tools = []
+        if "forecast" in inc:
+            dmarkets = [m for m in fd_markets if m["category"] in dcats]
+            if dmarkets:
+                fc_title = pcfg.get("forecast_title", f"The {title} Board")
+                build_forecast_page(out, [], dmarkets, forecast_cfg, category_order=dcats,
+                                    shell=shell_root,
+                                    page={"fname": f"{slug}-forecast.html", "title": fc_title,
+                                          "kicker": "The desk's predictions, by category",
+                                          "nav": desk_nav, "back": desk_back})
+                n_out = sum(len(m["outcomes"]) for m in dmarkets)
+                tools.append({"href": f"{slug}-forecast.html", "kicker": "The desk's forecaster",
+                              "title": fc_title,
+                              "meta": f"{len(dmarkets)} markets · {n_out} priced outcomes — "
+                                      f"every one from the research",
+                              "cta": "To the board →"})
+        if "glossary" in inc:
+            dgloss = [g for g in glossary_index if g.get("category") in dcats]
+            if dgloss:
+                gl_title = pcfg.get("glossary_title", f"The {title} Glossary")
+                gl_terms = len({(t.get("term") or "").strip().lower()
+                                for g in dgloss for t in g["terms"]} - {""})
+                build_glossary_page(out, dgloss, category_order=dcats, shell=shell_root,
+                                    page={"fname": f"{slug}-glossary.html", "title": gl_title,
+                                          "kicker": f"Reference · {title}",
+                                          "scope": f"across the {title} desk",
+                                          "nav": desk_nav, "back": desk_back})
+                tools.append({"href": f"{slug}-glossary.html", "kicker": "The desk's dictionary",
+                              "title": gl_title,
+                              "meta": f"{gl_terms} terms across {len(dgloss)} corpora, "
+                                      f"defined in plain language",
+                              "cta": "Look it up →"})
+        build_domain_page(out, pcfg, d, dcards, dcats, dstats, bands=bands,
+                          tools=_desk_tools_html(tools), shell=shell_root)
         home_bands.append(domain_band_html(pcfg, d, len(dcards), fp_editions if takes_fp else None))
-        print(f"  ✓ Detached desk: {pcfg.get('title') or d.get('title', '')} — {dstats} → {pcfg.get('slug', 'adtech')}.html")
+        print(f"  ✓ Detached desk: {title} — {dstats}"
+              f"{' + board' if any(t['href'].endswith('-forecast.html') for t in tools) else ''}"
+              f"{' + glossary' if any(t['href'].endswith('-glossary.html') for t in tools) else ''}"
+              f" → {slug}.html")
     fingerprint_band += "".join(home_bands)
 
     index_ws = [w for w in wrapped_stats if w["category"] not in detached_cats]

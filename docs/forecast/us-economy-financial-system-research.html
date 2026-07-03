@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Argument Over Money — The Forecast Desk</title>
+<meta name="description" content="The U.S. economy and financial system — from Hamilton&#x27;s debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar&#x27;s future through 2035">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='4' y='4' width='26' height='26' fill='%239a2c1a'/><rect x='34' y='4' width='26' height='26' fill='%23a3771c'/><rect x='4' y='34' width='26' height='26' fill='%23274d68'/><rect x='34' y='34' width='26' height='26' fill='%234a6350'/></svg>">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="calvincollins · xyz">
+<meta property="og:title" content="The Argument Over Money">
+<meta property="og:description" content="The U.S. economy and financial system — from Hamilton&#x27;s debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar&#x27;s future through 2035">
+<meta property="og:url" content="https://calvincollins.xyz/forecast/us-economy-financial-system-research.html">
+<meta property="og:image" content="https://calvincollins.xyz/covers/us-economy-financial-system-research.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Argument Over Money">
+<meta name="twitter:description" content="The U.S. economy and financial system — from Hamilton&#x27;s debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar&#x27;s future through 2035">
+<meta name="twitter:image" content="https://calvincollins.xyz/covers/us-economy-financial-system-research.jpg">
+<style>
+:root {
+  /* paper + ink */
+  --bg: #fcfbf7;            /* warm paper white — the room */
+  --panel: #f4f1e8;         /* mat board — sidebar, code, input wells, atlas landmass, figure plates ONLY */
+  --text: #1e1b16;          /* letterpress ink */
+  --muted: #6e6759;         /* pencil annotation */
+  --accent: #9a2c1a;        /* collection-stamp red */
+  --border: #d8d3c4;        /* the engraved hairline — load-bearing site-wide */
+  --mark: #f4e7ad;          /* reading-slip highlight */
+  --cover-bg: #f6f2e7;      /* plate paper */
+  /* plate inks (the old trencadís slots): carmine, ochre, Prussian, verdigris, aubergine */
+  --t1: #9a2c1a; --t2: #a3771c; --t3: #274d68; --t4: #4a6350; --t5: #64405a;
+  /* elevation: flat by decree; only floating overlays get shadow-2/-3 */
+  --shadow-1: 0 1px 0 rgba(30,27,22,.06);
+  --shadow-2: 0 2px 10px rgba(30,27,22,.08);
+  --shadow-3: 0 18px 44px rgba(30,27,22,.16);
+  /* motion: one curve, no springs (token kept for consumers; bounce removed) */
+  --ease: cubic-bezier(.25,.1,.25,1);
+  --ease-spring: cubic-bezier(.25,.1,.25,1);
+  /* focus: double ring — visible on any themed ground */
+  --ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  /* type */
+  --display: Baskerville, 'Hoefler Text', 'Palatino Linotype', 'Book Antiqua', Cambria, Georgia, serif;
+  --serif: Charter, 'Bitstream Charter', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+}
+[data-theme="dark"] {
+  /* the reading room after hours — lamplit ink on slate, flat, no glow */
+  --bg: #181512;
+  --panel: #211e19;
+  --text: #eae6db;
+  --muted: #9b9384;
+  --accent: #d98055;        /* beside the #d98f5f the 30 dark theme blocks were tuned against */
+  --border: #3a362f;
+  --mark: #5a4a1d;
+  --cover-bg: #232019;
+  --t1: #d0704f; --t2: #cfa93e; --t3: #6e98b1; --t4: #8ba576; --t5: #a97b9c;
+  --shadow-1: 0 1px 0 rgba(0,0,0,.35);
+  --shadow-2: 0 2px 12px rgba(0,0,0,.45);
+  --shadow-3: 0 18px 48px rgba(0,0,0,.60);
+}
+* { box-sizing: border-box; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+.masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
+  justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
+.mh-nav { display: flex; gap: 1.3rem; }
+.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
+.mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--accent);
+  transform: scaleX(0); transform-origin: right; transition: transform .18s var(--ease); }
+.mh-nav a:hover { color: var(--accent); }
+.mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+.mh-nav a.active { color: var(--text); }
+.mh-nav a.active::after { transform: scaleX(1); }
+.section-title { max-width: 1120px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
+  font-weight: 600; font-size: 1.5rem; scroll-margin-top: 1rem; }
+.section-title::after { content: ""; display: block; width: 112px; height: 6px; margin-top: .6rem; border-radius: 0;
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 6px 6px no-repeat,
+    linear-gradient(180deg, var(--text) 0 2px, transparent 2px 3px, var(--text) 3px 4px, transparent 4px) 12px 0 / 100px 6px no-repeat; }
+/* Collections — the flagship: curated cross-corpus reading arcs, shown as posters. */
+.collections { max-width: 1120px; margin: 1.9rem auto 0; padding: 0 2rem; }
+.coll-h { max-width: 1120px; font-family: var(--display); font-weight: 600; font-size: 1.5rem; margin: 0; }
+.coll-h::after { content: ""; display: block; width: 112px; height: 6px; margin-top: .6rem; border-radius: 0;
+  background:
+    linear-gradient(var(--accent), var(--accent)) 0 0 / 6px 6px no-repeat,
+    linear-gradient(180deg, var(--text) 0 2px, transparent 2px 3px, var(--text) 3px 4px, transparent 4px) 12px 0 / 100px 6px no-repeat; }
+.coll-intro { font-family: var(--sans); font-size: .9rem; color: var(--muted); margin: .7rem 0 1.2rem; max-width: 42rem; line-height: 1.5; }
+.coll-shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(264px, 1fr)); gap: 1.4rem; }
+.coll-card { display: flex; flex-direction: column; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 0; overflow: hidden; text-decoration: none; color: var(--text); box-shadow: none;
+  transition: border-color .16s var(--ease); }
+.coll-card:hover { border-color: var(--text); }
+.coll-poster { position: relative; background: var(--cover-bg); border-bottom: 1px solid var(--border); overflow: hidden; }
+.coll-poster svg { width: 100%; height: 138px; display: block; }
+.coll-poster-title { position: absolute; z-index: 1; left: 10px; right: auto; bottom: 10px; max-width: calc(100% - 20px);
+  font-family: var(--sans); font-size: .66rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .12em; line-height: 1.4; color: var(--text);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  border: 1px solid var(--border); padding: .3rem .5rem; text-shadow: none; }
+.coll-body { padding: 1rem 1.2rem 1.15rem; display: flex; flex-direction: column; flex: 1; }
+.coll-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); line-height: 1.5; margin: 0 0 .9rem; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.coll-meta { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums;
+  color: var(--muted); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+/* Today's Passage — the daily pull-quote hook pinned atop the index. */
+#daily-passage { max-width: 1120px; margin: 1.6rem auto 0; padding: 0 2rem; }
+.dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
+  background: transparent; border: 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  border-radius: 0; padding: 1.5rem .2rem 1.3rem; box-shadow: none; }
+.dp-kicker { display: block; font-family: var(--sans); font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--accent); margin: 0 0 .55rem; }
+.dp-mark { position: absolute; top: .2rem; right: 1.2rem; font-family: var(--display); font-size: 5rem;
+  line-height: 1; color: var(--accent); opacity: .12; }
+.dp-text { display: block; font-family: var(--display); font-style: italic; font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+  line-height: 1.36; margin: 0 0 .8rem; max-width: 46rem; }
+.dp-src { display: block; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: 0 0 1rem; }
+.dp-cta { font-family: var(--sans); font-size: .74rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--accent); border-bottom: 1px solid var(--accent); padding-bottom: 2px; }
+.dp-share { position: absolute; right: 1.5rem; bottom: 1.25rem; font-family: var(--sans); font-size: .7rem;
+  text-transform: uppercase; letter-spacing: .05em; color: var(--muted); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 2px; box-shadow: var(--shadow-2); padding: .35rem .7rem; cursor: pointer; }
+.dp-share:hover { color: var(--accent); border-color: var(--text); }
+/* "For You" — the living, personalized discovery zone (rows of cloned cards). */
+#foryou { max-width: 1120px; margin: 1.4rem auto 0; padding: 0 2rem; }
+#foryou[hidden] { display: none; }
+.fy-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); margin: 0 0 .15rem; }
+.fy-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .2rem 0 .4rem; max-width: 40rem; line-height: 1.5; }
+.fy-group { margin: 0 0 1.1rem; }
+.fy-h { font-family: var(--display); font-weight: 600; font-size: 1.12rem; margin: .9rem 0 .7rem; }
+.fy-h em { font-style: italic; color: var(--accent); }
+.fy-row { display: flex; gap: 1.1rem; overflow-x: auto; padding: .2rem .1rem 1rem; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.fy-row::-webkit-scrollbar { height: 8px; }
+.fy-row::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
+.fy-row::-webkit-scrollbar-track { background: transparent; }
+.fy-row .card { width: 264px; flex: 0 0 264px; scroll-snap-align: start; border: 1px solid var(--border); }
+@media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
+/* The Ghost of Times announcement row — first entry in the ruled announcements column. */
+.ghost-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
+.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+  text-decoration: none; color: var(--text); background: transparent; border: 0; border-top: 1px solid var(--border);
+  border-radius: 0; box-shadow: none; padding: 1.15rem 0 1.25rem; }
+.ghost-band a:hover .gb-lead { color: var(--accent); }
+.ghost-band .gb-flag { font-family: var(--display); font-weight: 600; font-size: 1.5rem; line-height: 1; color: var(--text);
+  border-right: 1px solid var(--border); padding-right: 1.6rem; }
+.ghost-band .gb-flag small { display: block; font-family: var(--serif); font-style: italic; font-size: .72rem;
+  letter-spacing: normal; text-transform: none; color: var(--muted); margin-top: .5rem; }
+.gb-flag .gb-nib { display: block; color: var(--accent); opacity: .8; margin-top: .3rem; }
+.gb-flag .gb-nib svg { width: 54px; height: 17px; }
+.ghost-band .gb-mid .gb-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); margin: 0 0 .35rem; }
+.ghost-band .gb-mid .gb-lead { font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.28; margin: 0 0 .3rem; color: var(--text); }
+.ghost-band .gb-mid .gb-sub { font-family: var(--sans); font-size: .82rem; line-height: 1.45; color: var(--muted); margin: 0; }
+.ghost-band .gb-cta { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); background: none; border-radius: 0; padding: 0; white-space: nowrap;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 1px; background-repeat: no-repeat; background-position: 0 100%;
+  transition: background-size .18s var(--ease), color .14s var(--ease); }
+.ghost-band a:hover .gb-cta, .ghost-band a:focus-visible .gb-cta { background-size: 100% 1px; color: var(--accent); }
+@media (max-width: 680px) {
+  .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
+  .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+  .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
+}
+header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
+  align-items: center; gap: 2.5rem; }
+.hero-text { flex: 1.1; }
+.hero-art { flex: 1; min-width: 0; color: var(--text); }
+.hero-art svg { width: 100%; height: auto; display: block; }
+.hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
+[data-theme="dark"] .hero-art .hero-core { fill: #d98055; }
+[data-theme="dark"] .hero-art .hero-ground { fill: #eae6db; }
+.kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--accent); margin: 0 0 .6rem; }
+header h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2.6rem, 6vw, 4.2rem);
+  line-height: 1.02; margin: 0 0 .7rem; text-transform: uppercase; letter-spacing: .06em;
+  border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); padding: .85rem 0; }
+.tagline { color: var(--muted); margin: 0 0 1.1rem; font-family: var(--sans); font-size: .72rem;
+  font-weight: 600; text-transform: uppercase; letter-spacing: .14em; line-height: 1.5; max-width: none; }
+.stats { font-family: var(--mono); font-size: .68rem; font-weight: 500; color: var(--muted); margin: 0;
+  text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.library { max-width: 1120px; margin: 0 auto; padding: 0 0 3rem; }
+/* Library toolbar — search box + category filter pills. */
+.lib-toolbar { padding: 1.2rem 2rem .4rem; display: flex; flex-wrap: wrap; align-items: center;
+  gap: .9rem 1.4rem; }
+.lib-search { flex: 1 1 240px; min-width: 0; max-width: 360px; font-family: var(--sans); font-size: .9rem;
+  color: var(--text); background: var(--bg); border: 1px solid var(--border); border-radius: 2px;
+  padding: .55rem .85rem; -webkit-appearance: none; appearance: none; }
+.lib-search:focus { outline: none; border-color: var(--accent); box-shadow: var(--ring); }
+.lib-search::placeholder { color: var(--muted); }
+.cat-pills { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cat-pill { font-family: var(--sans); font-size: .68rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--muted);
+  background: transparent; border: 1px solid var(--border); border-radius: 0; padding: .38rem .7rem;
+  cursor: pointer; transition: color .15s var(--ease), border-color .15s var(--ease), background-color .15s var(--ease); }
+.cat-pill:hover { color: var(--accent); border-color: var(--text); }
+.cat-pill.active { color: var(--bg); background: var(--text); border-color: var(--text); box-shadow: none; }
+.cat-pill .cat-count { opacity: .65; font-size: .9em; }
+.domain-group { padding-top: .4rem; }
+.domain-group[hidden] { display: none; }
+.domain-heading { max-width: 100%; margin: 2.2rem 0 .2rem; padding: 0 2rem .55rem;
+  font-family: var(--sans); font-size: .82rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .18em; color: var(--text);
+  display: flex; align-items: baseline; gap: .6rem; border-bottom: 1px solid var(--text); }
+.domain-heading .domain-count { font-family: var(--mono); font-size: .68rem; font-weight: 500; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.cat-section { padding-top: .6rem; }
+.cat-section[hidden] { display: none; }
+.cat-heading { max-width: 100%; margin: 1.2rem 0 0; padding: 0 2rem; font-family: var(--sans);
+  font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--muted); display: flex; align-items: baseline; gap: .5rem; }
+.cat-heading .cat-count { font-family: var(--mono); font-size: .68rem; font-weight: 500; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; }
+.lib-empty { font-family: var(--sans); color: var(--muted); text-align: center; padding: 2.5rem 2rem; margin: 0; }
+.grid { padding: 1.1rem 2rem 1.4rem; display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; }
+.card { display: flex; flex-direction: column; background: var(--bg);
+  border: 0; outline: 1px solid var(--border); outline-offset: 0;
+  border-radius: 0; box-shadow: none; overflow: hidden;
+  text-decoration: none; color: var(--text); transition: none; }
+.card:hover h2, .card:focus-visible h2 { color: var(--accent); }
+.cover { background: var(--cover-bg); border-bottom: 1px solid var(--border); overflow: hidden; }
+.cover svg { width: 100%; height: 124px; display: block; }
+/* Photo covers crop to the card band at any source size/aspect ratio — grayscale at rest. */
+.cover .cover-photo { width: 100%; height: 124px; object-fit: cover; object-position: center; display: block;
+  filter: grayscale(.25) contrast(1.02); transition: filter .18s var(--ease); }
+.card:hover .cover-photo, .card:focus-visible .cover-photo { filter: none; }
+.card-body { padding: .95rem 1.1rem 1.05rem; display: flex; flex-direction: column; flex: 1; }
+.card h2 { font-family: var(--display); font-weight: 600; font-size: 1.12rem; line-height: 1.3; margin: 0 0 .4rem; }
+.card .sub { color: var(--muted); font-size: .8rem; font-family: var(--sans);
+  margin: 0 0 .9rem; line-height: 1.45; flex: 1;
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.card .meta { color: var(--muted); font-family: var(--mono); font-size: .68rem; font-weight: 500;
+  text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; margin: 0; }
+.card .meta::before { content: ""; display: inline-block; width: 8px; height: 8px;
+  background: var(--accent); margin-right: .5rem; vertical-align: baseline; }
+footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top: 1px solid var(--text); }
+.tiles { display: flex; gap: 2px; margin: 1.2rem 0 .9rem; }
+.tiles span { width: 7px; height: 7px; border-radius: 0; transform: none; box-shadow: none; }
+.tiles span:nth-child(1) { background: var(--t1); }
+.tiles span:nth-child(2) { background: var(--t2); }
+.tiles span:nth-child(3) { background: var(--t3); }
+.tiles span:nth-child(4) { background: var(--t4); }
+.epigraph { font-style: italic; color: var(--muted); margin: 0 0 .3rem; font-size: .92rem; }
+.colophon { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: 0; }
+.colophon .mh-stamp { display: inline-block; padding: .3em .65em; border: 1.5px solid var(--accent);
+  color: var(--accent); font-family: var(--mono); font-size: .68rem; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; transform: rotate(-1.5deg);
+  opacity: .92; border-radius: 1px; margin: 0 0 .7rem; }
+.colophon.marc { line-height: 1.9; }
+.colophon.marc .marc-l { display: block; }
+.colophon.marc .marc-l b { color: var(--accent); font-weight: 500; margin-right: .8rem; }
+@media (max-width: 760px) {
+  header { flex-direction: column-reverse; gap: 1.2rem; padding-top: 1.6rem; }
+  .hero-art { width: 100%; }
+}
+
+/* The Forecast Desk — the site's one dark terminal, set into the paper site.
+   Board tokens are local so light and dark site themes both read correctly. */
+.fd-plate { display: block; max-width: 900px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
+.fd-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
+.fd-name { font-family: var(--display); font-weight: 600; font-size: clamp(2.4rem, 6vw, 4rem);
+  line-height: .98; letter-spacing: -.01em; margin: 0 0 .55rem; }
+.fd-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0 0 1.3rem; }
+.fd-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
+  font-family: var(--mono); font-size: .72rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--text); }
+.fd-folio .fd-folio-c { color: var(--accent); font-weight: 600; }
+
+/* the board */
+.fd-board { --fdbg: #0e141d; --fdcard: #141c28; --fdline: #232e40; --fdtext: #e8edf6;
+  --fdmut: #93a1b8; --fdup: #22c55e; --fddn: #ef4444; --fdgold: #eab308; --fdblue: #60a5fa;
+  --fdmono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  max-width: 1080px; margin: 2rem auto 0; padding: 1.6rem 1.6rem 2rem; border-radius: 2px;
+  background: var(--fdbg); border: 1px solid var(--fdline); color: var(--fdtext);
+  box-shadow: none; }
+
+/* ticker tape */
+.fd-tape { overflow: hidden; border: 1px solid var(--fdline); border-radius: 2px;
+  background: #0a0f16; margin: 0 0 1.4rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent); }
+.fd-tape-inner { display: inline-flex; gap: 2.2rem; padding: .55rem 0; white-space: nowrap;
+  animation: fd-tape 240s linear infinite; will-change: transform; }
+.fd-tape:hover .fd-tape-inner { animation-play-state: paused; }
+@keyframes fd-tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .fd-tape-inner { animation: none; } }
+.fd-tk { font-family: var(--fdmono); font-size: .78rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fd-tk b { color: var(--fdtext); font-weight: 600; }
+.fd-tk .up { color: var(--fdup); font-weight: 700; }
+
+/* live native market hero */
+.fd-live { display: block; text-decoration: none; color: var(--fdtext); background: #10161f;
+  border: 1px solid var(--fdline);
+  border-radius: 2px; padding: 1.5rem 1.7rem; margin-bottom: 1.6rem;
+  transition: border-color .15s var(--ease); }
+.fd-live:hover { border-color: var(--fdup); }
+.fd-live-top { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; margin-bottom: .7rem; }
+.fd-chip-live { font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .14em; color: #0c1117; background: var(--fdup); border-radius: 2px; padding: .22rem .6rem; }
+.fd-chip-live .d { display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #0c1117;
+  margin-right: .4rem; animation: fdb-pulse 1.8s ease infinite; }
+.fd-chip-cat { font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdblue); border: 1px solid var(--fdblue); border-radius: 2px; padding: .2rem .6rem; }
+.fd-chip-date { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); margin-left: auto; }
+.fd-live-q { font-family: var(--display); font-weight: 600; font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  line-height: 1.12; margin: 0 0 .9rem; }
+.fd-live-grid { display: grid; grid-template-columns: auto 1fr; gap: 1.4rem; align-items: center; }
+.fd-live-pick { text-align: center; background: #0c1117; border: 1px solid var(--fdline);
+  border-radius: 2px; padding: .9rem 1.3rem; }
+.fd-live-pick .f { font-size: 2rem; line-height: 1; }
+.fd-live-pick .t { font-family: var(--sans); font-weight: 800; font-size: 1.05rem; margin-top: .25rem; }
+.fd-live-pick .p { font-family: var(--fdmono); font-weight: 700; font-size: 1.05rem; color: var(--fdup); margin-top: .15rem;
+  font-variant-numeric: tabular-nums; }
+.fd-live-sub { font-family: var(--serif); font-style: italic; font-size: .95rem; color: var(--fdmut); line-height: 1.5; margin: 0; }
+.fd-live-meta { display: flex; gap: 1.3rem; flex-wrap: wrap; margin-top: .8rem;
+  font-family: var(--fdmono); font-size: .72rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fd-live-meta b { color: var(--fdtext); }
+@media (max-width: 640px) { .fd-live-grid { grid-template-columns: 1fr; } }
+
+/* category shelves + market cards */
+.fd-cat-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--fdmut); border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem; }
+.fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
+.fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
+.fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
+  background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.05rem 1.15rem;
+  transition: border-color .15s var(--ease); }
+.fd-card:hover { border-color: var(--fdup); }
+.fd-card-top { display: flex; align-items: center; gap: .5rem; margin-bottom: .55rem; }
+.fd-card-cover { width: 40px; height: 40px; object-fit: cover; border-radius: 2px;
+  border: 1px solid var(--fdline); flex: none; }
+.fd-chip-open { font-family: var(--sans); font-size: .58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdup); border: 1px solid var(--fdup); border-radius: 2px; padding: .16rem .5rem; }
+.fd-card-hz { font-family: var(--fdmono); font-size: .64rem; color: var(--fdmut); margin-left: auto;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 55%; }
+.fd-card-q { font-family: var(--display); font-weight: 600; font-size: 1.06rem; line-height: 1.22; margin: 0 0 .75rem; }
+.fd-out { margin: 0 0 .55rem; }
+.fd-out-l { display: flex; justify-content: space-between; gap: .8rem; align-items: baseline;
+  font-family: var(--sans); font-size: .78rem; line-height: 1.3; margin-bottom: .28rem; }
+.fd-out-l .nm { color: var(--fdmut); overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+  -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+.fd-out.lead .fd-out-l .nm { color: var(--fdtext); font-weight: 600; }
+.fd-out-l .pc { font-family: var(--fdmono); font-size: .76rem; font-weight: 700; color: var(--fdmut); white-space: nowrap;
+  font-variant-numeric: tabular-nums; }
+.fd-out.lead .fd-out-l .pc { color: #0c1117; background: var(--fdup); border-radius: 2px; padding: .08rem .38rem; }
+.fd-track { position: relative; height: 11px; border-radius: 0; background: #0a0f16; overflow: hidden; }
+/* Filled is the DEFAULT state (no JS/animation dependency for correctness);
+   the grow-in is a pure entrance flourish. */
+.fd-fill { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 0; background: var(--fdmut); opacity: .6;
+  transform-origin: left; }
+.fd-fill.rng { opacity: .25; }
+.fd-out.lead .fd-fill { background: var(--fdup); opacity: 1; }
+.fd-out.lead .fd-fill.rng { opacity: .35; }
+@keyframes fd-grow { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: no-preference) {
+  .fd-fill { animation: fd-grow .8s cubic-bezier(.22,1,.36,1); }
+}
+.fd-card-foot { display: flex; justify-content: space-between; align-items: center; gap: .8rem;
+  border-top: 1px solid var(--fdline); margin-top: auto; padding-top: .6rem;
+  font-family: var(--sans); font-size: .68rem; color: var(--fdmut); }
+.fd-card-foot .go { color: var(--fdup); text-transform: uppercase; letter-spacing: .08em; font-weight: 700; }
+
+.fd-foot { max-width: 900px; margin: 2.4rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.fd-foot .epigraph { font-family: var(--serif); font-style: italic; color: var(--muted); margin: 0 0 .8rem; }
+.fd-foot .colophon a { color: var(--accent); }
+@media (max-width: 640px) { .fd-board { padding: 1rem 1rem 1.4rem; border-radius: 2px; margin-left: .6rem; margin-right: .6rem; } }
+
+.fdd-wrap { max-width: 940px; margin: 0 auto; padding: 0 1.2rem; }
+.fd-board.fdd { margin-top: 1.4rem; }
+.fdd-res { font-family: var(--serif); font-style: italic; color: var(--fdmut); font-size: .9rem;
+  line-height: 1.5; margin: .9rem 0 0; }
+.fdd-h { font-family: var(--sans); font-size: .7rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--fdmut); border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 2rem 0 1rem; }
+.fdd-h .n { color: var(--fdup); font-family: var(--fdmono); margin-right: .5rem; }
+
+/* consensus hero */
+.fdd-hero { background: #10161f; border: 1px solid var(--fdline);
+  border-radius: 2px; padding: 1.5rem 1.7rem; }
+.fdd-pickrow { display: grid; grid-template-columns: auto 1fr; gap: 1.5rem; align-items: center; margin-top: 1rem; }
+.fdd-pick { text-align: center; background: #0c1117; border: 1px solid var(--fdup); border-radius: 2px;
+  padding: 1.1rem 1.7rem; }
+.fdd-pick .f { font-size: 2.7rem; line-height: 1; }
+.fdd-pick .t { font-family: var(--sans); font-weight: 800; font-size: 1.35rem; margin-top: .3rem; }
+.fdd-pick .p { font-family: var(--fdmono); font-weight: 700; font-size: 1.25rem; color: var(--fdup); margin-top: .2rem;
+  font-variant-numeric: tabular-nums; }
+.fdd-pick .ru { font-family: var(--sans); font-size: .7rem; color: var(--fdmut); margin-top: .45rem; }
+.fdd-case { font-family: var(--serif); font-size: .98rem; line-height: 1.62; color: #c6d0e0; margin: 0; }
+@media (max-width: 680px) { .fdd-pickrow { grid-template-columns: 1fr; } }
+
+/* tally leaderboard */
+.fdd-tally { display: flex; height: 14px; border-radius: 0; overflow: hidden; margin: .9rem 0 .45rem;
+  border: 1px solid var(--fdline); }
+.fdd-tally span { display: block; }
+.fdd-tally .t1 { background: var(--fdup); } .fdd-tally .t2 { background: var(--fdgold); } .fdd-tally .t3 { background: var(--fddn); }
+.fdd-tally-l { display: flex; gap: 1.4rem; flex-wrap: wrap; font-family: var(--sans); font-size: .74rem; color: var(--fdmut); }
+.fdd-tally-l b { color: var(--fdtext); }
+
+/* trader cards */
+.fdd-roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
+.fdd-trader { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.05rem 1.15rem;
+  display: flex; flex-direction: column; transition: border-color .15s var(--ease); }
+.fdd-trader:hover { border-color: var(--fdblue); }
+.fdd-tr-top { display: flex; gap: .8rem; align-items: flex-start; }
+.fdd-tr-av { font-size: 1.6rem; line-height: 1; background: #0c1117; border: 1px solid var(--fdline);
+  border-radius: 2px; padding: .5rem .55rem; }
+.fdd-tr-nm { font-family: var(--sans); font-weight: 800; font-size: 1rem; }
+.fdd-tr-crit { font-family: var(--serif); font-style: italic; font-size: .78rem; color: var(--fdmut); line-height: 1.4; margin-top: .15rem; }
+.fdd-tr-call { margin-left: auto; text-align: center; white-space: nowrap; }
+.fdd-tr-call .f { font-size: 1.4rem; line-height: 1; }
+.fdd-tr-call .t { font-family: var(--sans); font-size: .72rem; font-weight: 800; margin-top: .1rem; }
+.fdd-tr-call .p { font-family: var(--fdmono); font-size: .82rem; font-weight: 700; color: var(--fdup);
+  font-variant-numeric: tabular-nums; }
+.fdd-tr-tags { display: flex; gap: .45rem; flex-wrap: wrap; margin: .7rem 0 .55rem; }
+.fdd-tag { font-family: var(--sans); font-size: .58rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; border-radius: 2px; padding: .18rem .55rem; }
+.fdd-tag.reg { color: var(--fdgold); border: 1px solid var(--fdgold); }
+.fdd-tag.conf-high { color: #0c1117; background: var(--fdup); }
+.fdd-tag.conf-medium { color: var(--fdtext); border: 1px solid var(--fdmut); }
+.fdd-tag.conf-low { color: var(--fdmut); border: 1px solid var(--fdline); }
+.fdd-tag.rec { color: var(--fdblue); border: 1px solid var(--fdblue); }
+.fdd-tr-blurb { font-family: var(--serif); font-size: .92rem; line-height: 1.6; color: #c6d0e0; margin: 0 0 .7rem; }
+.fdd-tr-ev { border-top: 1px solid var(--fdline); margin-top: auto; padding-top: .6rem;
+  font-family: var(--sans); font-size: .74rem; line-height: 1.45; color: var(--fdmut); }
+.fdd-tr-ev b { color: var(--fdup); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; }
+
+/* consensus + dissent */
+.fdd-cons { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.2rem 1.4rem; }
+.fdd-cons p { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0; margin: 0 0 1rem; }
+.fdd-cons .lbl { display: block; font-family: var(--sans); font-size: .62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--fdup); margin-bottom: .3rem; }
+.fdd-dissent { background: rgba(239,68,68,.07); border: 1px solid rgba(239,68,68,.35); border-radius: 2px;
+  padding: .9rem 1.1rem; font-family: var(--serif); font-size: .9rem; line-height: 1.58; color: #d8c2c2; }
+.fdd-dissent .lbl { color: var(--fddn); }
+
+/* the field price board */
+.fdd-field { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.1rem 1.25rem; }
+.fdd-frow { display: grid; grid-template-columns: 130px 1fr 58px; gap: .9rem; align-items: center; margin: .5rem 0; }
+.fdd-frow .tm { font-family: var(--sans); font-size: .82rem; color: var(--fdmut); text-align: right; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; }
+.fdd-frow.lead .tm { color: var(--fdtext); font-weight: 700; }
+.fdd-frow .pv { font-family: var(--fdmono); font-size: .82rem; font-weight: 700; color: var(--fdmut);
+  font-variant-numeric: tabular-nums; }
+.fdd-frow.lead .pv { color: var(--fdup); }
+.fdd-frow .fd-track { height: 12px; }
+.fdd-field-foot { font-family: var(--sans); font-size: .68rem; color: var(--fdmut); border-top: 1px solid var(--fdline);
+  margin-top: .8rem; padding-top: .7rem; }
+@media (max-width: 560px) { .fdd-frow { grid-template-columns: 92px 1fr 52px; } }
+
+/* base-rate stat tiles */
+.fdd-rates { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .9rem; }
+.fdd-rate { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: .95rem 1.05rem; }
+.fdd-rate .big { font-family: var(--fdmono); font-weight: 700; font-size: 1.5rem; color: var(--fdup);
+  font-variant-numeric: tabular-nums; }
+.fdd-rate .txt { font-family: var(--sans); font-size: .78rem; line-height: 1.5; color: var(--fdmut); margin-top: .3rem; }
+
+/* markets table */
+.fdd-mkts { border: 1px solid var(--fdline); border-radius: 2px; overflow-x: auto; background: var(--fdcard); }
+.fdd-mkts table { border-collapse: collapse; width: 100%; font-size: .8rem; }
+.fdd-mkts th, .fdd-mkts td { text-align: left; padding: .65rem .85rem; border-bottom: 1px solid var(--fdline);
+  vertical-align: top; font-family: var(--sans); color: var(--fdmut); }
+.fdd-mkts thead th { font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); background: #0c1117; }
+.fdd-mkts td .plat { font-weight: 700; color: var(--fdtext); }
+.fdd-mkts tbody tr:last-child td { border-bottom: none; }
+
+/* triggers */
+.fdd-trigs { counter-reset: t; margin: 0; padding: 0; list-style: none; }
+.fdd-trigs li { counter-increment: t; position: relative; padding: .75rem 0 .75rem 2.6rem;
+  border-bottom: 1px solid var(--fdline); font-family: var(--serif); font-size: .92rem; line-height: 1.55; color: #c6d0e0; }
+.fdd-trigs li:last-child { border-bottom: none; }
+.fdd-trigs li::before { content: counter(t); position: absolute; left: 0; top: .7rem; width: 1.7rem; height: 1.7rem;
+  border-radius: 50%; background: var(--fdup); color: #0c1117; font-family: var(--fdmono); font-weight: 700;
+  font-size: .8rem; display: flex; align-items: center; justify-content: center; }
+
+.fdd-note { font-family: var(--serif); font-style: italic; font-size: .86rem; line-height: 1.6; color: var(--fdmut); margin: 1.2rem 0 0; }
+.fdd-src { margin: .8rem 0 0; padding: 0; list-style: none; }
+.fdd-src li { font-family: var(--sans); font-size: .76rem; margin: .35rem 0; }
+.fdd-src a { color: var(--fdblue); text-decoration: none; }
+.fdd-src a:hover { text-decoration: underline; }
+
+/* research-market pages — the harvested corpora in the same live-market dress */
+.fdd-pick.cvr { padding: 0; border-color: var(--fdline); overflow: hidden; }
+.fdd-pick.cvr img { display: block; width: 132px; height: 132px; object-fit: cover; }
+.fdd-pick.cvr .p { padding: .5rem .6rem .6rem; }
+.fdr-leadlbl { font-family: var(--sans); font-size: .62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdup); margin: 0 0 .3rem; }
+.fdr-leadnm { font-family: var(--display); font-weight: 700; font-size: clamp(1.15rem, 2.6vw, 1.55rem);
+  line-height: 1.18; margin: 0 0 .55rem; color: var(--fdtext); }
+.fdr-cta { display: inline-block; font-family: var(--sans); font-size: .72rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; color: #0c1117; background: var(--fdup);
+  border-radius: 2px; padding: .55rem 1rem; text-decoration: none; margin-top: .8rem; }
+.fdr-cta:hover { filter: brightness(1.1); }
+.fdr-out { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: 1.1rem 1.25rem; margin: 0 0 1rem; }
+.fdr-out.lead { border-color: rgba(34,197,94,.55); }
+.fdr-oh { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .55rem; }
+.fdr-oh .nm { font-family: var(--sans); font-weight: 800; font-size: 1.02rem; line-height: 1.3; color: var(--fdtext); }
+.fdr-oh .pc { font-family: var(--fdmono); font-size: .88rem; font-weight: 700; color: var(--fdmut);
+  white-space: nowrap; font-variant-numeric: tabular-nums; }
+.fdr-out.lead .fdr-oh .pc { color: #0c1117; background: var(--fdup); border-radius: 2px; padding: .1rem .45rem; }
+.fdr-out .fd-track { height: 12px; margin-bottom: .8rem; }
+.fdr-desc { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0; margin: 0 0 .8rem; }
+.fdr-deriv { background: #0c1117; border: 1px dashed var(--fdline); border-radius: 2px; padding: .7rem .85rem;
+  font-family: var(--sans); font-size: .76rem; line-height: 1.5; color: var(--fdmut); margin: 0 0 .8rem; }
+.fdr-deriv b { color: var(--fdup); font-size: .58rem; text-transform: uppercase; letter-spacing: .1em; }
+.fdr-lists { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.fdr-l h4 { font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); margin: 0 0 .4rem; }
+.fdr-l ul { margin: 0; padding: 0 0 0 1rem; }
+.fdr-l li { font-family: var(--sans); font-size: .78rem; line-height: 1.5; color: var(--fdmut); margin: .25rem 0; }
+.fdr-hz { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); border-top: 1px solid var(--fdline);
+  margin-top: .85rem; padding-top: .65rem; }
+@media (max-width: 620px) { .fdr-lists { grid-template-columns: 1fr; } .fdd-pick.cvr img { width: 100%; height: 110px; } }
+</style>
+</head>
+<body>
+<div class="masthead">
+  <span class="mh-brand">calvincollins · xyz</span>
+  <nav class="mh-nav">
+    <a href="../index.html">The Research</a>
+    <a href="../ghost.html">The Ghost of Times</a>
+    <a href="../adtech.html">Ad Tech</a>
+    <a href="../pamphlets.html">The Pamphlets</a>
+    <a href="../forecast.html" class="active">The Forecast Desk</a>
+  </nav>
+</div>
+<div class="fdd-wrap">
+<header class="fd-plate">
+  <p class="fd-kicker">The Forecast Desk · Research market</p>
+  <h1 class="fd-name" style="font-size:clamp(1.9rem,4.6vw,3rem)">The Argument Over Money</h1>
+  <div class="fd-folio">
+    <span>through 2035</span>
+    <span class="fd-folio-c">4 priced outcomes</span>
+    <span>The Modern World</span>
+  </div>
+</header>
+<main class="fd-board fdd" id="fd-board">
+<section class="fdd-hero"><div class="fd-live-top"><span class="fd-chip-open">Open</span><span class="fd-chip-cat">The Modern World</span><span class="fd-chip-date">through 2035</span></div><div class="fdd-pickrow"><div class="fdd-pick cvr"><img src="../covers/us-economy-financial-system-research.jpg" alt=""><div class="p">33–45%</div></div><div><p class="fdr-leadlbl">Most likely outcome</p><p class="fdr-leadnm">The Grind (Productive Muddle-Through)</p><p class="fdd-res">The U.S. economy and financial system — from Hamilton&#x27;s debt and the 1862 greenback to the Fed, a $39T debt, the AI-vs-entitlement race, and the dollar&#x27;s future through 2035</p><a class="fdr-cta" href="../us-economy-financial-system-research.html#ch-12">Read the full research →</a></div></div></section>
+<h2 class="fdd-h"><span class="n">01</span>The Outcomes — 4 scenarios, priced by the research</h2>
+<article class="fdr-out lead"><div class="fdr-oh"><span class="nm">The Grind (Productive Muddle-Through)</span><span class="pc">33–45%</span></div><div class="fd-track"><span class="fd-fill" style="width:33.0%"></span><span class="fd-fill rng" style="left:33.0%;width:12.0%"></span></div><p class="fdr-desc">The 2026 energy spike fades; core inflation stays sticky ~2.5-3%; the Fed keeps just enough independence; growth runs ~2%. The debt climbs toward ~118-122% of GDP without rupturing; recurring debt-ceiling scares (next binding ~mid-to-late 2027) resolve before each X-date; the dollar slips to the low-50s% of reserves while gold rises as the store-of-value rival; at least one ordinary recession is cleared in the U.S.&#x27;s sharp-but-short way.</p><div class="fdr-deriv"><b>How this number was derived</b><br>Three converging processes: (1) base rate — the dominant historical experience of a large-debt reserve sovereign is to grow/inflate the ratio sideways (Japan &gt;200% for a decade, no crisis); (2) market — prediction markets price only ~22-28% recession-2026 and a modal Fed &#x27;hold&#x27;; (3) decomposition — P(no decade-defining crisis) x P(AI helps but does not escape) x P(Fed keeps enough credibility) lands high-30s-to-low-40s. Plurality, not majority — system stress keeps it below 50%.</div><div class="fdr-lists"><div class="fdr-l"><h4>Drivers</h4><ul><li>all eight drivers at default weights</li><li>demographics and interest grinding up</li><li>AI helping modestly</li><li>the dollar buying time</li></ul></div><div class="fdr-l"><h4>Signals to watch</h4><ul><li>core PCE drifting toward 2.5%</li><li>ordinary auction tails and bid-to-cover</li><li>the term premium rising gradually not in spikes</li><li>foreign official demand soft but not striking</li></ul></div></div><div class="fdr-hz">Horizon · The default texture of the whole 2026-2035 window.</div></article><article class="fdr-out"><div class="fdr-oh"><span class="nm">Financial Accident / Recession With Teeth</span><span class="pc">17–28%</span></div><div class="fd-track"><span class="fd-fill" style="width:17.0%"></span><span class="fd-fill rng" style="left:17.0%;width:11.0%"></span></div><p class="fdr-desc">A discrete shock breaks the grind — most likely an AI-capex/concentration unwind (the ~$400B annual depreciation outrunning revenue, the most-weighted names falling 30-50%) transmitting through household wealth into consumption and GDP; or a private-credit default cycle testing the marks and gates for the first time and looping back into the G-SIBs; or a debt-ceiling X-date / term-premium spike firing the basis trade. The Fed catches it, but the catch is larger and more explicit than the last.</p><div class="fdr-deriv"><b>How this number was derived</b><br>Anchored on the market near-term recession read (~22-28% for 2026), extended across the decade and conditioned up for severity by the corpus&#x27;s untested fragilities: a $1.5-2T private-credit sector &#x27;not tested in a severe downturn&#x27; (FSB), record equity concentration (Mag-7 ~34%) transmitting an AI-capex reversal through a K-shaped consumer where the top decile drives ~half of spending, and the Treasury basis trade / a debt-ceiling X-date as candidate &#x27;LDI-equivalent&#x27; amplifiers. P(recession) x P(a fragility fires | recession) lands low-20s%.</div><div class="fdr-lists"><div class="fdr-l"><h4>Drivers</h4><ul><li>AI concentration reversing (Channel A)</li><li>non-bank credit amplifying and obscuring</li><li>the K-shape transmitting</li><li>the debt-ceiling/basis-trade tail as ignition</li></ul></div><div class="fdr-l"><h4>Signals to watch</h4><ul><li>hyperscaler capex-to-FCF turning negative or debt-funded</li><li>private-credit NAV markdowns and binding redemption gates</li><li>repo-rate spikes and basis-trade deleveraging</li><li>a debt-ceiling X-date approaching amid risk-off</li></ul></div></div><div class="fdr-hz">Horizon · Possible any year; the tail is fattest where a 2027+ debt-ceiling episode coincides with an AI-concentration wobble.</div></article><article class="fdr-out"><div class="fdr-oh"><span class="nm">Inflation Re-Embeds (Fiscal Dominance, Lite)</span><span class="pc">17–27%</span></div><div class="fd-track"><span class="fd-fill" style="width:17.0%"></span><span class="fd-fill rng" style="left:17.0%;width:10.0%"></span></div><p class="fdr-desc">Energy, tariff pass-through, and a Fed that eases too early settle inflation structurally at 3-4%. The Fed&#x27;s anti-inflation credibility erodes; the term premium rises, partly offsetting the interest-bill relief the cuts were meant to deliver. Real wages at the bottom lose ground; the K-shape widens. The saver, through negative real returns, quietly pays down the debt — the WWII-style financial repression without a war to justify it.</p><div class="fdr-deriv"><b>How this number was derived</b><br>Decomposition of the Fed-independence tail: P(a Trump-nominated Fed cuts under pressure into elevated inflation in 2026-2028) is materially above zero given the administration&#x27;s stated demand and the Warsh thesis; P(expectations unanchor | premature cuts with tariffs/energy already in the price level) is the conditional, anchored on the 1970s Burns base rate. The product, over a multi-year window and net of the ~57% &#x27;zero cuts 2026&#x27; market read (which pushes timing to 2027+), yields low-20s%.</div><div class="fdr-lists"><div class="fdr-l"><h4>Drivers</h4><ul><li>Fed independence eroding under fiscal dominance</li><li>tariffs and energy as inflation seeds</li><li>demographics/interest making inflation fiscally attractive</li></ul></div><div class="fdr-l"><h4>Signals to watch</h4><ul><li>a rate cut into 4%+ headline CPI</li><li>5y5y breakevens climbing above ~2.5%</li><li>the term premium and 30-yr yield rising with cuts</li><li>the dollar weakening on the policy mix</li></ul></div></div><div class="fdr-hz">Horizon · The fork is most likely 2026-2028; the embedded-inflation regime, if set, defines the back half of the decade.</div></article><article class="fdr-out"><div class="fdr-oh"><span class="nm">AI-Led Escape</span><span class="pc">10–20%</span></div><div class="fd-track"><span class="fd-fill" style="width:10.0%"></span><span class="fd-fill rng" style="left:10.0%;width:10.0%"></span></div><p class="fdr-desc">AI&#x27;s supply-side channel finally shows up in the aggregate data; TFP lifts potential output, nominal growth runs 4.5-5%+, and the r&lt;g math reasserts. The debt ratio stabilizes, equity leadership broadens beyond the Magnificent Seven, real wages rise, and the entitlement gap looks fundable from a larger tax base.</p><div class="fdr-deriv"><b>How this number was derived</b><br>Upper tail of the AI-productivity distribution. Central estimates run from Penn Wharton (~0.2pp/yr TFP-growth peak ~2032) to Acemoglu (~0.06pp/yr). An escape requires realized productivity at or above the Goldman/McKinsey bull cases — not visible in 2026 aggregate data — so it is weighted as the top ~15-20% of a distribution centered on &#x27;modest and not-yet-visible.&#x27;</div><div class="fdr-lists"><div class="fdr-l"><h4>Drivers</h4><ul><li>AI/productivity Channel B succeeds</li><li>structural Treasury demand holds financing cheap</li><li>tight labor + productivity lifts the taxable base</li></ul></div><div class="fdr-l"><h4>Signals to watch</h4><ul><li>multifactor productivity turning up durably</li><li>AI revenue distributing beyond the hyperscaler-to-Nvidia loop</li><li>capex-to-FCF staying below one without debt funding</li><li>the equity rally broadening</li></ul></div></div><div class="fdr-hz">Horizon · Distinguishing features visible 2028-2032; fiscal relief compounding into the early 2030s.</div></article>
+<p class="fdd-note">Probabilities are the research's own scenario bands, priced as outcomes. The full argument — history, current state, drivers, and sources — lives in the corpus: <a href="../us-economy-financial-system-research.html#ch-12" style="color:var(--fdblue)">read the Future Trajectory chapter</a>.</p>
+</main>
+<footer class="fd-foot">
+  <p class="epigraph">Priced from the corpus’s forecast scenarios — every band grounded in the research it links to.</p>
+  <p class="colophon"><a href="../forecast.html">← The Forecast Desk</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+</footer>
+</div>
+<script>
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+</script>
+<script>
+// The bars fill by default (see .fd-fill) — no arming required.
+// live countdowns: <span data-grades="YYYY-MM-DD">
+document.querySelectorAll('[data-grades]').forEach(el => {
+  const d = new Date(el.dataset.grades + 'T23:59:59');
+  const days = Math.max(0, Math.ceil((d - Date.now()) / 864e5));
+  el.textContent = days === 0 ? 'grades today' : `grades in ${days}d`;
+});
+</script>
+<style>
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+/* unified, accessible keyboard focus ring across every interactive surface */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible,
+textarea:focus-visible, [tabindex]:focus-visible, .card:focus-visible, .coll-card:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+:focus:not(:focus-visible) { outline: none; }
+/* branded text selection across the whole site */
+::selection { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+/* themed, unobtrusive scrollbars (overlay on macOS; visible elsewhere) */
+* { scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; border: 3px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+::-webkit-scrollbar-track { background: transparent; }
+#cmdk-fab { position: fixed; left: .9rem; bottom: .9rem; z-index: 60; display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--sans); font-size: .66rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--border); border-radius: 2px; padding: .4rem .7rem; cursor: pointer;
+  box-shadow: var(--shadow-2); transition: color .15s var(--ease), border-color .15s var(--ease); }
+#cmdk-fab:hover { color: var(--accent); border-color: var(--text); }
+#cmdk-fab kbd { font-family: var(--mono); font-size: .7rem; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 2px; padding: .02rem .32rem; color: inherit; }
+#cmdk-back { position: fixed; inset: 0; z-index: 80; background: rgba(24,22,18,.45); -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px); display: none; align-items: flex-start; justify-content: center; padding: 12vh 1rem 1rem; }
+#cmdk-back.open { display: flex; }
+#cmdk { width: 100%; max-width: 560px; background: var(--bg); border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
+  box-shadow: var(--shadow-3); animation: cmdkIn .16s var(--ease) both; }
+#cmdk::before { content: "Call slip"; display: block; padding: .55rem 1rem 0;
+  font-family: var(--sans); font-size: .6rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .16em; color: var(--muted); }
+@keyframes cmdkIn { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { #cmdk { animation: none; } }
+#cmdk-in { display: flex; align-items: center; gap: .6rem; padding: .85rem 1rem; border-bottom: 1px solid var(--border); }
+#cmdk-in svg { width: 18px; height: 18px; flex: none; color: var(--muted); }
+#cmdk-in input { flex: 1; border: none; background: none; outline: none; color: var(--text); font-family: var(--serif); font-size: 1.05rem; }
+#cmdk-in .hint { font-family: var(--sans); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted);
+  border: 1px solid var(--border); border-radius: 2px; padding: .12rem .4rem; }
+#cmdk-res { max-height: 52vh; overflow-y: auto; padding: .4rem; }
+.cmdk-grp { font-family: var(--sans); font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--muted);
+  border-bottom: 1px solid var(--border); padding: .6rem 0 .3rem; margin: 0 .6rem; }
+.cmdk-row { display: flex; align-items: center; gap: .7rem; padding: .5rem .6rem; border-radius: 0; cursor: pointer;
+  text-decoration: none; color: var(--text); }
+.cmdk-row.sel { background: var(--panel); box-shadow: inset 2px 0 0 var(--accent); }
+.cmdk-ic { width: 1.3rem; text-align: center; color: var(--accent); flex: none; font-family: var(--sans); font-size: .9rem; }
+.cmdk-t { font-family: var(--display); font-size: .98rem; flex: 0 1 auto; max-width: 60%; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cmdk-t mark { background: var(--mark, #f4e7ad); color: inherit; border-radius: 2px; padding: 0 1px; }
+.cmdk-m { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em;
+  font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap;
+  display: flex; align-items: baseline; gap: .55rem; flex: 1; justify-content: flex-end; }
+.cmdk-m::before { content: ""; flex: 1; min-width: 1.5rem; height: .7em;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1.2px);
+  background-size: 6px 2px; background-repeat: repeat-x; background-position: 0 60%; }
+.cmdk-none { font-family: var(--sans); font-size: .85rem; color: var(--muted); text-align: center; padding: 1.4rem .6rem; }
+/* reading progress lives on the meta line (bottom-right of the card body), never over the cover image */
+.meta.has-prog { display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
+.card-prog { display: inline-flex; align-items: center; gap: .34rem; font-family: var(--mono); font-size: .64rem;
+  font-variant-numeric: tabular-nums; letter-spacing: .02em; text-transform: none; color: var(--muted); white-space: nowrap; }
+.card-prog svg { width: 14px; height: 14px; flex: none; }
+.card-prog .pbg { stroke: var(--border); }
+.card-prog.done { color: var(--accent); }
+#resume { display: none; }
+#resume.on { display: block; max-width: 1120px; margin: 1.2rem auto 0; padding: 0 2rem; }
+#resume a { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--text); background: transparent;
+  border: 1px solid var(--border); border-left: 3px solid var(--accent); border-radius: 0; padding: 1rem 1.3rem; transition: border-color .15s var(--ease); }
+#resume a:hover { border-color: var(--text); border-left-color: var(--accent); }
+#resume .rcol { min-width: 0; }
+#resume .rk { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin: 0 0 .25rem; }
+#resume .rt { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
+#resume .rs { display: block; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: .2rem 0 0; }
+#resume .rcta { margin-left: auto; font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em;
+  color: var(--accent); background: none; border-radius: 0; padding: 0; white-space: nowrap; }
+@media (max-width: 560px) { #cmdk-fab { font-size: .66rem; } .cmdk-m { display: none; } .cmdk-m::before { display: none; } }
+/* shareable-card preview modal */
+#share-back { position: fixed; inset: 0; z-index: 85; background: rgba(24,22,18,.5); display: none; align-items: center; justify-content: center; padding: 1rem; }
+#share-back.open { display: flex; }
+#share-box { background: var(--bg); border: 1px solid var(--border); border-radius: 2px; padding: 1rem; max-width: 380px; width: 100%; box-shadow: var(--shadow-3); }
+#share-img { width: 100%; border-radius: 0; display: block; border: 1px solid var(--border); }
+#share-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+#share-actions button { font-family: var(--sans); font-size: .8rem; padding: .5rem .8rem; border: 1px solid var(--border); border-radius: 2px; background: transparent; color: var(--text); cursor: pointer; }
+#share-actions button:hover { border-color: var(--text); color: var(--accent); }
+#share-actions #share-dl { background: var(--text); color: var(--bg); border: 1px solid var(--text); border-radius: 2px;
+  font-family: var(--sans); font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; cursor: pointer;
+  box-shadow: none; transition: background-color .15s var(--ease); }
+#share-actions #share-dl:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.share-toast { position: fixed; bottom: 1.3rem; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg); font-family: var(--sans); font-size: .8rem; padding: .5rem .9rem; border-radius: 2px; z-index: 95; }
+</style><script id="library-manifest" type="application/json">[{"slug": "ancestry-research", "title": "The Emigrant's Atlas", "category": "Heritage", "kind": "corpus", "href": "ancestry-research.html", "chapters": ["Your Ancestral Background: A Briefing", "Irish Origins and History: The Ó Coileáin (Collins) Line and Its Four-Province World", "Central European & Baltic Origins and History", "Genetic and Anthropological Context: What This Estimate Means", "The Path to America: Two Lines Across the Atlantic", "The Surnames: Collins and Pokorný", "Cultural Heritage and Identity: How an Irish + Polish/Czech/Baltic American Family Remembers", "Future Trajectory: What Further Discovery Could Reveal, and Where the Heritage Is Heading"], "related": [{"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion"}, {"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising"}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion"}]}, {"slug": "carlyle-french-revolution-research", "title": "The Book That Burned", "category": "Thomas Carlyle", "kind": "corpus", "href": "carlyle-french-revolution-research.html", "chapters": ["Briefing", "Composition History and Biographical Context", "Carlyle's Sources and His Method of Writing History", "Style, Voice, and Narrative Form", "Allusive Texture — Bible, Shakespeare, Milton, Dante, Goethe, Classics", "Carlyle's Argument and the Theory of Revolution", "Reception 1837–1900 and Influence, Especially on Dickens", "Place in French Revolution Historiography and Modern Assessment", "Trajectory of the Work's Reputation and Use", "Future Trajectory: Reputation and Use through ~2040"], "related": [{"slug": "carlyle-friedrich-research", "title": "Carlyle's Everest", "category": "Thomas Carlyle"}, {"slug": "carlyle-research", "title": "The Calvinist Without a Creed", "category": "Thomas Carlyle"}, {"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy"}]}, {"slug": "carlyle-friedrich-research", "title": "Carlyle's Everest", "category": "Thomas Carlyle", "kind": "corpus", "href": "carlyle-friedrich-research.html", "chapters": ["Carlyle's *Friedrich the Great*", "Composition History", "\"Carlylese\" — The Prose Style, Close-Read", "The \"Dryasdust\" Device and Narrative Technique", "The Battle Set-Pieces as Prose", "Themes and Ideology", "Characterization — Friedrich, Friedrich Wilhelm I, Voltaire", "Place in Carlyle's Career and in Victorian Historiography", "Contemporary Reception", "The Contested 20th-Century Afterlife"], "related": [{"slug": "carlyle-french-revolution-research", "title": "The Book That Burned", "category": "Thomas Carlyle"}, {"slug": "carlyle-research", "title": "The Calvinist Without a Creed", "category": "Thomas Carlyle"}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion"}]}, {"slug": "carlyle-research", "title": "The Calvinist Without a Creed", "category": "Thomas Carlyle", "kind": "corpus", "href": "carlyle-research.html", "chapters": ["Thomas Carlyle and His Scottish Calvinist Influences: An Overview", "Origins and Deep History: The Annandale Calvinist Formation of Thomas Carlyle, 1795-1825", "The Modern Arc of Thomas Carlyle, 1825-1881", "Current Structure and Actors of Carlyle Studies", "Live Debates and Dynamics: Carlyle in Present-Day Scholarship and Discourse", "Carlyle in Comparative and Adjacent Context", "Drivers and Forces: The Scottish Calvinist Substrate of Carlyle's Mature Thought", "Primary Sources: Direct Readings of Carlyle's Major Works", "Future Trajectory: Carlyle's Standing Through 2035"], "related": [{"slug": "carlyle-french-revolution-research", "title": "The Book That Burned", "category": "Thomas Carlyle"}, {"slug": "carlyle-friedrich-research", "title": "Carlyle's Everest", "category": "Thomas Carlyle"}, {"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World"}]}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion", "kind": "corpus", "href": "civil-war-religion-whitman-research.html", "chapters": ["The Civil War's Religious Drivers and Walt Whitman: A Briefing", "Origins and Deep History: How Antebellum American Protestantism Made a Religious War Possible", "The Modern Arc: Religion Through the War and Reconstruction", "Whitman Shaped by the War: From Cosmic Optimist to Wartime Elegist", "Whitman as Shaper: The Civil Religion of Democracy", "Live Debates and Historiography: How the Field Argues About Civil War Religion and Whitman's Faith", "Adjacent and Comparative Context: What the American Case Looks Like From Outside Itself", "Future Trajectory: Where the Interpretation Is Heading"], "related": [{"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion"}, {"slug": "roman-catholicism-research", "title": "On This Rock", "category": "Faith & Religion"}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion"}]}, {"slug": "deutsch-good-explanations-research", "title": "Hard to Vary", "category": "Mind & Philosophy", "kind": "corpus", "href": "deutsch-good-explanations-research.html", "chapters": ["Briefing: The Hard-to-Vary Standard", "What Makes an Explanation Good", "The Engine: Conjecture, Criticism, and the Quarrel with Justification", "The Criticisms, Constructor Theory, and the Multiverse", "The Toolkit: Thinking in Hard-to-Vary Explanations", "Persephone in the Media Plan: Good Explanations and CTV Measurement", "The Hardest Case: Theology Under the Criterion", "Error-Correcting Machinery: Politics, Economics, Climate, Knowledge", "Future Trajectory: Where Deutsch's Influence Goes"], "related": [{"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy"}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy"}, {"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy"}]}, {"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising", "kind": "corpus", "href": "ipv4-ipv6-ctv-research.html", "chapters": ["IPv4/IPv6 and the Global CTV Programmatic Landscape: A Briefing", "Origins and Protocol History: How the IP Address Layer Was Built, Broke, and Became an Advertising Identifier", "The Modern Arc: How CTV Programmatic Grew Up on the IP Address (2007–early 2026)", "Current Structure and Actors: The IP Address Layer in Global CTV Programmatic (2026)", "Technical Mechanics: Primary Sources — Direct Readings of the Documents Underlying IP-Based CTV Identity", "Live Debates and Dynamics: IP-Based Identity in CTV Programmatic Advertising", "Regional Landscape: The Global IPv4/IPv6 × CTV Cross-Matrix", "Drivers & Forces: What Is Actually Moving IP-Based Identity in CTV", "The US CGNAT Erosion Vector — 5G Fixed Wireless and Satellite Are Pulling US Households Behind Carrier NAT", "The VPPA Class-Action Wave and What It Does to CTV Identifiers", "The Academic Geo-IP Accuracy Counter-Tradition (2007–2026)", "The IETF Pipeline — MASQUE, Oblivious HTTP, and Privacy Pass as the Standards Substrate of IP Obfuscation", "Gap Fill — SSAI Device-IP Passthrough Mechanics: Reading the Vendor Documentation Under the 'Spoofable Declaration", "The Operator Record and the Bid-Stream Observers — What NANOG, RIPE, and the Metadata Vendors Say That Trade Press Does Not", "IPv4/IPv6 and CTV: Future Trajectory Through 2030"], "related": [{"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising"}, {"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising"}, {"slug": "ctv-identity-signals-research", "title": "The Signal Layer", "category": "Media & Advertising"}]}, {"slug": "jesus-research", "title": "The Man and the Christ", "category": "Faith & Religion", "kind": "corpus", "href": "jesus-research.html", "chapters": ["The Message and Divinity of Jesus", "Historical Jesus", "The Message: Jesus as Philosopher", "Christological Development: From Jewish Messiah to Trinitarian Son", "The Divine Christ and the Mystical Tradition: Incarnation, Theosis, Inner Christ", "Modern Philosophical Christologies: From Hegel to Caputo", "Carlyle, Whitman, Jung, Peirce: Four Readings of Jesus", "Primary Sources: Direct Readings", "Convergence and Divergence: Carlyle, Whitman, Jung, Peirce on Jesus, and the Composite Picture", "Future Trajectory: How Jesus Will Be Read in Western Intellectual Life Through 2050"], "related": [{"slug": "john-the-baptist-research", "title": "More Than a Forerunner", "category": "Faith & Religion"}, {"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion"}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion"}]}, {"slug": "john-the-baptist-research", "title": "More Than a Forerunner", "category": "Faith & Religion", "kind": "corpus", "href": "john-the-baptist-research.html", "chapters": ["John the Baptist: A Briefing", "The Historical Life and Milieu of John the Baptist", "John Across Traditions: The Living Theological Readings of John the Baptist in Christianity, Islam, and Mandaeism", "John the Baptist: Reception History Across Three Horizons", "John the Baptist — Philosophy and Ascetic Worldview", "John the Baptist — The Phenomenological Reality", "John the Baptist: Mythological and Archetypal Patterns", "Primary Sources: Direct Readings of the Texts on John the Baptist", "John the Baptist: Future Trajectory"], "related": [{"slug": "jesus-research", "title": "The Man and the Christ", "category": "Faith & Religion"}, {"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion"}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion"}]}, {"slug": "jung-research", "title": "A God in the Psyche", "category": "Mind & Philosophy", "kind": "corpus", "href": "jung-research.html", "chapters": ["Overture: A Religious Psychology", "Religion as Experience: The Numinous and the Soul", "The Self and Individuation", "Christ as a Symbol of the Self", "The Problem of Evil: Privatio Boni and the Shadow", "Answer to Job: The Transformation of the God-Image", "The Psychoid Archetype and the Edge of Matter", "Synchronicity and the Unus Mundus", "Pauli, Physics, and the One World", "Alchemy, Gnosticism, and the Red Book", "Nietzsche: The Death of God and the Peril of Inflation", "Jordan Peterson Reads Jung: Alignment and Divergence", "Wotan and the Modern Soul: Jung's Answer to the Vacuum"], "related": [{"slug": "phenomenology-pragmatism-research", "title": "Experience and Consequences", "category": "Mind & Philosophy"}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy"}, {"slug": "american-pragmatism-research", "title": "The Cash-Value of Truth", "category": "Mind & Philosophy"}]}, {"slug": "phenomenology-pragmatism-research", "title": "Experience and Consequences", "category": "Mind & Philosophy", "kind": "corpus", "href": "phenomenology-pragmatism-research.html", "chapters": ["Phenomenology and Pragmatism — and Their Relation to Psychology and Christianity", "Phenomenology: Origins and Historical Arc", "Pragmatism: Origins and Historical Arc", "Phenomenology and Psychology", "Pragmatism and Psychology", "Phenomenology and Christianity", "Pragmatism and Christianity", "Phenomenology and Pragmatism: Convergence and Tension", "Phenomenology and Pragmatism: Future Trajectory through 2040", "Notes and Clarifications"], "related": [{"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy"}, {"slug": "american-pragmatism-research", "title": "The Cash-Value of Truth", "category": "Mind & Philosophy"}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy"}]}, {"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World", "kind": "corpus", "href": "uap-research.html", "chapters": ["Origins and Deep History: The U.S. UFO Phenomenon, 1947-1969", "The Modern Arc: 1969–2017", "The Current Structure of the U.S. UAP Phenomenon (May 2026)", "Live Debates and Dynamics in the UAP Conversation (May 2026)", "Adjacent and Comparative Frames for the U.S. UAP Question", "Drivers and Forces Shaping the UAP Trajectory", "Primary Sources: Direct Readings of the UAP Documentary Record"], "related": [{"slug": "us-geopolitics-research", "title": "The Map of American Power", "category": "The Modern World"}, {"slug": "us-economy-financial-system-research", "title": "The Argument Over Money", "category": "The Modern World"}, {"slug": "democratic-socialism-research", "title": "The Long Advent", "category": "The Modern World"}]}, {"slug": "us-geopolitics-research", "title": "The Map of American Power", "category": "The Modern World", "kind": "corpus", "href": "us-geopolitics-research.html", "chapters": ["US Geopolitical Position in 2026: A Briefing", "01 — Origins and Deep History: The Making of an American Grand Strategy, 1823–1945", "Modern Arc", "Current Structure and Actors: The Architecture of US Geopolitical Position in 2026", "Live Debates and Dynamics", "Adjacent and Comparative Lenses", "Drivers and Forces Shaping the US Strategic Position, 2026-2036", "Primary Sources: A Direct Reading of the Canonical Texts of US Grand Strategy", "Future Trajectory and Scenarios — US Geopolitical Position, 2026-2030 (with notes to 2035)"], "related": [{"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World"}, {"slug": "us-economy-financial-system-research", "title": "The Argument Over Money", "category": "The Modern World"}, {"slug": "democratic-socialism-research", "title": "The Long Advent", "category": "The Modern World"}]}, {"slug": "mcluhan-research", "title": "The Medium Is the Message", "category": "Media & Advertising", "kind": "corpus", "href": "mcluhan-research.html", "chapters": ["Marshall McLuhan: A Briefing", "Formation & Intellectual Roots: McLuhan from the Prairie to The Mechanical Bride (1911–1951)", "The Modern Arc of the Theory (1951–1980 and its Posthumous Tail)", "The Core Concepts of McLuhan's Media Theory", "McLuhan as Reader: Joyce, Carroll & the Literary Method", "The Canonical Texts, Close-Read", "The Field Today, the Estate & Live Debates", "Adjacent & Comparative: McLuhan Among His Neighbors", "Drivers & Forces: The Reputation Cycle and the Internet/Social/AI Re-reading", "Future Trajectory: McLuhan's Reputation Through ~2040"], "related": [{"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising"}, {"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising"}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}]}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy", "kind": "corpus", "href": "piaget-research.html", "chapters": ["Jean Piaget: A Briefing", "Jean Piaget — Life and Formation (1896–1980)", "Religion and the Sacred in the Young Piaget", "Genetic Epistemology as a Research Program", "The Developmental Machinery: Constructs, the Four Stages, and the Clinical Method", "Structuralism, the Logico-Mathematical Models, and the Biological Grounding", "The Critiques and the Modern Empirical / Theoretical Reception", "Jean Piaget: Future Trajectory"], "related": [{"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy"}, {"slug": "deutsch-good-explanations-research", "title": "Hard to Vary", "category": "Mind & Philosophy"}, {"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy"}]}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion", "kind": "corpus", "href": "dickinson-research.html", "chapters": ["Emily Dickinson — Master Briefing", "Emily Dickinson — Origins and Formation", "Emily Dickinson — The Arc of a Life and the Architecture of Withdrawal", "The Relationships", "The Architecture and Craft of Emily Dickinson's Poetry", "Themes and the Intellectual World of Emily Dickinson", "The Editorial Wars and the Textual History of Emily Dickinson", "Reception, Scholarship, and Cultural Afterlife", "Future Trajectory — Where Dickinson Scholarship and Her Cultural Standing Are Heading"], "related": [{"slug": "john-the-baptist-research", "title": "More Than a Forerunner", "category": "Faith & Religion"}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion"}, {"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion"}]}, {"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy", "kind": "corpus", "href": "emerson-research.html", "chapters": ["Ralph Waldo Emerson — Master Briefing", "The Formation and Life of Ralph Waldo Emerson (1803–1882)", "Transcendentalism — Philosophy, Sources, and Founding Texts", "Emerson's Religious Revolution and the Divinity School Address", "The Concord Circle: Emerson at the Center of a Movement", "Transatlantic and Literary Influence: Carlyle, Whitman, Dickinson, and the British Romantics", "Emerson the Political Thinker: Self-Reliance, Democracy, and the Long Road to Abolition", "Harvard, the Lyceum, and American Intellectual Life", "Reception, Reputation, and Enduring Influence", "Future Trajectory: Emerson's Standing through ~2050"], "related": [{"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy"}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy"}, {"slug": "american-pragmatism-research", "title": "The Cash-Value of Truth", "category": "Mind & Philosophy"}]}, {"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy", "kind": "corpus", "href": "pareto-research.html", "chapters": ["Vilfredo Pareto: The Briefing", "The Life and Intellectual Formation of Vilfredo Pareto (1848–1923)", "The Economist", "From Economics to Sociology: The Hinge of Pareto's Career", "The Treatise: Residues and Derivations", "Elite Theory and the Circulation of Elites", "Politics, Liberalism, and the Fascism Question", "Burnham and the Machiavellians: Reconstructing — and Going Beyond — His Use of Pareto", "Pareto in Comparative Context: The Elitist School, Its Legacy, and the Contemporary Revival", "Future Trajectory: Will Elite Theory Last?"], "related": [{"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy"}, {"slug": "deutsch-good-explanations-research", "title": "Hard to Vary", "category": "Mind & Philosophy"}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy"}]}, {"slug": "fox-roku-research", "title": "Buying the Living Room", "category": "Media & Advertising", "kind": "corpus", "href": "fox-roku-research.html", "chapters": ["Briefing — Fox Corporation's $22B Acquisition of Roku", "The Deal — Fox Corporation's Acquisition of Roku, Inc.", "Strategic and Ad-Tech Rationale: Why Fox Is Paying ~$22B for Roku", "How We Got Here — The Two Decades That Made Fox+Roku Logical", "Market Reaction and Live Debates — Fox–Roku ($22B, June 15, 2026)", "Implications and Forecast — What Fox+Roku Changes in CTV/Programmatic Through 2028", "The Consumer in the Room: A Privacy-Law and Consumer-Welfare Reading of Fox–Roku", "The Controlled-Company Question — Murdoch Control, the Dilution, and Whether the Roku Deal Serves Fox's Public Holders", "International (Non-U.S.) Regulatory Clearance: Which Foreign Regimes Bite, How Hard, and What It Does to the Outside Date", "The Gatekeeper Question — Fox News, the FCC, and the Political Economy of a Murdoch-Owned Home Screen", "The Loss-Leader Inside the Box — Roku's Device Economics, the Give-It-Away OS, and Whether Tariffs Threaten the Fox Thesis", "The Strategic War-Game — Counter-Bid, Partner Defection, and the Consolidation Cascade (Fox–Roku, $22B, June 15, 2026)", "The Buyer's Seat: Do Advertisers and Agencies Want a Fox-Owned Roku?", "The Side That Pays in Cash — Fox-Roku Through the Bond Market, Not the Stock Market", "The Primary Management Record — Reading the Fox/Roku Investor Call and Deck End-to-End", "Can Fox Actually Integrate Roku? — Execution, Synergy, Talent, and the Ad-Stack Merge", "The Missing Modality — Does AI Erode or Amplify the Four Assets Fox Bought?", "Future Trajectory — Where Fox+Roku Goes Through 2028"], "related": [{"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising"}, {"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising"}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising"}]}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising", "kind": "corpus", "href": "india-advertising-research.html", "chapters": ["The Indian Advertising Market", "Origins and the Digital Tipping Point — How India's Advertising Market Got Here", "The Indian Advertising Market — Current Structure, Money Flows, and Platform Stack", "Programmatic Advertising and Connected TV in India", "YouTube in India — Scale, the Reporting Gap, the Creator Economy, Shorts, and the Living-Room Pivot", "Regulation, Measurement & Trust — The Cross-Cutting Layer of Indian Advertising", "Competitive Dynamics & Future Structure — The Indian Advertising Market", "Future Trajectory — The Indian Advertising Market through 2030"], "related": [{"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising"}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising"}, {"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising"}]}, {"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising", "kind": "corpus", "href": "latam-ctv-research.html", "chapters": ["The LATAM Programmatic CTV Market — A Briefing", "Origins & History of the Latin American Programmatic CTV Advertising Market", "Sizing the Latin American Programmatic CTV Market", "LATAM Programmatic CTV — The Supply & Demand Ecosystem", "Measurement & Identity in the Latin American Programmatic CTV Market", "The Wired and the Wireless Living Room — Connectivity, Devices & Platform Substrate of LATAM CTV", "Regulation & Privacy — The Legal Substrate of Data-Driven CTV in Latin America", "Fraud, Inventory Quality & Pricing in LATAM Programmatic CTV", "Players & Competition — The LATAM Programmatic CTV Ad-Tech Landscape", "LATAM Programmatic CTV — Future Trajectory"], "related": [{"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising"}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising"}, {"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising"}]}, {"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising", "kind": "corpus", "href": "ctv-brand-safety-research.html", "chapters": ["Programmatic CTV Brand Safety Across the Globe", "Origins and History of Brand Safety and Suitability — From Web Display to Connected TV", "The Technical and Measurement Landscape of Brand Safety in Programmatic CTV", "Vendors, Standards Bodies, and Platforms: The Present-Day Actors in CTV Brand Safety", "Live Debates and Tensions in CTV Brand Safety", "Regional Deep-Dive — Brand Safety & Suitability in Programmatic CTV: United States and Canada", "Regional Brand Safety in Programmatic CTV — EU, India, LATAM, Australia", "Drivers and Forces Shaping CTV Brand Safety Through 2030", "Primary Sources and Standards: Direct Readings of the Load-Bearing Texts Underlying CTV Brand Safety", "The Counter-Region — CTV/OTT Brand Safety in China and APAC-ex-India", "The Fourth Actor Layer: Holding-Company Brand-Safety Apparatus and the Independent Media-Audit Check", "The Demand Side — What Advertisers Actually Want and Do About CTV Brand Safety", "Future Trajectory: Programmatic CTV Brand Safety Through 2030"], "related": [{"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising"}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising"}, {"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising"}]}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising", "kind": "corpus", "href": "ctv-dsp-ssp-research.html", "chapters": ["DSPs & SSPs for Programmatic CTV: A Briefing", "Evolution of the Programmatic CTV Stack & the Buy/Sell Blur", "The Independent Generalist DSPs: The Trade Desk & Yahoo DSP", "The Walled-Garden & Specialized DSPs: Amazon DSP & FreeWheel/Beeswax", "The Sell-Side & Curation Platforms: Index Exchange, Magnite (incl. ClearLine) & PubMatic", "Margin Economics: Fees, Take Rates, Transparency & Supply-Path Optimization", "Audience, ACR-Data Activation, Identity & Clean Rooms", "Drivers, Forces & Competitive Dynamics", "Comcast's Universal Ads — the Second Comcast Buy-Path", "Roku as a Buy-Side and Data Platform — The Disintermediator Bought Through and Competed Against", "Rival Intermediaries and the In-Housing Counter-Case", "The Measurement, Verification & Currency Layer", "The US v. Google Ad-Tech Antitrust Remedies — A Live Threat to the Sell Side", "Samba TV's Going-Concern and the ACR Concentration Risk This Analysis Rests On", "The VPPA and the Legal Durability of the ACR-Activation Moat", "DSPs & SSPs for Programmatic CTV: Future Trajectory"], "related": [{"slug": "miq-research", "title": "On Leased Land", "category": "Media & Advertising"}, {"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising"}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising"}]}, {"slug": "democratic-socialism-research", "title": "The Long Advent", "category": "The Modern World", "kind": "corpus", "href": "democratic-socialism-research.html", "chapters": ["Western Democratic Socialism: A Parliamentary Eschatology", "Millenarian Roots And Eschatological Parallels", "Christian Socialism And Social Gospel", "Revisionism and the Democratic Turn: How Democratic Socialism Became a Distinct Current, 1880–1914", "Democratic Socialism In Power", "Crisis Betrayal And Decline", "Theology and Democratic Socialism: The Prophetic Tradition, Political Religion, and the Contemporary Religious Left", "Contemporary Revival And Current State", "Drivers And Forces", "Western Democratic Socialism: Future Trajectory"], "related": [{"slug": "us-geopolitics-research", "title": "The Map of American Power", "category": "The Modern World"}, {"slug": "us-economy-financial-system-research", "title": "The Argument Over Money", "category": "The Modern World"}, {"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World"}]}, {"slug": "ctv-identity-signals-research", "title": "The Signal Layer", "category": "Media & Advertising", "kind": "corpus", "href": "ctv-identity-signals-research.html", "chapters": ["The Signal Layer — Executive Briefing", "The Signal Layer: A Complete Taxonomy of Identity in Programmatic CTV Advertising", "Identity Resolution: The Signal Layer", "The Signal Layer: Identity and Geolocation Through the CTV Programmatic Bid Path", "The Measurement Layer: Identity, Currency, and Outcome in Connected TV", "Chapter 5: The Signal Layer — Clean Room Architectures and CTV Identity", "Privacy Regulation and Signal Deprecation: What CTV Identity Survives to 2029", "The Identity Vendor Landscape in Programmatic CTV", "Verifying the IP-to-Household Accuracy Figures: The CIMM / Truthset Benchmark", "Two Numbers, Two Questions: Reconciling MaxMind's 80% and CIMM/Truthset's 13% IP Accuracy Figures", "The Geolocation Gap: What Peer-Reviewed Literature Actually Says About IP Accuracy at DMA and Postal-Code Resolution", "The Blind Spot Behind the DMA Code: geo.type Field Population in CTV Bid Requests", "IFA Type Specifications: The Primary-Source Record and Specification History", "From Specification to Bid Stream: OpenRTB v2.6-202409 EID Provenance Field Adoption", "The Authentication Ceiling: UID2 Deployment on AVOD and FAST Inventory", "FTC Consent Orders: Mobilewalla, X-Mode / Outlogic, and InMarket — What the Orders Actually Say", "Salazar v. NBA — Reading the Second Circuit's Opinion: The VPPA \"Consumer\" Debate Engaged Directly", "The Disney/ABC $2.75M CCPA Settlement", "Oracle Advertising Is Gone: Who Supplies Cross-Device Identity Data Now", "Viant's Household ID: The IP-Anchored Graph in a MAID-Declining World", "Blockgraph: The Programmer-Distributor Consortium Behind TV's Household Identity Layer", "ACR Audience Segment Taxonomy: What Buyers Actually Get Across Platforms", "AFAI Containment: What Third-Party DSPs Actually Receive in Fire TV Bid Requests", "The Linear/Addressable TV Identity Layer: Set-Top Box, Subscriber Data, and the MVPD Household Anchor", "CTV Identity Beyond the US: Europe, LATAM, and Australia", "The CTV Identity Signal Layer: Future Trajectory"], "related": [{"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising"}, {"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising"}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}]}, {"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising", "kind": "corpus", "href": "agentic-advertising-protocols-research.html", "chapters": ["Agentic Advertising Protocols: A Briefing", "Origins — How Programmatic, CTV, and AI Agents Converged", "The MCP Substrate and the Anatomy of an Agentic Ad Transaction", "The AdCP Camp — The Ad Context Protocol", "The IAB Tech Lab Camp — ARTF and AAMP", "The Standards War — Governance, Politics, and Who Keeps the Spread", "Agentic Advertising in CTV Specifically", "The Adjacent Agentic-Commerce and Payment Layer (the 'Other Standards')", "The Fourth Garden — TikTok's Ads MCP Server and the Move from Three Walled Gardens to Four", "The Measurement Layer: How Verification Vendors Answer the Agentic Stack's Open Question", "The Model-Layer Chokepoint and the Agent-Blocking Counter-Tradition", "The Missing Lens — Antitrust and Regulatory Exposure of the Agentic-Ad-Standards Layer", "The Demand Side Wakes Up — Holding-Company Buyer Agents and the Omnicom-IPG Reordering", "Roku Is No Longer for Sale — It Is Sold: The Fox Acquisition and Roku's Agentic Posture", "Agentic Advertising Protocols: Future Trajectory"], "related": [{"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising"}, {"slug": "containerized-bidding-research", "title": "Closer to the Metal", "category": "Media & Advertising"}, {"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising"}]}, {"slug": "miq-research", "title": "On Leased Land", "category": "Media & Advertising", "kind": "corpus", "href": "miq-research.html", "chapters": ["MiQ: A Briefing", "Origins and Strategic Arc: How MiQ Became a Global Programmatic Media Partner", "MiQ Sigma: The Platform and the AI", "MiQ CTV Capabilities and Activation", "MiQ ATV — TV Intelligence and the Measurement Stack", "How MiQ Sells and Delivers: The Agency & Client Relationship Architecture", "Market Structure and Competition: Where MiQ Sits in a Consolidating Independent-Specialist Market", "Commercial Model, Ownership, and Margins", "Geographic and M&A Expansion: MiQ's Regional Roll-Up", "Regulatory, Privacy, and the Durability of MiQ's Data Moat", "Drivers and Forces Shaping MiQ Through 2029", "Retail & Commerce Media: Orchestrating the Fastest-Growing Ad Segment From Outside the Shelf", "MiQ and the Agentic Advertising Frontier", "Is the Door Still Open? Titan OS as a Going Concern and the State of MiQ's Only EU-OS Data Deal", "Gap Close — The Samba TV Dependency: ACR Backbone, Going Concern, and the Disintermediation Clock", "The MFA and Supply-Path-Transparency Debate: Is MiQ's Neutrality an Asset or a Liability?", "The Practitioner Reality Check — Buy-Side and Employee Reception of MiQ, Independent of MiQ", "Just Xaxis With an LLM? The In-Housing and Agency-Trading-Desk Counter-Tradition Against MiQ's Category", "Going-Concern: The Xandr Sunset and MiQ's '7 TV Buying Platforms", "The Pathlabs MEP Bet and the Dentsu Anchor", "The Rail Is the Rival: Mapping MiQ's Bilateral Dependency on The Trade Desk", "The Independent Peer Set: A Competitive Teardown of MiQ's 'Largest Independent' Claim", "MiQ: Future Trajectory"], "related": [{"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising"}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising"}]}, {"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion", "kind": "corpus", "href": "great-awakenings-research.html", "chapters": ["The Great Awakenings", "Origins & Deep History — The First Great Awakening", "The Modern Arc — The Interval and the Second Great Awakening", "The Living Legacy and Present-Day Landscape", "Live Debates and Dynamics: The Historiography of the Great Awakenings", "Adjacent and Comparative Context: The American Awakenings from Outside", "Drivers & Forces — The Mechanisms Behind the Awakenings and Their Trajectory", "Primary Sources / Canonical Texts", "The First and Second Great Awakenings in America: Future Trajectory"], "related": [{"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion"}, {"slug": "roman-catholicism-research", "title": "On This Rock", "category": "Faith & Religion"}, {"slug": "john-the-baptist-research", "title": "More Than a Forerunner", "category": "Faith & Religion"}]}, {"slug": "containerized-bidding-research", "title": "Closer to the Metal", "category": "Media & Advertising", "kind": "corpus", "href": "containerized-bidding-research.html", "chapters": ["Containerized Bidding: A Briefing", "Origins & Evolution — The Road to Containerized Bidding", "Architecture & Plumbing — How Containerized Bidding Actually Works", "Standards & Governance — ARTF, AAMP, and the Protocol Fault Line", "Market & Competitive Map — Who's Building, Who's Running Inside, Who's Left Out", "Performance & Commercial Model — The Economics of Containerized Bidding and Who Captures the Value", "Risks & Contested Claims — The Skeptic's Case", "Magnite Is on the Fabric Map: The Elastic Edge, ClearLine, and the Cognitiv Tenant", "The Other Tenants — Fraud, Verification, and Measurement as the First Containers", "The Carbon Lens — Does Containerized Bidding Actually Decarbonize Programmatic, or Just Relocate the Compute?", "The Direct Booking Engine Cohort: Pontiac, Universal Ads, Onetag Dynamo, and Why a Low Take Rate Is Not the Same as a Container", "The Metadata Tenant — Gracenote, ARTF, and the Contextual-Container Class the Map Forgot", "The Holdco Counter-Map — Agency Holding Companies and the Demand-Side Response to Containerized Supply", "Containerized Bidding: Future Trajectory"], "related": [{"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising"}, {"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising"}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}]}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising", "kind": "corpus", "href": "political-ctv-research.html", "chapters": ["U.S. Political CTV Advertising: A Briefing", "Origins and the Modern Arc: How U.S. Political TV Advertising Migrated to Connected TV", "The Addressability Stack: How Voter-Level Connected-TV Targeting Actually Works", "Players & Market Structure: Who Keeps the Political CTV Dollar", "Ad Impact and Effectiveness: Does Political CTV Advertising Actually Work?", "Money, Strategy, and Campaigns: Where Political CTV Dollars Come From, Where They Flow, and How Campaigns Deploy Them", "Regulation, Privacy, and Risk — The Streaming Loophole", "Drivers and Forces: What Moves U.S. Political CTV Advertising", "Inscape ACR After Walmart: A Going-Concern Audit", "Fox–Roku Deal Status: The Caveat the Analysis Rests On", "The Republican Data Backbone in 2026: i360 and Data Trust", "The Operator's Seat: What Political CTV Buyers Actually Do — A Practitioner-Grounded Pass", "The Harms Counter-Tradition: Why Voter-Level Targeting Worries Democratic Theorists Even If It Doesn't Move Votes", "The Measurement-Currency War: Two Scoreboards That Never Reconcile", "Platform Political-Ad Policy: Who Accepts and Who Refuses", "International and Historical Comparisons — Two Mirrors", "U.S. Political CTV Advertising: Future Trajectory"], "related": [{"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising"}, {"slug": "miq-research", "title": "On Leased Land", "category": "Media & Advertising"}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}]}, {"slug": "american-pragmatism-research", "title": "The Cash-Value of Truth", "category": "Mind & Philosophy", "kind": "corpus", "href": "american-pragmatism-research.html", "chapters": ["American Pragmatism: An Overview", "Six Easy Pieces of American Pragmatism", "Origins and Deep History of American Pragmatism", "The Classical Pragmatists: Peirce, James, Dewey, and Mead", "Eclipse and Revival: Pragmatism from Dewey's Death to the New Neopragmatism", "Contemporary Schools and Debates", "Pragmatism in Practice: Law, Democracy, Education, Science, and Religion", "The Objections and the Wind at Its Back", "Primary Sources: Direct Readings of the Canonical Texts", "W.E.B. Du Bois — Primary Texts and the Pragmatist Integration", "The Hermeneutic Pragmatist: Richard J. Bernstein and the Road Between Rorty and Habermas", "The Pragmatist Who Would Not Be Named: Davidson, Rorty, and the Disputed Frontier of Neopragmatism", "American Pragmatism: Future Trajectory"], "related": [{"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy"}, {"slug": "phenomenology-pragmatism-research", "title": "Experience and Consequences", "category": "Mind & Philosophy"}, {"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy"}]}, {"slug": "us-economy-financial-system-research", "title": "The Argument Over Money", "category": "The Modern World", "kind": "corpus", "href": "us-economy-financial-system-research.html", "chapters": ["The United States Economy and Financial System: A Briefing", "Origins & Deep History of the American Economic and Financial Order", "The Modern Arc, 1913 to the COVID Hinge", "Current Structure and Actors of the U.S. Economy and Financial System (mid-2026)", "Live Debates and Dynamics, Mid-2026", "Adjacent and Comparative Context: The U.S. System Seen From Outside", "Drivers & Forces — The Mechanisms Pulling the U.S. Economy Through 2035", "Primary Sources: The Documents Beneath the U.S. Economy", "The GENIUS Act: A New Plumbing Layer in U.S. Money", "The Heterodox Traditions: MMT, Austrian Sound Money, and Minsky on the U.S. Debt", "The Debt Ceiling and the X-Date — The Self-Inflicted Crisis the Corpus Left Out", "The Successor the Corpus Did Not Test — Gold, the Reserve Asset Central Banks Are Actually Buying", "Future Trajectory: The U.S. Economy and Financial System Through 2035"], "related": [{"slug": "us-geopolitics-research", "title": "The Map of American Power", "category": "The Modern World"}, {"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World"}, {"slug": "democratic-socialism-research", "title": "The Long Advent", "category": "The Modern World"}]}, {"slug": "roman-catholicism-research", "title": "On This Rock", "category": "Faith & Religion", "kind": "corpus", "href": "roman-catholicism-research.html", "chapters": ["Roman Catholicism: A Briefing", "Origins and the Apostolic Church: From Jesus to the Eve of 1054", "From Estrangement to Reform: The Latin Church, 1054–1563", "The Modern Arc: From the Revolutionary Rupture to Pope Leo XIV", "Doctrine and Self-Understanding: What the Catholic Church Teaches, Read from the Canonical Texts", "The Present Institution and the Global Body", "Live Debates and Crises in the Contemporary Catholic Church", "Comparative and Adjacent: Roman Catholicism Among Its Neighbors", "Drivers and Forces: The Mechanisms Shaping the Catholic Church's Trajectory", "The Theology of Liberation: Latin America's Great Catholic Argument and Its Afterlife", "The Movements and the Orders: The Church's Living Institutional Edge", "Lived and Popular Catholicism: The Faith as It Is Actually Practiced", "The Direction of the Priest: The Syro-Malabar Liturgy War and the Limits of Roman Authority", "The Rupnik Affair: A Famous Abuser, His Mosaics, and the Governance Test the Numbers Cannot Show", "The Doctrine the Geopolitics Runs On: Catholic Social Teaching as a Living Body of Thought", "Roman Catholicism: Future Trajectory"], "related": [{"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion"}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion"}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion"}]}, {"slug": "walmart-vibe-research", "title": "The Missing Front Door", "category": "Media & Advertising", "kind": "corpus", "href": "walmart-vibe-research.html", "chapters": ["Walmart × Vibe.co: A Briefing", "Origins — How Retail Media and Self-Serve CTV Collided to Make Walmart–Vibe Logical", "Vibe.co — The Company Walmart Bought", "Walmart's Ad Flywheel — Walmart Connect, VIZIO, Magnite, and Where Vibe Fits", "The Transaction — Walmart's Acquisition of Vibe.co", "Strategic Logic & the Amazon Contest", "The Competitive & Market-Structure Map: Who Plays Where, and Who Keeps the Spread", "Risks, Frictions & the Bear Case", "The Comparable Deals: Testing the Scarcity-Premium Claim", "The CTV Consolidation Wave — Dating the Clock Behind the Buy-vs-Build Case", "The Bear Case on the Category Itself — Is Retail Media's Tailwind Real?", "Walmart's Acquisition of Vibe.co: Future Trajectory"], "related": [{"slug": "miq-research", "title": "On Leased Land", "category": "Media & Advertising"}, {"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising"}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}]}, {"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising", "kind": "corpus", "href": "social-ctv-retargeting-research.html", "chapters": ["Social-to-CTV Retargeting: A Briefing", "Social-to-CTV Retargeting: Origins of the Bridge", "The Plumbing — Identity and Retargeting Mechanics of Social-to-CTV", "LinkedIn's Social-to-CTV Play — B2B Audiences on the Big Screen", "Pinterest's Big-Screen Bet: tvScientific and the Intent-to-Household Match", "Reddit & TikTok — Two Postures at the Edge of the Big Screen", "Meta / 'Instagram TV' — The CTV Question", "Market Structure & Competitive Map — Who Extends onto the Big Screen", "The Sixth Platform: Why Snapchat Sits Out the Living Room", "The Platform That Already Won the Living Room: YouTube as the Integrated Social-to-CTV Bridge", "The Legal Threat to the Pixel-to-CTV Match — VPPA, State Privacy Law, and the Wiretap Front", "The Supply Side Learns to Sell the Audience — When Streamers Become the Targeting Layer", "Does the Buyer Want This? The Demand-Side Case for Social Audiences on the Big Screen", "The Ocean the Bridge Does Not Cross — Why Social-to-CTV Is a North American Story", "Social-to-CTV Retargeting: Future Trajectory"], "related": [{"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising"}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising"}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising"}]}, {"title": "Faith & Doubt", "kind": "collection", "category": "Collection", "href": "collection-faith-and-doubt.html", "meta": "6 chapters"}, {"title": "The Medium & the Message", "kind": "collection", "category": "Collection", "href": "collection-medium-and-message.html", "meta": "4 chapters"}, {"title": "Heroes & History", "kind": "collection", "category": "Collection", "href": "collection-heroes-and-history.html", "meta": "3 chapters"}, {"title": "The Ghost of Times", "kind": "section", "category": "Daily paper", "href": "ghost.html", "meta": "writer-voiced op-eds"}, {"title": "Peace Signed Digitally; And the Oil Shall Flow For Sixty Days", "kind": "edition", "category": "The Ghost of Times", "href": "ghost/2026-06-18-ghost-of-times.html", "meta": "2026-06-18"}, {"title": "A Tower of Stone, and Six Who Came to Be Heard", "kind": "edition", "category": "The Ghost of Times", "href": "ghost/2026-06-13-ghost-of-times.html", "meta": "2026-06-13"}, {"title": "Nobody Ends a War. A Master Persuader Buys Sixty Days.", "kind": "edition", "category": "The Ghost of Times", "href": "ghost/2026-05-29-ghost-of-times.html", "meta": "2026-05-29"}, {"title": "The Fingerprint", "kind": "section", "category": "Market wire", "href": "fingerprint.html", "meta": "CTV market paper"}, {"title": "Comcast to Spin Off NBCUniversal and Sky Into Standalone Company", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-30-fingerprint.html", "meta": "2026-06-30"}, {"title": "OpenAI Debuts at Cannes, Declaring Itself an Advertising Business", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-26-cannes-fingerprint.html", "meta": "2026-06-26-cannes"}, {"title": "Sky Agrees Terms to Buy ITV's Broadcast and Streaming Arm for £1.6bn", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-26-fingerprint.html", "meta": "2026-06-26"}, {"title": "Walmart Buys Vibe.co for $1.4B to Pull SMBs Into Streaming", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-23-fingerprint.html", "meta": "2026-06-23"}, {"title": "Fox Bought Roku for Its Identity Graph, Not Its Shows", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-18-fingerprint.html", "meta": "2026-06-18"}, {"title": "Fox to Buy Roku for $22 Billion, Redrawing CTV", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-15-fingerprint.html", "meta": "2026-06-15"}, {"title": "Roku Explores Sale as $19B Ad Platform Draws Bidders", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-13-fingerprint.html", "meta": "2026-06-13"}, {"title": "PubMatic Names MiQ Among First Partners In AI-In-The-Auction Layer", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-06-07-fingerprint.html", "meta": "2026-06-07"}, {"title": "Walmart Cracks Open CTV Data, Routes VIZIO Audiences To Yahoo DSP", "kind": "edition", "category": "The Fingerprint", "href": "fingerprint/2026-05-31-fingerprint.html", "meta": "2026-05-31"}, {"title": "The Pamphlets", "kind": "section", "category": "Essays", "href": "pamphlets.html", "meta": "writer-voiced essays"}, {"title": "The Cooling Break", "kind": "pamphlet", "category": "The Pamphlets", "href": "pamphlets/hemingway-on-the-world-cup.html", "meta": "On the 2026 World Cup · Ernest Hemingway"}, {"title": "The Climbing Men", "kind": "pamphlet", "category": "The Pamphlets", "href": "pamphlets/whitman-on-september-11th.html", "meta": "On the eleventh of September · Walt Whitman"}, {"title": "The Answering Bullet", "kind": "pamphlet", "category": "The Pamphlets", "href": "pamphlets/carlyle-on-the-assassination-of-charlie-kirk.html", "meta": "On the assassination of Charlie Kirk · Thomas Carlyle"}, {"title": "The Forecast Desk", "kind": "section", "category": "Predictions", "href": "forecast.html", "meta": "every prediction, priced and graded"}, {"title": "Who will win the 2026 FIFA World Cup?", "kind": "forecast", "category": "The Forecast Desk", "href": "forecast/world-cup-2026.html", "meta": "France · 28–32%"}, {"title": "Ad Tech", "kind": "section", "category": "The desk", "href": "adtech.html", "meta": "Programmatic & Advanced TV"}, {"title": "The Ad Tech Board", "kind": "section", "category": "The desk", "href": "adtech-forecast.html", "meta": "the desk's predictions, priced"}, {"title": "The Ad Tech Glossary", "kind": "section", "category": "The desk", "href": "adtech-glossary.html", "meta": "the trade's terms, defined"}, {"title": "Research Wrapped", "kind": "section", "category": "You", "href": "wrapped.html", "meta": "your year in reading"}, {"title": "Connections", "kind": "section", "category": "The map of ideas", "href": "connections.html", "meta": "how the corpora relate"}, {"title": "Glossary", "kind": "section", "category": "Reference", "href": "glossary.html", "meta": "every term across the research, defined"}]</script><script>window.SHELL_BASE="../";</script><script>
+(function () {
+  var base = window.SHELL_BASE || '';
+  var mEl = document.getElementById('library-manifest');
+  var LIB = mEl ? JSON.parse(mEl.textContent) : [];
+
+  var ENTRIES = [];
+  // searchable keyword surface — folds in the slug so evocative display titles
+  // ("A God in the Psyche") still match the obvious term ("jung", "ipv6").
+  function kw() { return Array.prototype.join.call(arguments, ' ').toLowerCase(); }
+  LIB.forEach(function (it) {
+    var slugWords = (it.slug || '').replace(/-/g, ' ').replace(/ research$/, '');
+    if (it.kind === 'corpus') {
+      ENTRIES.push({ t: it.title, m: it.category || 'Corpus', grp: 'Corpora', icon: '◆', href: it.href, k: kw(it.title, slugWords, it.category) });
+      (it.chapters || []).forEach(function (ch, i) {
+        ENTRIES.push({ t: ch, m: it.title, grp: 'Chapters', icon: '·', href: it.href + '#ch-' + i, k: kw(ch, it.title, slugWords) });
+      });
+    } else if (it.kind === 'collection') {
+      ENTRIES.push({ t: it.title, m: 'Collection · ' + (it.meta || ''), grp: 'Collections', icon: '❖', href: it.href, k: kw(it.title, it.meta) });
+    } else if (it.kind === 'section') {
+      ENTRIES.push({ t: it.title, m: it.meta || 'Section', grp: 'Sections', icon: '§', href: it.href, k: kw(it.title, it.meta) });
+    } else if (it.kind === 'edition') {
+      ENTRIES.push({ t: it.title, m: (it.category || '') + (it.meta ? ' · ' + it.meta : ''), grp: 'Editions', icon: '▤', href: it.href, k: kw(it.title, it.category, it.meta) });
+    }
+  });
+  var GRP_ORDER = ['Continue', 'Collections', 'Corpora', 'Sections', 'Chapters', 'In the text', 'Editions'];
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function fuzzy(q, s) { q = q.toLowerCase(); s = s.toLowerCase(); var i = 0, j = 0; while (i < q.length && j < s.length) { if (q[i] === s[j]) i++; j++; } return i === q.length; }
+  function score(q, e) {
+    q = q.toLowerCase();
+    var t = e.t.toLowerCase(), p = t.indexOf(q);
+    if (p === 0) return 0;
+    if (p > 0) return 1;
+    if ((e.k || '').indexOf(q) >= 0) return 2;
+    if (fuzzy(q, e.k || t)) return 5;  // loose subsequence — fallback rank only
+    return 9;
+  }
+  function hl(t, q) {
+    if (!q) return esc(t);
+    var i = t.toLowerCase().indexOf(q.toLowerCase());
+    if (i < 0) return esc(t);
+    return esc(t.slice(0, i)) + '<mark>' + esc(t.slice(i, i + q.length)) + '</mark>' + esc(t.slice(i + q.length));
+  }
+  function readRecents() {
+    try { return JSON.parse(localStorage.getItem('library-recents') || '[]') || []; } catch (e) { return []; }
+  }
+  function recentEntries() {
+    return readRecents().slice(0, 4).map(function (r) {
+      return { t: r.title, m: 'Ch ' + (r.ch + 1) + (r.chTitle ? ' · ' + r.chTitle : ''), grp: 'Continue', icon: '▸', href: r.slug + '.html#ch-' + r.ch };
+    });
+  }
+
+  // global "in the text" search — search-index.json is fetched lazily on the
+  // first body-length query, so it never blocks first paint (and degrades to
+  // title search if the fetch fails, e.g. opened from file://).
+  var SI = null, siState = 'idle';
+  function loadSI() {
+    if (siState !== 'idle') return;
+    siState = 'loading';
+    fetch(base + 'search-index.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (j) { SI = j; siState = 'ready'; if (isOpen() && input && input.value.trim().length >= 2) render(); })
+      .catch(function () { siState = 'failed'; });
+  }
+  function bodyMatches(q) {
+    if (siState !== 'ready' || !SI || q.length < 2) return [];
+    var out = [];
+    for (var c = 0; c < SI.length && out.length < 16; c++) {
+      var corp = SI[c], chs = corp.chapters || [];
+      for (var i = 0; i < chs.length && out.length < 16; i++) {
+        var text = chs[i].text || '', pos = text.toLowerCase().indexOf(q);
+        if (pos < 0) continue;
+        var s = Math.max(0, pos - 32), e = Math.min(text.length, pos + q.length + 54);
+        var snip = (s > 0 ? '…' : '') + text.slice(s, e).trim() + (e < text.length ? '…' : '');
+        out.push({ t: snip, m: corp.title + ' · ' + (chs[i].title || ('Ch ' + (i + 1))), grp: 'In the text',
+                   icon: '¶', href: corp.slug + '.html#ch-' + chs[i].i });
+      }
+    }
+    return out;
+  }
+
+  var back, input, resEl, rows = [], sel = 0, built = false;
+  function build() {
+    if (built) return;
+    back = document.createElement('div'); back.id = 'cmdk-back';
+    back.innerHTML = '<div id="cmdk" role="dialog" aria-label="Command palette">'
+      + '<div id="cmdk-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>'
+      + '<input id="cmdk-q" placeholder="Jump to any corpus, chapter, or edition…" autocomplete="off" spellcheck="false" aria-label="Search the library">'
+      + '<span class="hint">esc</span></div><div id="cmdk-res"></div></div>';
+    document.body.appendChild(back);
+    input = back.querySelector('#cmdk-q'); resEl = back.querySelector('#cmdk-res');
+    input.addEventListener('input', render);
+    back.addEventListener('click', function (e) { if (e.target === back) close(); });
+    built = true;
+  }
+  function results(q) {
+    if (!q) return recentEntries().concat(ENTRIES.filter(function (e) { return e.grp === 'Collections' || e.grp === 'Corpora' || e.grp === 'Sections'; }));
+    var ql = q.toLowerCase();
+    if (ql.length >= 3) loadSI();
+    var subs = [], fuz = [];
+    ENTRIES.forEach(function (e) { var s = score(ql, e); if (s < 5) subs.push({ e: e, s: s }); else if (s === 5) fuz.push(e); });
+    var head;
+    if (subs.length) { subs.sort(function (a, b) { return a.s - b.s; }); head = subs.slice(0, 10).map(function (x) { return x.e; }); }
+    else head = fuz.slice(0, 8);
+    return head.concat(bodyMatches(ql));  // title/chapter hits first, then in-the-text hits
+  }
+  function render() {
+    var q = input.value.trim();
+    var list = results(q);
+    if (!list.length) {
+      rows = [];
+      resEl.innerHTML = (siState === 'loading')
+        ? '<div class="cmdk-none">Searching inside the chapters…</div>'
+        : '<div class="cmdk-none">No matches. Try a title, a chapter, or “ghost”.</div>';
+      return;
+    }
+    var ordered = [];
+    GRP_ORDER.forEach(function (g) { list.forEach(function (e) { if (e.grp === g) ordered.push(e); }); });
+    list.forEach(function (e) { if (GRP_ORDER.indexOf(e.grp) < 0) ordered.push(e); });
+    rows = ordered; sel = 0;
+    var html = '', lastG = null;
+    ordered.forEach(function (e, i) {
+      if (e.grp !== lastG) { html += '<div class="cmdk-grp">' + esc(e.grp) + '</div>'; lastG = e.grp; }
+      html += '<a class="cmdk-row' + (i === 0 ? ' sel' : '') + '" data-i="' + i + '" href="' + esc(base + e.href) + '">'
+        + '<span class="cmdk-ic">' + e.icon + '</span><span class="cmdk-t">' + hl(e.t, q) + '</span><span class="cmdk-m">' + esc(e.m) + '</span></a>';
+    });
+    resEl.innerHTML = html;
+    [].forEach.call(resEl.querySelectorAll('.cmdk-row'), function (el) {
+      el.addEventListener('mouseenter', function () { sel = +el.getAttribute('data-i'); paint(); });
+      el.addEventListener('click', function (ev) { ev.preventDefault(); go(rows[+el.getAttribute('data-i')]); });
+    });
+  }
+  function paint() {
+    [].forEach.call(resEl.querySelectorAll('.cmdk-row'), function (el, i) {
+      var on = i === sel; el.classList.toggle('sel', on); if (on) el.scrollIntoView({ block: 'nearest' });
+    });
+  }
+  function go(e) { if (!e) return; close(); window.location.href = base + e.href; }
+  function open() { build(); back.classList.add('open'); input.value = ''; render(); setTimeout(function () { input.focus(); }, 10); }
+  function close() { if (back) back.classList.remove('open'); }
+  function isOpen() { return back && back.classList.contains('open'); }
+
+  document.addEventListener('keydown', function (e) {
+    if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')) { e.preventDefault(); isOpen() ? close() : open(); return; }
+    if (!isOpen()) return;
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); sel = Math.min(rows.length - 1, sel + 1); paint(); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); sel = Math.max(0, sel - 1); paint(); }
+    else if (e.key === 'Enter') { e.preventDefault(); go(rows[sel]); }
+  });
+
+  var mac = /Mac|iPhone|iPad/.test(navigator.platform);
+  var fab = document.createElement('button'); fab.id = 'cmdk-fab'; fab.type = 'button';
+  fab.setAttribute('aria-label', 'Search the library');
+  fab.innerHTML = '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg> <kbd>' + (mac ? '⌘' : 'Ctrl') + 'K</kbd>';
+  fab.addEventListener('click', open);
+  document.body.appendChild(fab);
+
+  [].forEach.call(document.querySelectorAll('.card[data-slug], .coll-card[data-slug]'), function (card) {
+    var slug = card.getAttribute('data-slug');
+    var total = +card.getAttribute('data-total') || 0;
+    var accent = card.getAttribute('data-accent') || '--accent';
+    var meta = card.querySelector('.meta, .coll-meta');
+    if (!meta || !total) return;
+    var read = 0;
+    try { read = (JSON.parse(localStorage.getItem('read:' + slug) || '[]') || []).filter(function (x) { return x < total; }).length; } catch (e) {}
+    if (!read) return;  // keep the meta line clean until there's progress
+    var done = read >= total;
+    var prog = document.createElement('span');
+    prog.className = 'card-prog' + (done ? ' done' : '');
+    if (done) {
+      card.classList.add('is-complete');
+      prog.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="var(' + accent + ')" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="13 4 6.5 12 3 8.5"/></svg>Read';
+    } else {
+      var r = 6, cir = 2 * Math.PI * r, off = cir * (1 - read / total);
+      prog.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><circle class="pbg" cx="8" cy="8" r="' + r + '" fill="none" stroke-width="2.4"/>'
+        + '<circle cx="8" cy="8" r="' + r + '" fill="none" stroke="var(' + accent + ')" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="' + cir.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '" transform="rotate(-90 8 8)"/></svg>' + read + '/' + total;
+    }
+    meta.classList.add('has-prog');
+    meta.appendChild(prog);
+  });
+
+  var resume = document.getElementById('resume');
+  if (resume) {
+    var rec = readRecents();
+    if (rec.length) {
+      var r0 = rec[0];
+      resume.innerHTML = '<a href="' + esc(base + r0.slug + '.html#ch-' + r0.ch) + '">'
+        + '<span class="rcol"><span class="rk">Resume reading</span>'
+        + '<span class="rt">' + esc(r0.title) + '</span>'
+        + '<span class="rs">Chapter ' + (r0.ch + 1) + (r0.chTitle ? ' — ' + esc(r0.chTitle) : '') + '</span></span>'
+        + '<span class="rcta">Continue →</span></a>';
+      resume.classList.add('on');
+    }
+  }
+
+  // quiet reading streak — a small folio stat folded into the library stats line
+  try {
+    var st = JSON.parse(localStorage.getItem('reading-streak') || '{}');
+    var stats = document.querySelector('.stats');
+    if (stats && st && (st.count || 0) >= 2 && !/streak/.test(stats.textContent)) {
+      stats.textContent = stats.textContent + ' · ' + st.count + '-day reading streak';
+    }
+  } catch (e) {}
+})();
+</script><script>
+(function () {
+  function v(name, fb) { var x = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); return x || fb; }
+  function rr(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r);
+    x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+  function wrap(ctx, text, maxW) {
+    var words = String(text).split(/\s+/), lines = [], line = '';
+    for (var i = 0; i < words.length; i++) {
+      var t = line ? line + ' ' + words[i] : words[i];
+      if (ctx.measureText(t).width > maxW && line) { lines.push(line); line = words[i]; } else line = t;
+    }
+    if (line) lines.push(line); return lines;
+  }
+  function draw(o) {
+    var S = 2, W = 540 * S, H = 675 * S, pad = 54 * S;
+    var c = document.createElement('canvas'); c.width = W; c.height = H;
+    var x = c.getContext('2d');
+    var bg = v('--bg', '#fcfbf7'), text = v('--text', '#1e1b16'), accent = v('--accent', '#9a2c1a'),
+        muted = v('--muted', '#6e6759'), border = v('--border', '#d8d3c4');
+    var tiles = [v('--t1', '#9a2c1a'), v('--t2', '#a3771c'), v('--t3', '#274d68'), v('--t4', '#4a6350'), v('--t5', '#64405a')];
+    var SANS = "-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif";
+    var SERIF = "'Iowan Old Style', Palatino, Georgia, serif";
+    x.fillStyle = bg; x.fillRect(0, 0, W, H);
+    x.strokeStyle = border; x.lineWidth = 2 * S; x.strokeRect(20 * S, 20 * S, W - 40 * S, H - 40 * S);
+    x.textBaseline = 'top';
+    x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
+    x.fillText((o.kicker || 'calvincollins · xyz').toUpperCase(), pad, pad);
+    var ty = pad + 32 * S;
+    for (var i = 0; i < 5; i++) { x.save(); x.translate(pad + i * (25 * S) + 8 * S, ty + 8 * S);
+      x.rotate((i % 2 ? 6 : -6) * Math.PI / 180); x.fillStyle = tiles[i % tiles.length];
+      rr(x, -8 * S, -8 * S, 16 * S, 16 * S, 4 * S); x.fill(); x.restore(); }
+    var qy = ty + 56 * S, maxW = W - pad * 2, body = o.quote || o.title || '';
+    var fs = o.quote ? 38 * S : 46 * S;
+    function setf() { x.font = (o.quote ? 'italic ' : '') + fs + 'px ' + SERIF; }
+    setf(); var lines = wrap(x, body, maxW), lh = fs * 1.3;
+    while (lines.length * lh > H - qy - 150 * S && fs > 22 * S) { fs -= 2 * S; setf(); lines = wrap(x, body, maxW); lh = fs * 1.3; }
+    var oy = 0;
+    if (o.quote) { x.fillStyle = accent; x.font = (84 * S) + 'px ' + SERIF; x.fillText('“', pad - 4 * S, qy - 24 * S); oy = 42 * S; setf(); }
+    x.fillStyle = text; setf();
+    for (var j = 0; j < lines.length; j++) x.fillText(lines[j], pad, qy + oy + j * lh);
+    var fy = H - pad - 64 * S;
+    if (o.source) { x.fillStyle = muted; x.font = (16 * S) + 'px ' + SANS;
+      var sl = wrap(x, o.source, maxW); for (var k = 0; k < Math.min(2, sl.length); k++) x.fillText(sl[k], pad, fy + k * 21 * S); }
+    x.fillStyle = accent; x.font = (14 * S) + 'px ' + SANS;
+    x.fillText('calvincollins.xyz', pad, H - pad - 16 * S);
+    return c;
+  }
+  var modal;
+  function toast(m) { var t = document.createElement('div'); t.className = 'share-toast'; t.textContent = m;
+    document.body.appendChild(t); setTimeout(function () { t.remove(); }, 1600); }
+  function open(o) {
+    var canvas = draw(o), link = o.url || location.href;
+    if (!modal) {
+      modal = document.createElement('div'); modal.id = 'share-back';
+      modal.innerHTML = '<div id="share-box"><img id="share-img" alt="Shareable card preview">'
+        + '<div id="share-actions"><button id="share-dl">Download</button>'
+        + '<button id="share-copy">Copy link</button><button id="share-go">Share</button>'
+        + '<button id="share-x">Close</button></div></div>';
+      document.body.appendChild(modal);
+      modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+      document.getElementById('share-x').onclick = function () { modal.classList.remove('open'); };
+    }
+    document.getElementById('share-img').src = canvas.toDataURL('image/png');
+    document.getElementById('share-copy').onclick = function () {
+      if (navigator.clipboard) navigator.clipboard.writeText(link).then(function () { toast('Link copied'); }, function () { prompt('Copy link:', link); });
+      else prompt('Copy link:', link);
+    };
+    document.getElementById('share-dl').onclick = function () {
+      canvas.toBlob(function (b) { var a = document.createElement('a'); a.href = URL.createObjectURL(b);
+        a.download = (o.filename || 'research-card') + '.png'; a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000); });
+    };
+    var go = document.getElementById('share-go');
+    go.style.display = navigator.share ? '' : 'none';
+    go.onclick = function () {
+      canvas.toBlob(function (b) {
+        var file = new File([b], (o.filename || 'research-card') + '.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({ files: [file], text: o.shareText || o.title || '', url: link }).catch(function () {});
+        else navigator.share({ text: o.shareText || o.title || '', url: link }).catch(function () {});
+      });
+    };
+    modal.classList.add('open');
+  }
+  window.CorpusShare = { open: open };
+})();
+</script><style>
+#atlas-dock { position: fixed; left: .9rem; bottom: .9rem; z-index: 60; display: flex; gap: .5rem; align-items: center; }
+#atlas-dock #cmdk-fab { position: static; left: auto; bottom: auto; }
+#atlas-fab { display: inline-flex; align-items: center; gap: .4rem; font-family: var(--sans); font-size: .66rem;
+  font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 2px; box-shadow: var(--shadow-2); padding: .4rem .7rem; cursor: pointer; }
+#atlas-fab:hover { color: var(--accent); border-color: var(--text); }
+#atlas-fab svg { flex: none; }
+#atlas-back { position: fixed; inset: 0; z-index: 90; background: rgba(24,22,18,.5); -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; padding: 3vh 2vw; }
+#atlas-back.open { display: flex; }
+#atlas-panel { position: relative; width: 100%; height: 94vh; max-width: 1500px; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 2px; overflow: hidden; box-shadow: var(--shadow-3);
+  display: flex; flex-direction: column; }
+#atlas-bar { display: flex; align-items: baseline; gap: .8rem; padding: .7rem 1rem; border-bottom: 1px solid var(--border); flex: none; }
+#atlas-title { font-family: var(--display, var(--serif)); font-size: 1.05rem; color: var(--text); white-space: nowrap; }
+#atlas-sub { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+#atlas-tools { display: flex; gap: .35rem; flex: none; }
+#atlas-tools button { font-family: var(--sans); font-size: .74rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 2px; padding: .25rem .55rem; cursor: pointer; min-width: 1.9rem; }
+#atlas-tools button:hover { border-color: var(--text); color: var(--accent); }
+#atlas-stage { position: relative; flex: 1; overflow: hidden; cursor: grab; background: var(--bg); touch-action: none; }
+#atlas-stage.grab { cursor: grabbing; }
+#atlas-world { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+#atlas-svg { display: block; }
+#atlas-msg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-family: var(--sans); font-size: .9rem; color: var(--muted); pointer-events: none; text-align: center; padding: 2rem; }
+#atlas-grat path { fill: none; stroke: var(--border); stroke-width: .6; opacity: .45; }
+#atlas-bd path { fill: var(--panel); stroke: var(--border); stroke-width: .7; opacity: .7; }
+[data-theme="dark"] #atlas-bd path { fill: #221f1b; opacity: .85; }
+/* the callout plates — every corpus one uniform stamp, grouped under a place name */
+.atlas-plbg { fill: var(--bg); stroke: var(--border); stroke-width: 1.2;
+  filter: drop-shadow(0 3px 9px rgba(24,22,18,.16)); }
+[data-theme="dark"] .atlas-plbg { filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)); }
+.atlas-plname { font-family: var(--sans); font-size: 19px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .16em; fill: var(--muted); cursor: pointer; }
+.atlas-plate:hover .atlas-plname { fill: var(--accent); }
+.atlas-plrule { stroke: var(--border); stroke-width: 1; }
+.atlas-leader { fill: none; stroke: var(--muted); stroke-width: 1.6; opacity: .55; pointer-events: none; }
+.atlas-spoke { stroke: var(--muted); stroke-width: 1.1; stroke-dasharray: 3 4; opacity: .5; pointer-events: none; }
+.atlas-anchor { stroke: var(--bg); stroke-width: 2; pointer-events: none; }
+.atlas-img { cursor: pointer; }
+.atlas-fallback { cursor: pointer; opacity: .22; }
+.atlas-initial { font-family: var(--display, var(--serif)); font-size: 52px; pointer-events: none; }
+.atlas-ring { fill: none; opacity: .6; transition: opacity .15s ease, stroke-width .15s ease; pointer-events: none; }
+.atlas-place.active .atlas-ring { opacity: 1; stroke-width: 5; }
+.atlas-cap { font-family: var(--sans); font-size: 12.5px; fill: var(--text); opacity: .85; pointer-events: none; }
+#atlas-card { position: absolute; left: 0; top: 0; z-index: 5; width: 250px; max-width: 76vw; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 0; padding: .7rem .8rem; box-shadow: var(--shadow-2); display: none; }
+#atlas-card.show { display: block; }
+#atlas-card .ac-title { display: block; font-family: var(--display, var(--serif)); font-size: 1.02rem; line-height: 1.2;
+  text-decoration: none; margin-bottom: .15rem; }
+#atlas-card .ac-title:hover { text-decoration: underline; }
+#atlas-card .ac-place { font-family: var(--sans); font-size: .66rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--muted); margin-bottom: .55rem; }
+#atlas-card .ac-sel { width: 100%; font-family: var(--sans); font-size: .8rem; padding: .42rem .5rem;
+  border: 1px solid var(--border); border-radius: 2px; background: var(--panel); color: var(--text); cursor: pointer; }
+/* the research picker — turns the Atlas from a mosaic into a per-corpus explorer */
+#atlas-pick { font-family: var(--sans); font-size: .76rem; color: var(--text); background: var(--panel);
+  border: 1px solid var(--border); border-radius: 2px; padding: .34rem 1.6rem .34rem .55rem; cursor: pointer;
+  flex: none; max-width: 240px; -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23999' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .55rem center; }
+#atlas-pick:hover, #atlas-pick:focus { border-color: var(--accent); color: var(--accent); outline: none; }
+/* per-corpus intellectual world: home badge, radiating threads, and place nodes */
+.atlas-thread { fill: none; stroke-width: 2.4; opacity: .4; transition: opacity .15s ease, stroke-width .15s ease; pointer-events: none; }
+.atlas-thread.lit { opacity: .96; stroke-width: 4.2; }
+.atlas-cnode { cursor: pointer; }
+.atlas-cdot { stroke: var(--bg); stroke-width: 3; transition: opacity .15s ease; }
+.atlas-cnode.active .atlas-cdot { r: 13; }
+.atlas-chalo { fill: none; stroke-width: 2.2; opacity: 0; transition: opacity .15s ease; pointer-events: none; }
+.atlas-cnode.active .atlas-chalo { opacity: .85; }
+.atlas-clabel { font-family: var(--sans); font-size: 23px; fill: var(--text); paint-order: stroke; stroke: var(--bg);
+  stroke-width: 5px; stroke-linejoin: round; pointer-events: none; opacity: .92; transition: opacity .15s ease; }
+.atlas-cnode.active .atlas-clabel { opacity: 1; font-weight: 600; }
+.atlas-home { cursor: pointer; }
+.atlas-hlabel { font-family: var(--display, var(--serif)); font-size: 34px; font-weight: 600; paint-order: stroke;
+  stroke: var(--bg); stroke-width: 7px; stroke-linejoin: round; }
+#atlas-card .ac-kind { font-family: var(--sans); font-size: .66rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--muted); margin-bottom: .25rem; }
+#atlas-card .ac-rel { font-family: var(--serif, var(--display)); font-size: .85rem; line-height: 1.42; color: var(--text); margin-top: .15rem; }
+#atlas-card .ac-cta { font-family: var(--sans); font-size: .66rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; margin-top: .55rem; }
+@media (max-width: 640px) { #atlas-sub { display: none; } #atlas-panel { height: 96vh; } #atlas-fab span { display: none; }
+  #atlas-pick { max-width: 44vw; } }
+</style><script>
+(function () {
+  var base = window.SHELL_BASE || '';
+  var DATA = null, loaded = false, loading = false;
+  var back, stage, world, card, msg, pick;
+  var mode = '';   // '' = the all-pins mosaic; otherwise a slug -> that corpus's intellectual world
+  var view = { s: 1, x: 0, y: 0 };
+  var dragging = false, moved = false, lastX = 0, lastY = 0;
+  var active = null, hideT = null, bySlug = {};
+
+  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+
+  // The Atlas FAB, docked beside the ⌘K button (which SHELL_JS already added).
+  var fab = document.createElement('button');
+  fab.id = 'atlas-fab'; fab.type = 'button'; fab.setAttribute('aria-label', 'Open the Atlas');
+  fab.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3.2 3.4 3.2 14.6 0 18M12 3c-3.2 3.4-3.2 14.6 0 18"/></svg> <span>Atlas</span>';
+  fab.addEventListener('click', open);
+  function dock() {
+    var c = document.getElementById('cmdk-fab');
+    var d = document.createElement('div'); d.id = 'atlas-dock';
+    var parent = (c && c.parentNode) || document.body;
+    parent.insertBefore(d, c || null);
+    if (c) d.appendChild(c);
+    d.appendChild(fab);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', dock);
+  else dock();
+
+  function open() { buildShell(); back.classList.add('open'); document.body.style.overflow = 'hidden'; if (!loaded) load(); }
+  function close() { if (back) { back.classList.remove('open'); document.body.style.overflow = ''; } hideCard(); }
+
+  function buildShell() {
+    if (back) return;
+    back = document.createElement('div'); back.id = 'atlas-back';
+    back.innerHTML =
+      '<div id="atlas-panel">'
+      + '<div id="atlas-bar"><span id="atlas-title">The Atlas</span>'
+      + '<span id="atlas-sub">Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.</span>'
+      + '<select id="atlas-pick" aria-label="Choose a research to map its intellectual world"></select>'
+      + '<span id="atlas-tools"><button id="atlas-zin" aria-label="Zoom in">+</button>'
+      + '<button id="atlas-zout" aria-label="Zoom out">−</button>'
+      + '<button id="atlas-fit" aria-label="Reset the view">Fit</button>'
+      + '<button id="atlas-x" aria-label="Close the Atlas">Esc</button></span></div>'
+      + '<div id="atlas-stage"><div id="atlas-world"></div>'
+      + '<div id="atlas-card"></div><div id="atlas-msg">Unrolling the map…</div></div></div>';
+    document.body.appendChild(back);
+    stage = back.querySelector('#atlas-stage'); world = back.querySelector('#atlas-world');
+    card = back.querySelector('#atlas-card'); msg = back.querySelector('#atlas-msg');
+    pick = back.querySelector('#atlas-pick');
+    pick.addEventListener('change', function () { setMode(pick.value); });
+    back.addEventListener('click', function (e) { if (e.target === back) close(); });
+    back.querySelector('#atlas-x').onclick = close;
+    back.querySelector('#atlas-zin').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1.3); };
+    back.querySelector('#atlas-zout').onclick = function () { zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1 / 1.3); };
+    back.querySelector('#atlas-fit').onclick = fit;
+    stage.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('#atlas-card')) return;
+      dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY;
+      try { stage.setPointerCapture(e.pointerId); } catch (x) {} stage.classList.add('grab');
+    });
+    stage.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      var dx = e.clientX - lastX, dy = e.clientY - lastY;
+      if (Math.abs(dx) + Math.abs(dy) > 3) moved = true;
+      view.x += dx; view.y += dy; lastX = e.clientX; lastY = e.clientY; apply();
+    });
+    function end() { if (dragging && moved) save(); dragging = false; stage.classList.remove('grab'); }
+    stage.addEventListener('pointerup', end); stage.addEventListener('pointercancel', end);
+    stage.addEventListener('wheel', function (e) {
+      e.preventDefault(); var r = stage.getBoundingClientRect();
+      zoomAt(e.clientX - r.left, e.clientY - r.top, e.deltaY < 0 ? 1.12 : 1 / 1.12);
+    }, { passive: false });
+    stage.addEventListener('dblclick', function (e) {
+      if (e.target.closest('#atlas-card')) return;
+      var r = stage.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, 1.5);
+    });
+    card.addEventListener('pointerenter', function () { if (hideT) { clearTimeout(hideT); hideT = null; } });
+    card.addEventListener('pointerleave', schedHide);
+    document.addEventListener('keydown', function (e) {
+      if (!back || !back.classList.contains('open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === '+' || e.key === '=') zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1.3);
+      else if (e.key === '-' || e.key === '_') zoomAt(stage.clientWidth / 2, stage.clientHeight / 2, 1 / 1.3);
+      else if (e.key === '0') fit();
+    });
+    window.addEventListener('resize', function () {
+      if (back && back.classList.contains('open') && DATA && DATA._b && !enoughVisible()) fit();
+    });
+  }
+
+  function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
+  // Persist where the reader roamed to, so the Atlas reopens exactly as they left it.
+  var SAVE_KEY = 'atlas-view2', saveT = null;
+  function save() { if (mode) return; if (saveT) clearTimeout(saveT); saveT = setTimeout(function () {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify({ s: view.s, x: view.x, y: view.y })); } catch (e) {} }, 180); }
+  function restore() {
+    try { var v = JSON.parse(localStorage.getItem(SAVE_KEY) || 'null');
+      if (v && isFinite(v.s) && isFinite(v.x) && isFinite(v.y) && v.s > 0) { view.s = v.s; view.x = v.x; view.y = v.y; return true; }
+    } catch (e) {}
+    return false;
+  }
+  // Is enough of the map on-screen? Guards a saved view that lands off-stage when
+  // the Atlas is reopened (or resized) at a very different viewport size.
+  function enoughVisible() {
+    if (!DATA || !DATA._b) return true;
+    var b = DATA._b, sw = stage.clientWidth, sh = stage.clientHeight;
+    var L = view.x + b.x * view.s, T = view.y + b.y * view.s,
+        Rr = view.x + (b.x + b.w) * view.s, B = view.y + (b.y + b.h) * view.s;
+    return view.s > 0 && (Math.min(Rr, sw) - Math.max(L, 0) >= 60) && (Math.min(B, sh) - Math.max(T, 0) >= 60);
+  }
+  function zoomAt(px, py, f) {
+    var ns = Math.max(0.22, Math.min(9, view.s * f)), k = ns / view.s;
+    view.x = px - (px - view.x) * k; view.y = py - (py - view.y) * k; view.s = ns; apply(); save();
+  }
+  function fit() {
+    if (!DATA || !DATA._b) return;
+    var b = DATA._b, sw = stage.clientWidth, sh = stage.clientHeight, pad = 46;
+    var s = Math.max(0.22, Math.min(9, Math.min((sw - pad * 2) / b.w, (sh - pad * 2) / b.h)));
+    view.s = s; view.x = (sw - (2 * b.x + b.w) * s) / 2; view.y = (sh - (2 * b.y + b.h) * s) / 2; apply(); save();
+  }
+
+  function load() {
+    if (loading) return; loading = true;
+    fetch(base + 'atlas.json').then(function (r) { return r.ok ? r.json() : Promise.reject(); })
+      .then(function (j) {
+        DATA = j; buildPick();
+        var sm = ''; try { sm = localStorage.getItem('atlas-pick') || ''; } catch (e) {}
+        if (sm && j.connections && j.connections[sm]) mode = sm;
+        paint(true); loaded = true; if (msg) msg.remove(); syncPick(); updateSub();
+      })
+      .catch(function () { if (msg) msg.textContent = 'The Atlas needs to load its map data — open it on the live site (calvincollins.xyz).'; });
+  }
+
+  // The research picker turns the Atlas from a single mosaic into a per-corpus
+  // explorer: pick a work and the map redraws as that corpus's intellectual world.
+  function buildPick() {
+    if (!pick || !DATA) return;
+    var conn = DATA.connections || {}, seen = {}, opts = '<option value="">✦ All corpora — the mosaic</option>';
+    (DATA.places || []).filter(function (p) { if (seen[p.slug] || !conn[p.slug]) return false; seen[p.slug] = 1; return true; })
+      .map(function (p) { return { slug: p.slug, title: p.title }; })
+      .sort(function (x, y) { return x.title.localeCompare(y.title); })
+      .forEach(function (it) { opts += '<option value="' + esc(it.slug) + '">' + esc(it.title) + '</option>'; });
+    pick.innerHTML = opts;
+  }
+  function syncPick() { if (pick) pick.value = mode; }
+  function setMode(m) {
+    if (!DATA) return;
+    m = m || ''; if (m && !(DATA.connections && DATA.connections[m])) m = '';
+    if (m === mode) { syncPick(); return; }
+    mode = m; try { localStorage.setItem('atlas-pick', mode); } catch (e) {}
+    hideCard(); paint(true); syncPick(); updateSub();
+  }
+  function updateSub() {
+    var sub = back && back.querySelector('#atlas-sub'); if (!sub) return;
+    var C = (mode && DATA && DATA.connections && DATA.connections[mode]) ? DATA.connections[mode] : null;
+    if (C) sub.textContent = C.home.name + '’s intellectual world — ' + C.nodes.length + ' geographic connections. Hover a place to trace its thread.';
+    else sub.textContent = 'Pick a research above to trace its intellectual world — or roam the mosaic of every corpus. Drag to pan, scroll to zoom.';
+  }
+
+  // Repaint the whole surface for the active mode. Cheap enough to rebuild wholesale.
+  function paint(doFit) {
+    if (!DATA) return;
+    var j = DATA, C = (mode && j.connections && j.connections[mode]) ? j.connections[mode] : null;
+    var s = '<svg id="atlas-svg" viewBox="' + j.viewBox + '" width="' + j.w + '" height="' + j.h
+      + '" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
+    s += '<defs>';
+    for (var rid in j.regions) s += '<clipPath id="ar-' + rid + '"><path d="' + j.regions[rid].d + '"/></clipPath>';
+    if (!C) j.places.forEach(function (p) { var c = p.cell;
+      s += '<clipPath id="ac-' + p.slug + '"><rect x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3] + '"/></clipPath>'; });
+    else s += '<clipPath id="ahome"><circle cx="' + C.home.x + '" cy="' + C.home.y + '" r="58"/></clipPath>';
+    s += '</defs>';
+    s += '<g id="atlas-grat">'; (j.graticule || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
+    s += '<g id="atlas-bd">'; (j.backdrop || []).forEach(function (d) { s += '<path d="' + d + '"/>'; }); s += '</g>';
+    s += C ? connLayer(C) : placesLayer(j);
+    s += '</svg>';
+    world.innerHTML = s;
+    bySlug = {};
+    computeBounds(C);
+    if (C) wireConn(C); else wirePlaces(j);
+    if (doFit === false) { apply(); return; }
+    if (!C && restore()) { apply(); if (!enoughVisible()) fit(); }
+    else fit();
+  }
+
+  function placesLayer(j) {
+    var s = '<g id="atlas-places">';
+    j.places.forEach(function (p) {
+      var c = p.cell;
+      s += '<g class="atlas-place" data-slug="' + esc(p.slug) + '"><g clip-path="url(#ar-' + p.region + ')">';
+      if (p.img) { var href = esc(base + p.img);
+        s += '<image class="atlas-img" href="' + href + '" xlink:href="' + href + '" x="' + c[0] + '" y="' + c[1]
+          + '" width="' + c[2] + '" height="' + c[3] + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ac-' + p.slug + ')"/>'; }
+      s += '<rect class="atlas-ring" x="' + c[0] + '" y="' + c[1] + '" width="' + c[2] + '" height="' + c[3]
+        + '" clip-path="url(#ac-' + p.slug + ')" fill="none" stroke="' + esc(p.accent) + '" stroke-width="3"/>';
+      s += '</g></g>';
+    });
+    s += '</g><g id="atlas-lines">';
+    for (var r2 in j.regions) { var R = j.regions[r2];
+      s += '<path class="atlas-rgn" d="' + R.d + '"/>';
+      (R.dividers || []).forEach(function (d) {
+        s += '<line class="atlas-div" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '" clip-path="url(#ar-' + r2 + ')"/>'; });
+    }
+    s += '</g>';
+    return s;
+  }
+
+  function arcPath(x1, y1, x2, y2) {
+    var mx = (x1 + x2) / 2, my = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx * dx + dy * dy) || 1;
+    var off = Math.min(170, len * 0.16), cx = mx - dy / len * off, cy = my + dx / len * off;
+    return 'M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + ' Q' + cx.toFixed(1) + ' ' + cy.toFixed(1) + ' ' + x2.toFixed(1) + ' ' + y2.toFixed(1);
+  }
+  function clipText(t, n) { t = t || ''; return t.length > n ? t.slice(0, n - 1).replace(/[\s,;:&/-]+$/, '') + '…' : t; }
+  function connLayer(C) {
+    var ac = esc(C.home.accent || '#b3502f'), H = C.home, R = 58;
+    var s = '<g id="atlas-lines">';
+    for (var rid in DATA.regions) s += '<path class="atlas-rgn" d="' + DATA.regions[rid].d + '"/>';
+    s += '</g>';
+    s += '<g id="atlas-threads" stroke="' + ac + '">';
+    C.nodes.forEach(function (n, i) { s += '<path class="atlas-thread" data-i="' + i + '" d="' + arcPath(H.x, H.y, n.x, n.y) + '"/>'; });
+    s += '</g>';
+    // home badge drawn UNDER the place nodes, so their dots + labels are never masked
+    s += '<g class="atlas-home">';
+    s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + (R + 6) + '" fill="var(--bg)"/>';
+    if (H.img) { var href = esc(base + H.img);
+      s += '<image href="' + href + '" xlink:href="' + href + '" x="' + (H.x - R) + '" y="' + (H.y - R) + '" width="' + (2 * R) + '" height="' + (2 * R) + '" preserveAspectRatio="xMidYMid slice" clip-path="url(#ahome)"/>'; }
+    else s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + R + '" fill="' + ac + '"/>';
+    s += '<circle cx="' + H.x + '" cy="' + H.y + '" r="' + R + '" fill="none" stroke="' + ac + '" stroke-width="4.5"/>';
+    s += '<text class="atlas-hlabel" x="' + H.x + '" y="' + (H.y + R + 33) + '" text-anchor="middle" fill="' + ac + '">' + esc(H.name) + '</text>';
+    s += '</g>';
+    s += '<g id="atlas-cnodes">';
+    C.nodes.forEach(function (n, i) {
+      // splay each label outward from home so the European cluster doesn't pile up
+      var dx = n.x - H.x, dy = n.y - H.y, L = Math.sqrt(dx * dx + dy * dy) || 1;
+      var lx = n.x + dx / L * 15, ly = n.y + dy / L * 15 + (dy >= 0 ? 16 : -8);
+      var anchor = dx > 30 ? 'start' : (dx < -30 ? 'end' : 'middle');
+      s += '<g class="atlas-cnode" data-i="' + i + '">';
+      s += '<circle class="atlas-chalo" cx="' + n.x + '" cy="' + n.y + '" r="17" stroke="' + ac + '" fill="none"/>';
+      s += '<circle class="atlas-cdot" cx="' + n.x + '" cy="' + n.y + '" r="9" fill="' + ac + '"/>';
+      s += '<text class="atlas-clabel" x="' + lx.toFixed(1) + '" y="' + ly.toFixed(1) + '" text-anchor="' + anchor + '">' + esc(clipText(n.name, 30)) + '</text>';
+      s += '</g>';
+    });
+    s += '</g>';
+    return s;
+  }
+
+  function computeBounds(C) {
+    var X0 = 1e9, Y0 = 1e9, X1 = -1e9, Y1 = -1e9;
+    if (C) {
+      var pts = C.nodes.map(function (n) { return [n.x, n.y]; }); pts.push([C.home.x, C.home.y]);
+      pts.forEach(function (q) { X0 = Math.min(X0, q[0]); Y0 = Math.min(Y0, q[1]); X1 = Math.max(X1, q[0]); Y1 = Math.max(Y1, q[1]); });
+      var px = 120, py = 150;
+      DATA._b = { x: X0 - px, y: Y0 - py, w: (X1 - X0) + 2 * px, h: (Y1 - Y0) + 2 * py };
+    } else {
+      DATA.places.forEach(function (p) { bySlug[p.slug] = p; var c = p.cell;
+        X0 = Math.min(X0, c[0]); Y0 = Math.min(Y0, c[1]); X1 = Math.max(X1, c[0] + c[2]); Y1 = Math.max(Y1, c[1] + c[3]); });
+      DATA._b = { x: X0 - 40, y: Y0 - 40, w: (X1 - X0) + 80, h: (Y1 - Y0) + 80 };
+    }
+  }
+
+  function wirePlaces(j) {
+    [].forEach.call(world.querySelectorAll('.atlas-place'), function (el) {
+      var p = bySlug[el.getAttribute('data-slug')];
+      el.addEventListener('pointerenter', function () { if (!dragging) activate(p, el); });
+      el.addEventListener('pointermove', function () { if (!dragging && active !== p) activate(p, el); });
+      el.addEventListener('pointerleave', schedHide);
+      el.addEventListener('click', function (e) { if (moved || e.target.closest('#atlas-card')) return; window.location.href = base + p.href; });
+    });
+  }
+  function wireConn(C) {
+    [].forEach.call(world.querySelectorAll('.atlas-cnode'), function (el) {
+      var i = +el.getAttribute('data-i'), n = C.nodes[i];
+      el.addEventListener('pointerenter', function () { if (!dragging) showNode(C, i, el); });
+      el.addEventListener('pointermove', function () { if (!dragging && active !== n) showNode(C, i, el); });
+      el.addEventListener('pointerleave', function () { lit(i, false); schedHide(); });
+      el.addEventListener('click', function (e) { if (moved) return; window.location.href = base + C.home.href; });
+    });
+    var home = world.querySelector('.atlas-home');
+    if (home) {
+      home.addEventListener('pointerenter', function () { if (!dragging) showHome(C, home); });
+      home.addEventListener('pointermove', function () { if (!dragging && active !== C.home) showHome(C, home); });
+      home.addEventListener('pointerleave', schedHide);
+      home.addEventListener('click', function (e) { if (moved) return; window.location.href = base + C.home.href; });
+    }
+  }
+  function lit(i, on) {
+    var t = world.querySelector('.atlas-thread[data-i="' + i + '"]'); if (t) t.classList.toggle('lit', on);
+    var nn = world.querySelector('.atlas-cnode[data-i="' + i + '"]'); if (nn) nn.classList.toggle('active', on);
+  }
+
+  function activate(p, el) {
+    clearActive();
+    active = p; p._el = el; el.classList.add('active');
+    var opts = '<option value="" disabled selected>Jump to a chapter…</option>';
+    (p.chapters || []).forEach(function (ch) { opts += '<option value="' + esc(base + ch.href) + '">' + esc(ch.t) + '</option>'; });
+    card.innerHTML = '<a class="ac-title" href="' + esc(base + p.href) + '" style="color:' + esc(p.accent) + '">' + esc(p.title) + '</a>'
+      + '<div class="ac-place">' + esc(p.label) + '</div>'
+      + (p.chapters && p.chapters.length ? '<select class="ac-sel" aria-label="Jump to a chapter">' + opts + '</select>' : '');
+    var sel = card.querySelector('.ac-sel');
+    if (sel) sel.onchange = function () { if (this.value) window.location.href = this.value; };
+    showCardAt(el);
+  }
+  function showNode(C, i, el) {
+    clearActive(); var n = C.nodes[i]; active = n; lit(i, true);
+    card.innerHTML = '<div class="ac-kind">' + esc(n.kind) + '</div>'
+      + '<span class="ac-title" style="color:' + esc(C.home.accent) + '">' + esc(n.name) + '</span>'
+      + '<div class="ac-place">' + esc(n.place) + '</div>'
+      + (n.relation ? '<div class="ac-rel">' + esc(n.relation) + '</div>' : '');
+    showCardAt(el);
+  }
+  function showHome(C, el) {
+    clearActive(); var H = C.home; active = H;
+    card.innerHTML = '<a class="ac-title" href="' + esc(base + H.href) + '" style="color:' + esc(H.accent) + '">' + esc(H.title) + '</a>'
+      + '<div class="ac-place">' + esc(H.place) + '</div>'
+      + (H.note ? '<div class="ac-rel">' + esc(H.note) + '</div>' : '')
+      + '<div class="ac-cta" style="color:' + esc(H.accent) + '">Open corpus →</div>';
+    showCardAt(el);
+  }
+  function showCardAt(el) {
+    card.classList.add('show');
+    var r = el.getBoundingClientRect(), sr = stage.getBoundingClientRect();
+    card.style.left = '0px'; card.style.top = '0px';
+    var cw = card.offsetWidth, chh = card.offsetHeight;
+    var cx = (r.left + r.right) / 2 - sr.left, cyTop = r.top - sr.top;
+    var left = Math.max(8, Math.min(sr.width - cw - 8, cx - cw / 2));
+    var top = cyTop - chh - 12; if (top < 8) top = (r.bottom - sr.top) + 12;
+    top = Math.max(8, Math.min(sr.height - chh - 8, top));
+    card.style.left = left + 'px'; card.style.top = top + 'px';
+    if (hideT) { clearTimeout(hideT); hideT = null; }
+  }
+  function schedHide() { if (hideT) clearTimeout(hideT); hideT = setTimeout(hideCard, 240); }
+  function clearActive() {
+    if (!world) return;
+    [].forEach.call(world.querySelectorAll('.atlas-place.active, .atlas-cnode.active'), function (e) { e.classList.remove('active'); });
+    [].forEach.call(world.querySelectorAll('.atlas-thread.lit'), function (e) { e.classList.remove('lit'); });
+  }
+  function hideCard() { if (card) card.classList.remove('show'); clearActive(); active = null; }
+})();
+</script>
+</body>
+</html>

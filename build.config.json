@@ -55,7 +55,9 @@
         "kicker": "Programmatic & Advanced TV",
         "subtitle": "The trade desk of the library — deep research on the programmatic and Connected-TV ad market, alongside The Fingerprint, its daily wire.",
         "include": [
-          "fingerprint"
+          "fingerprint",
+          "forecast",
+          "glossary"
         ]
       }
     },
