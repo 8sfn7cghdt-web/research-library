@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){var t=null;try{t=localStorage.getItem('corpus-theme')}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
-<title>Connections — calvincollins · xyz</title>
-<meta name="description" content="A map of ideas: how the research corpora relate by theme.">
+<title>The Briefings — calvincollins · xyz</title>
+<meta name="description" content="The desk&#x27;s essays — filed one argument at a time.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect x='4' y='4' width='26' height='26' fill='%239a2c1a'/><rect x='34' y='4' width='26' height='26' fill='%23a3771c'/><rect x='4' y='34' width='26' height='26' fill='%23274d68'/><rect x='34' y='34' width='26' height='26' fill='%234a6350'/></svg>">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="calvincollins · xyz">
-<meta property="og:title" content="Machine Humanities — Agentic Scholarship">
-<meta property="og:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">
-<meta property="og:url" content="https://calvincollins.xyz/">
+<meta property="og:title" content="The Briefings">
+<meta property="og:description" content="The desk&#x27;s essays — filed one argument at a time.">
+<meta property="og:url" content="https://calvincollins.xyz/briefings.html">
 <meta property="og:image" content="https://calvincollins.xyz/aiforhumanities.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Machine Humanities — Agentic Scholarship">
-<meta name="twitter:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">
+<meta name="twitter:title" content="The Briefings">
+<meta name="twitter:description" content="The desk&#x27;s essays — filed one argument at a time.">
 <meta name="twitter:image" content="https://calvincollins.xyz/aiforhumanities.png">
 <style>
 :root {
@@ -264,44 +264,70 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   .hero-art { width: 100%; }
 }
 
-.cx-wrap { max-width: 1120px; margin: 0 auto; padding: 1.2rem 2rem 3rem; }
-.cx-head { text-align: center; margin: 1.4rem 0 .2rem; }
-.cx-head .kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
-.cx-head h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.05; margin: 0; }
-.cx-head p { font-family: var(--sans); color: var(--muted); font-size: .9rem; line-height: 1.5; margin: .55rem auto 0; max-width: 38rem; }
-.cx-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; justify-content: center; margin: 1.1rem 0 1rem;
-  font-family: var(--sans); font-size: .66rem; font-weight: 600; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
-.cx-leg { display: inline-flex; align-items: center; gap: .4rem; }
-.cx-leg i { width: 9px; height: 9px; border-radius: 0; display: inline-block; }
-.cx-stage { position: relative; background: var(--bg); border: 1px solid var(--border); border-radius: 0; overflow: hidden; }
-#cx-svg { width: 100%; height: auto; display: block; }
-.cx-edge { stroke: var(--border); stroke-width: 1.2; opacity: .55; transition: opacity .15s ease, stroke .15s ease; }
-.cx-edge.lit { stroke: var(--accent); opacity: .95; stroke-width: 1.9; }
-#cx-svg.dimmed .cx-edge:not(.lit) { opacity: .1; }
-.cx-node { cursor: pointer; }
-.cx-node circle { stroke: var(--bg); stroke-width: 2.5; transition: opacity .15s ease; }
-.cx-node:focus { outline: none; }
-.cx-node:focus circle, .cx-node.hot circle { stroke: var(--accent); stroke-width: 3; }
-.cx-label { font-family: var(--sans); font-size: 10.5px; fill: var(--muted); pointer-events: none; transition: opacity .15s ease, fill .15s ease;
-  paint-order: stroke; stroke: var(--bg); stroke-width: 3.4px; stroke-linejoin: round; }
-.cx-node.hot .cx-label, .cx-node.adj .cx-label { fill: var(--text); }
-/* lifted/lit labels carry above their neighbours so an active thread reads cleanly */
-.cx-node.hot .cx-label, .cx-node.adj .cx-label { font-weight: 600; }
-#cx-svg.dimmed .cx-node:not(.hot):not(.adj) { opacity: .26; }
-#cx-svg.dimmed .cx-node:not(.hot):not(.adj) .cx-label { opacity: 0; }
-#cx-info { position: absolute; left: 1rem; bottom: 1rem; max-width: min(360px, 72%); background: var(--bg);
-  border: 1px solid var(--border); border-radius: 0; padding: .8rem 1rem; box-shadow: var(--shadow-2);
-  opacity: 0; transition: opacity .15s ease; pointer-events: none; }
-#cx-info.show { opacity: 1; }
-#cx-info .cx-i-t { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
-#cx-info .cx-i-n { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .35rem 0 .45rem; line-height: 1.45; }
-#cx-info .cx-i-cta { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
-.cx-hint { text-align: center; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: .9rem 0 0; }
-.cx-foot { max-width: 1120px; margin: 2rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
-.cx-foot .colophon { font-family: var(--mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
-.cx-foot a { color: var(--accent); text-decoration: none; }
-@media (max-width: 600px) { .cx-label { font-size: 9px; } #cx-info { left: .6rem; bottom: .6rem; } }
-</style>
+/* The Pamphlets — a section front in the site's catalogue register, sharing
+   the paper / serif / rule / accent language with the rest. */
+.pam-plate { display: block; max-width: 820px; margin: 1.6rem auto 0; padding: 0 2rem; text-align: center; }
+.pam-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
+.pam-name { font-family: var(--display); font-weight: 600; font-size: clamp(2.6rem, 6.5vw, 4.4rem);
+  line-height: .98; letter-spacing: -.02em; margin: 0 0 .55rem; }
+.pam-motto { font-family: var(--serif); font-style: italic; font-size: 1.05rem; color: var(--muted); margin: 0 0 1.3rem; }
+.pam-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
+  font-family: var(--mono); font-size: .72rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--text); }
+.pam-folio .pam-folio-c { color: var(--accent); font-weight: 700; }
+
+/* featured (latest) pamphlet — reads like a section lead */
+.pam-feature { max-width: 720px; margin: 2.1rem auto 0; padding: 0 2rem; }
+.pam-feature a { display: block; text-decoration: none; color: var(--text); }
+.pamf-meta { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); margin: 0 0 .7rem; }
+.pamf-head { font-family: var(--display); font-weight: 600; font-size: clamp(1.9rem, 4.2vw, 2.7rem);
+  line-height: 1.07; letter-spacing: -.01em; margin: 0 0 .7rem; transition: color .15s ease; }
+.pam-feature a:hover .pamf-head { color: var(--accent); }
+.pamf-dek { font-family: var(--serif); font-style: italic; font-size: 1.2rem; line-height: 1.4;
+  color: var(--muted); margin: 0 0 .9rem; }
+.pamf-by { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--accent); margin: 0 0 1.1rem; }
+.pamf-cta { font-family: var(--sans); font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent); border-bottom: 1.5px solid var(--accent); padding-bottom: 2px; }
+
+/* more pamphlets — archive rows */
+.pam-issues { max-width: 720px; margin: 2.8rem auto 0; padding: 0 2rem 1rem; }
+.pam-issues-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
+  color: var(--muted); border-bottom: 2px solid var(--text); padding-bottom: .5rem; margin: 0 0 .3rem; }
+.pam-row { display: grid; grid-template-columns: 1fr auto; gap: 1.2rem; align-items: baseline;
+  text-decoration: none; color: var(--text); padding: .95rem 0; border-bottom: 1px solid var(--border); }
+.pam-row-body { min-width: 0; }
+.pam-row-head { font-family: var(--display); font-size: 1.18rem; line-height: 1.18; display: block; transition: color .15s ease; }
+.pam-row:hover .pam-row-head { color: var(--accent); }
+.pam-row-by { display: flex; align-items: baseline; gap: .55rem; margin-top: .25rem;
+  font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); }
+.pam-row-by::after { content: ""; flex: 1; min-width: 1.5rem; height: .7em;
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1.2px);
+  background-size: 6px 2px; background-repeat: repeat-x; background-position: 0 60%; }
+.pam-row-date { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); white-space: nowrap; }
+
+.pam-empty { max-width: 720px; margin: 2.1rem auto 0; padding: 2rem; text-align: center;
+  color: var(--muted); font-family: var(--sans); font-size: .9rem; border-top: 3px double var(--border); }
+
+.pam-foot { max-width: 720px; margin: 3rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
+.pam-foot .epigraph { font-family: var(--serif); font-style: italic; color: var(--muted); font-size: .95rem; margin: 0 0 .6rem; }
+.pam-foot .colophon { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; margin: 0; }
+.pam-foot .colophon a { color: var(--accent); text-decoration: none; }
+.pam-foot .colophon a:hover { text-decoration: underline; }
+
+@media (max-width: 560px) {
+  .pam-folio { font-size: .58rem; letter-spacing: .08em; }
+  .pam-row-date { display: none; }
+  .pam-row-by::after { display: none; }
+}
+
+body { --accent: #0d5b68; } [data-theme="dark"] body { --accent: #62aab8; }</style>
 </head>
 <body>
 <div class="masthead">
@@ -309,65 +335,29 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
+    <a href="adtech.html" class="active">Ad Tech</a>
     <a href="pamphlets.html">The Pamphlets</a>
     <a href="forecast.html">The Forecast Desk</a>
-    <a href="connections.html" class="active">Connections</a>
-    <a href="glossary.html">Glossary</a>
   </nav>
 </div>
-<main class="cx-wrap">
-  <header class="cx-head">
-    <p class="kicker">A map of ideas</p>
-    <h1>Connections</h1>
-    <p>How the corpora speak to one another — clustered by subject, linked where they share the most ground. Hover a work to light its threads; open it with a click.</p>
-  </header>
-  <div class="cx-legend"><span class="cx-leg"><i style="background:#9a2c1a"></i>Thomas Carlyle</span><span class="cx-leg"><i style="background:#a3771c"></i>Faith &amp; Religion</span><span class="cx-leg"><i style="background:#274d68"></i>Mind &amp; Philosophy</span><span class="cx-leg"><i style="background:#4a6350"></i>Media &amp; Advertising</span><span class="cx-leg"><i style="background:#64405a"></i>The Modern World</span><span class="cx-leg"><i style="background:#9a2c1a"></i>Heritage</span></div>
-  <div class="cx-stage"><svg id="cx-svg" viewBox="0 0 1040 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A graph of how the research corpora relate by theme"><g id="cx-edges"><line class="cx-edge" data-a="agentic-advertising-protocols-research" data-b="containerized-bidding-research" x1="588.7" y1="485.3" x2="674.4" y2="592.8"/><line class="cx-edge" data-a="agentic-advertising-protocols-research" data-b="ctv-brand-safety-research" x1="588.7" y1="485.3" x2="396.2" y2="529.2"/><line class="cx-edge" data-a="agentic-advertising-protocols-research" data-b="fox-roku-research" x1="588.7" y1="485.3" x2="396.2" y2="726.8"/><line class="cx-edge" data-a="agentic-advertising-protocols-research" data-b="latam-ctv-research" x1="588.7" y1="485.3" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="agentic-advertising-protocols-research" data-b="walmart-vibe-research" x1="588.7" y1="485.3" x2="643.8" y2="726.8"/><line class="cx-edge" data-a="american-pragmatism-research" data-b="emerson-research" x1="817.7" y1="471.4" x2="684.6" y2="430.4"/><line class="cx-edge" data-a="american-pragmatism-research" data-b="jung-research" x1="817.7" y1="471.4" x2="748.1" y2="592.1"/><line class="cx-edge" data-a="american-pragmatism-research" data-b="pareto-research" x1="817.7" y1="471.4" x2="761.0" y2="418.9"/><line class="cx-edge" data-a="american-pragmatism-research" data-b="phenomenology-pragmatism-research" x1="817.7" y1="471.4" x2="674.2" y2="569.3"/><line class="cx-edge" data-a="ancestry-research" data-b="dickinson-research" x1="305.2" y1="256.0" x2="666.2" y2="295.6"/><line class="cx-edge" data-a="ancestry-research" data-b="great-awakenings-research" x1="305.2" y1="256.0" x2="666.2" y2="216.4"/><line class="cx-edge" data-a="ancestry-research" data-b="latam-ctv-research" x1="305.2" y1="256.0" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="carlyle-french-revolution-research" data-b="carlyle-friedrich-research" x1="520.0" y1="82.5" x2="562.9" y2="156.8"/><line class="cx-edge" data-a="carlyle-french-revolution-research" data-b="carlyle-research" x1="520.0" y1="82.5" x2="477.1" y2="156.8"/><line class="cx-edge" data-a="carlyle-french-revolution-research" data-b="emerson-research" x1="520.0" y1="82.5" x2="684.6" y2="430.4"/><line class="cx-edge" data-a="carlyle-friedrich-research" data-b="carlyle-research" x1="562.9" y1="156.8" x2="477.1" y2="156.8"/><line class="cx-edge" data-a="carlyle-friedrich-research" data-b="dickinson-research" x1="562.9" y1="156.8" x2="666.2" y2="295.6"/><line class="cx-edge" data-a="carlyle-research" data-b="uap-research" x1="477.1" y1="156.8" x2="253.8" y2="533.7"/><line class="cx-edge" data-a="civil-war-religion-whitman-research" data-b="dickinson-research" x1="803.4" y1="216.4" x2="666.2" y2="295.6"/><line class="cx-edge" data-a="civil-war-religion-whitman-research" data-b="great-awakenings-research" x1="803.4" y1="216.4" x2="666.2" y2="216.4"/><line class="cx-edge" data-a="civil-war-religion-whitman-research" data-b="roman-catholicism-research" x1="803.4" y1="216.4" x2="734.8" y2="176.8"/><line class="cx-edge" data-a="containerized-bidding-research" data-b="ctv-dsp-ssp-research" x1="674.4" y1="592.8" x2="451.3" y2="485.3"/><line class="cx-edge" data-a="containerized-bidding-research" data-b="latam-ctv-research" x1="674.4" y1="592.8" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="ctv-brand-safety-research" data-b="ctv-dsp-ssp-research" x1="396.2" y1="529.2" x2="451.3" y2="485.3"/><line class="cx-edge" data-a="ctv-brand-safety-research" data-b="fox-roku-research" x1="396.2" y1="529.2" x2="396.2" y2="726.8"/><line class="cx-edge" data-a="ctv-brand-safety-research" data-b="india-advertising-research" x1="396.2" y1="529.2" x2="365.6" y2="663.2"/><line class="cx-edge" data-a="ctv-brand-safety-research" data-b="ipv4-ipv6-ctv-research" x1="396.2" y1="529.2" x2="520.0" y2="786.4"/><line class="cx-edge" data-a="ctv-brand-safety-research" data-b="latam-ctv-research" x1="396.2" y1="529.2" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="ctv-brand-safety-research" data-b="mcluhan-research" x1="396.2" y1="529.2" x2="451.3" y2="770.7"/><line class="cx-edge" data-a="ctv-dsp-ssp-research" data-b="ctv-identity-signals-research" x1="451.3" y1="485.3" x2="520.0" y2="469.6"/><line class="cx-edge" data-a="ctv-dsp-ssp-research" data-b="india-advertising-research" x1="451.3" y1="485.3" x2="365.6" y2="663.2"/><line class="cx-edge" data-a="ctv-dsp-ssp-research" data-b="mcluhan-research" x1="451.3" y1="485.3" x2="451.3" y2="770.7"/><line class="cx-edge" data-a="ctv-dsp-ssp-research" data-b="miq-research" x1="451.3" y1="485.3" x2="643.8" y2="529.2"/><line class="cx-edge" data-a="ctv-dsp-ssp-research" data-b="social-ctv-retargeting-research" x1="451.3" y1="485.3" x2="588.7" y2="770.7"/><line class="cx-edge" data-a="ctv-dsp-ssp-research" data-b="walmart-vibe-research" x1="451.3" y1="485.3" x2="643.8" y2="726.8"/><line class="cx-edge" data-a="ctv-identity-signals-research" data-b="ipv4-ipv6-ctv-research" x1="520.0" y1="469.6" x2="520.0" y2="786.4"/><line class="cx-edge" data-a="ctv-identity-signals-research" data-b="latam-ctv-research" x1="520.0" y1="469.6" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="democratic-socialism-research" data-b="uap-research" x1="356.7" y1="474.3" x2="253.8" y2="533.7"/><line class="cx-edge" data-a="democratic-socialism-research" data-b="us-economy-financial-system-research" x1="356.7" y1="474.3" x2="334.9" y2="555.4"/><line class="cx-edge" data-a="democratic-socialism-research" data-b="us-geopolitics-research" x1="356.7" y1="474.3" x2="275.5" y2="452.6"/><line class="cx-edge" data-a="deutsch-good-explanations-research" data-b="emerson-research" x1="811.9" y1="548.5" x2="684.6" y2="430.4"/><line class="cx-edge" data-a="deutsch-good-explanations-research" data-b="pareto-research" x1="811.9" y1="548.5" x2="761.0" y2="418.9"/><line class="cx-edge" data-a="deutsch-good-explanations-research" data-b="piaget-research" x1="811.9" y1="548.5" x2="645.9" y2="497.3"/><line class="cx-edge" data-a="dickinson-research" data-b="great-awakenings-research" x1="666.2" y1="295.6" x2="666.2" y2="216.4"/><line class="cx-edge" data-a="dickinson-research" data-b="jesus-research" x1="666.2" y1="295.6" x2="803.4" y2="295.6"/><line class="cx-edge" data-a="dickinson-research" data-b="john-the-baptist-research" x1="666.2" y1="295.6" x2="734.8" y2="335.2"/><line class="cx-edge" data-a="dickinson-research" data-b="roman-catholicism-research" x1="666.2" y1="295.6" x2="734.8" y2="176.8"/><line class="cx-edge" data-a="emerson-research" data-b="pareto-research" x1="684.6" y1="430.4" x2="761.0" y2="418.9"/><line class="cx-edge" data-a="emerson-research" data-b="phenomenology-pragmatism-research" x1="684.6" y1="430.4" x2="674.2" y2="569.3"/><line class="cx-edge" data-a="emerson-research" data-b="piaget-research" x1="684.6" y1="430.4" x2="645.9" y2="497.3"/><line class="cx-edge" data-a="fox-roku-research" data-b="ipv4-ipv6-ctv-research" x1="396.2" y1="726.8" x2="520.0" y2="786.4"/><line class="cx-edge" data-a="great-awakenings-research" data-b="jesus-research" x1="666.2" y1="216.4" x2="803.4" y2="295.6"/><line class="cx-edge" data-a="great-awakenings-research" data-b="john-the-baptist-research" x1="666.2" y1="216.4" x2="734.8" y2="335.2"/><line class="cx-edge" data-a="great-awakenings-research" data-b="roman-catholicism-research" x1="666.2" y1="216.4" x2="734.8" y2="176.8"/><line class="cx-edge" data-a="india-advertising-research" data-b="ipv4-ipv6-ctv-research" x1="365.6" y1="663.2" x2="520.0" y2="786.4"/><line class="cx-edge" data-a="india-advertising-research" data-b="latam-ctv-research" x1="365.6" y1="663.2" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="india-advertising-research" data-b="miq-research" x1="365.6" y1="663.2" x2="643.8" y2="529.2"/><line class="cx-edge" data-a="india-advertising-research" data-b="political-ctv-research" x1="365.6" y1="663.2" x2="674.4" y2="663.2"/><line class="cx-edge" data-a="india-advertising-research" data-b="social-ctv-retargeting-research" x1="365.6" y1="663.2" x2="588.7" y2="770.7"/><line class="cx-edge" data-a="ipv4-ipv6-ctv-research" data-b="latam-ctv-research" x1="520.0" y1="786.4" x2="365.6" y2="592.8"/><line class="cx-edge" data-a="ipv4-ipv6-ctv-research" data-b="mcluhan-research" x1="520.0" y1="786.4" x2="451.3" y2="770.7"/><line class="cx-edge" data-a="ipv4-ipv6-ctv-research" data-b="miq-research" x1="520.0" y1="786.4" x2="643.8" y2="529.2"/><line class="cx-edge" data-a="ipv4-ipv6-ctv-research" data-b="political-ctv-research" x1="520.0" y1="786.4" x2="674.4" y2="663.2"/><line class="cx-edge" data-a="jesus-research" data-b="john-the-baptist-research" x1="803.4" y1="295.6" x2="734.8" y2="335.2"/><line class="cx-edge" data-a="jung-research" data-b="phenomenology-pragmatism-research" x1="748.1" y1="592.1" x2="674.2" y2="569.3"/><line class="cx-edge" data-a="jung-research" data-b="piaget-research" x1="748.1" y1="592.1" x2="645.9" y2="497.3"/><line class="cx-edge" data-a="latam-ctv-research" data-b="social-ctv-retargeting-research" x1="365.6" y1="592.8" x2="588.7" y2="770.7"/><line class="cx-edge" data-a="miq-research" data-b="political-ctv-research" x1="643.8" y1="529.2" x2="674.4" y2="663.2"/><line class="cx-edge" data-a="miq-research" data-b="walmart-vibe-research" x1="643.8" y1="529.2" x2="643.8" y2="726.8"/><line class="cx-edge" data-a="pareto-research" data-b="piaget-research" x1="761.0" y1="418.9" x2="645.9" y2="497.3"/><line class="cx-edge" data-a="phenomenology-pragmatism-research" data-b="piaget-research" x1="674.2" y1="569.3" x2="645.9" y2="497.3"/><line class="cx-edge" data-a="uap-research" data-b="us-economy-financial-system-research" x1="253.8" y1="533.7" x2="334.9" y2="555.4"/><line class="cx-edge" data-a="uap-research" data-b="us-geopolitics-research" x1="253.8" y1="533.7" x2="275.5" y2="452.6"/><line class="cx-edge" data-a="us-economy-financial-system-research" data-b="us-geopolitics-research" x1="334.9" y1="555.4" x2="275.5" y2="452.6"/></g><g id="cx-nodes"><g class="cx-node" data-slug="ancestry-research" data-nbr="dickinson-research great-awakenings-research latam-ctv-research" tabindex="0" role="link" aria-label="The Emigrant&#x27;s Atlas"><circle cx="305.2" cy="256.0" r="15.3" fill="#9a2c1a"/><text class="cx-label" x="305.2" y="284.3" text-anchor="middle">The Emigrant&#x27;s Atlas</text></g><g class="cx-node" data-slug="carlyle-french-revolution-research" data-nbr="carlyle-friedrich-research carlyle-research emerson-research" tabindex="0" role="link" aria-label="The Book That Burned"><circle cx="520.0" cy="82.5" r="16.0" fill="#9a2c1a"/><text class="cx-label" x="520.0" y="58.5" text-anchor="middle">The Book That Burned</text></g><g class="cx-node" data-slug="carlyle-friedrich-research" data-nbr="carlyle-french-revolution-research carlyle-research dickinson-research" tabindex="0" role="link" aria-label="Carlyle&#x27;s Everest"><circle cx="562.9" cy="156.8" r="16.7" fill="#9a2c1a"/><text class="cx-label" x="562.9" y="186.4" text-anchor="middle">Carlyle&#x27;s Everest</text></g><g class="cx-node" data-slug="carlyle-research" data-nbr="carlyle-french-revolution-research carlyle-friedrich-research uap-research" tabindex="0" role="link" aria-label="The Calvinist Without a Creed"><circle cx="477.1" cy="156.8" r="16.0" fill="#9a2c1a"/><text class="cx-label" x="477.1" y="185.8" text-anchor="middle">The Calvinist Without a Creed</text></g><g class="cx-node" data-slug="civil-war-religion-whitman-research" data-nbr="dickinson-research great-awakenings-research roman-catholicism-research" tabindex="0" role="link" aria-label="A Holy War and Its Poet"><circle cx="803.4" cy="216.4" r="15.3" fill="#a3771c"/><text class="cx-label" x="803.4" y="193.1" text-anchor="middle">A Holy War and Its Poet</text></g><g class="cx-node" data-slug="deutsch-good-explanations-research" data-nbr="emerson-research pareto-research piaget-research" tabindex="0" role="link" aria-label="Hard to Vary"><circle cx="811.9" cy="548.5" r="15.3" fill="#274d68"/><text class="cx-label" x="811.9" y="576.8" text-anchor="middle">Hard to Vary</text></g><g class="cx-node" data-slug="ipv4-ipv6-ctv-research" data-nbr="ctv-brand-safety-research ctv-identity-signals-research fox-roku-research india-advertising-research latam-ctv-research mcluhan-research miq-research political-ctv-research" tabindex="0" role="link" aria-label="The Address Knows You"><circle cx="520.0" cy="786.4" r="20.2" fill="#4a6350"/><text class="cx-label" x="520.0" y="819.6" text-anchor="middle">The Address Knows You</text></g><g class="cx-node" data-slug="jesus-research" data-nbr="dickinson-research great-awakenings-research john-the-baptist-research" tabindex="0" role="link" aria-label="The Man and the Christ"><circle cx="803.4" cy="295.6" r="16.7" fill="#a3771c"/><text class="cx-label" x="803.4" y="325.3" text-anchor="middle">The Man and the Christ</text></g><g class="cx-node" data-slug="john-the-baptist-research" data-nbr="dickinson-research great-awakenings-research jesus-research" tabindex="0" role="link" aria-label="More Than a Forerunner"><circle cx="734.8" cy="335.2" r="16.0" fill="#a3771c"/><text class="cx-label" x="734.8" y="364.2" text-anchor="middle">More Than a Forerunner</text></g><g class="cx-node" data-slug="jung-research" data-nbr="american-pragmatism-research phenomenology-pragmatism-research piaget-research" tabindex="0" role="link" aria-label="A God in the Psyche"><circle cx="748.1" cy="592.1" r="18.1" fill="#274d68"/><text class="cx-label" x="748.1" y="623.2" text-anchor="middle">A God in the Psyche</text></g><g class="cx-node" data-slug="phenomenology-pragmatism-research" data-nbr="american-pragmatism-research emerson-research jung-research piaget-research" tabindex="0" role="link" aria-label="Experience and Consequences"><circle cx="674.2" cy="569.3" r="16.0" fill="#274d68"/><text class="cx-label" x="674.2" y="598.3" text-anchor="middle">Experience and Consequences</text></g><g class="cx-node" data-slug="uap-research" data-nbr="carlyle-research democratic-socialism-research us-economy-financial-system-research us-geopolitics-research" tabindex="0" role="link" aria-label="From Roswell to Disclosure"><circle cx="253.8" cy="533.7" r="13.9" fill="#64405a"/><text class="cx-label" x="253.8" y="560.6" text-anchor="middle">From Roswell to Disclosure</text></g><g class="cx-node" data-slug="us-geopolitics-research" data-nbr="democratic-socialism-research uap-research us-economy-financial-system-research" tabindex="0" role="link" aria-label="The Map of American Power"><circle cx="275.5" cy="452.6" r="16.0" fill="#64405a"/><text class="cx-label" x="275.5" y="428.6" text-anchor="middle">The Map of American Power</text></g><g class="cx-node" data-slug="mcluhan-research" data-nbr="ctv-brand-safety-research ctv-dsp-ssp-research ipv4-ipv6-ctv-research" tabindex="0" role="link" aria-label="The Medium Is the Message"><circle cx="451.3" cy="770.7" r="16.7" fill="#4a6350"/><text class="cx-label" x="451.3" y="800.4" text-anchor="middle">The Medium Is the Message</text></g><g class="cx-node" data-slug="piaget-research" data-nbr="deutsch-good-explanations-research emerson-research jung-research pareto-research phenomenology-pragmatism-research" tabindex="0" role="link" aria-label="How Knowledge Grows"><circle cx="645.9" cy="497.3" r="15.3" fill="#274d68"/><text class="cx-label" x="645.9" y="474.0" text-anchor="middle">How Knowledge Grows</text></g><g class="cx-node" data-slug="dickinson-research" data-nbr="ancestry-research carlyle-friedrich-research civil-war-religion-whitman-research great-awakenings-research jesus-research john-the-baptist-research roman-catholicism-research" tabindex="0" role="link" aria-label="Tell It Slant"><circle cx="666.2" cy="295.6" r="16.0" fill="#a3771c"/><text class="cx-label" x="666.2" y="324.6" text-anchor="middle">Tell It Slant</text></g><g class="cx-node" data-slug="emerson-research" data-nbr="american-pragmatism-research carlyle-french-revolution-research deutsch-good-explanations-research pareto-research phenomenology-pragmatism-research piaget-research" tabindex="0" role="link" aria-label="An Original Relation to the Universe"><circle cx="684.6" cy="430.4" r="16.7" fill="#274d68"/><text class="cx-label" x="684.6" y="405.7" text-anchor="middle">An Original Relation to the Universe</text></g><g class="cx-node" data-slug="pareto-research" data-nbr="american-pragmatism-research deutsch-good-explanations-research emerson-research piaget-research" tabindex="0" role="link" aria-label="A Graveyard of Aristocracies"><circle cx="761.0" cy="418.9" r="16.7" fill="#274d68"/><text class="cx-label" x="761.0" y="394.2" text-anchor="middle">A Graveyard of Aristocracies</text></g><g class="cx-node" data-slug="fox-roku-research" data-nbr="agentic-advertising-protocols-research ctv-brand-safety-research ipv4-ipv6-ctv-research" tabindex="0" role="link" aria-label="Buying the Living Room"><circle cx="396.2" cy="726.8" r="22.3" fill="#4a6350"/><text class="cx-label" x="396.2" y="762.1" text-anchor="middle">Buying the Living Room</text></g><g class="cx-node" data-slug="india-advertising-research" data-nbr="ctv-brand-safety-research ctv-dsp-ssp-research ipv4-ipv6-ctv-research latam-ctv-research miq-research political-ctv-research social-ctv-retargeting-research" tabindex="0" role="link" aria-label="A Billion Screens"><circle cx="365.6" cy="663.2" r="15.3" fill="#4a6350"/><text class="cx-label" x="365.6" y="691.5" text-anchor="middle">A Billion Screens</text></g><g class="cx-node" data-slug="latam-ctv-research" data-nbr="agentic-advertising-protocols-research ancestry-research containerized-bidding-research ctv-brand-safety-research ctv-identity-signals-research india-advertising-research ipv4-ipv6-ctv-research social-ctv-retargeting-research" tabindex="0" role="link" aria-label="Reach Ahead of Revenue"><circle cx="365.6" cy="592.8" r="16.7" fill="#4a6350"/><text class="cx-label" x="365.6" y="568.1" text-anchor="middle">Reach Ahead of Revenue</text></g><g class="cx-node" data-slug="ctv-brand-safety-research" data-nbr="agentic-advertising-protocols-research ctv-dsp-ssp-research fox-roku-research india-advertising-research ipv4-ipv6-ctv-research latam-ctv-research mcluhan-research" tabindex="0" role="link" aria-label="Safe Beside What?"><circle cx="396.2" cy="529.2" r="18.8" fill="#4a6350"/><text class="cx-label" x="396.2" y="502.4" text-anchor="middle">Safe Beside What?</text></g><g class="cx-node" data-slug="ctv-dsp-ssp-research" data-nbr="containerized-bidding-research ctv-brand-safety-research ctv-identity-signals-research india-advertising-research mcluhan-research miq-research social-ctv-retargeting-research walmart-vibe-research" tabindex="0" role="link" aria-label="Who Keeps the Spread"><circle cx="451.3" cy="485.3" r="20.9" fill="#4a6350"/><text class="cx-label" x="451.3" y="456.4" text-anchor="middle">Who Keeps the Spread</text></g><g class="cx-node" data-slug="democratic-socialism-research" data-nbr="uap-research us-economy-financial-system-research us-geopolitics-research" tabindex="0" role="link" aria-label="The Long Advent"><circle cx="356.7" cy="474.3" r="16.7" fill="#64405a"/><text class="cx-label" x="356.7" y="449.6" text-anchor="middle">The Long Advent</text></g><g class="cx-node" data-slug="ctv-identity-signals-research" data-nbr="ctv-dsp-ssp-research ipv4-ipv6-ctv-research latam-ctv-research" tabindex="0" role="link" aria-label="The Signal Layer"><circle cx="520.0" cy="469.6" r="24.0" fill="#4a6350"/><text class="cx-label" x="520.0" y="437.6" text-anchor="middle">The Signal Layer</text></g><g class="cx-node" data-slug="agentic-advertising-protocols-research" data-nbr="containerized-bidding-research ctv-brand-safety-research fox-roku-research latam-ctv-research walmart-vibe-research" tabindex="0" role="link" aria-label="The Protocol War"><circle cx="588.7" cy="485.3" r="20.2" fill="#4a6350"/><text class="cx-label" x="588.7" y="457.1" text-anchor="middle">The Protocol War</text></g><g class="cx-node" data-slug="miq-research" data-nbr="ctv-dsp-ssp-research india-advertising-research ipv4-ipv6-ctv-research political-ctv-research walmart-vibe-research" tabindex="0" role="link" aria-label="On Leased Land"><circle cx="643.8" cy="529.2" r="24.0" fill="#4a6350"/><text class="cx-label" x="643.8" y="497.2" text-anchor="middle">On Leased Land</text></g><g class="cx-node" data-slug="great-awakenings-research" data-nbr="ancestry-research civil-war-religion-whitman-research dickinson-research jesus-research john-the-baptist-research roman-catholicism-research" tabindex="0" role="link" aria-label="The Recurring Fire"><circle cx="666.2" cy="216.4" r="16.0" fill="#a3771c"/><text class="cx-label" x="666.2" y="192.4" text-anchor="middle">The Recurring Fire</text></g><g class="cx-node" data-slug="containerized-bidding-research" data-nbr="agentic-advertising-protocols-research ctv-dsp-ssp-research latam-ctv-research" tabindex="0" role="link" aria-label="Closer to the Metal"><circle cx="674.4" cy="592.8" r="19.5" fill="#4a6350"/><text class="cx-label" x="674.4" y="565.3" text-anchor="middle">Closer to the Metal</text></g><g class="cx-node" data-slug="political-ctv-research" data-nbr="india-advertising-research ipv4-ipv6-ctv-research miq-research" tabindex="0" role="link" aria-label="The Measured Screen"><circle cx="674.4" cy="663.2" r="20.9" fill="#4a6350"/><text class="cx-label" x="674.4" y="697.1" text-anchor="middle">The Measured Screen</text></g><g class="cx-node" data-slug="american-pragmatism-research" data-nbr="emerson-research jung-research pareto-research phenomenology-pragmatism-research" tabindex="0" role="link" aria-label="The Cash-Value of Truth"><circle cx="817.7" cy="471.4" r="18.1" fill="#274d68"/><text class="cx-label" x="817.7" y="445.3" text-anchor="middle">The Cash-Value of Truth</text></g><g class="cx-node" data-slug="us-economy-financial-system-research" data-nbr="democratic-socialism-research uap-research us-geopolitics-research" tabindex="0" role="link" aria-label="The Argument Over Money"><circle cx="334.9" cy="555.4" r="18.8" fill="#64405a"/><text class="cx-label" x="334.9" y="587.2" text-anchor="middle">The Argument Over Money</text></g><g class="cx-node" data-slug="roman-catholicism-research" data-nbr="civil-war-religion-whitman-research dickinson-research great-awakenings-research" tabindex="0" role="link" aria-label="On This Rock"><circle cx="734.8" cy="176.8" r="20.9" fill="#a3771c"/><text class="cx-label" x="734.8" y="147.9" text-anchor="middle">On This Rock</text></g><g class="cx-node" data-slug="walmart-vibe-research" data-nbr="agentic-advertising-protocols-research ctv-dsp-ssp-research miq-research" tabindex="0" role="link" aria-label="The Missing Front Door"><circle cx="643.8" cy="726.8" r="17.4" fill="#4a6350"/><text class="cx-label" x="643.8" y="757.2" text-anchor="middle">The Missing Front Door</text></g><g class="cx-node" data-slug="social-ctv-retargeting-research" data-nbr="ctv-dsp-ssp-research india-advertising-research latam-ctv-research" tabindex="0" role="link" aria-label="The Living-Room Handoff"><circle cx="588.7" cy="770.7" r="19.5" fill="#4a6350"/><text class="cx-label" x="588.7" y="803.2" text-anchor="middle">The Living-Room Handoff</text></g></g></svg><div id="cx-info"></div></div>
-  <p class="cx-hint">Lines connect works that share the most thematic vocabulary. Tab through the map by keyboard, or open any work to read it.</p>
+<header class="pam-plate">
+  <p class="pam-kicker">Essays from the Ad Tech desk</p>
+  <h1 class="pam-name">The Briefings</h1>
+  <p class="pam-motto">“The desk&#x27;s essays — filed one argument at a time.”</p>
+  <div class="pam-folio">
+    <span>Vol. 1</span>
+    <span class="pam-folio-c">No briefings yet</span>
+    <span>Published irregularly</span>
+  </div>
+</header>
+<main class="pam-wrap">
+<p class="pam-empty">No briefings filed yet. Drop an essay into docs/briefings/data/ and list it in the manifest to see it here.</p>
 </main>
-<footer class="cx-foot">
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+<footer class="pam-foot">
+  <p class="epigraph">Standalone essays on the programmatic and Connected-TV trade — The Briefings is the Ad Tech desk&#x27;s own rack of arguments, kept apart from the library&#x27;s Pamphlets.</p>
+  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a></p>
 </footer>
-<script id="cx-data" type="application/json">{"titles": {"ancestry-research": "The Emigrant's Atlas", "carlyle-french-revolution-research": "The Book That Burned", "carlyle-friedrich-research": "Carlyle's Everest", "carlyle-research": "The Calvinist Without a Creed", "civil-war-religion-whitman-research": "A Holy War and Its Poet", "deutsch-good-explanations-research": "Hard to Vary", "ipv4-ipv6-ctv-research": "The Address Knows You", "jesus-research": "The Man and the Christ", "john-the-baptist-research": "More Than a Forerunner", "jung-research": "A God in the Psyche", "phenomenology-pragmatism-research": "Experience and Consequences", "uap-research": "From Roswell to Disclosure", "us-geopolitics-research": "The Map of American Power", "mcluhan-research": "The Medium Is the Message", "piaget-research": "How Knowledge Grows", "dickinson-research": "Tell It Slant", "emerson-research": "An Original Relation to the Universe", "pareto-research": "A Graveyard of Aristocracies", "fox-roku-research": "Buying the Living Room", "india-advertising-research": "A Billion Screens", "latam-ctv-research": "Reach Ahead of Revenue", "ctv-brand-safety-research": "Safe Beside What?", "ctv-dsp-ssp-research": "Who Keeps the Spread", "democratic-socialism-research": "The Long Advent", "ctv-identity-signals-research": "The Signal Layer", "agentic-advertising-protocols-research": "The Protocol War", "miq-research": "On Leased Land", "great-awakenings-research": "The Recurring Fire", "containerized-bidding-research": "Closer to the Metal", "political-ctv-research": "The Measured Screen", "american-pragmatism-research": "The Cash-Value of Truth", "us-economy-financial-system-research": "The Argument Over Money", "roman-catholicism-research": "On This Rock", "walmart-vibe-research": "The Missing Front Door", "social-ctv-retargeting-research": "The Living-Room Handoff"}}</script>
 <script></script>
-<script>
-(function () {
-  var svg = document.getElementById('cx-svg'); if (!svg) return;
-  var base = window.SHELL_BASE || '';
-  var dEl = document.getElementById('cx-data');
-  var titles = (dEl && JSON.parse(dEl.textContent || '{}').titles) || {};
-  var info = document.getElementById('cx-info');
-  var nodes = [].slice.call(svg.querySelectorAll('.cx-node'));
-  var edges = [].slice.call(svg.querySelectorAll('.cx-edge'));
-  function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
-  function clear() { svg.classList.remove('dimmed'); nodes.forEach(function (n) { n.classList.remove('hot', 'adj'); });
-    edges.forEach(function (e) { e.classList.remove('lit'); }); if (info) info.classList.remove('show'); }
-  function focusNode(n) {
-    var slug = n.getAttribute('data-slug'), nbr = (n.getAttribute('data-nbr') || '').split(' ').filter(Boolean);
-    svg.classList.add('dimmed');
-    nodes.forEach(function (m) { m.classList.remove('hot', 'adj'); });
-    n.classList.add('hot');
-    nodes.forEach(function (m) { if (nbr.indexOf(m.getAttribute('data-slug')) >= 0) m.classList.add('adj'); });
-    edges.forEach(function (e) { var a = e.getAttribute('data-a'), b = e.getAttribute('data-b'); e.classList.toggle('lit', a === slug || b === slug); });
-    if (info) {
-      var links = nbr.map(function (s) { return titles[s] || s; });
-      info.innerHTML = '<span class="cx-i-t">' + esc(titles[slug] || slug) + '</span>'
-        + '<span class="cx-i-n">' + (links.length ? 'Connects to ' + esc(links.join(' · ')) : 'No strong links yet') + '</span>'
-        + '<span class="cx-i-cta">Open corpus →</span>';
-      info.classList.add('show');
-    }
-  }
-  function go(n) { window.location.href = base + n.getAttribute('data-slug') + '.html'; }
-  nodes.forEach(function (n) {
-    n.addEventListener('mouseenter', function () { focusNode(n); });
-    n.addEventListener('focus', function () { focusNode(n); });
-    n.addEventListener('click', function () { go(n); });
-    n.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(n); } });
-  });
-  svg.addEventListener('mouseleave', clear);
-})();
-</script>
 <style>
 @view-transition { navigation: auto; }
 @media (prefers-reduced-motion: reduce) {

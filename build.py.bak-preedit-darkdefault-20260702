@@ -884,7 +884,6 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
 <link rel="icon" href="{favicon}">
 {og_meta}
@@ -1297,8 +1296,10 @@ const results = document.getElementById('search-results');
 const key = 'corpus:' + corpus.slug;
 let current = 0;
 
-// theme toggle — the theme itself is applied pre-paint by the <head> boot
-// script (dark unless localStorage 'corpus-theme' says 'light')
+// theme
+const themePref = localStorage.getItem('corpus-theme');
+if (themePref) document.documentElement.dataset.theme = themePref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
 document.getElementById('theme-btn').onclick = () => {
   const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
@@ -2564,7 +2565,7 @@ ATLAS_CSS = """
 #atlas-stage { position: relative; flex: 1; overflow: hidden; cursor: grab; background: var(--bg); touch-action: none; }
 #atlas-stage.grab { cursor: grabbing; }
 #atlas-world { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
-#atlas-svg { display: block; overflow: visible; }
+#atlas-svg { display: block; }
 #atlas-msg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   font-family: var(--sans); font-size: .9rem; color: var(--muted); pointer-events: none; text-align: center; padding: 2rem; }
 #atlas-grat path { fill: none; stroke: var(--border); stroke-width: .6; opacity: .45; }
@@ -2574,10 +2575,9 @@ ATLAS_CSS = """
 .atlas-plbg { fill: var(--bg); stroke: var(--border); stroke-width: 1.2;
   filter: drop-shadow(0 3px 9px rgba(24,22,18,.16)); }
 [data-theme="dark"] .atlas-plbg { filter: drop-shadow(0 3px 9px rgba(0,0,0,.5)); }
-.atlas-plname { font-family: var(--sans); font-size: calc(17px * var(--als, 1)); font-weight: 700;
-  text-transform: uppercase; letter-spacing: .12em; fill: var(--muted); cursor: pointer;
-  paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round; }
-.atlas-plname:hover { fill: var(--accent); }
+.atlas-plname { font-family: var(--sans); font-size: 17px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; fill: var(--muted); cursor: pointer; }
+.atlas-plate:hover .atlas-plname { fill: var(--accent); }
 .atlas-plrule { stroke: var(--border); stroke-width: 1; }
 .atlas-leader { fill: none; stroke: var(--muted); stroke-width: 1.6; opacity: .55; pointer-events: none; }
 .atlas-spoke { stroke: var(--muted); stroke-width: 1.1; stroke-dasharray: 3 4; opacity: .5; pointer-events: none; }
@@ -2738,12 +2738,7 @@ ATLAS_JS = r"""
     });
   }
 
-  function apply() {
-    world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')';
-    // Counter-scale the plate names so the navigation labels stay readable
-    // (~12 screen px) however far out the sheet is zoomed.
-    world.style.setProperty('--als', Math.min(2.6, Math.max(1, 12 / (17 * view.s))).toFixed(3));
-  }
+  function apply() { world.style.transform = 'translate(' + view.x + 'px,' + view.y + 'px) scale(' + view.s + ')'; }
   // Is enough of the map on-screen? Guards a saved view that lands off-stage when
   // the Atlas is reopened (or resized) at a very different viewport size.
   function enoughVisible() {
@@ -2855,14 +2850,9 @@ ATLAS_JS = r"""
     (j.plates || []).forEach(function (pl) {
       s += '<g class="atlas-plate" data-plate="' + esc(pl.id) + '">'
         + '<rect class="atlas-plbg" x="' + pl.x + '" y="' + pl.y + '" width="' + pl.w + '" height="' + pl.h + '" rx="10"/>'
+        + '<text class="atlas-plname" x="' + (pl.x + pl.w / 2) + '" y="' + (pl.y + 25) + '" text-anchor="middle">' + esc(pl.name) + '</text>'
         + '<line class="atlas-plrule" x1="' + (pl.x + 12) + '" y1="' + (pl.y + 33) + '" x2="' + (pl.x + pl.w - 12) + '" y2="' + (pl.y + 33) + '"/>'
         + '</g>';
-    });
-    // names in their own layer ABOVE every plate box, so a counter-scaled
-    // label never hides under a neighbouring plate
-    s += '</g><g id="atlas-plnames">';
-    (j.plates || []).forEach(function (pl) {
-      s += '<text class="atlas-plname" data-plate="' + esc(pl.id) + '" x="' + (pl.x + pl.w / 2) + '" y="' + (pl.y + 25) + '" text-anchor="middle">' + esc(pl.name) + '</text>';
     });
     s += '</g><g id="atlas-stamps">';
     j.places.forEach(function (p) {
@@ -2946,7 +2936,7 @@ ATLAS_JS = r"""
     });
     var byId = {};
     (j.plates || []).forEach(function (pl) { byId[pl.id] = pl; });
-    [].forEach.call(world.querySelectorAll('.atlas-plate, .atlas-plname'), function (el) {
+    [].forEach.call(world.querySelectorAll('.atlas-plate'), function (el) {
       var pl = byId[el.getAttribute('data-plate')];
       el.addEventListener('click', function () { if (moved || !pl) return; zoomToRect(pl.x - 30, pl.y - 30, pl.w + 60, pl.h + 60); });
     });
@@ -3023,34 +3013,6 @@ ATLAS_JS = r"""
 """
 
 
-# Floating light/dark toggle for pages that don't ship their own #theme-btn
-# (library index, section fronts, forecast board, domain pages, wrapped…).
-# The synchronous <head> boot script has already set data-theme before first
-# paint — dark unless localStorage 'corpus-theme' says 'light' — so this only
-# flips the attribute and persists the choice. Same affordance and placement
-# as the edition pages' fixed theme button.
-THEME_TOGGLE_CSS = """
-#shell-theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
-  font-size: .8rem; color: var(--muted); background: var(--bg); border: 1px solid var(--border);
-  border-radius: 2px; box-shadow: var(--shadow-2); padding: .4rem .7rem; cursor: pointer; }
-#shell-theme-btn:hover { color: var(--accent); border-color: var(--text); }
-"""
-
-THEME_TOGGLE_JS = r"""
-(function () {
-  if (document.getElementById('theme-btn')) return;
-  var b = document.createElement('button');
-  b.id = 'shell-theme-btn'; b.title = 'Light / dark'; b.textContent = '◐ Theme';
-  b.onclick = function () {
-    var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.dataset.theme = next;
-    try { localStorage.setItem('corpus-theme', next); } catch (e) {}
-  };
-  document.body.appendChild(b);
-})();
-"""
-
-
 def shell_html(manifest_json, base):
     """The cross-page connective shell, injected verbatim into every page template.
 
@@ -3064,8 +3026,6 @@ def shell_html(manifest_json, base):
         f"<script>window.SHELL_BASE={json.dumps(base)};</script>"
         f"<script>{SHELL_JS}</script>"
         f"<script>{SHARE_JS}</script>"
-        f"<style>{THEME_TOGGLE_CSS}</style>"
-        f"<script>{THEME_TOGGLE_JS}</script>"
         f"<style>{ATLAS_CSS}</style>"
         f"<script>{ATLAS_JS}</script>"
     )
@@ -3076,7 +3036,6 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{site_title}</title>
 <meta name="description" content="{site_subtitle}">
 <link rel="icon" href="{favicon}">
@@ -3138,12 +3097,11 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 </html>
 """
 
-# Theme is applied pre-paint by a synchronous <head> boot script in every
-# template (dark by default; light only when localStorage 'corpus-theme' says
-# so), so there is no init left to do here. Kept as an empty placeholder so
-# the {theme_js} slots and concatenations keep working. Pages without their
-# own #theme-btn get a floating toggle from shell_html().
-LIBRARY_THEME_JS = ""
+LIBRARY_THEME_JS = """
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
+"""
 
 # Live category filter + text search for the library index. Category pills and the
 # search box combine: a card shows only if it matches the active category AND the
@@ -3427,11 +3385,6 @@ QUIZ_JS = r"""
   var pEl = document.getElementById('passages-data');
   try { PAS = pEl ? (JSON.parse(pEl.textContent || '[]') || []) : []; } catch (e) { PAS = []; }
   var corpora = (LIB || []).filter(function (x) { return x.kind === 'corpus' && x.chapters && x.chapters.length; });
-  // An optional #quiz-slugs payload scopes the whole quiz (dropdown, questions,
-  // distractors) to one shelf — used by detached desk pages (e.g. Ad Tech) and
-  // by the home page to keep desk material off the library quiz.
-  var scEl = document.getElementById('quiz-slugs');
-  if (scEl) { try { var SC = {}; (JSON.parse(scEl.textContent || '[]') || []).forEach(function (s) { SC[s] = 1; }); corpora = corpora.filter(function (c) { return SC[c.slug]; }); } catch (e) {} }
   if (corpora.length < 2) return;                       // need a field of distractors
   var bySlug = {}; corpora.forEach(function (c) { bySlug[c.slug] = c; });
   // Content facts (#quiz-data): {slug, terms:[{t,d,c}], dates:[{d,e,c,a?}], entities:[{n,r,c,a?}]}
@@ -3561,7 +3514,7 @@ QUIZ_JS = r"""
 
   // --- setup UI ---
   var scope = document.getElementById('quiz-scope');
-  var optAll = document.createElement('option'); optAll.value = '__all__'; optAll.textContent = sec.getAttribute('data-all-label') || 'Across the whole library'; scope.appendChild(optAll);
+  var optAll = document.createElement('option'); optAll.value = '__all__'; optAll.textContent = 'Across the whole library'; scope.appendChild(optAll);
   corpora.slice().sort(function (a, b) { return a.title.localeCompare(b.title); }).forEach(function (c) {
     var o = document.createElement('option'); o.value = c.slug; o.textContent = c.title; scope.appendChild(o);
   });
@@ -3569,8 +3522,7 @@ QUIZ_JS = r"""
 
   var setup = document.getElementById('quiz-setup'), stage = document.getElementById('quiz-stage'), bestEl = document.getElementById('quiz-best');
   var QN = 7, state = null;
-  var NS = sec.getAttribute('data-ns') || '';   // separate best-score ledgers per desk
-  function bestKey(s) { return 'quiz-best:' + NS + s; }
+  function bestKey(s) { return 'quiz-best:' + s; }
   function showBest(s) {
     var b = null; try { b = JSON.parse(localStorage.getItem(bestKey(s)) || 'null'); } catch (e) {}
     if (b && b.total) { bestEl.textContent = 'Your best on this selection: ' + b.score + ' / ' + b.total + '.'; bestEl.hidden = false; }
@@ -3584,7 +3536,7 @@ QUIZ_JS = r"""
     var qs = pickRound(pool, QN);
     setup.hidden = true; stage.hidden = false;
     if (!qs.length) { stage.innerHTML = '<p class="quiz-empty">There isn’t enough material to build a test on this selection yet. Try “Across the whole library.”</p><p style="margin:1rem 0 0"><button class="quiz-btn quiz-again" type="button">← Back</button></p>'; wireAgain(); return; }
-    state = { sv: sv, qs: qs, i: 0, score: 0, label: sv === '__all__' ? (sec.getAttribute('data-all-name') || 'the whole library') : (bySlug[sv] ? bySlug[sv].title : '') };
+    state = { sv: sv, qs: qs, i: 0, score: 0, label: sv === '__all__' ? 'the whole library' : (bySlug[sv] ? bySlug[sv].title : '') };
     renderQ();
   });
 
@@ -3681,19 +3633,6 @@ QUIZ_SECTION_HTML = (
     '<div class="quiz-stage" id="quiz-stage" hidden></div>'
     '</div></section>'
 )
-
-
-def quiz_section_scoped(ns="", all_label="", all_name=""):
-    """The quiz scaffold with scope attributes for a detached desk page: `ns`
-    namespaces the localStorage best-score ledger; the labels rename the
-    "whole library" option/result line. Pair with a #quiz-slugs payload."""
-    attrs = "".join(
-        f' data-{k}="{html.escape(v, quote=True)}"'
-        for k, v in (("ns", ns), ("all-label", all_label), ("all-name", all_name)) if v
-    )
-    return QUIZ_SECTION_HTML.replace(
-        '<section class="quiz" id="quiz" hidden>',
-        f'<section class="quiz" id="quiz" hidden{attrs}>', 1)
 
 LIBRARY_CSS = """
 :root {
@@ -4100,7 +4039,6 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>The Ghost of Times — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
@@ -4441,7 +4379,6 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
@@ -4487,7 +4424,10 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 """
 
 GHOST_EDITION_JS = r"""
-// theme toggle — the theme itself is applied pre-paint by the <head> boot script
+// theme (shares the 'corpus-theme' preference with readers + library)
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
 document.getElementById('theme-btn').onclick = () => {
   const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
@@ -4683,10 +4623,9 @@ PAMPHLETS_BAND_CSS = """
 """
 
 
-def read_pamphlets_manifest(out_dir, subdir="pamphlets"):
-    """Load docs/<subdir>/manifest.json → list of pamphlet-shaped essays, newest
-    first. Missing → []. Also serves desk essay racks (e.g. docs/briefings/)."""
-    path = Path(out_dir) / subdir / "manifest.json"
+def read_pamphlets_manifest(out_dir):
+    """Load docs/pamphlets/manifest.json → list of pamphlets, newest first. Missing → []."""
+    path = Path(out_dir) / "pamphlets" / "manifest.json"
     if not path.exists():
         return []
     try:
@@ -4719,32 +4658,26 @@ def _pamphlet_meta(p, lead=False):
     return " · ".join(bits)
 
 
-def pamphlets_band_html(items, cfg, page=None):
-    """The Pamphlets feature band (home page), or — via `page` — a sibling essay
-    rack's band, e.g. the Ad Tech desk's Briefings: {name, flag, href, cls}."""
-    page = page or {}
-    name = page.get("name", "The Pamphlets")
-    href = page.get("href", "pamphlets.html")
-    cls = f' {page["cls"]}' if page.get("cls") else ""
+def pamphlets_band_html(items, cfg):
+    """The Pamphlets feature band for the home page. Always links to pamphlets.html."""
     motto = html.escape(cfg.get("motto", ""))
     blurb = html.escape(cfg.get("blurb", ""))
-    flag_title = page.get("flag", "The<br>Pamphlets")
-    flag = (f'<div class="pb-flag">{flag_title}<small>{motto}</small></div>')
+    flag = (f'<div class="pb-flag">The<br>Pamphlets<small>{motto}</small></div>')
     if items:
         latest = items[0]
-        kicker = f"{name} · Latest"
-        lead = html.escape(latest.get("title") or "Latest essay")
+        kicker = "The Pamphlets · Latest"
+        lead = html.escape(latest.get("title") or "Latest pamphlet")
         sub_bits = [x for x in [latest.get("dek"), _pamphlet_voice(latest)] if x]
         sub = html.escape(" · ".join(sub_bits))
         cta = "Read the latest →"
     else:
         kicker = "A new section"
-        lead = motto or name
+        lead = motto or "The Pamphlets"
         sub = blurb
         cta = "Coming soon →"
-    mid = (f'<div class="pb-mid"><p class="pb-kicker">{html.escape(kicker)}</p>'
+    mid = (f'<div class="pb-mid"><p class="pb-kicker">{kicker}</p>'
            f'<p class="pb-lead">{lead}</p><p class="pb-sub">{sub}</p></div>')
-    return (f'<div class="pamphlet-band{cls}"><a href="{html.escape(href, quote=True)}">{flag}{mid}'
+    return (f'<div class="pamphlet-band"><a href="pamphlets.html">{flag}{mid}'
             f'<span class="pb-cta">{cta}</span></a></div>')
 
 
@@ -4818,23 +4751,26 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
-<title>{page_title} — calvincollins · xyz</title>
+<title>The Pamphlets — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
 {og_meta}
-<style>{css}{accent_css}</style>
+<style>{css}</style>
 </head>
 <body>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-{nav}
+    <a href="index.html">The Research</a>
+    <a href="ghost.html">The Ghost of Times</a>
+    <a href="adtech.html">Ad Tech</a>
+    <a href="pamphlets.html" class="active">The Pamphlets</a>
+    <a href="forecast.html">The Forecast Desk</a>
   </nav>
 </div>
 <header class="pam-plate">
-  <p class="pam-kicker">{kicker}</p>
-  <h1 class="pam-name">{h1}</h1>
+  <p class="pam-kicker">Writer-voiced essays</p>
+  <h1 class="pam-name">The Pamphlets</h1>
   <p class="pam-motto">“{motto}”</p>
   <div class="pam-folio">
     <span>Vol. 1</span>
@@ -4847,7 +4783,7 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="pam-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon">{back}</p>
+  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -4881,51 +4817,24 @@ def pamphlet_row_html(p):
             f'<span class="pam-row-date">{when}</span></a>')
 
 
-PAMPHLETS_NAV_DEFAULT = (
-    '    <a href="index.html">The Research</a>\n'
-    '    <a href="ghost.html">The Ghost of Times</a>\n'
-    '    <a href="adtech.html">Ad Tech</a>\n'
-    '    <a href="pamphlets.html" class="active">The Pamphlets</a>\n'
-    '    <a href="forecast.html">The Forecast Desk</a>'
-)
-
-
-def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
-    """Render an essay-rack section front — docs/pamphlets.html by default: a
-    featured latest essay + the rest. A `page` override renders a desk's own
-    rack (e.g. the Ad Tech desk's Briefings): {fname, title (h1), kicker, nav,
-    back, empty, noun, accent (light, dark)}."""
+def build_pamphlets_page(out_dir, items, cfg, shell=""):
+    """Render docs/pamphlets.html — the section front: a featured latest essay + the rest."""
     out = Path(out_dir)
-    page = page or {}
-    fname = page.get("fname", "pamphlets.html")
-    h1 = page.get("title", "The Pamphlets")
-    kicker = page.get("kicker", "Writer-voiced essays")
-    nav = page.get("nav", PAMPHLETS_NAV_DEFAULT)
-    back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
-    noun = page.get("noun", "pamphlet")
-    accent = page.get("accent")
-    accent_css = (f'\nbody {{ --accent: {accent[0]}; }} [data-theme="dark"] body {{ --accent: {accent[1]}; }}'
-                  if accent else "")
     if items:
         n = len(items)
-        stats = f"{n} {noun}{'s' if n != 1 else ''}"
+        stats = f"{n} pamphlet{'s' if n != 1 else ''}"
         body = pamphlet_feature_html(items[0])
         rest = items[1:]
         if rest:
             rows = "\n".join(pamphlet_row_html(p) for p in rest)
-            body += f'<section class="pam-issues"><h2 class="pam-issues-h">More {noun}s</h2>{rows}</section>'
+            body += f'<section class="pam-issues"><h2 class="pam-issues-h">More pamphlets</h2>{rows}</section>'
     else:
-        body = '<p class="pam-empty">' + html.escape(page.get(
-            "empty", "No pamphlets published yet. Drop an essay into "
-                     "docs/pamphlets/data/ and list it in the manifest to see it here.")) + '</p>'
-        stats = f"No {noun}s yet"
-    og = (OG_META if fname == "pamphlets.html" else
-          og_tags(h1, cfg.get("motto", ""), f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}"))
-    page_html = PAMPHLETS_PAGE_TEMPLATE.format(
-        page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
-        nav=nav, back=back, accent_css=accent_css,
+        body = ('<p class="pam-empty">No pamphlets published yet. Drop an essay into '
+                'docs/pamphlets/data/ and list it in the manifest to see it here.</p>')
+        stats = "No pamphlets yet"
+    page = PAMPHLETS_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + PAMPHLETS_PAGE_CSS,
-        favicon=FAVICON, og_meta=og,
+        favicon=FAVICON, og_meta=OG_META,
         motto=html.escape(cfg.get("motto", "")),
         blurb=html.escape(cfg.get("blurb", "")),
         stats=stats,
@@ -4933,8 +4842,8 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
         theme_js=LIBRARY_THEME_JS,
         shell=shell,
     )
-    (out / fname).write_text(page_html)
-    print(f"  ✓ {h1}  ({len(items)} {noun}{'s' if len(items) != 1 else ''}) → {fname}")
+    (out / "pamphlets.html").write_text(page)
+    print(f"  ✓ The Pamphlets  ({len(items)} pamphlet{'s' if len(items) != 1 else ''}) → pamphlets.html")
 
 
 # ---------------------------------------------------------------- pamphlet pages
@@ -5018,7 +4927,6 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
@@ -5068,7 +4976,10 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 """
 
 PAMPHLET_JS = r"""
-// theme toggle — the theme itself is applied pre-paint by the <head> boot script
+// theme (shares the 'corpus-theme' preference with readers + library)
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
 document.getElementById('theme-btn').onclick = () => {
   const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
@@ -5363,9 +5274,9 @@ FORECAST_PAGE_CSS = """
   letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--text); }
 .fd-folio .fd-folio-c { color: var(--accent); font-weight: 600; }
 
-/* the board — warm charcoal, not navy; the color lives in the outcomes */
-.fd-board { --fdbg: #13151b; --fdcard: #1b1e26; --fdline: #2c303a; --fdtext: #edeff4;
-  --fdmut: #9aa1af; --fdup: #22c55e; --fddn: #ef4444; --fdgold: #eab308; --fdblue: #60a5fa;
+/* the board */
+.fd-board { --fdbg: #0e141d; --fdcard: #141c28; --fdline: #232e40; --fdtext: #e8edf6;
+  --fdmut: #93a1b8; --fdup: #22c55e; --fddn: #ef4444; --fdgold: #eab308; --fdblue: #60a5fa;
   --fdmono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   max-width: 1080px; margin: 2rem auto 0; padding: 1.6rem 1.6rem 2rem; border-radius: 2px;
   background: var(--fdbg); border: 1px solid var(--fdline); color: var(--fdtext);
@@ -5415,9 +5326,7 @@ FORECAST_PAGE_CSS = """
 
 /* category shelves + market cards */
 .fd-cat-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
-  color: #c9cdd6; border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem; }
-.fd-cat-h .tick { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
-  margin-right: .55rem; vertical-align: -1px; }
+  color: var(--fdmut); border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem; }
 .fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
 .fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
 .fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
@@ -5444,9 +5353,9 @@ FORECAST_PAGE_CSS = """
 .fd-track { position: relative; height: 11px; border-radius: 0; background: #0a0f16; overflow: hidden; }
 /* Filled is the DEFAULT state (no JS/animation dependency for correctness);
    the grow-in is a pure entrance flourish. */
-.fd-fill { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 0; background: var(--fdmut); opacity: .85;
+.fd-fill { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 0; background: var(--fdmut); opacity: .6;
   transform-origin: left; }
-.fd-fill.rng { opacity: .3; }
+.fd-fill.rng { opacity: .25; }
 .fd-out.lead .fd-fill { background: var(--fdup); opacity: 1; }
 .fd-out.lead .fd-fill.rng { opacity: .35; }
 @keyframes fd-grow { from { transform: scaleX(0); } }
@@ -5469,7 +5378,6 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{page_title} — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
@@ -5518,45 +5426,23 @@ document.querySelectorAll('[data-grades]').forEach(el => {
 """
 
 
-# Outcome + category colorways — the Polymarket move: every outcome in a market
-# wears its own hue, and every category shelf has a signature accent. Greens stay
-# semantic (LIVE / OPEN / CTAs).
-FD_OUT_COLORS = ["#22c55e", "#eab308", "#60a5fa", "#f4715c", "#c084fc"]
-FD_CAT_COLORS = {
-    "Sport & Games": "#22c55e",
-    "Media & Advertising": "#2dd4bf",
-    "The Modern World": "#f97316",
-    "Mind & Philosophy": "#c084fc",
-    "Faith & Religion": "#eab308",
-    "Thomas Carlyle": "#9bb24f",
-    "Heritage": "#f472b6",
-}
-
-
-def _fd_cat_color(cat):
-    return FD_CAT_COLORS.get(cat) or FD_OUT_COLORS[sum(map(ord, cat or "")) % len(FD_OUT_COLORS)]
-
-
 def _fd_outcome_rows(outcomes, cap=5):
     """Outcome rows for a market card: name + a bar that FILLS from zero to the
     outcome's probability (Polymarket-style, 0–100 axis), the band's uncertainty
-    shown as a lighter extension. Each outcome wears its own colorway."""
+    shown as a lighter extension from the low to the high bound."""
     rows = []
     for i, o in enumerate(outcomes[:cap]):
         low = max(min(o["low"], 100.0), 0.0)
         high = max(min(o["high"], 100.0), low)
         rng = high - low
-        col = FD_OUT_COLORS[i % len(FD_OUT_COLORS)]
         lead = " lead" if i == 0 else ""
-        bars = f'<span class="fd-fill" style="width:{max(low, 1.5):.1f}%;background:{col}"></span>'
+        bars = f'<span class="fd-fill" style="width:{max(low, 1.5):.1f}%"></span>'
         if rng >= .5:
-            bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{rng:.1f}%;background:{col}"></span>'
-        pc = (f'<span class="pc" style="background:{col};color:#0c1117">{_fmt_band(o["low"], o["high"])}</span>'
-              if i == 0 else
-              f'<span class="pc" style="color:{col}">{_fmt_band(o["low"], o["high"])}</span>')
+            bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{rng:.1f}%"></span>'
         rows.append(
             f'<div class="fd-out{lead}"><div class="fd-out-l">'
-            f'<span class="nm">{html.escape(o["name"])}</span>{pc}</div>'
+            f'<span class="nm">{html.escape(o["name"])}</span>'
+            f'<span class="pc">{_fmt_band(o["low"], o["high"])}</span></div>'
             f'<div class="fd-track">{bars}</div></div>'
         )
     extra = len(outcomes) - cap
@@ -5567,17 +5453,16 @@ def _fd_outcome_rows(outcomes, cap=5):
 
 def _fd_market_card(m):
     hz = html.escape(m["horizon"]) if m["horizon"] else ""
-    cc = _fd_cat_color(m["category"])
     cover = (f'<img class="fd-card-cover" src="{html.escape(m["cover"], quote=True)}" alt="" loading="lazy">'
              if m.get("cover") else "")
     return (
-        f'<a class="fd-card" href="{html.escape(m["href"], quote=True)}" style="border-top:3px solid {cc}">'
+        f'<a class="fd-card" href="{html.escape(m["href"], quote=True)}">'
         f'<div class="fd-card-top">{cover}<span class="fd-chip-open">Open</span>'
         f'<span class="fd-card-hz">{hz}</span></div>'
         f'<h3 class="fd-card-q">{html.escape(m["title"])}</h3>'
         f'{_fd_outcome_rows(m["outcomes"])}'
         f'<div class="fd-card-foot"><span>{len(m["outcomes"])} outcomes · from the research</span>'
-        f'<span class="go" style="color:{cc}">Full forecast →</span></div></a>'
+        f'<span class="go">Full forecast →</span></div></a>'
     )
 
 
@@ -5599,7 +5484,7 @@ def _fd_live_hero(f):
     return (
         f'<a class="fd-live" href="{href}">'
         f'<div class="fd-live-top"><span class="fd-chip-live"><span class="d"></span>Live market</span>'
-        f'<span class="fd-chip-cat" style="color:{_fd_cat_color(f.get("category", ""))};border-color:{_fd_cat_color(f.get("category", ""))}">{cat}</span>'
+        f'<span class="fd-chip-cat">{cat}</span>'
         f'<span class="fd-chip-date">logged {logged}</span></div>'
         f'<h2 class="fd-live-q">{q}</h2>'
         f'<div class="fd-live-grid"><div class="fd-live-pick">'
@@ -5619,9 +5504,8 @@ def _fd_tape(native_items, markets):
                          f'<span class="up">{html.escape((f.get("pick_flag", "") + " " + f["pick"]).strip())} {html.escape(f.get("band", ""))}</span></span>')
     for m in markets:
         o = m["outcomes"][0]
-        cc = _fd_cat_color(m["category"])
         ticks.append(f'<span class="fd-tk"><b>{html.escape(m["title"])}</b> · '
-                     f'{html.escape(o["name"][:46])} <span class="up" style="color:{cc}">{_fmt_band(o["low"], o["high"])}</span></span>')
+                     f'{html.escape(o["name"][:46])} <span class="up">{_fmt_band(o["low"], o["high"])}</span></span>')
     if not ticks:
         return ""
     row = "".join(ticks)
@@ -5667,9 +5551,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     for c in cats:
         group = [m for m in markets if m["category"] == c]
         cards = "".join(_fd_market_card(m) for m in group)
-        cc = _fd_cat_color(c)
-        parts.append(f'<h2 class="fd-cat-h"><span class="tick" style="background:{cc}"></span>'
-                     f'{html.escape(c)} <span class="n" style="color:{cc}">{len(group)}</span></h2>'
+        parts.append(f'<h2 class="fd-cat-h">{html.escape(c)} <span class="n">{len(group)}</span></h2>'
                      f'<div class="fd-grid">{cards}</div>')
     n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
     n_markets = len(native_items) + len(markets)
@@ -5852,7 +5734,6 @@ FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
@@ -5948,12 +5829,11 @@ def _fdd_field(field):
     rows = []
     for i, f in enumerate(field):
         w = f.get("price", 0) / top * 100
-        col = FD_OUT_COLORS[i % len(FD_OUT_COLORS)]
         rows.append(
             f'<div class="fdd-frow{" lead" if i == 0 else ""}">'
             f'<span class="tm">{f.get("flag", "")} {html.escape(f.get("team", ""))}</span>'
-            f'<div class="fd-track"><span class="fd-fill" style="left:0;width:{w:.1f}%;background:{col}"></span></div>'
-            f'<span class="pv" style="color:{col}">{f.get("price", 0):g}%</span></div>'
+            f'<div class="fd-track"><span class="fd-fill" style="left:0;width:{w:.1f}%"></span></div>'
+            f'<span class="pv">{f.get("price", 0):g}%</span></div>'
         )
     return (f'<div class="fdd-field">{"".join(rows)}'
             f'<div class="fdd-field-foot">Blended exact-winner price across the liquid books · bars scaled to the leader</div></div>')
@@ -6055,7 +5935,7 @@ def build_corpus_market_page(out_dir, m, shell=""):
     hero = (
         f'<section class="fdd-hero">'
         f'<div class="fd-live-top"><span class="fd-chip-open">Open</span>'
-        f'<span class="fd-chip-cat" style="color:{_fd_cat_color(m["category"])};border-color:{_fd_cat_color(m["category"])}">{html.escape(m["category"])}</span>'
+        f'<span class="fd-chip-cat">{html.escape(m["category"])}</span>'
         f'<span class="fd-chip-date">{html.escape(m["horizon"])}</span></div>'
         f'<div class="fdd-pickrow">{cover_sq}'
         f'<div><p class="fdr-leadlbl">Most likely outcome</p>'
@@ -6068,13 +5948,11 @@ def build_corpus_market_page(out_dir, m, shell=""):
     for i, o in enumerate(m["outcomes"]):
         low = max(min(o["low"], 100.0), 0.0)
         high = max(min(o["high"], 100.0), low)
-        col = FD_OUT_COLORS[i % len(FD_OUT_COLORS)]
-        bars = f'<span class="fd-fill" style="width:{max(low, 1.5):.1f}%;background:{col}"></span>'
+        bars = f'<span class="fd-fill" style="width:{max(low, 1.5):.1f}%"></span>'
         if high - low >= .5:
-            bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{high - low:.1f}%;background:{col}"></span>'
-        pc = (f'<span class="pc" style="background:{col};color:#0c1117">{_fmt_band(o["low"], o["high"])}</span>'
-              if i == 0 else f'<span class="pc" style="color:{col}">{_fmt_band(o["low"], o["high"])}</span>')
-        bits = [f'<div class="fdr-oh"><span class="nm">{html.escape(o["name"])}</span>{pc}</div>'
+            bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{high - low:.1f}%"></span>'
+        bits = [f'<div class="fdr-oh"><span class="nm">{html.escape(o["name"])}</span>'
+                f'<span class="pc">{_fmt_band(o["low"], o["high"])}</span></div>'
                 f'<div class="fd-track">{bars}</div>']
         if o.get("description"):
             bits.append(f'<p class="fdr-desc">{html.escape(o["description"])}</p>')
@@ -6091,7 +5969,7 @@ def build_corpus_market_page(out_dir, m, shell=""):
             bits.append(f'<div class="fdr-lists">{"".join(lists)}</div>')
         if o.get("horizon"):
             bits.append(f'<div class="fdr-hz">Horizon · {html.escape(o["horizon"])}</div>')
-        outs.append(f'<article class="fdr-out{" lead" if i == 0 else ""}" style="border-top:3px solid {col}">{"".join(bits)}</article>')
+        outs.append(f'<article class="fdr-out{" lead" if i == 0 else ""}">{"".join(bits)}</article>')
     parts = [hero,
              f'<h2 class="fdd-h"><span class="n">01</span>The Outcomes — {len(m["outcomes"])} scenarios, priced by the research</h2>',
              "".join(outs),
@@ -6340,7 +6218,6 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>The Fingerprint — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
@@ -6546,7 +6423,6 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
@@ -6761,7 +6637,10 @@ __FP_BEAT_CSS__
 """
 
 FINGERPRINT_EDITION_JS = r"""
-// theme toggle — the theme itself is applied pre-paint by the <head> boot script
+// theme (shares the 'corpus-theme' preference with readers + library)
+const pref = localStorage.getItem('corpus-theme');
+if (pref) document.documentElement.dataset.theme = pref;
+else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
 document.getElementById('theme-btn').onclick = () => {
   const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
   document.documentElement.dataset.theme = next;
@@ -7182,7 +7061,6 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>Connections — calvincollins · xyz</title>
 <meta name="description" content="A map of ideas: how the research corpora relate by theme.">
 <link rel="icon" href="{favicon}">
@@ -7597,7 +7475,6 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title} — calvincollins · xyz</title>
 <meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
@@ -7630,7 +7507,6 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <main class="library">
 {cards}
 </main>
-{quiz}
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">{epigraph}</p>
@@ -7680,10 +7556,6 @@ footer .colophon a:hover { text-decoration: underline; }
 .dk-tool-cta { margin-top: auto; font-family: var(--sans); font-size: .7rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: .1em; color: #0d5b68; }
 [data-theme="dark"] .dk-tool-cta { color: #62aab8; }
-
-/* the desk's essay rack band (Briefings) — the pamphlet band in desk teal */
-.pamphlet-band.brf { --accent: #0d5b68; }
-[data-theme="dark"] .pamphlet-band.brf { --accent: #62aab8; }
 """
 
 
@@ -7735,12 +7607,11 @@ def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
             f'<span class="fp-band-cta">Enter the desk →</span></a></div>')
 
 
-def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", quiz="", shell=""):
+def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", shell=""):
     """Render a detached domain front (docs/<slug>.html): nameplate, any bands it
-    pulled off the home page (the wire, its Briefings rack), its own apparatus row
-    (tools — the desk's forecaster and dictionary), its category shelves as the
-    standard card grid (with the live search box; category headings only when it
-    shelves >1 category), and — when granted — its own Test Yourself quiz."""
+    pulled off the home page, its own apparatus row (tools — the desk's forecaster
+    and dictionary), then its category shelves as the standard card grid (with the
+    live search box; category headings only when it shelves >1 category)."""
     out = Path(out_dir)
     slug = page_cfg.get("slug", "adtech")
     title = page_cfg.get("title") or dom.get("title", "The Desk")
@@ -7775,17 +7646,15 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         slug=slug,
         favicon=FAVICON,
         og_meta=og,
-        css=(LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + DOMAIN_PAGE_CSS
-             + (QUIZ_CSS if quiz else "")),
+        css=LIBRARY_CSS + FINGERPRINT_BAND_CSS + DOMAIN_PAGE_CSS,
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
         stats=html.escape(stats),
         folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
         bands=bands,
         tools=tools,
-        quiz=quiz,
         cards=body,
         epigraph=html.escape(page_cfg.get("epigraph", "“We sell — or else.” — David Ogilvy")),
-        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + (QUIZ_JS if quiz else ""),
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS,
         shell=shell,
     ))
 
@@ -7901,7 +7770,6 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>Research Wrapped — calvincollins · xyz</title>
 <meta name="description" content="Your private year in reading.">
 <link rel="icon" href="{favicon}">
@@ -8004,7 +7872,10 @@ GLOSSARY_EXTRA_CSS = """
 
 GLOSSARY_JS = r"""
 (function () {
-  // theme toggle — the theme itself is applied pre-paint by the <head> boot script
+  // theme (shares the 'corpus-theme' preference with readers + library)
+  var pref = localStorage.getItem('corpus-theme');
+  if (pref) document.documentElement.dataset.theme = pref;
+  else if (matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.dataset.theme = 'dark';
   document.getElementById('theme-btn').onclick = function () {
     var next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
@@ -8062,7 +7933,6 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{page_title} — calvincollins · xyz</title>
 <meta name="description" content="{descr}">
 <link rel="icon" href="{favicon}">
@@ -8514,20 +8384,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                              "kind": "section", "category": "The desk",
                              "href": f"{_slug}-glossary.html",
                              "meta": "the trade's terms, defined"})
-        if "briefings" in _inc:
-            _bslug = p.get("briefings_slug", "briefings")
-            _btitle = p.get("briefings_title", "The Briefings")
-            manifest.append({"title": _btitle, "kind": "section", "category": "The desk",
-                             "href": f"{_bslug}.html",
-                             "meta": p.get("briefings_kicker", "essays from the desk")})
-            for b in read_pamphlets_manifest(out, subdir=_bslug):
-                _voice = f" · {b['writer']}" if b.get("writer") else ""
-                manifest.append({
-                    "title": b.get("title") or f"Briefing — {b.get('slug', '')}",
-                    "kind": "pamphlet", "category": _btitle,
-                    "href": b.get("file") or f"{_bslug}/{b.get('slug', '')}.html",
-                    "meta": (b.get("dek", "") + _voice).strip(" ·"),
-                })
 
     manifest.append({"title": "Research Wrapped", "kind": "section", "category": "You",
                      "href": "wrapped.html", "meta": "your year in reading"})
@@ -8612,8 +8468,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     gl_desk_cats = {c for d in detached if "glossary" in (d["page"].get("include") or [])
                     for c in d.get("categories", [])}
     fc_desk_cats = {c for d in detached if "forecast" in (d["page"].get("include") or [])
-                    for c in d.get("categories", [])}
-    qz_desk_cats = {c for d in detached if "quiz" in (d["page"].get("include") or [])
                     for c in d.get("categories", [])}
 
     build_glossary_page(out, [g for g in glossary_index if g.get("category") not in gl_desk_cats],
@@ -8719,49 +8573,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                               "meta": f"{gl_terms} terms across {len(dgloss)} corpora, "
                                       f"defined in plain language",
                               "cta": "Look it up →"})
-        if "briefings" in inc:
-            # The desk's essay rack — its Pamphlets sibling. Renders (and bands)
-            # even when empty, so the section exists before the first essay files.
-            b_slug = pcfg.get("briefings_slug", "briefings")
-            b_title = pcfg.get("briefings_title", "The Briefings")
-            b_cfg = {
-                "motto": pcfg.get("briefings_motto",
-                                  "The desk's essays — filed one argument at a time."),
-                "blurb": pcfg.get("briefings_blurb",
-                                  f"Standalone essays on the programmatic and Connected-TV trade — "
-                                  f"{b_title} is the {title} desk's own rack of arguments, "
-                                  f"kept apart from the library's Pamphlets."),
-            }
-            b_items = read_pamphlets_manifest(out, subdir=b_slug)
-            build_pamphlets_page(out, b_items, b_cfg, shell=shell_root,
-                                 page={"fname": f"{b_slug}.html", "title": b_title,
-                                       "kicker": pcfg.get("briefings_kicker", f"Essays from the {title} desk"),
-                                       "nav": desk_nav, "back": desk_back, "noun": "briefing",
-                                       "empty": f"No briefings filed yet. Drop an essay into "
-                                                f"docs/{b_slug}/data/ and list it in the manifest "
-                                                f"to see it here.",
-                                       "accent": ("#0d5b68", "#62aab8")})
-            bands += pamphlets_band_html(b_items, b_cfg,
-                                         page={"name": b_title, "flag": "The<br>Briefings",
-                                               "href": f"{b_slug}.html", "cls": "brf"})
-        quiz_html = ""
-        if "quiz" in inc:
-            # The desk's own Test Yourself — the quiz engine scoped (via
-            # #quiz-slugs) to just this desk's corpora, facts, and passages.
-            dslugs = [m["slug"] for m in corpus_meta if m["category"] in dcats]
-            dset = set(dslugs)
-            dfacts = [f for f in quiz_facts if f["slug"] in dset]
-            dpass = [p for p in all_passages if p["slug"] in dset]
-            if dfacts:
-                quiz_html = (
-                    quiz_section_scoped(ns=f"{slug}:", all_label="Across the whole desk",
-                                        all_name=f"the {title} desk")
-                    + f'<script id="quiz-slugs" type="application/json">{json_for_html(dslugs)}</script>'
-                    + f'<script id="quiz-data" type="application/json">{json_for_html(dfacts)}</script>'
-                    + f'<script id="passages-data" type="application/json">{json_for_html(dpass)}</script>'
-                )
         build_domain_page(out, pcfg, d, dcards, dcats, dstats, bands=bands,
-                          tools=_desk_tools_html(tools), quiz=quiz_html, shell=shell_root)
+                          tools=_desk_tools_html(tools), shell=shell_root)
         home_bands.append(domain_band_html(pcfg, d, len(dcards), fp_editions if takes_fp else None))
         print(f"  ✓ Detached desk: {title} — {dstats}"
               f"{' + board' if any(t['href'].endswith('-forecast.html') for t in tools) else ''}"
@@ -8772,12 +8585,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     index_ws = [w for w in wrapped_stats if w["category"] not in detached_cats]
     stats = (f"{len(index_cards)} corpora · {sum(w['chapters'] for w in index_ws)} chapters · "
              f"{round(sum(w['words'] for w in index_ws) / 1000)}k words")
-
-    # The library quiz tests only the shelves that live on the library — corpora
-    # whose desk runs its own quiz are scoped out via the #quiz-slugs payload.
-    _slug_cat = {m["slug"]: m["category"] for m in corpus_meta}
-    index_quiz_slugs = [m["slug"] for m in corpus_meta if m["category"] not in qz_desk_cats]
-    index_quiz_facts = [f for f in quiz_facts if _slug_cat.get(f["slug"]) not in qz_desk_cats]
 
     # Group the cards into category sections. Categories appear in the configured
     # category_order; any category not listed (and the "Other" catch-all) follows
@@ -8909,8 +8716,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
         quiz=QUIZ_SECTION_HTML
-        + f'<script id="quiz-slugs" type="application/json">{json_for_html(index_quiz_slugs)}</script>'
-        + f'<script id="quiz-data" type="application/json">{json_for_html(index_quiz_facts)}</script>',
+        + f'<script id="quiz-data" type="application/json">{json_for_html(quiz_facts)}</script>',
         cards=library_body,
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS + QUIZ_JS,
         shell=shell_root,
