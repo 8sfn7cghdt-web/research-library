@@ -1,0 +1,4 @@
+{
+  "_how_to_grade": "The desk's grading ledger — one entry per resolved market; the build joins by slug and computes every record, Brier score, and calibration point from here. NATIVE forecast (docs/forecast/data/{slug}.json exists): {\"slug\", \"winner\" (must name the winning entity; matched case-insensitively against consensus + profile picks), \"winner_flag\" (optional emoji), \"resolved\" (YYYY-MM-DD), \"note\" (one sentence on what happened), \"source_url\"/\"source_label\" (optional)}. RESEARCH market (harvested from a corpus manifest): {\"slug\" (the corpus slug), \"outcome\" (the winning scenario's exact name, case-insensitive), \"resolved\", \"note\", \"source_url\"/\"source_label\"}. Then rebuild: python3 build.py -c build.config.json.",
+  "resolutions": []
+}

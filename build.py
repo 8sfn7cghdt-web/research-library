@@ -5589,6 +5589,251 @@ def read_forecast_data(out_dir, slug):
         return None
 
 
+# ---- the grading loop -------------------------------------------------------
+# docs/forecast/resolutions.json is the desk's grading ledger: one entry per
+# resolved market, native or harvested. The build joins entries by slug and
+# computes every hit/miss, record, Brier score, and calibration point from it —
+# records are never hand-maintained. A native data file that carries its own
+# `result` block (status graded/resolved) is honored as a second source.
+
+# The six standing desk personas (see the-forecaster skill). Profiles in native
+# data files carry a stable `persona` id so a market-localized display name
+# ("The Bracket Surgeon") still accrues to its standing persona's record.
+FD_PERSONAS = [
+    ("market-reader", "The Market Reader", "📈", "Follows the deepest, most liquid market prices."),
+    ("quant", "The Quant", "🧮", "Trusts the simulation models over recency and sentiment."),
+    ("historian", "The Historian", "📜", "Counted reference-class base rates and venue history."),
+    ("path-reader", "The Path Reader", "🔪", "Ignores reputation; reads the actual route, draw, and path."),
+    ("talisman", "The Talisman", "⭐", "Elite individual actors, motivation, proven leadership."),
+    ("contrarian", "The Contrarian", "🎭", "Favorites usually fail; hunts the underpriced live path."),
+]
+FD_PERSONA_ALIASES = {"the bracket surgeon": "path-reader"}
+
+
+def _persona_key(profile):
+    """Stable ledger key for a roster profile: explicit `persona` id, a known
+    alias, or the display name slugged (so unknown names still track)."""
+    if profile.get("persona"):
+        return str(profile["persona"]).strip().lower()
+    name = (profile.get("name") or "").strip()
+    alias = FD_PERSONA_ALIASES.get(name.casefold())
+    if alias:
+        return alias
+    return re.sub(r"[^a-z0-9]+", "-", name.casefold().removeprefix("the ")).strip("-")
+
+
+def read_forecast_resolutions(out_dir):
+    """Load docs/forecast/resolutions.json → {slug: resolution dict}. Missing → {}."""
+    path = Path(out_dir) / "forecast" / "resolutions.json"
+    if not path.exists():
+        return {}
+    try:
+        data = json.loads(path.read_text())
+    except (json.JSONDecodeError, OSError):
+        print(f"  ! could not read {path}, treating as ungraded", file=sys.stderr)
+        return {}
+    out = {}
+    for r in data.get("resolutions", []):
+        if isinstance(r, dict) and r.get("slug"):
+            out[r["slug"]] = r
+    return out
+
+
+def _native_resolution(d, resolutions):
+    """A native forecast's resolution: the central ledger wins; a `result` block
+    in the data file itself (the skill's grading flow) is honored as fallback.
+    Returns {winner, winner_flag, resolved, note, source_url, source_label} or None."""
+    res = resolutions.get(d.get("slug", ""))
+    if res and res.get("winner"):
+        return res
+    if d.get("status") in ("graded", "resolved") and isinstance(d.get("result"), dict):
+        r = d["result"]
+        if r.get("winner"):
+            return {"slug": d.get("slug", ""), "winner": r["winner"],
+                    "winner_flag": r.get("flag", r.get("winner_flag", "")),
+                    "resolved": r.get("resolved", r.get("date", "")),
+                    "note": r.get("note", ""), "source_url": r.get("source_url", ""),
+                    "source_label": r.get("source_label", "")}
+    return None
+
+
+def _brier(p_pct, hit):
+    """Binary Brier score for a stated probability (percent) against a 0/1 outcome.
+    0 is clairvoyance, 0.25 is a coin flip, 1 is confident wrongness."""
+    return (p_pct / 100.0 - (1 if hit else 0)) ** 2
+
+
+def grade_native_forecast(d, res):
+    """Grade one native forecast against its resolution: the council's consensus
+    call plus every roster profile, each as a binary claim on its own pick.
+    Returns {winner, winner_flag, resolved, note, source_url, source_label,
+             consensus: {pick, prob, hit, brier}, profiles: [{persona, name,
+             avatar, pick, flag, prob, hit, brier}]}."""
+    winner = (res.get("winner") or "").strip()
+    wkey = winner.casefold()
+    c = d.get("consensus", {})
+    lo, hi = c.get("band_low"), c.get("band_high")
+    c_prob = ((lo + hi) / 2 if isinstance(lo, (int, float)) and isinstance(hi, (int, float))
+              else None)
+    if c_prob is None:
+        band = _prob_band({"probability_range": c.get("band", "")})
+        c_prob = (band[0] + band[1]) / 2 if band else 50.0
+    c_hit = (c.get("pick", "").strip().casefold() == wkey)
+    graded = {
+        "winner": winner, "winner_flag": res.get("winner_flag", ""),
+        "resolved": res.get("resolved", ""), "note": res.get("note", ""),
+        "source_url": res.get("source_url", ""), "source_label": res.get("source_label", ""),
+        "consensus": {"pick": c.get("pick", ""), "flag": c.get("flag", ""),
+                      "prob": c_prob, "hit": c_hit, "brier": _brier(c_prob, c_hit)},
+        "profiles": [],
+    }
+    for p in d.get("profiles", []):
+        prob = p.get("prob_num")
+        if not isinstance(prob, (int, float)):
+            band = _prob_band({"probability_range": p.get("prob", "")})
+            prob = (band[0] + band[1]) / 2 if band else 50.0
+        hit = ((p.get("pick_scenario") or p.get("pick", "")).strip().casefold() == wkey)
+        graded["profiles"].append({
+            "persona": _persona_key(p), "name": p.get("name", ""),
+            "avatar": p.get("avatar", "🎯"), "pick": p.get("pick", ""),
+            "flag": p.get("flag", ""), "prob": float(prob),
+            "hit": hit, "brier": _brier(float(prob), hit),
+        })
+    return graded
+
+
+def _match_market_outcome(m, res):
+    """Index of the resolved outcome in a harvested market, matched
+    case-insensitively on the scenario name. None when nothing matches."""
+    want = (res.get("outcome") or "").strip().casefold()
+    if not want:
+        return None
+    for i, o in enumerate(m["outcomes"]):
+        if o["name"].strip().casefold() == want:
+            return i
+    return None
+
+
+def attach_market_resolution(m, resolutions):
+    """Join a harvested market with the grading ledger. On a match, sets
+    m['resolution'] = {idx, name, resolved, note, source_url, source_label,
+    lead_hit, brier} — graded on the desk's lead call (the top-priced outcome,
+    at its band midpoint). Warns and leaves the market open on a name mismatch."""
+    res = resolutions.get(m["slug"])
+    if not res:
+        return
+    idx = _match_market_outcome(m, res)
+    if idx is None:
+        print(f"  ! resolution for {m['slug']}: outcome {res.get('outcome')!r} "
+              f"matches no scenario — market left open", file=sys.stderr)
+        return
+    lead = m["outcomes"][0]
+    lead_hit = (idx == 0)
+    m["resolution"] = {
+        "idx": idx, "name": m["outcomes"][idx]["name"],
+        "resolved": res.get("resolved", ""), "note": res.get("note", ""),
+        "source_url": res.get("source_url", ""), "source_label": res.get("source_label", ""),
+        "lead_hit": lead_hit, "brier": _brier(lead["mid"], lead_hit),
+    }
+
+
+def build_forecast_ledger(native_items, markets):
+    """Everything the record pages and board chips need, computed in one pass:
+    - personas: {key: {name, avatar, criterion, graded, hits, briers[], calls[]}}
+      for the six standing personas (plus any guest), in roster order
+    - calls: every graded call (council + personas + research lead calls)
+    - desk: {graded, hits} — the desk's own record (consensus + lead calls)
+    - pending: open positions, native first by grade date, then research by horizon
+    native_items are manifest entries annotated with _graded (grade_native_forecast
+    output) when resolved; native_data maps slug → full data dict."""
+    personas = {k: {"key": k, "name": n, "avatar": a, "criterion": c,
+                    "graded": 0, "hits": 0, "briers": [], "calls": []}
+                for k, n, a, c in FD_PERSONAS}
+    calls, pending = [], []
+    desk = {"graded": 0, "hits": 0, "briers": []}
+    for f in native_items:
+        g = f.get("_graded")
+        if not g:
+            pending.append({"kind": "native", "title": f.get("title", f.get("slug", "")),
+                            "href": f.get("file") or f"forecast/{f.get('slug', '')}.html",
+                            "call": f"{f.get('pick_flag', '')} {f.get('pick', '')} {f.get('band', '')}".strip(),
+                            "due": f.get("grades", ""), "category": f.get("category", "")})
+            continue
+        c = g["consensus"]
+        desk["graded"] += 1
+        desk["hits"] += 1 if c["hit"] else 0
+        desk["briers"].append(c["brier"])
+        calls.append({"caller": "The Council", "avatar": "🏛", "kind": "council",
+                      "market": f.get("title", f.get("slug", "")),
+                      "href": f.get("file") or f"forecast/{f.get('slug', '')}.html",
+                      "call": c["pick"], "flag": c.get("flag", ""), "prob": c["prob"],
+                      "result": g["winner"], "result_flag": g.get("winner_flag", ""),
+                      "hit": c["hit"], "brier": c["brier"], "date": g.get("resolved", "")})
+        for p in g["profiles"]:
+            entry = personas.setdefault(p["persona"], {
+                "key": p["persona"], "name": p["name"], "avatar": p["avatar"],
+                "criterion": "", "graded": 0, "hits": 0, "briers": [], "calls": []})
+            entry["graded"] += 1
+            entry["hits"] += 1 if p["hit"] else 0
+            entry["briers"].append(p["brier"])
+            entry["calls"].append({"market": f.get("title", f.get("slug", "")),
+                                   "pick": p["pick"], "flag": p.get("flag", ""),
+                                   "prob": p["prob"], "hit": p["hit"], "brier": p["brier"]})
+            calls.append({"caller": entry["name"], "avatar": p["avatar"], "kind": "persona",
+                          "market": f.get("title", f.get("slug", "")),
+                          "href": f.get("file") or f"forecast/{f.get('slug', '')}.html",
+                          "call": p["pick"], "flag": p.get("flag", ""), "prob": p["prob"],
+                          "result": g["winner"], "result_flag": g.get("winner_flag", ""),
+                          "hit": p["hit"], "brier": p["brier"], "date": g.get("resolved", "")})
+    for m in markets:
+        r = m.get("resolution")
+        lead = m["outcomes"][0]
+        if not r:
+            pending.append({"kind": "research", "title": m["title"], "href": m["href"],
+                            "call": f"{lead['name']} {_fmt_band(lead['low'], lead['high'])}",
+                            "due": (m.get("desk") or {}).get("grades", ""),
+                            "horizon": m.get("horizon", ""),
+                            "category": m["category"]})
+            continue
+        desk["graded"] += 1
+        desk["hits"] += 1 if r["lead_hit"] else 0
+        desk["briers"].append(r["brier"])
+        calls.append({"caller": "The Research", "avatar": "📚", "kind": "research",
+                      "market": m["title"], "href": m["href"],
+                      "call": lead["name"], "flag": "", "prob": lead["mid"],
+                      "result": r["name"], "result_flag": "",
+                      "hit": r["lead_hit"], "brier": r["brier"], "date": r.get("resolved", "")})
+        # A graded market whose corpus carries a forecast_desk dossier grades its
+        # roster too — the standing personas' records accrue from research desks
+        # exactly as they do from native forecasts.
+        wkey = r["name"].strip().casefold()
+        for p in (m.get("desk") or {}).get("profiles", []):
+            prob = p.get("prob_num")
+            if not isinstance(prob, (int, float)):
+                band = _prob_band({"probability_range": p.get("prob", "")})
+                prob = (band[0] + band[1]) / 2 if band else 50.0
+            hit = ((p.get("pick_scenario") or p.get("pick", "")).strip().casefold() == wkey)
+            brier = _brier(float(prob), hit)
+            entry = personas.setdefault(_persona_key(p), {
+                "key": _persona_key(p), "name": p.get("name", ""),
+                "avatar": p.get("avatar", "🎯"), "criterion": "",
+                "graded": 0, "hits": 0, "briers": [], "calls": []})
+            entry["graded"] += 1
+            entry["hits"] += 1 if hit else 0
+            entry["briers"].append(brier)
+            entry["calls"].append({"market": m["title"], "pick": p.get("pick", ""),
+                                   "flag": p.get("flag", ""), "prob": float(prob),
+                                   "hit": hit, "brier": brier})
+            calls.append({"caller": entry["name"], "avatar": entry["avatar"], "kind": "persona",
+                          "market": m["title"], "href": m["href"],
+                          "call": p.get("pick", ""), "flag": p.get("flag", ""), "prob": float(prob),
+                          "result": r["name"], "result_flag": "",
+                          "hit": hit, "brier": brier, "date": r.get("resolved", "")})
+    calls.sort(key=lambda c: c.get("date", ""), reverse=True)
+    pending.sort(key=lambda p: (p["kind"] != "native", p.get("due", "") or "~", p.get("title", "")))
+    return {"personas": personas, "calls": calls, "desk": desk, "pending": pending}
+
+
 def _prob_band(scenario):
     """Normalize a scenario's probability to a (low, high) pair of percentages.
     Accepts {low,high} in 0–1 or 0–100, a bare float, or a prose range like
@@ -5631,7 +5876,7 @@ def _fmt_band(lo, hi):
     return f"{f(lo)}%" if abs(hi - lo) < .05 else f"{f(lo)}–{f(hi)}%"
 
 
-def harvest_corpus_market(folder, corpus, category, cover=None):
+def harvest_corpus_market(folder, corpus, category, cover=None, description=""):
     """Turn one research corpus's manifest `scenarios` into a Forecast Desk market
     (scenario = outcome, probability band = price). Returns None when the corpus
     carries no structured scenarios. Board cards open the market's own desk page
@@ -5671,16 +5916,22 @@ def harvest_corpus_market(folder, corpus, category, cover=None):
                  or "future trajectory" in d.get("title", "").lower()), None)
     research_href = f"{corpus['slug']}.html" + (f"#ch-{ft_i}" if ft_i is not None else "")
     horizon = (manifest.get("forecast_horizon") or outcomes[0]["horizon"] or "").strip()
+    # The optional `forecast_desk` dossier (written by the-forecaster) upgrades this
+    # market's desk page to the full live-market dress: predictor roster, consensus,
+    # base rates, market snapshot, triggers, sources, grading date.
+    desk = manifest.get("forecast_desk")
     return {
         "slug": corpus["slug"],
         "title": corpus["title"],
         "subtitle": corpus.get("subtitle", ""),
+        "description": (description or "").strip(),  # the library card's blurb, shown on board cards too
         "category": category,
         "href": f"forecast/{corpus['slug']}.html",   # the market's own desk page
         "research_href": research_href,              # root-relative reader deep link
         "cover": cover,                              # root-relative covers/{name}, or None
         "horizon": horizon,
         "outcomes": outcomes,
+        "desk": desk if isinstance(desk, dict) else {},
     }
 
 
@@ -5690,6 +5941,11 @@ def forecast_band_html(native_items, markets, cfg):
     motto = html.escape(cfg.get("motto", ""))
     n_markets = len(native_items) + len(markets)
     n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
+    n_graded = (sum(1 for f in native_items if f.get("_graded"))
+                + sum(1 for m in markets if m.get("resolution")))
+    hits = (sum(1 for f in native_items if f.get("_graded") and f["_graded"]["consensus"]["hit"])
+            + sum(1 for m in markets if m.get("resolution") and m["resolution"]["lead_hit"]))
+    rec_bit = f" · {n_graded} graded, record {hits}–{n_graded - hits}" if n_graded else ""
     flag = f'<div class="fdb-flag">The Forecast<br>Desk<small>{motto}</small></div>'
     live = next((f for f in native_items if f.get("status", "open") == "open"), None)
     if live:
@@ -5700,11 +5956,11 @@ def forecast_band_html(native_items, markets, cfg):
             chip = html.escape(f"{live.get('pick_flag', '')} {live['pick']} {live.get('band', '')}".strip())
             price = f'<span class="fdb-price">{chip}</span>'
         lead = f"{q}{price}"
-        sub = f"{n_markets} markets on the board · {n_outcomes} priced outcomes · every one grounded in the research"
+        sub = f"{n_markets} markets on the board · {n_outcomes} priced outcomes{rec_bit} · every one grounded in the research"
     else:
         kicker = "Predictions, by category"
         lead = html.escape(cfg.get("title", "The Forecast Desk"))
-        sub = f"{n_markets} markets · {n_outcomes} priced outcomes across the research library"
+        sub = f"{n_markets} markets · {n_outcomes} priced outcomes across the research library{rec_bit}"
     mid = (f'<div class="fdb-mid"><p class="fdb-kicker">{kicker}</p>'
            f'<p class="fdb-lead">{lead}</p><p class="fdb-sub">{html.escape(sub) if live else sub}</p></div>')
     return (f'<div class="fd-band"><a href="forecast.html">{flag}{mid}'
@@ -5810,6 +6066,8 @@ FORECAST_PAGE_CSS = """
 .fd-card-hz { font-family: var(--fdmono); font-size: .64rem; color: var(--fdmut); margin-left: auto;
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 55%; }
 .fd-card-q { font-family: var(--display); font-weight: 600; font-size: 1.06rem; line-height: 1.22; margin: 0 0 .75rem; }
+.fd-card-sub { font-family: var(--serif); font-style: italic; font-size: .84rem; line-height: 1.5; color: var(--fdmut);
+  margin: -.45rem 0 .8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .fd-out { margin: 0 0 .55rem; }
 .fd-out-l { display: flex; justify-content: space-between; gap: .8rem; align-items: baseline;
   font-family: var(--sans); font-size: .78rem; line-height: 1.3; margin-bottom: .28rem; }
@@ -5850,6 +6108,97 @@ FORECAST_PAGE_CSS = """
     transition-duration: .01ms !important;
   }
 }
+
+/* ---- the grading loop: verdict dress ---- */
+.fd-chip-graded { font-family: var(--sans); font-size: .64rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .14em; color: #0c1117; background: var(--fdup); border-radius: 2px; padding: .22rem .6rem; }
+.fd-chip-graded.miss { background: var(--fddn); color: #fff; }
+.fd-mk { font-family: var(--fdmono); font-weight: 700; font-size: .8rem; margin-right: .35rem; }
+.fd-mk.won { color: var(--fdup); } .fd-mk.lost { color: var(--fddn); }
+.fd-out.lost .nm { color: var(--fdmut); text-decoration: line-through; text-decoration-color: rgba(239,68,68,.5);
+  text-decoration-thickness: 1px; }
+.fd-out.lost .fd-track, .fd-out.lost .pc { opacity: .5; }
+.fd-out.won .nm { color: var(--fdup); font-weight: 800; }
+.fd-tk .dn { color: var(--fddn); font-weight: 700; }
+.fd-live.graded:hover { border-color: var(--fdgold); }
+.fd-live-grid.graded { grid-template-columns: auto auto 1fr; }
+.fd-live-pick.won { border-color: var(--fdup); }
+.fd-live-pick.won .p { color: var(--fdup); text-transform: uppercase; letter-spacing: .12em; font-size: .8rem; }
+.fd-live-pick.called .p { font-size: .8rem; }
+.fd-live-pick.called.missed { border-color: rgba(239,68,68,.5); }
+.fd-live-pick.called.missed .p { color: var(--fddn); }
+@media (max-width: 680px) { .fd-live-grid.graded { grid-template-columns: 1fr 1fr; } }
+.fd-folio-g { color: var(--fdgold, #b8860b); font-weight: 700; }
+.fd-rec-link { display: inline-block; margin-top: 1rem; font-family: var(--sans); font-size: .78rem;
+  font-weight: 700; text-decoration: none; color: var(--accent); border: 1px solid var(--border);
+  border-radius: 2px; padding: .5rem 1rem; transition: transform .14s var(--ease), box-shadow .14s var(--ease); }
+.fd-rec-link:hover { transform: translateY(-1px); box-shadow: var(--shadow-2, 0 4px 12px rgba(0,0,0,.12)); }
+
+/* ---- the track record page ---- */
+.fdt-sum { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: .9rem; }
+.fdt-stat { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: .95rem 1.05rem; }
+.fdt-stat .big { font-family: var(--fdmono); font-weight: 700; font-size: 1.55rem; color: var(--fdtext);
+  font-variant-numeric: tabular-nums; }
+.fdt-stat .big.up { color: var(--fdup); } .fdt-stat .big.gold { color: var(--fdgold); }
+.fdt-stat .lbl { font-family: var(--sans); font-size: .64rem; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--fdmut); margin-top: .3rem; }
+.fdt-note { font-family: var(--serif); font-style: italic; font-size: .9rem; line-height: 1.6; color: var(--fdmut); margin: 1rem 0 0; }
+.fdt-roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+.fdt-p { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1rem 1.1rem; }
+.fdt-p-top { display: flex; gap: .7rem; align-items: center; }
+.fdt-p-av { font-size: 1.5rem; line-height: 1; background: #0c1117; border: 1px solid var(--fdline);
+  border-radius: 2px; padding: .45rem .5rem; }
+.fdt-p-nm { font-family: var(--sans); font-weight: 800; font-size: .98rem; }
+.fdt-p-crit { font-family: var(--serif); font-style: italic; font-size: .76rem; color: var(--fdmut); line-height: 1.4; margin-top: .1rem; }
+.fdt-p-rec { margin-left: auto; text-align: right; white-space: nowrap; }
+.fdt-p-rec .r { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext);
+  font-variant-numeric: tabular-nums; }
+.fdt-p-rec .r.up { color: var(--fdup); } .fdt-p-rec .r.dn { color: var(--fddn); }
+.fdt-p-rec .b { font-family: var(--sans); font-size: .6rem; text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); }
+.fdt-p-calls { border-top: 1px solid var(--fdline); margin-top: .7rem; padding-top: .6rem; }
+.fdt-p-call { display: flex; justify-content: space-between; gap: .8rem; font-family: var(--sans); font-size: .74rem;
+  color: var(--fdmut); margin: .3rem 0; }
+.fdt-p-call .v { font-family: var(--fdmono); font-weight: 700; white-space: nowrap; }
+.fdt-p-call .v.up { color: var(--fdup); } .fdt-p-call .v.dn { color: var(--fddn); }
+.fdt-p-none { font-family: var(--serif); font-style: italic; font-size: .8rem; color: var(--fdmut);
+  border-top: 1px solid var(--fdline); margin-top: .7rem; padding-top: .6rem; }
+.fdt-cal { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.1rem 1.25rem; }
+.fdt-cal svg { display: block; width: 100%; height: auto; }
+.fdt-cal-leg { display: flex; gap: 1.1rem; flex-wrap: wrap; font-family: var(--sans); font-size: .7rem;
+  color: var(--fdmut); margin-top: .7rem; }
+.fdt-cal-leg .sw { display: inline-block; width: .7em; height: .7em; border-radius: 50%; margin-right: .3em; }
+.fdt-ledger { border: 1px solid var(--fdline); border-radius: 2px; overflow-x: auto; background: var(--fdcard); }
+.fdt-ledger table { border-collapse: collapse; width: 100%; font-size: .78rem; }
+.fdt-ledger th, .fdt-ledger td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--fdline);
+  vertical-align: top; font-family: var(--sans); color: var(--fdmut); white-space: nowrap; }
+.fdt-ledger thead th { font-size: .58rem; text-transform: uppercase; letter-spacing: .1em; background: #0c1117; }
+.fdt-ledger tbody tr:last-child td { border-bottom: none; }
+.fdt-ledger td a { color: var(--fdtext); text-decoration: none; font-weight: 700; }
+.fdt-ledger td a:hover { color: var(--fdblue); }
+.fdt-ledger .num { font-family: var(--fdmono); font-variant-numeric: tabular-nums; }
+.fdt-ledger .v-hit { color: var(--fdup); font-weight: 800; } .fdt-ledger .v-miss { color: var(--fddn); font-weight: 800; }
+.fdt-empty { font-family: var(--serif); font-style: italic; font-size: .95rem; line-height: 1.6; color: var(--fdmut);
+  border: 1px dashed var(--fdline); border-radius: 2px; padding: 1.1rem 1.25rem; }
+.fdt-pend { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem 1.2rem; }
+.fdt-pend a { display: flex; justify-content: space-between; gap: .8rem; align-items: baseline; text-decoration: none;
+  border-bottom: 1px dotted var(--fdline); padding: .35rem 0; }
+.fdt-pend .t { font-family: var(--sans); font-size: .8rem; font-weight: 600; color: var(--fdtext); }
+.fdt-pend a:hover .t { color: var(--fdblue); }
+.fdt-pend .w { font-family: var(--fdmono); font-size: .7rem; color: var(--fdmut); white-space: nowrap; }
+@media (max-width: 640px) { .fdt-pend { grid-template-columns: 1fr; } }
+
+/* verdict banner on graded detail pages */
+.fdd-verdict { border: 1px solid var(--fdup); background: rgba(34,197,94,.07); border-radius: 2px;
+  padding: 1.1rem 1.3rem; }
+.fdd-verdict.miss { border-color: var(--fddn); background: rgba(239,68,68,.07); }
+.fdd-verdict .lbl { display: block; font-family: var(--sans); font-size: .62rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--fdup); margin-bottom: .35rem; }
+.fdd-verdict.miss .lbl { color: var(--fddn); }
+.fdd-verdict p { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0; margin: 0; }
+.fdd-verdict .src { font-family: var(--sans); font-size: .72rem; margin-top: .5rem; }
+.fdd-verdict .src a { color: var(--fdblue); }
+.fdd-tag.hit { color: #0c1117; background: var(--fdup); }
+.fdd-tag.missed { color: #fff; background: var(--fddn); }
 """
 
 FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
@@ -5876,10 +6225,9 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
   <h1 class="fd-name">{h1}</h1>
   <p class="fd-motto">“{motto}”</p>
   <div class="fd-folio">
-    <span>{n_markets} markets</span>
-    <span class="fd-folio-c">{n_outcomes} priced outcomes</span>
-    <span>{n_cats} categories</span>
+{folio}
   </div>
+{plate_extra}
 </header>
 <main class="fd-board" id="fd-board">
 {body}
@@ -5925,26 +6273,35 @@ def _fd_cat_color(cat):
     return FD_CAT_COLORS.get(cat) or FD_OUT_COLORS[sum(map(ord, cat or "")) % len(FD_OUT_COLORS)]
 
 
-def _fd_outcome_rows(outcomes, cap=5):
+def _fd_outcome_rows(outcomes, cap=5, resolved_idx=None):
     """Outcome rows for a market card: name + a bar that FILLS from zero to the
     outcome's probability (Polymarket-style, 0–100 axis), the band's uncertainty
-    shown as a lighter extension. Each outcome wears its own colorway."""
+    shown as a lighter extension. Each outcome wears its own colorway. On a
+    graded market (resolved_idx set) the winning outcome is stamped ✓ and the
+    rest ✗-dimmed — the priced bars stay, as the record of what the desk said."""
     rows = []
-    for i, o in enumerate(outcomes[:cap]):
+    show = outcomes[:cap]
+    if resolved_idx is not None and resolved_idx >= cap:
+        show = outcomes[:cap - 1] + [outcomes[resolved_idx]]
+    for i, o in enumerate(show):
+        oi = outcomes.index(o)
         low = max(min(o["low"], 100.0), 0.0)
         high = max(min(o["high"], 100.0), low)
         rng = high - low
-        col = FD_OUT_COLORS[i % len(FD_OUT_COLORS)]
-        lead = " lead" if i == 0 else ""
+        col = FD_OUT_COLORS[oi % len(FD_OUT_COLORS)]
+        lead = " lead" if oi == 0 else ""
+        won = resolved_idx is not None and oi == resolved_idx
+        lost = resolved_idx is not None and oi != resolved_idx
         bars = f'<span class="fd-fill" style="width:{max(low, 1.5):.1f}%;background:{col}"></span>'
         if rng >= .5:
             bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{rng:.1f}%;background:{col}"></span>'
+        mark = '<span class="fd-mk won">✓</span>' if won else ('<span class="fd-mk lost">✗</span>' if lost else "")
         pc = (f'<span class="pc" style="background:{col};color:#0c1117">{_fmt_band(o["low"], o["high"])}</span>'
-              if i == 0 else
+              if oi == 0 else
               f'<span class="pc" style="color:{col}">{_fmt_band(o["low"], o["high"])}</span>')
         rows.append(
-            f'<div class="fd-out{lead}"><div class="fd-out-l">'
-            f'<span class="nm">{html.escape(o["name"])}</span>{pc}</div>'
+            f'<div class="fd-out{lead}{" won" if won else ""}{" lost" if lost else ""}"><div class="fd-out-l">'
+            f'{mark}<span class="nm">{html.escape(o["name"])}</span>{pc}</div>'
             f'<div class="fd-track">{bars}</div></div>'
         )
     extra = len(outcomes) - cap
@@ -5958,19 +6315,35 @@ def _fd_market_card(m):
     cc = _fd_cat_color(m["category"])
     cover = (f'<img class="fd-card-cover" src="{html.escape(m["cover"], quote=True)}" alt="" loading="lazy">'
              if m.get("cover") else "")
+    dek = (f'<p class="fd-card-sub">{html.escape(m["description"])}</p>'
+           if m.get("description") else "")
+    r = m.get("resolution")
+    if r:
+        verdict = ("✓ the desk's lead call hit" if r["lead_hit"] else "✗ the desk's lead call missed")
+        vcol = "var(--fdup)" if r["lead_hit"] else "var(--fddn)"
+        chip = f'<span class="fd-chip-graded{"" if r["lead_hit"] else " miss"}">{"✓" if r["lead_hit"] else "✗"} Graded</span>'
+        top_right = html.escape(_long_date(r["resolved"]) if r.get("resolved") else "resolved")
+        foot = (f'<div class="fd-card-foot"><span style="color:{vcol}">{verdict} · Brier {r["brier"]:.3f}</span>'
+                f'<span class="go" style="color:{cc}">The grade →</span></div>')
+    else:
+        chip = '<span class="fd-chip-open">Open</span>'
+        top_right = hz
+        foot = (f'<div class="fd-card-foot"><span>{len(m["outcomes"])} outcomes · from the research</span>'
+                f'<span class="go" style="color:{cc}">Full forecast →</span></div>')
     return (
-        f'<a class="fd-card" href="{html.escape(m["href"], quote=True)}" style="border-top:3px solid {cc}">'
-        f'<div class="fd-card-top">{cover}<span class="fd-chip-open">Open</span>'
-        f'<span class="fd-card-hz">{hz}</span></div>'
-        f'<h3 class="fd-card-q">{html.escape(m["title"])}</h3>'
-        f'{_fd_outcome_rows(m["outcomes"])}'
-        f'<div class="fd-card-foot"><span>{len(m["outcomes"])} outcomes · from the research</span>'
-        f'<span class="go" style="color:{cc}">Full forecast →</span></div></a>'
+        f'<a class="fd-card{" graded" if r else ""}" href="{html.escape(m["href"], quote=True)}" style="border-top:3px solid {cc}">'
+        f'<div class="fd-card-top">{cover}{chip}'
+        f'<span class="fd-card-hz">{top_right}</span></div>'
+        f'<h3 class="fd-card-q">{html.escape(m["title"])}</h3>{dek}'
+        f'{_fd_outcome_rows(m["outcomes"], resolved_idx=r["idx"] if r else None)}'
+        f'{foot}</a>'
     )
 
 
 def _fd_live_hero(f):
-    """The featured native market — a live board lead with the consensus pick."""
+    """The featured native market — a live board lead with the consensus pick.
+    Once graded (f['_graded'] set by the resolutions ledger) the same hero turns
+    into the verdict: winner named, the council's call stamped hit or miss."""
     q = html.escape(f.get("question") or f.get("title") or "Live forecast")
     cat = html.escape(f.get("category", ""))
     pick = html.escape(f.get("pick", ""))
@@ -5979,11 +6352,36 @@ def _fd_live_hero(f):
     dek = html.escape(f.get("dek", ""))
     logged = html.escape(_long_date(f["logged"]) if f.get("logged") else "")
     grades = f.get("grades", "")
-    grades_bit = (f'<span>⏳ <b data-grades="{html.escape(grades, quote=True)}">grades {html.escape(_long_date(grades))}</b></span>'
-                  if grades else "")
     profiles_n = f.get("profiles_n")
     prof_bit = f"<span>👥 <b>{profiles_n} predictor profiles</b></span>" if profiles_n else ""
     href = html.escape(f.get("file") or f"forecast/{f['slug']}.html", quote=True)
+    g = f.get("_graded")
+    if g:
+        c = g["consensus"]
+        hit = c["hit"]
+        chip = (f'<span class="fd-chip-graded{"" if hit else " miss"}">{"✓" if hit else "✗"} Graded — '
+                f'the desk {"called it" if hit else "missed"}</span>')
+        graded_on = html.escape(_long_date(g["resolved"]) if g.get("resolved") else "")
+        meta = (f'{prof_bit}<span>🏁 <b>graded {graded_on}</b></span>'
+                f'<span>📉 <b>Brier {c["brier"]:.3f}</b></span>')
+        winner_bit = (f'<div class="fd-live-pick won"><div class="f">{g.get("winner_flag", "") or "🏆"}</div>'
+                      f'<div class="t">{html.escape(g["winner"])}</div><div class="p">won</div></div>')
+        sub = html.escape(g.get("note", "")) or dek
+        return (
+            f'<a class="fd-live graded" href="{href}">'
+            f'<div class="fd-live-top">{chip}'
+            f'<span class="fd-chip-cat" style="color:{_fd_cat_color(f.get("category", ""))};border-color:{_fd_cat_color(f.get("category", ""))}">{cat}</span>'
+            f'<span class="fd-chip-date">logged {logged}</span></div>'
+            f'<h2 class="fd-live-q">{q}</h2>'
+            f'<div class="fd-live-grid graded">{winner_bit}'
+            f'<div class="fd-live-pick called{"" if hit else " missed"}">'
+            f'<div class="f">{flagc}</div><div class="t">{pick}</div><div class="p">called {band}</div></div>'
+            f'<div><p class="fd-live-sub">{sub}</p>'
+            f'<div class="fd-live-meta">{meta}</div>'
+            f'</div></div></a>'
+        )
+    grades_bit = (f'<span>⏳ <b data-grades="{html.escape(grades, quote=True)}">grades {html.escape(_long_date(grades))}</b></span>'
+                  if grades else "")
     return (
         f'<a class="fd-live" href="{href}">'
         f'<div class="fd-live-top"><span class="fd-chip-live"><span class="d"></span>Live market</span>'
@@ -5999,13 +6397,28 @@ def _fd_live_hero(f):
 
 
 def _fd_tape(native_items, markets):
-    """The ticker tape: every market's leading outcome as one tick."""
+    """The ticker tape: every market's leading outcome as one tick; graded
+    markets tick their verdict instead."""
     ticks = []
     for f in native_items:
-        if f.get("pick"):
+        g = f.get("_graded")
+        if g:
+            hit = g["consensus"]["hit"]
+            cls = "up" if hit else "dn"
+            ticks.append(f'<span class="fd-tk"><b>{html.escape(f.get("title", f["slug"]))}</b> · '
+                         f'<span class="{cls}">{"✓" if hit else "✗"} {html.escape((g.get("winner_flag", "") + " " + g["winner"]).strip())} won'
+                         f' — desk {"called it" if hit else "missed"}</span></span>')
+        elif f.get("pick"):
             ticks.append(f'<span class="fd-tk"><b>{html.escape(f.get("title", f["slug"]))}</b> · '
                          f'<span class="up">{html.escape((f.get("pick_flag", "") + " " + f["pick"]).strip())} {html.escape(f.get("band", ""))}</span></span>')
     for m in markets:
+        r = m.get("resolution")
+        if r:
+            cls = "up" if r["lead_hit"] else "dn"
+            ticks.append(f'<span class="fd-tk"><b>{html.escape(m["title"])}</b> · '
+                         f'<span class="{cls}">{"✓" if r["lead_hit"] else "✗"} {html.escape(r["name"][:46])}'
+                         f' — {"called" if r["lead_hit"] else "missed"}</span></span>')
+            continue
         o = m["outcomes"][0]
         cc = _fd_cat_color(m["category"])
         ticks.append(f'<span class="fd-tk"><b>{html.escape(m["title"])}</b> · '
@@ -6030,9 +6443,10 @@ FORECAST_NAV_DEFAULT = (
 
 def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None):
     """Render a Forecast board — docs/forecast.html by default: ticker, live
-    native markets, then every harvested corpus market shelved by category.
+    native markets, then every harvested corpus market shelved by category
+    (graded markets shelve last on their shelf, wearing their verdict).
     A `page` override scopes the board to a detached desk's own edition (e.g.
-    the Ad Tech Board): {fname, title (h1), kicker, nav, back}."""
+    the Ad Tech Board): {fname, title (h1), kicker, nav, back, record_fname}."""
     out = Path(out_dir)
     page = page or {}
     fname = page.get("fname", "forecast.html")
@@ -6040,6 +6454,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     kicker = page.get("kicker", "Predictions, by category")
     nav = page.get("nav", FORECAST_NAV_DEFAULT)
     back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
+    record_fname = page.get("record_fname", "forecast-record.html")
     category_order = category_order or []
     parts = [_fd_tape(native_items, markets)]
     for f in native_items:
@@ -6053,7 +6468,8 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         if m["category"] not in cats:
             cats.append(m["category"])
     for c in cats:
-        group = [m for m in markets if m["category"] == c]
+        group = sorted([m for m in markets if m["category"] == c],
+                       key=lambda m: bool(m.get("resolution")))
         cards = "".join(_fd_market_card(m) for m in group)
         cc = _fd_cat_color(c)
         parts.append(f'<h2 class="fd-cat-h"><span class="tick" style="background:{cc}"></span>'
@@ -6061,6 +6477,19 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
                      f'<div class="fd-grid">{cards}</div>')
     n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
     n_markets = len(native_items) + len(markets)
+    # The plate's graded line + the standing link to the track record.
+    n_graded = (sum(1 for f in native_items if f.get("_graded"))
+                + sum(1 for m in markets if m.get("resolution")))
+    hits = (sum(1 for f in native_items if f.get("_graded") and f["_graded"]["consensus"]["hit"])
+            + sum(1 for m in markets if m.get("resolution") and m["resolution"]["lead_hit"]))
+    folio = (f'    <span>{n_markets} markets</span>\n'
+             f'    <span class="fd-folio-c">{n_outcomes} priced outcomes</span>\n'
+             f'    <span>{len(cats) + (1 if native_items else 0)} categories</span>')
+    if n_graded:
+        folio += (f'\n    <span class="fd-folio-g">{n_graded} graded · '
+                  f'record {hits}–{n_graded - hits}</span>')
+    plate_extra = (f'  <a class="fd-rec-link" href="{html.escape(record_fname, quote=True)}">'
+                   f'📒 The Track Record — every graded call, scored →</a>')
     og = og_tags(h1,
                  cfg.get("motto", "Every prediction the research makes, priced and graded."),
                  f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
@@ -6071,15 +6500,234 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         favicon=FAVICON, og_meta=og,
         motto=html.escape(cfg.get("motto", "")),
         blurb=html.escape(cfg.get("blurb", "")),
-        n_markets=n_markets, n_outcomes=n_outcomes,
-        n_cats=len(cats) + (1 if native_items else 0),
+        folio=folio, plate_extra=plate_extra,
         body="\n".join(parts),
         theme_js=LIBRARY_THEME_JS,
         app_js=FORECAST_PAGE_JS,
         shell=shell,
     )
     (out / fname).write_text(page_html)
-    print(f"  ✓ {h1}  ({n_markets} markets, {n_outcomes} outcomes) → {fname}")
+    print(f"  ✓ {h1}  ({n_markets} markets, {n_outcomes} outcomes, {n_graded} graded) → {fname}")
+
+
+# ------------------------------------------------------------- the track record
+# The accountability page: every graded call scored, the standing personas'
+# cumulative records, a calibration diagram, and the open positions still
+# awaiting their grade. Site-wide (forecast-record.html) and one per detached
+# desk that runs its own board ({slug}-record.html).
+
+FDT_SERIES_COLORS = {
+    "council": "#eab308", "research": "#60a5fa",
+    "market-reader": "#22c55e", "quant": "#c084fc", "historian": "#f4715c",
+    "path-reader": "#2dd4bf", "talisman": "#f472b6", "contrarian": "#9bb24f",
+}
+
+
+def _fdt_series_color(call):
+    if call["kind"] == "persona":
+        key = re.sub(r"[^a-z0-9]+", "-", call["caller"].casefold().removeprefix("the ")).strip("-")
+        return FDT_SERIES_COLORS.get(key, "#9aa1af")
+    return FDT_SERIES_COLORS.get(call["kind"], "#9aa1af")
+
+
+def _fdt_calibration_svg(calls):
+    """A reliability diagram as inline SVG: every graded call is one dot at
+    (stated probability, what happened), the dashed diagonal is perfect
+    calibration, and once enough calls accumulate a binned frequency line
+    (gold) shows where the desk actually sits. Sparse-safe: dots stack."""
+    X0, X1, Y0, Y1 = 60, 620, 375, 25   # plot box; y inverted (0% at bottom)
+    def px(p):
+        return X0 + (X1 - X0) * p / 100.0
+    def py(v):
+        return Y0 + (Y1 - Y0) * v / 100.0
+    grid = []
+    for t in (0, 25, 50, 75, 100):
+        grid.append(f'<line x1="{px(t):.0f}" y1="{Y0}" x2="{px(t):.0f}" y2="{Y1}" stroke="#2c303a" stroke-width="1"/>')
+        grid.append(f'<line x1="{X0}" y1="{py(t):.0f}" x2="{X1}" y2="{py(t):.0f}" stroke="#2c303a" stroke-width="1"/>')
+        grid.append(f'<text x="{px(t):.0f}" y="{Y0 + 18}" text-anchor="middle" fill="#9aa1af" font-size="11" font-family="ui-monospace,Menlo,monospace">{t}%</text>')
+        grid.append(f'<text x="{X0 - 10}" y="{py(t) + 4:.0f}" text-anchor="end" fill="#9aa1af" font-size="11" font-family="ui-monospace,Menlo,monospace">{t}%</text>')
+    diag = (f'<line x1="{px(0):.0f}" y1="{py(0):.0f}" x2="{px(100):.0f}" y2="{py(100):.0f}" '
+            f'stroke="#9aa1af" stroke-width="1.2" stroke-dasharray="5 5" opacity=".7"/>')
+    labels = (
+        f'<text x="{(X0 + X1) / 2:.0f}" y="{Y0 + 36}" text-anchor="middle" fill="#9aa1af" font-size="11.5" '
+        f'font-family="-apple-system,sans-serif">stated probability at log time →</text>'
+        f'<text x="16" y="{(Y0 + Y1) / 2:.0f}" text-anchor="middle" fill="#9aa1af" font-size="11.5" '
+        f'font-family="-apple-system,sans-serif" transform="rotate(-90 16 {(Y0 + Y1) / 2:.0f})">observed frequency →</text>'
+        f'<text x="{px(72):.0f}" y="{py(78):.0f}" text-anchor="middle" fill="#9aa1af" font-size="10.5" '
+        f'font-style="italic" font-family="Georgia,serif" transform="rotate(-29 {px(72):.0f} {py(78):.0f})">perfect calibration</text>'
+    )
+    dots, stacks = [], {}
+    for c in calls:
+        bucket = (round(c["prob"] / 4), c["hit"])          # stack near-identical dots
+        k = stacks.get(bucket, 0)
+        stacks[bucket] = k + 1
+        y = py(97 - k * 4.5) if c["hit"] else py(3 + k * 4.5)
+        col = _fdt_series_color(c)
+        tip = f'{c["caller"]}: {c["call"]} @ {c["prob"]:g}% — {"hit" if c["hit"] else "miss"} ({c["market"]})'
+        dots.append(f'<circle cx="{px(c["prob"]):.1f}" cy="{y:.1f}" r="5.5" fill="{col}" '
+                    f'stroke="#0c1117" stroke-width="1.2" opacity=".92"><title>{html.escape(tip)}</title></circle>')
+    curve = ""
+    if len(calls) >= 8:
+        pts = []
+        for b0 in range(0, 100, 20):
+            binned = [c for c in calls if b0 <= c["prob"] < b0 + 20 or (b0 == 80 and c["prob"] == 100)]
+            if len(binned) >= 2:
+                freq = sum(1 for c in binned if c["hit"]) / len(binned) * 100
+                mid = sum(c["prob"] for c in binned) / len(binned)
+                pts.append((px(mid), py(freq)))
+        if len(pts) >= 2:
+            path = " ".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+            curve = (f'<polyline points="{path}" fill="none" stroke="#eab308" stroke-width="2.2"/>'
+                     + "".join(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" fill="#eab308"/>' for x, y in pts))
+    empty = ("" if calls else
+             f'<text x="{(X0 + X1) / 2:.0f}" y="{(Y0 + Y1) / 2 - 8:.0f}" text-anchor="middle" fill="#9aa1af" '
+             f'font-size="13" font-style="italic" font-family="Georgia,serif">The diagram draws itself as calls grade.</text>'
+             f'<text x="{(X0 + X1) / 2:.0f}" y="{(Y0 + Y1) / 2 + 14:.0f}" text-anchor="middle" fill="#9aa1af" '
+             f'font-size="11" font-family="-apple-system,sans-serif">A well-calibrated desk lands its dots along the diagonal.</text>')
+    return (f'<svg viewBox="0 0 660 420" xmlns="http://www.w3.org/2000/svg" role="img" '
+            f'aria-label="Calibration diagram: stated probability vs observed frequency">'
+            f'{"".join(grid)}{diag}{labels}{curve}{"".join(dots)}{empty}</svg>')
+
+
+def _fdt_fmt_brier(briers):
+    return f"{sum(briers) / len(briers):.3f}" if briers else "—"
+
+
+def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None):
+    """Render a Track Record page from the graded ledger: desk summary, the
+    standing predictor roster with cumulative records and Brier scores, the
+    calibration diagram, every graded call as a ledger table, and the open
+    positions still awaiting a grade. `page` scopes it to a detached desk:
+    {fname, title, kicker, nav, back, board_href, board_title}."""
+    out = Path(out_dir)
+    page = page or {}
+    fname = page.get("fname", "forecast-record.html")
+    h1 = page.get("title", "The Track Record")
+    kicker = page.get("kicker", "The desk, graded call by call")
+    nav = page.get("nav", FORECAST_NAV_DEFAULT)
+    board_href = page.get("board_href", "forecast.html")
+    board_title = page.get("board_title", "The Forecast Desk")
+    back = page.get("back", f'<a href="{board_href}">← Back to {board_title}</a>')
+    led = build_forecast_ledger(native_items, markets)
+    desk, calls, pending = led["desk"], led["calls"], led["pending"]
+    n_open = len(pending)
+    parts = []
+    # 01 — the desk's own record.
+    rec_txt = f'{desk["hits"]}–{desk["graded"] - desk["hits"]}' if desk["graded"] else "0–0"
+    hitrate = f'{desk["hits"] / desk["graded"] * 100:.0f}%' if desk["graded"] else "—"
+    next_due = next((p for p in pending if p.get("due")), None)
+    parts.append('<h2 class="fdd-h"><span class="n">01</span>The Desk Record — the house call on every graded market</h2>')
+    parts.append(
+        f'<div class="fdt-sum">'
+        f'<div class="fdt-stat"><div class="big">{desk["graded"]}</div><div class="lbl">markets graded</div></div>'
+        f'<div class="fdt-stat"><div class="big {"up" if desk["hits"] * 2 >= desk["graded"] and desk["graded"] else ""}">{rec_txt}</div><div class="lbl">record, hits–misses</div></div>'
+        f'<div class="fdt-stat"><div class="big">{hitrate}</div><div class="lbl">hit rate</div></div>'
+        f'<div class="fdt-stat"><div class="big gold">{_fdt_fmt_brier(desk["briers"])}</div><div class="lbl">mean Brier score</div></div>'
+        f'<div class="fdt-stat"><div class="big">{n_open}</div><div class="lbl">open positions</div></div>'
+        f'</div>')
+    if not desk["graded"]:
+        opens_line = (f' The first market <b data-grades="{html.escape(next_due["due"], quote=True)}">'
+                      f'grades {html.escape(_long_date(next_due["due"]))}</b>.' if next_due and next_due.get("due") else "")
+        parts.append(f'<p class="fdt-note">The ledger is open and nothing has been graded yet — every call below is '
+                     f'frozen at log time and will be scored against the official result, no retro-edits.{opens_line}</p>')
+    parts.append('<p class="fdt-note">Brier score = (stated probability − what happened)², averaged over calls. '
+                 '0 is clairvoyance, 0.25 is a coin flip, 1 is confident wrongness. Lower is better.</p>')
+    n = 2
+    # 02 — the standing personas' cumulative records.
+    personas = [p for p in led["personas"].values() if p["graded"] or p["criterion"]]
+    if personas:
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Standing Roster — cumulative, market over market</h2>')
+        cards = []
+        for p in personas:
+            col = FDT_SERIES_COLORS.get(p["key"], "#9aa1af")
+            if p["graded"]:
+                losses = p["graded"] - p["hits"]
+                cls = "up" if p["hits"] > losses else ("dn" if losses > p["hits"] else "")
+                rec = (f'<div class="fdt-p-rec"><div class="r {cls}">{p["hits"]}–{losses}</div>'
+                       f'<div class="b">Brier {_fdt_fmt_brier(p["briers"])}</div></div>')
+                rows = "".join(
+                    f'<div class="fdt-p-call"><span>{html.escape(c["market"])} · {html.escape((c.get("flag", "") + " " + c["pick"]).strip())} @ {c["prob"]:g}%</span>'
+                    f'<span class="v {"up" if c["hit"] else "dn"}">{"✓ hit" if c["hit"] else "✗ miss"} · {c["brier"]:.3f}</span></div>'
+                    for c in p["calls"][-6:])
+                tail = f'<div class="fdt-p-calls">{rows}</div>'
+            else:
+                rec = '<div class="fdt-p-rec"><div class="r">0–0</div><div class="b">no grades yet</div></div>'
+                tail = '<div class="fdt-p-none">First call on the ledger — awaiting its grade.</div>'
+            cards.append(
+                f'<article class="fdt-p" style="border-top:3px solid {col}">'
+                f'<div class="fdt-p-top"><span class="fdt-p-av">{p["avatar"]}</span>'
+                f'<div><div class="fdt-p-nm">{html.escape(p["name"])}</div>'
+                f'<div class="fdt-p-crit">{html.escape(p["criterion"])}</div></div>{rec}</div>'
+                f'{tail}</article>')
+        parts.append(f'<div class="fdt-roster">{"".join(cards)}</div>')
+        n += 1
+    # 03 — calibration.
+    parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Calibration — where the desk\'s confidence meets reality</h2>')
+    leg_items = ['<span><span class="sw" style="background:#eab308"></span>The Council</span>',
+                 '<span><span class="sw" style="background:#60a5fa"></span>The Research (lead scenarios)</span>']
+    leg_items += [f'<span><span class="sw" style="background:{FDT_SERIES_COLORS.get(k, "#9aa1af")}"></span>{html.escape(nm)}</span>'
+                  for k, nm, _a, _c in FD_PERSONAS]
+    parts.append(f'<div class="fdt-cal">{_fdt_calibration_svg(calls)}'
+                 f'<div class="fdt-cal-leg">{"".join(leg_items)}</div></div>')
+    n += 1
+    # 04 — the graded ledger.
+    parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Ledger — every graded call, scored</h2>')
+    if calls:
+        rows = "".join(
+            f'<tr><td class="num">{html.escape(c["date"] or "—")}</td>'
+            f'<td><a href="{html.escape(c["href"], quote=True)}">{html.escape(c["market"])}</a></td>'
+            f'<td>{c["avatar"]} {html.escape(c["caller"])}</td>'
+            f'<td>{html.escape((c.get("flag", "") + " " + c["call"]).strip())}</td>'
+            f'<td class="num">{c["prob"]:g}%</td>'
+            f'<td>{html.escape((c.get("result_flag", "") + " " + c["result"]).strip())}</td>'
+            f'<td class="{"v-hit" if c["hit"] else "v-miss"}">{"✓ hit" if c["hit"] else "✗ miss"}</td>'
+            f'<td class="num">{c["brier"]:.3f}</td></tr>'
+            for c in calls)
+        parts.append(f'<div class="fdt-ledger"><table><thead><tr><th>Graded</th><th>Market</th><th>Caller</th>'
+                     f'<th>The call</th><th>Price</th><th>Result</th><th>Verdict</th><th>Brier</th></tr></thead>'
+                     f'<tbody>{rows}</tbody></table></div>')
+    else:
+        first = (f' Next up: <a href="{html.escape(next_due["href"], quote=True)}" '
+                 f'style="color:var(--fdblue)">{html.escape(next_due["title"])}</a>, which '
+                 f'<b data-grades="{html.escape(next_due["due"], quote=True)}">'
+                 f'grades {html.escape(_long_date(next_due["due"]))}</b>.'
+                 if next_due and next_due.get("due") else "")
+        parts.append(f'<div class="fdt-empty">No calls graded yet — the ledger below is all open positions.{first}</div>')
+    n += 1
+    # 05 — open positions.
+    if pending:
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Open Positions — {len(pending)} markets awaiting their grade</h2>')
+        rows = []
+        for p in pending:
+            when = (f'<span class="w" data-grades="{html.escape(p["due"], quote=True)}">grades {html.escape(_long_date(p["due"]))}</span>'
+                    if p.get("due") else
+                    f'<span class="w">{html.escape(p.get("horizon", "") or "horizon open")}</span>')
+            rows.append(f'<a href="{html.escape(p["href"], quote=True)}"><span class="t">{html.escape(p["title"])}</span>{when}</a>')
+        parts.append(f'<div class="fdt-pend">{"".join(rows)}</div>')
+    folio = (f'    <span>{desk["graded"]} graded</span>\n'
+             f'    <span class="fd-folio-c">record {rec_txt}</span>\n'
+             f'    <span>mean Brier {_fdt_fmt_brier(desk["briers"])}</span>\n'
+             f'    <span>{n_open} open</span>')
+    plate_extra = (f'  <a class="fd-rec-link" href="{html.escape(board_href, quote=True)}">'
+                   f'📊 {html.escape(board_title)} — the live board →</a>')
+    og = og_tags(h1, "Every graded call, scored — records, Brier scores, and calibration.",
+                 f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
+    page_html = FORECAST_PAGE_TEMPLATE.format(
+        page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
+        nav=nav, back=back,
+        css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+        favicon=FAVICON, og_meta=og,
+        motto="A forecast you never grade is just a mood.",
+        blurb="Every call is frozen when it is logged and scored against the official result when it resolves — "
+              "hits and misses both stay on the ledger. That is the difference between a desk and a feed.",
+        folio=folio, plate_extra=plate_extra,
+        body="\n".join(parts),
+        theme_js=LIBRARY_THEME_JS,
+        app_js=FORECAST_PAGE_JS,
+        shell=shell,
+    )
+    (out / fname).write_text(page_html)
+    print(f"  ✓ {h1}  ({desk['graded']} graded, {n_open} open) → {fname}")
 
 
 # ------------------------------------------------------------- native forecast pages
@@ -6129,7 +6777,8 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
   border-radius: 2px; padding: .5rem .55rem; }
 .fdd-tr-nm { font-family: var(--sans); font-weight: 800; font-size: 1rem; }
 .fdd-tr-crit { font-family: var(--serif); font-style: italic; font-size: .78rem; color: var(--fdmut); line-height: 1.4; margin-top: .15rem; }
-.fdd-tr-call { margin-left: auto; text-align: center; white-space: nowrap; }
+.fdd-tr-call { margin-left: auto; text-align: center; max-width: 11rem; }
+.fdd-tr-call .t { line-height: 1.25; }
 .fdd-tr-call .f { font-size: 1.4rem; line-height: 1; }
 .fdd-tr-call .t { font-family: var(--sans); font-size: .72rem; font-weight: 800; margin-top: .1rem; }
 .fdd-tr-call .p { font-family: var(--fdmono); font-size: .82rem; font-weight: 700; color: var(--fdup);
@@ -6292,35 +6941,53 @@ FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
 """
 
 
-def _fdd_hero(d):
+def _fdd_hero(d, graded=None):
     c = d.get("consensus", {})
     tally = c.get("tally", [])
     total = sum(t.get("votes", 0) for t in tally) or 1
-    seg = "".join(f'<span class="t{i+1}" style="width:{t["votes"]/total*100:.1f}%" title="{html.escape(t["team"])}"></span>'
+    seg = "".join(f'<span class="t{i+1}" style="width:{t["votes"]/total*100:.1f}%" title="{html.escape(t.get("team") or t.get("name", ""))}"></span>'
                   for i, t in enumerate(tally[:3]))
-    leg = " ".join(f'<span>{t.get("flag", "")} <b>{html.escape(t["team"])}</b> {t["votes"]}</span>' for t in tally)
+    leg = " ".join(f'<span>{t.get("flag", "")} <b>{html.escape(t.get("team") or t.get("name", ""))}</b> {t["votes"]}</span>' for t in tally)
     res = html.escape(d.get("resolution", ""))
+    if graded:
+        hit = graded["consensus"]["hit"]
+        chip = f'<span class="fd-chip-graded{"" if hit else " miss"}">{"✓" if hit else "✗"} Graded</span>'
+        date_bit = (f'<span class="fd-chip-date">graded '
+                    f'{html.escape(_long_date(graded["resolved"]) if graded.get("resolved") else "")}</span>')
+    else:
+        chip = '<span class="fd-chip-live"><span class="d"></span>Live</span>'
+        date_bit = f'<span class="fd-chip-date" data-grades="{html.escape(d.get("grades", ""), quote=True)}"></span>'
     return (
         f'<section class="fdd-hero">'
-        f'<div class="fd-live-top"><span class="fd-chip-live"><span class="d"></span>Live</span>'
+        f'<div class="fd-live-top">{chip}'
         f'<span class="fd-chip-cat">{html.escape(d.get("category", ""))}</span>'
-        f'<span class="fd-chip-date" data-grades="{html.escape(d.get("grades", ""), quote=True)}"></span></div>'
+        f'{date_bit}</div>'
         f'<div class="fdd-pickrow"><div class="fdd-pick">'
         f'<div class="f">{c.get("flag", "")}</div><div class="t">{html.escape(c.get("pick", ""))}</div>'
         f'<div class="p">{html.escape(c.get("band", ""))}</div>'
-        f'<div class="ru">runner-up: {c.get("runner_up_flag", "")} {html.escape(c.get("runner_up", ""))} {html.escape(c.get("runner_up_band", ""))}</div></div>'
+        + (f'<div class="ru">runner-up: {c.get("runner_up_flag", "")} {html.escape(c.get("runner_up", ""))} {html.escape(c.get("runner_up_band", ""))}</div>'
+           if c.get("runner_up") else "") + '</div>'
         f'<div><div class="fdd-tally">{seg}</div><div class="fdd-tally-l">{leg}'
         f'<span style="margin-left:auto">council split · fused by grounding strength, not votes</span></div>'
         f'<p class="fdd-res">{res}</p></div></div></section>'
     )
 
 
-def _fdd_roster(profiles):
+def _fdd_roster(profiles, records=None, graded=None):
+    """Trader cards for a roster. `records` (persona key → {graded, hits}) swaps
+    the static record tag for the build-computed cumulative one; `graded`
+    (grade_native_forecast output) stamps each card's call ✓ hit / ✗ miss."""
+    verdicts = {p["persona"]: p for p in (graded or {}).get("profiles", [])}
     cards = []
     for p in profiles:
-        rec = p.get("record") or {}
-        rec_tag = (f'<span class="fdd-tag rec">record {rec.get("hits", 0)}–{max(rec.get("graded", 0) - rec.get("hits", 0), 0)}</span>'
-                   if rec.get("graded") else '<span class="fdd-tag rec">first call on the ledger</span>')
+        key = _persona_key(p)
+        rec = (records or {}).get(key) or p.get("record") or {}
+        n_graded = rec.get("graded", 0)
+        rec_tag = (f'<span class="fdd-tag rec">record {rec.get("hits", 0)}–{max(n_graded - rec.get("hits", 0), 0)}</span>'
+                   if n_graded else '<span class="fdd-tag rec">first call on the ledger</span>')
+        v = verdicts.get(key)
+        v_tag = (f'<span class="fdd-tag {"hit" if v["hit"] else "missed"}">'
+                 f'{"✓ hit" if v["hit"] else "✗ miss"} · Brier {v["brier"]:.3f}</span>' if v else "")
         conf = (p.get("confidence") or "medium").lower()
         cards.append(
             f'<article class="fdd-trader">'
@@ -6331,7 +6998,7 @@ def _fdd_roster(profiles):
             f'<div class="t">{html.escape(p.get("pick", ""))}</div>'
             f'<div class="p">{html.escape(p.get("prob", ""))}</div></div></div>'
             f'<div class="fdd-tr-tags"><span class="fdd-tag reg">✍ {html.escape(p.get("register", ""))}</span>'
-            f'<span class="fdd-tag conf-{conf}">{conf} conf.</span>{rec_tag}</div>'
+            f'<span class="fdd-tag conf-{conf}">{conf} conf.</span>{rec_tag}{v_tag}</div>'
             f'<p class="fdd-tr-blurb">{html.escape(p.get("blurb", ""))}</p>'
             f'<div class="fdd-tr-ev"><b>Key evidence</b> · {html.escape(p.get("evidence", ""))}</div>'
             f'</article>'
@@ -6357,19 +7024,36 @@ def _fdd_field(field):
             f'<div class="fdd-field-foot">Blended exact-winner price across the liquid books · bars scaled to the leader</div></div>')
 
 
-def build_forecast_item(out_dir, item, shell=""):
+def build_forecast_item(out_dir, item, shell="", records=None):
     """Render one native forecast (docs/forecast/{slug}.html) from its data file.
+    A graded item (item['_graded'] joined from the resolutions ledger) wears the
+    verdict: graded hero, "what happened" banner, ✓/✗-stamped trader cards, and
+    the build-computed cumulative `records` on the roster tags.
     Returns True if rendered, False if the data file is absent."""
     out = Path(out_dir)
     slug = item.get("slug", "")
     d = read_forecast_data(out, slug)
     if d is None:
         return False
+    g = item.get("_graded")
     c = d.get("consensus", {})
-    parts = [_fdd_hero(d)]
+    parts = [_fdd_hero(d, graded=g)]
+    if g:
+        gc = g["consensus"]
+        note = html.escape(g.get("note", ""))
+        src = (f'<div class="src">Result per <a href="{html.escape(g["source_url"], quote=True)}" target="_blank" '
+               f'rel="noopener">{html.escape(g.get("source_label") or g["source_url"])}</a></div>'
+               if g.get("source_url") else "")
+        verdict_line = (f'{g.get("winner_flag", "")} <b>{html.escape(g["winner"])}</b> won. The council called '
+                        f'{gc.get("flag", "")} <b>{html.escape(gc["pick"])}</b> at {gc["prob"]:g}% — '
+                        f'{"the desk called it" if gc["hit"] else "the desk missed"} '
+                        f'(Brier {gc["brier"]:.3f}).')
+        parts.append(f'<section class="fdd-verdict{"" if gc["hit"] else " miss"}">'
+                     f'<span class="lbl">{"✓" if gc["hit"] else "✗"} The Grade — what happened</span>'
+                     f'<p>{verdict_line}{" " + note if note else ""}</p>{src}</section>')
     if d.get("profiles"):
         parts.append(f'<h2 class="fdd-h"><span class="n">01</span>The Predictor Roster — {len(d["profiles"])} standing profiles, tracked call by call</h2>')
-        parts.append(_fdd_roster(d["profiles"]))
+        parts.append(_fdd_roster(d["profiles"], records=records, graded=g))
     n = 2
     if c.get("headline_case"):
         parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Consensus</h2>')
@@ -6384,6 +7068,14 @@ def build_forecast_item(out_dir, item, shell=""):
         parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Field</h2>')
         parts.append(_fdd_field(d["field"]))
         n += 1
+    if d.get("outcomes"):
+        # Scenario-shaped native runs (no single named winner) deposit rich
+        # `outcomes` instead of a `field` — same articles as a research market.
+        outs = [x for x in (_norm_outcome(o) for o in d["outcomes"]) if x]
+        if outs:
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Outcomes — {len(outs)} scenarios, priced</h2>')
+            parts.append(_fdr_outcomes(outs))
+            n += 1
     if d.get("base_rates"):
         tiles = "".join(f'<div class="fdd-rate"><div class="big">{html.escape(r.get("stat", ""))}</div>'
                         f'<div class="txt">{html.escape(r.get("text", ""))}</div></div>'
@@ -6413,16 +7105,22 @@ def build_forecast_item(out_dir, item, shell=""):
     grades = d.get("grades", item.get("grades", ""))
     og = og_tags(title, d.get("question", title), f"{SITE_URL}/forecast/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
     logged = html.escape(_long_date(d.get("logged", "")) if d.get("logged") else "—")
+    if g:
+        graded_span = (f'    <span class="fd-folio-c">Graded '
+                       f'{html.escape(_long_date(g["resolved"]) if g.get("resolved") else "")} · '
+                       f'{"✓ hit" if g["consensus"]["hit"] else "✗ miss"}</span>\n')
+    else:
+        graded_span = (f'    <span class="fd-folio-c" data-grades="{html.escape(grades, quote=True)}">'
+                       f'Grades {html.escape(_long_date(grades) if grades else "—")}</span>\n')
     folio = (f'    <span>Logged {logged}</span>\n'
-             f'    <span class="fd-folio-c" data-grades="{html.escape(grades, quote=True)}">'
-             f'Grades {html.escape(_long_date(grades) if grades else "—")}</span>\n'
+             f'{graded_span}'
              f'    <span>{html.escape(d.get("category", ""))}</span>')
     page = FORECAST_DETAIL_TEMPLATE.format(
         title=html.escape(f"{title} — The Forecast Desk"),
         description=html.escape(d.get("question", title)),
         favicon=FAVICON, og_meta=og,
         css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
-        kicker="The Forecast Desk · Live market",
+        kicker=f'The Forecast Desk · {"Graded market" if g else "Live market"}',
         headline=html.escape(d.get("question", title)),
         folio=folio,
         method_note=html.escape(d.get("method_note", "")),
@@ -6436,34 +7134,36 @@ def build_forecast_item(out_dir, item, shell=""):
     return True
 
 
-def build_corpus_market_page(out_dir, m, shell=""):
-    """Render a harvested research market's own desk page — forecast/{slug}.html —
-    in the same live-market dress as a native forecast: hero with the corpus cover
-    as the square panel, every outcome priced with a filled bar plus its
-    description / derivation / drivers / signals, and the deep link into the
-    corpus's Future Trajectory chapter."""
-    out = Path(out_dir)
-    lead = m["outcomes"][0]
-    research = "../" + m["research_href"]
-    cover_sq = (f'<div class="fdd-pick cvr"><img src="../{html.escape(m["cover"], quote=True)}" alt="">'
-                f'<div class="p">{_fmt_band(lead["low"], lead["high"])}</div></div>'
-                if m.get("cover") else
-                f'<div class="fdd-pick"><div class="f">📚</div>'
-                f'<div class="p">{_fmt_band(lead["low"], lead["high"])}</div></div>')
-    hero = (
-        f'<section class="fdd-hero">'
-        f'<div class="fd-live-top"><span class="fd-chip-open">Open</span>'
-        f'<span class="fd-chip-cat" style="color:{_fd_cat_color(m["category"])};border-color:{_fd_cat_color(m["category"])}">{html.escape(m["category"])}</span>'
-        f'<span class="fd-chip-date">{html.escape(m["horizon"])}</span></div>'
-        f'<div class="fdd-pickrow">{cover_sq}'
-        f'<div><p class="fdr-leadlbl">Most likely outcome</p>'
-        f'<p class="fdr-leadnm">{html.escape(lead["name"])}</p>'
-        f'<p class="fdd-res">{html.escape(m.get("subtitle", ""))}</p>'
-        f'<a class="fdr-cta" href="{html.escape(research, quote=True)}">Read the full research →</a>'
-        f'</div></div></section>'
-    )
+def _norm_outcome(o):
+    """Normalize a deposited outcome (native data file) to the harvested-outcome
+    shape _fdr_outcomes renders. Accepts numeric low/high, a band/probability
+    string ('26–32%'), and the-forecaster's field names (signals_to_watch,
+    time_horizon). Returns None when no probability is parseable."""
+    if not isinstance(o, dict) or not o.get("name"):
+        return None
+    if isinstance(o.get("low"), (int, float)) and isinstance(o.get("high"), (int, float)):
+        band = (float(o["low"]), float(o["high"]))
+    else:
+        band = _prob_band({"probability": o.get("band") or o.get("probability")})
+    if band is None:
+        return None
+    def _lst(v):
+        return [str(x).strip() for x in v if str(x).strip()] if isinstance(v, list) else []
+    return {"name": o["name"], "low": band[0], "high": band[1],
+            "description": (o.get("description") or "").strip(),
+            "derivation": (o.get("derivation") or "").strip(),
+            "drivers": _lst(o.get("drivers")),
+            "signals": _lst(o.get("signals") or o.get("signals_to_watch")),
+            "horizon": (o.get("horizon") or o.get("time_horizon") or "").strip()}
+
+
+def _fdr_outcomes(outcomes, resolved_idx=None):
+    """The priced-outcome articles: name + filled band bar, then the description,
+    derivation, drivers / signals, and horizon. Shared by harvested research
+    markets and scenario-shaped native forecasts. On a graded market
+    (resolved_idx set) the outcome that happened is stamped ✓ and the rest ✗."""
     outs = []
-    for i, o in enumerate(m["outcomes"]):
+    for i, o in enumerate(outcomes):
         low = max(min(o["low"], 100.0), 0.0)
         high = max(min(o["high"], 100.0), low)
         col = FD_OUT_COLORS[i % len(FD_OUT_COLORS)]
@@ -6472,7 +7172,11 @@ def build_corpus_market_page(out_dir, m, shell=""):
             bars += f'<span class="fd-fill rng" style="left:{low:.1f}%;width:{high - low:.1f}%;background:{col}"></span>'
         pc = (f'<span class="pc" style="background:{col};color:#0c1117">{_fmt_band(o["low"], o["high"])}</span>'
               if i == 0 else f'<span class="pc" style="color:{col}">{_fmt_band(o["low"], o["high"])}</span>')
-        bits = [f'<div class="fdr-oh"><span class="nm">{html.escape(o["name"])}</span>{pc}</div>'
+        mark = ""
+        if resolved_idx is not None:
+            mark = ('<span class="fd-mk won">✓ happened</span>' if i == resolved_idx
+                    else '<span class="fd-mk lost">✗</span>')
+        bits = [f'<div class="fdr-oh"><span class="nm">{mark}{html.escape(o["name"])}</span>{pc}</div>'
                 f'<div class="fd-track">{bars}</div>']
         if o.get("description"):
             bits.append(f'<p class="fdr-desc">{html.escape(o["description"])}</p>')
@@ -6490,17 +7194,163 @@ def build_corpus_market_page(out_dir, m, shell=""):
         if o.get("horizon"):
             bits.append(f'<div class="fdr-hz">Horizon · {html.escape(o["horizon"])}</div>')
         outs.append(f'<article class="fdr-out{" lead" if i == 0 else ""}" style="border-top:3px solid {col}">{"".join(bits)}</article>')
-    parts = [hero,
-             f'<h2 class="fdd-h"><span class="n">01</span>The Outcomes — {len(m["outcomes"])} scenarios, priced by the research</h2>',
-             "".join(outs),
-             f'<p class="fdd-note">Probabilities are the research\'s own scenario bands, priced as outcomes. '
-             f'The full argument — history, current state, drivers, and sources — lives in the corpus: '
-             f'<a href="{html.escape(research, quote=True)}" style="color:var(--fdblue)">read the Future Trajectory chapter</a>.</p>']
+    return "".join(outs)
+
+
+def build_corpus_market_page(out_dir, m, shell="", records=None):
+    """Render a harvested research market's own desk page — forecast/{slug}.html —
+    in the FULL live-market dress of a native forecast. Every outcome is priced
+    with a filled bar plus its description / derivation / drivers / signals, and
+    the hero deep-links into the corpus's Future Trajectory chapter. When the
+    corpus manifest carries a `forecast_desk` dossier (written by the-forecaster),
+    the page also gets the World-Cup-page anatomy: desk-split tally in the hero,
+    the predictor roster, the consensus (call / why / dissent), base-rate tiles,
+    the market snapshot, what-would-change-the-call triggers, sources, and the
+    grading countdown chip. A graded market (m['resolution'] joined from the
+    resolutions ledger) wears the verdict: graded chip, "what happened" banner,
+    ✓/✗-stamped outcomes, and — with a dossier — a ✓/✗-stamped roster."""
+    out = Path(out_dir)
+    desk = m.get("desk") or {}
+    cons = desk.get("consensus") or {}
+    profiles = desk.get("profiles") or []
+    r = m.get("resolution")
+    # A graded dossier roster gets per-profile verdicts, same shape the native
+    # page uses, so _fdd_roster can stamp the cards.
+    rg = None
+    if r and profiles:
+        wkey = r["name"].strip().casefold()
+        rg_profiles = []
+        for p in profiles:
+            prob = p.get("prob_num")
+            if not isinstance(prob, (int, float)):
+                band = _prob_band({"probability_range": p.get("prob", "")})
+                prob = (band[0] + band[1]) / 2 if band else 50.0
+            hit = ((p.get("pick_scenario") or p.get("pick", "")).strip().casefold() == wkey)
+            rg_profiles.append({"persona": _persona_key(p), "hit": hit,
+                                "brier": _brier(float(prob), hit)})
+        rg = {"profiles": rg_profiles}
+    lead = m["outcomes"][0]
+    research = "../" + m["research_href"]
+    ru_bit = (f'<div class="ru">runner-up: {html.escape(cons.get("runner_up", ""))} '
+              f'{html.escape(cons.get("runner_up_band", ""))}</div>'
+              if cons.get("runner_up") else "")
+    cover_sq = (f'<div class="fdd-pick cvr"><img src="../{html.escape(m["cover"], quote=True)}" alt="">'
+                f'<div class="p">{_fmt_band(lead["low"], lead["high"])}</div>{ru_bit}</div>'
+                if m.get("cover") else
+                f'<div class="fdd-pick"><div class="f">📚</div>'
+                f'<div class="p">{_fmt_band(lead["low"], lead["high"])}</div>{ru_bit}</div>')
+    status = (desk.get("status") or "open").strip().lower()
+    grades = (desk.get("grades") or "").strip()
+    if r:
+        status_chip = (f'<span class="fd-chip-graded{"" if r["lead_hit"] else " miss"}">'
+                       f'{"✓" if r["lead_hit"] else "✗"} Graded</span>')
+        grades_chip = (f'<span class="fd-chip-date">graded '
+                       f'{html.escape(_long_date(r["resolved"]) if r.get("resolved") else "")}</span>')
+    else:
+        status_chip = f'<span class="fd-chip-open">{html.escape(status.capitalize())}</span>'
+        grades_chip = (f'<span class="fd-chip-date" data-grades="{html.escape(grades, quote=True)}"></span>'
+                       if grades else "")
+    # Desk-split tally across the roster's picks, worn like the native hero's.
+    tally_bit = ""
+    if profiles:
+        counts = {}
+        for p in profiles:
+            k = (p.get("pick") or "").strip()
+            if k:
+                counts[k] = counts.get(k, 0) + 1
+        tally = sorted(counts.items(), key=lambda kv: -kv[1])
+        total = sum(counts.values()) or 1
+        seg = "".join(f'<span class="t{i+1}" style="width:{v/total*100:.1f}%" title="{html.escape(k)}"></span>'
+                      for i, (k, v) in enumerate(tally[:3]))
+        leg = " ".join(f'<span><b>{html.escape(k)}</b> {v}</span>' for k, v in tally[:3])
+        tally_bit = (f'<div class="fdd-tally">{seg}</div><div class="fdd-tally-l">{leg}'
+                     f'<span style="margin-left:auto">desk split · consensus fused by grounding strength, not votes</span></div>')
+    hero = (
+        f'<section class="fdd-hero">'
+        f'<div class="fd-live-top">{status_chip}'
+        f'<span class="fd-chip-cat" style="color:{_fd_cat_color(m["category"])};border-color:{_fd_cat_color(m["category"])}">{html.escape(m["category"])}</span>'
+        f'<span class="fd-chip-date">{html.escape(m["horizon"])}</span>{grades_chip}</div>'
+        f'<div class="fdd-pickrow">{cover_sq}'
+        f'<div><p class="fdr-leadlbl">{"The desk\'s lead call was" if r else "Most likely outcome"}</p>'
+        f'<p class="fdr-leadnm">{html.escape(lead["name"])}</p>'
+        f'{tally_bit}'
+        f'<p class="fdd-res">{html.escape(desk.get("resolution") or m.get("subtitle", ""))}</p>'
+        f'<a class="fdr-cta" href="{html.escape(research, quote=True)}">Read the full research →</a>'
+        f'</div></div></section>'
+    )
+    parts = [hero]
+    if r:
+        note = html.escape(r.get("note", ""))
+        src = (f'<div class="src">Result per <a href="{html.escape(r["source_url"], quote=True)}" target="_blank" '
+               f'rel="noopener">{html.escape(r.get("source_label") or r["source_url"])}</a></div>'
+               if r.get("source_url") else "")
+        verdict_line = (f'<b>{html.escape(r["name"])}</b> is what happened. The research\'s lead call was '
+                        f'<b>{html.escape(lead["name"])}</b> at {_fmt_band(lead["low"], lead["high"])} — '
+                        f'{"the desk called it" if r["lead_hit"] else "the desk missed"} '
+                        f'(Brier {r["brier"]:.3f} on the lead call).')
+        parts.append(f'<section class="fdd-verdict{"" if r["lead_hit"] else " miss"}">'
+                     f'<span class="lbl">{"✓" if r["lead_hit"] else "✗"} The Grade — what happened</span>'
+                     f'<p>{verdict_line}{" " + note if note else ""}</p>{src}</section>')
+    n = 1
+    if profiles:
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Predictor Roster — {len(profiles)} standing profiles, tracked call by call</h2>')
+        parts.append(_fdd_roster(profiles, records=records, graded=rg))
+        n += 1
+    if cons.get("headline_case"):
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Consensus</h2>')
+        cbits = [f'<p><span class="lbl">The call</span>{html.escape(cons["headline_case"])}</p>']
+        if cons.get("why_over_runner_up"):
+            cbits.append(f'<p><span class="lbl">Why over the runner-up</span>{html.escape(cons["why_over_runner_up"])}</p>')
+        if cons.get("dissent"):
+            cbits.append(f'<div class="fdd-dissent"><span class="lbl">Strongest surviving dissent</span>{html.escape(cons["dissent"])}</div>')
+        parts.append(f'<div class="fdd-cons">{"".join(cbits)}</div>')
+        n += 1
+    parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Outcomes — {len(m["outcomes"])} scenarios, priced by the research</h2>')
+    parts.append(_fdr_outcomes(m["outcomes"], resolved_idx=r["idx"] if r else None))
+    parts.append(f'<p class="fdd-note">Probabilities are the research\'s own scenario bands, priced as outcomes. '
+                 f'The full argument — history, current state, drivers, and sources — lives in the corpus: '
+                 f'<a href="{html.escape(research, quote=True)}" style="color:var(--fdblue)">read the Future Trajectory chapter</a>.</p>')
+    n += 1
+    if desk.get("base_rates"):
+        tiles = "".join(f'<div class="fdd-rate"><div class="big">{html.escape(r.get("stat", ""))}</div>'
+                        f'<div class="txt">{html.escape(r.get("text", ""))}</div></div>'
+                        for r in desk["base_rates"] if isinstance(r, dict))
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Base Rates</h2><div class="fdd-rates">{tiles}</div>')
+        n += 1
+    if desk.get("markets"):
+        rows = "".join(
+            f'<tr><td><span class="plat">{html.escape(mk.get("platform", ""))}</span><br>{html.escape(mk.get("market", ""))}</td>'
+            f'<td>{html.escape(mk.get("detail", ""))}</td><td>{html.escape(mk.get("volume", ""))}</td></tr>'
+            for mk in desk["markets"] if isinstance(mk, dict))
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Market Snapshot</h2>'
+                     f'<div class="fdd-mkts"><table><thead><tr><th>Market</th><th>Prices</th><th>Volume</th></tr></thead>'
+                     f'<tbody>{rows}</tbody></table></div>')
+        n += 1
+    if desk.get("triggers"):
+        lis = "".join(f'<li>{html.escape(str(t))}</li>' for t in desk["triggers"])
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>What Would Change the Call</h2><ol class="fdd-trigs">{lis}</ol>')
+        n += 1
+    if desk.get("sources"):
+        lis = "".join(f'<li><a href="{html.escape(s.get("url", ""), quote=True)}" target="_blank" rel="noopener">'
+                      f'{html.escape(s.get("label", s.get("url", "")))}</a></li>'
+                      for s in desk["sources"] if isinstance(s, dict))
+        parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Sources</h2><ul class="fdd-src">{lis}</ul>')
+        n += 1
+    if desk.get("honesty_note"):
+        parts.append(f'<p class="fdd-note">{html.escape(desk["honesty_note"])}</p>')
     og_img = f"{SITE_URL}/{m['cover']}" if m.get("cover") else f"{SITE_URL}/{OG_IMAGE}"
     og = og_tags(m["title"], m.get("subtitle") or m["title"],
                  f"{SITE_URL}/forecast/{m['slug']}.html", og_img)
+    if r:
+        grades_folio = (f'    <span class="fd-folio-c">Graded '
+                        f'{html.escape(_long_date(r["resolved"]) if r.get("resolved") else "")} · '
+                        f'{"✓ hit" if r["lead_hit"] else "✗ miss"}</span>\n')
+    else:
+        grades_folio = (f'    <span class="fd-folio-c" data-grades="{html.escape(grades, quote=True)}">'
+                        f'Grades {html.escape(_long_date(grades))}</span>\n' if grades else "")
     folio = (f'    <span>{html.escape(m["horizon"] or "Open")}</span>\n'
              f'    <span class="fd-folio-c">{len(m["outcomes"])} priced outcomes</span>\n'
+             f'{grades_folio}'
              f'    <span>{html.escape(m["category"])}</span>')
     page = FORECAST_DETAIL_TEMPLATE.format(
         title=html.escape(f"{m['title']} — The Forecast Desk"),
@@ -6510,7 +7360,8 @@ def build_corpus_market_page(out_dir, m, shell=""):
         kicker="The Forecast Desk · Research market",
         headline=html.escape(m["title"]),
         folio=folio,
-        method_note="Priced from the corpus’s forecast scenarios — every band grounded in the research it links to.",
+        method_note=html.escape(desk.get("method_note", "")) or
+                    "Priced from the corpus’s forecast scenarios — every band grounded in the research it links to.",
         body="\n".join(parts),
         theme_js=LIBRARY_THEME_JS,
         app_js=FORECAST_PAGE_JS,
@@ -9017,7 +9868,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                               "chapters": n,
                               "words": sum(len(re.sub(r"<[^>]+>", " ", d["body"]).split()) for d in corpus["documents"])})
         fd_m = harvest_corpus_market(folder, corpus, category,
-                                     cover=f"covers/{_atlas_img.name}" if _atlas_img else None)
+                                     cover=f"covers/{_atlas_img.name}" if _atlas_img else None,
+                                     description=card_sub)
         if fd_m:
             fd_markets.append(fd_m)
         fig_note = f", {figs} figures" if figs else ""
@@ -9050,6 +9902,24 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     fp_editions = read_fingerprint_manifest(out) if fingerprint_cfg.get("enabled", True) else []
     pamphlet_items = read_pamphlets_manifest(out) if pamphlets_cfg.get("enabled", True) else []
     forecast_items = read_forecast_manifest(out) if forecast_cfg.get("enabled", True) else []
+
+    # The grading loop: join docs/forecast/resolutions.json against every market.
+    # Graded native items carry `_graded` (the full scored verdict); graded
+    # harvested markets carry `resolution`. Cumulative per-persona records are
+    # computed here — never hand-maintained — and worn by every roster.
+    fd_resolutions = read_forecast_resolutions(out) if forecast_cfg.get("enabled", True) else {}
+    for f in forecast_items:
+        d = read_forecast_data(out, f.get("slug", ""))
+        if not d:
+            continue
+        res = _native_resolution(d, fd_resolutions)
+        if res:
+            f["_graded"] = grade_native_forecast(d, res)
+            f["status"] = "graded"
+    for m in fd_markets:
+        attach_market_resolution(m, fd_resolutions)
+    persona_records = {k: {"graded": v["graded"], "hits": v["hits"]}
+                       for k, v in build_forecast_ledger(forecast_items, fd_markets)["personas"].items()}
 
     if ghost_cfg.get("enabled", True):
         manifest.append({"title": "The Ghost of Times", "kind": "section",
@@ -9090,12 +9960,18 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         manifest.append({"title": "The Forecast Desk", "kind": "section",
                          "category": "Predictions", "href": "forecast.html",
                          "meta": "every prediction, priced and graded"})
+        manifest.append({"title": "The Track Record", "kind": "section",
+                         "category": "Predictions", "href": "forecast-record.html",
+                         "meta": "graded calls, Brier scores, calibration"})
         for f in forecast_items:
+            _gm = f.get("_graded")
+            _meta = (f'graded — {("✓ " if _gm["consensus"]["hit"] else "✗ ") + _gm["winner"]} won' if _gm
+                     else " · ".join(x for x in [f.get("pick", ""), f.get("band", "")] if x))
             manifest.append({
                 "title": f.get("question") or f.get("title") or f"Forecast — {f.get('slug', '')}",
                 "kind": "forecast", "category": "The Forecast Desk",
                 "href": f.get("file") or f"forecast/{f.get('slug', '')}.html",
-                "meta": " · ".join(x for x in [f.get("pick", ""), f.get("band", "")] if x),
+                "meta": _meta,
             })
 
     # Detached domain fronts (config domains carrying a "page" key) — e.g. the
@@ -9117,6 +9993,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                              "kind": "section", "category": "The desk",
                              "href": f"{_slug}-forecast.html",
                              "meta": "the desk's predictions, priced"})
+            manifest.append({"title": p.get("record_title", f"The {_title} Track Record"),
+                             "kind": "section", "category": "The desk",
+                             "href": f"{_slug}-record.html",
+                             "meta": "the desk's graded calls, scored"})
         if "glossary" in _inc and any(g.get("category") in _cats for g in glossary_index):
             manifest.append({"title": p.get("glossary_title", f"The {_title} Glossary"),
                              "kind": "section", "category": "The desk",
@@ -9259,17 +10139,24 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     # The Forecast Desk (fifth top-level section — predictions by category).
     # Markets whose category belongs to a desk that runs its own board stay off
-    # the site-wide board (they trade on the desk's edition instead).
+    # the site-wide board (they trade on the desk's edition instead) — native
+    # forecasts route by category the same way.
     fd_main = [m for m in fd_markets if m["category"] not in fc_desk_cats]
-    build_forecast_page(out, forecast_items, fd_main, forecast_cfg,
+    fd_native_main = [f for f in forecast_items if f.get("category") not in fc_desk_cats]
+    build_forecast_page(out, fd_native_main, fd_main, forecast_cfg,
                         category_order=category_order, shell=shell_root)
-    forecast_band = forecast_band_html(forecast_items, fd_main, forecast_cfg)
-    fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub) for f in forecast_items)
-    fdm_rendered = sum(build_corpus_market_page(out, m, shell=shell_sub) for m in fd_markets)
+    forecast_band = forecast_band_html(fd_native_main, fd_main, forecast_cfg)
+    fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub, records=persona_records)
+                      for f in forecast_items)
+    fdm_rendered = sum(build_corpus_market_page(out, m, shell=shell_sub, records=persona_records)
+                       for m in fd_markets)
     if fd_markets:
         print(f"  ✓ Rendered {fdm_rendered} research market page(s) → forecast/")
     if forecast_items:
         print(f"  ✓ Rendered {fd_rendered}/{len(forecast_items)} live forecast page(s) from data")
+    # The Track Record — the site-wide accountability page covers EVERY market,
+    # desk-scoped ones included; each detached desk also gets its own scoped copy.
+    build_record_page(out, forecast_items, fd_markets, forecast_cfg, shell=shell_root)
 
     # ---- Detached domain fronts: a config domain carrying a "page" object is
     # lifted off the home page onto its own top-level section of the site (e.g.
@@ -9305,19 +10192,37 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         tools = []
         if "forecast" in inc:
             dmarkets = [m for m in fd_markets if m["category"] in dcats]
-            if dmarkets:
+            dnative = [f for f in forecast_items if f.get("category") in dcats]
+            if dmarkets or dnative:
                 fc_title = pcfg.get("forecast_title", f"The {title} Board")
-                build_forecast_page(out, [], dmarkets, forecast_cfg, category_order=dcats,
+                build_forecast_page(out, dnative, dmarkets, forecast_cfg, category_order=dcats,
                                     shell=shell_root,
                                     page={"fname": f"{slug}-forecast.html", "title": fc_title,
                                           "kicker": "The desk's predictions, by category",
-                                          "nav": desk_nav, "back": desk_back})
+                                          "nav": desk_nav, "back": desk_back,
+                                          "record_fname": f"{slug}-record.html"})
                 n_out = sum(len(m["outcomes"]) for m in dmarkets)
                 tools.append({"href": f"{slug}-forecast.html", "kicker": "The desk's forecaster",
                               "title": fc_title,
-                              "meta": f"{len(dmarkets)} markets · {n_out} priced outcomes — "
+                              "meta": f"{len(dmarkets) + len(dnative)} markets · {n_out + len(dnative)} priced outcomes — "
                                       f"every one from the research",
                               "cta": "To the board →"})
+                # The desk's own track record, scoped to its markets.
+                rec_title = pcfg.get("record_title", f"The {title} Track Record")
+                build_record_page(out, dnative, dmarkets, forecast_cfg, shell=shell_root,
+                                  page={"fname": f"{slug}-record.html", "title": rec_title,
+                                        "kicker": "The desk, graded call by call",
+                                        "nav": desk_nav, "back": desk_back,
+                                        "board_href": f"{slug}-forecast.html",
+                                        "board_title": fc_title})
+                dgraded = (sum(1 for f in dnative if f.get("_graded"))
+                           + sum(1 for m in dmarkets if m.get("resolution")))
+                dopen = len(dmarkets) + len(dnative) - dgraded
+                tools.append({"href": f"{slug}-record.html", "kicker": "The desk's ledger",
+                              "title": rec_title,
+                              "meta": (f"{dgraded} graded · {dopen} open positions — "
+                                       f"every call scored when it resolves"),
+                              "cta": "See the record →"})
         if "glossary" in inc:
             dgloss = [g for g in glossary_index if g.get("category") in dcats]
             if dgloss:
