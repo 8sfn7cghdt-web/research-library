@@ -215,7 +215,7 @@
    "low": 8,
    "high": 13,
    "description": "A performance-driven NO. CPM softening (~$42 to ~$31 after Amazon Prime Video's ad launch), thin measurement/IP-data complaints, choppy CTV upfront demand, and slow international fill leave 2026 ad revenue visibly short of the ~$3B rail. When a growth metric disappoints, the IR incentive flips from amplify to de-emphasize: the Q4 letter frames momentum qualitatively rather than stamping a figure that reads as a miss, leaving the business 'below a disclosed milestone' -- and, for this path to complete, the cutover leg and any fresh scale number must also fail to rescue YES.",
-   "derivation": "Decomposition. P(2026 ad revenue materially below the ~$3B framing | CPM $42->$31, measurement friction, choppy upfront, early intl fill; but 2025 delivered ~2.5x so a hard miss is a minority) ~0.30 x P(a miss produces a NO-shaped disclosure that also escapes rescue by the standing cutover leg or a fresh scale number | miss) ~0.33 = ~0.10, set to 8-13%. The conditional is capped low because the disjunctive cutover leg and the already-public 250M+ figure independently rescue most revenue misses -- a point that survived cross-examination and bounds this well below a pure revenue-miss probability. The independent estimates clustered at 7-14%, the higher end reflecting that a missed doubling target sharpens the selective-disclosure incentive (the subscriber-reporting-drop precedent).",
+   "derivation": "Decomposition. P(2026 ad revenue materially below the ~$3B framing | CPM $42->$31, measurement friction, choppy upfront, early intl fill; but 2025 delivered ~2.5x so a hard miss is a minority) ~0.30 x P(a miss produces a NO-shaped disclosure that also escapes rescue by the standing cutover leg or a fresh scale number | miss) ~0.33 = ~0.10, set to 8-13%. The conditional is capped low because the disjunctive cutover leg and the already-public 250M+ figure independently rescue most revenue misses -- a point that held up under scrutiny and bounds this well below a pure revenue-miss probability. The independent estimates clustered at 7-14%, the higher end reflecting that a missed doubling target sharpens the selective-disclosure incentive (the subscriber-reporting-drop precedent).",
    "drivers": [
     "CPM softening ~$42 to ~$31 after Amazon Prime Video's ad launch",
     "Measurement/IP-data friction buyers complain about (abridged data, thin targeting)",
@@ -281,13 +281,34 @@
   }
  ],
  "base_rates": [
-  "Netflix ad-tier scale disclosures on a ~6-month cadence: 8 of 8 windows since May 2023 produced a fresh escalating milestone (~5M -> 15 -> 23 -> 40 -> 70 -> 94 -> 190 -> 250M+) -- disclosing SOME ad-scale figure in a window is near-automatic and the strongest YES anchor; but headline reveals cluster at the May Upfront and November, so a milestone landing SPECIFICALLY in the Q4-report window is less certain than 8/8 implies",
-  "Netflix disclosing ad DOLLAR revenue at Q4 earnings: 1 of 1 (Q4 2025 / Jan 2026 gave >$1.5B for 2025 plus a ~$3B 'double' 2026 target) -- a 2026 ad-revenue figure at the Q4 2026 letter is modal, and a first-stated 2026 full-year ACTUAL is arguably itself new, softening the strict-read objection",
-  "In-house ad-server cutover completion: Ads Suite 'built and implemented in all 12 markets' (Oct 2025 blog) plus Microsoft Invest/Xandr support ending Feb 28, 2026 -- 1/1 on-time. The counterparty withdrawing support is an externally-corroborated dated event, not a Netflix marketing claim; a residual-dependency tail exists but is operationally implausible and unreported, so this leg is effectively resolved YES before the window opens",
-  "Streamer headline scale reveals chosen at trade venues over earnings: Netflix at the May Upfronts (2024/25/26) plus Disney's 157M MAU at CES (Jan 2025) -- 2/2; the venue mismatch powering the strict-read NO path",
-  "Companies dropping a legacy disclosure while amplifying a favored growth metric: Netflix dropped subscriber/ARM reporting (Q1 2025) yet kept volunteering ad metrics; Apple dropped iPhone units (2018) while keeping services revenue -- the pattern favors continued disclosure, though the same venue-migration mechanism is how a silence tail could occur",
-  "Netflix hitting a 'roughly double' ad-revenue target: 2025 delivered ~2.5x (prior-year framing 1/1 met); 2026 ~$3B still open amid CPM softening (~$42 -> ~$31) -- genuine business-side uncertainty, but it threatens HITTING the milestone, not DISCLOSING one, and only converts to NO if a miss also triggers qualitative suppression",
-  "No liquid market on the exact question or its decompositions (Polymarket/Kalshi/Manifold/Metaculus swept 2026-07-03). Kalshi's prior-call 'ad-supported' word-mention was below ~40%, but that market prices whether a word is SPOKEN on the call (near-certain vocabulary), not whether a milestone is crossed -- it is non-adjustable to this question and is NOT used as an anchor; the forecast falls to base rates"
+  {
+   "stat": "8 of 8",
+   "text": "Netflix ad-tier scale disclosures on a ~6-month cadence: 8 of 8 windows since May 2023 produced a fresh escalating milestone (~5M -> 15 -> 23 -> 40 -> 70 -> 94 -> 190 -> 250M+) -- disclosing SOME ad-scale figure in a window is near-automatic and the strongest YES anchor; but headline reveals cluster at the May Upfront and November, so a milestone landing SPECIFICALLY in the Q4-report window is less certain than 8/8 implies"
+  },
+  {
+   "stat": "1 of 1",
+   "text": "Netflix disclosing ad DOLLAR revenue at Q4 earnings: 1 of 1 (Q4 2025 / Jan 2026 gave >$1.5B for 2025 plus a ~$3B 'double' 2026 target) -- a 2026 ad-revenue figure at the Q4 2026 letter is modal, and a first-stated 2026 full-year ACTUAL is arguably itself new, softening the strict-read objection"
+  },
+  {
+   "stat": "1/1",
+   "text": "In-house ad-server cutover completion: Ads Suite 'built and implemented in all 12 markets' (Oct 2025 blog) plus Microsoft Invest/Xandr support ending Feb 28, 2026 -- 1/1 on-time. The counterparty withdrawing support is an externally-corroborated dated event, not a Netflix marketing claim; a residual-dependency tail exists but is operationally implausible and unreported, so this leg is effectively resolved YES before the window opens"
+  },
+  {
+   "stat": "2024/25",
+   "text": "Streamer headline scale reveals chosen at trade venues over earnings: Netflix at the May Upfronts (2024/25/26) plus Disney's 157M MAU at CES (Jan 2025) -- 2/2; the venue mismatch powering the strict-read NO path"
+  },
+  {
+   "stat": "1",
+   "text": "Companies dropping a legacy disclosure while amplifying a favored growth metric: Netflix dropped subscriber/ARM reporting (Q1 2025) yet kept volunteering ad metrics; Apple dropped iPhone units (2018) while keeping services revenue -- the pattern favors continued disclosure, though the same venue-migration mechanism is how a silence tail could occur"
+  },
+  {
+   "stat": "1/1",
+   "text": "Netflix hitting a 'roughly double' ad-revenue target: 2025 delivered ~2.5x (prior-year framing 1/1 met); 2026 ~$3B still open amid CPM softening (~$42 -> ~$31) -- genuine business-side uncertainty, but it threatens HITTING the milestone, not DISCLOSING one, and only converts to NO if a miss also triggers qualitative suppression"
+  },
+  {
+   "stat": "~40%",
+   "text": "No liquid market on the exact question or its decompositions (Polymarket/Kalshi/Manifold/Metaculus swept 2026-07-03). Kalshi's prior-call 'ad-supported' word-mention was below ~40%, but that market prices whether a word is SPOKEN on the call (near-certain vocabulary), not whether a milestone is crossed -- it is non-adjustable to this question and is NOT used as an anchor; the forecast falls to base rates"
+  }
  ],
  "triggers": [
   "A real resolver publishes strict criteria requiring a NEW threshold crossed specifically in the Q4-report window, excluding recurring restatements and the pre-window cutover claim -- the single largest lever between YES and NO",
@@ -297,7 +318,60 @@
   "A material, explicitly-stated miss on the ~$3B 2026 ad-revenue target that suppresses milestone framing in the letter",
   "A major Netflix M&A announcement (e.g., Warner Bros.) that could dominate the Q4 letter and raise the silence-tail mass"
  ],
- "sources": [],
+ "sources": [
+  {
+   "label": "The Wrap — Netflix Ad Tier Surpasses 250 Million Monthly Active Viewers (May 2026)",
+   "url": "https://www.thewrap.com/media-platforms/streaming/netflix-ad-tier-monthly-active-viewers-update-upfronts-2026/"
+  },
+  {
+   "label": "Deadline — Netflix Ad Tier Reaches 94M Monthly Active Users (May 2025)",
+   "url": "https://deadline.com/2025/05/netflix-ad-tier-reaches-94-million-monthly-active-users-1236397938/"
+  },
+  {
+   "label": "Deadline — Netflix Switches to New Ad Tier Metric, 190M Monthly Active Viewers (Nov 2025)",
+   "url": "https://deadline.com/2025/11/netflix-ads-1236606573/"
+  },
+  {
+   "label": "About Netflix — Netflix's Third Season of Ads and a Look Ahead ('built and implemented the Netflix Ads Suite... in all 12 ad-supported countries')",
+   "url": "http://about.netflix.com/en/news/netflix-third-season-of-ads-and-a-look-ahead-at-whats-next"
+  },
+  {
+   "label": "eMarketer — Netflix nearly doubles ad-supported users, plans new ad tech platform (Microsoft exit / Ads Suite timeline)",
+   "url": "https://www.emarketer.com/content/netflix-nearly-doubles-ad-supported-users-plans-new-ad-tech-platform"
+  },
+  {
+   "label": "Adweek — Netflix Will Wean Itself Off Microsoft's Adtech By 2025",
+   "url": "https://www.adweek.com/convergent-tv/netflix-will-wean-itself-off-microsofts-adtech-by-2025/"
+  },
+  {
+   "label": "Variety — Netflix to Stop Reporting Subscriber Numbers Starting in 2025",
+   "url": "https://variety.com/2024/tv/news/netflix-stop-reporting-subscriber-numbers-starting-2025-1235975341/"
+  },
+  {
+   "label": "The Current — Netflix more than doubled its ad revenue in 2025 (Q4 2025 earnings ad disclosures: >$1.5B, 190M MAV, 325M subs)",
+   "url": "https://www.thecurrent.com/streaming-marketers-netflix-global-advertising-earnings-targeting"
+  },
+  {
+   "label": "AdExchanger — Netflix Doubled Its Ad Revenue Last Year and Expects to Do the Same in 2026",
+   "url": "https://www.adexchanger.com/streaming/netflix-doubled-its-ad-revenue-last-year-and-expects-to-do-the-same-in-2026/"
+  },
+  {
+   "label": "Marketing Brew / The Wrap — Disney 157M ad-supported MAU disclosed at CES (Jan 2025)",
+   "url": "https://www.marketingbrew.com/stories/2025/01/10/disney-157-million-ad-supported-monthly-active-users-ces-ad-tech"
+  },
+  {
+   "label": "PPC.land — Netflix 2026 upfront: 250M viewers, AI agents, 15 new ad markets",
+   "url": "https://ppc.land/netflix-2026-upfront-250m-viewers-ai-agents-and-15-new-ad-markets/"
+  },
+  {
+   "label": "StreamingMediaBlog (Dan Rayburn), Netflix ad tier 250M MAU disclosed May 14 2026 at Upfront",
+   "url": "https://www.streamingmediablog.com/2026/05/netflix-adtier-150million.html"
+  },
+  {
+   "label": "The Desk, Netflix Q4 2025 earnings report ($1.5B+ ad revenue, 2.5x, double in 2026; reported Jan 20 2026)",
+   "url": "https://thedesk.net/2026/01/netflix-q4-2025-earnings-report/"
+  }
+ ],
  "method_note": "Grounded research-first: a fresh sweep of Netflix's ad-tier disclosures, the Ads Suite migration, and comparable CTV disclosure timing, plus a prediction-market scan on 2026-07-03 that found no liquid market on Netflix ad revenue or the cutover. Four scenario trees were argued against each other and fused by grounding strength; every probability is a decomposition or a base rate, not a picked number. Horizon: through Q4 2026 earnings (~Jan 2027).",
  "honesty_note": "A 60-70% YES still leaves nearly a third of the probability on the NO branches — driven mostly by definition risk, not business risk: Netflix's ad tier is clearly scaling, but whether a restatement or a pre-window cutover clears a strict in-window milestone is genuinely contestable. With no market to anchor on, this rests on fundamentals and reference classes."
 }
