@@ -1,6 +1,21 @@
 {
  "forecasts": [
   {
+   "slug": "2028-election",
+   "title": "Who Wins the 2028 US Presidential Election",
+   "question": "Who wins the 2028 US presidential election?",
+   "dek": "Democrats are the favorite to retake the White House at 52–58% — a weak favorite over a market-priced ~45% Republican hold, with the person race wide open (Vance the modal Republican, Newsom the modal Democrat); the six standing profiles split 4–2.",
+   "category": "The Modern World",
+   "status": "open",
+   "logged": "2026-07-03",
+   "grades": "2028-11-07",
+   "pick": "Democratic Party",
+   "pick_flag": "🔵",
+   "band": "52–58%",
+   "profiles_n": 6,
+   "file": "forecast/2028-election.html"
+  },
+  {
    "slug": "world-cup-2026",
    "title": "Who Will Win the 2026 World Cup",
    "question": "Who will win the 2026 FIFA World Cup?",

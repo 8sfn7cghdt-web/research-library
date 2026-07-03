@@ -1,0 +1,254 @@
+{
+ "kind": "native_forecast",
+ "slug": "2028-election",
+ "question": "Who wins the 2028 US presidential election?",
+ "title": "Who Wins the 2028 US Presidential Election",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2028-11-07",
+ "resolution": "Resolves to the party and the person who wins the 2028 US presidential election (Electoral College majority, or 12th-Amendment contingency), per AP/decision-desk calls. The party leg is the primary resolvable bet; the person leg resolves to the named winner.",
+ "consensus": {
+  "pick": "Democratic Party",
+  "flag": "🔵",
+  "band": "52–58%",
+  "band_low": 52,
+  "band_high": 58,
+  "runner_up": "Republican Party",
+  "runner_up_flag": "🔴",
+  "runner_up_band": "42–48%",
+  "headline_case": "The strongest anchor on this race is not a hunch but a price: four independent prediction markets — Polymarket, Metaculus, Kalshi, and Manifold — converge on the Democratic nominee winning the White House at roughly 59%, a clean reversal from a Republican-favored line a year earlier. Every structural base rate agrees on direction. Since 1952 the party holding the White House has won a third consecutive term just once in seven tries (1988); an open-seat successor has held only once in eight since 1920; and 2028 is an open seat because Trump is term-limited, stripping the incumbency shield the GOP would otherwise enjoy. Layer on a term-limited president near 39% approval, a souring tariff-inflation economy, and a generic ballot pointing to a 2026 Democratic midterm wave, and the out-party is the clear structural favorite. But the edge is thinner than the base rates alone suggest: those reference classes are largely the same seven elections recounted, the historical losing margins averaged under a point, and the nominees on both sides are unset 28 months out. The call: Democrats favored to retake the presidency at 52–58%, most likely through a governor-type nominee (Gavin Newsom the modal name in a genuinely open field), but this is a weak favorite, not a lock.",
+  "why_over_runner_up": "The Republicans are defending an open seat for a third straight term with a term-limited, sub-40%-approval president and a weak economic hand — a fundamentals picture the out-party has converted in nearly every comparable postwar cycle, and one the markets price at a durable ~59/41. Crucially, the in-party has lost all four postwar elections fought near a recession, and 2028 carries roughly a 40% recession risk the GOP cannot fully hedge. The Republican path is real and market-priced at ~41%, but it is the underdog's path: it needs the economy to hold, Trump's approval to recover, and the Democrats to fumble the nomination — three things breaking right at once.",
+  "dissent": "The best surviving case against the pick is that the Democratic edge is overstated. Three points bite. The third-term, open-seat, and sitting-VP base rates are not three independent signals but the same ~7 postwar elections recounted, so their agreement is one witness in three costumes. The ~59% market rests partly on a stale mid-2026 approval snapshot that is thermostatic and mean-reverts. And because Trump's 2024 win was non-consecutive, 2028 can be read as a first-term party's race (a ~64% reelection class) rather than a tired dynasty's (~14%), a blend that lands the true number near a coin flip. Add the sharpest asymmetry on the board — an orderly Vance-led GOP succession against a fractured Democratic field with no candidate above ~21% — and a Republican hold is a live ~45%, not a long shot. If a recession is averted and the Democrats nominate a weak-general candidate, this becomes the modal outcome.",
+  "tally": [
+   { "team": "Democratic Party", "flag": "🔵", "votes": 4 },
+   { "team": "Republican Party", "flag": "🔴", "votes": 2 }
+  ]
+ },
+ "profiles": [
+  {
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+   "pick": "Democratic Party",
+   "flag": "🔵",
+   "prob": "57%",
+   "prob_num": 57,
+   "confidence": "high",
+   "register": "Terse tape-reading",
+   "blurb": "I do not forecast. I read the tape. Four books — Polymarket, Metaculus, Kalshi, Manifold — price the same thing: Democrats about 59, Republicans about 41 to win the White House. That is not one crowd's mood. That is four independent pools landing within a point of each other. A year ago this line was red. It flipped. When money moves that far and then agrees, you take the side it moved to. I shade it to 57 because the person market is still a fog — nobody over about 21% — and the vote is 28 months out. Favored. Not settled. I take the price.",
+   "evidence": "Party-win market Democratic ~59% / Republican ~41%, cross-validated across Polymarket, Metaculus (59.9%), Kalshi, and Manifold — a reversal from Republican-favored a year earlier.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona": "market-reader"
+  },
+  {
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the fundamentals models (time-for-change, approval, recession-conditioning) over recency and sentiment.",
+   "pick": "Democratic Party",
+   "flag": "🔵",
+   "prob": "54%",
+   "prob_num": 54,
+   "confidence": "medium",
+   "register": "Measured analytic contrarian",
+   "blurb": "Run the fundamentals and a curious thing happens: every model points the same way, yet none points as hard as it first appears. Time-for-change fatigue, sub-40 approval, a souring economy — each nudges the out-party. But the reference classes that look like three witnesses — third-term, open-seat, sitting-VP — are one witness in three costumes, the same seven elections recounted. Strip the costume and the 80% floor everyone quotes collapses toward the low 50s. The economy is the master switch, and it has not been thrown yet. So I hold the Democrats a touch over even, at 54 — a favorite the thickness of a coin, not the height of a mountain.",
+   "evidence": "Fundamentals (time-for-change, ~39% approval, recession-conditioning) favor the out-party, but the third-term / open-seat / sitting-VP base rates are non-independent — one signal, not three — which caps the edge near the low 50s.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona": "quant"
+  },
+  {
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Judges by counted reference-class base rates: third-term tenure, open-seat succession, the sitting-VP record.",
+   "pick": "Democratic Party",
+   "flag": "🔵",
+   "prob": "57%",
+   "prob_num": 57,
+   "confidence": "medium",
+   "register": "Prophetic bardic catalog",
+   "blurb": "Turn the ledger of the Republic and hear what it says, plainly and without flattery. The party that holds the house and reaches for a third straight term has been turned away six times in seven since 1952 — only 1988 answered. Count again by another door, the open seat with no incumbent to shield it, and the tally is one hold in eight since 1920. Count a third time, the deputy who would climb from second chair to first, and it is one in four. Three doors, and each opens on the same verdict. Yet I am no fool for the counted years — those doors open on the same rooms, and the losing margins were a whisker, two-thirds of a point. So I set it at 57: favored by history, but by a hand's breadth, not a landslide.",
+   "evidence": "In-party seeking a 3rd consecutive term won 1 of 7 since 1952 (only 1988); open-seat successor 1 of 8 since 1920; sitting VP elected 1 of 4 modern — every reference class cuts against a GOP hold.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona": "historian"
+  },
+  {
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation and reads the actual route — the nomination path each side must walk to November.",
+   "pick": "Republican (Vance)",
+   "flag": "🔴",
+   "prob": "48%",
+   "prob_num": 48,
+   "confidence": "medium",
+   "register": "Terse verdict-driven",
+   "blurb": "Forget the mood of the country. Read the road. On one side, one man: Vance, the heir, Trump's blessing on him, near 38% of his party's field and no rival within reach — an orderly march to the nomination, funded, unbruised. On the other side, a mob: not one Democrat clears the low twenties, five or six of them clawing at each other, a long and bloody primary that ends with a nominee out of money and out of favor. The favored party has no candidate. The trailing party has a spear. That is the whole story of who fumbles the layup. I make it a coin — 48 the Republican — and I would take that bet against the tape.",
+   "evidence": "The GOP has a dominant frontrunner (Vance ~38% of the field, Trump's backing); the Democratic field is fragmented with no one above ~21% — a nominee-quality asymmetry the party market averages away.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona": "path-reader"
+  },
+  {
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Weights elite individual actors — proven leadership, motivation, a candidate who has actually won.",
+   "pick": "Democrats (Newsom)",
+   "flag": "🔵",
+   "prob": "53%",
+   "prob_num": 53,
+   "confidence": "low",
+   "register": "Bardic-incantatory, archetypal",
+   "blurb": "I look past the party and search for the one figure who has actually won something alone. And here is the shape of it. The heir apparent has never carried a nation on his own name — he rode in on another man's tide, a deputy, a borrowed mandate. Against him, across the aisle, stands a proven executive who twice won the largest state in the union and broke a recall meant to end him — a face, an operation, a will. The out-party's hunger, married to a candidate who has actually led: that is the older pattern, and patterns like it gather force at the hinge of an age. So I place the Democrats, through their proven governor, at 53 — thin, but real, and carried by one who has done it before.",
+   "evidence": "Vance would inherit rather than earn a national mandate; the Democrats' modal figure is a two-term governor of the largest state who survived a recall — proven individual leadership the out-party can rally behind.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona": "talisman"
+  },
+  {
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail — hunts the underpriced live path the crowd has talked itself out of.",
+   "pick": "Republican Party",
+   "flag": "🔴",
+   "prob": "46%",
+   "prob_num": 46,
+   "confidence": "medium",
+   "register": "Wry contrarian-desk",
+   "blurb": "Everyone has agreed the Democrats will win, which is exactly when I start counting the exits. Notice the trick the crowd has played on itself. It stacked three base rates — third-term, open-seat, sitting-VP — as if they were three separate omens, when they are the same seven elections in three hats. It read a mid-2026 approval snapshot as if it were a law of nature, when approval is the most thermostatic number in politics and swings back as fast as it fell. And it forgot that 2024 was non-consecutive, so 2028 is arguably a first-term party's race, not a tired dynasty's. Blend the tired-dynasty rate with the first-termer's rate and you land near a coin. The favorite is only 55, priced on a bad month. I buy the Republican at 46 — the live dog the story forgot.",
+   "evidence": "The Democratic edge rests on non-independent base rates and a stale mid-2026 approval snapshot; 2024 was non-consecutive, so a first-term-tenure framing blends toward a coin flip — the GOP hold is underpriced at the market's ~41%.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona": "contrarian"
+  }
+ ],
+ "field": [
+  { "team": "JD Vance (R)", "flag": "🔴", "price": 20 },
+  { "team": "Gavin Newsom (D)", "flag": "🔵", "price": 13 },
+  { "team": "Marco Rubio (R)", "flag": "🔴", "price": 12 },
+  { "team": "Jon Ossoff (D)", "flag": "🔵", "price": 7 },
+  { "team": "Alexandria Ocasio-Cortez (D)", "flag": "🔵", "price": 6 },
+  { "team": "Pete Buttigieg (D)", "flag": "🔵", "price": 5 },
+  { "team": "Josh Shapiro (D)", "flag": "🔵", "price": 4 },
+  { "team": "Ron DeSantis (R)", "flag": "🔴", "price": 4 },
+  { "team": "Andy Beshear (D)", "flag": "🔵", "price": 3 },
+  { "team": "The rest of the field (unnamed / long shots)", "flag": "🗳️", "price": 22 }
+ ],
+ "outcomes": [
+  {
+   "name": "Democratic recapture — the structural favorite",
+   "low": 42, "high": 50,
+   "horizon": "Through November 2028",
+   "description": "A Democrat wins the open seat on time-for-change fatigue, a term-limited president near 39% approval, a souring tariff-inflation economy, and a 2026 midterm wave that cascades into 2028 standings. The driver bundle wins even a fragmented, generic nominee — the Democrat need not be strong, only acceptable. This is the modal outcome and the one nearly every reference class and the party market point toward.",
+   "derivation": "Market anchor, lightly trimmed. The cross-validated party market prices Democratic ~59% (Polymarket 59/41, Metaculus 59.9/40, Kalshi, Manifold). The raw base-rate stack (3rd-term 1/7, open-seat 1/8, sitting-VP 1/4) would push a naive read to ~75–85%, but those classes are non-independent (the same ~7 elections), so the market's ~59% — not the base-rate floor — is the anchor. Trim a few points for a 28-month horizon with both nominees unset and a fragmented Democratic field, and carve the recession-decisive path out into its own scenario: 42–50%.",
+   "drivers": [
+    "Time-for-change / open-seat penalty — in-party successor held 1 of 8 since 1920; no incumbency shield",
+    "Trump approval ~39% / net ~-18, independent approval ~34% — historically the losing band",
+    "2026 midterm wave (generic ballot D+7) as the transmission belt into 2028",
+    "Out-party market edge (~59% Democratic, cross-validated across four venues)"
+   ],
+   "signals": [
+    "Party market holding above ~55% Democratic through 2027",
+    "Trump approval staying sub-42% into the 2026 midterms",
+    "A 2026 Democratic House gain of 15+ seats reinforcing the cascade",
+    "Democrats consolidating behind a broadly acceptable governor by late 2027"
+   ]
+  },
+  {
+   "name": "Republican hold — orderly succession beats the base rate",
+   "low": 35, "high": 43,
+   "horizon": "Through November 2028",
+   "description": "A Republican (modally Vance) holds the White House for a third consecutive term. The economy avoids recession, Trump's approval recovers off its 2026 trough, and a fragmented Democratic field nominates a weaker-than-generic candidate while the GOP runs an orderly, well-funded Vance coronation. The 1988 analogy: the one modern open-seat hold rode a recovering economy and a no-longer-toxic predecessor. The market already prices this at ~41% — not a long shot.",
+   "derivation": "Market complement + nominee asymmetry. The party markets price Republican ~40–41% directly (Polymarket, Metaculus, Kalshi). The raw base rate would put a GOP hold as low as ~14–25%, so 41% is already elevated above the outside view — the market is pricing Vance's frontrunner strength (~38% of the GOP field) and the non-independence of the third-term base rates. Fold in the recession-free-rebound and Democratic-self-destruction mechanisms (a fractured field with no one above ~21%), and hold near the market: 35–43%.",
+   "drivers": [
+    "Primary-dynamics asymmetry: orderly GOP (Vance ~38%) vs. fragmented Dems (none >~21%)",
+    "No recession by November 2028 (the 1988-style precondition for a hold)",
+    "Trump approval recovery off the 2026 trough lifting the in-party's coalition",
+    "Thin third-term penalty — the losses averaged only ~-0.68pp, within polling error"
+   ],
+   "signals": [
+    "Recession odds falling below ~20% through 2027",
+    "Trump approval climbing durably above ~45% with independents",
+    "GOP nominee market consolidating Vance above ~50%",
+    "The Democratic primary staying a 4–5-way scrum into 2028"
+   ]
+  },
+  {
+   "name": "Recession routs the in-party — decisive Democratic win",
+   "low": 8, "high": 14,
+   "horizon": "Through November 2028",
+   "description": "A 2027–28 recession actually lands — a tariff/stagflation shock or an AI-capex bust (Deloitte's downside is -1% GDP in 2028) — and the in-party loses clearly, regardless of who each side nominates. This is the cleanest, non-double-counted signal on the board: postwar, the in-party lost all four elections fought near a recession. The economic master variable fires at its downside and swamps every offsetting factor, including Democratic fragmentation.",
+   "derivation": "Decomposition. P(recession lands by Nov 2028) ~0.40 (JPM ~35%, WSJ ~45%, Morningstar 40–50% for 2026, cumulated to a wider window) × P(in-party loses | recession near election) ~0.9 (4-of-4 postwar, discounted for small-N). That maps to ~0.36 of total recession-conditioned Democratic mass — but most already lives inside the modal recapture scenario. Carving only the incremental, decisive-margin recession effect on top of that baseline: 8–14%.",
+   "drivers": [
+    "Recession as master driver — in-party lost 4-of-4 postwar recession-adjacent elections",
+    "Tariff-driven inflation and the pending SCOTUS IEEPA ruling as specific catalysts",
+    "A possible 2027–28 AI-capex bust (Deloitte downside -1% GDP 2028)",
+    "Fundamentals swamp nominee identity — even a weak Democrat wins comfortably"
+   ],
+   "signals": [
+    "NBER-style indicators, yield-curve inversion, unemployment rising through 2027–28",
+    "AI-capex / data-center spending pullback signals in 2027",
+    "The SCOTUS IEEPA ruling forcing a tariff unwind or entrenchment",
+    "Real disposable income turning negative into the election year"
+   ]
+  },
+  {
+   "name": "Wildcard — contested nomination or exogenous shock redraws the race",
+   "low": 4, "high": 8,
+   "horizon": "Any time through November 2028",
+   "description": "The fat tail the tidy binary cannot price 28 months out: a frontrunner falls (Vance stumbles, or a single Democrat consolidates from nowhere), a serious independent fractures a coalition, or a candidate health/legal/geopolitical shock reshuffles the matchup. 2028 is the first back-to-back no-incumbent pair since 1884, so comparables are thin and model uncertainty is genuinely fatter than a normal cycle. These do not all point one way — several help each side — so they get their own bucket.",
+   "derivation": "Base rate + long-horizon adjustment. Roughly 3–5 of the last ~20 cycles were materially shaped by a discontinuity (a serious third-party spoiler, a nominee-reshaping health/legal shock, a contested outcome): ~15–25% loosely. But most such events resolve into one of the two major-party outcomes already counted above; netting the absorbed portion leaves a 4–8% residual for outcomes that genuinely break the normal-election frame — bumped slightly for the 1884-rare no-incumbent structure.",
+   "drivers": [
+    "Thin comparables (first back-to-back no-incumbent pair since 1884) widening the distribution",
+    "Candidate age/health/legal exposure across an old, entangled field",
+    "A serious independent/third-party run in a low-approval environment",
+    "Long-horizon market miscalibration 28 months from Election Day"
+   ],
+   "signals": [
+    "Any frontrunner collapsing >10 points in the nominee markets",
+    "A credible independent clearing ballot access and polling >10%",
+    "A frontrunner health/legal event in either party",
+    "State-level Electoral-College or election-law disputes gaining traction"
+   ]
+  }
+ ],
+ "base_rates": [
+  { "stat": "1 / 7", "text": "In-party won a 3rd consecutive term only once since 1952 (1988) — the core headwind against a GOP hold." },
+  { "stat": "1 / 8", "text": "Open-seat in-party successor held the White House once since 1920 (1928) — no incumbency shield in an open seat." },
+  { "stat": "1 / 4", "text": "Sitting VPs elected in a modern open seat — only Bush '88; Nixon, Humphrey, Gore lost — a drag if Vance is the nominee." },
+  { "stat": "4 / 4", "text": "Postwar elections near a recession that the in-party lost (1976, 1980, 1992, 2020) — the one clean, non-double-counted signal." },
+  { "stat": "~0.68pp", "text": "Average popular-vote margin in the third-term-failure cases — the penalty is real but rarely a rout; a small shift can flip it." },
+  { "stat": "~59 / 41", "text": "Cross-validated party-win market (Polymarket, Metaculus, Kalshi, Manifold), Democratic over Republican — pulled 3 July 2026." }
+ ],
+ "markets": [
+  { "platform": "Polymarket", "market": "Which party wins 2028?", "detail": "Democratic ~59% · Republican ~41%", "volume": "~$1.87M", "pulled": "2026-07-03" },
+  { "platform": "Metaculus", "market": "Which party wins 2028?", "detail": "Democratic 59.9% · Republican 40% · Other 0.1%", "volume": "Community forecast", "pulled": "2026-07-03" },
+  { "platform": "Polymarket", "market": "Winner (person, exact)", "detail": "JD Vance ~21% · Marco Rubio ~15% · Gavin Newsom ~12% · Jon Ossoff ~7% · AOC ~7% · 120+ candidates", "volume": "~$60M+ (mirror)", "pulled": "2026-07-03" },
+  { "platform": "Kalshi", "market": "Winner (person)", "detail": "Rubio ~19% · Newsom ~19% · Vance ~18% (March 2026 snapshot — stale)", "volume": "~$48M", "pulled": "2026-07-03" },
+  { "platform": "Polymarket", "market": "Democratic nominee", "detail": "Gavin Newsom ~21% (frontrunner); Harris / Shapiro / Buttigieg / Whitmer / AOC ~6–10%", "volume": "~$1.2B cumulative", "pulled": "2026-07-03" },
+  { "platform": "Polymarket", "market": "Republican nominee", "detail": "JD Vance ~38% (frontrunner); Rubio the next tier", "volume": "~$668M cumulative", "pulled": "2026-07-03" }
+ ],
+ "triggers": [
+  "A 2026–28 recession is confirmed (NBER dating or a negative Q2-2028 GDP print) — historically decisive against the in-party (4-of-4 postwar losses) and the single largest swing variable; its arrival cements the Democratic pick, its clear absence is the GOP's best path.",
+  "The party-win market moves durably (2+ months) below ~50% Democratic or above ~65% — the primary external anchor for the whole call.",
+  "Trump's approval breaks out of its 2026 sub-40% band — a sustained recovery above ~45% with independents lifts the GOP out of the losing band; a further slide entrenches the Democratic edge.",
+  "The 2026 midterm House result — a Democratic wave of 20+ seats confirms the transmission belt into 2028; a GOP hold or a narrow Democratic gain undercuts the time-for-change thesis.",
+  "The Democratic field consolidates behind a broadly acceptable governor by late 2027 (raises the Democratic pick), or stays a fractured five-way scrum that yields a weak-general nominee (revives the Republican hold).",
+  "Either frontrunner falls — Vance loses the GOP nominee lead, or a single Democrat consolidates above ~35% — redrawing the general-election matchup.",
+  "The SCOTUS IEEPA tariff ruling — a strike-down removes the named driver of tariff inflation and aids the GOP; an upholding that re-accelerates inflation entrenches the Democratic path."
+ ],
+ "sources": [
+  { "label": "Polymarket — Which party wins the 2028 US Presidential Election?", "url": "https://polymarket.com/event/which-party-wins-2028-us-presidential-election" },
+  { "label": "Polymarket — Presidential Election Winner 2028 (person)", "url": "https://polymarket.com/event/presidential-election-winner-2028" },
+  { "label": "Polymarket — Republican Presidential Nominee 2028", "url": "https://polymarket.com/event/republican-presidential-nominee-2028" },
+  { "label": "Polymarket — Democratic Presidential Nominee 2028", "url": "https://polymarket.com/event/democratic-presidential-nominee-2028" },
+  { "label": "Metaculus — Which party will win the 2028 US presidential election?", "url": "https://www.metaculus.com/questions/40567/which-party-will-win-the-2028-us-presidential-election/" },
+  { "label": "Kalshi — 2028 Presidential Election winner (person)", "url": "https://kalshi.com/markets/kxpresperson/pres-person/kxpresperson-28" },
+  { "label": "The Center Square — Two years out, Vance remains clear frontrunner for 2028 GOP primary", "url": "https://www.thecentersquare.com/national/article_1ea58d2c-f705-4068-9be0-da081e96297a.html" },
+  { "label": "Emerson College Polling — June 2026 national poll", "url": "https://emersoncollegepolling.com/june-national-poll/" },
+  { "label": "The Hill — 2028 Democratic presidential hopefuls: Top contenders", "url": "https://thehill.com/homenews/campaign/5661026-democratic-party-future-leaders/" },
+  { "label": "The Hill — Is it that hard for a party to hold the White House for three terms?", "url": "https://thehill.com/blogs/pundits-blog/presidential-campaign/238812-is-it-that-hard-for-a-party-to-hold-the-white-house/" },
+  { "label": "Goldman Sachs — Incumbent US presidents tend to win elections except during recessions", "url": "https://www.goldmansachs.com/insights/articles/us-president-incumbents-tend-to-win-elections-except-during-recessions" },
+  { "label": "Gallup — Presidential Job Approval Related to Reelection Historically", "url": "https://news.gallup.com/poll/311825/presidential-job-approval-related-reelection-historically.aspx" },
+  { "label": "Deloitte — United States Economic Forecast 2026–2031", "url": "https://www.deloitte.com/us/en/insights/topics/economy/us-economic-forecast/united-states-outlook-analysis.html" },
+  { "label": "Silver Bulletin — 2026 generic ballot average", "url": "https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls" },
+  { "label": "Wikipedia — 2028 United States presidential election", "url": "https://en.wikipedia.org/wiki/2028_United_States_presidential_election" }
+ ],
+ "method_note": "Six standing predictor profiles each committed to a call by a fixed criterion, fused to one consensus by grounding strength rather than vote count, with the strongest dissent preserved. Prediction markets were swept first as the external anchor; every probability is grounded in a market price, a counted base rate, or an explicit decomposition. The party leg (Democratic ~55%) is the resolvable near-even bet; the person leg is presented as an open field because no candidate clears ~21%.",
+ "honesty_note": "Democrats are the favorite to win the presidency at ~52–58% — which also means a Republican hold is a live ~42–48%, closer to a coin flip than the base rates alone imply. The pick names the party favorite 28 months out; it does not claim certainty, and the person who wins is genuinely unsettled."
+}
