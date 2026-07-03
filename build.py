@@ -6340,6 +6340,20 @@ FORECAST_PAGE_CSS = """
 .fd-cat-h .tick { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: .55rem; vertical-align: -1px; }
 .fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
+
+/* super-section bands: the board's three wings — Sports & Politics (the
+   standalone live calls), From the Research (corpus markets), Ad Tech & Media.
+   Bigger and heavier than a category shelf head; each wears its own accent. */
+.fd-sec { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
+  margin: 2.8rem 0 1.3rem; padding-bottom: .7rem; border-bottom: 2px solid var(--fdtext); }
+.fd-sec:first-of-type { margin-top: 1.4rem; }
+.fd-sec-bar { align-self: center; display: inline-block; width: 15px; height: 15px; border-radius: 3px; }
+.fd-sec-t { font-family: var(--display); font-weight: 600; font-size: clamp(1.35rem, 3vw, 1.85rem);
+  line-height: 1; margin: 0; color: var(--fdtext); }
+.fd-sec-k { font-family: var(--serif); font-style: italic; font-size: .92rem; color: var(--fdmut); }
+.fd-sec-n { margin-left: auto; align-self: center; font-family: var(--fdmono); font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 640px) { .fd-sec-k { flex-basis: 100%; } .fd-sec-n { margin-left: 0; } }
 .fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
 .fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
   background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.05rem 1.15rem;
@@ -6785,12 +6799,17 @@ FORECAST_NAV_DEFAULT = (
 )
 
 
-def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None, native_data=None):
+def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None, native_data=None, sections=None):
     """Render a Forecast board — docs/forecast.html by default: ticker, live
     native markets, then every harvested corpus market shelved by category
     (graded markets shelve last on their shelf, wearing their verdict).
     A `page` override scopes the board to a detached desk's own edition (e.g.
-    the Ad Tech Board): {fname, title (h1), kicker, nav, back, record_fname}."""
+    the Ad Tech Board): {fname, title (h1), kicker, nav, back, record_fname}.
+    `sections`, when given, splits the board into labeled super-section bands
+    instead of one flat run of shelves — an ordered list of section dicts:
+    {title, kicker, color, native:True} pins the standalone native heroes; a
+    {title, kicker, color, categories:[...]} or {..., rest:True} band groups
+    the category shelves it claims (rest = every category no other band took)."""
     out = Path(out_dir)
     page = page or {}
     fname = page.get("fname", "forecast.html")
@@ -6801,8 +6820,6 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     record_fname = page.get("record_fname", "forecast-record.html")
     category_order = category_order or []
     parts = [_fd_tape(native_items, markets)]
-    for f in native_items:
-        parts.append(_fd_live_hero(f))
     # Shelve harvested markets by category, config order first, then first-seen.
     cats = []
     for c in category_order:
@@ -6811,14 +6828,44 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     for m in markets:
         if m["category"] not in cats:
             cats.append(m["category"])
-    for c in cats:
+
+    def _shelf(c):
         group = sorted([m for m in markets if m["category"] == c],
                        key=lambda m: bool(m.get("resolution")))
         cards = "".join(_fd_market_card(m) for m in group)
         cc = _fd_cat_color(c)
-        parts.append(f'<h2 class="fd-cat-h"><span class="tick" style="background:{cc}"></span>'
-                     f'{html.escape(c)} <span class="n" style="color:{cc}">{len(group)}</span></h2>'
-                     f'<div class="fd-grid">{cards}</div>')
+        return (f'<h2 class="fd-cat-h"><span class="tick" style="background:{cc}"></span>'
+                f'{html.escape(c)} <span class="n" style="color:{cc}">{len(group)}</span></h2>'
+                f'<div class="fd-grid">{cards}</div>', len(group))
+
+    if sections:
+        claimed = {c for sec in sections for c in sec.get("categories", [])}
+        for sec in sections:
+            band, n = [], 0
+            if sec.get("native"):
+                band = [_fd_live_hero(f) for f in native_items]
+                n = len(native_items)
+            else:
+                sec_cats = ([c for c in cats if c not in claimed] if sec.get("rest")
+                            else [c for c in cats if c in sec.get("categories", [])])
+                for c in sec_cats:
+                    shtml, cnt = _shelf(c)
+                    band.append(shtml)
+                    n += cnt
+            if not band:
+                continue
+            col = sec.get("color", "#9aa1af")
+            parts.append(
+                f'<div class="fd-sec"><span class="fd-sec-bar" style="background:{col}"></span>'
+                f'<h2 class="fd-sec-t">{html.escape(sec["title"])}</h2>'
+                f'<span class="fd-sec-k">{html.escape(sec.get("kicker", ""))}</span>'
+                f'<span class="fd-sec-n">{n} {"market" if n == 1 else "markets"}</span></div>')
+            parts.extend(band)
+    else:
+        for f in native_items:
+            parts.append(_fd_live_hero(f))
+        for c in cats:
+            parts.append(_shelf(c)[0])
     n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
     n_markets = len(native_items) + len(markets)
     # The plate's graded line + the standing link to the track record.
@@ -10657,15 +10704,26 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     if pamphlet_items:
         print(f"  ✓ Rendered {pam_rendered}/{len(pamphlet_items)} pamphlet page(s) from data")
 
-    # The Forecast Desk (fifth top-level section — predictions by category).
-    # Markets whose category belongs to a desk that runs its own board stay off
-    # the site-wide board (they trade on the desk's edition instead) — native
-    # forecasts route by category the same way.
-    fd_main = [m for m in fd_markets if m["category"] not in fc_desk_cats]
-    fd_native_main = [f for f in forecast_items if f.get("category") not in fc_desk_cats]
-    build_forecast_page(out, fd_native_main, fd_main, forecast_cfg,
-                        category_order=category_order, shell=shell_root, native_data=fd_native_data)
-    forecast_band = forecast_band_html(fd_native_main, fd_main, forecast_cfg)
+    # The Forecast Desk (fifth top-level section). The site-wide board is split
+    # into three labeled wings: the standalone live calls (sports & politics),
+    # the research corpora, and the Ad Tech markets. Ad Tech shows on BOTH the
+    # main board (this wing) and its own detached desk board (built below), so
+    # unlike glossary/quiz the forecast markets are NOT held back here.
+    adtech_title = next((d.get("title", "Ad Tech & Media") for d in detached
+                         if "forecast" in (d["page"].get("include") or [])), "Ad Tech & Media")
+    fd_sections = [
+        {"title": "Sports & Politics", "color": "#f59e0b", "native": True,
+         "kicker": "Standalone live calls — bare-topic questions, not drawn from a corpus"},
+        {"title": "From the Research", "color": "#60a5fa", "rest": True,
+         "kicker": "Every research corpus's forecast, priced as a market"},
+        {"title": adtech_title, "color": _fd_cat_color("Media & Advertising"),
+         "categories": sorted(fc_desk_cats),
+         "kicker": "The trade desk's predictions — also on the Ad Tech board"},
+    ]
+    build_forecast_page(out, forecast_items, fd_markets, forecast_cfg,
+                        category_order=category_order, shell=shell_root,
+                        native_data=fd_native_data, sections=fd_sections)
+    forecast_band = forecast_band_html(forecast_items, fd_markets, forecast_cfg)
     fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub, records=persona_records)
                       for f in forecast_items)
     fdm_rendered = sum(build_corpus_market_page(out, m, shell=shell_sub, records=persona_records)
