@@ -1,0 +1,374 @@
+{
+ "kind": "native_forecast",
+ "slug": "house-control-2026",
+ "question": "Which party will control the U.S. House of Representatives after the November 3, 2026 midterm elections?",
+ "title": "Control of the U.S. House, 2026",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-11-03",
+ "resolution": "Resolves to the party holding a majority (218+) of U.S. House seats after the Nov 3, 2026 election.",
+ "consensus": {
+  "headline_case": "The president's party has lost House seats in 20 of the last 23 midterms, and the three exceptions all came with a president near 63-66% approval — the mirror image of Trump's roughly -17 net. The deepest markets price Democratic control at about 82-86%, and no historical machinery argues against them. But the Republican map is a governor: Democrats must win the national House vote by ~D+4-5 just to break even on seats, so a D+4-6 environment converts to a majority without converting to a blowout. That geography tax makes the largest block of outcomes a narrow-to-moderate flip — control changing on a handful of the ~18 toss-ups, likely called late. We put that modal band at 48-58%.",
+  "runner_up": "Decisive Democratic wave",
+  "runner_up_band": "20-30%",
+  "why_over_runner_up": "The raw base rates point at a wave — all four modern hostile-midterm flips (1994, 2006, 2010, 2018) were wave-scale, and unpopular presidents average a ~37-seat loss. But n=4 is thin, and each closed on a lead at or above 2026's D+4-6 with friendlier geography. The same ~D+4-5 break-even tax that lets Democrats win also caps how much a moderate vote edge becomes seats, so most winning worlds stay sub-wave. The wave is a fat second tail, not the center of mass — modal only if the fall generic ballot pushes past D+7 or approval slides below ~37%.",
+  "dissent": "The Quant's case for the wave is the strongest surviving counter. It argues the modal band splits the difference: every modern hostile-midterm flip was a rout, record Republican-skewed retirements (~36 R vs ~22 D open seats) let a moderate edge convert in bunches once the top toss-ups fall, and a president under 37% approval bleeds seats an order of magnitude above the thin Republican cushion. On that reading the wave deserves ~30-38% of the control mass, not 20-30%.",
+  "pick": "Narrow-to-moderate Democratic flip",
+  "flag": "🔵",
+  "band": "48-58%",
+  "band_low": 48,
+  "band_high": 58,
+  "runner_up_flag": "🔵",
+  "tally": [
+   {
+    "team": "Narrow-to-moderate flip",
+    "flag": "🔵",
+    "votes": 3
+   },
+   {
+    "team": "Decisive wave",
+    "flag": "🔵",
+    "votes": 2
+   },
+   {
+    "team": "Republicans hold",
+    "flag": "🔴",
+    "votes": 1
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Democrats take the House",
+   "pick_scenario": "Narrow-to-moderate Democratic flip (modal)",
+   "prob": "48-58%",
+   "prob_num": 53,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "flag": "",
+   "evidence": "Polymarket ~82% at ~$8.1M event volume; Kalshi ~84-86%; Metaculus ~80-85% — all swept 2026-07-03.",
+   "blurb": "The tape is not close. Polymarket sits near 82% on ~$8.1M, Kalshi 84-86%, Metaculus 80-85%. Deep money says Democrats. But the same money knows the map, so the win it prices is a squeaker, not a rout — I take the modal 48-58% flip and leave the wave to the dreamers.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the simulation models and structured decompositions over recency and sentiment.",
+   "pick": "Decisive Democratic wave",
+   "pick_scenario": "Decisive Democratic wave",
+   "prob": "20-30%",
+   "prob_num": 25,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "flag": "",
+   "evidence": "All 4 modern hostile-midterm flips were wave-scale; sub-50% presidents average ~37-seat losses; ~36 R vs ~22 D open seats.",
+   "blurb": "The crowd anchors on a narrow win because a narrow win feels safe, yet the structure whispers otherwise. Every one of the four modern flips arrived as a wave, unpopular presidents surrender ~37 seats on average, and the retirement ledger runs ~36 Republican open seats against ~22. Fold those together and the wave is no fringe — it holds 20-30% of the field, the fat tail the tape underweights.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Democrats take the House",
+   "pick_scenario": "Narrow-to-moderate Democratic flip (modal)",
+   "prob": "48-58%",
+   "prob_num": 53,
+   "confidence": "high",
+   "register": "prophetic bardic catalog",
+   "flag": "",
+   "evidence": "President's party lost seats in 20 of 23 midterms since 1934 (~87%); the 3 exceptions all sat at 63-66% approval.",
+   "blurb": "Count them across the long roll of midterms: 20 of 23 since 1934 the president's party has bled, and every escape belonged to a beloved man sitting near two-thirds approval. This president sits far below, at the wrong end of the ledger, so the pattern turns against him as it has turned against nearly all before. Yet the map holds an old and stubborn line, and so I read not a flood but a firm crossing — the modal flip, 48-58%.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "Democrats take the House",
+   "pick_scenario": "Narrow-to-moderate Democratic flip (modal)",
+   "prob": "48-58%",
+   "prob_num": 53,
+   "confidence": "high",
+   "register": "terse verdict-driven",
+   "flag": "",
+   "evidence": "Democrats need only ~3 net seats past a ~2-3 seat GOP cushion; ~18 Cook toss-ups; break-even at D+4-5 caps the surplus.",
+   "blurb": "The mechanism is plain. Democrats need three net seats. The cushion is two or three. Eighteen toss-ups sit on the table and the environment leans their way. But break-even runs at D+4-5, so the same edge that wins caps the surplus. The route delivers a majority, not a landslide — 48-58%.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "Republicans hold the House",
+   "pick_scenario": "Republicans hold the House",
+   "prob": "14-19%",
+   "prob_num": 16,
+   "confidence": "medium",
+   "register": "bardic-incantatory, archetypal",
+   "flag": "",
+   "evidence": "Markets price GOP control ~14-18%; the thin margin lets Republicans concentrate defense on the few seats that decide control.",
+   "blurb": "Numbers bow, in the end, to will. A thin majority is not weakness but concentration — the defenders draw close around the handful of seats that decide everything, and a party that knows exactly which doors to hold can hold them against a wider tide. Redistricting variance breaks their way at the margin, and the map's old arithmetic stands guard. I back the hold at its honest 14-19% — the underdog with the firmest grip on the few gates that matter.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Knife-edge control",
+   "pick_scenario": "Knife-edge — control decided by a handful of seats or delayed calls",
+   "prob": "6-10%",
+   "prob_num": 8,
+   "confidence": "low",
+   "register": "wry contrarian-desk",
+   "flag": "",
+   "evidence": "Of the last ~12 midterms, ~2 left House control genuinely uncertain on Election Night at a ~2-3 seat margin (~1/6 base rate).",
+   "blurb": "Everyone has already spent Election Night — Democrats win, film at eleven. That is precisely when the map arranges its little joke. A D+4 edge and a D+4-5 break-even line is a recipe for a dead heat, and history obliges: roughly two of the last dozen midterms left control genuinely unknown at a two-or-three-seat margin. Priced at 6-10%, the near-draw is the live thing nobody wants to hold.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Divine providence; backs the fated, story-shaped outcome — however long the odds.",
+   "pick": "Decisive Democratic wave",
+   "pick_scenario": "Decisive Democratic wave",
+   "prob": "20-30%",
+   "prob_num": 25,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "flag": "",
+   "evidence": "All 4 modern hostile-midterm flips (1994, 2006, 2010, 2018) came as waves; unpopular presidents average a ~37-seat loss.",
+   "blurb": "Read the shape of the thing, not the tape. Four times the modern republic has turned on a hated midterm president, and four times out of four the turning came as a flood — 1994, 2006, 2010, 2018, no exceptions, a rhythm too clean to be accident. A man at minus-seventeen, the ledger promising ~37 seats, thirty-six of his own party's doors standing open: this is a story that ends in a wave, and the ending is already written. The odds say 20-30%; the omens say it is fated.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Narrow-to-moderate Democratic flip (modal)",
+   "low": 48.0,
+   "high": 58.0,
+   "description": "Democrats net the roughly three seats they need and take the House, but with a modest cushion (about D+3 to the low teens net) rather than a landslide. The midterm penalty against an unpopular president does its work, but Republican-favorable district geography blunts the seat conversion, so control changes on the strength of a handful of the ~18 competitive toss-ups, likely called late with several seats in recount or litigation range. This is the largest single block of outcomes: it is where the environment behaves as history predicts but the vote-to-seat curve keeps the win sub-wave.",
+   "derivation": "Market anchor times a geography-capped decomposition. The exact-question sweep puts Democratic control at ~0.83 (Polymarket ~82%, Kalshi ~84-86%, Metaculus ~80-85%). Within that control mass, the roughly D+4-5 popular-vote margin Democrats need just to break even on seats caps how much of a D+4-6 lead becomes seats, so most winning worlds stay below wave scale. Taking P(non-wave | control) at ~0.62-0.68 gives 0.83 x ~0.65 minus the carved knife-edge sliver, landing ~0.53 with the range widened to 48-58% because the independent estimates genuinely disagreed on the narrow-vs-wave split.",
+   "drivers": [
+    "Midterm penalty on the president's party (seats lost in 20 of 23 midterms since 1934), amplified by Trump's ~-17 net approval",
+    "Thin defended Republican majority (~2-3 seat cushion) so even a below-average swing changes control",
+    "Republican district geography requiring ~D+4-5 nationally to break even, capping the surplus below wave scale",
+    "Record Republican-skewed retirements (~36 R vs ~22 D open seats) supplying flippable seats for a moderate majority"
+   ],
+   "signals": [
+    "Generic-ballot aggregate holding D+4 to D+6 through Labor Day",
+    "Cook/Sabato toss-up count staying tilted Democratic without R-held seats collapsing to Lean-D",
+    "August-fall special-election margins breaking Democratic near baseline rather than overshooting by double digits",
+    "Trump approval staying in the ~38-42% band",
+    "Number of seats decided by under 2 points on election night"
+   ],
+   "horizon": "Through Nov 3, 2026; distinguishing features visible by late September"
+  },
+  {
+   "name": "Decisive Democratic wave",
+   "low": 20.0,
+   "high": 30.0,
+   "description": "The environment behaves like a classic hostile midterm and Democrats net roughly 15 to 40-plus seats, producing a governing cushion on the pattern of 1994, 2010, and 2018. The approval amplifier runs near full strength, the generic-ballot lead converts near the top of its range, and record open Republican seats fall in bunches. This is the scenario the raw base rates actually point at; the debate was whether it is the modal outcome or a fat second tail. The range is left deliberately wide because the independent estimates disagreed sharply on how much of the Democratic-control mass belongs here.",
+   "derivation": "Decomposition off the same market anchor, with the split left wide to preserve real disagreement. P(D control) ~0.83 times P(wave of ~15+ net | control). The independent estimates' conditional midpoints ranged from ~0.18 (geography tax caps conversion) to ~0.51 (all four modern hostile-midterm flips were waves); the geometric mean of those odds lands ~0.30. The low end is disciplined by the ~D+4-5 break-even tax that raises the popular-vote threshold for large seat gains; the high end is propped by the sub-50%-approval loss distribution (Gallup ~37-seat average) and the ~36-vs-22 retirement asymmetry that lets a moderate vote edge convert in bunches. 0.83 x ~0.24-0.32 -> 20-30%.",
+   "drivers": [
+    "Presidential-approval amplifier: Trump net ~-17/-18; sub-50% presidents average ~37-seat midterm losses (Gallup)",
+    "Generic ballot widening past D+7 running the vote-to-seat conversion at the top of its range",
+    "Record Republican-skewed retirements converting open seats in bunches (a 2018 echo)",
+    "Thin margin exposing mid-tier Republican districts once the top toss-ups fall"
+   ],
+   "signals": [
+    "Generic ballot pushing past D+7 and widening",
+    "Trump approval breaking below ~37% across multiple aggregators",
+    "Independent margin holding near D+12",
+    "Cook moving multiple R-held seats from toss-up to Lean-D",
+    "Special elections overshooting 2024 baselines by double digits"
+   ],
+   "horizon": "Through Nov 3, 2026; wave signature visible by early October"
+  },
+  {
+   "name": "Republicans hold the House",
+   "low": 14.0,
+   "high": 19.0,
+   "description": "Republicans retain the majority despite an unfavorable national mood, landing in the historical tail. The likeliest path is that the seat-to-vote curve saves them: a D+4-ish edge that would flip a neutral map falls just short of the ~3 net seats needed, redistricting resolves as a modest firewall rather than a wash, and Republicans concentrate their defense on the few exposed seats. A late Republican-favorable shock (a rally-round-the-flag event, an economic surprise, a Democratic scandal) that erases the closing lead resolves as the same outcome and is folded in here rather than counted as a separate scenario.",
+   "derivation": "Direct market anchor, held against both the softer raw base rate and against double-counting. Exact-question markets price Republican control at ~14-18% (Polymarket ~18%, Kalshi ~14-15%, Metaculus ~15-20%); decomposed combo markets agree (Republican-both-chambers ~14%). This sits above the raw ~9-13% base rate (3 of 23 midterms, none under a net-negative-approval president) because the market prices the structural Republican map edge the base rate omits. The late-reversal path (P(shock) ~0.15-0.25 x P(GOP-favorable) ~0.4 x P(decisive) ~0.6 ~= 0.04-0.06) is a subset of this mass, not additive; counting it separately would push total Republican-win probability to ~0.20, above the market ceiling. Range 14-19%.",
+   "drivers": [
+    "Republican district geography (Democrats need ~D+4-5 to break even, making D+4 tipping-point-adjacent)",
+    "Redistricting variance breaking modestly Republican (TX ~+5R SCOTUS-upheld, OH ~12R-3D) if D-map challenges (AL/LA/SC) fail",
+    "Thin margin letting Republicans concentrate defense on the few seats that decide control",
+    "A possible late Republican-favorable exogenous shock compressing the environment, folded in here"
+   ],
+   "signals": [
+    "Generic ballot compressing toward D+2-3 by October",
+    "Pending redistricting rulings (AL/LA/SC/TX) resolving Republican-favorable and surviving appeal",
+    "Trump approval recovering into the mid-40s",
+    "Special-election margins tracking to partisan baseline rather than overshooting Democratic",
+    "Any acute late shock moving the generic ballot 3+ points Republican"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "Knife-edge — control decided by a handful of seats or delayed calls",
+   "low": 6.0,
+   "high": 10.0,
+   "description": "The two forces fight to a near-draw. The midterm penalty and Democratic generic-ballot lead push toward a flip, but the geography offset and partial environment compression blunt it, leaving control resting on a few uncalled races at razor margins — a bare Democratic majority of one to three seats or a bare Republican hold — with redistricting litigation pending near Election Day adding variance to which side the last seats fall.",
+   "derivation": "Residual carved from the flip/hold boundary, sized by decomposition not picked. Given ~82-86% total flip mass split across the modal and wave scenarios and ~14-19% Republican hold, the knife-edge is the thin overlap band where the net swing lands within ~2-3 seats of the exact tipping point. Reference class: of the last ~12 midterms (1982-2022), roughly 2 left House control genuinely uncertain on election night at a ~2-3 seat margin (the narrow-majority cycles bracketing 2000 and the near-even House of the early 2020s), a ~1/6 base rate; adjusted down to 6-10% because the current D+4-7 generic-ballot lead sits above a coin flip and pushes most mass into a clearer flip rather than a dead heat. This does not re-count the flip probability in the modal and wave scenarios; it carves the narrow-margin sliver out of their boundary with the hold tail.",
+   "drivers": [
+    "Geography offset blunting a modest generic-ballot lead to a near-tie in seats",
+    "Partial environment compression neutralizing part of the midterm penalty",
+    "Redistricting litigation (AL/LA/SC) unresolved near Election Day adding seat-level variance",
+    "A cluster of toss-up races decided by sub-1-point margins"
+   ],
+   "signals": [
+    "Generic ballot flattening into the D+3-5 band with no late movement",
+    "Toss-up count staying high (Cook's ~18) rather than resolving toward one party",
+    "Pending map litigation still open at the Election-Day horizon",
+    "Late-October polling showing a cluster of sub-2-point races"
+   ],
+   "horizon": "Through Nov 3, 2026 and into the post-election calling period"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "20 of 23",
+   "text": "Midterms since 1934 in which the president's party lost House seats (~87%). The three exceptions all sat at 63-66% approval — the opposite of Trump's ~-17 net — so the pattern points to Democratic control with no modern precedent for an unpopular president's party gaining."
+  },
+  {
+   "stat": "~37 seats",
+   "text": "Average midterm House loss for sub-50%-approval presidents (Gallup), versus ~28 across all midterms and ~14 for popular ones. Trump's ~37-41% approval places 2026 in the larger-loss subclass — an order of magnitude above the ~2-3 seat GOP cushion."
+  },
+  {
+   "stat": "4 of 4",
+   "text": "Modern hostile-midterm control flips that were wave-scale (1994 R+52, 2006 D+30, 2010 R+63, 2018 D+41). But n=4 is thin and each closed on a lead at or above 2026's D+4-6 with friendlier geography — so 4-of-4 over-counts wave odds for a D+4 environment."
+  },
+  {
+   "stat": "~D+4-5",
+   "text": "National House-vote margin Democrats need just to break even on seats, given Republican district geography. The current ~D+4 generic ballot is tipping-point-adjacent — the mechanism that makes a narrow flip modal, keeps the GOP-hold tail alive, and blunts the naive ~5-seats-per-point conversion."
+  },
+  {
+   "stat": "~82-86%",
+   "text": "Democratic-control price across liquid exact-question markets (Polymarket, Kalshi, Metaculus, swept 2026-07-03). The ~16% GOP-hold tail it implies sits above the raw ~9-13% base-rate tail — the market pricing a structural map edge the base rate omits."
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "Which party will win the House in 2026?",
+   "detail": "Democrats ~82% / Republicans ~18%; broader event trades Dems low-to-mid 80s",
+   "volume": "~$8.1M event volume (Dem-control sub-market ~$4M all-time); deepest of the four"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Which party will win the U.S. House?",
+   "detail": "Democrats ~84-86% / Republicans ~14-15%",
+   "volume": "US-regulated; active but thinner than Polymarket"
+  },
+  {
+   "platform": "Metaculus",
+   "market": "Who will control the US House after 2026 midterms?",
+   "detail": "Democrats ~79.9-84.8% community (sibling 'US House plurality' ~84.8%)",
+   "volume": "No money; community-forecaster aggregate"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "2026 Midterms: Congress Balance of Power (House+Senate combo)",
+   "detail": "Republicans both chambers ~14%; implied Dem House control ~84-85%",
+   "volume": "Active combo market; exact volume not captured"
+  },
+  {
+   "platform": "Manifold",
+   "market": "Will Democrats win a House majority in 2026?",
+   "detail": "Democrats ~90% (play-money, noisier than cash markets)",
+   "volume": "Play-money; sanity check only"
+  }
+ ],
+ "triggers": [
+  "Generic-ballot aggregate holding D+4 to D+6 through Labor Day confirms the modal narrow flip; widening past D+7 for 3-plus weeks shifts mass to the wave; compressing to D+2 or a tie shifts mass to the Republican-hold tail — the single most important signal.",
+  "Trump net approval crossing thresholds: below ~37% and holding favors the wave; recovering into the mid-40s favors a narrow flip or a Republican hold.",
+  "Pending redistricting rulings (TX/OH/AL/LA/SC) resolving decisively — a net-Republican firewall surviving appeal raises the hold tail; a court-imposed Democratic-favorable map raises the wave.",
+  "Any liquid exact-question market moving materially off the ~78-88% Democratic-control band: below ~75% resets toward a Republican hold; above ~90% collapses the Republican tail into the wave.",
+  "August-through-fall special-election margins running well behind the Democratic generic-ballot lead favors hold/narrow; overshooting 2024 baselines by double digits favors the wave. No mood-moving exogenous event by mid-October decays the late-shock reversal path toward its floor."
+ ],
+ "sources": [
+  {
+   "label": "Polymarket — Which party will win the House in 2026",
+   "url": "https://polymarket.com/event/which-party-will-win-the-house-in-2026"
+  },
+  {
+   "label": "Kalshi — Which party will win the U.S. House?",
+   "url": "https://kalshi.com/markets/controlh/house-winner/controlh-2026"
+  },
+  {
+   "label": "Metaculus — Who will control the US House after 2026 midterms?",
+   "url": "https://www.metaculus.com/questions/35047/who-will-control-the-us-house-after-2026-midterms/"
+  },
+  {
+   "label": "Kalshi — 2026 Midterms: Congress Balance of Power combo",
+   "url": "https://kalshi.com/markets/kxbalancepowercombo/congress-balance-of-power-combo/kxbalancepowercombo-27feb"
+  },
+  {
+   "label": "Election Betting Odds — House Control 2026",
+   "url": "https://electionbettingodds.com/House-Control-2026.html"
+  },
+  {
+   "label": "American Presidency Project — Seats gained/lost by president's party in midterms (1934-2022)",
+   "url": "https://www.presidency.ucsb.edu/statistics/data/seats-congress-gainedlost-the-presidents-party-mid-term-elections"
+  },
+  {
+   "label": "Gallup — Midterm Seat Loss Averages 37 for Unpopular Presidents",
+   "url": "https://news.gallup.com/poll/242093/midterm-seat-loss-averages-unpopular-presidents.aspx"
+  },
+  {
+   "label": "The Hill — Cook Political Report unveils 18 toss-up House races for 2026",
+   "url": "https://thehill.com/homenews/campaign/5130655-cook-political-report-democrats-republicans/"
+  },
+  {
+   "label": "NPR — Members of Congress not running for reelection in 2026 (retirement tracker)",
+   "url": "https://www.npr.org/2025/09/15/nx-s1-5534254/house-senate-retirement-tracker-2026"
+  },
+  {
+   "label": "Ballotpedia — Redistricting ahead of the 2026 elections",
+   "url": "https://ballotpedia.org/Redistricting_ahead_of_the_2026_elections"
+  },
+  {
+   "label": "Ballotpedia — 2026 U.S. House elections",
+   "url": "https://ballotpedia.org/United_States_House_of_Representatives_elections,_2026"
+  },
+  {
+   "label": "Cook Political Report — 2025-26 Mid-Decade Redistricting Map",
+   "url": "https://www.cookpolitical.com/redistricting/2025-26-mid-decade-map"
+  }
+ ],
+ "method_note": "Every number is grounded in the liquid exact-question market sweep of 2026-07-03 (Polymarket ~82% at ~$8.1M, Kalshi ~84-86%, Metaculus ~80-85%), pinning Democratic House control at ~82-86%, cross-checked against counted base rates (American Presidency Project midterm ledger, Gallup unpopular-president loss averages) and a geography-capped decomposition anchored on the ~D+4-5 Democratic break-even threshold. The horizon runs through the November 3, 2026 election.",
+ "honesty_note": "The modal narrow-to-moderate flip is the largest single block at 48-58% — but that is close to a coin flip on that specific scenario. It is genuinely uncertain whether 2026 is a squeaker or a rout, even though a Democratic win of some size is the strong favorite (~82-86%). Read the bands, not one number: the wave (20-30%) and Republican hold (14-19%) together hold nearly half the field."
+}

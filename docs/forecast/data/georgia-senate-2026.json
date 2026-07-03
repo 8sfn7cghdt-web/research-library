@@ -1,0 +1,315 @@
+{
+ "kind": "native_forecast",
+ "slug": "georgia-senate-2026",
+ "question": "Who will win the 2026 U.S. Senate election in Georgia — Democratic incumbent Jon Ossoff or Republican Mike Collins?",
+ "title": "Georgia U.S. Senate — Ossoff vs. Collins",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-11-03",
+ "resolution": "Resolves to the winner of the Georgia U.S. Senate general election on Nov 3, 2026 — or a December runoff if no candidate clears 50%.",
+ "consensus": {
+  "headline_case": "Ossoff is favored to win, but narrowly, not comfortably. The deepest exact-question market prices him near 85 cents, a record cash edge (~$32M cash-on-hand vs. Collins's low-single-digit millions) funds early ad and turnout dominance, and a Republican-president midterm penalty plus a net-negative Trump in Georgia (42/51) drag the endorsed nominee. What caps the win at Georgia-narrow is the state's own history: the last six top-of-ballot federal races all finished inside three points, so the mid-year lead is treated as an overstatement destined to compress. Marking the raw ~85c down and carving out the runoff branch leaves a 44-54% modal band for a narrow hold.",
+  "runner_up": "Mike Collins",
+  "runner_up_band": "22-30%",
+  "why_over_runner_up": "The Republican path is real and deliberately priced above the 15% the market shows, because a liquid market can over-price a favorite by stamping an incumbency narrative onto a coin-flip state. But it stays the runner-up: the incumbent-reelection floor sits above 80%, the 2022 MAGA-nominee class went 0-of-4 against Democratic holds, and the out-party gets the structural midterm tailwind. Collins needs the environment to sour and his coalition's turnout to sag before the R+2 lean becomes a floor he climbs to rather than a ceiling Ossoff clears.",
+  "dissent": "The Contrarian's case is the one that refuses to die: the ~85c market is too confident by half. Georgia's six-of-six sub-three-point top-of-ballot history implies a roughly 40% Republican top-line absent incumbency, and Democratic incumbents defending Trump-won states in 2018 lost four of seven. Read that way, Collins belongs in the high-20s to low-30s, not near 15 — and if post-Labor-Day likely-voter polls converge on D+2/R+2 while October early-vote shows soft Black and youth turnout, that reading gets vindicated.",
+  "pick": "Jon Ossoff",
+  "flag": "🔵",
+  "band": "70-78%",
+  "band_low": 70,
+  "band_high": 78,
+  "runner_up_flag": "🔴",
+  "tally": [
+   {
+    "team": "Jon Ossoff",
+    "flag": "🔵",
+    "votes": 5
+   },
+   {
+    "team": "Mike Collins",
+    "flag": "🔴",
+    "votes": 2
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "flag": "🔵",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Ossoff (reads ~78%)",
+   "pick_scenario": "Jon Ossoff",
+   "prob": "78%",
+   "prob_num": 78,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "Kalshi is the deepest book here and it prints Ossoff at 85 cents, Collins at 16. Polymarket agrees at 85%. I don't fight a tape that liquid. But the same tape ignores that Georgia's last six top races all closed inside three points, so I take the win and shave the margin. Favored, and thin. That's the trade.",
+   "evidence": "Kalshi SENATEGA-26 Ossoff 85c / Collins 16c; Polymarket ~85%; deepest exact-question liquidity of the four.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "flag": "🔵",
+   "criterion": "Trusts the simulation models and structured decompositions over recency and sentiment.",
+   "pick": "Ossoff, narrow",
+   "pick_scenario": "Jon Ossoff",
+   "prob": "74%",
+   "prob_num": 74,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Start with a total Ossoff-win mass of about 0.78, the geometric mean of the three win-midpoints marked down from raw 85c. Now carve it. The runoff branch takes 14 to 16 points; the state's margin history sends roughly three-quarters of the remaining outright wins into the narrow band. That leaves ~0.47 for a sub-five-point hold. The number isn't a mood; it's what the decomposition returns.",
+   "evidence": "~0.62 outright x ~0.75 narrow share = ~0.47; runoff branch ~14-16% carved out first; total win mass ~0.78.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "flag": "🔴",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Collins (reversion)",
+   "pick_scenario": "Mike Collins",
+   "prob": "26%",
+   "prob_num": 26,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "I count the ground this race stands on, and the ground remembers. Six of six recent top-of-ballot contests in Georgia finished inside three points — Biden by a quarter-point, Ossoff by one, Warnock by one and by two — a state that has never once let a favorite breathe easy. And I catalog the fallen: Donnelly, McCaskill, Heitkamp, Nelson, four of seven Democratic incumbents who defended Trump country in a midterm and lost. The market whispers fifteen; the venue's history sings louder than that.",
+   "evidence": "Georgia 6-of-6 top races inside 3 points; 2018 Democratic Trump-state defenses lost 4 of 7 (~57%).",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "flag": "🔵",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "Ossoff, narrow",
+   "pick_scenario": "Jon Ossoff",
+   "prob": "74%",
+   "prob_num": 74,
+   "confidence": "high",
+   "register": "terse verdict-driven",
+   "blurb": "Follow the mechanism. Ossoff has a better-than-three-to-one cash edge and buys the metro suburbs and the under-30 turnout early. The out-party gets the midterm penalty. Collins is a MAGA House member, not the moderate Kemp declined to be. That route wins the seat. But the same route runs through a state that closes inside three points every time, so it wins it close. Narrow hold.",
+   "evidence": "~$32M cash-on-hand vs. low-single-digit millions; midterm penalty on the president's party; candidate-quality gap vs. a MAGA nominee.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "flag": "🔵",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "Ossoff, clear",
+   "pick_scenario": "Jon Ossoff",
+   "prob": "80%",
+   "prob_num": 80,
+   "confidence": "low",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "I read the man, not the tape. Here stands an incumbent who already won the impossible room once, now holding 87% of Black voters, 68% of independents, 66% of moderates, and leading the top issue by twenty-one. A candidate this consolidated, this funded, against a challenger the ads can define as extreme before he ever consolidates his base — that is the shape of a clear win, not a squeaker. The 2022 MAGA nominees went zero for four. I back the leader to open the margin.",
+   "evidence": "Fox coalition: Black 87%, independents 68%, moderates 66%, +21 on the top issue; 2022 MAGA nominees 0-of-4.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "flag": "🔴",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Collins (live dog)",
+   "pick_scenario": "Mike Collins",
+   "prob": "30%",
+   "prob_num": 30,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone's crowded onto the 85-cent side, which is exactly where I start getting curious. A market can be deep and still wrong when it staples an incumbency story to a state that flips a coin every cycle. Georgia's margin history implies a Republican top-line near 40% before you even count the reverting fundamentals, and the Fox +13 smells like a registered-voter artifact. I'll take Collins at the top of an 18-to-30 band and let the likely-voter polls come to me.",
+   "evidence": "6-of-6 sub-3-point history implies ~40% Republican top-line absent incumbency; Fox +13 read as a registered-voter-screen artifact.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "flag": "🔵",
+   "criterion": "Divine providence; backs the fated, story-shaped outcome the ending events seem to be scripting.",
+   "pick": "Ossoff, in December",
+   "pick_scenario": "Jon Ossoff",
+   "prob": "74%",
+   "prob_num": 74,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "Look at how this man arrived: not on a November night but through the long December, the runoff that made him a Senator in 2021. The state that raised him keeps its 50-plus-one rule like a returning tide, and 2021 and 2022 both bent to it. The tape barely prices the mechanism that authored his own beginning. I read the anniversary and the symmetry — the story that ends where it started, back in the December frost, is the one that feels written.",
+   "evidence": "Ossoff's own 2021 win came via runoff; 2021 and 2022 Georgia Senate races both went to runoffs under the 50%+1 rule; Manifold prices a 2026 runoff at ~27%.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "field": [
+  {
+   "team": "Jon Ossoff (D)",
+   "flag": "🔵",
+   "price": 74
+  },
+  {
+   "team": "Mike Collins (R)",
+   "flag": "🔴",
+   "price": 26
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "6 of 6",
+   "text": "Recent Georgia top-of-ballot federal races decided inside ~3 points (Biden +0.24, Ossoff +1.2, Warnock +1.6, Warnock +0.9/runoff +2.8, Trump +2.2). Structurally a coin-flip top line — the strongest argument the mid-year lead compresses."
+  },
+  {
+   "stat": "~85c",
+   "text": "Kalshi SENATEGA-26 last price on an Ossoff/Democratic win (Collins ~16c), matched by Polymarket ~85% — the deepest exact-question market anchor, pulled 2026-07-03."
+  },
+  {
+   "stat": "0 of 4",
+   "text": "Trump-endorsed MAGA Senate nominees vs. Democratic swing-state holds in 2022 (Walker/Oz/Masters/Bolduc). A candidate-quality caution for Collins — but all four ran in a Democrat-favorable year, unlike 2026."
+  },
+  {
+   "stat": "3 of 7",
+   "text": "Democratic incumbents held Trump-won states in the nearest analog midterm, 2018 (~43%). A floor, not the central estimate, since 2018 favored Democrats while a Republican-president midterm penalty cuts toward Ossoff."
+  },
+  {
+   "stat": "20 of 22",
+   "text": "House midterms since 1938 in which the president's party lost ground (~91%). A structural out-party tailwind for Democrats in a 2026 Republican-president midterm."
+  },
+  {
+   "stat": ">80%",
+   "text": "Senate incumbent reelection floor (2022: 35/35; 2018 ~83%; 2014 ~79%). Favors the incumbent to win — but this is a win-rate, not a comfortable-margin rate, consistent with a narrow hold."
+  },
+  {
+   "stat": "~27%",
+   "text": "Thin play-money Manifold price on a December runoff; two of the last three competitive Georgia Senate cycles went to one. Discounted for a weaker 2026 third-party field to a 10-18% runoff branch."
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Kalshi",
+   "market": "Georgia Senate winner? (2026) — SENATEGA-26",
+   "detail": "Ossoff/Dem last 85c (bid/ask 85/86c); Collins/Rep last 16c (bid/ask 15/16c). Deepest exact-question liquidity of the four; inclusive of any runoff.",
+   "volume": "D leg vol ~157k, OI ~87k; R leg vol ~252k, OI ~171k"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Georgia Senate Election Winner (2026)",
+   "detail": "~85% Democrat/Ossoff; ~15% Republican/Collins. Resolves to the election winner, inclusive of any runoff.",
+   "volume": "~$33,700 traded (per aggregator, Jul 2, 2026; thin-to-moderate)"
+  },
+  {
+   "platform": "Manifold",
+   "market": "2026 Georgia U.S. Senate Election Winner (by candidate)",
+   "detail": "Ossoff 74%; 'Other' 16%; stale pre-primary GOP tail lists primary names, not nominee Collins — the ~74% Ossoff figure is the usable signal. Play-money, thin.",
+   "volume": "~3,500 mana, 15 traders"
+  },
+  {
+   "platform": "Manifold",
+   "market": "Which party will win the 2026 US Senate election in Georgia?",
+   "detail": "Per-party probabilities not returned by API at pull time; Democrat heavily favored, consistent with the ~74-85% Ossoff pricing elsewhere.",
+   "volume": "~108,600 mana, 44 traders (play-money; highest Manifold volume here)"
+  },
+  {
+   "platform": "Manifold",
+   "market": "Will the 2026 Georgia Senate race go to a runoff?",
+   "detail": "27% Yes (no candidate clears 50% on Nov 3, forcing a Dec 1 runoff). Very thin play-money — a sanity check, not a constraint.",
+   "volume": "~234 mana, 14 traders"
+  }
+ ],
+ "triggers": [
+  "Two consecutive post-Labor-Day live-caller likely-voter (not registered-voter) polls showing Ossoff +8 or more — shifts mass to the comfortable-win scenario.",
+  "The polling average tightening inside D+2, or two likely-voter polls showing Collins within 2 or ahead — shifts mass toward Collins and the runoff.",
+  "October early-vote composition showing depressed Black or under-30 turnout share vs. 2020/2022 — the single most decisive turnout signal for reversion to Georgia's structural margin.",
+  "Kalshi's Collins leg (OI ~171k) moving above 20c or below 12c — a real-money re-pricing that re-weights every scenario.",
+  "A macro shock (CPI re-acceleration or recession signal) bringing Ossoff's inflation-voter edge below +10 from the current +21 — the largest single driver-reversal, toward Collins.",
+  "A credible Libertarian qualifying for the Georgia ballot and polling 2%+ with both majors under 48% — mechanically raises the runoff branch.",
+  "Collins closing the cash gap below ~3:1 via national transfers (lifts Collins), or a Walker-2022-magnitude Collins scandal (collapses him and vindicates the 0-of-4 MAGA-nominee anchor).",
+  "A candidate exit, indictment, or health event — activates the tail scenario and invalidates the incumbency reference class for that nominee."
+ ],
+ "sources": [
+  {
+   "label": "Kalshi — Georgia Senate race (SENATEGA-26)",
+   "url": "https://kalshi.com/markets/senatega/georgia-senate-race/senatega-26"
+  },
+  {
+   "label": "Polymarket — Georgia Senate Election Winner (2026)",
+   "url": "https://polymarket.com/event/georgia-senate-election-winner"
+  },
+  {
+   "label": "Manifold — 2026 Georgia U.S. Senate Election Winner (by candidate)",
+   "url": "https://manifold.markets/Vortex/placeholder-fim9qgsg0g"
+  },
+  {
+   "label": "Manifold — Which party will win the 2026 US Senate election in Georgia?",
+   "url": "https://manifold.markets/Mana/which-party-will-win-the-2026-us-se"
+  },
+  {
+   "label": "Manifold — Will the 2026 Georgia Senate race go to a runoff?",
+   "url": "https://manifold.markets/PlasmaBallin/will-the-2026-georgia-senate-race-g"
+  },
+  {
+   "label": "Wikipedia — 2026 United States Senate election in Georgia",
+   "url": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Georgia"
+  },
+  {
+   "label": "Fox News poll — Ossoff leads Collins by double digits",
+   "url": "https://www.foxnews.com/politics/fox-news-poll-early-look-georgia-senate-race"
+  },
+  {
+   "label": "Emerson College Polling — Georgia 2026 (Ossoff near 50%)",
+   "url": "https://emersoncollegepolling.com/georgia-2026-poll-senator-ossoff-starts-re-election-near-50-and-outpaces-gop-field/"
+  },
+  {
+   "label": "OpenSecrets — Fundraising divide shapes Georgia Senate race",
+   "url": "https://www.opensecrets.org/news/2026/04/small-donors-vs-big-checks-fundraising-divide-shapes-georgia-senate-race/"
+  },
+  {
+   "label": "AJC — Ossoff posts record $14M haul",
+   "url": "https://www.ajc.com/politics/2026/04/jon-ossoff-posts-record-14m-haul-in-high-stakes-georgia-senate-race/"
+  },
+  {
+   "label": "NBC News — Collins wins GOP runoff",
+   "url": "https://www.nbcnews.com/politics/2026-election/georgia-senate-midterms-primary-winner-collins-rcna350028"
+  },
+  {
+   "label": "Brookings — GOP midterm prospects darken as Trump approval falls",
+   "url": "https://www.brookings.edu/articles/gop-midterm-prospects-darken-as-trump-approval-falls/"
+  },
+  {
+   "label": "Sabato's Crystal Ball — Initial Senate Ratings",
+   "url": "https://centerforpolitics.org/crystalball/our-initial-senate-ratings-republicans-start-as-strong-favorites-to-hold-majority/"
+  },
+  {
+   "label": "Wikipedia — 2022 United States Senate election in Georgia",
+   "url": "https://en.wikipedia.org/wiki/2022_United_States_Senate_election_in_Georgia"
+  }
+ ],
+ "method_note": "Anchored on the deepest exact-question market — Kalshi near 85c on an Ossoff win, backed by Polymarket (~85%) and a thin Manifold market (~74%), pulled July 3, 2026. Because Georgia's six-of-six recent sub-three-point finishes say the mid-year lead overstates the result, win probability splits by margin: total Ossoff-win mass near 0.78, the December runoff (~14%) carved out, the rest split narrow vs. comfortable. Collins nudged above 15% to 18-30%. Horizon: through November 3, 2026.",
+ "honesty_note": "The modal call — a narrow Ossoff win at 44-54% — sits near a coin flip and is more likely to NOT land exactly as described than to land: pool the runoff, comfortable-win, Collins, and shock branches and there is close to an even chance the result takes a different shape. Treat this as a lean with a live Republican path and a real runoff tail, not a settled outcome."
+}
