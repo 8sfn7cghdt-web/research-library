@@ -4,5 +4,22 @@
   { "file": "06_Drivers_And_Forces.md", "after": "## 1. Predestination Becomes Providential History", "snippet": "calv_ledger.html" },
   { "file": "06_Drivers_And_Forces.md", "after": "## 11. The Failure Mode: When the Substrate Goes to Seed", "snippet": "calv_failuremode.html" },
   { "file": "07_Primary_Sources.md", "after": "## 1. *Sartor Resartus*", "snippet": "calv_ordo.html" },
-  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "calv_forecast.html" }
+  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "calv_forecast.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "## How the engine actually works", "snippet": "scene_00_engine.html" },
+  { "file": "01_Origins_And_Deep_History.md", "after": "### The father", "snippet": "scene_01_james_stonemason.html" },
+  { "file": "01_Origins_And_Deep_History.md", "after": "### The composition of the *Reminiscences* essay on James", "snippet": "scene_02_grief_text.html" },
+  { "file": "02_Modern_Arc.md", "after": "### 4.4 The Emerson Visit (25-26 August 1833)", "snippet": "scene_03_emerson_arrival.html" },
+  { "file": "02_Modern_Arc.md", "after": "## 17. Late Years (1866-1881)", "snippet": "scene_04_late_cheyne_row.html" },
+  { "file": "03_Current_Structure_And_Actors.md", "after": "### 3.2 Thomas Carlyle's Birthplace, Ecclefechan (\"The Arched House\")", "snippet": "scene_05_arched_house.html" },
+  { "file": "03_Current_Structure_And_Actors.md", "after": "## 6. Recent Monographs and Editions, 2010-2026", "snippet": "scene_06_small_seminar.html" },
+  { "file": "04_Live_Debates_And_Dynamics.md", "after": "### 1a. The strong proto-fascist reading", "snippet": "scene_07_bunker_reception.html" },
+  { "file": "04_Live_Debates_And_Dynamics.md", "after": "## 7. The Jane Welsh Carlyle Question and Feminist Scholarship", "snippet": "scene_08_jane_writer.html" },
+  { "file": "05_Adjacent_And_Comparative.md", "after": "Carlyle and Emerson: The Two Forks of Post-Calvinism", "snippet": "scene_09_boston_sartor.html" },
+  { "file": "05_Adjacent_And_Comparative.md", "after": "Carlyle and Nietzsche: The Heir Who Hated His Father", "snippet": "scene_10_nietzsche.html" },
+  { "file": "06_Drivers_And_Forces.md", "after": "### 2.6 The peroration of *Past and Present*", "snippet": "scene_11_past_present.html" },
+  { "file": "06_Drivers_And_Forces.md", "after": "### 9.3 The German overlay and the Goethean inflection", "snippet": "scene_12_natural_supernaturalism.html" },
+  { "file": "07_Primary_Sources.md", "after": "### The conversion sequence (Book II, chapters 7-9)", "snippet": "scene_13_everlasting_no.html" },
+  { "file": "07_Primary_Sources.md", "after": "### Mill's reply", "snippet": "scene_14_mill_reply.html" },
+  { "file": "Future_Trajectory.md", "after": "**What Quiet Recovery looks like, year by year.**", "snippet": "scene_15_quiet_recovery.html" },
+  { "file": "Future_Trajectory.md", "after": "### Driver 5: Work-and-labor / AI-displacement", "snippet": "scene_16_ai_work.html" }
 ]
