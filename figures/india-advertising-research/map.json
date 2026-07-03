@@ -3,5 +3,20 @@
   { "file": "03_Programmatic_CTV.md", "after": "## 1. The Definitional Problem That Governs", "snippet": "ctv-fog.html" },
   { "file": "04_YouTube_India.md", "after": "## 1. Scale", "snippet": "youtube-three-businesses.html" },
   { "file": "05_Regulation_Measurement_Trust.md", "after": "## 1. The DPDP Act and Rules", "snippet": "dpdp-floor.html" },
-  { "file": "06_Competitive_Dynamics.md", "after": "## 6. Synthesis: Three Concentrations and One Question", "snippet": "three-concentrations.html" }
+  { "file": "06_Competitive_Dynamics.md", "after": "## 6. Synthesis: Three Concentrations and One Question", "snippet": "three-concentrations.html" },
+  { "file": "00_Briefing.md", "after": "How India got here", "snippet": "scene_billion-screens-jio-2016.html" },
+  { "file": "00_Briefing.md", "after": "The layer underneath: regulation, measurement, trust", "snippet": "scene_billion-screens-dpdp-gazette.html" },
+  { "file": "01_Origins_Digital_Tipping_Point.md", "after": "The shape of the legacy market", "snippet": "scene_billion-screens-legacy-living-room.html" },
+  { "file": "01_Origins_Digital_Tipping_Point.md", "after": "7. UPI and the payments rail under digital advertising", "snippet": "scene_billion-screens-upi-street-vendor.html" },
+  { "file": "02_Current_Market_Structure.md", "after": "Why the gap exists (reconciliation)", "snippet": "scene_billion-screens-five-ledgers.html" },
+  { "file": "02_Current_Market_Structure.md", "after": "6. The MSME Long Tail", "snippet": "scene_billion-screens-msme-advertiser.html" },
+  { "file": "03_Programmatic_CTV.md", "after": "2. Household and User Penetration", "snippet": "scene_billion-screens-connected-home.html" },
+  { "file": "03_Programmatic_CTV.md", "after": "Samsung TV Plus is India's leading OEM FAST service", "snippet": "scene_billion-screens-fast-channel-surfing.html" },
+  { "file": "04_YouTube_India.md", "after": "India is the largest YouTube market by users", "snippet": "scene_billion-screens-regional-creator.html" },
+  { "file": "04_YouTube_India.md", "after": "Brandcast 2025 India was held September 11, 2025", "snippet": "scene_billion-screens-brandcast-upfront.html" },
+  { "file": "05_Regulation_Measurement_Trust.md", "after": "1.5 Children: the provision that bites adtech hardest", "snippet": "scene_billion-screens-parental-consent.html" },
+  { "file": "05_Regulation_Measurement_Trust.md", "after": "4.1 The CTV fraud surface", "snippet": "scene_billion-screens-ctv-bot-fraud.html" },
+  { "file": "06_Competitive_Dynamics.md", "after": "1.2 Why \"one dominant video-inventory seller\" is the structural story", "snippet": "scene_billion-screens-cricket-control-room.html" },
+  { "file": "06_Competitive_Dynamics.md", "after": "5.1 The demographic facts", "snippet": "scene_billion-screens-bharat-living-room.html" },
+  { "file": "Future_Trajectory.md", "after": "The scenarios", "snippet": "scene_billion-screens-four-futures.html" }
 ]
