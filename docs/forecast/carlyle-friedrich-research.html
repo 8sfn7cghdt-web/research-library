@@ -392,6 +392,20 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fd-cat-h .tick { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: .55rem; vertical-align: -1px; }
 .fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
+
+/* super-section bands: the board's three wings — Sports & Politics (the
+   standalone live calls), From the Research (corpus markets), Ad Tech & Media.
+   Bigger and heavier than a category shelf head; each wears its own accent. */
+.fd-sec { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
+  margin: 2.8rem 0 1.3rem; padding-bottom: .7rem; border-bottom: 2px solid var(--fdtext); }
+.fd-sec:first-of-type { margin-top: 1.4rem; }
+.fd-sec-bar { align-self: center; display: inline-block; width: 15px; height: 15px; border-radius: 3px; }
+.fd-sec-t { font-family: var(--display); font-weight: 600; font-size: clamp(1.35rem, 3vw, 1.85rem);
+  line-height: 1; margin: 0; color: var(--fdtext); }
+.fd-sec-k { font-family: var(--serif); font-style: italic; font-size: .92rem; color: var(--fdmut); }
+.fd-sec-n { margin-left: auto; align-self: center; font-family: var(--fdmono); font-size: .72rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 640px) { .fd-sec-k { flex-basis: 100%; } .fd-sec-n { margin-left: 0; } }
 .fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
 .fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
   background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.05rem 1.15rem;
