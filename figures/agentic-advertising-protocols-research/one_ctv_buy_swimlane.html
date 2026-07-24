@@ -1,0 +1,128 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 466" role="img" aria-label="A left-to-right swimlane diagram tracking one connected-TV media buy through nine steps, numbered zero to eight, across four lanes plus a substrate rail. The lanes are Application, Ad negotiation which is AdCP, RTB transport which is ARTF, and Payment which is AP2 and ACP. The bottom rail is labelled substrate: MCP plus A2A, and runs the full width. Step zero sits in the Application lane and is the human's intent prompt. Steps one, two and three sit in the AdCP lane: get_products in brief mode, get_products in refine mode, and build_creative with sync_creatives. Step four is a tall box spanning the Application and AdCP lanes together: check_governance plus human approval, carried by MCP elicitation. Step five sits in the AdCP lane as create_media_buy, and from it a dashed arrow drops down into the otherwise empty ARTF lane, labelled biddable portion only, colocated bid enrichment at roughly one hundred milliseconds. Step six is back in the AdCP lane: activate_signal, sync_audiences and the Trusted Match Protocol. Step seven is the only box in the Payment lane, drawn greyed and dashed because it applies to shoppable inventory only. Step eight returns to the AdCP lane with get_media_buy_delivery and get_plan_audit_logs. The visual teaches that almost the entire CTV buy lives in the AdCP lane, that ARTF appears only for the biddable slice, and that payment appears only when the ad is shoppable.">
+<rect x="8" y="8" width="684" height="450" rx="4" class="f-bg" stroke-width="1" style="stroke:var(--border)"/>
+<text x="350" y="32" text-anchor="middle" font-size="16" class="t-mono" font-weight="bold" letter-spacing="1.4" style="fill:var(--text)">ONE CTV BUY THROUGH THE STACK</text>
+<text x="350" y="49" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">nine steps, four lanes &#8212; and one lane that stays almost empty</text>
+
+<g font-size="7.5" class="t-mono t-muted" text-anchor="middle">
+<text x="136" y="70">STEP 0</text><text x="201" y="70">1</text><text x="266" y="70">2</text><text x="331" y="70">3</text><text x="396" y="70">4</text><text x="461" y="70">5</text><text x="526" y="70">6</text><text x="591" y="70">7</text><text x="656" y="70">8</text>
+</g>
+<line x1="106" y1="76" x2="688" y2="76" class="ln-soft" stroke-width="1"/>
+
+<rect x="12" y="82" width="90" height="48" rx="3" class="f-panel" stroke-width="1.2" style="stroke:var(--t5)"/>
+<text x="57" y="104" text-anchor="middle" font-size="8.5" class="t-mono" font-weight="bold" style="fill:var(--t5)">APPLICATION</text>
+<text x="57" y="117" text-anchor="middle" font-size="7" class="t-muted">the human</text>
+
+<rect x="12" y="134" width="90" height="84" rx="3" class="f-panel" stroke-width="2" style="stroke:var(--t2)"/>
+<text x="57" y="168" text-anchor="middle" font-size="8.5" class="t-mono" font-weight="bold" style="fill:var(--t2)">AD-NEGOTIATION</text>
+<text x="57" y="181" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" style="fill:var(--t2)">AdCP</text>
+<text x="57" y="194" text-anchor="middle" font-size="7" class="t-muted">outside the auction</text>
+
+<rect x="12" y="222" width="90" height="56" rx="3" class="f-panel" stroke-width="1.2" style="stroke:var(--t3)"/>
+<text x="57" y="244" text-anchor="middle" font-size="8.5" class="t-mono" font-weight="bold" style="fill:var(--t3)">RTB TRANSPORT</text>
+<text x="57" y="257" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" style="fill:var(--t3)">ARTF</text>
+<text x="57" y="269" text-anchor="middle" font-size="7" class="t-muted">inside the auction</text>
+
+<rect x="12" y="282" width="90" height="48" rx="3" class="f-panel" stroke-width="1.2" style="stroke:var(--t4)"/>
+<text x="57" y="304" text-anchor="middle" font-size="8.5" class="t-mono" font-weight="bold" style="fill:var(--t4)">PAYMENT</text>
+<text x="57" y="317" text-anchor="middle" font-size="7.5" class="t-mono t-muted">AP2 &#183; ACP</text>
+
+<g class="ln-soft" stroke-width="1">
+<line x1="106" y1="130" x2="688" y2="130"/>
+<line x1="106" y1="218" x2="688" y2="218"/>
+<line x1="106" y1="278" x2="688" y2="278"/>
+<line x1="106" y1="330" x2="688" y2="330"/>
+</g>
+<g class="ln-soft" stroke-width="1" stroke-dasharray="2 4">
+<line x1="171" y1="82" x2="171" y2="330"/><line x1="236" y1="82" x2="236" y2="330"/>
+<line x1="301" y1="82" x2="301" y2="330"/><line x1="366" y1="82" x2="366" y2="330"/>
+<line x1="431" y1="82" x2="431" y2="330"/><line x1="496" y1="82" x2="496" y2="330"/>
+<line x1="561" y1="82" x2="561" y2="330"/><line x1="626" y1="82" x2="626" y2="330"/>
+</g>
+
+<g class="cv-rise">
+<rect x="110" y="88" width="57" height="36" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t5)"/>
+<text x="138" y="103" text-anchor="middle" font-size="7" class="t-mono" style="fill:var(--text)">intent</text>
+<text x="138" y="113" text-anchor="middle" font-size="7" class="t-mono" style="fill:var(--text)">prompt</text>
+<text x="138" y="121" text-anchor="middle" font-size="6" class="t-muted">natural language</text>
+</g>
+
+<g class="cv-rise" style="--d:.06s">
+<rect x="175" y="146" width="57" height="42" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t2)"/>
+<text x="203" y="161" text-anchor="middle" font-size="6.8" class="t-mono" style="fill:var(--t2)">get_products</text>
+<text x="203" y="172" text-anchor="middle" font-size="7" font-weight="bold" style="fill:var(--text)">brief mode</text>
+<text x="203" y="183" text-anchor="middle" font-size="6" class="t-muted">fan out to sellers</text>
+</g>
+<g class="cv-rise" style="--d:.12s">
+<rect x="240" y="146" width="57" height="42" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t2)"/>
+<text x="268" y="161" text-anchor="middle" font-size="6.8" class="t-mono" style="fill:var(--t2)">get_products</text>
+<text x="268" y="172" text-anchor="middle" font-size="7" font-weight="bold" style="fill:var(--text)">refine mode</text>
+<text x="268" y="183" text-anchor="middle" font-size="6" class="t-muted">negotiate / curate</text>
+</g>
+<g class="cv-rise" style="--d:.18s">
+<rect x="305" y="146" width="57" height="42" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t2)"/>
+<text x="333" y="161" text-anchor="middle" font-size="6.6" class="t-mono" style="fill:var(--t2)">build_creative</text>
+<text x="333" y="172" text-anchor="middle" font-size="6.6" class="t-mono" style="fill:var(--t2)">sync_creatives</text>
+<text x="333" y="183" text-anchor="middle" font-size="6" class="t-muted">brand.json formats</text>
+</g>
+
+<g class="cv-rise" style="--d:.24s">
+<rect x="370" y="88" width="57" height="100" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t4)"/>
+<text x="398" y="106" text-anchor="middle" font-size="6.4" class="t-mono" style="fill:var(--t4)">check_</text>
+<text x="398" y="115" text-anchor="middle" font-size="6.4" class="t-mono" style="fill:var(--t4)">governance</text>
+<line x1="378" y1="122" x2="418" y2="122" class="ln-soft" stroke-width="1"/>
+<text x="398" y="136" text-anchor="middle" font-size="7.5" font-weight="bold" style="fill:var(--text)">human</text>
+<text x="398" y="146" text-anchor="middle" font-size="7.5" font-weight="bold" style="fill:var(--text)">approval</text>
+<text x="398" y="162" text-anchor="middle" font-size="6" class="t-muted">over threshold</text>
+<text x="398" y="176" text-anchor="middle" font-size="6.2" class="t-mono" style="fill:var(--t4)">MCP</text>
+<text x="398" y="184" text-anchor="middle" font-size="6.2" class="t-mono" style="fill:var(--t4)">elicitation</text>
+</g>
+
+<g class="cv-rise" style="--d:.3s">
+<rect x="435" y="146" width="57" height="42" rx="3" class="f-panel" stroke-width="2.2" style="stroke:var(--t2)"/>
+<text x="463" y="161" text-anchor="middle" font-size="6.4" class="t-mono" style="fill:var(--t2)">create_</text>
+<text x="463" y="170" text-anchor="middle" font-size="6.4" class="t-mono" style="fill:var(--t2)">media_buy</text>
+<text x="463" y="183" text-anchor="middle" font-size="6" class="t-muted">terminal for guaranteed</text>
+</g>
+<path d="M463,188 L463,232" fill="none" class="s-t3 cv-draw" pathLength="1" stroke-width="1.8" stroke-dasharray="4 3"/>
+<polygon points="458,228 463,240 468,228" class="f-t3"/>
+<g class="cv-fade" style="--d:.4s">
+<rect x="424" y="240" width="140" height="32" rx="3" class="f-bg" stroke-width="1.6" style="stroke:var(--t3)" stroke-dasharray="4 3"/>
+<text x="494" y="254" text-anchor="middle" font-size="7" class="t-mono" font-weight="bold" style="fill:var(--t3)">biddable portion only</text>
+<text x="494" y="266" text-anchor="middle" font-size="6.5" class="t-muted">colocated bid enrichment &#183; ~100 ms</text>
+</g>
+
+<g class="cv-rise" style="--d:.36s">
+<rect x="500" y="146" width="57" height="42" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t2)"/>
+<text x="528" y="160" text-anchor="middle" font-size="6.4" class="t-mono" style="fill:var(--t2)">activate_signal</text>
+<text x="528" y="170" text-anchor="middle" font-size="6.4" class="t-mono" style="fill:var(--t2)">sync_audiences</text>
+<text x="528" y="183" text-anchor="middle" font-size="6.4" class="t-mono t-muted">+ TMP</text>
+</g>
+
+<g class="cv-fade" style="--d:.44s">
+<rect x="565" y="288" width="57" height="36" rx="3" class="f-bg" stroke-width="1.4" style="stroke:var(--muted)" stroke-dasharray="4 3"/>
+<text x="593" y="302" text-anchor="middle" font-size="7" class="t-mono" style="fill:var(--t4)">AP2 / ACP</text>
+<text x="593" y="313" text-anchor="middle" font-size="6" class="t-muted">shoppable</text>
+<text x="593" y="321" text-anchor="middle" font-size="6" class="t-muted">inventory only</text>
+</g>
+
+<g class="cv-rise" style="--d:.48s">
+<rect x="630" y="146" width="57" height="42" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t2)"/>
+<text x="658" y="159" text-anchor="middle" font-size="6.2" class="t-mono" style="fill:var(--t2)">get_media_</text>
+<text x="658" y="167" text-anchor="middle" font-size="6.2" class="t-mono" style="fill:var(--t2)">buy_delivery</text>
+<text x="658" y="178" text-anchor="middle" font-size="6.2" class="t-mono" style="fill:var(--t2)">get_plan_</text>
+<text x="658" y="186" text-anchor="middle" font-size="6.2" class="t-mono" style="fill:var(--t2)">audit_logs</text>
+</g>
+
+<rect x="12" y="336" width="676" height="26" rx="3" class="f-panel" stroke-width="1.6" style="stroke:var(--t1)"/>
+<text x="26" y="353" font-size="8" class="t-mono t-muted" letter-spacing="1.2">SUBSTRATE</text>
+<text x="106" y="353" font-size="9.5" class="t-mono" font-weight="bold" style="fill:var(--t1)">MCP + A2A</text>
+<text x="674" y="353" text-anchor="end" font-size="8.5" class="t-muted">every step above rides on this rail</text>
+
+<line x1="120" y1="378" x2="580" y2="378" class="ln-soft" stroke-width="1"/>
+<text x="350" y="400" text-anchor="middle" font-size="10" class="t-muted">Seven of nine steps sit in one lane. The auction lane holds a single dashed box; the payment lane, one greyed one.</text>
+<text x="350" y="424" text-anchor="middle" font-size="11" font-weight="bold" style="fill:var(--text)">Almost the whole CTV buy happens outside the auction.</text>
+<text x="350" y="444" text-anchor="middle" font-size="8.5" class="t-mono t-muted">first live agent-to-agent media buy &#183; real money against LG Ad Solutions inventory &#183; 16 October 2025</text>
+</svg>
+<figcaption><strong>Fig. 4.</strong> One connected-TV buy, traced step by step through the layers. <em>The scenario is ordinary &#8212; an outdoor-apparel brand wants premium sports CTV, males 25 to 45, fifty thousand dollars, with human sign-off above a threshold &#8212; and the lane assignment is the whole finding. Discovery, negotiation, creative, execution, audience activation and measurement all sit in the AdCP lane. Governance straddles the human and the agent, carried by MCP's elicitation primitive, and cannot be skipped. ARTF enters exactly once, on a dashed arrow, and only for whatever slice of the buy ultimately clears through an auction. Payment enters only if the ad is shoppable. This is the clearest place the two ad-layer standards compose rather than compete: AdCP negotiates the deal, and ARTF, where it is used at all, executes the impressions of the biddable remainder.</em></figcaption>
+</figure>

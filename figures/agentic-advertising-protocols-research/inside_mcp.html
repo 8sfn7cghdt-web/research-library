@@ -1,0 +1,87 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 470" role="img" aria-label="A diagram of the internals of the Model Context Protocol. At the top left, a box labelled MCP Host, the AI application, contains three MCP Client chips. Each client holds exactly one connection to one server. Client one connects over local stdio to Server A, a filesystem. Client two connects over local stdio to Server B, a database. Client three connects over remote Streamable HTTP with OAuth to Server C, described as Sentry or publisher inventory. Below, two columns list the primitives. The server primitives are Tools, which act; Resources, which are read; and Prompts, which are reusable templates. The client primitives are Sampling, which uses the host's own model; Elicitation, which asks the human user to confirm; and Logging. A footer band records that the data layer is JSON-RPC 2.0 and the transport is either stdio for local servers or Streamable HTTP with server-sent events for remote ones. A note marks Elicitation as the primitive that carries advertising's human-approval step.">
+<rect x="8" y="8" width="684" height="454" rx="4" class="f-bg" stroke-width="1" style="stroke:var(--border)"/>
+<text x="350" y="34" text-anchor="middle" font-size="16" class="t-mono" font-weight="bold" letter-spacing="1.4" style="fill:var(--text)">INSIDE MCP</text>
+<text x="350" y="52" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">one host, three clients, three servers &#8212; and the six primitives they trade in</text>
+
+<g class="cv-rise">
+<rect x="30" y="72" width="250" height="152" rx="4" class="f-panel" stroke-width="2.2" style="stroke:var(--t1)"/>
+<text x="44" y="92" font-size="8" class="t-mono t-muted" letter-spacing="1.2">MCP HOST</text>
+<text x="44" y="110" font-size="12" font-weight="bold" style="fill:var(--t1)">the AI application</text>
+<text x="266" y="92" text-anchor="end" font-size="8" class="t-mono t-muted">one client per server</text>
+<rect x="44" y="122" width="222" height="28" rx="3" class="f-bg" stroke-width="1.3" style="stroke:var(--t1)"/>
+<text x="56" y="140" font-size="10" class="t-mono" style="fill:var(--text)">MCP Client 1</text>
+<rect x="44" y="156" width="222" height="28" rx="3" class="f-bg" stroke-width="1.3" style="stroke:var(--t1)"/>
+<text x="56" y="174" font-size="10" class="t-mono" style="fill:var(--text)">MCP Client 2</text>
+<rect x="44" y="190" width="222" height="28" rx="3" class="f-bg" stroke-width="1.3" style="stroke:var(--t1)"/>
+<text x="56" y="208" font-size="10" class="t-mono" style="fill:var(--text)">MCP Client 3</text>
+</g>
+
+<g class="s-t1">
+<line x1="266" y1="136" x2="428" y2="136" stroke-width="2" class="cv-draw" pathLength="1"/>
+<line x1="266" y1="170" x2="428" y2="170" stroke-width="2" class="cv-draw" pathLength="1"/>
+</g>
+<line x1="266" y1="204" x2="428" y2="204" class="s-t2 cv-draw" pathLength="1" stroke-width="2" stroke-dasharray="5 3"/>
+<g class="f-t1">
+<polygon points="422,131 434,136 422,141"/>
+<polygon points="422,165 434,170 422,175"/>
+</g>
+<polygon points="422,199 434,204 422,209" class="f-t2"/>
+<text x="347" y="130" text-anchor="middle" font-size="7.5" class="t-mono t-muted">stdio &#183; local</text>
+<text x="347" y="164" text-anchor="middle" font-size="7.5" class="t-mono t-muted">stdio &#183; local</text>
+<text x="347" y="198" text-anchor="middle" font-size="7.5" class="t-mono" style="fill:var(--t2)">Streamable HTTP &#183; OAuth</text>
+
+<g class="cv-rise" style="--d:.12s">
+<rect x="436" y="118" width="234" height="34" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--border)"/>
+<text x="450" y="133" font-size="8" class="t-mono t-muted" letter-spacing="1">SERVER A &#183; LOCAL</text>
+<text x="450" y="146" font-size="10.5" font-weight="bold" style="fill:var(--text)">Filesystem</text>
+</g>
+<g class="cv-rise" style="--d:.2s">
+<rect x="436" y="152" width="234" height="34" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--border)"/>
+<text x="450" y="167" font-size="8" class="t-mono t-muted" letter-spacing="1">SERVER B &#183; LOCAL</text>
+<text x="450" y="180" font-size="10.5" font-weight="bold" style="fill:var(--text)">Database</text>
+</g>
+<g class="cv-rise" style="--d:.28s">
+<rect x="436" y="186" width="234" height="38" rx="3" class="f-panel" stroke-width="2" style="stroke:var(--t2)"/>
+<text x="450" y="201" font-size="8" class="t-mono t-muted" letter-spacing="1">SERVER C &#183; REMOTE</text>
+<text x="450" y="215" font-size="10.5" font-weight="bold" style="fill:var(--t2)">Sentry / publisher inventory</text>
+</g>
+
+<line x1="30" y1="244" x2="670" y2="244" class="ln-soft" stroke-width="1"/>
+
+<g class="cv-fade" style="--d:.34s">
+<rect x="30" y="258" width="308" height="118" rx="4" class="f-bg" stroke-width="1.4" style="stroke:var(--t1)"/>
+<text x="184" y="277" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" letter-spacing="1.4" style="fill:var(--t1)">SERVER PRIMITIVES</text>
+<text x="46" y="300" font-size="10.5" class="t-mono" font-weight="bold" style="fill:var(--text)">Tools</text>
+<text x="132" y="300" font-size="9.5" class="t-muted">executable actions &#8212; <tspan font-style="italic">act</tspan></text>
+<text x="46" y="324" font-size="10.5" class="t-mono" font-weight="bold" style="fill:var(--text)">Resources</text>
+<text x="132" y="324" font-size="9.5" class="t-muted">read-only context &#8212; <tspan font-style="italic">read</tspan></text>
+<text x="46" y="348" font-size="10.5" class="t-mono" font-weight="bold" style="fill:var(--text)">Prompts</text>
+<text x="132" y="348" font-size="9.5" class="t-muted">reusable workflows &#8212; <tspan font-style="italic">template</tspan></text>
+<text x="184" y="367" text-anchor="middle" font-size="8" class="t-mono t-muted">discoverable via */list, with change notifications</text>
+</g>
+
+<g class="cv-fade" style="--d:.42s">
+<rect x="362" y="258" width="308" height="118" rx="4" class="f-bg" stroke-width="1.4" style="stroke:var(--t2)"/>
+<text x="516" y="277" text-anchor="middle" font-size="9" class="t-mono" font-weight="bold" letter-spacing="1.4" style="fill:var(--t2)">CLIENT PRIMITIVES</text>
+<text x="378" y="300" font-size="10.5" class="t-mono" font-weight="bold" style="fill:var(--text)">Sampling</text>
+<text x="470" y="300" font-size="9.5" class="t-muted">use the host's own model</text>
+<rect x="370" y="310" width="292" height="24" rx="3" class="f-panel" stroke-width="1.4" style="stroke:var(--t4)"/>
+<text x="378" y="327" font-size="10.5" class="t-mono" font-weight="bold" style="fill:var(--t4)">Elicitation</text>
+<text x="470" y="327" font-size="9.5" style="fill:var(--t4)">ask the human to confirm</text>
+<text x="378" y="352" font-size="10.5" class="t-mono" font-weight="bold" style="fill:var(--text)">Logging</text>
+<text x="470" y="352" font-size="9.5" class="t-muted">messages back for debugging</text>
+<text x="516" y="369" text-anchor="middle" font-size="8" class="t-mono" style="fill:var(--t4)">&#8593; this is where advertising's human approval lives</text>
+</g>
+
+<rect x="30" y="390" width="640" height="34" rx="4" class="f-panel" stroke-width="1.4" style="stroke:var(--border)"/>
+<text x="44" y="411" font-size="9" class="t-mono t-muted" letter-spacing="1.2">DATA LAYER</text>
+<text x="132" y="411" font-size="10" class="t-mono" font-weight="bold" style="fill:var(--t1)">JSON-RPC 2.0</text>
+<line x1="252" y1="396" x2="252" y2="418" class="ln-soft" stroke-width="1"/>
+<text x="268" y="411" font-size="9" class="t-mono t-muted" letter-spacing="1.2">TRANSPORT</text>
+<text x="356" y="411" font-size="10" class="t-mono" style="fill:var(--text)">stdio <tspan class="t-muted">(local)</tspan> &#183; Streamable HTTP + SSE <tspan class="t-muted">(remote)</tspan></text>
+
+<text x="350" y="446" text-anchor="middle" font-size="10.5" class="t-muted" font-style="italic">One standardised plug &#8212; the M&#215;N integration problem collapsed to M+N.</text>
+</svg>
+<figcaption><strong>Fig. 2.</strong> What the substrate actually looks like from inside. <em>A host application holds one client per server, and each client keeps a single dedicated connection &#8212; which is why adding a server is an integration you do once rather than once per pairing. Local servers speak over stdio; remote ones speak Streamable HTTP with OAuth, and that remote case is the one advertising cares about, because a publisher's inventory server is somebody else's machine. The six primitives divide cleanly: three the server offers, three the client offers back. Elicitation is the quiet load-bearing one for this corpus. Advertising's insistence that a human sign off on a large buy is not a policy bolted onto the workflow; it is a protocol primitive, which is what people mean when they say the approval step is architectural rather than procedural.</em></figcaption>
+</figure>
