@@ -166,6 +166,25 @@
         "The Watercooler"
       ],
       "dispatches": 19
+    },
+    {
+      "date": "2026-07-24",
+      "weekday": "Friday",
+      "edition_number": 33,
+      "file": "fingerprint/2026-07-24-fingerprint.html",
+      "lead_headline": "Peacock Turns Its First Profit as NBCU Ad Revenue Jumps 55%",
+      "lead_dek": "The streamer earned $189 million in the quarter and now supplies a third of NBCUniversal's advertising — weeks before Comcast spins it away.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 20
     }
   ]
 }
