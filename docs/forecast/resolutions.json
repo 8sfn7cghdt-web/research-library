@@ -36,6 +36,24 @@
       "note": "Spain beat Argentina 1-0 after extra time at MetLife Stadium, substitute Ferran Torres scoring in the 105th minute, for Spain's second World Cup title. France, the council's favorite, did not reach the final.",
       "source_url": "https://www.fifa.com/en/match-centre/match/17/285023/289292/400021543",
       "source_label": "FIFA match report"
+    },
+    {
+      "slug": "lebron-2026-27",
+      "winner": "Philadelphia 76ers",
+      "winner_flag": "🔔",
+      "resolved": "2026-07-24",
+      "note": "LeBron signed a two-year, $8M deal with Philadelphia — his 'last decision' — joining Joel Embiid and newly-acquired Jaylen Brown, after weeks of speculation centered on Cleveland, Miami, and Golden State.",
+      "source_url": "https://www.nba.com/news/lebron-james-free-agency-sixers-2026",
+      "source_label": "NBA.com"
+    },
+    {
+      "slug": "tiktok-divestiture",
+      "winner": "Qualified divestiture stands (YES)",
+      "winner_flag": "✅",
+      "resolved": "2026-07-16",
+      "note": "DOJ's Office of Legal Counsel ruled the restructured, majority-American-owned TikTok USDS joint venture falls outside the No TikTok on Government Devices Act, clearing it for federal devices — the clearest government treatment yet of the deal as a qualified divestiture, with ByteDance's stake capped just under 20%.",
+      "source_url": "https://www.washingtonpost.com/national-security/2026/07/20/doj-its-safe-fed-employees-download-tiktok-work-phones/",
+      "source_label": "Washington Post"
     }
   ]
 }
