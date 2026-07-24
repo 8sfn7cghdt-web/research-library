@@ -1,4 +1,41 @@
 {
   "_how_to_grade": "The desk's grading ledger — one entry per resolved market; the build joins by slug and computes every record, Brier score, and calibration point from here. NATIVE forecast (docs/forecast/data/{slug}.json exists): {\"slug\", \"winner\" (must name the winning entity; matched case-insensitively against consensus + profile picks), \"winner_flag\" (optional emoji), \"resolved\" (YYYY-MM-DD), \"note\" (one sentence on what happened), \"source_url\"/\"source_label\" (optional)}. RESEARCH market (harvested from a corpus manifest): {\"slug\" (the corpus slug), \"outcome\" (the winning scenario's exact name, case-insensitive), \"resolved\", \"note\", \"source_url\"/\"source_label\"}. Then rebuild: python3 build.py -c build.config.json.",
-  "resolutions": []
+  "resolutions": [
+    {
+      "slug": "brazil-norway-r16",
+      "winner": "Norway advances",
+      "winner_flag": "🇳🇴",
+      "resolved": "2026-07-05",
+      "note": "Erling Haaland scored twice in the final eleven minutes (79', 90') to send Norway through 2-1; Neymar's penalty in stoppage time came too late. Norway reached the World Cup quarterfinals for the first time.",
+      "source_url": "https://www.fifa.com/en/match-centre/match/17/285023/289288/400021532",
+      "source_label": "FIFA match report"
+    },
+    {
+      "slug": "wimbledon-2026-mens",
+      "winner": "Sinner",
+      "winner_flag": "🇮🇹",
+      "resolved": "2026-07-12",
+      "note": "Jannik Sinner beat Alexander Zverev 6-7(7-9), 7-6(7-2), 6-3, 6-4 to defend his title — his second Wimbledon and fifth major overall.",
+      "source_url": "https://www.atptour.com/en/news/wimbledon-2026-results",
+      "source_label": "ATP Tour"
+    },
+    {
+      "slug": "wimbledon-2026-womens",
+      "winner": "Linda Nosková",
+      "winner_flag": "🇨🇿",
+      "resolved": "2026-07-11",
+      "note": "Ninth seed Linda Nosková beat fellow Czech Karolína Muchová 6-2, 5-7, 6-3 for her maiden major, extending the tournament's first-time-champion streak — Sabalenka fell in the semifinals, her fourth straight loss at that stage.",
+      "source_url": "https://www.wimbledon.com/en_GB/scores/draws/2026_LS_draw.pdf",
+      "source_label": "Wimbledon official draw"
+    },
+    {
+      "slug": "world-cup-2026",
+      "winner": "Spain",
+      "winner_flag": "🇪🇸",
+      "resolved": "2026-07-19",
+      "note": "Spain beat Argentina 1-0 after extra time at MetLife Stadium, substitute Ferran Torres scoring in the 105th minute, for Spain's second World Cup title. France, the council's favorite, did not reach the final.",
+      "source_url": "https://www.fifa.com/en/match-centre/match/17/285023/289292/400021543",
+      "source_label": "FIFA match report"
+    }
+  ]
 }
