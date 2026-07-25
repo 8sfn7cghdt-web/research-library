@@ -33,7 +33,12 @@
     "Thomas Carlyle",
     "Faith & Religion",
     "Mind & Philosophy",
-    "Media & Advertising",
+    "Platforms & Deals",
+    "Programmatic Infrastructure",
+    "Identity & Addressing",
+    "Trust, Politics & Society",
+    "Global Markets",
+    "Media Theory",
     "The Modern World",
     "Heritage"
   ],
@@ -47,14 +52,22 @@
     {
       "title": "Ad Tech & Media",
       "categories": [
-        "Media & Advertising"
+        "Platforms & Deals",
+        "Programmatic Infrastructure",
+        "Identity & Addressing",
+        "Trust, Politics & Society",
+        "Global Markets",
+        "Media Theory"
       ],
       "page": {
         "slug": "adtech",
         "title": "Ad Tech",
         "kicker": "Programmatic & Advanced TV",
         "subtitle": "The trade desk of the library — deep research on the programmatic and Connected-TV ad market, alongside The Fingerprint, its daily wire.",
-        "accent": ["#0d5b68", "#62aab8"],
+        "accent": [
+          "#0d5b68",
+          "#62aab8"
+        ],
         "include": [
           "fingerprint",
           "forecast",
@@ -200,7 +213,7 @@
     "ipv4-ipv6-ctv-research": {
       "title": "The Address Knows You",
       "subtitle": "IPv4/IPv6 and the global CTV programmatic landscape",
-      "category": "Media & Advertising"
+      "category": "Identity & Addressing"
     },
     "jesus-research": {
       "title": "The Man and the Christ",
@@ -235,7 +248,7 @@
     "mcluhan-research": {
       "title": "The Medium Is the Message",
       "subtitle": "Marshall McLuhan — print, the global village, and the forms that remake us",
-      "category": "Media & Advertising"
+      "category": "Media Theory"
     },
     "piaget-research": {
       "title": "How Knowledge Grows",
@@ -260,27 +273,27 @@
     "fox-roku-research": {
       "title": "Buying the Living Room",
       "subtitle": "Fox's $22B acquisition of Roku and the fight for the connected-TV stack",
-      "category": "Media & Advertising"
+      "category": "Platforms & Deals"
     },
     "india-advertising-research": {
       "title": "A Billion Screens",
       "subtitle": "India's advertising market — the digital tipping point, programmatic CTV, and YouTube",
-      "category": "Media & Advertising"
+      "category": "Global Markets"
     },
     "latam-ctv-research": {
       "title": "Reach Ahead of Revenue",
       "subtitle": "Latin America's programmatic Connected-TV market — Brazil, Mexico, and the gap between attention and money",
-      "category": "Media & Advertising"
+      "category": "Global Markets"
     },
     "ctv-brand-safety-research": {
       "title": "Safe Beside What?",
       "subtitle": "Brand safety in programmatic Connected TV — and the global fight over who sets the floor",
-      "category": "Media & Advertising"
+      "category": "Trust, Politics & Society"
     },
     "ctv-dsp-ssp-research": {
       "title": "Who Keeps the Spread",
       "subtitle": "Programmatic CTV's DSPs and SSPs — and where the margin really sits for a platform-agnostic intermediary",
-      "category": "Media & Advertising"
+      "category": "Programmatic Infrastructure"
     },
     "democratic-socialism-research": {
       "title": "The Long Advent",
@@ -290,17 +303,17 @@
     "ctv-identity-signals-research": {
       "title": "The Signal Layer",
       "subtitle": "Identity in programmatic CTV — hashed emails, MAIDs, IP, ACR, clean rooms, and what survives to 2029",
-      "category": "Media & Advertising"
+      "category": "Identity & Addressing"
     },
     "agentic-advertising-protocols-research": {
       "title": "The Protocol War",
       "subtitle": "How AI agents are being wired into the ad buy — MCP, AdCP, the IAB's ARTF, and what agentic buying does to CTV",
-      "category": "Media & Advertising"
+      "category": "Programmatic Infrastructure"
     },
     "miq-research": {
       "title": "On Leased Land",
       "subtitle": "MiQ, the independent programmatic trading desk, and its CTV/ATV bet",
-      "category": "Media & Advertising"
+      "category": "Platforms & Deals"
     },
     "great-awakenings-research": {
       "title": "The Recurring Fire",
@@ -310,12 +323,12 @@
     "containerized-bidding-research": {
       "title": "Closer to the Metal",
       "subtitle": "Containerized bidding — when the buyer's bidder moves inside the exchange's data center, and who captures the margin it relocates",
-      "category": "Media & Advertising"
+      "category": "Programmatic Infrastructure"
     },
     "political-ctv-research": {
       "title": "The Measured Screen",
       "subtitle": "Political advertising migrates to connected TV — the smart-TV ACR and voter-file targeting stack, who captures the spend, the streaming regulatory gap, and whether any of it actually moves votes.",
-      "category": "Media & Advertising"
+      "category": "Trust, Politics & Society"
     },
     "american-pragmatism-research": {
       "title": "The Cash-Value of Truth",
@@ -335,17 +348,17 @@
     "walmart-vibe-research": {
       "title": "The Missing Front Door",
       "subtitle": "Walmart's $1.4B acquisition of Vibe.co — completing a retail-media + connected-TV ad stack, and the long catch-up to Amazon",
-      "category": "Media & Advertising"
+      "category": "Platforms & Deals"
     },
     "social-ctv-retargeting-research": {
       "title": "The Living-Room Handoff",
       "subtitle": "How social platforms — LinkedIn, Pinterest, Reddit, TikTok, Meta — extend their audiences onto Connected TV, and which ones credibly make the jump through 2029",
-      "category": "Media & Advertising"
+      "category": "Trust, Politics & Society"
     },
     "ctv-ssp-research": {
       "title": "The Seller's Agent",
       "subtitle": "The supply-side platforms that carry programmatic CTV — and their bet on attention, outcomes and AI",
-      "category": "Media & Advertising"
+      "category": "Programmatic Infrastructure"
     }
   },
   "corpora": [

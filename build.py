@@ -34,6 +34,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 COVERS_DIR = HERE / "covers"  # optional per-corpus photo covers: covers/<slug>.<ext>
+FIGURES_DIR = HERE / "figures"
+SCENE_ASSET_DIRNAME = "research-scenes"
 MARKED_JS = (HERE / "vendor" / "marked.min.js").read_text()
 # GFM strikethrough fires on a SINGLE tilde, so prose tildes meaning
 # "approximately" (~$22B, ~50%, ~12-month-old) get rendered crossed-out — the
@@ -748,7 +750,12 @@ def _cover_figure(r, pal, slug):
 _SEAL_SHAPES = {
     "Faith & Religion": "circle",
     "Mind & Philosophy": "ellipse",
-    "Media & Advertising": "lozenge",
+    "Platforms & Deals": "lozenge",
+    "Programmatic Infrastructure": "lozenge",
+    "Identity & Addressing": "lozenge",
+    "Trust, Politics & Society": "lozenge",
+    "Global Markets": "lozenge",
+    "Media Theory": "lozenge",
     "The Modern World": "square",
     "Thomas Carlyle": "triangle",
     "Heritage": "rings",
@@ -3434,6 +3441,7 @@ SCENE_STAMPS = {
 
 
 _SCENE_COVER_SLUGS_CACHE = None
+_RESEARCH_SCENES_CACHE = None
 
 
 def _all_scene_cover_slugs():
@@ -3447,6 +3455,93 @@ def _all_scene_cover_slugs():
                 if p.suffix.lower() in COVER_EXTS
             ))
     return _SCENE_COVER_SLUGS_CACHE
+
+
+def _research_scenes():
+    """Return one representative, content-specific scene for each corpus.
+
+    Interior research scenes are stored as self-contained figure snippets with
+    base64 images. The build publishes one representative image per corpus as a
+    normal raster asset so scene plates can use the real research artwork
+    without duplicating large data URIs into every page.
+    """
+    global _RESEARCH_SCENES_CACHE
+    if _RESEARCH_SCENES_CACHE is not None:
+        return _RESEARCH_SCENES_CACHE
+
+    scenes = {}
+    if FIGURES_DIR.is_dir():
+        for folder in sorted(p for p in FIGURES_DIR.iterdir() if p.is_dir()):
+            snippets = sorted(folder.glob("scene_*.html"))
+            # Prefer a foundational/early scene over a future-scenario plate.
+            snippets.sort(key=lambda p: ("future" in p.stem.lower(), p.name))
+            for snippet in snippets:
+                text = snippet.read_text(errors="ignore")
+                img = re.search(
+                    r'<img\b[^>]*\bsrc=["\']data:image/(jpeg|jpg|png|webp);base64,([^"\']+)["\'][^>]*>',
+                    text,
+                    re.IGNORECASE,
+                )
+                if not img:
+                    continue
+                tag = img.group(0)
+                alt_match = re.search(r'\balt=["\']([^"\']*)["\']', tag, re.IGNORECASE)
+                mime_ext = "jpg" if img.group(1).lower() in ("jpeg", "jpg") else img.group(1).lower()
+                scenes[folder.name] = {
+                    "bytes": base64.b64decode(img.group(2)),
+                    "ext": mime_ext,
+                    "alt": html.unescape(alt_match.group(1)) if alt_match else "",
+                    "source": snippet.name,
+                }
+                break
+    _RESEARCH_SCENES_CACHE = scenes
+    return scenes
+
+
+def publish_research_scenes(out):
+    """Materialize representative interior scenes into the served build."""
+    scene_dir = Path(out) / SCENE_ASSET_DIRNAME
+    scene_dir.mkdir(parents=True, exist_ok=True)
+    for slug, scene in _research_scenes().items():
+        (scene_dir / f"{slug}.{scene['ext']}").write_bytes(scene["bytes"])
+
+
+def _scene_subject_slug(kind, cover_slugs=None, seed=""):
+    """Pick a content-specific corpus deterministically for a scene plate."""
+    requested = [slug for slug in (cover_slugs or ()) if slug]
+    if requested:
+        return requested[0]
+
+    available = list(_research_scenes())
+    # Seeds commonly contain the corpus slug (reader cards, forecasts, bands).
+    matches = [slug for slug in available if slug in (seed or "")]
+    if matches:
+        return max(matches, key=len)
+
+    preferred = [slug for slug in SCENE_COVERS.get(kind, ()) if slug in available]
+    pool = preferred or available
+    if not pool:
+        return None
+    return min(pool, key=lambda slug: _scene_rank(f"{kind}:{seed}", slug))
+
+
+def _scene_image(kind, root="", cover_slugs=None, seed=""):
+    """Return (src, alt) for a real research scene, falling back to its cover."""
+    slug = _scene_subject_slug(kind, cover_slugs=cover_slugs, seed=seed)
+    if not slug:
+        return None, ""
+
+    scene = _research_scenes().get(slug)
+    if scene:
+        return (
+            f"{root}{SCENE_ASSET_DIRNAME}/{slug}.{scene['ext']}",
+            scene["alt"] or f"A narrative scene from the {humanize(slug)} research.",
+        )
+
+    cover = find_cover_image(slug)
+    if cover:
+        return f"{root}covers/{cover.name}", f"Cover scene for the {humanize(slug)} research."
+    return None, ""
 
 
 def _scene_rank(seed_key, slug):
@@ -3491,28 +3586,18 @@ def _scene_cover_images(kind, root="", cover_slugs=None, seed=""):
 
 
 def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None, seed=""):
-    """A cover-like scene plate built from the corpus visual language."""
+    """A full-bleed narrative scene drawn from the actual research artwork."""
     kind = kind if kind in SCENE_LABELS else "pamphlet"
     variant = _scene_variant(kind, seed)
     cls = f"scene-plate scene-{kind} scene-v{variant}" + (f" {extra_class}" if extra_class else "")
-    aria = html.escape(label or SCENE_LABELS[kind], quote=True)
-    stamp = html.escape(SCENE_STAMPS.get(kind, "FIELD NOTES"))
+    src, scene_alt = _scene_image(kind, root=root, cover_slugs=cover_slugs, seed=seed)
+    if not src:
+        return ""
+    alt = label or scene_alt or SCENE_LABELS[kind]
     return (
-        f'<figure class="{html.escape(cls, quote=True)}" role="img" aria-label="{aria}">'
-        '<span class="sc-wall" aria-hidden="true"></span><span class="sc-window" aria-hidden="true"></span>'
-        '<span class="sc-pin sc-pin1" aria-hidden="true"></span><span class="sc-pin sc-pin2" aria-hidden="true"></span>'
-        '<span class="sc-wire sc-wire1" aria-hidden="true"></span><span class="sc-wire sc-wire2" aria-hidden="true"></span>'
-        f'{_scene_cover_images(kind, root=root, cover_slugs=cover_slugs, seed=seed)}'
-        '<span class="sc-screen sc-screen1" aria-hidden="true"></span><span class="sc-screen sc-screen2" aria-hidden="true"></span>'
-        '<span class="sc-mapgrid" aria-hidden="true"></span><span class="sc-path sc-path1" aria-hidden="true"></span>'
-        '<span class="sc-path sc-path2" aria-hidden="true"></span><span class="sc-path sc-path3" aria-hidden="true"></span>'
-        '<span class="sc-table" aria-hidden="true"></span><span class="sc-book" aria-hidden="true"></span>'
-        '<span class="sc-sheet sc-s1" aria-hidden="true"></span><span class="sc-sheet sc-s2" aria-hidden="true"></span>'
-        '<span class="sc-sheet sc-s3" aria-hidden="true"></span><span class="sc-ticket sc-t1" aria-hidden="true"></span>'
-        '<span class="sc-ticket sc-t2" aria-hidden="true"></span><span class="sc-ticket sc-t3" aria-hidden="true"></span>'
-        '<span class="sc-roller sc-r1" aria-hidden="true"></span><span class="sc-roller sc-r2" aria-hidden="true"></span>'
-        '<span class="sc-lamp" aria-hidden="true"></span><span class="sc-glow" aria-hidden="true"></span>'
-        f'<span class="sc-stamp" aria-hidden="true">{stamp}</span>'
+        f'<figure class="{html.escape(cls, quote=True)}">'
+        f'<img class="sc-scene" src="{html.escape(src, quote=True)}" '
+        f'alt="{html.escape(alt, quote=True)}" loading="lazy" decoding="async">'
         '</figure>'
     )
 
@@ -3670,6 +3755,13 @@ SCENE_PLATE_CSS = """
    the fold instead of below a half-screen of scenery. */
 .scene-plate.page-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.35rem; }
 .scene-plate.detail-scene { max-width: 680px; margin: 1rem auto 1.2rem; }
+.scene-plate .sc-scene { position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; object-fit: cover; object-position: center; filter: saturate(.96) contrast(1.03); }
+.scene-plate:has(.sc-scene)::before { z-index: 2; opacity: .22;
+  background: linear-gradient(180deg, transparent 62%, rgba(20, 15, 10, .24)); }
+.scene-plate:has(.sc-scene)::after { z-index: 3; }
+[data-theme="dark"] .scene-plate .sc-scene { filter: saturate(.9) brightness(.82) contrast(1.08); }
+[data-theme="dark"] .scene-plate:has(.sc-scene)::before { opacity: .3; mix-blend-mode: normal; }
 .scene-ghost { --sc-accent: #9a2c1a; }
 [data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }
 .scene-fingerprint, .scene-briefing { --sc-accent: #0d5b68; }
@@ -11890,6 +11982,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
           fingerprint_cfg=None, pamphlets_cfg=None, forecast_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
+    publish_research_scenes(out)
     # Copy top-level image assets into the served output so absolute URLs resolve on the live site.
     for image_asset in SITE_IMAGE_ASSETS:
         src = HERE / image_asset
