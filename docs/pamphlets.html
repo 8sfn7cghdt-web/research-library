@@ -64,9 +64,21 @@
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+.top-header-art { width: 100%; background: #0f0e0c; border-bottom: 1px solid var(--text); overflow: hidden; }
+.top-header-img { width: 100%; height: clamp(150px, 22vw, 315px); object-fit: cover; object-position: center;
+  display: block; filter: saturate(.9) contrast(1.02); }
 .masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
   justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
   color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
+.mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; color: var(--muted);
+  text-decoration: none; transition: color .2s ease; }
+.mh-brand:hover, .mh-brand:focus-visible { color: var(--accent); }
+.mh-brand:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+.mh-logo { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #0f0e0c;
+  border: 1px solid var(--border); box-shadow: var(--shadow-1); flex: 0 0 auto;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
+.mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo {
+  transform: rotate(-7deg) scale(1.08); box-shadow: var(--shadow-2); }
 .mh-nav { display: flex; gap: 1.3rem; }
 .mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
 .mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent);
@@ -193,9 +205,16 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
 .hero-text { flex: 1.1; }
-.hero-art { flex: 1; min-width: 0; color: var(--text); }
+.hero-art { flex: .55; min-width: 0; color: var(--text); display: flex; justify-content: center; }
 .hero-art svg { width: 100%; height: auto; display: block; }
 .hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
+.hero-art .mascot-img { width: min(100%, 285px); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2);
+  animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
+@keyframes mhAgentFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); filter: saturate(1.02) brightness(1); }
+  45% { transform: translateY(-8px) rotate(1deg); filter: saturate(1.1) brightness(1.035); }
+}
 [data-theme="dark"] .hero-art .hero-core { fill: #d98055; }
 [data-theme="dark"] .hero-art .hero-ground { fill: #eae6db; }
 .kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
@@ -289,6 +308,8 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 @media (max-width: 760px) {
   header { flex-direction: column-reverse; gap: 1.2rem; padding-top: 1.6rem; }
   .hero-art { width: 100%; }
+  .top-header-img { height: 150px; }
+  .hero-art .mascot-img { width: min(72vw, 270px); }
 }
 @media (prefers-reduced-motion: reduce) {
   /* every selector this constant transforms or draws, rest AND hover: */
@@ -299,10 +320,12 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   .dp-share, .dp-share:hover, .dp-share:focus-visible,
   .ghost-band .gb-cta, .ghost-band a:hover .gb-cta, .ghost-band a:focus-visible .gb-cta,
   .gb-flag .gb-nib, .ghost-band a:hover .gb-nib, .ghost-band a:focus-visible .gb-nib,
+  .mh-logo, .mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo,
   .cover .cover-photo, .card:hover .cover-photo, .card:focus-visible .cover-photo {
     transform: none !important;
     transition-duration: .01ms !important;
   }
+  .hero-art .mascot-img { animation: none !important; }
   /* the nav underline keeps its scaleX states (transform none would show it at rest) — travel only is killed: */
   .mh-nav a::after, .mh-nav a:hover::after, .mh-nav a.active::after {
     transition-duration: .01ms !important;
@@ -494,7 +517,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
     <a href="index.html">The Research</a>
     <a href="ghost.html">The Ghost of Times</a>

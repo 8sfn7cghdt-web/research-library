@@ -65,7 +65,7 @@ FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='
 SITE_URL = "https://calvincollins.xyz"
 OG_IMAGE = "machine-humanities-homepage.png"  # source lives in corpus-app/; copied into out/ at build time
 TOP_HEADER_IMAGE = OG_IMAGE
-HERO_IMAGE = "divine-hero-agent-logo.png"
+HERO_IMAGE = "divine-hero-agent-logo-v3.png"
 USE_TOP_HEADER_IMAGE = True
 USE_HERO_IMAGE = True  # Use the Divine Hero Agent mascot; flip to False for the engraved lintel SVG.
 
@@ -3198,7 +3198,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 {overture}
 {top_header}
 <div class="masthead">
-  <span class="mh-brand">{brand_logo}<span>calvincollins · xyz</span></span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage">{brand_logo}<span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -4061,9 +4061,15 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
   justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
   color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
-.mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; }
+.mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; color: var(--muted);
+  text-decoration: none; transition: color .2s ease; }
+.mh-brand:hover, .mh-brand:focus-visible { color: var(--accent); }
+.mh-brand:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
 .mh-logo { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #0f0e0c;
-  border: 1px solid var(--border); box-shadow: var(--shadow-1); flex: 0 0 auto; }
+  border: 1px solid var(--border); box-shadow: var(--shadow-1); flex: 0 0 auto;
+  transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
+.mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo {
+  transform: rotate(-7deg) scale(1.08); box-shadow: var(--shadow-2); }
 .mh-nav { display: flex; gap: 1.3rem; }
 .mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
 .mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent);
@@ -4194,7 +4200,12 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
 .hero-art svg { width: 100%; height: auto; display: block; }
 .hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
 .hero-art .mascot-img { width: min(100%, 285px); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
-  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2); }
+  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2);
+  animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
+@keyframes mhAgentFloat {
+  0%, 100% { transform: translateY(0) rotate(-1deg); filter: saturate(1.02) brightness(1); }
+  45% { transform: translateY(-8px) rotate(1deg); filter: saturate(1.1) brightness(1.035); }
+}
 [data-theme="dark"] .hero-art .hero-core { fill: #d98055; }
 [data-theme="dark"] .hero-art .hero-ground { fill: #eae6db; }
 .kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
@@ -4300,10 +4311,12 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   .dp-share, .dp-share:hover, .dp-share:focus-visible,
   .ghost-band .gb-cta, .ghost-band a:hover .gb-cta, .ghost-band a:focus-visible .gb-cta,
   .gb-flag .gb-nib, .ghost-band a:hover .gb-nib, .ghost-band a:focus-visible .gb-nib,
+  .mh-logo, .mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo,
   .cover .cover-photo, .card:hover .cover-photo, .card:focus-visible .cover-photo {
     transform: none !important;
     transition-duration: .01ms !important;
   }
+  .hero-art .mascot-img { animation: none !important; }
   /* the nav underline keeps its scaleX states (transform none would show it at rest) — travel only is killed: */
   .mh-nav a::after, .mh-nav a:hover::after, .mh-nav a.active::after {
     transition-duration: .01ms !important;
@@ -4512,7 +4525,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -4896,7 +4909,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="../index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -5335,7 +5348,7 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -5553,7 +5566,7 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="../index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -6680,13 +6693,14 @@ FORECAST_PAGE_CSS = """
   font-size: .52rem; font-weight: 800; line-height: 1; color: #0c1117; background: var(--agent-color);
   padding: 2px 3px; border-radius: 1px; letter-spacing: 0; }
 .fd-agent-mini { width: 38px; height: 38px; }
+.fd-agent-table { width: 34px; height: 34px; vertical-align: middle; margin-right: .5rem; }
 .fd-agent-card { width: 46px; height: 46px; }
 .fd-agent-title { width: 54px; height: 54px; vertical-align: middle; margin-right: .55rem; }
 .fd-agent-title .fd-agent-mark { font-size: .62rem; }
 .fd-profile-name { display: inline-flex; align-items: center; justify-content: center; gap: .2rem; flex-wrap: wrap; }
 .fd-profile-name .txt { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1; }
 .fd-profile-name .role { font-family: var(--sans); font-size: .78rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--fdmut); margin-top: .3rem; }
+  letter-spacing: 0; color: var(--fdmut); margin-top: .3rem; }
 .fdmas-market-reader::before { left: 10px; top: 11px; width: 23px; height: 17px; border-left: 2px solid currentColor;
   border-bottom: 2px solid currentColor; background: linear-gradient(135deg, transparent 54%, currentColor 55%, currentColor 61%, transparent 62%); opacity: .9; }
 .fdmas-market-reader::after { left: 14px; top: 19px; width: 18px; height: 2px; background: currentColor; transform: rotate(-18deg); }
@@ -6712,7 +6726,7 @@ FORECAST_PAGE_CSS = """
 .fdm-av { font-size: 1.3rem; line-height: 1; }
 .fdm-nm { font-family: var(--sans); font-size: .66rem; font-weight: 800; line-height: 1.2; margin-top: .1rem; }
 .fdm-role { font-family: var(--sans); font-size: .52rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--fdmut); line-height: 1.15; }
+  letter-spacing: 0; color: var(--fdmut); line-height: 1.15; }
 .fdm-rec { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
 .fdm-bank { font-family: var(--fdmono); font-size: .64rem; color: var(--fdgold); font-variant-numeric: tabular-nums; }
 @media (max-width: 720px) { .fdm-roster-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -6747,7 +6761,7 @@ FORECAST_PAGE_CSS = """
   border-radius: 2px; padding: .45rem .5rem; }
 .fdt-p-nm { font-family: var(--sans); font-weight: 800; font-size: .98rem; }
 .fdt-p-role { font-family: var(--sans); font-size: .58rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--fdmut); margin-top: .12rem; }
+  letter-spacing: 0; color: var(--fdmut); margin-top: .12rem; }
 .fdt-p-crit { font-family: var(--serif); font-style: italic; font-size: .76rem; color: var(--fdmut); line-height: 1.4; margin-top: .1rem; }
 .fdt-p-rec { margin-left: auto; text-align: right; white-space: nowrap; }
 .fdt-p-rec .r { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext);
@@ -6877,7 +6891,7 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -7106,13 +7120,17 @@ def _fd_mini_roster(led, book):
         p = led["personas"].get(key) or {"graded": 0, "hits": 0, "briers": []}
         acct = book["personas"].get(key)
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        agent = _persona_agent_name(key, name)
+        role = _persona_role(key, name)
         losses = p["graded"] - p["hits"]
         rec = f'{p["hits"]}–{losses}' if p["graded"] else "0–0"
         bank = f'<span class="fdm-bank">{_fd_money(acct["bankroll"])}</span>' if acct else ""
         cards.append(
-            f'<a class="fdm-card" href="forecasters/{key}.html" style="border-top-color:{col}" title="{html.escape(criterion, quote=True)}">'
-            f'<span class="fdm-av">{avatar}</span>'
-            f'<span class="fdm-nm">{html.escape(name)}</span>'
+            f'<a class="fdm-card" href="forecasters/{key}.html" style="border-top-color:{col}" '
+            f'title="{html.escape(agent + " — " + criterion, quote=True)}">'
+            f'{_persona_mascot_html(key, "mini")}'
+            f'<span class="fdm-nm">{html.escape(agent)}</span>'
+            f'<span class="fdm-role">{html.escape(role)}</span>'
             f'<span class="fdm-rec">{rec}</span>{bank}</a>')
     return (
         '<div class="fdm-roster">'
@@ -7340,8 +7358,9 @@ def _fdt_book_section(book, n):
         roi_txt = f'{roi:+.0f}%' if a["staked"] else "—"
         trows.append(
             f'<tr><td class="num">{i}</td>'
-            f'<td class="fdt-bk-who"><span class="av" style="border-color:{a["color"]}">{a["avatar"]}</span>'
-            f'{html.escape(a["name"])}</td>'
+            f'<td class="fdt-bk-who">{_persona_mascot_html(a["key"], "table")}'
+            f'{html.escape(a["name"])}<br><span style="color:var(--fdmut);font-size:.62rem;text-transform:uppercase;letter-spacing:0">'
+            f'{html.escape(_persona_role(a["key"], ""))}</span></td>'
             f'<td class="fdt-bk-worth"><span class="wbar" style="width:{barw:.0f}%;background:{a["color"]}"></span>'
             f'<b class="num">{_fd_money(a["bankroll"])}</b></td>'
             f'<td class="num {pcls}">{pnl_txt}</td>'
@@ -7359,7 +7378,7 @@ def _fdt_book_section(book, n):
         call = html.escape((p.get("flag", "") + " " + p["pick"]).strip())
         pcards.append(
             f'<div class="fdt-bk-pos" style="border-left:3px solid {col}">'
-            f'<div class="who"><span>{p["avatar"]} {html.escape(p["name"])}</span>'
+            f'<div class="who"><span>{_persona_mascot_html(p["key"], "table")} {html.escape(p["name"])}</span>'
             f'<span class="odds">{p["dec_odds"]:.1f}×</span></div>'
             f'<div class="mk">{html.escape(p["market"])}</div>'
             f'<div class="call">{call}</div>'
@@ -7373,7 +7392,7 @@ def _fdt_book_section(book, n):
     if book["settled"]:
         lead = book["leader"]
         summ = (f'The book has settled {book["settled"]} bet(s). Out front: '
-                f'{lead["avatar"]} <b>{html.escape(lead["name"])}</b> at {_fd_money(lead["bankroll"])} '
+                f'{_persona_mascot_html(lead["key"], "table")} <b>{html.escape(lead["name"])}</b> at {_fd_money(lead["bankroll"])} '
                 f'(<span class="{"up" if lead["pnl"] >= 0 else "dn"}">{_fd_signed(lead["pnl"])}</span>).')
     else:
         summ = (f'The book is open and even — every predictor holds {_fd_money(start)}. '
@@ -7419,6 +7438,9 @@ def _fdt_spectrum_svg():
     for i, (key, name, av, _crit) in enumerate(ordered):
         s = FD_PERSONA_PROFILES.get(key, {}).get("spectrum", 0.5)
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        agent = _persona_agent_name(key, name)
+        role = _persona_role(key, name)
+        mark = _persona_monogram(key, name)
         x = X(s)
         above = (i % 2 == 0)
         ny = ax - 32 if above else ax + 40
@@ -7426,12 +7448,13 @@ def _fdt_spectrum_svg():
         parts.append(f'<line x1="{x:.0f}" y1="{ax}" x2="{x:.0f}" y2="{y_conn:.0f}" stroke="{col}" stroke-width="1" opacity=".4"/>')
         parts.append(
             f'<a href="forecasters/{key}.html" class="fdt-spx-link">'
-            f'<title>{html.escape(name)} — full profile</title>'
-            f'<circle cx="{x:.0f}" cy="{ax}" r="16" fill="transparent"/>'
-            f'<circle cx="{x:.0f}" cy="{ax}" r="13" fill="#10161f" stroke="{col}" stroke-width="2"/>'
-            f'<text x="{x:.0f}" y="{ax + 5:.0f}" text-anchor="middle" font-size="14">{av}</text>'
+            f'<title>{html.escape(agent)} — {html.escape(role)} · {html.escape(_persona_mascot_name(key))}</title>'
+            f'<rect x="{x - 16:.0f}" y="{ax - 16:.0f}" width="32" height="32" rx="2" fill="transparent"/>'
+            f'<rect x="{x - 13:.0f}" y="{ax - 13:.0f}" width="26" height="26" rx="2" fill="#10161f" stroke="{col}" stroke-width="2"/>'
+            f'<text x="{x:.0f}" y="{ax + 4:.0f}" text-anchor="middle" fill="{col}" '
+            f'font-family="ui-monospace,monospace" font-size="9.5" font-weight="800">{html.escape(mark)}</text>'
             f'<text x="{x:.0f}" y="{ny:.0f}" text-anchor="middle" fill="{col}" '
-            f'font-family="-apple-system,sans-serif" font-size="10" font-weight="700">{html.escape(name)}</text>'
+            f'font-family="-apple-system,sans-serif" font-size="9.5" font-weight="700">{html.escape(agent)}</text>'
             f'</a>')
     return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
             f'aria-label="The forecaster roster arranged from mathematical rigor to creative hypothesis">'
@@ -7543,8 +7566,9 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
                 tail = '<div class="fdt-p-none">First call on the ledger — awaiting its grade.</div>'
             cards.append(
                 f'<a class="fdt-p fdt-p-link" href="forecasters/{p["key"]}.html" style="border-top:3px solid {col}">'
-                f'<div class="fdt-p-top"><span class="fdt-p-av">{p["avatar"]}</span>'
+                f'<div class="fdt-p-top">{_persona_mascot_html(p["key"], "card")}'
                 f'<div><div class="fdt-p-nm">{html.escape(p["name"])}</div>'
+                f'<div class="fdt-p-role">{html.escape(_persona_role(p["key"], ""))}</div>'
                 f'<div class="fdt-p-crit">{html.escape(p["criterion"])}</div></div>{rec}</div>'
                 f'{model_html}{doc_html}{spx_html}{bankline}{tail}'
                 f'<span class="fdt-p-cta">Full profile →</span></a>')
@@ -7554,7 +7578,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
     parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Calibration — where the desk\'s confidence meets reality</h2>')
     leg_items = ['<span><span class="sw" style="background:#eab308"></span>The Council</span>',
                  '<span><span class="sw" style="background:#60a5fa"></span>The Research (lead scenarios)</span>']
-    leg_items += [f'<span><span class="sw" style="background:{FDT_SERIES_COLORS.get(k, "#9aa1af")}"></span>{html.escape(nm)}</span>'
+    leg_items += [f'<span><span class="sw" style="background:{FDT_SERIES_COLORS.get(k, "#9aa1af")}"></span>{html.escape(_persona_agent_name(k, nm))}</span>'
                   for k, nm, _a, _c in FD_PERSONAS]
     parts.append(f'<div class="fdt-cal">{_fdt_calibration_svg(calls)}'
                  f'<div class="fdt-cal-leg">{"".join(leg_items)}</div></div>')
@@ -7573,7 +7597,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
         rows = "".join(
             f'<tr><td class="num">{html.escape(c["date"] or "—")}</td>'
             f'<td><a href="{html.escape(c["href"], quote=True)}">{html.escape(c["market"])}</a></td>'
-            f'<td>{c["avatar"]} {html.escape(c["caller"])}</td>'
+            f'<td>{(_persona_mascot_html(c["key"], "table") if c.get("kind") == "persona" and c.get("key") else c["avatar"])} {html.escape(c["caller"])}</td>'
             f'<td>{html.escape((c.get("flag", "") + " " + c["call"]).strip())}</td>'
             f'<td class="num">{c["prob"]:g}%</td>'
             f'<td>{html.escape((c.get("result_flag", "") + " " + c["result"]).strip())}</td>'
@@ -7657,7 +7681,9 @@ def build_persona_pages(out_dir, led, book, shell=""):
     out.mkdir(parents=True, exist_ok=True)
     n_rendered = 0
     for key, name, avatar, criterion in FD_PERSONAS:
-        p = led["personas"].get(key) or {"key": key, "name": name, "avatar": avatar,
+        agent = _persona_agent_name(key, name)
+        role = _persona_role(key, name)
+        p = led["personas"].get(key) or {"key": key, "name": agent, "avatar": avatar,
                                           "criterion": criterion, "graded": 0, "hits": 0,
                                           "briers": [], "calls": []}
         prof = FD_PERSONA_PROFILES.get(key, {})
@@ -7729,13 +7755,16 @@ def build_persona_pages(out_dir, led, book, shell=""):
             parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Open Positions ({len(acct["open"])})</h2>'
                         f'<div class="fdt-pend">{rows}</div>')
 
-        title = f"{name} — The Forecast Desk"
+        title = f"{agent} — {role}"
         og = og_tags(title, criterion, f"{SITE_URL}/forecasters/{key}.html", f"{SITE_URL}/{OG_IMAGE}")
         folio = (f'    <span>{p["graded"]} graded</span>\n'
                 f'    <span class="fd-folio-c">record {rec_txt}</span>\n'
                 f'    <span>{html.escape(prof.get("zone", "The desk"))}</span>')
+        headline = (f'<span class="fd-profile-name">{_persona_mascot_html(key, "title")}'
+                    f'<span class="txt"><span>{html.escape(agent)}</span>'
+                    f'<span class="role">{html.escape(role)}</span></span></span>')
         page = FORECAST_PAGE_TEMPLATE.format(
-            page_title=html.escape(title), h1=html.escape(f"{avatar} {name}"),
+            page_title=html.escape(title), h1=headline,
             kicker="The Forecast Desk · Predictor profile",
             nav=main_nav_html(prefix="../", active="forecast.html"),
             back='<a href="../forecast-record.html">← The Track Record</a>',
@@ -7753,6 +7782,207 @@ def build_persona_pages(out_dir, led, book, shell=""):
     print(f"  ✓ Predictor profiles ({n_rendered}) → forecasters/")
 
 
+def _fd_persona_legend_html():
+    """A colored-dot key for the roster, shared across the comparison charts."""
+    return '<div class="cmp-legend">' + "".join(
+        f'<span><span class="sw" style="background:{FDT_SERIES_COLORS.get(key, "#9aa1af")}"></span>{avatar} {html.escape(name)}</span>'
+        for key, name, avatar, criterion in FD_PERSONAS
+    ) + '</div>'
+
+
+def _fdc_bankroll_race_svg(book):
+    """The bankroll race: every persona's running bankroll traced across the
+    shared sequence of settled bets, in settlement order — one line chart that
+    turns seven different forecasting methods into a single number. Built from
+    a shared event timeline (date, market) so every series shares one x-axis
+    even though a persona can pass on a market its doctrine skips."""
+    events, seen = [], set()
+    for a in book["personas"].values():
+        for b in a["bets"]:
+            if not b.get("graded"):
+                continue
+            k = (b.get("date") or "", b["market"])
+            if k not in seen:
+                seen.add(k)
+                events.append(k)
+    events.sort()
+    if len(events) < 2:
+        return ""
+    W, H = 660, 320
+    X0, X1, Y0, Y1 = 58, 630, 268, 26
+    n = len(events)
+    def X(i):
+        return X0 + (X1 - X0) * i / (n - 1)
+    series = {}
+    maxv = minv = FD_BANKROLL_START
+    for key, name, avatar, criterion in FD_PERSONAS:
+        acct = book["personas"].get(key)
+        by_event = {}
+        if acct:
+            for b in acct["bets"]:
+                if b.get("graded"):
+                    by_event[(b.get("date") or "", b["market"])] = b
+        vals, bal = [], FD_BANKROLL_START
+        for ev in events:
+            b = by_event.get(ev)
+            if b is not None:
+                bal += b.get("pnl", 0.0)
+            vals.append(bal)
+        maxv, minv = max(maxv, max(vals)), min(minv, min(vals))
+        series[key] = vals
+    pad = max((maxv - minv) * 0.1, 25)
+    lo, hi = max(0.0, minv - pad), maxv + pad
+    def Y(v):
+        return Y0 - (Y0 - Y1) * (v - lo) / (hi - lo) if hi > lo else (Y0 + Y1) / 2
+    grid = []
+    for t in range(5):
+        v = lo + (hi - lo) * t / 4
+        y = Y(v)
+        grid.append(f'<line x1="{X0}" y1="{y:.1f}" x2="{X1}" y2="{y:.1f}" stroke="#2c303a" stroke-width="1"/>')
+        grid.append(f'<text x="{X0 - 10}" y="{y + 4:.1f}" text-anchor="end" fill="#9aa1af" font-size="10.5" '
+                    f'font-family="ui-monospace,Menlo,monospace">${v:,.0f}</text>')
+    base_y = Y(FD_BANKROLL_START)
+    grid.append(f'<line x1="{X0}" y1="{base_y:.1f}" x2="{X1}" y2="{base_y:.1f}" stroke="#9aa1af" '
+               f'stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>')
+    grid.append(f'<text x="{X1}" y="{base_y - 6:.1f}" text-anchor="end" fill="#9aa1af" font-size="9.5" '
+               f'font-style="italic" font-family="Georgia,serif">starting bankroll</text>')
+    lines = []
+    for key, name, avatar, criterion in FD_PERSONAS:
+        col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        vals = series[key]
+        pts = " ".join(f"{X(i):.1f},{Y(v):.1f}" for i, v in enumerate(vals))
+        lines.append(f'<polyline points="{pts}" fill="none" stroke="{col}" stroke-width="2" opacity=".92"/>')
+        lx, ly = X(n - 1), Y(vals[-1])
+        lines.append(f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="4" fill="{col}" stroke="#0c1117" stroke-width="1.2"/>')
+        lines.append(f'<text x="{lx + 8:.1f}" y="{ly + 4:.1f}" fill="{col}" font-size="11" font-weight="700" '
+                    f'font-family="-apple-system,sans-serif">{avatar}</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
+            f'aria-label="Bankroll race across every graded call">{"".join(grid)}{"".join(lines)}</svg>')
+
+
+def _fdc_record_bars_svg(led):
+    """A ranked horizontal bar per predictor — hits shaded in its own color over
+    a full-width track (graded markets), sorted best hit-rate first, Brier
+    annotated at the end of the bar."""
+    rows = []
+    for key, name, avatar, criterion in FD_PERSONAS:
+        p = led["personas"].get(key) or {"graded": 0, "hits": 0, "briers": []}
+        graded, hits = p["graded"], p["hits"]
+        hitrate = (hits / graded * 100) if graded else -1.0
+        rows.append((key, name, avatar, graded, hits, graded - hits, hitrate, _fdt_fmt_brier(p["briers"])))
+    rows.sort(key=lambda r: r[6], reverse=True)
+    if not any(r[3] for r in rows):
+        return ""
+    W = 660
+    row_h = 42
+    H = row_h * len(rows) + 16
+    X0, X1 = 168, 470
+    maxn = max((r[3] for r in rows), default=1) or 1
+    bars = []
+    for i, (key, name, avatar, graded, hits, losses, hitrate, brier) in enumerate(rows):
+        y = 12 + i * row_h
+        col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        w = (X1 - X0) * (graded / maxn) if maxn else 0
+        hw = w * (hits / graded) if graded else 0
+        bars.append(f'<text x="{X0 - 12}" y="{y + 15:.0f}" text-anchor="end" fill="#edeff4" font-size="11.5" '
+                    f'font-weight="700" font-family="-apple-system,sans-serif">{avatar} {html.escape(name)}</text>')
+        bars.append(f'<rect x="{X0}" y="{y}" width="{w:.1f}" height="20" rx="2" fill="#2c303a"/>')
+        if hw > 0:
+            bars.append(f'<rect x="{X0}" y="{y}" width="{hw:.1f}" height="20" rx="2" fill="{col}"/>')
+        rec_txt = f"{hits}–{losses} · {hitrate:.0f}% · Brier {brier}" if graded else "no grades yet"
+        bars.append(f'<text x="{X0 + w + 10:.1f}" y="{y + 15:.0f}" fill="#9aa1af" font-size="10.5" '
+                    f'font-family="ui-monospace,Menlo,monospace">{rec_txt}</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
+            f'aria-label="Record by predictor, sorted by hit rate">{"".join(bars)}</svg>')
+
+
+def _fdc_rigor_accuracy_svg(led):
+    """A scatter of spectrum position (rigor → story) against mean Brier score,
+    testing the roster's own premise: does more mathematical rigor actually
+    predict a lower (better) Brier score, or does the spectrum just describe
+    style, not accuracy?"""
+    pts = []
+    for key, name, avatar, criterion in FD_PERSONAS:
+        p = led["personas"].get(key) or {}
+        prof = FD_PERSONA_PROFILES.get(key, {})
+        if not p.get("briers") or prof.get("spectrum") is None:
+            continue
+        pts.append((key, name, avatar, prof["spectrum"], sum(p["briers"]) / len(p["briers"])))
+    if len(pts) < 2:
+        return ""
+    W, H = 660, 300
+    X0, X1, Y0, Y1 = 60, 620, 250, 34
+    briers = [b for *_, b in pts]
+    pad = max((max(briers) - min(briers)) * 0.2, 0.015)
+    lo, hi = max(0.0, min(briers) - pad), max(briers) + pad
+    def X(s):
+        return X0 + (X1 - X0) * max(0.0, min(1.0, s))
+    def Y(b):
+        return Y1 + (Y0 - Y1) * (b - lo) / (hi - lo) if hi > lo else (Y0 + Y1) / 2
+    grid = []
+    for t in (0, .25, .5, .75, 1):
+        grid.append(f'<line x1="{X(t):.1f}" y1="{Y0}" x2="{X(t):.1f}" y2="{Y1}" stroke="#2c303a" stroke-width="1"/>')
+    for t in (0, .25, .5, .75, 1):
+        v = lo + (hi - lo) * t
+        grid.append(f'<line x1="{X0}" y1="{Y(v):.1f}" x2="{X1}" y2="{Y(v):.1f}" stroke="#2c303a" stroke-width="1"/>')
+        grid.append(f'<text x="{X0 - 10}" y="{Y(v) + 4:.1f}" text-anchor="end" fill="#9aa1af" font-size="10" '
+                    f'font-family="ui-monospace,Menlo,monospace">{v:.2f}</text>')
+    labels = (
+        f'<text x="{X0}" y="{Y0 + 24}" fill="#9aa1af" font-size="10.5" font-family="ui-monospace,Menlo,monospace">trust the number</text>'
+        f'<text x="{X1}" y="{Y0 + 24}" text-anchor="end" fill="#9aa1af" font-size="10.5" font-family="ui-monospace,Menlo,monospace">trust the story</text>'
+        f'<text x="18" y="{(Y0 + Y1) / 2:.0f}" text-anchor="middle" fill="#9aa1af" font-size="10.5" '
+        f'font-family="-apple-system,sans-serif" transform="rotate(-90 18 {(Y0 + Y1) / 2:.0f})">mean Brier — lower is better ↑</text>'
+    )
+    dots = []
+    for key, name, avatar, s, b in pts:
+        col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        x, y = X(s), Y(b)
+        dots.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="9" fill="{col}" stroke="#0c1117" stroke-width="1.5">'
+                    f'<title>{html.escape(name)}: Brier {b:.3f} at spectrum {s:.2f}</title></circle>')
+        dots.append(f'<text x="{x:.1f}" y="{y - 14:.1f}" text-anchor="middle" fill="{col}" font-size="10.5" '
+                    f'font-weight="700" font-family="-apple-system,sans-serif">{avatar} {html.escape(name)}</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
+            f'aria-label="Rigor versus accuracy: spectrum position against mean Brier score">'
+            f'{"".join(grid)}{labels}{"".join(dots)}</svg>')
+
+
+def _fdc_head_to_head_html(led):
+    """A market × predictor grid: every graded market as a row, every standing
+    predictor's pick as a column, hit shaded green and miss shaded red — the
+    fastest way to see which predictors were pulling in the same direction on
+    the same call, and which weren't."""
+    order, seen = [], set()
+    for c in led["calls"]:
+        if c["kind"] == "persona" and c["market"] not in seen:
+            seen.add(c["market"])
+            order.append((c["market"], c["href"], c["result"]))
+    if not order:
+        return ""
+    head = "".join(
+        f'<th class="h2h-persona" style="border-top-color:{FDT_SERIES_COLORS.get(key, "#9aa1af")}">'
+        f'<a href="{key}.html" title="{html.escape(name, quote=True)}"><span class="cmp-av">{avatar}</span></a></th>'
+        for key, name, avatar, criterion in FD_PERSONAS
+    )
+    rows = []
+    for market, href, winner in order:
+        cells = []
+        for key, name, avatar, criterion in FD_PERSONAS:
+            p = led["personas"].get(key) or {}
+            call = next((c for c in p.get("calls", []) if c["market"] == market), None)
+            if call is None:
+                cells.append('<td class="h2h-none">—</td>')
+                continue
+            cls = "h2h-hit" if call["hit"] else "h2h-miss"
+            cells.append(
+                f'<td class="{cls}"><span class="h2h-pick">{call.get("flag", "")} {html.escape(call["pick"])}</span>'
+                f'<span class="h2h-prob">{call["prob"]:g}%</span></td>')
+        rows.append(
+            f'<tr><th class="h2h-m"><a href="../{html.escape(href, quote=True)}">{html.escape(market)}</a>'
+            f'<span class="h2h-w">won: {html.escape(winner)}</span></th>{"".join(cells)}</tr>')
+    return (f'<div class="cmp-wrap"><table class="h2h-table"><thead><tr><th></th>{head}</tr></thead>'
+            f'<tbody>{"".join(rows)}</tbody></table></div>')
+
+
 def build_persona_compare_page(out_dir, led, book, shell=""):
     """Render docs/forecasters/compare.html — every standing predictor laid side
     by side in one table (criterion, spectrum position, model, doctrine, record,
@@ -7762,12 +7992,14 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
     out.mkdir(parents=True, exist_ok=True)
     cols = []
     for key, name, avatar, criterion in FD_PERSONAS:
+        agent = _persona_agent_name(key, name)
+        role = _persona_role(key, name)
         p = led["personas"].get(key) or {"graded": 0, "hits": 0, "briers": []}
         prof = FD_PERSONA_PROFILES.get(key, {})
         acct = book["personas"].get(key)
         losses = p["graded"] - p["hits"]
         cols.append({
-            "key": key, "name": name, "avatar": avatar, "criterion": criterion,
+            "key": key, "name": agent, "role": role, "avatar": avatar, "criterion": criterion,
             "col": FDT_SERIES_COLORS.get(key, "#9aa1af"),
             "zone": prof.get("zone", ""), "spectrum": prof.get("spectrum"),
             "model": prof.get("model", ""), "doctrine": prof.get("doctrine", ""),
@@ -7785,8 +8017,9 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
 
     head_cells = "".join(
         f'<th class="cmp-persona" style="border-top-color:{c["col"]}">'
-        f'<a href="{c["key"]}.html"><span class="cmp-av">{c["avatar"]}</span>'
-        f'<span class="cmp-nm">{html.escape(c["name"])}</span></a></th>'
+        f'<a href="{c["key"]}.html">{_persona_mascot_html(c["key"], "card")}'
+        f'<span class="cmp-nm">{html.escape(c["name"])}</span>'
+        f'<span class="cmp-role">{html.escape(c["role"])}</span></a></th>'
         for c in cols
     )
     rows = "".join([
@@ -7881,7 +8114,7 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
   border-radius: 2px; padding: .5rem .55rem; }
 .fdd-tr-nm { font-family: var(--sans); font-weight: 800; font-size: 1rem; }
 .fdd-tr-role { font-family: var(--sans); font-size: .58rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--fdmut); margin-top: .12rem; }
+  letter-spacing: 0; color: var(--fdmut); margin-top: .12rem; }
 .fdd-tr-crit { font-family: var(--serif); font-style: italic; font-size: .78rem; color: var(--fdmut); line-height: 1.4; margin-top: .15rem; }
 .fdd-tr-call { margin-left: auto; text-align: center; max-width: 11rem; }
 .fdd-tr-call .t { line-height: 1.25; }
@@ -8027,7 +8260,7 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
 .cmp-av { font-size: 1.5rem; line-height: 1; }
 .cmp-nm { font-family: var(--sans); font-weight: 800; font-size: .82rem; color: var(--fdtext); }
 .cmp-role { font-family: var(--sans); font-size: .56rem; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--fdmut); }
+  letter-spacing: 0; color: var(--fdmut); }
 .cmp-persona a:hover .cmp-nm { color: var(--fdblue); }
 .cmp-crit, .cmp-prose, .cmp-sig { display: block; font-family: var(--serif); font-style: italic; font-size: .88rem;
   line-height: 1.55; color: #c6d0e0; }
@@ -8049,7 +8282,7 @@ FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="../index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -8118,6 +8351,8 @@ def _fdd_roster(profiles, records=None, graded=None):
     cards = []
     for p in profiles:
         key = _persona_key(p)
+        agent = _persona_agent_name(key, p.get("name", ""))
+        role = _persona_role(key, p.get("name", ""))
         rec = (records or {}).get(key) or p.get("record") or {}
         n_graded = rec.get("graded", 0)
         rec_tag = (f'<span class="fdd-tag rec">record {rec.get("hits", 0)}–{max(n_graded - rec.get("hits", 0), 0)}</span>'
@@ -8128,8 +8363,9 @@ def _fdd_roster(profiles, records=None, graded=None):
         conf = (p.get("confidence") or "medium").lower()
         cards.append(
             f'<a class="fdd-trader" href="../forecasters/{key}.html">'
-            f'<div class="fdd-tr-top"><span class="fdd-tr-av">{p.get("avatar", "🎯")}</span>'
-            f'<div><div class="fdd-tr-nm">{html.escape(p.get("name", ""))}</div>'
+            f'<div class="fdd-tr-top">{_persona_mascot_html(key, "card")}'
+            f'<div><div class="fdd-tr-nm">{html.escape(agent)}</div>'
+            f'<div class="fdd-tr-role">{html.escape(role)}</div>'
             f'<div class="fdd-tr-crit">{html.escape(p.get("criterion", ""))}</div></div>'
             f'<div class="fdd-tr-call"><div class="f">{p.get("flag", "")}</div>'
             f'<div class="t">{html.escape(p.get("pick", ""))}</div>'
@@ -8759,7 +8995,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -8997,7 +9233,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <body>
 <div id="fp-progress" aria-hidden="true"></div>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="../index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -9638,7 +9874,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -10048,7 +10284,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -10580,7 +10816,7 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -10759,7 +10995,7 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -10941,7 +11177,7 @@ QUIZ_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
