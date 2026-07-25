@@ -7400,9 +7400,9 @@ def _fdt_book_section(book, n):
                 f'the first settles when its market grades.')
     note = ('<p class="fdt-note">Each predictor opens with $1,000, plays every market it has a pick on, and '
             'every bet pays at the market’s own decimal odds — but each one <b>sizes in its own style, drawn '
-            'from where it sits on the spectrum</b>. The Quant goes half-Kelly on an edge and antes small without '
-            'one; the Historian stakes the same flat unit every time; the Market Reader rides the tape for token '
-            'money; the Prophet and the Contrarian swing for the fences on long odds. A win pays the decimal odds, '
+            'from where it sits on the spectrum</b>. Quinn Ratio goes half-Kelly on an edge and antes small without '
+            'one; Ada Ledger stakes the same flat unit every time; Mira Tape rides the tape for token '
+            'money; Elias Lantern and Nico Tilt swing for the fences on long odds. A win pays the decimal odds, '
             'a loss costs the stake, and bankrolls compound — so the standings are the running verdict on rigor '
             'versus revelation.</p>')
     return (f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Book — the roster bets fake money at the market’s odds</h2>'
@@ -7785,7 +7785,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
 def _fd_persona_legend_html():
     """A colored-dot key for the roster, shared across the comparison charts."""
     return '<div class="cmp-legend">' + "".join(
-        f'<span><span class="sw" style="background:{FDT_SERIES_COLORS.get(key, "#9aa1af")}"></span>{avatar} {html.escape(name)}</span>'
+        f'<span>{_persona_mascot_html(key, "table")} {html.escape(_persona_agent_name(key, name))}</span>'
         for key, name, avatar, criterion in FD_PERSONAS
     ) + '</div>'
 
@@ -7849,13 +7849,15 @@ def _fdc_bankroll_race_svg(book):
     lines = []
     for key, name, avatar, criterion in FD_PERSONAS:
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        mark = _persona_monogram(key, name)
         vals = series[key]
         pts = " ".join(f"{X(i):.1f},{Y(v):.1f}" for i, v in enumerate(vals))
         lines.append(f'<polyline points="{pts}" fill="none" stroke="{col}" stroke-width="2" opacity=".92"/>')
         lx, ly = X(n - 1), Y(vals[-1])
         lines.append(f'<circle cx="{lx:.1f}" cy="{ly:.1f}" r="4" fill="{col}" stroke="#0c1117" stroke-width="1.2"/>')
-        lines.append(f'<text x="{lx + 8:.1f}" y="{ly + 4:.1f}" fill="{col}" font-size="11" font-weight="700" '
-                    f'font-family="-apple-system,sans-serif">{avatar}</text>')
+        lines.append(f'<rect x="{lx + 8:.1f}" y="{ly - 10:.1f}" width="18" height="18" rx="2" fill="#10161f" stroke="{col}" stroke-width="1.4"/>')
+        lines.append(f'<text x="{lx + 17:.1f}" y="{ly + 2.8:.1f}" text-anchor="middle" fill="{col}" font-size="7.2" font-weight="800" '
+                    f'font-family="ui-monospace,Menlo,monospace">{html.escape(mark)}</text>')
     return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
             f'aria-label="Bankroll race across every graded call">{"".join(grid)}{"".join(lines)}</svg>')
 
@@ -7869,7 +7871,7 @@ def _fdc_record_bars_svg(led):
         p = led["personas"].get(key) or {"graded": 0, "hits": 0, "briers": []}
         graded, hits = p["graded"], p["hits"]
         hitrate = (hits / graded * 100) if graded else -1.0
-        rows.append((key, name, avatar, graded, hits, graded - hits, hitrate, _fdt_fmt_brier(p["briers"])))
+        rows.append((key, _persona_agent_name(key, name), avatar, graded, hits, graded - hits, hitrate, _fdt_fmt_brier(p["briers"])))
     rows.sort(key=lambda r: r[6], reverse=True)
     if not any(r[3] for r in rows):
         return ""
@@ -7882,10 +7884,14 @@ def _fdc_record_bars_svg(led):
     for i, (key, name, avatar, graded, hits, losses, hitrate, brier) in enumerate(rows):
         y = 12 + i * row_h
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        mark = _persona_monogram(key, name)
         w = (X1 - X0) * (graded / maxn) if maxn else 0
         hw = w * (hits / graded) if graded else 0
+        bars.append(f'<rect x="{X0 - 162}" y="{y - 1}" width="24" height="24" rx="2" fill="#10161f" stroke="{col}" stroke-width="1.5"/>')
+        bars.append(f'<text x="{X0 - 150}" y="{y + 15:.0f}" text-anchor="middle" fill="{col}" font-size="8" '
+                    f'font-weight="800" font-family="ui-monospace,Menlo,monospace">{html.escape(mark)}</text>')
         bars.append(f'<text x="{X0 - 12}" y="{y + 15:.0f}" text-anchor="end" fill="#edeff4" font-size="11.5" '
-                    f'font-weight="700" font-family="-apple-system,sans-serif">{avatar} {html.escape(name)}</text>')
+                    f'font-weight="700" font-family="-apple-system,sans-serif">{html.escape(name)}</text>')
         bars.append(f'<rect x="{X0}" y="{y}" width="{w:.1f}" height="20" rx="2" fill="#2c303a"/>')
         if hw > 0:
             bars.append(f'<rect x="{X0}" y="{y}" width="{hw:.1f}" height="20" rx="2" fill="{col}"/>')
@@ -7907,7 +7913,7 @@ def _fdc_rigor_accuracy_svg(led):
         prof = FD_PERSONA_PROFILES.get(key, {})
         if not p.get("briers") or prof.get("spectrum") is None:
             continue
-        pts.append((key, name, avatar, prof["spectrum"], sum(p["briers"]) / len(p["briers"])))
+        pts.append((key, _persona_agent_name(key, name), avatar, prof["spectrum"], sum(p["briers"]) / len(p["briers"])))
     if len(pts) < 2:
         return ""
     W, H = 660, 300
@@ -7936,11 +7942,14 @@ def _fdc_rigor_accuracy_svg(led):
     dots = []
     for key, name, avatar, s, b in pts:
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        mark = _persona_monogram(key, name)
         x, y = X(s), Y(b)
         dots.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="9" fill="{col}" stroke="#0c1117" stroke-width="1.5">'
                     f'<title>{html.escape(name)}: Brier {b:.3f} at spectrum {s:.2f}</title></circle>')
-        dots.append(f'<text x="{x:.1f}" y="{y - 14:.1f}" text-anchor="middle" fill="{col}" font-size="10.5" '
-                    f'font-weight="700" font-family="-apple-system,sans-serif">{avatar} {html.escape(name)}</text>')
+        dots.append(f'<text x="{x:.1f}" y="{y + 3.3:.1f}" text-anchor="middle" fill="#0c1117" font-size="7.5" '
+                    f'font-weight="800" font-family="ui-monospace,Menlo,monospace">{html.escape(mark)}</text>')
+        dots.append(f'<text x="{x:.1f}" y="{y - 15:.1f}" text-anchor="middle" fill="{col}" font-size="10.5" '
+                    f'font-weight="700" font-family="-apple-system,sans-serif">{html.escape(name)}</text>')
     return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
             f'aria-label="Rigor versus accuracy: spectrum position against mean Brier score">'
             f'{"".join(grid)}{labels}{"".join(dots)}</svg>')
@@ -7960,7 +7969,8 @@ def _fdc_head_to_head_html(led):
         return ""
     head = "".join(
         f'<th class="h2h-persona" style="border-top-color:{FDT_SERIES_COLORS.get(key, "#9aa1af")}">'
-        f'<a href="{key}.html" title="{html.escape(name, quote=True)}"><span class="cmp-av">{avatar}</span></a></th>'
+        f'<a href="{key}.html" title="{html.escape(_persona_agent_name(key, name), quote=True)}">'
+        f'{_persona_mascot_html(key, "table")}</a></th>'
         for key, name, avatar, criterion in FD_PERSONAS
     )
     rows = []
@@ -10584,27 +10594,19 @@ def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages
     from the Research Library, one from the detached desk), then the two
     panes continuing as parallel scrollable shelves underneath. Falls back to
     a single Research pane when no desk is configured."""
-    head = (
-        '<div class="mirror-head">'
-        '<div class="dp-pane mc-lib" id="daily-passage-lib" hidden></div>'
-        f'<script id="passages-data-lib" type="application/json">{json_for_html(lib_passages)}</script>'
-    )
     body = (
         '<div class="mirror-grid">'
         '<div class="mirror-col mc-lib">'
         '<h2 class="mirror-h" id="library"><a href="#library">The Research Library</a></h2>'
         f'<p class="mirror-sub">{html.escape(library_meta)}</p>'
+        '<div class="dp-pane mc-lib" id="daily-passage-lib" hidden></div>'
+        f'<script id="passages-data-lib" type="application/json">{json_for_html(lib_passages)}</script>'
         '<div id="resume"></div>'
         '<section id="foryou" hidden></section>'
         f'{library_pane}'
         '</div>'
     )
     if hub_desk:
-        head += (
-            '<div class="dp-pane mc-adtech" id="daily-passage-adtech" hidden></div>'
-            f'<script id="passages-data-adtech" type="application/json">{json_for_html(adtech_passages)}</script>'
-            '</div>'
-        )
         desk_pane = _pane_grid_html(hub_desk["cards"], hub_desk.get("cats") or [],
                                     placeholder=f'Search {hub_desk["title"]}…')
         body += (
@@ -10612,14 +10614,14 @@ def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages
             f'<h2 class="mirror-h"><a href="{html.escape(hub_desk["href"], quote=True)}">'
             f'{html.escape(hub_desk["title"])}</a></h2>'
             f'<p class="mirror-sub">{html.escape(hub_desk["meta"])}</p>'
+            '<div class="dp-pane mc-adtech" id="daily-passage-adtech" hidden></div>'
+            f'<script id="passages-data-adtech" type="application/json">{json_for_html(adtech_passages)}</script>'
             f'{desk_pane}'
             f'<a class="mirror-more" href="{html.escape(hub_desk["href"], quote=True)}">'
             f'Enter the full desk →</a></div>'
         )
-    else:
-        head += '</div>'
     body += '</div>'
-    return f'<section class="mirror-spread">{head}{body}</section>'
+    return f'<section class="mirror-spread">{body}</section>'
 
 
 def _scroll_card_html(kicker, title, meta, href, scene_kind="pamphlet"):
