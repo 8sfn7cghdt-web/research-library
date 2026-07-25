@@ -64,8 +64,10 @@ FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='
 # require — relative paths are ignored by them.
 SITE_URL = "https://calvincollins.xyz"
 OG_IMAGE = "machine-humanities-homepage.png"  # source lives in corpus-app/; copied into out/ at build time
-HERO_IMAGE = OG_IMAGE
-USE_HERO_IMAGE = True  # Use the Machine Humanities homepage visual; flip to False for the engraved lintel SVG.
+TOP_HEADER_IMAGE = OG_IMAGE
+HERO_IMAGE = "divine-hero-agent-logo.png"
+USE_TOP_HEADER_IMAGE = True
+USE_HERO_IMAGE = True  # Use the Divine Hero Agent mascot; flip to False for the engraved lintel SVG.
 
 # Open Graph + Twitter card tags so a shared link renders a rich preview with an
 # image. The result is passed as a VALUE into each template's .format() (never as
@@ -863,17 +865,37 @@ def hero_svg():
     )
 
 
+def embedded_image(filename, class_name, alt):
+    """Embed a project image as a data URI so index.html remains self-contained."""
+    img = HERE / filename
+    if not img.exists():
+        return ""
+    mime = mimetypes.guess_type(img.name)[0] or "image/png"
+    b64 = base64.b64encode(img.read_bytes()).decode("ascii")
+    return (f"<img class='{html.escape(class_name, quote=True)}' "
+            f"src='data:{mime};base64,{b64}' "
+            f"alt='{html.escape(alt, quote=True)}' decoding='async'>")
+
+
+def top_header_art():
+    """The full-width Machine Humanities visual that opens the home page."""
+    if not USE_TOP_HEADER_IMAGE:
+        return ""
+    img = embedded_image(TOP_HEADER_IMAGE, "top-header-img", "Machine Humanities reading room")
+    return f'<div class="top-header-art">{img}</div>' if img else ""
+
+
+def brand_logo_art():
+    return embedded_image(HERO_IMAGE, "mh-logo", "Divine Hero Agent")
+
+
 def hero_art():
-    """The library hero. When USE_HERO_IMAGE is on, embeds HERO_IMAGE if present;
-    otherwise uses the engraved lintel SVG. The image is base64-embedded so
-    index.html stays self-contained."""
+    """The library hero. When USE_HERO_IMAGE is on, embeds the mascot image;
+    otherwise uses the engraved lintel SVG."""
     if USE_HERO_IMAGE:
-        img = HERE / HERO_IMAGE
-        if img.exists():
-            mime = mimetypes.guess_type(img.name)[0] or "image/png"
-            b64 = base64.b64encode(img.read_bytes()).decode("ascii")
-            return (f"<img class='hero-img' src='data:{mime};base64,{b64}' "
-                    "alt='Machine Humanities' decoding='async'>")
+        img = embedded_image(HERO_IMAGE, "hero-img mascot-img", "Divine Hero Agent")
+        if img:
+            return img
     return hero_svg()
 
 
@@ -1123,6 +1145,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 #content h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; }
 #content a { color: var(--accent); text-underline-offset: .18em; overflow-wrap: anywhere; }
 #content a:hover { text-decoration-thickness: 1.5px; }
+#content em, #content strong { overflow-wrap: anywhere; }
 /* injected chapter feature well: ruled mono byline + drop cap on the opening paragraph */
 #content .ch-byline { font-family: var(--mono); font-size: .68rem; font-weight: 500;
   text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums;
@@ -3173,8 +3196,9 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 {overture}
+{top_header}
 <div class="masthead">
-  <span class="mh-brand">calvincollins · xyz</span>
+  <span class="mh-brand">{brand_logo}<span>calvincollins · xyz</span></span>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -4031,9 +4055,15 @@ LIBRARY_CSS = """
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+.top-header-art { width: 100%; background: #0f0e0c; border-bottom: 1px solid var(--text); overflow: hidden; }
+.top-header-img { width: 100%; height: clamp(150px, 22vw, 315px); object-fit: cover; object-position: center;
+  display: block; filter: saturate(.9) contrast(1.02); }
 .masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
   justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
   color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
+.mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; }
+.mh-logo { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; background: #0f0e0c;
+  border: 1px solid var(--border); box-shadow: var(--shadow-1); flex: 0 0 auto; }
 .mh-nav { display: flex; gap: 1.3rem; }
 .mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
 .mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent);
@@ -4160,9 +4190,11 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
 .hero-text { flex: 1.1; }
-.hero-art { flex: 1; min-width: 0; color: var(--text); }
+.hero-art { flex: .55; min-width: 0; color: var(--text); display: flex; justify-content: center; }
 .hero-art svg { width: 100%; height: auto; display: block; }
 .hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
+.hero-art .mascot-img { width: min(100%, 285px); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2); }
 [data-theme="dark"] .hero-art .hero-core { fill: #d98055; }
 [data-theme="dark"] .hero-art .hero-ground { fill: #eae6db; }
 .kicker { font-family: var(--sans); font-size: .72rem; text-transform: uppercase;
@@ -4256,6 +4288,8 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 @media (max-width: 760px) {
   header { flex-direction: column-reverse; gap: 1.2rem; padding-top: 1.6rem; }
   .hero-art { width: 100%; }
+  .top-header-img { height: 150px; }
+  .hero-art .mascot-img { width: min(72vw, 270px); }
 }
 @media (prefers-reduced-motion: reduce) {
   /* every selector this constant transforms or draws, rest AND hover: */
@@ -5965,8 +5999,9 @@ def grade_native_forecast(d, res):
             band = _prob_band({"probability_range": p.get("prob", "")})
             prob = (band[0] + band[1]) / 2 if band else 50.0
         hit = ((p.get("pick_scenario") or p.get("pick", "")).strip().casefold() == wkey)
+        pkey = _persona_key(p)
         graded["profiles"].append({
-            "persona": _persona_key(p), "name": p.get("name", ""),
+            "persona": pkey, "name": _persona_agent_name(pkey, p.get("name", "")),
             "avatar": p.get("avatar", "🎯"), "pick": p.get("pick", ""),
             "flag": p.get("flag", ""), "prob": float(prob),
             "hit": hit, "brier": _brier(float(prob), hit),
@@ -6018,7 +6053,7 @@ def build_forecast_ledger(native_items, markets):
     - pending: open positions, native first by grade date, then research by horizon
     native_items are manifest entries annotated with _graded (grade_native_forecast
     output) when resolved; native_data maps slug → full data dict."""
-    personas = {k: {"key": k, "name": n, "avatar": a, "criterion": c,
+    personas = {k: {"key": k, "name": _persona_agent_name(k, n), "avatar": a, "criterion": c,
                     "graded": 0, "hits": 0, "briers": [], "calls": []}
                 for k, n, a, c in FD_PERSONAS}
     calls, pending = [], []
@@ -6042,8 +6077,9 @@ def build_forecast_ledger(native_items, markets):
                       "result": g["winner"], "result_flag": g.get("winner_flag", ""),
                       "hit": c["hit"], "brier": c["brier"], "date": g.get("resolved", "")})
         for p in g["profiles"]:
-            entry = personas.setdefault(p["persona"], {
-                "key": p["persona"], "name": p["name"], "avatar": p["avatar"],
+            pkey = p["persona"]
+            entry = personas.setdefault(pkey, {
+                "key": pkey, "name": _persona_agent_name(pkey, p["name"]), "avatar": p["avatar"],
                 "criterion": "", "graded": 0, "hits": 0, "briers": [], "calls": []})
             entry["graded"] += 1
             entry["hits"] += 1 if p["hit"] else 0
@@ -6051,7 +6087,7 @@ def build_forecast_ledger(native_items, markets):
             entry["calls"].append({"market": f.get("title", f.get("slug", "")),
                                    "pick": p["pick"], "flag": p.get("flag", ""),
                                    "prob": p["prob"], "hit": p["hit"], "brier": p["brier"]})
-            calls.append({"caller": entry["name"], "avatar": p["avatar"], "kind": "persona",
+            calls.append({"caller": entry["name"], "avatar": p["avatar"], "kind": "persona", "key": pkey,
                           "market": f.get("title", f.get("slug", "")),
                           "href": f.get("file") or f"forecast/{f.get('slug', '')}.html",
                           "call": p["pick"], "flag": p.get("flag", ""), "prob": p["prob"],
@@ -6086,8 +6122,9 @@ def build_forecast_ledger(native_items, markets):
                 prob = (band[0] + band[1]) / 2 if band else 50.0
             hit = ((p.get("pick_scenario") or p.get("pick", "")).strip().casefold() == wkey)
             brier = _brier(float(prob), hit)
-            entry = personas.setdefault(_persona_key(p), {
-                "key": _persona_key(p), "name": p.get("name", ""),
+            pkey = _persona_key(p)
+            entry = personas.setdefault(pkey, {
+                "key": pkey, "name": _persona_agent_name(pkey, p.get("name", "")),
                 "avatar": p.get("avatar", "🎯"), "criterion": "",
                 "graded": 0, "hits": 0, "briers": [], "calls": []})
             entry["graded"] += 1
@@ -6096,7 +6133,7 @@ def build_forecast_ledger(native_items, markets):
             entry["calls"].append({"market": m["title"], "pick": p.get("pick", ""),
                                    "flag": p.get("flag", ""), "prob": float(prob),
                                    "hit": hit, "brier": brier})
-            calls.append({"caller": entry["name"], "avatar": entry["avatar"], "kind": "persona",
+            calls.append({"caller": entry["name"], "avatar": entry["avatar"], "kind": "persona", "key": pkey,
                           "market": m["title"], "href": m["href"],
                           "call": p.get("pick", ""), "flag": p.get("flag", ""), "prob": float(prob),
                           "result": r["name"], "result_flag": "",
@@ -6236,7 +6273,8 @@ def _fd_bet_rows(native_items, markets, native_data):
             pp = p.get("prob_num")
             if q is None or not isinstance(pp, (int, float)):
                 continue
-            rows.append({"key": _persona_key(p), "name": p.get("name", ""),
+            pkey = _persona_key(p)
+            rows.append({"key": pkey, "name": _persona_agent_name(pkey, p.get("name", "")),
                          "avatar": p.get("avatar", "🎯"), "market": title, "href": href,
                          "pick": pick, "flag": p.get("flag", ""), "p": float(pp), "q": float(q),
                          "conf": p.get("confidence", "medium"),
@@ -6255,7 +6293,8 @@ def _fd_bet_rows(native_items, markets, native_data):
                 pp = (band[0] + band[1]) / 2 if band else None
             if q is None or not isinstance(pp, (int, float)):
                 continue
-            rows.append({"key": _persona_key(p), "name": p.get("name", ""),
+            pkey = _persona_key(p)
+            rows.append({"key": pkey, "name": _persona_agent_name(pkey, p.get("name", "")),
                          "avatar": p.get("avatar", "🎯"), "market": m["title"], "href": m["href"],
                          "pick": pick, "flag": p.get("flag", ""), "p": float(pp), "q": float(q),
                          "conf": p.get("confidence", "medium"),
@@ -6279,7 +6318,7 @@ def build_book(native_items, markets, native_data):
                 "bankroll": FD_BANKROLL_START, "pnl": 0.0, "staked": 0.0,
                 "settled": 0, "wins": 0, "passes": 0, "biggest": None,
                 "bets": [], "open": [], "at_risk": 0.0}
-    accounts = {k: _seed(k, n, a) for k, n, a, c in FD_PERSONAS}
+    accounts = {k: _seed(k, _persona_agent_name(k, n), a) for k, n, a, c in FD_PERSONAS}
 
     def acct(row):
         return accounts.setdefault(row["key"], _seed(row["key"], row["name"], row["avatar"]))
@@ -6469,7 +6508,7 @@ FORECAST_PAGE_CSS = """
 [data-theme="dark"] .fd-kicker { color: #4ade80; }
 [data-theme="dark"] .fd-kicker::before { background: #4ade80; }
 .fd-name { font-family: var(--display); font-weight: 600; font-size: clamp(2.4rem, 6vw, 4rem);
-  line-height: .98; letter-spacing: -.01em; margin: 0 0 .55rem; }
+  line-height: .98; letter-spacing: 0; margin: 0 0 .55rem; }
 .fd-name::after { content: ""; display: block; width: 148px; height: 8px; margin: .65rem auto 0; border-radius: 0;
   background:
     linear-gradient(#15803d, #15803d) 0 0 / 28px 8px no-repeat,
@@ -6633,13 +6672,47 @@ FORECAST_PAGE_CSS = """
 .fdm-cmp { color: var(--fdblue); text-decoration: none; }
 .fdm-cmp:hover { text-decoration: underline; }
 .fdm-roster-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .55rem; }
+.fd-agent-mascot { --agent-color: #9aa1af; position: relative; display: inline-block; flex: none;
+  width: 44px; height: 44px; color: var(--agent-color); background: #0c1117; border: 1px solid var(--agent-color);
+  border-radius: 2px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
+.fd-agent-mascot::before, .fd-agent-mascot::after { content: ""; position: absolute; box-sizing: border-box; }
+.fd-agent-mark { position: absolute; right: 3px; bottom: 3px; z-index: 2; font-family: var(--fdmono);
+  font-size: .52rem; font-weight: 800; line-height: 1; color: #0c1117; background: var(--agent-color);
+  padding: 2px 3px; border-radius: 1px; letter-spacing: 0; }
+.fd-agent-mini { width: 38px; height: 38px; }
+.fd-agent-card { width: 46px; height: 46px; }
+.fd-agent-title { width: 54px; height: 54px; vertical-align: middle; margin-right: .55rem; }
+.fd-agent-title .fd-agent-mark { font-size: .62rem; }
+.fd-profile-name { display: inline-flex; align-items: center; justify-content: center; gap: .2rem; flex-wrap: wrap; }
+.fd-profile-name .txt { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+.fd-profile-name .role { font-family: var(--sans); font-size: .78rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); margin-top: .3rem; }
+.fdmas-market-reader::before { left: 10px; top: 11px; width: 23px; height: 17px; border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor; background: linear-gradient(135deg, transparent 54%, currentColor 55%, currentColor 61%, transparent 62%); opacity: .9; }
+.fdmas-market-reader::after { left: 14px; top: 19px; width: 18px; height: 2px; background: currentColor; transform: rotate(-18deg); }
+.fdmas-quant::before { left: 10px; top: 9px; width: 24px; height: 24px; border: 1px solid currentColor;
+  background: radial-gradient(currentColor 1.4px, transparent 1.8px) 2px 2px / 8px 8px; opacity: .9; }
+.fdmas-quant::after { left: 21px; top: 8px; width: 2px; height: 26px; background: currentColor; box-shadow: -9px 9px 0 currentColor, 9px 9px 0 currentColor; opacity: .55; }
+.fdmas-historian::before { left: 12px; top: 9px; width: 20px; height: 25px; border: 2px solid currentColor; background: #0c1117; box-shadow: -4px 4px 0 #0c1117, -5px 5px 0 currentColor; }
+.fdmas-historian::after { left: 17px; top: 16px; width: 11px; height: 2px; background: currentColor; box-shadow: 0 6px 0 currentColor; opacity: .8; }
+.fdmas-path-reader::before { left: 9px; top: 25px; width: 27px; height: 2px; background: currentColor; transform: rotate(-25deg); transform-origin: left center; }
+.fdmas-path-reader::after { left: 10px; top: 25px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 18px -9px 0 currentColor; }
+.fdmas-talisman::before { left: 11px; top: 9px; width: 23px; height: 23px; background: currentColor;
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 56%, 80% 96%, 50% 72%, 20% 96%, 32% 56%, 2% 35%, 39% 35%); }
+.fdmas-talisman::after { left: 20px; top: 4px; width: 4px; height: 34px; background: currentColor; opacity: .22; }
+.fdmas-contrarian::before { inset: 8px; border: 2px solid currentColor; background: linear-gradient(135deg, currentColor 0 46%, transparent 47%); opacity: .8; }
+.fdmas-contrarian::after { left: 23px; top: 12px; width: 7px; height: 7px; background: #0c1117; border: 2px solid currentColor; transform: rotate(45deg); }
+.fdmas-prophet::before { left: 14px; top: 10px; width: 17px; height: 23px; border: 2px solid currentColor; border-radius: 9px 9px 3px 3px; }
+.fdmas-prophet::after { left: 20px; top: 16px; width: 5px; height: 9px; background: currentColor; box-shadow: 0 -10px 0 -2px currentColor; opacity: .9; }
 .fdm-card { display: flex; flex-direction: column; align-items: center; gap: .2rem; text-align: center;
   text-decoration: none; color: inherit; background: var(--fdcard); border: 1px solid var(--fdline);
-  border-top: 3px solid var(--fdmut); border-radius: 2px; padding: .6rem .4rem .55rem;
+  border-top: 3px solid var(--fdmut); border-radius: 2px; padding: .65rem .35rem .6rem;
   transition: transform .12s var(--ease), border-color .12s var(--ease); }
 .fdm-card:hover { transform: translateY(-2px); border-color: var(--fdblue); }
 .fdm-av { font-size: 1.3rem; line-height: 1; }
-.fdm-nm { font-family: var(--sans); font-size: .64rem; font-weight: 700; line-height: 1.2; }
+.fdm-nm { font-family: var(--sans); font-size: .66rem; font-weight: 800; line-height: 1.2; margin-top: .1rem; }
+.fdm-role { font-family: var(--sans); font-size: .52rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--fdmut); line-height: 1.15; }
 .fdm-rec { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
 .fdm-bank { font-family: var(--fdmono); font-size: .64rem; color: var(--fdgold); font-variant-numeric: tabular-nums; }
 @media (max-width: 720px) { .fdm-roster-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -6673,6 +6746,8 @@ FORECAST_PAGE_CSS = """
 .fdt-p-av { font-size: 1.5rem; line-height: 1; background: #0c1117; border: 1px solid var(--fdline);
   border-radius: 2px; padding: .45rem .5rem; }
 .fdt-p-nm { font-family: var(--sans); font-weight: 800; font-size: .98rem; }
+.fdt-p-role { font-family: var(--sans); font-size: .58rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--fdmut); margin-top: .12rem; }
 .fdt-p-crit { font-family: var(--serif); font-style: italic; font-size: .76rem; color: var(--fdmut); line-height: 1.4; margin-top: .1rem; }
 .fdt-p-rec { margin-left: auto; text-align: right; white-space: nowrap; }
 .fdt-p-rec .r { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext);
@@ -7178,7 +7253,8 @@ FDT_SERIES_COLORS = {
 
 def _fdt_series_color(call):
     if call["kind"] == "persona":
-        key = re.sub(r"[^a-z0-9]+", "-", call["caller"].casefold().removeprefix("the ")).strip("-")
+        key = call.get("key") or FD_PERSONA_ALIASES.get(call.get("caller", "").casefold())
+        key = key or re.sub(r"[^a-z0-9]+", "-", call["caller"].casefold().removeprefix("the ")).strip("-")
         return FDT_SERIES_COLORS.get(key, "#9aa1af")
     return FDT_SERIES_COLORS.get(call["kind"], "#9aa1af")
 
@@ -7804,6 +7880,8 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
 .fdd-tr-av { font-size: 1.6rem; line-height: 1; background: #0c1117; border: 1px solid var(--fdline);
   border-radius: 2px; padding: .5rem .55rem; }
 .fdd-tr-nm { font-family: var(--sans); font-weight: 800; font-size: 1rem; }
+.fdd-tr-role { font-family: var(--sans); font-size: .58rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--fdmut); margin-top: .12rem; }
 .fdd-tr-crit { font-family: var(--serif); font-style: italic; font-size: .78rem; color: var(--fdmut); line-height: 1.4; margin-top: .15rem; }
 .fdd-tr-call { margin-left: auto; text-align: center; max-width: 11rem; }
 .fdd-tr-call .t { line-height: 1.25; }
@@ -7948,6 +8026,8 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
 .cmp-persona a { display: flex; flex-direction: column; align-items: center; gap: .3rem; text-decoration: none; color: inherit; }
 .cmp-av { font-size: 1.5rem; line-height: 1; }
 .cmp-nm { font-family: var(--sans); font-weight: 800; font-size: .82rem; color: var(--fdtext); }
+.cmp-role { font-family: var(--sans); font-size: .56rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--fdmut); }
 .cmp-persona a:hover .cmp-nm { color: var(--fdblue); }
 .cmp-crit, .cmp-prose, .cmp-sig { display: block; font-family: var(--serif); font-style: italic; font-size: .88rem;
   line-height: 1.55; color: #c6d0e0; }
@@ -11761,6 +11841,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         css=library_css,
         favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(active="index.html"),
+        top_header=top_header_art(),
+        brand_logo=brand_logo_art(),
         stats=stats,
         hero=hero_art(),
         ticker=ticker_html,
