@@ -10104,7 +10104,7 @@ CONNECTIONS_CSS = """
 #cx-svg.dimmed .cx-node:not(.hot):not(.adj) .cx-label { opacity: 0; }
 #cx-info { position: absolute; left: 1rem; bottom: 1rem; max-width: min(360px, 72%); background: var(--bg);
   border: 1px solid var(--border); border-radius: 0; padding: .8rem 1rem; box-shadow: var(--shadow-2);
-  opacity: 0; transition: opacity .15s ease; pointer-events: none; }
+  opacity: 1; transition: opacity .15s ease; pointer-events: none; }
 #cx-info.show { opacity: 1; }
 #cx-info .cx-i-t { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
 #cx-info .cx-i-n { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .35rem 0 .55rem; line-height: 1.45; }
@@ -10114,6 +10114,7 @@ CONNECTIONS_CSS = """
 #cx-info .cx-i-link { font-family: var(--sans); font-size: .74rem; font-weight: 700; color: var(--text); }
 #cx-info .cx-i-why { font-family: var(--sans); font-size: .72rem; color: var(--muted); line-height: 1.4; }
 #cx-info .cx-i-cta { display: block; margin-top: .65rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+#cx-info .cx-i-help { display: block; font-family: var(--sans); font-size: .72rem; color: var(--muted); line-height: 1.45; }
 .cx-hint { text-align: center; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: .9rem 0 0; }
 .cx-foot { max-width: 1120px; margin: 2rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
 .cx-foot .colophon { font-family: var(--mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
@@ -10133,8 +10134,15 @@ CONNECTIONS_JS = r"""
   var nodes = [].slice.call(svg.querySelectorAll('.cx-node'));
   var edges = [].slice.call(svg.querySelectorAll('.cx-edge'));
   function esc(s) { var d = document.createElement('div'); d.textContent = s == null ? '' : s; return d.innerHTML; }
+  function renderEmpty() {
+    if (!info) return;
+    info.innerHTML = '<span class="cx-i-t">Why this connection exists</span>'
+      + '<span class="cx-i-n">Pick a work on the map.</span>'
+      + '<span class="cx-i-help">This panel will explain each linked work in simple terms.</span>';
+    info.classList.add('show');
+  }
   function clear() { svg.classList.remove('dimmed'); nodes.forEach(function (n) { n.classList.remove('hot', 'adj'); });
-    edges.forEach(function (e) { e.classList.remove('lit'); }); if (info) info.classList.remove('show'); }
+    edges.forEach(function (e) { e.classList.remove('lit'); }); renderEmpty(); }
   function focusNode(n) {
     var slug = n.getAttribute('data-slug'), nbr = (n.getAttribute('data-nbr') || '').split(' ').filter(Boolean);
     svg.classList.add('dimmed');
@@ -10162,6 +10170,7 @@ CONNECTIONS_JS = r"""
     n.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(n); } });
   });
   svg.addEventListener('mouseleave', clear);
+  renderEmpty();
 })();
 """
 
