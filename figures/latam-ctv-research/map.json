@@ -1,0 +1,20 @@
+[
+  { "file": "00_Six_Easy_Pieces.md", "after": "Follow one ad into a Brazilian living room", "snippet": "scene_latam_five_doors_living_room.html" },
+  { "file": "01_Origins_History.md", "after": "Globo and Televisa achieved their dominance through early-stage alliances with the state", "snippet": "scene_latam_free_air_century.html" },
+  { "file": "01_Origins_History.md", "after": "Global CTV ad platforms continued landing through 2025", "snippet": "scene_latam_roku_brazil_plumbing.html" },
+  { "file": "02_Market_Size_Growth.md", "after": "1.2 CTV ad spend specifically", "snippet": "scene_latam_sizing_fork.html" },
+  { "file": "02_Market_Size_Growth.md", "after": "4.2 Headwinds", "snippet": "scene_latam_headwinds.html" },
+  { "file": "03_Supply_Demand_Ecosystem.md", "after": "1.1 The shape of the supply side", "snippet": "scene_latam_supply_stack.html" },
+  { "file": "03_Supply_Demand_Ecosystem.md", "after": "5.1 Who spends", "snippet": "scene_latam_retail_demand.html" },
+  { "file": "04_Measurement_Identity.md", "after": "Per-country currency snapshot", "snippet": "scene_latam_currency_split.html" },
+  { "file": "04_Measurement_Identity.md", "after": "7. Attribution & Outcomes", "snippet": "scene_latam_clean_room_loop.html" },
+  { "file": "05_Connectivity_Devices.md", "after": "1.1 The regional picture", "snippet": "scene_latam_mobile_onramp_tv_surface.html" },
+  { "file": "05_Connectivity_Devices.md", "after": "4.4 Free-to-air persistence", "snippet": "scene_latam_dtv_plus_world_cup.html" },
+  { "file": "06_Regulation_Privacy.md", "after": "Claim 1.2", "snippet": "scene_latam_privacy_children_carveout.html" },
+  { "file": "06_Regulation_Privacy.md", "after": "Claim 6.1", "snippet": "scene_latam_chile_law_under_construction.html" },
+  { "file": "07_Fraud_Quality_Pricing.md", "after": "2. The Fraud Baseline", "snippet": "scene_latam_data_center_fraud.html" },
+  { "file": "07_Fraud_Quality_Pricing.md", "after": "9. Frequency-Capping & Ad-Load Quality", "snippet": "scene_latam_frequency_fatigue.html" },
+  { "file": "08_Players_Competition.md", "after": "Key Claim 2.1", "snippet": "scene_latam_netflix_five_dsps.html" },
+  { "file": "08_Players_Competition.md", "after": "6. Retail Media Converging Into CTV", "snippet": "scene_latam_mercado_ctv_aggregator.html" },
+  { "file": "Future_Trajectory.md", "after": "Base Rates", "snippet": "scene_latam_three_scenario_paths.html" }
+]
