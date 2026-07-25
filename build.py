@@ -22,6 +22,7 @@ import argparse
 import base64
 import hashlib
 import html
+import io
 import json
 import math
 import mimetypes
@@ -68,7 +69,7 @@ TOP_HEADER_IMAGE = OG_IMAGE
 HERO_IMAGE = "divine-hero-agent-logo-v3.png"
 RESEARCH_HERO_IMAGE = "research-hero-agent-logo-v1.png"
 ADTECH_HERO_IMAGE = "adtech-hero-agent-logo-v1.png"
-SITE_IMAGE_ASSETS = (OG_IMAGE, RESEARCH_HERO_IMAGE, ADTECH_HERO_IMAGE)
+SITE_IMAGE_ASSETS = (OG_IMAGE, HERO_IMAGE, RESEARCH_HERO_IMAGE, ADTECH_HERO_IMAGE)
 USE_TOP_HEADER_IMAGE = True
 USE_HERO_IMAGE = True  # Use the Divine Hero Agent mascot; flip to False for the engraved lintel SVG.
 
@@ -831,10 +832,13 @@ def card_cover(slug, title="", palette=None, cat=None):
     img = find_cover_image(slug)
     if img is None:
         return cover_svg(slug, palette, cat)
-    mime = mimetypes.guess_type(img.name)[0] or "image/png"
-    b64 = base64.b64encode(img.read_bytes()).decode("ascii")
+    # Cards are ~260px wide; embedding the 1400px source 36 times is what made
+    # the home page weigh 20MB. Cap at 2x the display width.
+    mime, data = _fit_image_bytes(img, 560, 78)
+    b64 = base64.b64encode(data).decode("ascii")
     alt = html.escape(title or slug)
-    return f'<img class="cover-photo" src="data:{mime};base64,{b64}" alt="{alt}" decoding="async">'
+    return (f'<img class="cover-photo" src="data:{mime};base64,{b64}" alt="{alt}" '
+            f'decoding="async" loading="lazy">')
 
 
 def hero_svg():
@@ -868,37 +872,133 @@ def hero_svg():
     )
 
 
-def embedded_image(filename, class_name, alt):
-    """Embed a project image as a data URI so index.html remains self-contained."""
+_EMBED_CACHE = {}
+
+
+def _fit_image_bytes(path, max_px, quality):
+    """Downscale a source image to the size it is actually displayed at and
+    re-encode it, so a 30px logo doesn't ship as 750KB of base64. Returns
+    (mime, bytes). Falls back to the untouched file if Pillow isn't available
+    or the image is already small enough."""
+    key = (str(path), max_px, quality)
+    if key in _EMBED_CACHE:
+        return _EMBED_CACHE[key]
+    raw = path.read_bytes()
+    mime = mimetypes.guess_type(path.name)[0] or "image/png"
+    if max_px:
+        try:
+            from PIL import Image
+            with Image.open(io.BytesIO(raw)) as im:
+                im.load()
+                has_alpha = im.mode in ("RGBA", "LA") or (im.mode == "P" and "transparency" in im.info)
+                if max(im.size) > max_px:
+                    im.thumbnail((max_px, max_px), Image.LANCZOS)
+                buf = io.BytesIO()
+                if has_alpha:
+                    im.convert("RGBA").save(buf, format="PNG", optimize=True)
+                    mime = "image/png"
+                else:
+                    im.convert("RGB").save(buf, format="JPEG", quality=quality,
+                                           optimize=True, progressive=True)
+                    mime = "image/jpeg"
+                if buf.tell() < len(raw):
+                    raw = buf.getvalue()
+        except Exception:
+            pass  # keep the original bytes; a heavy page beats a broken one
+    _EMBED_CACHE[key] = (mime, raw)
+    return mime, raw
+
+
+_URI_RE = re.compile(r"data:image/(png|jpe?g|webp);base64,([A-Za-z0-9+/]+={0,2})")
+_URI_CACHE = {}
+
+
+def shrink_data_uris(text, max_px=1600, quality=80, min_bytes=400_000):
+    """Cap the size of base64 images embedded in corpus prose.
+
+    The scene illustrations are baked into the chapter markdown, and the current
+    ones are already sized for the reader column (~1100px), so this is a guard
+    rather than a routine pass: anything under `min_bytes` is skipped without
+    being decoded. Source files are never touched."""
+    if not text:
+        return text
+    try:
+        from PIL import Image
+    except Exception:
+        return text
+
+    def repl(m):
+        b64 = m.group(2)
+        if len(b64) * 3 // 4 < min_bytes:
+            return m.group(0)
+        key = hashlib.sha1(b64.encode("ascii")).hexdigest()
+        if key in _URI_CACHE:
+            return _URI_CACHE[key]
+        try:
+            raw = base64.b64decode(b64)
+            with Image.open(io.BytesIO(raw)) as im:
+                im.load()
+                if max(im.size) > max_px:
+                    im.thumbnail((max_px, max_px), Image.LANCZOS)
+                buf = io.BytesIO()
+                im.convert("RGB").save(buf, format="JPEG", quality=quality,
+                                       optimize=True, progressive=True)
+            if buf.tell() >= len(raw):
+                out = m.group(0)
+            else:
+                out = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode("ascii")
+        except Exception:
+            out = m.group(0)
+        _URI_CACHE[key] = out
+        return out
+
+    return _URI_RE.sub(repl, text)
+
+
+def embedded_image(filename, class_name, alt, max_px=None, quality=82, sizing=""):
+    """Embed a project image as a data URI so the page stays self-contained.
+
+    `max_px` caps the embedded pixel dimensions — pass the largest size the
+    image is ever *displayed* at (times 2 for retina). `sizing` supplies the
+    intrinsic width/height attributes that stop the image from reflowing the
+    page as it decodes."""
     img = HERE / filename
     if not img.exists():
         return ""
-    mime = mimetypes.guess_type(img.name)[0] or "image/png"
-    b64 = base64.b64encode(img.read_bytes()).decode("ascii")
+    mime, data = _fit_image_bytes(img, max_px, quality)
+    b64 = base64.b64encode(data).decode("ascii")
     return (f"<img class='{html.escape(class_name, quote=True)}' "
             f"src='data:{mime};base64,{b64}' "
-            f"alt='{html.escape(alt, quote=True)}' decoding='async'>")
+            f"alt='{html.escape(alt, quote=True)}' decoding='async'{sizing}>")
 
 
 def top_header_art():
     """The full-width Machine Humanities visual that opens the home page."""
     if not USE_TOP_HEADER_IMAGE:
         return ""
-    img = embedded_image(TOP_HEADER_IMAGE, "top-header-img", "Machine Humanities reading room")
+    img = embedded_image(TOP_HEADER_IMAGE, "top-header-img", "Machine Humanities reading room",
+                         max_px=1800, quality=80, sizing=" width='1800' height='693'")
     return f'<div class="top-header-art">{img}</div>' if img else ""
 
 
 def brand_logo_art():
-    return embedded_image(HERO_IMAGE, "mh-logo", "Divine Hero Agent")
+    # Rendered at 30px in the masthead — embed at 2x, not at the source's 640px.
+    return embedded_image(HERO_IMAGE, "mh-logo", "Divine Hero Agent",
+                          max_px=72, sizing=" width='30' height='30'")
 
 
 def section_agent_art(kind="library", compact=False):
     """Reuse the homepage mascot with section-specific framing so the agents feel like siblings."""
-    accent = "library" if kind == "library" else "adtech"
+    # Namespaced accent class: a bare "library" collides with the site-wide
+    # .library container rule and silently pads the chip.
+    accent = "agent-library" if kind == "library" else "agent-adtech"
     label = "Research agent" if kind == "library" else "Ad Tech agent"
     filename = RESEARCH_HERO_IMAGE if kind == "library" else ADTECH_HERO_IMAGE
     wrap = "agent-chip compact" if compact else "agent-chip"
-    img = embedded_image(filename, f"hero-img mascot-img agent-portrait {accent}", label)
+    # 96px in the mirror spread, 285px on a desk front — embed at 2x either way.
+    box = 96 if compact else 285
+    img = embedded_image(filename, f"hero-img mascot-img agent-portrait {accent}", label,
+                         max_px=box * 2, sizing=f" width='{box}' height='{box}'")
     if not img:
         return hero_svg()
     return (
@@ -909,11 +1009,29 @@ def section_agent_art(kind="library", compact=False):
     )
 
 
+def hero_cta_html(hub_desk=None):
+    """The home hero's entry points. The fold already carries the banner art and
+    the mascot; a third decorative plate here just pushed the library further
+    down, so this row sends people into the shelves instead."""
+    links = [('research.html', 'Enter the library', 'primary')]
+    if hub_desk:
+        links.append((hub_desk["href"], hub_desk["title"], ''))
+    links.append(('forecast.html', 'The Forecast Desk', ''))
+    out = []
+    for href, label, kind in links:
+        cls = "hero-cta-btn" + (" primary" if kind == 'primary' else "")
+        arrow = ' <span aria-hidden="true">→</span>' if kind == 'primary' else ''
+        out.append(f'<a class="{cls}" href="{html.escape(href, quote=True)}">'
+                   f'{html.escape(label)}{arrow}</a>')
+    return f'<div class="hero-cta">{"".join(out)}</div>'
+
+
 def hero_art():
-    """The library hero. When USE_HERO_IMAGE is on, embeds the mascot image;
+    """The home-page hero. When USE_HERO_IMAGE is on, embeds the Divine mascot image;
     otherwise uses the engraved lintel SVG."""
     if USE_HERO_IMAGE:
-        return section_agent_art("library")
+        return embedded_image(HERO_IMAGE, "hero-img mascot-img", "Divine Hero Agent",
+                              max_px=570, sizing=" width='285' height='285'")
     return hero_svg()
 
 
@@ -3241,7 +3359,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
     <h1>{site_title}</h1>
     <p class="tagline">{site_subtitle}</p>
     <p class="stats">{stats}</p>
-    {hero_scene}
+    {hero_cta}
   </div>
   <div class="hero-art">{hero}</div>
 </header>
@@ -3469,12 +3587,14 @@ SCENE_PLATE_CSS = """
   transform: rotate(-3deg); box-shadow: 0 8px 14px var(--sc-shadow); white-space: nowrap; }
 .scene-plate.band-scene { width: 164px; min-width: 164px; aspect-ratio: 4 / 3; }
 .scene-plate.hero-scene { max-width: 420px; margin: 1.1rem 0 0; }
-.scene-plate.section-scene { max-width: 640px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.section-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.25rem; }
 .scene-plate.feature-scene { margin: 0 0 1rem; }
 .scene-plate.article-scene, .scene-plate.edition-scene { max-width: 680px; margin: 0 auto 2rem; }
 .scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
 .scene-plate.reader-scene { aspect-ratio: 16 / 9; margin: 1rem 0 1.65rem; }
-.scene-plate.page-scene { max-width: 640px; margin: 1.05rem auto 1.35rem; }
+/* Section fronts share one banner ratio, so the numbers and the board sit near
+   the fold instead of below a half-screen of scenery. */
+.scene-plate.page-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.35rem; }
 .scene-plate.detail-scene { max-width: 680px; margin: 1rem auto 1.2rem; }
 .scene-ghost { --sc-accent: #9a2c1a; }
 [data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }
@@ -4247,11 +4367,11 @@ LIBRARY_CSS = """
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 .top-header-art { width: 100%; background: #0f0e0c; border-bottom: 1px solid var(--text); overflow: hidden; }
-.top-header-img { width: 100%; height: clamp(150px, 22vw, 315px); object-fit: cover; object-position: center;
+.top-header-img { width: 100%; height: clamp(140px, 18vw, 260px); object-fit: cover; object-position: center;
   display: block; filter: saturate(.9) contrast(1.02); }
-.masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
-  justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
-  color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
+.masthead { max-width: 1240px; margin: 0 auto; padding: .8rem 2rem; display: flex;
+  justify-content: space-between; align-items: center; gap: 1.4rem; font-family: var(--sans); font-size: .66rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .1em; border-bottom: 1px solid var(--text); }
 .mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; color: var(--muted);
   text-decoration: none; transition: color .2s ease; }
 .mh-brand:hover, .mh-brand:focus-visible { color: var(--accent); }
@@ -4261,8 +4381,12 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
 .mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo {
   transform: rotate(-7deg) scale(1.08); box-shadow: var(--shadow-2); }
-.mh-nav { display: flex; gap: 1.3rem; }
-.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
+/* Nav items break between links, never inside one — "AD TECH" and "THE GHOST OF
+   TIMES" used to split across two lines and leave the row ragged. */
+.mh-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .45rem 1.15rem; }
+.mh-brand { white-space: nowrap; }
+.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative;
+  white-space: nowrap; transition: color .2s ease; }
 .mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent);
   transform: scaleX(0); transform-origin: right; transition: transform .18s var(--ease); }
 .mh-nav a:hover { color: var(--accent); }
@@ -4389,20 +4513,37 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
 .hero-text { flex: 1.1; }
 .hero-art { flex: .55; min-width: 0; color: var(--text); display: flex; justify-content: center; }
 .hero-art svg { width: 100%; height: auto; display: block; }
-.hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
-.hero-art .mascot-img { width: min(100%, 285px); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
-  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2);
+/* :not(.mascot-img) so the square-plate radius doesn't out-specify the mascot's
+   circular crop below. */
+.hero-art .hero-img:not(.mascot-img) { width: 100%; height: auto; display: block; border-radius: 10px; }
+/* The mascot crop travels with the image, not with .hero-art — the section
+   agents live inside .agent-chip on the desk fronts and were rendering as
+   hard-edged cream squares on a dark page. */
+.mascot-img { aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  background: transparent; border: 0; box-shadow: var(--shadow-2); }
+.hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+.hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
+  padding: .78rem 1.25rem; white-space: nowrap;
+  transition: background-color .16s var(--ease), color .16s var(--ease),
+              border-color .16s var(--ease), transform .16s var(--ease); }
+.hero-cta-btn:hover, .hero-cta-btn:focus-visible { border-color: var(--text); transform: translateY(-2px); }
+.hero-cta-btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.hero-cta-btn.primary:hover, .hero-cta-btn.primary:focus-visible {
+  background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .agent-chip { display: inline-flex; flex-direction: column; align-items: center; gap: .7rem; }
-.agent-chip .agent-portrait { width: min(100%, 285px); }
+.agent-chip .agent-portrait { width: min(100%, 285px); height: auto;
+  animation: mhAgentFloat 7.5s ease-in-out infinite; transform-origin: 50% 58%; }
 .agent-chip-label { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .14em; padding: .42rem .78rem; border: 1px solid currentColor; background: var(--bg); }
-.agent-chip.library { color: #9a2c1a; }
-.agent-chip.adtech { color: #0d5b68; }
-[data-theme="dark"] .agent-chip.library { color: #d98055; }
-[data-theme="dark"] .agent-chip.adtech { color: #62aab8; }
-.agent-chip.compact { align-items: flex-start; gap: .55rem; }
-.agent-chip.compact .agent-portrait { width: 88px; box-shadow: var(--shadow-1); }
+.agent-chip.agent-library { color: #9a2c1a; }
+.agent-chip.agent-adtech { color: #0d5b68; }
+[data-theme="dark"] .agent-chip.agent-library { color: #d98055; }
+[data-theme="dark"] .agent-chip.agent-adtech { color: #62aab8; }
+.agent-chip.compact { align-items: center; gap: .6rem; }
+.agent-chip.compact .agent-portrait { width: 96px; box-shadow: var(--shadow-1); }
 .agent-chip.compact .agent-chip-label { font-size: .58rem; letter-spacing: .12em; padding: .34rem .56rem; }
 @keyframes mhAgentFloat {
   0%, 100% { transform: translateY(0) rotate(-1deg); filter: saturate(1.02) brightness(1); }
@@ -4518,7 +4659,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     transform: none !important;
     transition-duration: .01ms !important;
   }
-  .hero-art .mascot-img { animation: none !important; }
+  .hero-art .mascot-img, .agent-chip .agent-portrait { animation: none !important; }
   /* the nav underline keeps its scaleX states (transform none would show it at rest) — travel only is killed: */
   .mh-nav a::after, .mh-nav a:hover::after, .mh-nav a.active::after {
     transition-duration: .01ms !important;
@@ -10627,13 +10768,14 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
       <p class="dk-kicker">{kicker}</p>
       <h1 class="dk-name">{title}</h1>
       <p class="dk-motto">{subtitle}</p>
-      {scene}
       <div class="dk-folio">
         <span>{folio_left}</span>
         <span class="dk-folio-c">{stats}</span>
         <span>{folio_right}</span>
       </div>
     </div>
+    <div class="dk-agent">{hero}</div>
+    <div class="dk-scene">{scene}</div>
   </div>
 </header>
 {bands}
@@ -10643,6 +10785,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 {cards}
 </main>
 {quiz}
+{bottom_bands}
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">{epigraph}</p>
@@ -10657,9 +10800,21 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 DOMAIN_PAGE_CSS = """
 /* A detached domain front (the Ad Tech desk) — a working-desk nameplate signed
    in the Fingerprint's petrol teal, over the shared library card grid. */
-.dk-plate { display: block; max-width: 1080px; margin: 1.9rem auto 0; padding: 0 2rem; }
-.dk-hero { display: block; }
-.dk-copy { text-align: center; }
+/* 1120px to match every other section — the plate used to be 1080 and left a
+   20px stagger against the bands below it. */
+.dk-plate { display: block; max-width: 1120px; margin: 1.9rem auto 0; padding: 0 2rem; }
+/* Nameplate and numbers first, decoration second — the fold should tell you
+   what the desk holds, not just that it has a mascot. */
+.dk-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(160px, 220px);
+  align-items: center; gap: 2.4rem; }
+.dk-copy { text-align: center; min-width: 0; }
+.dk-agent { display: flex; justify-content: center; }
+.dk-agent .agent-chip { align-items: center; }
+.dk-agent .agent-portrait { width: min(100%, 200px); }
+/* Sits in the copy column so it lines up under the nameplate rather than
+   centring itself across the mascot too. */
+.dk-scene { grid-column: 1; margin: 1.5rem 0 0; min-width: 0; }
+.dk-scene .scene-plate { aspect-ratio: 21 / 9; max-width: none; margin: 0; }
 .dk-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
 .dk-kicker::before { content: ""; display: inline-block; width: 8px; height: 8px; background: var(--accent); margin-right: .5rem; }
@@ -10679,6 +10834,8 @@ DOMAIN_PAGE_CSS = """
 footer .colophon a { color: var(--accent); text-decoration: none; }
 footer .colophon a:hover { text-decoration: underline; }
 @media (max-width: 560px) {
+  .dk-hero { grid-template-columns: 1fr; }
+  .dk-agent { order: -1; }
   .dk-folio { font-size: .58rem; letter-spacing: .04em; }
   .dk-tools { padding: 0 1.2rem; }
   .dk-tool { padding: 1.05rem 1.1rem; }
@@ -10817,16 +10974,32 @@ HOME_MIRROR_CSS = """
 .dp-pane .dp-quote:hover, .dp-pane .dp-quote:focus-visible { border-top-color: var(--mc-accent, var(--accent)); }
 .dp-pane .dp-kicker, .dp-pane .dp-mark, .dp-pane .dp-cta { color: var(--mc-accent, var(--accent)); }
 .dp-pane .dp-quote:hover .dp-cta, .dp-pane .dp-quote:focus-visible .dp-cta { color: var(--bg); }
-.mirror-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2rem; align-items: start; }
+/* Three shared rows — masthead, passage, shelf — so both panes stay level. */
+.mirror-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2rem;
+  grid-template-rows: auto auto 1fr; align-items: start; }
+.mirror-col { display: grid; grid-row: 1 / -1; grid-template-rows: subgrid; row-gap: 0;
+  border-top: 3px solid var(--mc-accent, var(--accent)); padding-top: 1rem; min-width: 0; }
 .mirror-col #resume:empty { display: none; }
 .mirror-col #foryou { max-width: none; margin: .3rem 0 1rem; padding: 0; }
-.mirror-col { border-top: 3px solid var(--mc-accent, var(--accent)); padding-top: 1rem; min-width: 0; }
-.mirror-h { font-family: var(--display); font-weight: 600; font-size: 1.55rem; margin: 0; }
+/* Mascot beside the title rather than stacked above it: the two agents have
+   different natural heights and used to shove each column's title out of line. */
+.mirror-mast { display: flex; align-items: center; gap: 1rem; padding-bottom: 1.1rem; min-width: 0; }
+.mirror-id { min-width: 0; }
+.mirror-h { font-family: var(--display); font-weight: 600; font-size: 1.55rem; margin: 0;
+  line-height: 1.12; text-wrap: balance; }
 .mirror-h a { color: inherit; text-decoration: none; }
 .mirror-h a:hover { color: var(--mc-accent, var(--accent)); }
 .mirror-sub { font-family: var(--mono); font-size: .68rem; color: var(--muted); text-transform: uppercase;
-  letter-spacing: .06em; font-variant-numeric: tabular-nums; margin: .35rem 0 1.1rem; }
-.mirror-agent { margin: .05rem 0 1rem; }
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; margin: .4rem 0 0; line-height: 1.5; }
+.mirror-agent { flex: 0 0 auto; }
+.mirror-agent .agent-chip.compact { gap: 0; }
+/* In the spread the heading right next to the mascot already names the section,
+   so the boxed caption is just noise — keep it for the desk fronts, where the
+   agent stands on its own. */
+.mirror-agent .agent-chip-label { display: none; }
+.mirror-passage { min-width: 0; padding-bottom: 1.1rem; }
+.mirror-body { min-width: 0; display: flex; flex-direction: column; }
+.mirror-body .mirror-more { align-self: flex-start; margin-top: auto; }
 .mirror-col .lib-toolbar { padding: 0 0 .7rem; }
 .mirror-col .grid { padding: .2rem 0 1rem; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
 .mirror-col .cat-heading, .mirror-col .domain-heading { padding: 0; }
@@ -10854,19 +11027,31 @@ HOME_MIRROR_CSS = """
 .sr-more { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .1em; color: var(--sr-accent, var(--accent)); text-decoration: none; white-space: nowrap; }
 .sr-more:hover { text-decoration: underline; }
+/* The track fades at both ends so a half-visible card reads as "more this way"
+   rather than as a card someone forgot to finish. */
+.sr-track-wrap { position: relative; }
+.sr-track-wrap::after { content: ""; position: absolute; top: 0; right: 0; bottom: 1.3rem; width: 3.2rem;
+  pointer-events: none; background: linear-gradient(90deg, transparent, var(--bg) 82%); }
 .sr-track { display: flex; gap: 1rem; overflow-x: auto; padding: .2rem .1rem 1.3rem; scroll-snap-type: x proximity;
-  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  align-items: stretch; }
 .sr-track::-webkit-scrollbar { height: 8px; }
 .sr-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
 .sr-track::-webkit-scrollbar-track { background: transparent; }
-.sr-card { flex: 0 0 240px; scroll-snap-align: start; display: block; text-decoration: none; color: var(--text);
+/* Cards in a row are one height and their meta lines share a baseline, however
+   many lines the headline runs to. */
+.sr-card { flex: 0 0 240px; scroll-snap-align: start; display: flex; flex-direction: column;
+  text-decoration: none; color: var(--text);
   background: var(--bg); border: 1px solid var(--border); border-top: 3px solid var(--sr-accent, var(--accent));
   border-radius: 0; padding: 1rem 1.1rem; transition: transform .16s var(--ease), box-shadow .16s var(--ease); }
 .sr-card:hover, .sr-card:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-2); }
 .sr-card-kicker { font-family: var(--sans); font-size: .62rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; color: var(--sr-accent, var(--accent)); margin: 0 0 .4rem; }
-.sr-card-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.25; margin: 0 0 .4rem; }
-.sr-card-meta { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; line-height: 1.4; }
+.sr-card-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.25; margin: 0 0 .4rem;
+  text-wrap: pretty; }
+.sr-card-meta { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: .55rem 0 0; line-height: 1.4;
+  padding-top: .55rem; border-top: 1px solid var(--border); }
+.sr-card .sr-card-meta { margin-top: auto; }
 @media (max-width: 560px) { .sr-card { flex-basis: 74vw; } .scroll-row { padding-left: 1.2rem; padding-right: 1.2rem; } }
 """
 
@@ -10912,33 +11097,51 @@ def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages
     from the Research Library, one from the detached desk), then the two
     panes continuing as parallel scrollable shelves underneath. Falls back to
     a single Research pane when no desk is configured."""
+    # Each column is three fixed bands — masthead, passage, shelf — laid onto the
+    # parent's rows with subgrid so the two sides stay level with each other no
+    # matter how long a title runs or how tall a mascot is.
     body = (
         '<div class="mirror-grid">'
         '<div class="mirror-col mc-lib">'
+        '<div class="mirror-mast">'
+        f'<div class="mirror-agent">{section_agent_art("library", compact=True)}</div>'
+        '<div class="mirror-id">'
         '<h2 class="mirror-h" id="library"><a href="research.html">The Research Library</a></h2>'
         f'<p class="mirror-sub">{html.escape(library_meta)}</p>'
-        f'<div class="mirror-agent">{section_agent_art("library", compact=True)}</div>'
+        '</div></div>'
+        '<div class="mirror-passage">'
         '<div class="dp-pane mc-lib" id="daily-passage-lib" hidden></div>'
         f'<script id="passages-data-lib" type="application/json">{json_for_html(lib_passages)}</script>'
+        '</div>'
+        '<div class="mirror-body">'
+        f'{library_pane}'
+        # Personalised blocks sit under the shelf, so both columns open on their
+        # search toolbar and the spread still reads as a mirror.
         '<div id="resume"></div>'
         '<section id="foryou" hidden></section>'
-        f'{library_pane}'
-        '</div>'
+        '<a class="mirror-more" href="research.html">Enter the full library →</a>'
+        '</div></div>'
     )
     if hub_desk:
         desk_pane = _pane_grid_html(hub_desk["cards"], hub_desk.get("cats") or [],
                                     placeholder=f'Search {hub_desk["title"]}…')
+        href = html.escape(hub_desk["href"], quote=True)
         body += (
             '<div class="mirror-col mc-adtech">'
-            f'<h2 class="mirror-h"><a href="{html.escape(hub_desk["href"], quote=True)}">'
-            f'{html.escape(hub_desk["title"])}</a></h2>'
-            f'<p class="mirror-sub">{html.escape(hub_desk["meta"])}</p>'
+            '<div class="mirror-mast">'
             f'<div class="mirror-agent">{section_agent_art("adtech", compact=True)}</div>'
+            '<div class="mirror-id">'
+            f'<h2 class="mirror-h"><a href="{href}">{html.escape(hub_desk["title"])}</a></h2>'
+            f'<p class="mirror-sub">{html.escape(hub_desk["meta"])}</p>'
+            '</div></div>'
+            '<div class="mirror-passage">'
             '<div class="dp-pane mc-adtech" id="daily-passage-adtech" hidden></div>'
             f'<script id="passages-data-adtech" type="application/json">{json_for_html(adtech_passages)}</script>'
+            '</div>'
+            '<div class="mirror-body">'
             f'{desk_pane}'
-            f'<a class="mirror-more" href="{html.escape(hub_desk["href"], quote=True)}">'
-            f'Enter the full desk →</a></div>'
+            f'<a class="mirror-more" href="{href}">Enter the full desk →</a>'
+            '</div></div>'
         )
     body += '</div>'
     return f'<section class="mirror-spread">{body}</section>'
@@ -10964,12 +11167,13 @@ def bottom_scroll_row_html(title, sub, href, cards_html, accent=None):
         f'<div class="sr-head"><h2 class="sr-h"><a href="{html.escape(href, quote=True)}">{html.escape(title)}</a></h2>'
         f'<p class="sr-sub">{html.escape(sub)}</p>'
         f'<a class="sr-more" href="{html.escape(href, quote=True)}">See all →</a></div>'
-        f'<div class="sr-track">{cards_html}</div>'
+        f'<div class="sr-track-wrap"><div class="sr-track">{cards_html}</div></div>'
         '</section>'
     )
 
 
-def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", quiz="", shell=""):
+def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", quiz="",
+                      bottom_bands="", shell=""):
     """Render a detached domain front (docs/<slug>.html): nameplate, any bands it
     pulled off the home page (the wire, its Briefings rack), its own apparatus row
     (tools — the desk's forecaster and dictionary), its category shelves as the
@@ -11006,6 +11210,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         bands=bands,
         tools=tools,
         quiz=quiz,
+        bottom_bands=bottom_bands,
         cards=body,
         epigraph=html.escape(page_cfg.get("epigraph", "“We sell — or else.” — David Ogilvy")),
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + (QUIZ_JS if quiz else ""),
@@ -11958,7 +12163,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             css=CSS + SCENE_PLATE_CSS,
             theme_style=p["theme_style"],
             favicon=FAVICON, og_meta=p["reader_og"],
-            data_json=p["data_json"],
+            data_json=shrink_data_uris(p["data_json"]),
             marked_js=MARKED_JS,
             app_js=APP_JS,
             shell=shell_root,
@@ -11976,7 +12181,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         (out / f"{meta['slug']}.html").write_text(READER_TEMPLATE.format(
             title=html.escape(meta["title"]), subtitle=html.escape(col_corpus["subtitle"]),
             css=CSS + SCENE_PLATE_CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
-            data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
+            data_json=shrink_data_uris(json_for_html(col_corpus)), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
             back_href="research.html", back_label="Library",
             scene=scene_plate("collection", extra_class="reader-scene", cover_slugs=meta.get("slugs"))))
     if resolved_collections:
@@ -12414,7 +12619,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         brand_logo=brand_logo_art(),
         stats=stats,
         hero=hero_art(),
-        hero_scene=scene_plate("research", extra_class="hero-scene"),
+        hero_cta=hero_cta_html(hub_desk),
         ticker=ticker_html,
         mirror=mirror_html,
         overture_head=OVERTURE_HEAD,
@@ -12456,8 +12661,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     ]
     build_domain_page(out, {"slug": "research", **research_page_cfg}, {"title": site_title}, index_cards,
                       [c for c in category_order if c not in detached_cats], stats,
-                      bands=collections_html, tools=_desk_tools_html(research_tools),
-                      quiz=research_quiz, shell=shell_root)
+                      tools=_desk_tools_html(research_tools), quiz=research_quiz,
+                      bottom_bands=collections_html, shell=shell_root)
     build_wrapped_page(out, wrapped_stats, shell=shell_root, category_order=category_order)
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html, {out}/research.html")
 

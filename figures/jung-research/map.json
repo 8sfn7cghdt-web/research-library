@@ -5,5 +5,6 @@
   { "file": "03_christ-symbol-of-self.md", "after": "## The aeon of the Fishes", "snippet": "aeon_of_fishes.html" },
   { "file": "05_answer-to-job.md", "after": "## The asymmetry", "snippet": "job_asymmetry.html" },
   { "file": "05_answer-to-job.md", "after": "## The missing fourth", "snippet": "trinity_quaternity.html" },
-  { "file": "07_synchronicity-unus-mundus.md", "after": "## The definition", "snippet": "synchronicity_quaternio.html" }
+  { "file": "07_synchronicity-unus-mundus.md", "after": "## The definition", "snippet": "synchronicity_quaternio.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "## How the argument actually works", "snippet": "scene_psyche_cathedral.html" }
 ]

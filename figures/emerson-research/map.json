@@ -5,5 +5,6 @@
   { "file": "06_Democracy_Individualism_and_Abolition.md", "after": "## 2. The Evolution of Emerson", "snippet": "abolition_arc.html" },
   { "file": "07_Harvard_Lyceum_and_American_Intellectual_Life.md", "after": "## 4. The Reconciliation, 1866", "snippet": "harvard_rupture.html" },
   { "file": "08_Reception_Reputation_and_Enduring_Influence.md", "after": "## 7. Reputation Cycles I", "snippet": "reputation_wave.html" },
-  { "file": "Future_Trajectory.md", "after": "## The Scenarios", "snippet": "forecast_fan.html" }
+  { "file": "Future_Trajectory.md", "after": "## The Scenarios", "snippet": "forecast_fan.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "## The argument, walked one step at a time", "snippet": "scene_pulpit_to_forest.html" }
 ]

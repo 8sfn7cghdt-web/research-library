@@ -4,5 +4,6 @@
   { "file": "05_Argument_And_Themes.md", "after": "## 1. The Theory of Revolution", "snippet": "death_birth.html" },
   { "file": "05_Argument_And_Themes.md", "after": "## 3. Sham vs. Reality", "snippet": "fr_sham_reality.html" },
   { "file": "05_Argument_And_Themes.md", "after": "## 4. Heroes and Their Absence", "snippet": "fr_pilot.html" },
-  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "fr_forecast.html" }
+  { "file": "Future_Trajectory.md", "after": "## Scenarios", "snippet": "fr_forecast.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "## How the argument actually works, step by step", "snippet": "scene_last_judgment_revolution.html" }
 ]

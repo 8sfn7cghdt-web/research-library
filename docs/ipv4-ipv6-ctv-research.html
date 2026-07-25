@@ -483,12 +483,14 @@ figure.viz, figure.corpus-fig { --cv-ease: cubic-bezier(.25,.1,.25,1); }
   transform: rotate(-3deg); box-shadow: 0 8px 14px var(--sc-shadow); white-space: nowrap; }
 .scene-plate.band-scene { width: 164px; min-width: 164px; aspect-ratio: 4 / 3; }
 .scene-plate.hero-scene { max-width: 420px; margin: 1.1rem 0 0; }
-.scene-plate.section-scene { max-width: 640px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.section-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.25rem; }
 .scene-plate.feature-scene { margin: 0 0 1rem; }
 .scene-plate.article-scene, .scene-plate.edition-scene { max-width: 680px; margin: 0 auto 2rem; }
 .scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
 .scene-plate.reader-scene { aspect-ratio: 16 / 9; margin: 1rem 0 1.65rem; }
-.scene-plate.page-scene { max-width: 640px; margin: 1.05rem auto 1.35rem; }
+/* Section fronts share one banner ratio, so the numbers and the board sit near
+   the fold instead of below a half-screen of scenery. */
+.scene-plate.page-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.35rem; }
 .scene-plate.detail-scene { max-width: 680px; margin: 1rem auto 1.2rem; }
 .scene-ghost { --sc-accent: #9a2c1a; }
 [data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }

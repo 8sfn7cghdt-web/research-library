@@ -65,11 +65,11 @@
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 .top-header-art { width: 100%; background: #0f0e0c; border-bottom: 1px solid var(--text); overflow: hidden; }
-.top-header-img { width: 100%; height: clamp(150px, 22vw, 315px); object-fit: cover; object-position: center;
+.top-header-img { width: 100%; height: clamp(140px, 18vw, 260px); object-fit: cover; object-position: center;
   display: block; filter: saturate(.9) contrast(1.02); }
-.masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
-  justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
-  color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
+.masthead { max-width: 1240px; margin: 0 auto; padding: .8rem 2rem; display: flex;
+  justify-content: space-between; align-items: center; gap: 1.4rem; font-family: var(--sans); font-size: .66rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .1em; border-bottom: 1px solid var(--text); }
 .mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; color: var(--muted);
   text-decoration: none; transition: color .2s ease; }
 .mh-brand:hover, .mh-brand:focus-visible { color: var(--accent); }
@@ -79,8 +79,12 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
 .mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo {
   transform: rotate(-7deg) scale(1.08); box-shadow: var(--shadow-2); }
-.mh-nav { display: flex; gap: 1.3rem; }
-.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
+/* Nav items break between links, never inside one — "AD TECH" and "THE GHOST OF
+   TIMES" used to split across two lines and leave the row ragged. */
+.mh-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .45rem 1.15rem; }
+.mh-brand { white-space: nowrap; }
+.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative;
+  white-space: nowrap; transition: color .2s ease; }
 .mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent);
   transform: scaleX(0); transform-origin: right; transition: transform .18s var(--ease); }
 .mh-nav a:hover { color: var(--accent); }
@@ -207,20 +211,37 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
 .hero-text { flex: 1.1; }
 .hero-art { flex: .55; min-width: 0; color: var(--text); display: flex; justify-content: center; }
 .hero-art svg { width: 100%; height: auto; display: block; }
-.hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
-.hero-art .mascot-img { width: min(100%, 285px); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
-  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2);
+/* :not(.mascot-img) so the square-plate radius doesn't out-specify the mascot's
+   circular crop below. */
+.hero-art .hero-img:not(.mascot-img) { width: 100%; height: auto; display: block; border-radius: 10px; }
+/* The mascot crop travels with the image, not with .hero-art — the section
+   agents live inside .agent-chip on the desk fronts and were rendering as
+   hard-edged cream squares on a dark page. */
+.mascot-img { aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  background: transparent; border: 0; box-shadow: var(--shadow-2); }
+.hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+.hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
+  padding: .78rem 1.25rem; white-space: nowrap;
+  transition: background-color .16s var(--ease), color .16s var(--ease),
+              border-color .16s var(--ease), transform .16s var(--ease); }
+.hero-cta-btn:hover, .hero-cta-btn:focus-visible { border-color: var(--text); transform: translateY(-2px); }
+.hero-cta-btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.hero-cta-btn.primary:hover, .hero-cta-btn.primary:focus-visible {
+  background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .agent-chip { display: inline-flex; flex-direction: column; align-items: center; gap: .7rem; }
-.agent-chip .agent-portrait { width: min(100%, 285px); }
+.agent-chip .agent-portrait { width: min(100%, 285px); height: auto;
+  animation: mhAgentFloat 7.5s ease-in-out infinite; transform-origin: 50% 58%; }
 .agent-chip-label { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .14em; padding: .42rem .78rem; border: 1px solid currentColor; background: var(--bg); }
-.agent-chip.library { color: #9a2c1a; }
-.agent-chip.adtech { color: #0d5b68; }
-[data-theme="dark"] .agent-chip.library { color: #d98055; }
-[data-theme="dark"] .agent-chip.adtech { color: #62aab8; }
-.agent-chip.compact { align-items: flex-start; gap: .55rem; }
-.agent-chip.compact .agent-portrait { width: 88px; box-shadow: var(--shadow-1); }
+.agent-chip.agent-library { color: #9a2c1a; }
+.agent-chip.agent-adtech { color: #0d5b68; }
+[data-theme="dark"] .agent-chip.agent-library { color: #d98055; }
+[data-theme="dark"] .agent-chip.agent-adtech { color: #62aab8; }
+.agent-chip.compact { align-items: center; gap: .6rem; }
+.agent-chip.compact .agent-portrait { width: 96px; box-shadow: var(--shadow-1); }
 .agent-chip.compact .agent-chip-label { font-size: .58rem; letter-spacing: .12em; padding: .34rem .56rem; }
 @keyframes mhAgentFloat {
   0%, 100% { transform: translateY(0) rotate(-1deg); filter: saturate(1.02) brightness(1); }
@@ -336,7 +357,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     transform: none !important;
     transition-duration: .01ms !important;
   }
-  .hero-art .mascot-img { animation: none !important; }
+  .hero-art .mascot-img, .agent-chip .agent-portrait { animation: none !important; }
   /* the nav underline keeps its scaleX states (transform none would show it at rest) — travel only is killed: */
   .mh-nav a::after, .mh-nav a:hover::after, .mh-nav a.active::after {
     transition-duration: .01ms !important;
@@ -446,12 +467,14 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   transform: rotate(-3deg); box-shadow: 0 8px 14px var(--sc-shadow); white-space: nowrap; }
 .scene-plate.band-scene { width: 164px; min-width: 164px; aspect-ratio: 4 / 3; }
 .scene-plate.hero-scene { max-width: 420px; margin: 1.1rem 0 0; }
-.scene-plate.section-scene { max-width: 640px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.section-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.25rem; }
 .scene-plate.feature-scene { margin: 0 0 1rem; }
 .scene-plate.article-scene, .scene-plate.edition-scene { max-width: 680px; margin: 0 auto 2rem; }
 .scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
 .scene-plate.reader-scene { aspect-ratio: 16 / 9; margin: 1rem 0 1.65rem; }
-.scene-plate.page-scene { max-width: 640px; margin: 1.05rem auto 1.35rem; }
+/* Section fronts share one banner ratio, so the numbers and the board sit near
+   the fold instead of below a half-screen of scenery. */
+.scene-plate.page-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.35rem; }
 .scene-plate.detail-scene { max-width: 680px; margin: 1rem auto 1.2rem; }
 .scene-ghost { --sc-accent: #9a2c1a; }
 [data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }
@@ -579,7 +602,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 <figure class="wr-holdings" aria-label="Every corpus in the library, one square each"><svg viewBox='0 0 212 50' xmlns='http://www.w3.org/2000/svg' role='img' aria-label='36 corpora'><rect class='hc-cell hc-1' x='0' y='0' width='14' height='14'/><rect class='hc-cell hc-1' x='18' y='0' width='14' height='14'/><rect class='hc-cell hc-1' x='36' y='0' width='14' height='14'/><rect class='hc-cell hc-1' x='54' y='0' width='14' height='14'/><rect class='hc-cell hc-2' x='72' y='0' width='14' height='14'/><rect class='hc-cell hc-3' x='90' y='0' width='14' height='14'/><rect class='hc-cell hc-4' x='108' y='0' width='14' height='14'/><rect class='hc-cell hc-2' x='126' y='0' width='14' height='14'/><rect class='hc-cell hc-2' x='144' y='0' width='14' height='14'/><rect class='hc-cell hc-3' x='162' y='0' width='14' height='14'/><rect class='hc-cell hc-3' x='180' y='0' width='14' height='14'/><rect class='hc-cell hc-5' x='198' y='0' width='14' height='14'/><rect class='hc-cell hc-5' x='0' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='18' y='18' width='14' height='14'/><rect class='hc-cell hc-3' x='36' y='18' width='14' height='14'/><rect class='hc-cell hc-2' x='54' y='18' width='14' height='14'/><rect class='hc-cell hc-3' x='72' y='18' width='14' height='14'/><rect class='hc-cell hc-3' x='90' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='108' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='126' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='144' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='162' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='180' y='18' width='14' height='14'/><rect class='hc-cell hc-5' x='198' y='18' width='14' height='14'/><rect class='hc-cell hc-4' x='0' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='18' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='36' y='36' width='14' height='14'/><rect class='hc-cell hc-2' x='54' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='72' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='90' y='36' width='14' height='14'/><rect class='hc-cell hc-3' x='108' y='36' width='14' height='14'/><rect class='hc-cell hc-5' x='126' y='36' width='14' height='14'/><rect class='hc-cell hc-2' x='144' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='162' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='180' y='36' width='14' height='14'/><rect class='hc-cell hc-4' x='198' y='36' width='14' height='14'/></svg><figcaption>The holdings — one square per corpus, inked by subject</figcaption></figure>
 <main id="wrapped-body"></main>
 <footer class="wr-foot"><a href="research.html">← Back to the Research Library</a></footer>
-<script id="wrapped-stats" type="application/json">[{"slug": "ancestry-research", "title": "The Emigrant's Atlas", "category": "Heritage", "chapters": 8, "words": 38474}, {"slug": "carlyle-french-revolution-research", "title": "The Book That Burned", "category": "Thomas Carlyle", "chapters": 10, "words": 41365}, {"slug": "carlyle-friedrich-research", "title": "Carlyle's Everest", "category": "Thomas Carlyle", "chapters": 10, "words": 70602}, {"slug": "carlyle-research", "title": "The Calvinist Without a Creed", "category": "Thomas Carlyle", "chapters": 9, "words": 141928}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion", "chapters": 8, "words": 61062}, {"slug": "deutsch-good-explanations-research", "title": "Hard to Vary", "category": "Mind & Philosophy", "chapters": 9, "words": 24045}, {"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising", "chapters": 15, "words": 103275}, {"slug": "jesus-research", "title": "The Man and the Christ", "category": "Faith & Religion", "chapters": 10, "words": 170412}, {"slug": "john-the-baptist-research", "title": "More Than a Forerunner", "category": "Faith & Religion", "chapters": 9, "words": 63052}, {"slug": "jung-research", "title": "A God in the Psyche", "category": "Mind & Philosophy", "chapters": 14, "words": 51783}, {"slug": "phenomenology-pragmatism-research", "title": "Experience and Consequences", "category": "Mind & Philosophy", "chapters": 10, "words": 185106}, {"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World", "chapters": 8, "words": 58665}, {"slug": "us-geopolitics-research", "title": "The Map of American Power", "category": "The Modern World", "chapters": 9, "words": 207574}, {"slug": "mcluhan-research", "title": "The Medium Is the Message", "category": "Media & Advertising", "chapters": 10, "words": 58340}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy", "chapters": 8, "words": 47615}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion", "chapters": 9, "words": 40372}, {"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy", "chapters": 10, "words": 64533}, {"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy", "chapters": 10, "words": 65511}, {"slug": "fox-roku-research", "title": "Buying the Living Room", "category": "Media & Advertising", "chapters": 18, "words": 112367}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising", "chapters": 8, "words": 30036}, {"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising", "chapters": 10, "words": 42129}, {"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising", "chapters": 13, "words": 76995}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising", "chapters": 16, "words": 91126}, {"slug": "democratic-socialism-research", "title": "The Long Advent", "category": "The Modern World", "chapters": 10, "words": 99610}, {"slug": "ctv-identity-signals-research", "title": "The Signal Layer", "category": "Media & Advertising", "chapters": 26, "words": 179283}, {"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising", "chapters": 15, "words": 80230}, {"slug": "miq-research", "title": "On Leased Land", "category": "Media & Advertising", "chapters": 23, "words": 99458}, {"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion", "chapters": 9, "words": 68345}, {"slug": "containerized-bidding-research", "title": "Closer to the Metal", "category": "Media & Advertising", "chapters": 14, "words": 72229}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising", "chapters": 17, "words": 88606}, {"slug": "american-pragmatism-research", "title": "The Cash-Value of Truth", "category": "Mind & Philosophy", "chapters": 12, "words": 112117}, {"slug": "us-economy-financial-system-research", "title": "The Argument Over Money", "category": "The Modern World", "chapters": 13, "words": 84324}, {"slug": "roman-catholicism-research", "title": "On This Rock", "category": "Faith & Religion", "chapters": 16, "words": 120231}, {"slug": "walmart-vibe-research", "title": "The Missing Front Door", "category": "Media & Advertising", "chapters": 12, "words": 47985}, {"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising", "chapters": 15, "words": 75041}, {"slug": "ctv-ssp-research", "title": "The Seller's Agent", "category": "Media & Advertising", "chapters": 8, "words": 57177}]</script>
+<script id="wrapped-stats" type="application/json">[{"slug": "ancestry-research", "title": "The Emigrant's Atlas", "category": "Heritage", "chapters": 8, "words": 38499}, {"slug": "carlyle-french-revolution-research", "title": "The Book That Burned", "category": "Thomas Carlyle", "chapters": 10, "words": 41387}, {"slug": "carlyle-friedrich-research", "title": "Carlyle's Everest", "category": "Thomas Carlyle", "chapters": 10, "words": 70622}, {"slug": "carlyle-research", "title": "The Calvinist Without a Creed", "category": "Thomas Carlyle", "chapters": 9, "words": 141928}, {"slug": "civil-war-religion-whitman-research", "title": "A Holy War and Its Poet", "category": "Faith & Religion", "chapters": 8, "words": 61085}, {"slug": "deutsch-good-explanations-research", "title": "Hard to Vary", "category": "Mind & Philosophy", "chapters": 9, "words": 24071}, {"slug": "ipv4-ipv6-ctv-research", "title": "The Address Knows You", "category": "Media & Advertising", "chapters": 15, "words": 103275}, {"slug": "jesus-research", "title": "The Man and the Christ", "category": "Faith & Religion", "chapters": 10, "words": 170438}, {"slug": "john-the-baptist-research", "title": "More Than a Forerunner", "category": "Faith & Religion", "chapters": 9, "words": 63081}, {"slug": "jung-research", "title": "A God in the Psyche", "category": "Mind & Philosophy", "chapters": 14, "words": 51809}, {"slug": "phenomenology-pragmatism-research", "title": "Experience and Consequences", "category": "Mind & Philosophy", "chapters": 10, "words": 185127}, {"slug": "uap-research", "title": "From Roswell to Disclosure", "category": "The Modern World", "chapters": 8, "words": 58691}, {"slug": "us-geopolitics-research", "title": "The Map of American Power", "category": "The Modern World", "chapters": 9, "words": 207602}, {"slug": "mcluhan-research", "title": "The Medium Is the Message", "category": "Media & Advertising", "chapters": 10, "words": 58340}, {"slug": "piaget-research", "title": "How Knowledge Grows", "category": "Mind & Philosophy", "chapters": 8, "words": 47638}, {"slug": "dickinson-research", "title": "Tell It Slant", "category": "Faith & Religion", "chapters": 9, "words": 40398}, {"slug": "emerson-research", "title": "An Original Relation to the Universe", "category": "Mind & Philosophy", "chapters": 10, "words": 64557}, {"slug": "pareto-research", "title": "A Graveyard of Aristocracies", "category": "Mind & Philosophy", "chapters": 10, "words": 65537}, {"slug": "fox-roku-research", "title": "Buying the Living Room", "category": "Media & Advertising", "chapters": 18, "words": 112367}, {"slug": "india-advertising-research", "title": "A Billion Screens", "category": "Media & Advertising", "chapters": 8, "words": 30036}, {"slug": "latam-ctv-research", "title": "Reach Ahead of Revenue", "category": "Media & Advertising", "chapters": 10, "words": 42129}, {"slug": "ctv-brand-safety-research", "title": "Safe Beside What?", "category": "Media & Advertising", "chapters": 13, "words": 76995}, {"slug": "ctv-dsp-ssp-research", "title": "Who Keeps the Spread", "category": "Media & Advertising", "chapters": 16, "words": 91126}, {"slug": "democratic-socialism-research", "title": "The Long Advent", "category": "The Modern World", "chapters": 10, "words": 99634}, {"slug": "ctv-identity-signals-research", "title": "The Signal Layer", "category": "Media & Advertising", "chapters": 26, "words": 179283}, {"slug": "agentic-advertising-protocols-research", "title": "The Protocol War", "category": "Media & Advertising", "chapters": 15, "words": 80230}, {"slug": "miq-research", "title": "On Leased Land", "category": "Media & Advertising", "chapters": 23, "words": 99458}, {"slug": "great-awakenings-research", "title": "The Recurring Fire", "category": "Faith & Religion", "chapters": 9, "words": 68364}, {"slug": "containerized-bidding-research", "title": "Closer to the Metal", "category": "Media & Advertising", "chapters": 14, "words": 72229}, {"slug": "political-ctv-research", "title": "The Measured Screen", "category": "Media & Advertising", "chapters": 17, "words": 88606}, {"slug": "american-pragmatism-research", "title": "The Cash-Value of Truth", "category": "Mind & Philosophy", "chapters": 12, "words": 112141}, {"slug": "us-economy-financial-system-research", "title": "The Argument Over Money", "category": "The Modern World", "chapters": 13, "words": 84352}, {"slug": "roman-catholicism-research", "title": "On This Rock", "category": "Faith & Religion", "chapters": 16, "words": 120256}, {"slug": "walmart-vibe-research", "title": "The Missing Front Door", "category": "Media & Advertising", "chapters": 12, "words": 47985}, {"slug": "social-ctv-retargeting-research", "title": "The Living-Room Handoff", "category": "Media & Advertising", "chapters": 15, "words": 75041}, {"slug": "ctv-ssp-research", "title": "The Seller's Agent", "category": "Media & Advertising", "chapters": 8, "words": 56677}]</script>
 <script></script>
 <script>
 (function () {

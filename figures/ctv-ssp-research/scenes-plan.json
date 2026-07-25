@@ -1,0 +1,122 @@
+[
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_ad_break_auction.png",
+    "after": "## Five: The fight",
+    "caption": "<strong>One ad, many hands.</strong> The ad break only looks like a simple television slot; underneath it, the seller's agent, the ad server, the SSPs, and the buyers divide the hammer price in milliseconds.",
+    "alt": "A viewer watches a connected TV while a dark auction room behind the screen routes media lots, bid paths, and brass payment tokens through a seller's ledger.",
+    "name": "scene_ad_break_auction",
+    "file": "00_Six_Easy_Pieces.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_video_ad_server.png",
+    "after": "## The Video Ad Server Era",
+    "caption": "<strong>The decision before the auction.</strong> Video ad serving became powerful because it decided what would actually play, a job that made CTV plumbing more strategic than a pure exchange.",
+    "alt": "Engineers in a dark auction-room machine hall stitch video ad pods through old cable equipment and streaming servers while a seller-agent studies a ledger.",
+    "name": "scene_video_ad_server",
+    "file": "01_How_The_Sell_Side_Was_Assembled.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_roads_not_taken.png",
+    "after": "## The Roads Not Taken",
+    "caption": "<strong>The header that never came.</strong> CTV's missing browser layer pushed auction control back toward server-side stitching instead of the open-web header-bidding path.",
+    "alt": "An auction room splits into an open-web bidding corridor and a central server-side path leading into a television ad pod.",
+    "name": "scene_roads_not_taken",
+    "file": "01_How_The_Sell_Side_Was_Assembled.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_disclosure_roster.png",
+    "after": "## The Roster, Sized Honestly",
+    "caption": "<strong>The lit desks and the curtained booths.</strong> The independent roster can be ranked only where companies expose enough CTV evidence for the ledger to be read.",
+    "alt": "Three brightly lit broker desks with open ledgers sit before several curtained, darker booths in a CTV auction hall.",
+    "name": "scene_disclosure_roster",
+    "file": "02_The_Independent_SSPs.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_response_machine.png",
+    "after": "## The response: attention, performance, and agentic trading",
+    "caption": "<strong>Three tools for a squeezed commission.</strong> Attention signals, outcome claims, and seller agents are the independent SSPs' answer to buyers narrowing the supply path.",
+    "alt": "A seller-agent coordinates an attention lens, outcome receipts, and abstract software agents from a baize auction desk.",
+    "name": "scene_response_machine",
+    "file": "02_The_Independent_SSPs.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_platform_two_sides.png",
+    "after": "## Amazon: The Same Company Sits on Both Sides of the Table",
+    "caption": "<strong>The booth on both sides.</strong> A platform that owns the screen and the buying tool can make the independent seller's door narrow by design.",
+    "alt": "A large private trading booth controls both the streaming-screen supply gallery and the buyer bidding desks while an outside seller-agent waits at a side door.",
+    "name": "scene_platform_two_sides",
+    "file": "03_The_Platform_Owned_Sell_Side.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_platform_roles.png",
+    "after": "## The Analytical Spine",
+    "caption": "<strong>Required, tolerated, designed out.</strong> The independent SSP matters most where a publisher cannot build the stack, less where a platform only needs incremental demand, and least where the platform keeps the auction inside its walls.",
+    "alt": "Three auction corridors show a small publisher using a broker, a large platform opening a narrow side hatch, and a sealed private stack shutting the broker out.",
+    "name": "scene_platform_roles",
+    "file": "03_The_Platform_Owned_Sell_Side.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_attention_panel.png",
+    "after": "## What Attention Measurement Actually Is",
+    "caption": "<strong>The living room becomes evidence.</strong> Attention measurement turns household viewing into a market signal, but the signal depends on which instrument produced it.",
+    "alt": "A glass-walled living room inside an auction hall is observed by attention instruments while analysts compare the results at baize desks.",
+    "name": "scene_attention_panel",
+    "file": "04_Attention_As_A_Currency.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_attention_verdict.png",
+    "after": "## The Honest Verdict",
+    "caption": "<strong>A useful overlay, not yet a currency.</strong> The attention instruments help buyers tell a quality story, but their units still do not balance cleanly on a shared scale.",
+    "alt": "A seller-agent weighs attention instruments on brass scales while many connected-TV screens glow behind the rostrum.",
+    "name": "scene_attention_verdict",
+    "file": "04_Attention_As_A_Currency.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_identity_linking.png",
+    "after": "### The linking problem: identity resolution",
+    "caption": "<strong>The household graph.</strong> Performance CTV starts by trying to connect the shared television to the phone, browser, and checkout path where the outcome appears.",
+    "alt": "A connected TV, phone, laptop, checkout terminal, and payment device are linked by solid and faint glowing identity threads over a ledger.",
+    "name": "scene_identity_linking",
+    "file": "05_Performance_And_Outcomes.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_outcome_underwriting.png",
+    "after": "### Is the premium bigger than the risk",
+    "caption": "<strong>The seller as underwriter.</strong> Outcome guarantees move the uncertainty from the buyer's media plan onto the seller's balance sheet.",
+    "alt": "A seller-agent balances a large stack of impressions against a smaller stack of outcome receipts while reserve-red loss tickets gather on the desk.",
+    "name": "scene_outcome_underwriting",
+    "file": "05_Performance_And_Outcomes.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_agentic_layer.png",
+    "after": "## The Agentic Layer",
+    "caption": "<strong>Agents above the old rails.</strong> The new negotiation layer is only useful if buyer and seller agents can speak across shared protocols built on existing transaction plumbing.",
+    "alt": "Two abstract luminous software agents negotiate across a brass bridge above an auction floor while human operators step back.",
+    "name": "scene_agentic_layer",
+    "file": "06_AI_And_The_Agentic_Sell_Side.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_shocks_reset_board.png",
+    "after": "## The Cross-Cutting Shocks That Could Reset the Board by 2029",
+    "caption": "<strong>Forces outside the product roadmap.</strong> Privacy law, antitrust remedies, in-housing, measurement fragmentation, and the ad cycle can redraw the board before agentic trading does.",
+    "alt": "A seller-agent grips a ledger as legal folders, privacy locks, platform doors, measurement meters, and storm clouds pressure a live trading board.",
+    "name": "scene_shocks_reset_board",
+    "file": "06_AI_And_The_Agentic_Sell_Side.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_squeezed_standing.png",
+    "after": "## Scenario One",
+    "caption": "<strong>Bigger, thinner, fewer.</strong> The modal 2029 case leaves the leading independents standing, but with platform stacks looming and commissions under pressure.",
+    "alt": "Independent auctioneers keep working under giant platform-owned booths while one mid-tier desk is quietly packed away.",
+    "name": "scene_squeezed_standing",
+    "file": "Future_Trajectory.md"
+  },
+  {
+    "image": "figures/ctv-ssp-research/source-scenes/scene_structural_break.png",
+    "after": "## Scenario Four",
+    "caption": "<strong>The board can still break.</strong> A remedy, privacy ruling, or true agent-to-agent layer could create openings for independents while also producing a stronger new rival.",
+    "alt": "A CTV auction room reshuffles as a large exchange block separates, privacy threads dim, platform doors move, and new deal rails cross the old lanes.",
+    "name": "scene_structural_break",
+    "file": "Future_Trajectory.md"
+  }
+]

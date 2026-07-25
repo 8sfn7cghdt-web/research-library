@@ -5,5 +5,6 @@
   { "file": "03_Genetic_Anthropological_Context.md", "after": "## Narrative: How To Read This Particular Estimate", "snippet": "signal_noise.html" },
   { "file": "04_Path_To_America.md", "after": "## Narrative I", "snippet": "dual_crossing.html" },
   { "file": "04_Path_To_America.md", "after": "## Narrative III", "snippet": "quota_door.html" },
-  { "file": "Future_Trajectory.md", "after": "## Scenarios (Thread B", "snippet": "heritage_futures.html" }
+  { "file": "Future_Trajectory.md", "after": "## Scenarios (Thread B", "snippet": "heritage_futures.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "## How the test actually cut you in half", "snippet": "scene_two_halves_atlas.html" }
 ]

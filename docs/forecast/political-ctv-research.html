@@ -65,11 +65,11 @@
 body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--serif);
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
 .top-header-art { width: 100%; background: #0f0e0c; border-bottom: 1px solid var(--text); overflow: hidden; }
-.top-header-img { width: 100%; height: clamp(150px, 22vw, 315px); object-fit: cover; object-position: center;
+.top-header-img { width: 100%; height: clamp(140px, 18vw, 260px); object-fit: cover; object-position: center;
   display: block; filter: saturate(.9) contrast(1.02); }
-.masthead { max-width: 1120px; margin: 0 auto; padding: .8rem 2rem; display: flex;
-  justify-content: space-between; align-items: center; font-family: var(--sans); font-size: .68rem;
-  color: var(--muted); text-transform: uppercase; letter-spacing: .14em; border-bottom: 1px solid var(--text); }
+.masthead { max-width: 1240px; margin: 0 auto; padding: .8rem 2rem; display: flex;
+  justify-content: space-between; align-items: center; gap: 1.4rem; font-family: var(--sans); font-size: .66rem;
+  color: var(--muted); text-transform: uppercase; letter-spacing: .1em; border-bottom: 1px solid var(--text); }
 .mh-brand { display: inline-flex; align-items: center; gap: .55rem; line-height: 1.25; color: var(--muted);
   text-decoration: none; transition: color .2s ease; }
 .mh-brand:hover, .mh-brand:focus-visible { color: var(--accent); }
@@ -79,8 +79,12 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   transition: transform .22s var(--ease), box-shadow .22s var(--ease); }
 .mh-brand:hover .mh-logo, .mh-brand:focus-visible .mh-logo {
   transform: rotate(-7deg) scale(1.08); box-shadow: var(--shadow-2); }
-.mh-nav { display: flex; gap: 1.3rem; }
-.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative; transition: color .2s ease; }
+/* Nav items break between links, never inside one — "AD TECH" and "THE GHOST OF
+   TIMES" used to split across two lines and leave the row ragged. */
+.mh-nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .45rem 1.15rem; }
+.mh-brand { white-space: nowrap; }
+.mh-nav a { color: var(--muted); text-decoration: none; padding-bottom: 2px; position: relative;
+  white-space: nowrap; transition: color .2s ease; }
 .mh-nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.5px; background: var(--accent);
   transform: scaleX(0); transform-origin: right; transition: transform .18s var(--ease); }
 .mh-nav a:hover { color: var(--accent); }
@@ -207,20 +211,37 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
 .hero-text { flex: 1.1; }
 .hero-art { flex: .55; min-width: 0; color: var(--text); display: flex; justify-content: center; }
 .hero-art svg { width: 100%; height: auto; display: block; }
-.hero-art .hero-img { width: 100%; height: auto; display: block; border-radius: 10px; }
-.hero-art .mascot-img { width: min(100%, 285px); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
-  background: #0f0e0c; border: 1px solid var(--border); box-shadow: var(--shadow-2);
+/* :not(.mascot-img) so the square-plate radius doesn't out-specify the mascot's
+   circular crop below. */
+.hero-art .hero-img:not(.mascot-img) { width: 100%; height: auto; display: block; border-radius: 10px; }
+/* The mascot crop travels with the image, not with .hero-art — the section
+   agents live inside .agent-chip on the desk fronts and were rendering as
+   hard-edged cream squares on a dark page. */
+.mascot-img { aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  background: transparent; border: 0; box-shadow: var(--shadow-2); }
+.hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+.hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
+  padding: .78rem 1.25rem; white-space: nowrap;
+  transition: background-color .16s var(--ease), color .16s var(--ease),
+              border-color .16s var(--ease), transform .16s var(--ease); }
+.hero-cta-btn:hover, .hero-cta-btn:focus-visible { border-color: var(--text); transform: translateY(-2px); }
+.hero-cta-btn.primary { background: var(--text); color: var(--bg); border-color: var(--text); }
+.hero-cta-btn.primary:hover, .hero-cta-btn.primary:focus-visible {
+  background: var(--accent); border-color: var(--accent); color: var(--bg); }
 .agent-chip { display: inline-flex; flex-direction: column; align-items: center; gap: .7rem; }
-.agent-chip .agent-portrait { width: min(100%, 285px); }
+.agent-chip .agent-portrait { width: min(100%, 285px); height: auto;
+  animation: mhAgentFloat 7.5s ease-in-out infinite; transform-origin: 50% 58%; }
 .agent-chip-label { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .14em; padding: .42rem .78rem; border: 1px solid currentColor; background: var(--bg); }
-.agent-chip.library { color: #9a2c1a; }
-.agent-chip.adtech { color: #0d5b68; }
-[data-theme="dark"] .agent-chip.library { color: #d98055; }
-[data-theme="dark"] .agent-chip.adtech { color: #62aab8; }
-.agent-chip.compact { align-items: flex-start; gap: .55rem; }
-.agent-chip.compact .agent-portrait { width: 88px; box-shadow: var(--shadow-1); }
+.agent-chip.agent-library { color: #9a2c1a; }
+.agent-chip.agent-adtech { color: #0d5b68; }
+[data-theme="dark"] .agent-chip.agent-library { color: #d98055; }
+[data-theme="dark"] .agent-chip.agent-adtech { color: #62aab8; }
+.agent-chip.compact { align-items: center; gap: .6rem; }
+.agent-chip.compact .agent-portrait { width: 96px; box-shadow: var(--shadow-1); }
 .agent-chip.compact .agent-chip-label { font-size: .58rem; letter-spacing: .12em; padding: .34rem .56rem; }
 @keyframes mhAgentFloat {
   0%, 100% { transform: translateY(0) rotate(-1deg); filter: saturate(1.02) brightness(1); }
@@ -336,7 +357,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     transform: none !important;
     transition-duration: .01ms !important;
   }
-  .hero-art .mascot-img { animation: none !important; }
+  .hero-art .mascot-img, .agent-chip .agent-portrait { animation: none !important; }
   /* the nav underline keeps its scaleX states (transform none would show it at rest) — travel only is killed: */
   .mh-nav a::after, .mh-nav a:hover::after, .mh-nav a.active::after {
     transition-duration: .01ms !important;
@@ -446,12 +467,14 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   transform: rotate(-3deg); box-shadow: 0 8px 14px var(--sc-shadow); white-space: nowrap; }
 .scene-plate.band-scene { width: 164px; min-width: 164px; aspect-ratio: 4 / 3; }
 .scene-plate.hero-scene { max-width: 420px; margin: 1.1rem 0 0; }
-.scene-plate.section-scene { max-width: 640px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.section-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.25rem; }
 .scene-plate.feature-scene { margin: 0 0 1rem; }
 .scene-plate.article-scene, .scene-plate.edition-scene { max-width: 680px; margin: 0 auto 2rem; }
 .scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
 .scene-plate.reader-scene { aspect-ratio: 16 / 9; margin: 1rem 0 1.65rem; }
-.scene-plate.page-scene { max-width: 640px; margin: 1.05rem auto 1.35rem; }
+/* Section fronts share one banner ratio, so the numbers and the board sit near
+   the fold instead of below a half-screen of scenery. */
+.scene-plate.page-scene { max-width: 760px; aspect-ratio: 21 / 9; margin: 1.05rem auto 1.35rem; }
 .scene-plate.detail-scene { max-width: 680px; margin: 1rem auto 1.2rem; }
 .scene-ghost { --sc-accent: #9a2c1a; }
 [data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }

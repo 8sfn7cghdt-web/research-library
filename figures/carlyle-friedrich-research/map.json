@@ -5,5 +5,6 @@
   { "file": "04_Battle_Set_Pieces.md", "after": "## How the Devices Cohere", "snippet": "battle_matrix.html" },
   { "file": "07_Career_Historiography.md", "after": "## The Career Arc: From the Revolution to the King", "snippet": "career_arc.html" },
   { "file": "09_Contested_Afterlife.md", "after": "## The German Channel", "snippet": "contested_lineage.html" },
-  { "file": "09_Contested_Afterlife.md", "after": "## The Shadow and the Recovery", "snippet": "reputation_fan.html" }
+  { "file": "09_Contested_Afterlife.md", "after": "## The Shadow and the Recovery", "snippet": "reputation_fan.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "## How the book actually does its work", "snippet": "scene_archive_campaign_mountain.html" }
 ]
