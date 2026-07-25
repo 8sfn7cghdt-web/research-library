@@ -895,7 +895,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <div id="reader-progress" aria-hidden="true"></div>
 <button id="menu-btn" title="Chapters">☰</button>
 <aside id="sidebar">
-  <a class="back" href="index.html">← Library</a>
+  <a class="back" href="{back_href}">← {back_label}</a>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <h1>{title}</h1>
   <p class="subtitle">{subtitle}</p>
@@ -10313,6 +10313,16 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     titles = titles or {}
     category_order = category_order or []
     domains = domains or []
+    # Corpus category -> the detached domain page it belongs to (e.g. "Media &
+    # Advertising" -> adtech.html), so a corpus reader's "Library" link goes
+    # back to the desk it lives on rather than always the site-wide index.
+    domain_page_by_category = {}
+    for _d in domains:
+        _pg = _d.get("page")
+        if not _pg:
+            continue
+        for _c in _d.get("categories", []):
+            domain_page_by_category[_c] = (f"{_pg['slug']}.html", _pg.get("title", _d["title"]))
     cards = []
     manifest = []          # cross-page command-palette index (corpora + sections + editions)
     pages = []             # reader renders deferred until the manifest below is complete
@@ -10367,6 +10377,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             "theme_style": render_theme_style(theme),
             "reader_og": reader_og,
             "data_json": json_for_html(corpus),
+            "category": override.get("category") or "Other",
         })
         n = len(corpus["documents"])
         words = sum(len(d["body"].split()) for d in corpus["documents"])
@@ -10642,6 +10653,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     # Now write the reader pages, each carrying the shared shell.
     for p in pages:
+        _back_href, _back_label = domain_page_by_category.get(p["category"], ("index.html", "Library"))
         (out / f"{p['slug']}.html").write_text(READER_TEMPLATE.format(
             title=html.escape(p["title"]),
             subtitle=html.escape(p["subtitle"]),
@@ -10652,6 +10664,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             marked_js=MARKED_JS,
             app_js=APP_JS,
             shell=shell_root,
+            back_href=_back_href,
+            back_label=_back_label,
         ))
 
     # Collection pages — merged cross-corpus readers, rendered through the same
@@ -10662,7 +10676,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         (out / f"{meta['slug']}.html").write_text(READER_TEMPLATE.format(
             title=html.escape(meta["title"]), subtitle=html.escape(col_corpus["subtitle"]),
             css=CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
-            data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root))
+            data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
+            back_href="index.html", back_label="Library"))
     if resolved_collections:
         print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
 
