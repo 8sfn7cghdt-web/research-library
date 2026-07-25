@@ -3,5 +3,7 @@
   { "file": "06_Market_Structure_And_Competition.md", "after": "## 2. The market map", "snippet": "the_squeeze.html" },
   { "file": "04_ATV_TV_Intelligence_And_Measurement.md", "after": "## 3. The Rented-Signal Stack", "snippet": "owns_vs_rents.html" },
   { "file": "01_Origins_And_Strategic_Arc.md", "after": "## 4. Bridgepoint Takes Majority", "snippet": "ownership_clock.html" },
-  { "file": "00_Briefing.md", "after": "## Forecast (Brief)", "snippet": "forecast_bands.html" }
+  { "file": "00_Briefing.md", "after": "## Forecast (Brief)", "snippet": "forecast_bands.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "How a single ad dollar actually moves", "snippet": "scene_leased_land.html" },
+  { "file": "03_CTV_Capabilities_And_Activation.md", "after": "8. Agentic Activation", "snippet": "scene_orchestration_bet.html" }
 ]

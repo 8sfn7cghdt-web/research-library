@@ -4,5 +4,7 @@
   { "file": "03_Vendors_Standards_Actors.md", "after": "### 2.5 GARM", "snippet": "post_garm_vacuum.html" },
   { "file": "03_Vendors_Standards_Actors.md", "after": "## 4. How the Three Layers Pay and Answer to One Another", "snippet": "actor_layers.html" },
   { "file": "06_Regional_EU_India_LATAM_AU.md", "after": "## 5. Cross-Regional Synthesis", "snippet": "regional_constraints.html" },
-  { "file": "Future_Trajectory.md", "after": "## The Scenarios", "snippet": "scenario_bands.html" }
+  { "file": "Future_Trajectory.md", "after": "## The Scenarios", "snippet": "scenario_bands.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "The address that vanished", "snippet": "scene_missing_address.html" },
+  { "file": "02_Technical_And_Measurement_Landscape.md", "after": "5.2 Why SSAI breaks verification and enables spoofing", "snippet": "scene_hidden_seam.html" }
 ]
