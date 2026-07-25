@@ -1,0 +1,49 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 468" role="img" aria-label="A four row inversion table compares web brand safety with CTV brand safety. The rows show ground truth, last-second veto, ad delivery trust, and fraud signature. Web has URL, browser script, client-side render, and low single digit protected IVT. CTV has app bundle, weak post-bid JavaScript, server side ad insertion, and 18 percent global open-programmatic CTV IVT.">
+<text x="350" y="28" text-anchor="middle" class="t-serif" style="font-size:15px;font-weight:700">THE WEB-TO-CTV INVERSION</text>
+<text x="350" y="48" text-anchor="middle" class="t-muted" style="font-size:10.5px">the old controls do not fail at the edge; the channel inverts their premises</text>
+<rect x="38" y="74" width="624" height="40" rx="3" class="f-t3"/>
+<text x="154" y="99" text-anchor="middle" class="t-inv" style="font-size:11px;font-weight:700">CONTROL</text>
+<text x="354" y="99" text-anchor="middle" class="t-inv" style="font-size:11px;font-weight:700">WEB</text>
+<text x="554" y="99" text-anchor="middle" class="t-inv" style="font-size:11px;font-weight:700">CTV</text>
+<g class="cv-rise" style="--d:.06s">
+<rect x="38" y="126" width="624" height="62" rx="3" class="f-panel" style="stroke:var(--border);stroke-width:1.1"/>
+<rect x="38" y="126" width="8" height="62" class="f-t1"/>
+<text x="154" y="151" text-anchor="middle" style="font-size:11px;font-weight:700">Ground truth</text>
+<text x="354" y="151" text-anchor="middle" class="t-mono" style="font-size:10px">site.page URL</text>
+<text x="354" y="168" text-anchor="middle" class="t-muted" style="font-size:9.5px">crawlable context</text>
+<text x="554" y="151" text-anchor="middle" class="t-mono" style="font-size:10px">app.bundle + sparse content</text>
+<text x="554" y="168" text-anchor="middle" class="t-muted" style="font-size:9.5px">0.73 biddable categories/program</text>
+</g>
+<g class="cv-rise" style="--d:.14s">
+<rect x="38" y="198" width="624" height="62" rx="3" class="f-panel" style="stroke:var(--border);stroke-width:1.1"/>
+<rect x="38" y="198" width="8" height="62" class="f-t4"/>
+<text x="154" y="223" text-anchor="middle" style="font-size:11px;font-weight:700">Last-second veto</text>
+<text x="354" y="223" text-anchor="middle" class="t-mono" style="font-size:10px">browser JS tag</text>
+<text x="354" y="240" text-anchor="middle" class="t-muted" style="font-size:9.5px">can inspect and block at render</text>
+<text x="554" y="223" text-anchor="middle" class="t-mono" style="font-size:10px">most TVs run no verifier JS</text>
+<text x="554" y="240" text-anchor="middle" class="t-muted" style="font-size:9.5px">blocking shifts pre-bid</text>
+</g>
+<g class="cv-rise" style="--d:.22s">
+<rect x="38" y="270" width="624" height="62" rx="3" class="f-panel" style="stroke:var(--border);stroke-width:1.1"/>
+<rect x="38" y="270" width="8" height="62" class="f-t2"/>
+<text x="154" y="295" text-anchor="middle" style="font-size:11px;font-weight:700">Delivery trust</text>
+<text x="354" y="295" text-anchor="middle" class="t-mono" style="font-size:10px">client-side render</text>
+<text x="354" y="312" text-anchor="middle" class="t-muted" style="font-size:9.5px">device reports the event</text>
+<text x="554" y="295" text-anchor="middle" class="t-mono" style="font-size:10px">SSAI server stitches stream</text>
+<text x="554" y="312" text-anchor="middle" class="t-muted" style="font-size:9.5px">the server becomes the trust seam</text>
+</g>
+<g class="cv-rise" style="--d:.3s">
+<rect x="38" y="342" width="624" height="62" rx="3" class="f-panel" style="stroke:var(--border);stroke-width:1.1"/>
+<rect x="38" y="342" width="8" height="62" class="f-t5"/>
+<text x="154" y="367" text-anchor="middle" style="font-size:11px;font-weight:700">Fraud signature</text>
+<text x="354" y="367" text-anchor="middle" class="t-mono" style="font-size:10px">browser-observable traces</text>
+<text x="354" y="384" text-anchor="middle" class="t-muted" style="font-size:9.5px">low-single-digit protected IVT</text>
+<text x="554" y="367" text-anchor="middle" class="t-mono" style="font-size:10px">device + bundle spoofing</text>
+<text x="554" y="384" text-anchor="middle" class="t-acc" style="font-size:10px;font-weight:700">18% global open CTV IVT</text>
+</g>
+<path d="M248 114 L248 404 M460 114 L460 404" class="ln-soft" style="stroke-width:1"/>
+<text x="350" y="440" text-anchor="middle" class="t-muted t-serif" style="font-size:10.5px;font-style:italic">CTV does not merely hide the page; it removes the browser, moves trust server-side, and raises the fraud premium.</text>
+</svg>
+<figcaption><strong>Fig. 2.</strong> CTV inverts the web model: the pre-bid gate has less content data, the post-bid gate often cannot execute, and SSAI moves the trust boundary to the server just as open-programmatic IVT rises to roughly 18% globally.</figcaption>
+</figure>

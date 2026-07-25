@@ -1,0 +1,8 @@
+[
+  { "file": "00_Six_Easy_Pieces.md", "after": "## The address that vanished", "snippet": "missing_page.html" },
+  { "file": "02_Technical_And_Measurement_Landscape.md", "after": "## 10. Synthesis: the web-to-CTV inversion", "snippet": "ctv_inversion.html" },
+  { "file": "03_Vendors_Standards_Actors.md", "after": "### 2.5 GARM", "snippet": "post_garm_vacuum.html" },
+  { "file": "03_Vendors_Standards_Actors.md", "after": "## 4. How the Three Layers Pay and Answer to One Another", "snippet": "actor_layers.html" },
+  { "file": "06_Regional_EU_India_LATAM_AU.md", "after": "## 5. Cross-Regional Synthesis", "snippet": "regional_constraints.html" },
+  { "file": "Future_Trajectory.md", "after": "## The Scenarios", "snippet": "scenario_bands.html" }
+]

@@ -1,0 +1,45 @@
+{
+  "aesthetic": "The Orphaned Floor — a standards workbook under the streaming glass",
+  "anchor": "The GARM Brand Safety Floor and Suitability Framework, IAB Tech Lab Content Taxonomy worksheets, MRC accreditation letters, TAG certification seals, and the OpenRTB app/content object read as a compliance binder whose crucial field is often blank.",
+  "rationale": "The corpus turns on a standards discipline built for readable web pages and forced onto app-based streaming television. Its native world is therefore not a glossy TV screen but the verification workbook beside it: taxonomy grids, audit stamps, bid-request forms, supply-chain attestations, and a missing program-title field. The structural metaphor is an orphaned floor: a shared minimum standard still embedded in tools after the body that maintained it dissolved. The palette uses verification teal for the surviving technical standard, caution clay for unsafe adjacency, taxonomy gold for suitability tiers, governance indigo for standards bodies, and muted plum for the private-list layer. The paper is a cool compliance sheet rather than a market terminal, separating it from the neighboring CTV trading and identity corpora.",
+  "light": {
+    "bg": "#f1f4ee",
+    "panel": "#ffffff",
+    "text": "#171b1e",
+    "muted": "#526167",
+    "accent": "#0f7280",
+    "border": "#ccd8d0",
+    "mark": "#d5ece7",
+    "cover-bg": "#e6eee9",
+    "t1": "#0f7280",
+    "t2": "#9f4128",
+    "t3": "#565d97",
+    "t4": "#9a7119",
+    "t5": "#80466d"
+  },
+  "dark": {
+    "bg": "#0f1412",
+    "panel": "#1a231f",
+    "text": "#e8ece8",
+    "muted": "#93a09b",
+    "accent": "#62c6ba",
+    "border": "#293732",
+    "mark": "#123b3c",
+    "cover-bg": "#111c19",
+    "t1": "#62c6ba",
+    "t2": "#e0704c",
+    "t3": "#9aa2e8",
+    "t4": "#d8b44b",
+    "t5": "#d486ba"
+  },
+  "fonts": {
+    "display": "Verdana, Geneva, 'Segoe UI', system-ui, sans-serif",
+    "body": "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
+    "mono": "'Courier New', Courier, 'DejaVu Sans Mono', ui-monospace, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\25a3   \\2713   \\25a3'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": ["#0f7280", "#9f4128", "#565d97", "#9a7119"]
+}

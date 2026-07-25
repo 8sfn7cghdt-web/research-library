@@ -7473,9 +7473,11 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
 /* trader cards */
 .fdd-roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem; }
 .fdd-trader { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.05rem 1.15rem;
-  display: flex; flex-direction: column;
+  display: flex; flex-direction: column; text-decoration: none; color: inherit;
   transition: transform .16s var(--ease), box-shadow .16s var(--ease), border-color .15s var(--ease); }
 .fdd-trader:hover { border-color: var(--fdblue); transform: translateY(-2px); box-shadow: var(--fdshadow); }
+.fdd-tr-cta { display: block; font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--fdblue); margin-top: .7rem; padding-top: .6rem; border-top: 1px solid var(--fdline); }
 .fdd-tr-top { display: flex; gap: .8rem; align-items: flex-start; }
 .fdd-tr-av { font-size: 1.6rem; line-height: 1; background: #0c1117; border: 1px solid var(--fdline);
   border-radius: 2px; padding: .5rem .55rem; }
@@ -7704,7 +7706,7 @@ def _fdd_roster(profiles, records=None, graded=None):
                  f'{"✓ hit" if v["hit"] else "✗ miss"} · Brier {v["brier"]:.3f}</span>' if v else "")
         conf = (p.get("confidence") or "medium").lower()
         cards.append(
-            f'<article class="fdd-trader">'
+            f'<a class="fdd-trader" href="../forecasters/{key}.html">'
             f'<div class="fdd-tr-top"><span class="fdd-tr-av">{p.get("avatar", "🎯")}</span>'
             f'<div><div class="fdd-tr-nm">{html.escape(p.get("name", ""))}</div>'
             f'<div class="fdd-tr-crit">{html.escape(p.get("criterion", ""))}</div></div>'
@@ -7715,7 +7717,8 @@ def _fdd_roster(profiles, records=None, graded=None):
             f'<span class="fdd-tag conf-{conf}">{conf} conf.</span>{rec_tag}{v_tag}</div>'
             f'<p class="fdd-tr-blurb">{html.escape(p.get("blurb", ""))}</p>'
             f'<div class="fdd-tr-ev"><b>Key evidence</b> · {html.escape(p.get("evidence", ""))}</div>'
-            f'</article>'
+            f'<span class="fdd-tr-cta">Full profile →</span>'
+            f'</a>'
         )
     return f'<div class="fdd-roster">{"".join(cards)}</div>'
 
@@ -10591,7 +10594,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             f'<p class="sub">{html.escape(card_sub)}</p>'
             f'<p class="meta">{" · ".join(meta_bits)}</p></div></a>'
         )
-        cards.append({"category": category, "html": card_html})
+        cards.append({"category": category, "html": card_html, "slug": corpus["slug"]})
         manifest.append({
             "slug": corpus["slug"],
             "title": corpus["title"],
@@ -10977,6 +10980,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 "meta": f"{dstats} — plus the desk's own wire, board, and glossary",
                 "cta": "Enter the desk →",
                 "accent": ("#0d5b68", "#62aab8"),
+                "cards": dcards,
+                "slugs": [c["slug"] for c in dcards],
             }
         inc = pcfg.get("include") or []
         takes_fp = "fingerprint" in inc

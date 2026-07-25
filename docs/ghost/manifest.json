@@ -49,6 +49,23 @@
         "Scott Adams",
         "Walt Whitman"
       ]
+    },
+    {
+      "date": "2026-07-25",
+      "weekday": "Saturday",
+      "edition_number": 8,
+      "file": "ghost/2026-07-25-ghost-of-times.html",
+      "lead_headline": "On Being Told America Has Reached a Dead End",
+      "lead_dek": "It is a curious thing that a nation should be pronounced childless by men who have never once considered the neighbours.",
+      "lead_writer": "G.K. Chesterton",
+      "writers": [
+        "G.K. Chesterton",
+        "Thomas Carlyle",
+        "Ernest Hemingway",
+        "C.G. Jung",
+        "Scott Adams",
+        "Walt Whitman"
+      ]
     }
   ]
 }

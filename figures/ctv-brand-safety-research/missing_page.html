@@ -1,0 +1,52 @@
+<figure class="corpus-fig" role="group">
+<svg viewBox="0 0 700 438" role="img" aria-label="A side by side diagram contrasts web brand safety with connected TV brand safety. On the web side a page URL is visible and feeds page crawl, context classifier, and pre-bid decision. On the CTV side the app bundle is visible but the show title field is blank, leaving the buyer to bid with app-level knowledge rather than program-level knowledge. The conclusion is that the missing page address is the central technical break.">
+<text x="350" y="28" text-anchor="middle" class="t-serif" style="font-size:15px;font-weight:700">THE ADDRESS THAT VANISHED</text>
+<text x="350" y="48" text-anchor="middle" class="t-muted" style="font-size:10.5px">web safety reads a page; CTV safety often receives an app and a blank content field</text>
+<rect x="36" y="76" width="288" height="300" rx="3" class="f-panel" style="stroke:var(--border);stroke-width:1.25"/>
+<rect x="376" y="76" width="288" height="300" rx="3" class="f-panel" style="stroke:var(--border);stroke-width:1.25"/>
+<text x="180" y="102" text-anchor="middle" class="t-serif" style="font-size:13px;font-weight:700">OPEN WEB</text>
+<text x="520" y="102" text-anchor="middle" class="t-serif" style="font-size:13px;font-weight:700">CONNECTED TV</text>
+<g class="cv-rise" style="--d:.05s">
+<rect x="62" y="126" width="236" height="42" rx="2" class="f-t1"/>
+<text x="180" y="143" text-anchor="middle" class="t-inv" style="font-size:11px;font-weight:700">site.page</text>
+<text x="180" y="158" text-anchor="middle" class="t-inv t-mono" style="font-size:9.5px">example.com/news/story</text>
+</g>
+<g class="cv-rise" style="--d:.1s">
+<rect x="402" y="126" width="236" height="42" rx="2" class="f-t3"/>
+<text x="520" y="143" text-anchor="middle" class="t-inv" style="font-size:11px;font-weight:700">app.bundle</text>
+<text x="520" y="158" text-anchor="middle" class="t-inv t-mono" style="font-size:9.5px">com.tubi.tv</text>
+</g>
+<path d="M180 170 L180 196" class="s-t1 cv-draw" pathLength="1" style="stroke-width:2"/>
+<path d="M520 170 L520 196" class="s-t3 cv-draw" pathLength="1" style="stroke-width:2;--d:.12s"/>
+<g class="cv-rise" style="--d:.16s">
+<rect x="80" y="198" width="200" height="36" rx="2" class="f-panel" style="stroke:var(--t1);stroke-width:1.15"/>
+<text x="180" y="220" text-anchor="middle" style="font-size:10.5px;font-weight:700">crawl the actual page</text>
+</g>
+<g class="cv-rise" style="--d:.18s">
+<rect x="420" y="198" width="200" height="36" rx="2" class="f-panel" style="stroke:var(--t2);stroke-width:1.15"/>
+<text x="520" y="214" text-anchor="middle" class="t-mono" style="font-size:10px;font-weight:700">content.title =</text>
+<text x="520" y="228" text-anchor="middle" class="t-acc" style="font-size:10px;font-weight:700">blank or sparse</text>
+</g>
+<path d="M180 236 L180 262" class="s-t1 cv-draw" pathLength="1" style="stroke-width:2;--d:.22s"/>
+<path d="M520 236 L520 262" class="s-t2 cv-draw" pathLength="1" style="stroke-width:2;--d:.24s"/>
+<g class="cv-rise" style="--d:.28s">
+<rect x="80" y="264" width="200" height="48" rx="2" class="f-panel" style="stroke:var(--border);stroke-width:1.15"/>
+<text x="180" y="284" text-anchor="middle" style="font-size:10.5px;font-weight:700">classify surrounding text</text>
+<text x="180" y="299" text-anchor="middle" class="t-muted" style="font-size:9.5px">independent, checkable ground truth</text>
+</g>
+<g class="cv-rise" style="--d:.3s">
+<rect x="420" y="264" width="200" height="48" rx="2" class="f-panel" style="stroke:var(--border);stroke-width:1.15"/>
+<text x="520" y="284" text-anchor="middle" style="font-size:10.5px;font-weight:700">infer from container</text>
+<text x="520" y="299" text-anchor="middle" class="t-muted" style="font-size:9.5px">app-level proxy, not show-level truth</text>
+</g>
+<path d="M180 314 L180 338" class="s-t1 cv-draw" pathLength="1" style="stroke-width:2;--d:.34s"/>
+<path d="M520 314 L520 338" class="s-t2 cv-draw" pathLength="1" style="stroke-width:2;--d:.36s"/>
+<rect x="74" y="340" width="212" height="24" rx="2" class="f-t1 cv-grow-right" style="--d:.38s"/>
+<text x="180" y="356" text-anchor="middle" class="t-inv" style="font-size:10px;font-weight:700">pre-bid + post-bid can both work</text>
+<rect x="414" y="340" width="212" height="24" rx="2" class="f-t2 cv-grow-right" style="--d:.4s"/>
+<text x="520" y="356" text-anchor="middle" class="t-inv" style="font-size:10px;font-weight:700">pre-bid is half-blind</text>
+<path d="M330 132 L370 132 M330 198 L370 198 M330 264 L370 264 M330 340 L370 340" class="ln-soft cv-draw" pathLength="1" style="stroke-width:1.25;--d:.44s"/>
+<text x="350" y="406" text-anchor="middle" class="t-muted t-serif" style="font-size:10.5px;font-style:italic">The lost URL turns brand safety from reading the placement into trusting the bid stream.</text>
+</svg>
+<figcaption><strong>Fig. 1.</strong> The page URL was the web&#8217;s safety primitive; CTV replaces it with an app bundle and a frequently empty content object, so suitability decisions move from checkable context to volunteered metadata.</figcaption>
+</figure>
