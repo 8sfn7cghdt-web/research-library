@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Lot Book — an auction house's consignment ledger, lit by a live trading board",
+  "anchor": "The single most useful thing to know about a supply-side platform is that it is an agent selling somebody else's goods on consignment. So the world here is an auction room and its paperwork: the lot catalogue printed on laid cream stock with numbered lots and reserve prices, the baize-green baize of the rostrum, brass fittings on the ledger, a red reserve stamp — crossed with the thing that has replaced the rostrum, a live trading board where the price is a number that moves in milliseconds. Light mode is the printed lot book; dark mode is the board at night, baize-black with the live price glowing citron.",
+  "rationale": "This corpus's structural argument is about consignment and the cut — who is selling whose inventory, and what fraction of the hammer price the agent keeps. That calls for a register of ledgers and live prices rather than dashboards or humanities plates: a condensed grotesque for lot-catalogue headlines, a clean sans for the brief-register body, and true monospace carrying real weight because the argument is made almost entirely in percentages (take rates, growth rates, share of contribution, CPM spreads). The accent is deliberately CITRON-OLIVE, chosen because it is the one hue genuinely unclaimed across the ad-tech shelf: it sits clear of the true greens of the protocols and DSP/SSP corpora, the teals of containerized bidding and IPv4, the cobalt of identity signals, the ambers and oranges of India, social retargeting and MiQ, the magentas of political and LATAM, and the spark-gold of Walmart-Vibe. Citron reads as a live quote on a dark board and as brass on cream — the two states this corpus lives in. The figure palette pairs it with baize green (the room and the seller), brass (the ledger and the fee), reserve red (the floor price and the risk the seller now underwrites), screen blue (the streaming surface being sold), and graphite for structure.",
+  "light": {
+    "bg": "#f7f5ee",
+    "panel": "#ecebe0",
+    "text": "#191c18",
+    "muted": "#5a5f56",
+    "accent": "#5c6b0f",
+    "border": "#d5d4c5",
+    "mark": "#eef2b0",
+    "cover-bg": "#e9e9db",
+    "t1": "#2f6f4f",
+    "t2": "#8a5a12",
+    "t3": "#a63426",
+    "t4": "#2b6480",
+    "t5": "#4a4f48"
+  },
+  "dark": {
+    "bg": "#10140e",
+    "panel": "#1d2418",
+    "text": "#e9ece4",
+    "muted": "#8d9487",
+    "accent": "#c3d94a",
+    "border": "#2a3323",
+    "mark": "#333d12",
+    "cover-bg": "#141a11",
+    "t1": "#5fc394",
+    "t2": "#d9a54a",
+    "t3": "#ef6f5c",
+    "t4": "#57b4d6",
+    "t5": "#b0b6a8"
+  },
+  "fonts": {
+    "display": "'Helvetica Neue Condensed', 'Arial Narrow', 'Helvetica Neue', Helvetica, 'Segoe UI', system-ui, sans-serif",
+    "body": "'Inter', 'Helvetica Neue', 'Segoe UI', Roboto, system-ui, sans-serif",
+    "mono": "'SF Mono', 'JetBrains Mono', 'Roboto Mono', 'Courier New', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2016   \\00a7   \\2016'",
+    "fig_radius": "3px"
+  },
+  "cover_palette": [
+    "#5c6b0f",
+    "#2f6f4f",
+    "#8a5a12",
+    "#a63426"
+  ]
+}

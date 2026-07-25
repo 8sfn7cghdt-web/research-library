@@ -340,6 +340,11 @@
       "title": "The Living-Room Handoff",
       "subtitle": "How social platforms — LinkedIn, Pinterest, Reddit, TikTok, Meta — extend their audiences onto Connected TV, and which ones credibly make the jump through 2029",
       "category": "Media & Advertising"
+    },
+    "ctv-ssp-research": {
+      "title": "The Seller's Agent",
+      "subtitle": "The supply-side platforms that carry programmatic CTV — and their bet on attention, outcomes and AI",
+      "category": "Media & Advertising"
     }
   },
   "corpora": [
@@ -377,7 +382,8 @@
     "../us-economy-financial-system-research",
     "../roman-catholicism-research",
     "../walmart-vibe-research",
-    "../social-ctv-retargeting-research"
+    "../social-ctv-retargeting-research",
+    "../ctv-ssp-research"
   ],
   "atlas": {
     "_comment": "Optional overrides for the Atlas stamp map. 'places' = {slug: {lon, lat, label, group}} pins a corpus (one uniform stamp each); 'groups' = {gid: {name, plate:[lon,lat] center, cols}} defines the callout plates. Defaults live in build.py (ATLAS_PLACEMENTS / ATLAS_GROUPS) — leave empty to use them."
