@@ -1,6 +1,14 @@
 {
   "pamphlets": [
     {
+      "slug": "mcluhan-on-pause-ad-standards",
+      "title": "The Message in the Gap",
+      "dek": "On the IAB Tech Lab's new signaling standard for pause ads, menu ads, and screensavers",
+      "writer": "Marshall McLuhan",
+      "subject": "CTV pause/menu/screensaver ad-format standardization",
+      "date": "2026-07-25"
+    },
+    {
       "slug": "carlyle-on-mrc-measurement-withdrawal",
       "title": "The Withdrawn Witness",
       "dek": "On the Nielsen ONE Ads and VideoAmp withdrawals from Media Rating Council audit",
