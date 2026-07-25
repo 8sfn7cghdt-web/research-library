@@ -10107,8 +10107,13 @@ CONNECTIONS_CSS = """
   opacity: 0; transition: opacity .15s ease; pointer-events: none; }
 #cx-info.show { opacity: 1; }
 #cx-info .cx-i-t { display: block; font-family: var(--display); font-size: 1.12rem; line-height: 1.2; }
-#cx-info .cx-i-n { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .35rem 0 .45rem; line-height: 1.45; }
-#cx-info .cx-i-cta { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
+#cx-info .cx-i-n { display: block; font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: .35rem 0 .55rem; line-height: 1.45; }
+#cx-info .cx-i-list { margin: 0; padding: 0; list-style: none; display: grid; gap: .45rem; }
+#cx-info .cx-i-item { display: grid; gap: .1rem; padding-top: .45rem; border-top: 1px solid var(--border); }
+#cx-info .cx-i-item:first-child { padding-top: 0; border-top: 0; }
+#cx-info .cx-i-link { font-family: var(--sans); font-size: .74rem; font-weight: 700; color: var(--text); }
+#cx-info .cx-i-why { font-family: var(--sans); font-size: .72rem; color: var(--muted); line-height: 1.4; }
+#cx-info .cx-i-cta { display: block; margin-top: .65rem; font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--accent); }
 .cx-hint { text-align: center; font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase; letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--muted); margin: .9rem 0 0; }
 .cx-foot { max-width: 1120px; margin: 2rem auto 0; padding: 1.4rem 2rem 3rem; border-top: 1px solid var(--border); text-align: center; }
 .cx-foot .colophon { font-family: var(--mono); font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 0; }
@@ -10121,7 +10126,9 @@ CONNECTIONS_JS = r"""
   var svg = document.getElementById('cx-svg'); if (!svg) return;
   var base = window.SHELL_BASE || '';
   var dEl = document.getElementById('cx-data');
-  var titles = (dEl && JSON.parse(dEl.textContent || '{}').titles) || {};
+  var data = (dEl && JSON.parse(dEl.textContent || '{}')) || {};
+  var titles = data.titles || {};
+  var reasons = data.reasons || {};
   var info = document.getElementById('cx-info');
   var nodes = [].slice.call(svg.querySelectorAll('.cx-node'));
   var edges = [].slice.call(svg.querySelectorAll('.cx-edge'));
@@ -10136,9 +10143,13 @@ CONNECTIONS_JS = r"""
     nodes.forEach(function (m) { if (nbr.indexOf(m.getAttribute('data-slug')) >= 0) m.classList.add('adj'); });
     edges.forEach(function (e) { var a = e.getAttribute('data-a'), b = e.getAttribute('data-b'); e.classList.toggle('lit', a === slug || b === slug); });
     if (info) {
-      var links = nbr.map(function (s) { return titles[s] || s; });
+      var links = nbr.map(function (s) {
+        return '<li class="cx-i-item"><span class="cx-i-link">' + esc(titles[s] || s) + '</span>'
+          + '<span class="cx-i-why">' + esc((reasons[slug] && reasons[slug][s]) || 'They share overlapping themes.') + '</span></li>';
+      }).join('');
       info.innerHTML = '<span class="cx-i-t">' + esc(titles[slug] || slug) + '</span>'
-        + '<span class="cx-i-n">' + (links.length ? 'Connects to ' + esc(links.join(' · ')) : 'No strong links yet') + '</span>'
+        + '<span class="cx-i-n">' + (nbr.length ? 'Why these connections show up:' : 'No strong links yet.') + '</span>'
+        + (nbr.length ? '<ul class="cx-i-list">' + links + '</ul>' : '')
         + '<span class="cx-i-cta">Open corpus →</span>';
       info.classList.add('show');
     }
@@ -10202,7 +10213,7 @@ def build_connections_page(out_dir, corpora, category_order, shell=""):
     nodes = [c for c in corpora if c.get("kind") == "corpus"]
     if len(nodes) < 2:
         return False
-    by = {n["slug"]: n for n in nodes}
+    by_slug = {n["slug"]: n for n in nodes}
     seen = []
     for c in (category_order or []):
         if any(n["category"] == c for n in nodes) and c not in seen:
@@ -10234,7 +10245,7 @@ def build_connections_page(out_dir, corpora, category_order, shell=""):
     edges = set()
     for n in nodes:
         for r in n.get("related", []):
-            if r.get("slug") in by:
+            if r.get("slug") in by_slug:
                 edges.add(tuple(sorted((n["slug"], r["slug"]))))
     nbr = {n["slug"]: set() for n in nodes}
     for a, b in edges:
@@ -10262,12 +10273,16 @@ def build_connections_page(out_dir, corpora, category_order, shell=""):
     parts.append('</g></svg>')
     legend = "".join(f'<span class="cx-leg"><i style="background:{cat_color[c]}"></i>{html.escape(c)}</span>' for c in seen)
     titles = {n["slug"]: n["title"] for n in nodes}
+    reasons = {
+        n["slug"]: {r["slug"]: r.get("reason", "") for r in n.get("related", []) if r.get("slug") in by_slug}
+        for n in nodes
+    }
     page = CONNECTIONS_TEMPLATE.format(
         css=LIBRARY_CSS + SCENE_PLATE_CSS + CONNECTIONS_CSS, favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(active="connections.html"),
         svg="".join(parts), legend=legend,
         scene=scene_plate("map", extra_class="page-scene"),
-        data_json=json_for_html({"titles": titles}),
+        data_json=json_for_html({"titles": titles, "reasons": reasons}),
         theme_js=LIBRARY_THEME_JS, app_js=CONNECTIONS_JS, shell=shell,
     )
     (out / "connections.html").write_text(page)
@@ -10308,6 +10323,27 @@ _STOPWORDS = set((
 def _keywords(text):
     """Lowercased content-word set for the similarity graph (stopwords/short words dropped)."""
     return {t for t in re.findall(r"[a-z][a-z'\-]{3,}", text.lower()) if t not in _STOPWORDS}
+
+
+def _connection_reason(a, b, limit=3):
+    """Short plain-language explanation for why two corpora connect."""
+    shared = sorted(a["keywords"] & b["keywords"], key=lambda w: (-len(w), w))
+    picks = []
+    for word in shared:
+        if word in picks:
+            continue
+        picks.append(word.replace("-", " "))
+        if len(picks) == limit:
+            break
+    if picks:
+        if len(picks) == 1:
+            return f"Both spend time on {picks[0]}."
+        if len(picks) == 2:
+            return f"Both spend time on {picks[0]} and {picks[1]}."
+        return f"Both spend time on {', '.join(picks[:-1])}, and {picks[-1]}."
+    if a["category"] == b["category"]:
+        return f"Both sit in {a['category']}."
+    return "They share overlapping themes."
 
 
 def _clean_passage(text, max_len=260):
@@ -10491,7 +10527,7 @@ def build_similarity(corpus_meta, top_k=3):
             scored.append((score, b))
         scored.sort(key=lambda x: x[0], reverse=True)
         out[a["slug"]] = [
-            {"slug": b["slug"], "title": b["title"], "category": b["category"]}
+            {"slug": b["slug"], "title": b["title"], "category": b["category"], "reason": _connection_reason(a, b)}
             for s, b in scored[:top_k] if s > 0
         ]
     return out
@@ -10947,7 +10983,9 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
     title = page_cfg.get("title") or dom.get("title", "The Desk")
     kicker = page_cfg.get("kicker", "A separate desk")
     subtitle = page_cfg.get("subtitle", dom.get("title", ""))
-    body = _pane_grid_html(dom_cards, cat_order, placeholder="Search the desk…")
+    scene_kind = "research" if slug == "research" else "briefing"
+    search_placeholder = "Search the library..." if slug == "research" else "Search the desk..."
+    body = _pane_grid_html(dom_cards, cat_order, placeholder=search_placeholder)
     og = og_tags(title, subtitle or title, f"{SITE_URL}/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
     (out / f"{slug}.html").write_text(DOMAIN_PAGE_TEMPLATE.format(
         title=html.escape(title),
@@ -10963,7 +11001,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
         stats=html.escape(stats),
         folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
-        scene=scene_plate("briefing", extra_class="section-scene"),
+        scene=scene_plate(scene_kind, extra_class="section-scene"),
         hero=desk_hero_art(slug),
         bands=bands,
         tools=tools,
