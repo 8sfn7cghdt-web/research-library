@@ -12,11 +12,11 @@
 <meta property="og:title" content="Machine Humanities — Agentic Scholarship">
 <meta property="og:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">
 <meta property="og:url" content="https://calvincollins.xyz/">
-<meta property="og:image" content="https://calvincollins.xyz/aiforhumanities.png">
+<meta property="og:image" content="https://calvincollins.xyz/machine-humanities-homepage.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Machine Humanities — Agentic Scholarship">
 <meta name="twitter:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">
-<meta name="twitter:image" content="https://calvincollins.xyz/aiforhumanities.png">
+<meta name="twitter:image" content="https://calvincollins.xyz/machine-humanities-homepage.png">
 <style>
 :root {
   /* paper + ink */
@@ -110,8 +110,9 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .coll-meta { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums;
   color: var(--muted); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
-/* Today's Passage — the daily pull-quote hook pinned atop the index. */
-#daily-passage { max-width: 1120px; margin: 1.6rem auto 0; padding: 0 2rem; }
+/* Today's Passage — the daily pull-quote, mirrored in a pair atop the index
+   (see .mirror-head / .dp-pane in HOME_MIRROR_CSS). */
+.dp-pane[hidden] { display: none; }
 .dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
   background: var(--bg); border: 1px solid var(--border); border-top: 3px solid var(--accent);
   border-radius: 0; padding: 1.4rem 1.6rem 1.3rem; box-shadow: none;
@@ -158,7 +159,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
 /* The Ghost of Times announcement row — first entry in the ruled announcements column. */
 .ghost-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+.ghost-band a { display: grid; grid-template-columns: auto minmax(118px, 142px) 1fr auto; align-items: center; gap: 1.6rem;
   text-decoration: none; color: var(--text); background: transparent; border: 0; border-top: 1px solid var(--border);
   border-radius: 0; box-shadow: none; padding: 1.3rem 0 1.4rem; position: relative; }
 .ghost-band a:hover .gb-lead { color: var(--accent); }
@@ -185,6 +186,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 680px) {
   .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+  .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
   .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
 }
@@ -305,6 +307,84 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   .mh-nav a::after, .mh-nav a:hover::after, .mh-nav a.active::after {
     transition-duration: .01ms !important;
   }
+}
+
+/* Scene plates — small, content-depicting CSS scenes used where the periodicals
+   and essay racks used to be typography-only. */
+.scene-plate { --sc-accent: var(--accent); --sc-ink: var(--text); --sc-paper: var(--panel);
+  --sc-soft: color-mix(in srgb, var(--muted) 32%, transparent);
+  --sc-bg-a: color-mix(in srgb, var(--panel) 88%, var(--bg));
+  --sc-bg-b: color-mix(in srgb, var(--bg) 80%, var(--accent) 20%);
+  position: relative; display: block; width: 100%; aspect-ratio: 3 / 2; overflow: hidden;
+  margin: 0; border: 1px solid var(--border); border-radius: 2px; background:
+    linear-gradient(180deg, var(--sc-bg-a), var(--sc-bg-b)); box-shadow: none; }
+[data-theme="dark"] .scene-plate { --sc-soft: color-mix(in srgb, var(--muted) 42%, transparent);
+  --sc-bg-a: color-mix(in srgb, var(--panel) 86%, #000 14%);
+  --sc-bg-b: color-mix(in srgb, var(--bg) 72%, var(--accent) 28%); }
+.scene-plate > span { position: absolute; display: block; }
+.sc-sky { inset: 0; background:
+  linear-gradient(90deg, transparent 0 48%, color-mix(in srgb, var(--sc-accent) 12%, transparent) 48% 49%, transparent 49%),
+  radial-gradient(circle at 78% 24%, color-mix(in srgb, var(--sc-accent) 28%, transparent), transparent 20%); opacity: .9; }
+.sc-floor { left: 0; right: 0; bottom: 0; height: 31%; background:
+  linear-gradient(180deg, color-mix(in srgb, var(--sc-ink) 10%, transparent), transparent 22%),
+  repeating-linear-gradient(90deg, color-mix(in srgb, var(--sc-ink) 12%, transparent) 0 1px, transparent 1px 20px); }
+.sc-table { left: 10%; right: 8%; bottom: 17%; height: 8%; background: var(--sc-ink); opacity: .8; }
+.sc-table::before, .sc-table::after { content: ""; position: absolute; top: 100%; width: 3px; height: 42px; background: var(--sc-ink); opacity: .65; }
+.sc-table::before { left: 12%; } .sc-table::after { right: 12%; }
+.sc-paper { background: color-mix(in srgb, var(--bg) 72%, #fff 28%); border: 1px solid var(--border);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--sc-ink) 12%, transparent); }
+.sc-p1 { width: 25%; height: 18%; left: 16%; bottom: 28%; transform: rotate(-7deg); }
+.sc-p2 { width: 22%; height: 15%; left: 38%; bottom: 31%; transform: rotate(4deg); }
+.sc-p3 { width: 18%; height: 13%; right: 17%; bottom: 29%; transform: rotate(-2deg); }
+.sc-line { height: 2px; background: var(--sc-accent); opacity: .72; }
+.sc-l1 { width: 15%; left: 20%; bottom: 39%; transform: rotate(-7deg); }
+.sc-l2 { width: 13%; left: 43%; bottom: 40%; transform: rotate(4deg); }
+.sc-l3 { width: 10%; right: 21%; bottom: 37%; transform: rotate(-2deg); }
+.sc-window { top: 15%; height: 28%; border: 1px solid var(--border);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sc-accent) 10%, transparent), transparent); }
+.sc-window::before { content: ""; position: absolute; inset: 50% 0 auto; border-top: 1px solid var(--border); }
+.sc-window::after { content: ""; position: absolute; inset: 0 50% 0 auto; border-left: 1px solid var(--border); }
+.sc-w1 { left: 12%; width: 20%; } .sc-w2 { right: 12%; width: 20%; }
+.sc-lamp { width: 9%; height: 22%; left: 48%; bottom: 34%; border-left: 2px solid var(--sc-ink); }
+.sc-lamp::before { content: ""; position: absolute; left: -13px; top: -3px; width: 28px; height: 13px;
+  background: var(--sc-accent); clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%); }
+.sc-glow { width: 22%; height: 15%; left: 40%; bottom: 27%; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sc-accent) 33%, transparent), transparent 68%);
+  opacity: .75; }
+.sc-screen { background: color-mix(in srgb, var(--sc-ink) 86%, #000 14%); border: 1px solid var(--border); }
+.sc-screen::before { content: ""; position: absolute; left: 10%; right: 10%; top: 28%; height: 2px;
+  background: var(--sc-accent); box-shadow: 0 8px 0 color-mix(in srgb, var(--sc-accent) 55%, transparent), 0 16px 0 var(--sc-soft); }
+.sc-s1 { width: 24%; height: 22%; left: 11%; top: 17%; }
+.sc-s2 { width: 21%; height: 18%; left: 39%; top: 12%; }
+.sc-s3 { width: 24%; height: 22%; right: 11%; top: 17%; }
+.sc-roller { height: 12%; border-radius: 999px; background: var(--sc-ink); opacity: .82; }
+.sc-r1 { left: 18%; right: 18%; bottom: 36%; }
+.sc-r2 { left: 26%; right: 26%; bottom: 50%; background: var(--sc-accent); opacity: .72; }
+.sc-tower { left: 50%; top: 22%; width: 2px; height: 35%; background: var(--sc-accent); opacity: .9; }
+.sc-tower::before, .sc-tower::after { content: ""; position: absolute; left: 50%; top: -16%;
+  width: 72px; height: 72px; border: 1px solid var(--sc-accent); border-bottom: 0; border-radius: 72px 72px 0 0;
+  transform: translateX(-50%); opacity: .55; }
+.sc-tower::after { top: -32%; width: 110px; height: 110px; opacity: .32; }
+.scene-ghost { --sc-accent: #9a2c1a; }
+[data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }
+.scene-ghost .sc-screen, .scene-ghost .sc-roller, .scene-ghost .sc-tower { display: none; }
+.scene-fingerprint, .scene-briefing { --sc-accent: #0d5b68; }
+[data-theme="dark"] .scene-fingerprint, [data-theme="dark"] .scene-briefing { --sc-accent: #62aab8; }
+.scene-fingerprint .sc-window, .scene-fingerprint .sc-lamp, .scene-fingerprint .sc-glow,
+.scene-fingerprint .sc-paper, .scene-fingerprint .sc-line, .scene-fingerprint .sc-roller { display: none; }
+.scene-pamphlet .sc-window, .scene-pamphlet .sc-screen, .scene-pamphlet .sc-lamp, .scene-pamphlet .sc-glow,
+.scene-pamphlet .sc-tower { display: none; }
+.scene-briefing .sc-window, .scene-briefing .sc-lamp, .scene-briefing .sc-glow,
+.scene-briefing .sc-roller, .scene-briefing .sc-tower { display: none; }
+.scene-briefing .sc-paper { bottom: 25%; }
+.scene-plate.band-scene { width: 142px; min-width: 142px; }
+.scene-plate.section-scene { max-width: 560px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.feature-scene { margin: 0 0 1rem; }
+.scene-plate.article-scene, .scene-plate.edition-scene { max-width: 620px; margin: 0 auto 2rem; }
+.scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
+@media (max-width: 680px) {
+  .scene-plate.band-scene { width: 100%; min-width: 0; max-width: 320px; }
+  .scene-plate.section-scene { margin-top: .9rem; }
 }
 
 /* A single Ghost of Times edition — the corpus reader's reading column in
@@ -464,6 +544,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
       <span>5 writers</span>
     </div>
   </header>
+  <figure class="scene-plate scene-ghost edition-scene" role="img" aria-label="A late-night editorial room with a lamp, marked pages, and a window beyond the desk."><span class="sc-sky"></span><span class="sc-floor"></span><span class="sc-window sc-w1"></span><span class="sc-window sc-w2"></span><span class="sc-screen sc-s1"></span><span class="sc-screen sc-s2"></span><span class="sc-screen sc-s3"></span><span class="sc-table"></span><span class="sc-lamp"></span><span class="sc-glow"></span><span class="sc-paper sc-p1"></span><span class="sc-paper sc-p2"></span><span class="sc-paper sc-p3"></span><span class="sc-line sc-l1"></span><span class="sc-line sc-l2"></span><span class="sc-line sc-l3"></span><span class="sc-roller sc-r1"></span><span class="sc-roller sc-r2"></span><span class="sc-tower"></span></figure>
   <nav id="gh-contents"></nav>
   <div id="gh-pieces"></div>
   <section id="gh-facts"></section>

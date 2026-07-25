@@ -1,5 +1,5 @@
 [
-  { "file": "02_The_Addressability_Stack.md", "after": "## How to read this document", "snippet": "stack_anatomy.html" },
+  { "file": "02_The_Addressability_Stack.md", "after": "## How to read what follows", "snippet": "stack_anatomy.html" },
   { "file": "01_Origins_And_Modern_Arc.md", "after": "## 3. The CTV-specific arc", "snippet": "spend_climb.html" },
   { "file": "03_Players_And_Market_Structure.md", "after": "## 1.1 The accept/refuse map", "snippet": "refuser_split.html" },
   { "file": "04_Ad_Impact_And_Effectiveness.md", "after": "## 3. The Measurement-Validity Problem", "snippet": "reach_vs_effect.html" },

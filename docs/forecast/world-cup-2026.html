@@ -12,11 +12,11 @@
 <meta property="og:title" content="Who Will Win the 2026 World Cup">
 <meta property="og:description" content="Who will win the 2026 FIFA World Cup?">
 <meta property="og:url" content="https://calvincollins.xyz/forecast/world-cup-2026.html">
-<meta property="og:image" content="https://calvincollins.xyz/aiforhumanities.png">
+<meta property="og:image" content="https://calvincollins.xyz/machine-humanities-homepage.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Who Will Win the 2026 World Cup">
 <meta name="twitter:description" content="Who will win the 2026 FIFA World Cup?">
-<meta name="twitter:image" content="https://calvincollins.xyz/aiforhumanities.png">
+<meta name="twitter:image" content="https://calvincollins.xyz/machine-humanities-homepage.png">
 <style>
 :root {
   /* paper + ink */
@@ -110,8 +110,9 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .coll-meta { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums;
   color: var(--muted); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
-/* Today's Passage — the daily pull-quote hook pinned atop the index. */
-#daily-passage { max-width: 1120px; margin: 1.6rem auto 0; padding: 0 2rem; }
+/* Today's Passage — the daily pull-quote, mirrored in a pair atop the index
+   (see .mirror-head / .dp-pane in HOME_MIRROR_CSS). */
+.dp-pane[hidden] { display: none; }
 .dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
   background: var(--bg); border: 1px solid var(--border); border-top: 3px solid var(--accent);
   border-radius: 0; padding: 1.4rem 1.6rem 1.3rem; box-shadow: none;
@@ -158,7 +159,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
 /* The Ghost of Times announcement row — first entry in the ruled announcements column. */
 .ghost-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+.ghost-band a { display: grid; grid-template-columns: auto minmax(118px, 142px) 1fr auto; align-items: center; gap: 1.6rem;
   text-decoration: none; color: var(--text); background: transparent; border: 0; border-top: 1px solid var(--border);
   border-radius: 0; box-shadow: none; padding: 1.3rem 0 1.4rem; position: relative; }
 .ghost-band a:hover .gb-lead { color: var(--accent); }
@@ -185,6 +186,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 680px) {
   .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+  .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
   .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
 }
@@ -473,6 +475,26 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fd-out.lost .fd-track, .fd-out.lost .pc { opacity: .5; }
 .fd-out.won .nm { color: var(--fdup); font-weight: 800; }
 .fd-tk .dn { color: var(--fddn); font-weight: 700; }
+
+/* mini predictor roster — pinned atop every board, links to full profiles */
+.fdm-roster { margin: 0 0 1.4rem; }
+.fdm-roster-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); margin: 0 0 .5rem; }
+.fdm-cmp { color: var(--fdblue); text-decoration: none; }
+.fdm-cmp:hover { text-decoration: underline; }
+.fdm-roster-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .55rem; }
+.fdm-card { display: flex; flex-direction: column; align-items: center; gap: .2rem; text-align: center;
+  text-decoration: none; color: inherit; background: var(--fdcard); border: 1px solid var(--fdline);
+  border-top: 3px solid var(--fdmut); border-radius: 2px; padding: .6rem .4rem .55rem;
+  transition: transform .12s var(--ease), border-color .12s var(--ease); }
+.fdm-card:hover { transform: translateY(-2px); border-color: var(--fdblue); }
+.fdm-av { font-size: 1.3rem; line-height: 1; }
+.fdm-nm { font-family: var(--sans); font-size: .64rem; font-weight: 700; line-height: 1.2; }
+.fdm-rec { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fdm-bank { font-family: var(--fdmono); font-size: .64rem; color: var(--fdgold); font-variant-numeric: tabular-nums; }
+@media (max-width: 720px) { .fdm-roster-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .fdm-roster-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .fd-live.graded:hover { border-color: var(--fdgold); }
 .fd-live-grid.graded { grid-template-columns: auto auto 1fr; }
 .fd-live-pick.won { border-color: var(--fdup); }
@@ -788,6 +810,25 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   transform: translate(-50%, -50%); border: 2px solid #10161f; }
 .fdt-p-link { display: block; text-decoration: none; color: inherit; transition: transform .12s, border-color .12s; }
 .fdt-p-link:hover { transform: translateY(-2px); border-color: var(--fdup) !important; }
+
+/* predictor comparison table */
+.cmp-wrap { overflow-x: auto; border: 1px solid var(--fdline); border-radius: 2px; background: var(--fdcard); }
+.cmp-table { border-collapse: collapse; width: 100%; min-width: 960px; }
+.cmp-table th, .cmp-table td { border-bottom: 1px solid var(--fdline); padding: .75rem .85rem; text-align: left;
+  vertical-align: top; font-family: var(--sans); font-size: .78rem; color: var(--fdmut); }
+.cmp-table tbody tr:last-child th, .cmp-table tbody tr:last-child td { border-bottom: none; }
+.cmp-table thead th { background: #0c1117; }
+.cmp-table tbody th { font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--fdtext); white-space: nowrap; position: sticky; left: 0; background: var(--fdcard); }
+.cmp-persona { border-top: 3px solid var(--fdmut); min-width: 190px; }
+.cmp-persona a { display: flex; flex-direction: column; align-items: center; gap: .3rem; text-decoration: none; color: inherit; }
+.cmp-av { font-size: 1.5rem; line-height: 1; }
+.cmp-nm { font-family: var(--sans); font-weight: 800; font-size: .82rem; color: var(--fdtext); }
+.cmp-persona a:hover .cmp-nm { color: var(--fdblue); }
+.cmp-crit, .cmp-prose, .cmp-sig { display: block; font-family: var(--serif); font-style: italic; font-size: .88rem;
+  line-height: 1.55; color: #c6d0e0; }
+.cmp-zone { display: block; font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--fdmut); margin-bottom: .4rem; }
 </style>
 </head>
 <body>

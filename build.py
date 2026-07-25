@@ -63,8 +63,9 @@ FAVICON = ("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='
 # build the ABSOLUTE og:image URL link-preview scrapers (iMessage, Slack, etc.)
 # require — relative paths are ignored by them.
 SITE_URL = "https://calvincollins.xyz"
-OG_IMAGE = "aiforhumanities.png"  # source lives in corpus-app/; copied into out/ at build time
-USE_HERO_IMAGE = False  # Rose Main: hero is the engraved lintel SVG. Flip to True to restore the PNG hero.
+OG_IMAGE = "machine-humanities-homepage.png"  # source lives in corpus-app/; copied into out/ at build time
+HERO_IMAGE = OG_IMAGE
+USE_HERO_IMAGE = True  # Use the Machine Humanities homepage visual; flip to False for the engraved lintel SVG.
 
 # Open Graph + Twitter card tags so a shared link renders a rich preview with an
 # image. The result is passed as a VALUE into each template's .format() (never as
@@ -863,17 +864,16 @@ def hero_svg():
 
 
 def hero_art():
-    """The library hero. When USE_HERO_IMAGE is on, uses aiforhumanities.<ext> if present
-    (base64-embedded so index.html stays self-contained); otherwise the engraved lintel SVG.
-    The PNG stays on disk (one-line revert via USE_HERO_IMAGE); OG_IMAGE link previews unchanged."""
+    """The library hero. When USE_HERO_IMAGE is on, embeds HERO_IMAGE if present;
+    otherwise uses the engraved lintel SVG. The image is base64-embedded so
+    index.html stays self-contained."""
     if USE_HERO_IMAGE:
-        for ext in COVER_EXTS:
-            img = HERE / f"aiforhumanities{ext}"
-            if img.exists():
-                mime = mimetypes.guess_type(img.name)[0] or "image/png"
-                b64 = base64.b64encode(img.read_bytes()).decode("ascii")
-                return (f"<img class='hero-img' src='data:{mime};base64,{b64}' "
-                        "alt='Machine Humanities' decoding='async'>")
+        img = HERE / HERO_IMAGE
+        if img.exists():
+            mime = mimetypes.guess_type(img.name)[0] or "image/png"
+            b64 = base64.b64encode(img.read_bytes()).decode("ascii")
+            return (f"<img class='hero-img' src='data:{mime};base64,{b64}' "
+                    "alt='Machine Humanities' decoding='async'>")
     return hero_svg()
 
 
@@ -1121,7 +1121,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
     linear-gradient(180deg, var(--text) 0 3px, transparent 3px 5px, var(--text) 5px 6px, transparent 6px) 36px 0 / 112px 8px no-repeat; }
 #content h2 { font-family: var(--display); font-weight: 600; font-size: 1.45rem; margin-top: 2.6rem; line-height: 1.3; }
 #content h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 600; }
-#content a { color: var(--accent); text-underline-offset: .18em; }
+#content a { color: var(--accent); text-underline-offset: .18em; overflow-wrap: anywhere; }
 #content a:hover { text-decoration-thickness: 1.5px; }
 /* injected chapter feature well: ruled mono byline + drop cap on the opening paragraph */
 #content .ch-byline { font-family: var(--mono); font-size: .68rem; font-weight: 500;
@@ -1132,7 +1132,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   float: left; font-size: 3.1em; line-height: .74; padding: .05em .09em 0 0; color: var(--accent); }
 #content blockquote { margin: 1.6rem 0; padding: .15rem 0 .15rem 1.2rem; border-left: 2px solid var(--accent);
   background: transparent; border-radius: 0; color: var(--muted); font-style: italic; }
-#content code { background: var(--panel); padding: .1em .35em; border-radius: 2px; font-size: .88em; }
+#content code { background: var(--panel); padding: .1em .35em; border-radius: 2px; font-size: .88em; overflow-wrap: anywhere; }
 #content pre { background: var(--panel); padding: 1rem; border-radius: 2px; overflow-x: auto; }
 #content pre code { background: none; padding: 0; }
 #content table { border-collapse: collapse; font-family: var(--sans); font-size: .85rem; width: 100%; margin: 1.2rem 0; }
@@ -3188,20 +3188,11 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   </div>
   <div class="hero-art">{hero}</div>
 </header>
-{hub}
-{daily_passage}
-{resume}
-{foryou}
-{ghost_band}
-{fingerprint_band}
-{pamphlets_band}
-{forecast_band}
-<h2 class="section-title" id="library">The Research Library</h2>
-<main class="library">
-{cards}
-</main>
+{ticker}
+{mirror}
 {collections}
 {quiz}
+{bottom_scrolls}
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">“The medium is the message.” — Marshall McLuhan</p>
@@ -3226,16 +3217,127 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 # own #theme-btn get a floating toggle from shell_html().
 LIBRARY_THEME_JS = ""
 
-# Live category filter + text search for the library index. Category pills and the
-# search box combine: a card shows only if it matches the active category AND the
-# search term. Empty category sections hide their heading; a message shows if nothing matches.
+SCENE_LABELS = {
+    "ghost": "A late-night editorial room with a lamp, marked pages, and a window beyond the desk.",
+    "fingerprint": "A market-wire signal room with screens, broadcast arcs, and ticker bars.",
+    "pamphlet": "A letterpress table with fresh pamphlet sheets, rollers, and a locked-up chase.",
+    "briefing": "A briefing desk with screens, notes, and trade signals arranged for review.",
+}
+
+
+def scene_plate(kind, label=None, extra_class=""):
+    """A small CSS-built scene plate. It uses shared spans; each `scene-*`
+    class turns them into the relevant visual setting."""
+    kind = kind if kind in SCENE_LABELS else "pamphlet"
+    cls = f"scene-plate scene-{kind}" + (f" {extra_class}" if extra_class else "")
+    aria = html.escape(label or SCENE_LABELS[kind], quote=True)
+    return (
+        f'<figure class="{html.escape(cls, quote=True)}" role="img" aria-label="{aria}">'
+        '<span class="sc-sky"></span><span class="sc-floor"></span>'
+        '<span class="sc-window sc-w1"></span><span class="sc-window sc-w2"></span>'
+        '<span class="sc-screen sc-s1"></span><span class="sc-screen sc-s2"></span><span class="sc-screen sc-s3"></span>'
+        '<span class="sc-table"></span><span class="sc-lamp"></span><span class="sc-glow"></span>'
+        '<span class="sc-paper sc-p1"></span><span class="sc-paper sc-p2"></span><span class="sc-paper sc-p3"></span>'
+        '<span class="sc-line sc-l1"></span><span class="sc-line sc-l2"></span><span class="sc-line sc-l3"></span>'
+        '<span class="sc-roller sc-r1"></span><span class="sc-roller sc-r2"></span><span class="sc-tower"></span>'
+        '</figure>'
+    )
+
+
+SCENE_PLATE_CSS = """
+/* Scene plates — small, content-depicting CSS scenes used where the periodicals
+   and essay racks used to be typography-only. */
+.scene-plate { --sc-accent: var(--accent); --sc-ink: var(--text); --sc-paper: var(--panel);
+  --sc-soft: color-mix(in srgb, var(--muted) 32%, transparent);
+  --sc-bg-a: color-mix(in srgb, var(--panel) 88%, var(--bg));
+  --sc-bg-b: color-mix(in srgb, var(--bg) 80%, var(--accent) 20%);
+  position: relative; display: block; width: 100%; aspect-ratio: 3 / 2; overflow: hidden;
+  margin: 0; border: 1px solid var(--border); border-radius: 2px; background:
+    linear-gradient(180deg, var(--sc-bg-a), var(--sc-bg-b)); box-shadow: none; }
+[data-theme="dark"] .scene-plate { --sc-soft: color-mix(in srgb, var(--muted) 42%, transparent);
+  --sc-bg-a: color-mix(in srgb, var(--panel) 86%, #000 14%);
+  --sc-bg-b: color-mix(in srgb, var(--bg) 72%, var(--accent) 28%); }
+.scene-plate > span { position: absolute; display: block; }
+.sc-sky { inset: 0; background:
+  linear-gradient(90deg, transparent 0 48%, color-mix(in srgb, var(--sc-accent) 12%, transparent) 48% 49%, transparent 49%),
+  radial-gradient(circle at 78% 24%, color-mix(in srgb, var(--sc-accent) 28%, transparent), transparent 20%); opacity: .9; }
+.sc-floor { left: 0; right: 0; bottom: 0; height: 31%; background:
+  linear-gradient(180deg, color-mix(in srgb, var(--sc-ink) 10%, transparent), transparent 22%),
+  repeating-linear-gradient(90deg, color-mix(in srgb, var(--sc-ink) 12%, transparent) 0 1px, transparent 1px 20px); }
+.sc-table { left: 10%; right: 8%; bottom: 17%; height: 8%; background: var(--sc-ink); opacity: .8; }
+.sc-table::before, .sc-table::after { content: ""; position: absolute; top: 100%; width: 3px; height: 42px; background: var(--sc-ink); opacity: .65; }
+.sc-table::before { left: 12%; } .sc-table::after { right: 12%; }
+.sc-paper { background: color-mix(in srgb, var(--bg) 72%, #fff 28%); border: 1px solid var(--border);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--sc-ink) 12%, transparent); }
+.sc-p1 { width: 25%; height: 18%; left: 16%; bottom: 28%; transform: rotate(-7deg); }
+.sc-p2 { width: 22%; height: 15%; left: 38%; bottom: 31%; transform: rotate(4deg); }
+.sc-p3 { width: 18%; height: 13%; right: 17%; bottom: 29%; transform: rotate(-2deg); }
+.sc-line { height: 2px; background: var(--sc-accent); opacity: .72; }
+.sc-l1 { width: 15%; left: 20%; bottom: 39%; transform: rotate(-7deg); }
+.sc-l2 { width: 13%; left: 43%; bottom: 40%; transform: rotate(4deg); }
+.sc-l3 { width: 10%; right: 21%; bottom: 37%; transform: rotate(-2deg); }
+.sc-window { top: 15%; height: 28%; border: 1px solid var(--border);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sc-accent) 10%, transparent), transparent); }
+.sc-window::before { content: ""; position: absolute; inset: 50% 0 auto; border-top: 1px solid var(--border); }
+.sc-window::after { content: ""; position: absolute; inset: 0 50% 0 auto; border-left: 1px solid var(--border); }
+.sc-w1 { left: 12%; width: 20%; } .sc-w2 { right: 12%; width: 20%; }
+.sc-lamp { width: 9%; height: 22%; left: 48%; bottom: 34%; border-left: 2px solid var(--sc-ink); }
+.sc-lamp::before { content: ""; position: absolute; left: -13px; top: -3px; width: 28px; height: 13px;
+  background: var(--sc-accent); clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%); }
+.sc-glow { width: 22%; height: 15%; left: 40%; bottom: 27%; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sc-accent) 33%, transparent), transparent 68%);
+  opacity: .75; }
+.sc-screen { background: color-mix(in srgb, var(--sc-ink) 86%, #000 14%); border: 1px solid var(--border); }
+.sc-screen::before { content: ""; position: absolute; left: 10%; right: 10%; top: 28%; height: 2px;
+  background: var(--sc-accent); box-shadow: 0 8px 0 color-mix(in srgb, var(--sc-accent) 55%, transparent), 0 16px 0 var(--sc-soft); }
+.sc-s1 { width: 24%; height: 22%; left: 11%; top: 17%; }
+.sc-s2 { width: 21%; height: 18%; left: 39%; top: 12%; }
+.sc-s3 { width: 24%; height: 22%; right: 11%; top: 17%; }
+.sc-roller { height: 12%; border-radius: 999px; background: var(--sc-ink); opacity: .82; }
+.sc-r1 { left: 18%; right: 18%; bottom: 36%; }
+.sc-r2 { left: 26%; right: 26%; bottom: 50%; background: var(--sc-accent); opacity: .72; }
+.sc-tower { left: 50%; top: 22%; width: 2px; height: 35%; background: var(--sc-accent); opacity: .9; }
+.sc-tower::before, .sc-tower::after { content: ""; position: absolute; left: 50%; top: -16%;
+  width: 72px; height: 72px; border: 1px solid var(--sc-accent); border-bottom: 0; border-radius: 72px 72px 0 0;
+  transform: translateX(-50%); opacity: .55; }
+.sc-tower::after { top: -32%; width: 110px; height: 110px; opacity: .32; }
+.scene-ghost { --sc-accent: #9a2c1a; }
+[data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }
+.scene-ghost .sc-screen, .scene-ghost .sc-roller, .scene-ghost .sc-tower { display: none; }
+.scene-fingerprint, .scene-briefing { --sc-accent: #0d5b68; }
+[data-theme="dark"] .scene-fingerprint, [data-theme="dark"] .scene-briefing { --sc-accent: #62aab8; }
+.scene-fingerprint .sc-window, .scene-fingerprint .sc-lamp, .scene-fingerprint .sc-glow,
+.scene-fingerprint .sc-paper, .scene-fingerprint .sc-line, .scene-fingerprint .sc-roller { display: none; }
+.scene-pamphlet .sc-window, .scene-pamphlet .sc-screen, .scene-pamphlet .sc-lamp, .scene-pamphlet .sc-glow,
+.scene-pamphlet .sc-tower { display: none; }
+.scene-briefing .sc-window, .scene-briefing .sc-lamp, .scene-briefing .sc-glow,
+.scene-briefing .sc-roller, .scene-briefing .sc-tower { display: none; }
+.scene-briefing .sc-paper { bottom: 25%; }
+.scene-plate.band-scene { width: 142px; min-width: 142px; }
+.scene-plate.section-scene { max-width: 560px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.feature-scene { margin: 0 0 1rem; }
+.scene-plate.article-scene, .scene-plate.edition-scene { max-width: 620px; margin: 0 auto 2rem; }
+.scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
+@media (max-width: 680px) {
+  .scene-plate.band-scene { width: 100%; min-width: 0; max-width: 320px; }
+  .scene-plate.section-scene { margin-top: .9rem; }
+}
+"""
+
+# Live category filter + text search, scoped per `.lib-pane` — the home page
+# carries two independent panes (Research Library, the mirrored desk) side by
+# side, so each pane's search box and pills only ever touch its own grid.
+# Category pills and the search box combine: a card shows only if it matches
+# the active category AND the search term. Empty category sections hide their
+# heading; a message shows if nothing matches.
 LIBRARY_FILTER_JS = """
 (function () {
-  var search = document.getElementById('lib-search');
-  var empty = document.getElementById('lib-empty');
-  var pills = Array.prototype.slice.call(document.querySelectorAll('.cat-pill'));
-  var sections = Array.prototype.slice.call(document.querySelectorAll('.cat-section'));
-  var groups = Array.prototype.slice.call(document.querySelectorAll('.domain-group'));
+  Array.prototype.slice.call(document.querySelectorAll('.lib-pane')).forEach(function (pane) {
+  var search = pane.querySelector('.lib-search');
+  var empty = pane.querySelector('.lib-empty');
+  var pills = Array.prototype.slice.call(pane.querySelectorAll('.cat-pill'));
+  var sections = Array.prototype.slice.call(pane.querySelectorAll('.cat-section'));
+  var groups = Array.prototype.slice.call(pane.querySelectorAll('.domain-group'));
   if (!search) return;
   var activeCat = 'all';
 
@@ -3264,7 +3366,7 @@ LIBRARY_FILTER_JS = """
     if (empty) empty.hidden = anyVisible;
     // The "For You" rows are a browse-what-to-read surface; hide them while a
     // category/search filter is active so they don't contradict the filtered grid.
-    var fy = document.getElementById('foryou');
+    var fy = pane.querySelector('#foryou');
     if (fy && !fy.hidden) fy.style.display = (activeCat !== 'all' || term) ? 'none' : '';
   }
 
@@ -3276,41 +3378,49 @@ LIBRARY_FILTER_JS = """
     });
   });
   search.addEventListener('input', apply);
+  });
 })();
 """
 
-# Today's Passage — a date-seeded pull-quote pinned atop the index, preferring
-# corpora the visitor hasn't opened. Reads the inlined #passages-data and links
-# to the exact chapter with ?q=<snippet> so the reader scrolls to (and flashes)
-# the line. Pure client-side: date math + localStorage history, no fetch.
+# Today's Passage — a date-seeded pull-quote, preferring corpora the visitor
+# hasn't opened. The home page mirrors two of these side by side — one drawn
+# from the Research Library's passages, one from the detached desk's — each
+# reading its own #passages-data-* / #daily-passage-* pair independently so
+# the two picks are unrelated to one another. Pure client-side: date math +
+# localStorage history, no fetch.
 DAILY_PASSAGE_JS = r"""
 (function () {
-  var el = document.getElementById('daily-passage'), dataEl = document.getElementById('passages-data');
-  if (!el || !dataEl) return;
-  var P; try { P = JSON.parse(dataEl.textContent || '[]'); } catch (e) { return; }
-  if (!P.length) return;
-  var opened = {};
-  try { (JSON.parse(localStorage.getItem('library-recents') || '[]') || []).forEach(function (r) { opened[r.slug] = 1; }); } catch (e) {}
-  P.forEach(function (p) { try { if ((JSON.parse(localStorage.getItem('read:' + p.slug) || '[]') || []).length) opened[p.slug] = 1; } catch (e) {} });
-  var fresh = P.filter(function (p) { return !opened[p.slug]; });
-  var pool = fresh.length ? fresh : P;
-  var day = Math.floor(Date.now() / 864e5);
-  var p = pool[day % pool.length];
   var esc = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
-  var href = esc(p.slug) + '.html?q=' + encodeURIComponent(p.text.slice(0, 42)) + '#ch-' + p.chapter;
-  el.innerHTML = '<a class="dp-quote" href="' + href + '">'
-    + '<span class="dp-kicker">Today’s Passage</span>'
-    + '<span class="dp-mark" aria-hidden="true">“</span>'
-    + '<span class="dp-text">' + esc(p.text) + '</span>'
-    + '<span class="dp-src">— ' + esc(p.title) + ' · ' + esc(p.chapterTitle) + '</span>'
-    + '<span class="dp-cta">Read in context →</span>'
-    + '<button class="dp-share" type="button" aria-label="Share this passage">Share ↗</button></a>';
-  el.hidden = false;
-  var sb = el.querySelector('.dp-share');
-  if (sb) sb.onclick = function (ev) { ev.preventDefault(); ev.stopPropagation();
-    if (!window.CorpusShare) return;  // the shell (which defines CorpusShare) loads after this script
-    window.CorpusShare.open({ kicker: 'Today’s Passage', quote: p.text, source: p.title + ' · ' + p.chapterTitle,
-      url: new URL(href, location.href).href, filename: 'passage' }); };
+  function render(el, dataEl, kicker) {
+    if (!el || !dataEl) return;
+    var P; try { P = JSON.parse(dataEl.textContent || '[]'); } catch (e) { return; }
+    if (!P.length) return;
+    var opened = {};
+    try { (JSON.parse(localStorage.getItem('library-recents') || '[]') || []).forEach(function (r) { opened[r.slug] = 1; }); } catch (e) {}
+    P.forEach(function (p) { try { if ((JSON.parse(localStorage.getItem('read:' + p.slug) || '[]') || []).length) opened[p.slug] = 1; } catch (e) {} });
+    var fresh = P.filter(function (p) { return !opened[p.slug]; });
+    var pool = fresh.length ? fresh : P;
+    var day = Math.floor(Date.now() / 864e5);
+    var p = pool[day % pool.length];
+    var href = esc(p.slug) + '.html?q=' + encodeURIComponent(p.text.slice(0, 42)) + '#ch-' + p.chapter;
+    el.innerHTML = '<a class="dp-quote" href="' + href + '">'
+      + '<span class="dp-kicker">' + esc(kicker) + '</span>'
+      + '<span class="dp-mark" aria-hidden="true">“</span>'
+      + '<span class="dp-text">' + esc(p.text) + '</span>'
+      + '<span class="dp-src">— ' + esc(p.title) + ' · ' + esc(p.chapterTitle) + '</span>'
+      + '<span class="dp-cta">Read in context →</span>'
+      + '<button class="dp-share" type="button" aria-label="Share this passage">Share ↗</button></a>';
+    el.hidden = false;
+    var sb = el.querySelector('.dp-share');
+    if (sb) sb.onclick = function (ev) { ev.preventDefault(); ev.stopPropagation();
+      if (!window.CorpusShare) return;  // the shell (which defines CorpusShare) loads after this script
+      window.CorpusShare.open({ kicker: kicker, quote: p.text, source: p.title + ' · ' + p.chapterTitle,
+        url: new URL(href, location.href).href, filename: 'passage' }); };
+  }
+  render(document.getElementById('daily-passage-lib'), document.getElementById('passages-data-lib'),
+         'Today’s Passage · The Research');
+  render(document.getElementById('daily-passage-adtech'), document.getElementById('passages-data-adtech'),
+         'Today’s Passage · Ad Tech');
 })();
 """
 
@@ -3967,8 +4077,9 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .coll-meta { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums;
   color: var(--muted); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
-/* Today's Passage — the daily pull-quote hook pinned atop the index. */
-#daily-passage { max-width: 1120px; margin: 1.6rem auto 0; padding: 0 2rem; }
+/* Today's Passage — the daily pull-quote, mirrored in a pair atop the index
+   (see .mirror-head / .dp-pane in HOME_MIRROR_CSS). */
+.dp-pane[hidden] { display: none; }
 .dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
   background: var(--bg); border: 1px solid var(--border); border-top: 3px solid var(--accent);
   border-radius: 0; padding: 1.4rem 1.6rem 1.3rem; box-shadow: none;
@@ -4015,7 +4126,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
 /* The Ghost of Times announcement row — first entry in the ruled announcements column. */
 .ghost-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+.ghost-band a { display: grid; grid-template-columns: auto minmax(118px, 142px) 1fr auto; align-items: center; gap: 1.6rem;
   text-decoration: none; color: var(--text); background: transparent; border: 0; border-top: 1px solid var(--border);
   border-radius: 0; box-shadow: none; padding: 1.3rem 0 1.4rem; position: relative; }
 .ghost-band a:hover .gb-lead { color: var(--accent); }
@@ -4042,6 +4153,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 680px) {
   .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+  .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
   .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
 }
@@ -4347,7 +4459,8 @@ def ghost_band_html(editions, ghost_cfg):
         cta = "Coming soon →"
     mid = (f'<div class="gb-mid"><p class="gb-kicker">{kicker}</p>'
            f'<p class="gb-lead">{lead}</p><p class="gb-sub">{sub}</p></div>')
-    return (f'<div class="ghost-band"><a href="ghost.html">{flag}{mid}'
+    scene = scene_plate("ghost", extra_class="band-scene")
+    return (f'<div class="ghost-band"><a href="ghost.html">{flag}{scene}{mid}'
             f'<span class="gb-cta">{cta}</span></a></div>')
 
 
@@ -4375,6 +4488,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
   <h1 class="gp-name">The Ghost of Times</h1>
   <div class="gp-ornament" aria-hidden="true">{ornament}</div>
   <p class="gp-motto">“{motto}”</p>
+  {scene}
   <div class="gp-folio">
     <span>Vol. 1</span>
     <span class="gp-folio-c">{stats}</span>
@@ -4534,6 +4648,7 @@ def ghost_feature_html(ed):
     writers = _writers_line(ed)
     writers_html = f'<p class="gedf-writers">{writers}</p>' if writers else ""
     return (f'<article class="ged-feature"><a href="{_ed_href(ed)}">'
+            f'{scene_plate("ghost", extra_class="feature-scene")}'
             f'<p class="gedf-meta">{html.escape(meta)}</p>'
             f'<h2 class="gedf-head">{headline}</h2>{dek_html}{writers_html}'
             f'<span class="gedf-cta">Read the edition →</span></a></article>')
@@ -4568,11 +4683,12 @@ def build_ghost_page(out_dir, editions, ghost_cfg, shell=""):
                 'skill and publish an edition to see it here.</p>')
         stats = "No editions yet"
     page = GHOST_PAGE_TEMPLATE.format(
-        css=LIBRARY_CSS + GHOST_PAGE_CSS,
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + GHOST_PAGE_CSS,
         favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(active="ghost.html"),
         ornament=GHOST_NIB,
         motto=html.escape(ghost_cfg.get("motto", "")),
+        scene=scene_plate("ghost", extra_class="section-scene"),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
         stats=stats,
         editions=body,
@@ -4761,6 +4877,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
       <span>{folio_writers}</span>
     </div>
   </header>
+  {scene}
   <nav id="gh-contents"></nav>
   <div id="gh-pieces"></div>
   <section id="gh-facts"></section>
@@ -4913,10 +5030,11 @@ def build_ghost_edition(out_dir, ed, shell=""):
         description=html.escape(data.get("lead", {}).get("dek", "") or "The Ghost of Times"),
         favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(prefix="../", active="ghost.html"),
-        css=LIBRARY_CSS + GHOST_EDITION_CSS,
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + GHOST_EDITION_CSS,
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
         folio_writers=html.escape(folio_writers),
+        scene=scene_plate("ghost", extra_class="edition-scene"),
         watch=watch_html,
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
@@ -4948,7 +5066,7 @@ PAMPHLETS_BAND_CSS = """
 /* The Pamphlets announcement row on the home page — one line of the ruled
    announcements column, signed by the double accent letterpress rule at left. */
 .pamphlet-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-.pamphlet-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+.pamphlet-band a { display: grid; grid-template-columns: auto minmax(118px, 142px) 1fr auto; align-items: center; gap: 1.6rem;
   text-decoration: none; color: var(--text); background: transparent;
   border: 0; border-top: 1px solid var(--border); border-left: 6px double var(--accent);
   border-radius: 0; box-shadow: none; padding: 1.3rem 0 1.4rem 1.1rem; position: relative; }
@@ -4973,6 +5091,7 @@ PAMPHLETS_BAND_CSS = """
 @media (max-width: 680px) {
   .pamphlet-band a { grid-template-columns: 1fr; gap: .9rem; }
   .pamphlet-band .pb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+  .pamphlet-band .scene-plate { max-width: 320px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .pamphlet-band .pb-cta,
@@ -4982,6 +5101,17 @@ PAMPHLETS_BAND_CSS = """
   }
 }
 """
+
+
+def _accent_css(accent, selector="body"):
+    """A page-scoped --accent override: accent=(light, dark) hex pair, or None
+    for no override. Used to keep a detached desk's whole page run (not just
+    its home-page bands) in one signature color, e.g. the Ad Tech desk's blue."""
+    if not accent:
+        return ""
+    light, dark = accent
+    return (f'\n{selector} {{ --accent: {light}; }} '
+            f'[data-theme="dark"] {selector} {{ --accent: {dark}; }}')
 
 
 def read_pamphlets_manifest(out_dir, subdir="pamphlets"):
@@ -5027,6 +5157,7 @@ def pamphlets_band_html(items, cfg, page=None):
     name = page.get("name", "The Pamphlets")
     href = page.get("href", "pamphlets.html")
     cls = f' {page["cls"]}' if page.get("cls") else ""
+    scene_kind = "briefing" if "brf" in cls or "Briefing" in name else "pamphlet"
     motto = html.escape(cfg.get("motto", ""))
     blurb = html.escape(cfg.get("blurb", ""))
     flag_title = page.get("flag", "The<br>Pamphlets")
@@ -5045,7 +5176,8 @@ def pamphlets_band_html(items, cfg, page=None):
         cta = "Coming soon →"
     mid = (f'<div class="pb-mid"><p class="pb-kicker">{html.escape(kicker)}</p>'
            f'<p class="pb-lead">{lead}</p><p class="pb-sub">{sub}</p></div>')
-    return (f'<div class="pamphlet-band{cls}"><a href="{html.escape(href, quote=True)}">{flag}{mid}'
+    scene = scene_plate(scene_kind, extra_class="band-scene")
+    return (f'<div class="pamphlet-band{cls}"><a href="{html.escape(href, quote=True)}">{flag}{scene}{mid}'
             f'<span class="pb-cta">{cta}</span></a></div>')
 
 
@@ -5178,6 +5310,7 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
   <p class="pam-kicker">{kicker}</p>
   <h1 class="pam-name">{h1}</h1>
   <p class="pam-motto">“{motto}”</p>
+  {scene}
   <div class="pam-folio">
     <span>Vol. 1</span>
     <span class="pam-folio-c">{stats}</span>
@@ -5206,7 +5339,9 @@ def pamphlet_feature_html(p, subdir="pamphlets", noun="pamphlet"):
     dek_html = f'<p class="pamf-dek">{dek}</p>' if dek else ""
     voice = html.escape(_pamphlet_voice(p))
     voice_html = f'<p class="pamf-by">{voice}</p>' if voice else ""
+    scene_kind = "briefing" if noun == "briefing" or subdir != "pamphlets" else "pamphlet"
     return (f'<article class="pam-feature"><a href="{_pamphlet_href(p, subdir)}">'
+            f'{scene_plate(scene_kind, extra_class="feature-scene")}'
             f'<p class="pamf-meta">{html.escape(meta)}</p>'
             f'<h2 class="pamf-head">{headline}</h2>{dek_html}{voice_html}'
             f'<span class="pamf-cta">Read the {html.escape(noun)} →</span></a></article>')
@@ -5241,8 +5376,8 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
     noun = page.get("noun", "pamphlet")
     subdir = page.get("subdir", "pamphlets")
     accent = page.get("accent")
-    accent_css = (f'\nbody {{ --accent: {accent[0]}; }} [data-theme="dark"] body {{ --accent: {accent[1]}; }}'
-                  if accent else "")
+    accent_css = _accent_css(accent)
+    scene_kind = "briefing" if noun == "briefing" or subdir != "pamphlets" else "pamphlet"
     if items:
         n = len(items)
         stats = f"{n} {noun}{'s' if n != 1 else ''}"
@@ -5261,9 +5396,10 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
     page_html = PAMPHLETS_PAGE_TEMPLATE.format(
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
         nav=nav, back=back, accent_css=accent_css,
-        css=LIBRARY_CSS + PAMPHLETS_PAGE_CSS,
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + PAMPHLETS_PAGE_CSS,
         favicon=FAVICON, og_meta=og,
         motto=html.escape(cfg.get("motto", "")),
+        scene=scene_plate(scene_kind, extra_class="section-scene"),
         blurb=html.escape(cfg.get("blurb", "")),
         stats=stats,
         body=body,
@@ -5379,7 +5515,7 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
 {og_meta}
-<style>{css}</style>
+<style>{css}{accent_css}</style>
 </head>
 <body>
 <div class="masthead">
@@ -5403,6 +5539,7 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
     <h1 class="pm-head">{headline}</h1>
     {dek}
     {byline}
+    {scene}
     <div id="pm-body" class="pm-body"></div>
   </article>
   <footer class="pm-foot">
@@ -5450,7 +5587,7 @@ def read_pamphlet_data(out_dir, slug, subdir="pamphlets"):
 def build_pamphlet(out_dir, item, shell="", page=None):
     """Render one pamphlet page (docs/pamphlets/{slug}.html) from its data file.
     A `page` override renders a desk's own essay rack instead (e.g. the Ad Tech
-    desk's Briefings): {subdir, list_href, list_name, nav_active}.
+    desk's Briefings): {subdir, list_href, list_name, nav_active, accent}.
 
     Returns True if rendered, False if the data file is absent (page left untouched)."""
     out = Path(out_dir)
@@ -5458,6 +5595,7 @@ def build_pamphlet(out_dir, item, shell="", page=None):
     subdir = page.get("subdir", "pamphlets")
     list_href = page.get("list_href", "pamphlets.html")
     list_name = page.get("list_name", "The Pamphlets")
+    accent_css = _accent_css(page.get("accent"))
     slug = item.get("slug", "")
     data = read_pamphlet_data(out, slug, subdir=subdir)
     if data is None:
@@ -5475,6 +5613,7 @@ def build_pamphlet(out_dir, item, shell="", page=None):
     date = pick("date")
     tagline = pick("kicker")  # e.g. "A Latter-Day Pamphlet"
     voice_note = pick("voice_note") or (f"Written in the voice of {writer}." if writer else "")
+    scene_kind = "briefing" if subdir != "pamphlets" or page.get("noun") == "briefing" else "pamphlet"
 
     tagline_html = f'<p class="pm-tagline">{html.escape(tagline)}</p>' if tagline else ""
     dek_html = f'<p class="pm-dek">{html.escape(dek)}</p>' if dek else ""
@@ -5487,7 +5626,8 @@ def build_pamphlet(out_dir, item, shell="", page=None):
         description=html.escape(dek or subject or "A pamphlet"),
         favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(prefix="../", active=nav_active),
-        css=LIBRARY_CSS + PAMPHLET_CSS,
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + PAMPHLET_CSS,
+        accent_css=accent_css,
         list_kicker=html.escape(page.get("kicker", "Writer-voiced essays")),
         list_href=html.escape(list_href, quote=True),
         list_name=html.escape(list_name),
@@ -5499,6 +5639,7 @@ def build_pamphlet(out_dir, item, shell="", page=None):
         headline=html.escape(title),
         dek=dek_html,
         byline=byline_html,
+        scene=scene_plate(scene_kind, extra_class="article-scene"),
         colophon=colophon_html,
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
@@ -6444,6 +6585,26 @@ FORECAST_PAGE_CSS = """
 .fd-out.lost .fd-track, .fd-out.lost .pc { opacity: .5; }
 .fd-out.won .nm { color: var(--fdup); font-weight: 800; }
 .fd-tk .dn { color: var(--fddn); font-weight: 700; }
+
+/* mini predictor roster — pinned atop every board, links to full profiles */
+.fdm-roster { margin: 0 0 1.4rem; }
+.fdm-roster-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); margin: 0 0 .5rem; }
+.fdm-cmp { color: var(--fdblue); text-decoration: none; }
+.fdm-cmp:hover { text-decoration: underline; }
+.fdm-roster-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .55rem; }
+.fdm-card { display: flex; flex-direction: column; align-items: center; gap: .2rem; text-align: center;
+  text-decoration: none; color: inherit; background: var(--fdcard); border: 1px solid var(--fdline);
+  border-top: 3px solid var(--fdmut); border-radius: 2px; padding: .6rem .4rem .55rem;
+  transition: transform .12s var(--ease), border-color .12s var(--ease); }
+.fdm-card:hover { transform: translateY(-2px); border-color: var(--fdblue); }
+.fdm-av { font-size: 1.3rem; line-height: 1; }
+.fdm-nm { font-family: var(--sans); font-size: .64rem; font-weight: 700; line-height: 1.2; }
+.fdm-rec { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fdm-bank { font-family: var(--fdmono); font-size: .64rem; color: var(--fdgold); font-variant-numeric: tabular-nums; }
+@media (max-width: 720px) { .fdm-roster-row { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 460px) { .fdm-roster-row { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .fd-live.graded:hover { border-color: var(--fdgold); }
 .fd-live-grid.graded { grid-template-columns: auto auto 1fr; }
 .fd-live-pick.won { border-color: var(--fdup); }
@@ -6598,7 +6759,7 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
 {og_meta}
-<style>{css}</style>
+<style>{css}{accent_css}</style>
 </head>
 <body>
 <div class="masthead">
@@ -6819,6 +6980,35 @@ def _fd_tape(native_items, markets):
             f'<div class="fd-tape-inner" style="animation-duration:{dur}s">{row}{row}</div></div>')
 
 
+def _fd_mini_roster(led, book):
+    """A compact predictor strip pinned atop every board (site-wide and each
+    desk's own) — one small card per standing persona: avatar, name, cumulative
+    record, current bankroll. Each card links straight to that predictor's full
+    profile, and the strip's own header links to the side-by-side comparison
+    page, so a visitor can size up or drill into any predictor before scrolling
+    past a single market."""
+    cards = []
+    for key, name, avatar, criterion in FD_PERSONAS:
+        p = led["personas"].get(key) or {"graded": 0, "hits": 0, "briers": []}
+        acct = book["personas"].get(key)
+        col = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        losses = p["graded"] - p["hits"]
+        rec = f'{p["hits"]}–{losses}' if p["graded"] else "0–0"
+        bank = f'<span class="fdm-bank">{_fd_money(acct["bankroll"])}</span>' if acct else ""
+        cards.append(
+            f'<a class="fdm-card" href="forecasters/{key}.html" style="border-top-color:{col}" title="{html.escape(criterion, quote=True)}">'
+            f'<span class="fdm-av">{avatar}</span>'
+            f'<span class="fdm-nm">{html.escape(name)}</span>'
+            f'<span class="fdm-rec">{rec}</span>{bank}</a>')
+    return (
+        '<div class="fdm-roster">'
+        '<div class="fdm-roster-head"><span>The Predictors</span>'
+        '<a class="fdm-cmp" href="forecasters/compare.html">Compare all →</a></div>'
+        f'<div class="fdm-roster-row">{"".join(cards)}</div>'
+        '</div>'
+    )
+
+
 FORECAST_NAV_DEFAULT = main_nav_html(active="forecast.html")
 
 
@@ -6841,8 +7031,11 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     nav = page.get("nav", FORECAST_NAV_DEFAULT)
     back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
     record_fname = page.get("record_fname", "forecast-record.html")
+    accent_css = _accent_css(page.get("accent"))
     category_order = category_order or []
-    parts = [_fd_tape(native_items, markets)]
+    led = build_forecast_ledger(native_items, markets)
+    book = build_book(native_items, markets, native_data)
+    parts = [_fd_tape(native_items, markets), _fd_mini_roster(led, book)]
     # Shelve harvested markets by category, config order first, then first-seen.
     cats = []
     for c in category_order:
@@ -6902,7 +7095,6 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     if n_graded:
         folio += (f'\n    <span class="fd-folio-g">{n_graded} graded · '
                   f'record {hits}–{n_graded - hits}</span>')
-    book = build_book(native_items, markets, native_data)
     if book["settled"] and book["leader"]:
         folio += (f'\n    <span class="fd-folio-g">book leader {html.escape(book["leader"]["name"])} '
                   f'{_fd_money(book["leader"]["bankroll"])}</span>')
@@ -6917,6 +7109,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
         nav=nav, back=back,
         css=LIBRARY_CSS + FORECAST_PAGE_CSS,
+        accent_css=_accent_css(page.get("accent")),
         favicon=FAVICON, og_meta=og,
         motto=html.escape(cfg.get("motto", "")),
         blurb=html.escape(cfg.get("blurb", "")),
@@ -7311,6 +7504,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
         nav=nav, back=back,
         css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+        accent_css=_accent_css(page.get("accent")),
         favicon=FAVICON, og_meta=og,
         motto="A forecast you never grade is just a mood.",
         blurb="Every call is frozen when it is logged and scored against the official result when it resolves — "
@@ -7431,6 +7625,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
             nav=main_nav_html(prefix="../", active="forecast.html"),
             back='<a href="../forecast-record.html">← The Track Record</a>',
             css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+            accent_css="",
             favicon=FAVICON, og_meta=og,
             motto=html.escape(prof.get("signature", criterion)),
             folio=folio, plate_extra="",
@@ -7441,6 +7636,85 @@ def build_persona_pages(out_dir, led, book, shell=""):
         (out / f"{key}.html").write_text(page)
         n_rendered += 1
     print(f"  ✓ Predictor profiles ({n_rendered}) → forecasters/")
+
+
+def build_persona_compare_page(out_dir, led, book, shell=""):
+    """Render docs/forecasters/compare.html — every standing predictor laid side
+    by side in one table (criterion, spectrum position, model, doctrine, record,
+    Brier, bankroll), so a visitor can read straight across instead of flipping
+    between seven separate profile pages."""
+    out = Path(out_dir) / "forecasters"
+    out.mkdir(parents=True, exist_ok=True)
+    cols = []
+    for key, name, avatar, criterion in FD_PERSONAS:
+        p = led["personas"].get(key) or {"graded": 0, "hits": 0, "briers": []}
+        prof = FD_PERSONA_PROFILES.get(key, {})
+        acct = book["personas"].get(key)
+        losses = p["graded"] - p["hits"]
+        cols.append({
+            "key": key, "name": name, "avatar": avatar, "criterion": criterion,
+            "col": FDT_SERIES_COLORS.get(key, "#9aa1af"),
+            "zone": prof.get("zone", ""), "spectrum": prof.get("spectrum"),
+            "model": prof.get("model", ""), "doctrine": prof.get("doctrine", ""),
+            "graded": p["graded"],
+            "rec": f'{p["hits"]}–{losses}' if p["graded"] else "0–0",
+            "hitrate": f'{p["hits"] / p["graded"] * 100:.0f}%' if p["graded"] else "—",
+            "brier": _fdt_fmt_brier(p["briers"]) if p["briers"] else "—",
+            "bank": _fd_money(acct["bankroll"]) if acct else "—",
+            "pnl": _fd_signed(acct["pnl"]) if acct else "—",
+            "signature": prof.get("signature", ""),
+        })
+
+    def _row(label, render):
+        return f'<tr><th>{html.escape(label)}</th>{"".join(f"<td>{render(c)}</td>" for c in cols)}</tr>'
+
+    head_cells = "".join(
+        f'<th class="cmp-persona" style="border-top-color:{c["col"]}">'
+        f'<a href="{c["key"]}.html"><span class="cmp-av">{c["avatar"]}</span>'
+        f'<span class="cmp-nm">{html.escape(c["name"])}</span></a></th>'
+        for c in cols
+    )
+    rows = "".join([
+        _row("Criterion", lambda c: f'<span class="cmp-crit">{html.escape(c["criterion"])}</span>'),
+        _row("Where it sits", lambda c: (
+            f'<span class="cmp-zone">{html.escape(c["zone"])}</span>'
+            + (_fdp_spectrum_bar(c["spectrum"], c["col"]) if c["spectrum"] is not None else ""))),
+        _row("The model", lambda c: f'<span class="cmp-prose">{html.escape(c["model"])}</span>'),
+        _row("The doctrine", lambda c: f'<span class="cmp-prose">{html.escape(c["doctrine"])}</span>'),
+        _row("Markets graded", lambda c: str(c["graded"])),
+        _row("Record, hits–misses", lambda c: c["rec"]),
+        _row("Hit rate", lambda c: c["hitrate"]),
+        _row("Mean Brier score", lambda c: c["brier"]),
+        _row("The book", lambda c: c["bank"]),
+        _row("P&amp;L, play money", lambda c: c["pnl"]),
+        _row("Signature", lambda c: f'<span class="cmp-sig">{html.escape(c["signature"])}</span>'),
+    ])
+    body = (
+        '<p class="fdp-crit">Every standing predictor, side by side — the same rows the profile pages carry '
+        'separately, read straight across so the differences in method (not just outcome) are visible at a glance.</p>'
+        f'<div class="cmp-wrap"><table class="cmp-table"><thead><tr><th></th>{head_cells}</tr></thead>'
+        f'<tbody>{rows}</tbody></table></div>'
+    )
+    title = "Compare the Predictors — The Forecast Desk"
+    og = og_tags(title, "Every standing predictor's model, doctrine, and record, compared side by side.",
+                 f"{SITE_URL}/forecasters/compare.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = FORECAST_PAGE_TEMPLATE.format(
+        page_title=html.escape(title), h1="Compare the Predictors",
+        kicker="The Forecast Desk · All seven, side by side",
+        nav=main_nav_html(prefix="../", active="forecast.html"),
+        back='<a href="../forecast-record.html">← The Track Record</a>',
+        css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+        accent_css="",
+        favicon=FAVICON, og_meta=og,
+        motto="Seven models, one spectrum — no hiding behind a single number.",
+        folio=f'    <span>{len(cols)} predictors</span>\n    <span class="fd-folio-c">every row comparable</span>',
+        plate_extra="",
+        body=body,
+        blurb="Every call this roster has made, graded honestly — the desk keeps no predictor's record off the books.",
+        theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
+    )
+    (out / "compare.html").write_text(page)
+    print("  ✓ Compare the Predictors → forecasters/compare.html")
 
 
 # ------------------------------------------------------------- native forecast pages
@@ -7621,6 +7895,25 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
   transform: translate(-50%, -50%); border: 2px solid #10161f; }
 .fdt-p-link { display: block; text-decoration: none; color: inherit; transition: transform .12s, border-color .12s; }
 .fdt-p-link:hover { transform: translateY(-2px); border-color: var(--fdup) !important; }
+
+/* predictor comparison table */
+.cmp-wrap { overflow-x: auto; border: 1px solid var(--fdline); border-radius: 2px; background: var(--fdcard); }
+.cmp-table { border-collapse: collapse; width: 100%; min-width: 960px; }
+.cmp-table th, .cmp-table td { border-bottom: 1px solid var(--fdline); padding: .75rem .85rem; text-align: left;
+  vertical-align: top; font-family: var(--sans); font-size: .78rem; color: var(--fdmut); }
+.cmp-table tbody tr:last-child th, .cmp-table tbody tr:last-child td { border-bottom: none; }
+.cmp-table thead th { background: #0c1117; }
+.cmp-table tbody th { font-family: var(--sans); font-size: .64rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .07em; color: var(--fdtext); white-space: nowrap; position: sticky; left: 0; background: var(--fdcard); }
+.cmp-persona { border-top: 3px solid var(--fdmut); min-width: 190px; }
+.cmp-persona a { display: flex; flex-direction: column; align-items: center; gap: .3rem; text-decoration: none; color: inherit; }
+.cmp-av { font-size: 1.5rem; line-height: 1; }
+.cmp-nm { font-family: var(--sans); font-weight: 800; font-size: .82rem; color: var(--fdtext); }
+.cmp-persona a:hover .cmp-nm { color: var(--fdblue); }
+.cmp-crit, .cmp-prose, .cmp-sig { display: block; font-family: var(--serif); font-style: italic; font-size: .88rem;
+  line-height: 1.55; color: #c6d0e0; }
+.cmp-zone { display: block; font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--fdmut); margin-bottom: .4rem; }
 """
 
 FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
@@ -8269,7 +8562,8 @@ def fingerprint_band_html(editions, cfg):
     mid = (f'<div class="fp-band-mid"><p class="fp-band-kicker">{kicker}</p>'
            f'<p class="fp-band-lead">{lead}</p>'
            f'<p class="fp-band-ticker">{ticker}</p></div>')
-    return (f'<div class="fp-band"><a href="fingerprint.html">{flag}{mid}'
+    scene = scene_plate("fingerprint", extra_class="band-scene")
+    return (f'<div class="fp-band"><a href="fingerprint.html">{flag}{scene}{mid}'
             f'<span class="fp-band-cta">{cta}</span></a></div>')
 
 
@@ -8278,7 +8572,7 @@ FINGERPRINT_BAND_CSS = """
 /* The Fingerprint announcement row — the market wire's line in the index's
    ruled announcements column, signed in petrol teal (house accent barred). */
 .fp-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-.fp-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+.fp-band a { display: grid; grid-template-columns: auto minmax(118px, 142px) 1fr auto; align-items: center; gap: 1.6rem;
   text-decoration: none; color: var(--text); background: transparent;
   border: 0; border-top: 1px solid var(--border); border-left: 3px solid #0d5b68;
   border-radius: 0; box-shadow: none; padding: 1.3rem 0 1.4rem 1.1rem; position: relative;
@@ -8318,6 +8612,7 @@ FINGERPRINT_BAND_CSS = """
 @media (max-width: 680px) {
   .fp-band a { grid-template-columns: 1fr; gap: .8rem; }
   .fp-band .fp-band-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .8rem; }
+  .fp-band .scene-plate { max-width: 320px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fp-band .fp-band-cta,
@@ -8355,6 +8650,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
   <h1 class="fpp-name">The Fingerprint</h1>
   <div class="fpp-ridges" aria-hidden="true">{ridges}</div>
   <p class="fpp-motto">“{motto}”</p>
+  {scene}
   <div class="fpp-folio">
     <span>Vol. 1</span>
     <span class="fpp-folio-c">{stats}</span>
@@ -8512,6 +8808,7 @@ def fingerprint_feature_html(ed):
     beats = _fp_beats_line(ed)
     beats_html = f'<p class="fpedf-beats">{beats}</p>' if beats else ""
     return (f'<article class="fped-feature"><a href="{_fp_ed_href(ed)}">'
+            f'{scene_plate("fingerprint", extra_class="feature-scene")}'
             f'<p class="fpedf-meta">{html.escape(meta)}</p>'
             f'<h2 class="fpedf-head">{headline}</h2>{dek_html}{beats_html}'
             f'<span class="fpedf-cta">Read the edition →</span></a></article>')
@@ -8547,12 +8844,13 @@ def build_fingerprint_page(out_dir, editions, cfg, shell=""):
                 'skill and publish an edition to see it here.</p>')
         stats = "No editions yet"
     page = FINGERPRINT_PAGE_TEMPLATE.format(
-        css=LIBRARY_CSS + FINGERPRINT_BAND_CSS + FINGERPRINT_PAGE_CSS,
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + FINGERPRINT_BAND_CSS + FINGERPRINT_PAGE_CSS,
         favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(active="adtech.html"),
         kicker=html.escape(cfg.get("kicker", "The global programmatic & Advanced TV market paper")),
         ridges=FP_RIDGES,
         motto=html.escape(cfg.get("motto", "All the news that's fit to Fingerprint")),
+        scene=scene_plate("fingerprint", extra_class="section-scene"),
         blurb=html.escape(cfg.get("blurb", "")),
         stats=stats,
         editions=body,
@@ -8595,6 +8893,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
       <span>{folio_meta}</span>
     </div>
   </header>
+  {scene}
   <nav class="fp-jump" id="fp-jump" aria-label="Sections"></nav>
   <section id="fp-frontpage" class="fp-frontpage" aria-label="In this edition"></section>
   <section id="fp-lead" class="fp-lead-wrap"></section>
@@ -9100,7 +9399,7 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
     watch_html = f'<p class="fp-watch"><b>What to watch</b>{html.escape(watch)}</p>' if watch else ""
 
     lead_head = data.get("lead", {}).get("headline", "") or f"Edition of {date}"
-    css = (LIBRARY_CSS + FINGERPRINT_EDITION_CSS).replace("__FP_BEAT_CSS__", _fp_beat_css())
+    css = (LIBRARY_CSS + SCENE_PLATE_CSS + FINGERPRINT_EDITION_CSS).replace("__FP_BEAT_CSS__", _fp_beat_css())
     page = FINGERPRINT_EDITION_TEMPLATE.format(
         title=html.escape(f"{lead_head} — The Fingerprint"),
         description=html.escape(data.get("lead", {}).get("dek", "") or "The Fingerprint"),
@@ -9110,6 +9409,7 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
         folio_meta=html.escape(folio_meta),
+        scene=scene_plate("fingerprint", extra_class="edition-scene"),
         watch=watch_html,
         data_json=json_for_html(data),
         marks_json=json_for_html(FP_MARKS),
@@ -9625,7 +9925,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
 {og_meta}
-<style>{css}</style>
+<style>{css}{accent_css}</style>
 </head>
 <body>
 <div class="masthead">
@@ -9638,6 +9938,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
   <p class="dk-kicker">{kicker}</p>
   <h1 class="dk-name">{title}</h1>
   <p class="dk-motto">{subtitle}</p>
+  {scene}
   <div class="dk-folio">
     <span>{folio_left}</span>
     <span class="dk-folio-c">{stats}</span>
@@ -9783,82 +10084,210 @@ def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
     mid = (f'<div class="fp-band-mid"><p class="fp-band-kicker">{html.escape(kicker)}</p>'
            f'<p class="fp-band-lead">{lead}</p>'
            f'<p class="fp-band-ticker">{ticker}</p></div>')
-    return (f'<div class="fp-band"><a href="{slug}.html">{flag}{mid}'
+    scene = scene_plate("briefing", extra_class="band-scene")
+    return (f'<div class="fp-band"><a href="{slug}.html">{flag}{scene}{mid}'
             f'<span class="fp-band-cta">Enter the desk →</span></a></div>')
 
 
-HOME_HUB_CSS = """
-/* The home hub — three doorways under the masthead: two co-equal desks
-   (Research / Ad Tech) and a smaller third door to the Forecast Desk. Reads
-   as one choice, not a wall of nav, so the rest of the index still scrolls
-   as a normal reading page beneath it. */
-.home-hub { max-width: 1120px; margin: .4rem auto 1.6rem; padding: 0 2rem; }
-.hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.hh-card { --hh-accent: var(--hh-accent-l, var(--accent));
-  display: flex; flex-direction: column; justify-content: space-between; gap: .9rem;
-  text-decoration: none; color: var(--text); background: var(--bg);
-  border: 1px solid var(--border); border-top: 3px solid var(--hh-accent, var(--accent));
-  border-radius: 0; padding: 1.3rem 1.4rem 1.2rem; position: relative; overflow: hidden;
-  transition: transform .16s var(--ease), box-shadow .16s var(--ease), border-color .16s var(--ease); }
-[data-theme="dark"] .hh-card { --hh-accent: var(--hh-accent-d, var(--accent)); }
-.hh-card:hover, .hh-card:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-2);
-  border-color: var(--hh-accent, var(--accent)); }
-.hh-kicker { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .14em; color: var(--hh-accent, var(--accent)); margin: 0; }
-.hh-title { font-family: var(--display); font-weight: 600; font-size: 1.7rem; line-height: 1.05;
-  margin: .3rem 0 0; }
-.hh-meta { font-family: var(--sans); font-size: .82rem; line-height: 1.5; color: var(--muted); margin: .5rem 0 0; }
-.hh-cta { align-self: flex-start; font-family: var(--sans); font-size: .68rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .12em; white-space: nowrap;
-  color: var(--hh-accent, var(--accent)); border: 1px solid currentColor; border-radius: 0;
-  padding: .4rem .8rem; transition: background-color .16s var(--ease), color .16s var(--ease),
-  transform .16s var(--ease); }
-.hh-card:hover .hh-cta, .hh-card:focus-visible .hh-cta { background: var(--hh-accent, var(--accent));
-  border-color: var(--hh-accent, var(--accent)); color: var(--bg); transform: translateX(3px); }
-.hh-more { margin-top: .9rem; }
-.hh-more a { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  text-decoration: none; color: var(--text); background: transparent;
-  border: 1px dashed var(--border); border-radius: 0; padding: .7rem 1.1rem; }
-.hh-more a:hover, .hh-more a:focus-visible { border-color: var(--hh-accent, var(--accent)); border-style: solid; }
-.hh-more .hh-more-label { font-family: var(--sans); font-size: .76rem; font-weight: 600; color: var(--text); }
-.hh-more .hh-more-label small { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 400;
-  color: var(--muted); margin-top: .15rem; }
-.hh-more .hh-more-cta { font-family: var(--sans); font-size: .66rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: .1em; color: var(--hh-accent-fd, #15803d); white-space: nowrap; }
-[data-theme="dark"] .hh-more .hh-more-cta { color: var(--hh-accent-fd-dark, #4ade80); }
-@media (max-width: 760px) {
-  .hh-grid { grid-template-columns: 1fr; }
-  .hh-title { font-size: 1.45rem; }
+HOME_MIRROR_CSS = """
+/* The home ticker — the Forecast Desk's own ticker tape, borrowed onto the
+   front page. Needs the board's dark-terminal custom properties, which
+   .fd-tape itself only inherits from .fd-board on the Forecast page, so this
+   slim wrapper carries the same values. */
+.home-ticker { --fdline: #2c303a; --fdmut: #9aa1af; --fdup: #22c55e; --fdtext: #edeff4;
+  --fdmono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  display: flex; align-items: center; gap: 1rem; max-width: 1120px; margin: .7rem auto 0; padding: 0 2rem; }
+.home-ticker-label { flex: 0 0 auto; font-family: var(--sans); font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: #15803d; text-decoration: none; white-space: nowrap; }
+[data-theme="dark"] .home-ticker-label { color: #4ade80; }
+.home-ticker-label:hover { text-decoration: underline; }
+.home-ticker-board { flex: 1 1 auto; min-width: 0; }
+.home-ticker .fd-tape { flex: 1 1 auto; min-width: 0; margin: 0; }
+@media (max-width: 680px) { .home-ticker { flex-wrap: wrap; } }
+/* .fd-tape itself is Forecast-page CSS, not otherwise loaded on the index —
+   duplicated here (not shared) so the ticker works without pulling in the
+   whole dark-terminal board stylesheet. */
+.fd-tape { overflow: hidden; border: 1px solid var(--fdline); border-radius: 2px;
+  background: #0a0f16; margin: 0; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6% 94%, transparent); }
+.fd-tape-inner { display: inline-flex; gap: 2.2rem; padding: .55rem 0; white-space: nowrap;
+  animation: fd-tape 240s linear infinite; will-change: transform; }
+.fd-tape:hover .fd-tape-inner { animation-play-state: paused; }
+@keyframes fd-tape { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .fd-tape-inner { animation: none; } }
+.fd-tk { font-family: var(--fdmono); font-size: .78rem; color: var(--fdmut); font-variant-numeric: tabular-nums; }
+.fd-tk b { color: var(--fdtext); font-weight: 600; }
+.fd-tk .up { color: var(--fdup); font-weight: 700; }
+.fd-tk .dn { color: #ef4444; font-weight: 700; }
+
+/* The mirror spread — the front page's two co-equal panes (the Research
+   Library and the detached desk, e.g. Ad Tech), starting with a mirrored
+   Today's Passage and continuing as two parallel scrollable shelves. Reads
+   as one deliberate choice, not a wall of nav, and the whole thing scrolls
+   with the page — nothing here is independently scrollable. */
+.mirror-spread { max-width: 1120px; margin: 1.6rem auto 0; padding: 0 2rem; }
+.mirror-head { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.6rem; }
+.mc-lib { --mc-accent: #9a2c1a; }
+[data-theme="dark"] .mc-lib { --mc-accent: #d98055; }
+.mc-adtech { --mc-accent: #0d5b68; }
+[data-theme="dark"] .mc-adtech { --mc-accent: #62aab8; }
+.dp-pane .dp-quote { border-top-color: var(--mc-accent, var(--accent)); }
+.dp-pane .dp-quote:hover, .dp-pane .dp-quote:focus-visible { border-top-color: var(--mc-accent, var(--accent)); }
+.dp-pane .dp-kicker, .dp-pane .dp-mark, .dp-pane .dp-cta { color: var(--mc-accent, var(--accent)); }
+.dp-pane .dp-quote:hover .dp-cta, .dp-pane .dp-quote:focus-visible .dp-cta { color: var(--bg); }
+.mirror-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.2rem; align-items: start; }
+.mirror-col #resume:empty { display: none; }
+.mirror-col #foryou { max-width: none; margin: .3rem 0 1rem; padding: 0; }
+.mirror-col { border-top: 3px solid var(--mc-accent, var(--accent)); padding-top: 1rem; min-width: 0; }
+.mirror-h { font-family: var(--display); font-weight: 600; font-size: 1.55rem; margin: 0; }
+.mirror-h a { color: inherit; text-decoration: none; }
+.mirror-h a:hover { color: var(--mc-accent, var(--accent)); }
+.mirror-sub { font-family: var(--mono); font-size: .68rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .06em; font-variant-numeric: tabular-nums; margin: .35rem 0 1.1rem; }
+.mirror-col .lib-toolbar { padding: 0 0 .7rem; }
+.mirror-col .grid { padding: .2rem 0 1rem; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
+.mirror-col .cat-heading, .mirror-col .domain-heading { padding: 0; }
+.mirror-col .lib-empty { padding: 1.6rem 0; }
+.mirror-more { display: inline-block; margin-top: 1rem; font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--mc-accent, var(--accent)); text-decoration: none;
+  border: 1px solid currentColor; padding: .5rem 1rem;
+  transition: background-color .16s var(--ease), color .16s var(--ease), transform .16s var(--ease); }
+.mirror-more:hover, .mirror-more:focus-visible { background: var(--mc-accent, var(--accent)); color: var(--bg);
+  transform: translateX(3px); }
+@media (max-width: 900px) {
+  .mirror-head, .mirror-grid { grid-template-columns: 1fr; }
 }
+
+/* Bottom scrolls — Ghost of Times / Pamphlets / Briefings as horizontal
+   carousel rows at the foot of the page: light, native-reading hints rather
+   than another full shelf. */
+.scroll-row { max-width: 1120px; margin: 0 auto; padding: 1.7rem 2rem 0; }
+.sr-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem 1.6rem;
+  flex-wrap: wrap; margin-bottom: .8rem; border-bottom: 1px solid var(--border); padding-bottom: .6rem; }
+.sr-h { font-family: var(--display); font-weight: 600; font-size: 1.3rem; margin: 0; }
+.sr-h a { color: inherit; text-decoration: none; }
+.sr-h a:hover { color: var(--sr-accent, var(--accent)); }
+.sr-sub { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: 0; flex: 1 1 260px; }
+.sr-more { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--sr-accent, var(--accent)); text-decoration: none; white-space: nowrap; }
+.sr-more:hover { text-decoration: underline; }
+.sr-track { display: flex; gap: 1rem; overflow-x: auto; padding: .2rem .1rem 1.3rem; scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.sr-track::-webkit-scrollbar { height: 8px; }
+.sr-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 0; }
+.sr-track::-webkit-scrollbar-track { background: transparent; }
+.sr-card { flex: 0 0 240px; scroll-snap-align: start; display: block; text-decoration: none; color: var(--text);
+  background: var(--bg); border: 1px solid var(--border); border-top: 3px solid var(--sr-accent, var(--accent));
+  border-radius: 0; padding: 1rem 1.1rem; transition: transform .16s var(--ease), box-shadow .16s var(--ease); }
+.sr-card:hover, .sr-card:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+.sr-card-kicker { font-family: var(--sans); font-size: .62rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--sr-accent, var(--accent)); margin: 0 0 .4rem; }
+.sr-card-title { font-family: var(--display); font-weight: 600; font-size: 1.02rem; line-height: 1.25; margin: 0 0 .4rem; }
+.sr-card-meta { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0; line-height: 1.4; }
+@media (max-width: 560px) { .sr-card { flex-basis: 74vw; } .scroll-row { padding-left: 1.2rem; padding-right: 1.2rem; } }
 """
 
 
-def home_hub_html(library_card, desk_card, forecast_card):
-    """The home page's front door: two co-equal cards (Research Library, the
-    detached desk — e.g. Ad Tech) plus a smaller dashed strip pointing at the
-    Forecast Desk. Each *_card dict: href, kicker, title, meta, cta, accent
-    (light, dark) — forecast_card additionally: label, sub."""
-    def _card(c):
-        accent = c.get("accent")
-        style = (f' style="--hh-accent-l:{accent[0]};--hh-accent-d:{accent[1]}"'
-                 if accent and len(accent) > 1 else "")
-        return (
-            f'<a class="hh-card" href="{html.escape(c["href"], quote=True)}"{style}>'
-            f'<div><p class="hh-kicker">{html.escape(c["kicker"])}</p>'
-            f'<h2 class="hh-title">{html.escape(c["title"])}</h2>'
-            f'<p class="hh-meta">{html.escape(c["meta"])}</p></div>'
-            f'<span class="hh-cta">{html.escape(c.get("cta", "Enter →"))}</span></a>'
-        )
-    more = (
-        f'<div class="hh-more"><a href="{html.escape(forecast_card["href"], quote=True)}">'
-        f'<span class="hh-more-label">{html.escape(forecast_card["title"])}'
-        f'<small>{html.escape(forecast_card["meta"])}</small></span>'
-        f'<span class="hh-more-cta">{html.escape(forecast_card.get("cta", "See the board →"))}</span></a></div>'
-    ) if forecast_card else ""
+def _pane_grid_html(dom_cards, cat_order, placeholder="Search…"):
+    """A `.lib-pane` grid: a search box (+ category pills once there's more
+    than one category) over `dom_cards`, grouped by category. Same markup and
+    classes the site-wide library pane uses, so LIBRARY_FILTER_JS wires it up
+    automatically — used for both a detached desk's own page and its mirrored
+    pane on the home page."""
+    cats = [c for c in (cat_order or []) if any(cc["category"] == c for cc in dom_cards)]
+    for cc in dom_cards:
+        if cc["category"] not in cats:
+            cats.append(cc["category"])
+    multi = len(cats) > 1
+    pills = ['<button class="cat-pill active" data-cat="all">All</button>'] if multi else []
+    sections = []
+    for cat in cats:
+        cat_cards = [c["html"] for c in dom_cards if c["category"] == cat]
+        if multi:
+            pills.append(f'<button class="cat-pill" data-cat="{html.escape(cat, quote=True)}">'
+                         f'{html.escape(cat)} <span class="cat-count">{len(cat_cards)}</span></button>')
+        head = (f'<h3 class="cat-heading">{html.escape(cat)} '
+                f'<span class="cat-count">{len(cat_cards)}</span></h3>') if multi else ""
+        sections.append(
+            f'<section class="cat-section" data-cat="{html.escape(cat, quote=True)}">{head}'
+            f'<div class="grid">{"".join(cat_cards)}</div></section>')
+    pills_html = f'<div class="cat-pills">{"".join(pills)}</div>' if multi else ""
     return (
-        '<section class="home-hub">'
-        f'<div class="hh-grid">{_card(library_card)}{_card(desk_card) if desk_card else ""}</div>'
-        f'{more}'
+        '<div class="lib-pane">'
+        '<div class="lib-toolbar">'
+        f'<input class="lib-search" type="search" placeholder="{html.escape(placeholder, quote=True)}" '
+        f'aria-label="{html.escape(placeholder, quote=True)}" autocomplete="off">'
+        f'{pills_html}</div>'
+        + "\n".join(sections)
+        + '<p class="lib-empty" hidden>No corpora match your search.</p>'
+        + '</div>'
+    )
+
+
+def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages, hub_desk):
+    """The home page's mirrored spread: Today's Passage side by side (one pull
+    from the Research Library, one from the detached desk), then the two
+    panes continuing as parallel scrollable shelves underneath. Falls back to
+    a single Research pane when no desk is configured."""
+    head = (
+        '<div class="mirror-head">'
+        '<div class="dp-pane mc-lib" id="daily-passage-lib" hidden></div>'
+        f'<script id="passages-data-lib" type="application/json">{json_for_html(lib_passages)}</script>'
+    )
+    body = (
+        '<div class="mirror-grid">'
+        '<div class="mirror-col mc-lib">'
+        '<h2 class="mirror-h" id="library"><a href="#library">The Research Library</a></h2>'
+        f'<p class="mirror-sub">{html.escape(library_meta)}</p>'
+        '<div id="resume"></div>'
+        '<section id="foryou" hidden></section>'
+        f'{library_pane}'
+        '</div>'
+    )
+    if hub_desk:
+        head += (
+            '<div class="dp-pane mc-adtech" id="daily-passage-adtech" hidden></div>'
+            f'<script id="passages-data-adtech" type="application/json">{json_for_html(adtech_passages)}</script>'
+            '</div>'
+        )
+        desk_pane = _pane_grid_html(hub_desk["cards"], hub_desk.get("cats") or [],
+                                    placeholder=f'Search {hub_desk["title"]}…')
+        body += (
+            '<div class="mirror-col mc-adtech">'
+            f'<h2 class="mirror-h"><a href="{html.escape(hub_desk["href"], quote=True)}">'
+            f'{html.escape(hub_desk["title"])}</a></h2>'
+            f'<p class="mirror-sub">{html.escape(hub_desk["meta"])}</p>'
+            f'{desk_pane}'
+            f'<a class="mirror-more" href="{html.escape(hub_desk["href"], quote=True)}">'
+            f'Enter the full desk →</a></div>'
+        )
+    else:
+        head += '</div>'
+    body += '</div>'
+    return f'<section class="mirror-spread">{head}{body}</section>'
+
+
+def _scroll_card_html(kicker, title, meta, href, scene_kind="pamphlet"):
+    return (f'<a class="sr-card" href="{html.escape(href, quote=True)}">'
+            f'{scene_plate(scene_kind, extra_class="card-scene")}'
+            f'<p class="sr-card-kicker">{html.escape(kicker)}</p>'
+            f'<h3 class="sr-card-title">{html.escape(title)}</h3>'
+            f'<p class="sr-card-meta">{html.escape(meta)}</p></a>')
+
+
+def bottom_scroll_row_html(title, sub, href, cards_html, accent=None):
+    """A bottom-of-page horizontal carousel row (Ghost of Times / Pamphlets /
+    Briefings) — a scrollable hint at further reading, not another full
+    shelf. Empty string (no row at all) when there's nothing to show."""
+    if not cards_html:
+        return ""
+    style = f' style="--sr-accent:{html.escape(accent, quote=True)}"' if accent else ""
+    return (
+        f'<section class="scroll-row"{style}>'
+        f'<div class="sr-head"><h2 class="sr-h"><a href="{html.escape(href, quote=True)}">{html.escape(title)}</a></h2>'
+        f'<p class="sr-sub">{html.escape(sub)}</p>'
+        f'<a class="sr-more" href="{html.escape(href, quote=True)}">See all →</a></div>'
+        f'<div class="sr-track">{cards_html}</div>'
         '</section>'
     )
 
@@ -9868,33 +10297,16 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
     pulled off the home page (the wire, its Briefings rack), its own apparatus row
     (tools — the desk's forecaster and dictionary), its category shelves as the
     standard card grid (with the live search box; category headings only when it
-    shelves >1 category), and — when granted — its own Test Yourself quiz."""
+    shelves >1 category), and — when granted — its own Test Yourself quiz.
+    page_cfg's optional "accent": (light, dark) hex pair keeps the whole desk's
+    page run (not just its home-page bands) in one signature color."""
     out = Path(out_dir)
+    accent_css = _accent_css(page_cfg.get("accent"))
     slug = page_cfg.get("slug", "adtech")
     title = page_cfg.get("title") or dom.get("title", "The Desk")
     kicker = page_cfg.get("kicker", "A separate desk")
     subtitle = page_cfg.get("subtitle", dom.get("title", ""))
-    cats = [c for c in (cat_order or []) if any(cc["category"] == c for cc in dom_cards)]
-    for cc in dom_cards:  # any category the config order missed, in first-seen order
-        if cc["category"] not in cats:
-            cats.append(cc["category"])
-    multi = len(cats) > 1
-    sections = []
-    for cat in cats:
-        cat_cards = [c["html"] for c in dom_cards if c["category"] == cat]
-        head = (f'<h3 class="cat-heading">{html.escape(cat)} '
-                f'<span class="cat-count">{len(cat_cards)}</span></h3>') if multi else ""
-        sections.append(
-            f'<section class="cat-section" data-cat="{html.escape(cat, quote=True)}">{head}'
-            f'<div class="grid">{"".join(cat_cards)}</div></section>')
-    body = (
-        '<div class="lib-toolbar">'
-        '<input id="lib-search" class="lib-search" type="search" '
-        'placeholder="Search the desk…" aria-label="Search this desk" autocomplete="off">'
-        '</div>'
-        + "\n".join(sections)
-        + '<p class="lib-empty" id="lib-empty" hidden>No corpora match your search.</p>'
-    )
+    body = _pane_grid_html(dom_cards, cat_order, placeholder="Search the desk…")
     og = og_tags(title, subtitle or title, f"{SITE_URL}/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
     (out / f"{slug}.html").write_text(DOMAIN_PAGE_TEMPLATE.format(
         title=html.escape(title),
@@ -9904,11 +10316,13 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         favicon=FAVICON,
         og_meta=og,
         nav=main_nav_html(active=f"{slug}.html"),
-        css=(LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + DOMAIN_PAGE_CSS
+        css=(LIBRARY_CSS + SCENE_PLATE_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + DOMAIN_PAGE_CSS
              + (QUIZ_CSS if quiz else "")),
+        accent_css=accent_css,
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
         stats=html.escape(stats),
         folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
+        scene=scene_plate("briefing", extra_class="section-scene"),
         bands=bands,
         tools=tools,
         quiz=quiz,
@@ -10222,7 +10636,7 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 <meta name="description" content="{descr}">
 <link rel="icon" href="{favicon}">
 {og_meta}
-<style>{css}</style>
+<style>{css}{accent_css}</style>
 </head>
 <body>
 <div class="masthead">
@@ -10267,7 +10681,7 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
     to the corpora that use it. Filterable by category (any category a source corpus
     belongs to) and by article (a specific corpus) in addition to the free-text
     search. A `page` override scopes it to a detached desk's own dictionary (e.g.
-    the Ad Tech Glossary): {fname, title (h1), kicker, scope, nav, back}."""
+    the Ad Tech Glossary): {fname, title (h1), kicker, scope, nav, back, accent}."""
     out = Path(out_dir)
     page = page or {}
     fname = page.get("fname", "glossary.html")
@@ -10276,6 +10690,7 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
     scope = page.get("scope", "across the research library")
     nav = page.get("nav", GLOSSARY_NAV_DEFAULT)
     back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
+    accent_css = _accent_css(page.get("accent"))
     merged = {}
     for g in glossary_index:
         for t in g["terms"]:
@@ -10368,7 +10783,7 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
     page_html = GLOSSARY_TEMPLATE.format(
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
         descr=html.escape(descr), nav=nav, back=back,
-        favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + GLOSSARY_EXTRA_CSS,
+        favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + GLOSSARY_EXTRA_CSS, accent_css=accent_css,
         intro=intro, n=n, az=az, entries="".join(blocks), app_js=GLOSSARY_JS, shell=shell,
         cat_pills="".join(cat_pills), article_options="".join(article_opts),
     )
@@ -10900,9 +11315,10 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # what you read spans every shelf, unlike the desk-scoped reference pages.
     build_quiz_page(out, quiz_facts, all_passages, shell=shell_root)
 
-    # The Ghost of Times section (second top-level section of the site).
+    # The Ghost of Times section (second top-level section of the site). Its
+    # old single-line home-page teaser is gone — the front page now carries a
+    # scrollable Ghost of Times row at the bottom instead (see bottom_scrolls).
     build_ghost_page(out, editions, ghost_cfg, shell=shell_root)
-    ghost_band = ghost_band_html(editions, ghost_cfg)
     # Render each edition page natively from its deposited data (skips any that
     # predate the data-driven renderer and so have no docs/ghost/data/*.json).
     rendered = sum(build_ghost_edition(out, ed, shell=shell_sub) for ed in editions)
@@ -10916,9 +11332,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     if fp_editions:
         print(f"  ✓ Rendered {fp_rendered}/{len(fp_editions)} Fingerprint edition page(s) from data")
 
-    # The Pamphlets section (fourth top-level section — standalone writer essays).
+    # The Pamphlets section (fourth top-level section — standalone writer
+    # essays). Home-page presence is now the bottom scroll row, not a band.
     build_pamphlets_page(out, pamphlet_items, pamphlets_cfg, shell=shell_root)
-    pamphlets_band = pamphlets_band_html(pamphlet_items, pamphlets_cfg)
     pam_rendered = sum(build_pamphlet(out, p, shell=shell_sub) for p in pamphlet_items)
     if pamphlet_items:
         print(f"  ✓ Rendered {pam_rendered}/{len(pamphlet_items)} pamphlet page(s) from data")
@@ -10942,7 +11358,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     build_forecast_page(out, forecast_items, fd_markets, forecast_cfg,
                         category_order=category_order, shell=shell_root,
                         native_data=fd_native_data, sections=fd_sections)
-    forecast_band = forecast_band_html(forecast_items, fd_markets, forecast_cfg)
+    # Home-page presence is now the top ticker (see ticker_html), not a band.
     fd_rendered = sum(build_forecast_item(out, f, shell=shell_sub, records=persona_records)
                       for f in forecast_items)
     fdm_rendered = sum(build_corpus_market_page(out, m, shell=shell_sub, records=persona_records)
@@ -10956,11 +11372,15 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     build_record_page(out, forecast_items, fd_markets, forecast_cfg, shell=shell_root,
                        native_data=fd_native_data)
     # One full profile page per standing predictor (docs/forecasters/{key}.html),
-    # computed from every market site-wide so a desk-scoped record still rolls up
-    # into the same complete history. The roster cards on both Track Record pages
-    # (site-wide and each desk's own) link here.
-    build_persona_pages(out, build_forecast_ledger(forecast_items, fd_markets),
-                        build_book(forecast_items, fd_markets, fd_native_data), shell=shell_root)
+    # plus one page comparing all seven side by side — both computed from every
+    # market site-wide so a desk-scoped record still rolls up into the same
+    # complete history. The roster cards on both Track Record pages (site-wide
+    # and each desk's own), the mini roster atop every board, and every
+    # per-market trader card all link into these.
+    _fd_site_led = build_forecast_ledger(forecast_items, fd_markets)
+    _fd_site_book = build_book(forecast_items, fd_markets, fd_native_data)
+    build_persona_pages(out, _fd_site_led, _fd_site_book, shell=shell_root)
+    build_persona_compare_page(out, _fd_site_led, _fd_site_book, shell=shell_root)
 
     # ---- Detached domain fronts: a config domain carrying a "page" object is
     # lifted off the home page onto its own top-level section of the site (e.g.
@@ -10971,7 +11391,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # tools row. The home page gets a desk band pointing at the section instead.
     index_cards = [c for c in cards if c["category"] not in detached_cats]
     home_bands = []
-    hub_desk = None  # first detached domain (e.g. Ad Tech) — feeds the home hub's co-equal door
+    hub_desk = None      # first detached domain (e.g. Ad Tech) — the home page's mirrored twin pane
+    hub_briefings = None  # that desk's Briefings rack, if it has one — feeds a bottom scroll row
     for d in detached:
         pcfg = d["page"]
         slug = pcfg.get("slug", "adtech")
@@ -10991,6 +11412,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 "accent": ("#0d5b68", "#62aab8"),
                 "cards": dcards,
                 "slugs": [c["slug"] for c in dcards],
+                "cats": dcats,
             }
         inc = pcfg.get("include") or []
         takes_fp = "fingerprint" in inc
@@ -11066,6 +11488,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                                   f"kept apart from the library's Pamphlets."),
             }
             b_items = read_pamphlets_manifest(out, subdir=b_slug)
+            hub_briefings = {"items": b_items, "slug": b_slug, "title": b_title}
             build_pamphlets_page(out, b_items, b_cfg, shell=shell_root,
                                  page={"fname": f"{b_slug}.html", "title": b_title,
                                        "kicker": pcfg.get("briefings_kicker", f"Essays from the {title} desk"),
@@ -11190,17 +11613,19 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     if group_open:
         sections.append('</div>')
     library_body = (
+        '<div class="lib-pane">'
         '<div class="lib-toolbar">'
-        '<input id="lib-search" class="lib-search" type="search" '
+        '<input class="lib-search" type="search" '
         'placeholder="Search the library…" aria-label="Search the research library" autocomplete="off">'
         f'<div class="cat-pills">{"".join(pills)}</div>'
         '</div>'
         + "\n".join(sections)
-        + '<p class="lib-empty" id="lib-empty" hidden>No corpora match your search.</p>'
+        + '<p class="lib-empty" hidden>No corpora match your search.</p>'
+        + '</div>'
     )
 
     # The Fingerprint + Pamphlets bands share the library CSS, so fold them in once.
-    library_css = LIBRARY_CSS + HOME_HUB_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + FORECAST_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
+    library_css = LIBRARY_CSS + SCENE_PLATE_CSS + HOME_MIRROR_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + FORECAST_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
     # First-visit overture markup — built from the existing brand only (no new copy).
     # The Fingerprint bills under its desk's name once a detached domain takes it.
     # Every section name is a live link: The Research stays on this page (#library);
@@ -11226,30 +11651,68 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         '<p class="ov-skip">Press Esc to skip</p>'
         '</div></div>'
     )
-    daily_passage = (
-        '<section id="daily-passage" hidden></section>'
-        f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>'
-    )
     collections_html = collections_section_html([m for _cc, m in resolved_collections])
-    # The home hub — the front door's two co-equal choices (Research Library,
-    # the detached desk) plus a smaller third door to the Forecast Desk.
-    _hub_n_markets = len(forecast_items) + len(fd_markets)
-    _hub_n_outcomes = sum(len(m["outcomes"]) for m in fd_markets) + len(forecast_items)
-    library_card = {
-        "href": "#library",
-        "kicker": "The library",
-        "title": "The Research Library",
-        "meta": stats,
-        "cta": "Start reading →",
-        "accent": ("#9a2c1a", "#d98055"),
-    }
-    forecast_card = {
-        "href": "forecast.html",
-        "title": "The Forecast Desk",
-        "meta": f"{_hub_n_markets} markets · {_hub_n_outcomes} priced outcomes, every one grounded in the research",
-        "cta": "See the board →",
-    } if _hub_n_markets else None
-    hub_html = home_hub_html(library_card, hub_desk, forecast_card)
+
+    # The Forecast Desk ticker — the board's own ticker tape, surfaced at the
+    # very top of the front page (replaces the old single-line teaser band).
+    _ticker_tape = _fd_tape(forecast_items, fd_markets)
+    ticker_html = (
+        '<div class="home-ticker">'
+        '<a class="home-ticker-label" href="forecast.html">The Forecast Desk →</a>'
+        f'<div class="home-ticker-board">{_ticker_tape}</div></div>'
+    ) if _ticker_tape else ""
+
+    # The mirrored spread — Today's Passage side by side, then the Research
+    # Library and the detached desk (Ad Tech) continuing as two parallel
+    # scrollable shelves. A corpus belongs to exactly one side, so the
+    # passages split is a clean complement.
+    _adtech_slugs = set(hub_desk["slugs"]) if hub_desk else set()
+    lib_passages = [p for p in all_passages if p["slug"] not in _adtech_slugs]
+    adtech_passages = [p for p in all_passages if p["slug"] in _adtech_slugs]
+    mirror_html = mirror_spread_html(library_body, stats, lib_passages, adtech_passages, hub_desk)
+
+    # Bottom scrolls — Ghost of Times, the Fingerprint, Pamphlets, and (if the
+    # desk has filed any) its Briefings rack, as light horizontal carousels at
+    # the foot of the page rather than full shelves.
+    ghost_cards = "".join(
+        _scroll_card_html(_no_label(e), e.get("lead_headline") or f"Edition of {e.get('date', '')}",
+                          (f"{_weekday(e.get('date', ''))} · {e.get('date', '')}"
+                           if _weekday(e.get("date", "")) else e.get("date", "")),
+                          _ed_href(e), scene_kind="ghost")
+        for e in editions[:10]
+    )
+    ghost_row = bottom_scroll_row_html("The Ghost of Times", ghost_cfg.get("motto", ""), "ghost.html", ghost_cards)
+    fp_cards = "".join(
+        _scroll_card_html(_fp_no_label(e), e.get("lead_headline") or f"Edition of {e.get('date', '')}",
+                          (f"{e.get('dispatches')} dispatches"
+                           if isinstance(e.get("dispatches"), int)
+                           else " · ".join(e.get("beats") or [])[:90]),
+                          _fp_ed_href(e), scene_kind="fingerprint")
+        for e in fp_editions[:10]
+    )
+    fp_row = bottom_scroll_row_html("The Fingerprint", fingerprint_cfg.get("motto", ""),
+                                    "fingerprint.html", fp_cards, accent="#0d5b68")
+    pam_cards = "".join(
+        _scroll_card_html(p.get("subject") or _pamphlet_voice(p) or "Pamphlet",
+                          p.get("title") or "Untitled pamphlet",
+                          _pamphlet_meta(p) or _long_date(p.get("date", "")),
+                          _pamphlet_href(p, "pamphlets"), scene_kind="pamphlet")
+        for p in pamphlet_items[:10]
+    )
+    pam_row = bottom_scroll_row_html("The Pamphlets", pamphlets_cfg.get("motto", ""), "pamphlets.html", pam_cards)
+    brief_row = ""
+    if hub_briefings and hub_briefings["items"]:
+        brief_cards = "".join(
+            _scroll_card_html(p.get("subject") or _pamphlet_voice(p) or "Briefing",
+                              p.get("title") or "Untitled briefing",
+                              _pamphlet_meta(p) or _long_date(p.get("date", "")),
+                              _pamphlet_href(p, hub_briefings["slug"]), scene_kind="briefing")
+            for p in hub_briefings["items"][:10]
+        )
+        brief_row = bottom_scroll_row_html(hub_briefings["title"], "The Ad Tech desk's own essay rack",
+                                           f'{hub_briefings["slug"]}.html', brief_cards, accent="#0d5b68")
+    bottom_scrolls_html = ghost_row + fp_row + pam_row + brief_row
+
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(
         site_title=html.escape(site_title),
         site_subtitle=html.escape(site_subtitle),
@@ -11258,19 +11721,13 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         nav=main_nav_html(active="index.html"),
         stats=stats,
         hero=hero_art(),
-        hub=hub_html,
+        ticker=ticker_html,
+        mirror=mirror_html,
         overture_head=OVERTURE_HEAD,
         overture=overture_html,
-        daily_passage=daily_passage,
-        ghost_band=ghost_band,
-        fingerprint_band=fingerprint_band,
-        pamphlets_band=pamphlets_band,
-        forecast_band=forecast_band,
-        resume='<div id="resume"></div>',
-        foryou='<section id="foryou" hidden></section>',
         collections=collections_html,
         quiz=QUIZ_CTA_HTML,
-        cards=library_body,
+        bottom_scrolls=bottom_scrolls_html,
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS,
         shell=shell_root,
     ))

@@ -12,11 +12,11 @@
 <meta property="og:title" content="Machine Humanities — Agentic Scholarship">
 <meta property="og:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">
 <meta property="og:url" content="https://calvincollins.xyz/">
-<meta property="og:image" content="https://calvincollins.xyz/aiforhumanities.png">
+<meta property="og:image" content="https://calvincollins.xyz/machine-humanities-homepage.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Machine Humanities — Agentic Scholarship">
 <meta name="twitter:description" content="A library of deep research, plus The Ghost of Times and The Fingerprint.">
-<meta name="twitter:image" content="https://calvincollins.xyz/aiforhumanities.png">
+<meta name="twitter:image" content="https://calvincollins.xyz/machine-humanities-homepage.png">
 <style>
 :root {
   /* paper + ink */
@@ -110,8 +110,9 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .coll-meta { font-family: var(--mono); font-size: .68rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums;
   color: var(--muted); margin: 0; display: flex; align-items: center; justify-content: space-between; gap: .6rem; }
-/* Today's Passage — the daily pull-quote hook pinned atop the index. */
-#daily-passage { max-width: 1120px; margin: 1.6rem auto 0; padding: 0 2rem; }
+/* Today's Passage — the daily pull-quote, mirrored in a pair atop the index
+   (see .mirror-head / .dp-pane in HOME_MIRROR_CSS). */
+.dp-pane[hidden] { display: none; }
 .dp-quote { display: block; position: relative; overflow: hidden; text-decoration: none; color: var(--text);
   background: var(--bg); border: 1px solid var(--border); border-top: 3px solid var(--accent);
   border-radius: 0; padding: 1.4rem 1.6rem 1.3rem; box-shadow: none;
@@ -158,7 +159,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 560px) { .fy-row .card { width: 78vw; flex-basis: 78vw; } #foryou { padding: 0 1.2rem; } }
 /* The Ghost of Times announcement row — first entry in the ruled announcements column. */
 .ghost-band { max-width: 1120px; margin: 0 auto; padding: 0 2rem; }
-.ghost-band a { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1.6rem;
+.ghost-band a { display: grid; grid-template-columns: auto minmax(118px, 142px) 1fr auto; align-items: center; gap: 1.6rem;
   text-decoration: none; color: var(--text); background: transparent; border: 0; border-top: 1px solid var(--border);
   border-radius: 0; box-shadow: none; padding: 1.3rem 0 1.4rem; position: relative; }
 .ghost-band a:hover .gb-lead { color: var(--accent); }
@@ -185,6 +186,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 @media (max-width: 680px) {
   .ghost-band a { grid-template-columns: 1fr; gap: .9rem; }
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
+  .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
   .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
 }
