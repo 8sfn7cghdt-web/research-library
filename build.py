@@ -10652,6 +10652,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 {cards}
 </main>
 {quiz}
+{bottom_bands}
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">{epigraph}</p>
@@ -10978,7 +10979,8 @@ def bottom_scroll_row_html(title, sub, href, cards_html, accent=None):
     )
 
 
-def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", quiz="", shell=""):
+def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", quiz="",
+                      bottom_bands="", shell=""):
     """Render a detached domain front (docs/<slug>.html): nameplate, any bands it
     pulled off the home page (the wire, its Briefings rack), its own apparatus row
     (tools — the desk's forecaster and dictionary), its category shelves as the
@@ -11015,6 +11017,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         bands=bands,
         tools=tools,
         quiz=quiz,
+        bottom_bands=bottom_bands,
         cards=body,
         epigraph=html.escape(page_cfg.get("epigraph", "“We sell — or else.” — David Ogilvy")),
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + (QUIZ_JS if quiz else ""),
@@ -12465,8 +12468,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     ]
     build_domain_page(out, {"slug": "research", **research_page_cfg}, {"title": site_title}, index_cards,
                       [c for c in category_order if c not in detached_cats], stats,
-                      bands=collections_html, tools=_desk_tools_html(research_tools),
-                      quiz=research_quiz, shell=shell_root)
+                      tools=_desk_tools_html(research_tools), quiz=research_quiz,
+                      bottom_bands=collections_html, shell=shell_root)
     build_wrapped_page(out, wrapped_stats, shell=shell_root, category_order=category_order)
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html, {out}/research.html")
 
