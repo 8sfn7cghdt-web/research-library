@@ -3485,12 +3485,12 @@ def _research_scenes():
                 if not img:
                     continue
                 tag = img.group(0)
-                alt_match = re.search(r'\balt=["\']([^"\']*)["\']', tag, re.IGNORECASE)
+                alt_match = re.search(r'\balt=(["\'])(.*?)\1', tag, re.IGNORECASE)
                 mime_ext = "jpg" if img.group(1).lower() in ("jpeg", "jpg") else img.group(1).lower()
                 scenes[folder.name] = {
                     "bytes": base64.b64decode(img.group(2)),
                     "ext": mime_ext,
-                    "alt": html.unescape(alt_match.group(1)) if alt_match else "",
+                    "alt": html.unescape(alt_match.group(2)) if alt_match else "",
                     "source": snippet.name,
                 }
                 break
