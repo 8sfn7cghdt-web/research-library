@@ -1135,8 +1135,8 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 #content code { background: var(--panel); padding: .1em .35em; border-radius: 2px; font-size: .88em; overflow-wrap: anywhere; }
 #content pre { background: var(--panel); padding: 1rem; border-radius: 2px; overflow-x: auto; }
 #content pre code { background: none; padding: 0; }
-#content table { border-collapse: collapse; font-family: var(--sans); font-size: .85rem; width: 100%; margin: 1.2rem 0; }
-#content th, #content td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+#content table { border-collapse: collapse; font-family: var(--sans); font-size: .85rem; width: 100%; table-layout: fixed; margin: 1.2rem 0; }
+#content th, #content td { border: 1px solid var(--border); padding: .45rem .6rem; text-align: left; vertical-align: top; overflow-wrap: anywhere; }
 #content th { background: var(--panel); }
 #content img { max-width: 100%; }
 #content hr { border: none; margin: 2.6rem 0; text-align: center; height: 1em; }
@@ -5766,7 +5766,46 @@ FD_PERSONAS = [
     ("contrarian", "The Contrarian", "🎭", "Favorites usually fail; hunts the underpriced live path."),
     ("prophet", "The Prophet", "🕊", "Divine providence — backs the fated, story-shaped ending, however long the odds."),
 ]
-FD_PERSONA_ALIASES = {"the bracket surgeon": "path-reader"}
+FD_PERSONA_DETAILS = {
+    "market-reader": {"agent": "Mira Tape", "role": "The Market Reader", "monogram": "MT", "mascot": "ticker lens"},
+    "quant": {"agent": "Quinn Ratio", "role": "The Quant", "monogram": "QR", "mascot": "ratio grid"},
+    "historian": {"agent": "Ada Ledger", "role": "The Historian", "monogram": "AL", "mascot": "archive stack"},
+    "path-reader": {"agent": "Rowan Wayfinder", "role": "The Path Reader", "monogram": "RW", "mascot": "route compass"},
+    "talisman": {"agent": "Stella North", "role": "The Talisman", "monogram": "SN", "mascot": "north star"},
+    "contrarian": {"agent": "Nico Tilt", "role": "The Contrarian", "monogram": "NT", "mascot": "split mask"},
+    "prophet": {"agent": "Elias Lantern", "role": "The Prophet", "monogram": "EL", "mascot": "signal lantern"},
+}
+FD_PERSONA_ALIASES = {
+    "the bracket surgeon": "path-reader",
+    **{v["agent"].casefold(): k for k, v in FD_PERSONA_DETAILS.items()},
+}
+
+
+def _persona_agent_name(key, fallback=""):
+    return FD_PERSONA_DETAILS.get(key, {}).get("agent") or fallback
+
+
+def _persona_role(key, fallback=""):
+    return FD_PERSONA_DETAILS.get(key, {}).get("role") or fallback
+
+
+def _persona_monogram(key, fallback=""):
+    return FD_PERSONA_DETAILS.get(key, {}).get("monogram") or fallback[:2].upper()
+
+
+def _persona_mascot_name(key):
+    return FD_PERSONA_DETAILS.get(key, {}).get("mascot", "forecast mark")
+
+
+def _persona_mascot_html(key, size=""):
+    """Reusable visual badge for one Forecast Desk agent."""
+    meta = FD_PERSONA_DETAILS.get(key, {})
+    label = f'{meta.get("agent", key)} mascot: {meta.get("mascot", "forecast mark")}'
+    cls = f' fd-agent-{size}' if size else ""
+    color = FDT_SERIES_COLORS.get(key, "#9aa1af") if "FDT_SERIES_COLORS" in globals() else "#9aa1af"
+    return (f'<span class="fd-agent-mascot fdmas-{html.escape(key, quote=True)}{cls}" '
+            f'style="--agent-color:{color}" aria-label="{html.escape(label, quote=True)}">'
+            f'<span class="fd-agent-mark">{html.escape(_persona_monogram(key))}</span></span>')
 
 # ---- The spectrum: rigor → intuition → creative hypothesis -------------------
 # The roster is not a committee of equals — it is a spectrum. On the left sit the
@@ -11409,7 +11448,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                 "title": title,
                 "meta": f"{dstats} — plus the desk's own wire, board, and glossary",
                 "cta": "Enter the desk →",
-                "accent": ("#0d5b68", "#62aab8"),
+                "accent": pcfg.get("accent", ("#0d5b68", "#62aab8")),
                 "cards": dcards,
                 "slugs": [c["slug"] for c in dcards],
                 "cats": dcats,
@@ -11434,7 +11473,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                                     page={"fname": f"{slug}-forecast.html", "title": fc_title,
                                           "kicker": "The desk's predictions, by category",
                                           "nav": desk_nav, "back": desk_back,
-                                          "record_fname": f"{slug}-record.html"})
+                                          "record_fname": f"{slug}-record.html",
+                                          "accent": pcfg.get("accent")})
                 n_out = sum(len(m["outcomes"]) for m in dmarkets)
                 tools.append({"href": f"{slug}-forecast.html", "kicker": "The desk's forecaster",
                               "title": fc_title,
@@ -11449,7 +11489,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                                         "kicker": "The desk, graded call by call",
                                         "nav": desk_nav, "back": desk_back,
                                         "board_href": f"{slug}-forecast.html",
-                                        "board_title": fc_title})
+                                        "board_title": fc_title,
+                                        "accent": pcfg.get("accent")})
                 dgraded = (sum(1 for f in dnative if f.get("_graded"))
                            + sum(1 for m in dmarkets if m.get("resolution")))
                 dopen = len(dmarkets) + len(dnative) - dgraded
@@ -11468,7 +11509,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                                     page={"fname": f"{slug}-glossary.html", "title": gl_title,
                                           "kicker": f"Reference · {title}",
                                           "scope": f"across the {title} desk",
-                                          "nav": desk_nav, "back": desk_back})
+                                          "nav": desk_nav, "back": desk_back,
+                                          "accent": pcfg.get("accent")})
                 tools.append({"href": f"{slug}-glossary.html", "kicker": "The desk's dictionary",
                               "title": gl_title,
                               "meta": f"{gl_terms} terms across {len(dgloss)} corpora, "
@@ -11496,7 +11538,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                                        "empty": f"No briefings filed yet. Drop an essay into "
                                                 f"docs/{b_slug}/data/ and list it in the manifest "
                                                 f"to see it here.",
-                                       "accent": ("#0d5b68", "#62aab8")})
+                                       "accent": pcfg.get("accent")})
             bands += pamphlets_band_html(b_items, b_cfg,
                                          page={"name": b_title, "flag": "The<br>Briefings",
                                                "href": f"{b_slug}.html", "cls": "brf"})
@@ -11505,7 +11547,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                                                   "list_name": b_title, "nav_active": f"{slug}.html",
                                                   "kicker": pcfg.get("briefings_kicker",
                                                                      f"Essays from the {title} desk"),
-                                                  "noun": "briefing"})
+                                                  "noun": "briefing", "accent": pcfg.get("accent")})
                              for p in b_items)
             if b_items:
                 print(f"  ✓ Rendered {b_rendered}/{len(b_items)} {b_title} essay page(s) from data")
