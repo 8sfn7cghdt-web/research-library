@@ -3315,14 +3315,47 @@ SCENE_STAMPS = {
 }
 
 
-def _scene_cover_images(kind, root="", cover_slugs=None):
+_SCENE_COVER_SLUGS_CACHE = None
+
+
+def _all_scene_cover_slugs():
+    global _SCENE_COVER_SLUGS_CACHE
+    if _SCENE_COVER_SLUGS_CACHE is None:
+        if not COVERS_DIR.is_dir():
+            _SCENE_COVER_SLUGS_CACHE = ()
+        else:
+            _SCENE_COVER_SLUGS_CACHE = tuple(dict.fromkeys(
+                p.stem for p in sorted(COVERS_DIR.iterdir())
+                if p.suffix.lower() in COVER_EXTS
+            ))
+    return _SCENE_COVER_SLUGS_CACHE
+
+
+def _scene_rank(seed_key, slug):
+    return hashlib.md5(f"{seed_key}:{slug}".encode("utf-8")).hexdigest()
+
+
+def _scene_variant(kind, seed):
+    if not seed:
+        return 0
+    return int(hashlib.md5(f"{kind}:{seed}".encode("utf-8")).hexdigest()[:2], 16) % 6
+
+
+def _scene_cover_images(kind, root="", cover_slugs=None, seed=""):
     slugs = []
     for slug in (cover_slugs or ()):
         if slug and slug not in slugs:
             slugs.append(slug)
-    for slug in SCENE_COVERS.get(kind, ()):
+
+    pool = list(dict.fromkeys(SCENE_COVERS.get(kind, ()) + _all_scene_cover_slugs()))
+    if seed:
+        seed_key = f"{kind}:{seed}"
+        pool.sort(key=lambda slug: _scene_rank(seed_key, slug))
+    for slug in pool:
         if slug and slug not in slugs:
             slugs.append(slug)
+        if len(slugs) >= 4:
+            break
 
     imgs = []
     asset_root = root or ""
@@ -3339,10 +3372,11 @@ def _scene_cover_images(kind, root="", cover_slugs=None):
     return "".join(imgs)
 
 
-def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None):
+def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None, seed=""):
     """A cover-like scene plate built from the corpus visual language."""
     kind = kind if kind in SCENE_LABELS else "pamphlet"
-    cls = f"scene-plate scene-{kind}" + (f" {extra_class}" if extra_class else "")
+    variant = _scene_variant(kind, seed)
+    cls = f"scene-plate scene-{kind} scene-v{variant}" + (f" {extra_class}" if extra_class else "")
     aria = html.escape(label or SCENE_LABELS[kind], quote=True)
     stamp = html.escape(SCENE_STAMPS.get(kind, "FIELD NOTES"))
     return (
@@ -3350,7 +3384,7 @@ def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None):
         '<span class="sc-wall" aria-hidden="true"></span><span class="sc-window" aria-hidden="true"></span>'
         '<span class="sc-pin sc-pin1" aria-hidden="true"></span><span class="sc-pin sc-pin2" aria-hidden="true"></span>'
         '<span class="sc-wire sc-wire1" aria-hidden="true"></span><span class="sc-wire sc-wire2" aria-hidden="true"></span>'
-        f'{_scene_cover_images(kind, root=root, cover_slugs=cover_slugs)}'
+        f'{_scene_cover_images(kind, root=root, cover_slugs=cover_slugs, seed=seed)}'
         '<span class="sc-screen sc-screen1" aria-hidden="true"></span><span class="sc-screen sc-screen2" aria-hidden="true"></span>'
         '<span class="sc-mapgrid" aria-hidden="true"></span><span class="sc-path sc-path1" aria-hidden="true"></span>'
         '<span class="sc-path sc-path2" aria-hidden="true"></span><span class="sc-path sc-path3" aria-hidden="true"></span>'
@@ -3408,6 +3442,46 @@ SCENE_PLATE_CSS = """
 .sc-c2 { left: 29%; top: 8%; width: 24%; height: 52%; transform: rotate(4deg); }
 .sc-c3 { right: 15%; top: 16%; width: 23%; height: 50%; transform: rotate(8deg); }
 .sc-c4 { right: 33%; top: 22%; width: 19%; height: 42%; transform: rotate(-3deg); opacity: .9; }
+.scene-v1 .sc-c1 { left: 12%; top: 8%; width: 25%; height: 55%; transform: rotate(-3deg); }
+.scene-v1 .sc-c2 { left: 34%; top: 14%; width: 23%; height: 47%; transform: rotate(8deg); }
+.scene-v1 .sc-c3 { right: 12%; top: 9%; width: 24%; height: 52%; transform: rotate(-6deg); }
+.scene-v1 .sc-c4 { right: 33%; top: 29%; width: 18%; height: 38%; transform: rotate(3deg); }
+.scene-v1 .sc-s1 { left: 16%; bottom: 19%; transform: rotate(-4deg); }
+.scene-v1 .sc-s2 { right: 18%; bottom: 21%; transform: rotate(9deg); }
+.scene-v1 .sc-lamp { left: 56%; }
+.scene-v1 .sc-stamp { right: auto; left: 7%; transform: rotate(2deg); }
+.scene-v2 .sc-c1 { left: 7%; top: 17%; width: 27%; height: 51%; transform: rotate(-10deg); }
+.scene-v2 .sc-c2 { left: 25%; top: 7%; width: 26%; height: 55%; transform: rotate(2deg); }
+.scene-v2 .sc-c3 { right: 18%; top: 11%; width: 22%; height: 49%; transform: rotate(11deg); }
+.scene-v2 .sc-c4 { right: 38%; top: 24%; width: 18%; height: 40%; transform: rotate(-5deg); }
+.scene-v2 .sc-wire1 { top: 24%; transform: rotate(2deg); }
+.scene-v2 .sc-wire2 { top: 27%; transform: rotate(-18deg); }
+.scene-v2 .sc-book { left: 27%; width: 37%; transform: rotate(2deg); }
+.scene-v2 .sc-stamp { bottom: 11%; transform: rotate(-7deg); }
+.scene-v3 .sc-c1 { left: 16%; top: 10%; width: 23%; height: 50%; transform: rotate(6deg); }
+.scene-v3 .sc-c2 { left: 38%; top: 7%; width: 24%; height: 52%; transform: rotate(-6deg); }
+.scene-v3 .sc-c3 { right: 8%; top: 18%; width: 24%; height: 50%; transform: rotate(4deg); }
+.scene-v3 .sc-c4 { right: 29%; top: 18%; width: 18%; height: 39%; transform: rotate(9deg); }
+.scene-v3 .sc-window { right: 11%; top: 8%; }
+.scene-v3 .sc-s3 { left: 55%; bottom: 37%; transform: rotate(5deg); }
+.scene-v3 .sc-lamp { left: 45%; }
+.scene-v3 .sc-stamp { right: 8%; bottom: 13%; transform: rotate(3deg); }
+.scene-v4 .sc-c1 { left: 10%; top: 7%; width: 29%; height: 57%; transform: rotate(-4deg); }
+.scene-v4 .sc-c2 { left: 36%; top: 18%; width: 21%; height: 44%; transform: rotate(7deg); }
+.scene-v4 .sc-c3 { right: 10%; top: 13%; width: 26%; height: 53%; transform: rotate(-9deg); }
+.scene-v4 .sc-c4 { right: 36%; top: 9%; width: 17%; height: 37%; transform: rotate(2deg); }
+.scene-v4 .sc-pin1 { left: 14%; top: 12%; }
+.scene-v4 .sc-pin2 { right: 18%; top: 17%; }
+.scene-v4 .sc-sheet { bottom: 16%; }
+.scene-v4 .sc-stamp { right: 9%; bottom: 7%; transform: rotate(-1deg); }
+.scene-v5 .sc-c1 { left: 6%; top: 11%; width: 24%; height: 52%; transform: rotate(-6deg); }
+.scene-v5 .sc-c2 { left: 28%; top: 11%; width: 25%; height: 53%; transform: rotate(5deg); }
+.scene-v5 .sc-c3 { right: 13%; top: 8%; width: 22%; height: 48%; transform: rotate(-2deg); }
+.scene-v5 .sc-c4 { right: 31%; top: 28%; width: 20%; height: 43%; transform: rotate(8deg); }
+.scene-v5 .sc-wire1 { left: 18%; width: 48%; transform: rotate(12deg); }
+.scene-v5 .sc-wire2 { left: 37%; width: 40%; transform: rotate(-8deg); }
+.scene-v5 .sc-lamp { left: 61%; height: 23%; }
+.scene-v5 .sc-stamp { right: 6%; bottom: 10%; transform: rotate(-5deg); }
 .sc-pin { width: 9px; height: 9px; border-radius: 50%; z-index: 5; background: var(--sc-accent);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--sc-accent) 20%, transparent), 0 2px 8px var(--sc-shadow); }
 .sc-pin1 { left: 18%; top: 15%; } .sc-pin2 { right: 22%; top: 21%; }
@@ -4708,7 +4782,8 @@ def ghost_band_html(editions, ghost_cfg):
         cta = "Coming soon →"
     mid = (f'<div class="gb-mid"><p class="gb-kicker">{kicker}</p>'
            f'<p class="gb-lead">{lead}</p><p class="gb-sub">{sub}</p></div>')
-    scene = scene_plate("ghost", extra_class="band-scene")
+    scene_seed = f"ghost-band:{editions[0].get('date', '') if editions else 'empty'}"
+    scene = scene_plate("ghost", extra_class="band-scene", seed=scene_seed)
     return (f'<div class="ghost-band"><a href="ghost.html">{flag}{scene}{mid}'
             f'<span class="gb-cta">{cta}</span></a></div>')
 
@@ -4897,7 +4972,7 @@ def ghost_feature_html(ed):
     writers = _writers_line(ed)
     writers_html = f'<p class="gedf-writers">{writers}</p>' if writers else ""
     return (f'<article class="ged-feature"><a href="{_ed_href(ed)}">'
-            f'{scene_plate("ghost", extra_class="feature-scene")}'
+            f'{scene_plate("ghost", extra_class="feature-scene", seed=ed.get("file") or ed.get("date", ""))}'
             f'<p class="gedf-meta">{html.escape(meta)}</p>'
             f'<h2 class="gedf-head">{headline}</h2>{dek_html}{writers_html}'
             f'<span class="gedf-cta">Read the edition →</span></a></article>')
@@ -4937,7 +5012,7 @@ def build_ghost_page(out_dir, editions, ghost_cfg, shell=""):
         nav=main_nav_html(active="ghost.html"),
         ornament=GHOST_NIB,
         motto=html.escape(ghost_cfg.get("motto", "")),
-        scene=scene_plate("ghost", extra_class="section-scene"),
+        scene=scene_plate("ghost", extra_class="section-scene", seed="ghost-front"),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
         stats=stats,
         editions=body,
@@ -5283,7 +5358,7 @@ def build_ghost_edition(out_dir, ed, shell=""):
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
         folio_writers=html.escape(folio_writers),
-        scene=scene_plate("ghost", extra_class="edition-scene", root="../"),
+        scene=scene_plate("ghost", extra_class="edition-scene", root="../", seed=f"ghost-edition:{date}"),
         watch=watch_html,
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
@@ -5425,7 +5500,8 @@ def pamphlets_band_html(items, cfg, page=None):
         cta = "Coming soon →"
     mid = (f'<div class="pb-mid"><p class="pb-kicker">{html.escape(kicker)}</p>'
            f'<p class="pb-lead">{lead}</p><p class="pb-sub">{sub}</p></div>')
-    scene = scene_plate(scene_kind, extra_class="band-scene")
+    latest_key = items[0].get("slug") if items else href
+    scene = scene_plate(scene_kind, extra_class="band-scene", seed=f"{name}:{latest_key}")
     return (f'<div class="pamphlet-band{cls}"><a href="{html.escape(href, quote=True)}">{flag}{scene}{mid}'
             f'<span class="pb-cta">{cta}</span></a></div>')
 
@@ -5590,7 +5666,7 @@ def pamphlet_feature_html(p, subdir="pamphlets", noun="pamphlet"):
     voice_html = f'<p class="pamf-by">{voice}</p>' if voice else ""
     scene_kind = "briefing" if noun == "briefing" or subdir != "pamphlets" else "pamphlet"
     return (f'<article class="pam-feature"><a href="{_pamphlet_href(p, subdir)}">'
-            f'{scene_plate(scene_kind, extra_class="feature-scene")}'
+            f'{scene_plate(scene_kind, extra_class="feature-scene", seed=_pamphlet_href(p, subdir))}'
             f'<p class="pamf-meta">{html.escape(meta)}</p>'
             f'<h2 class="pamf-head">{headline}</h2>{dek_html}{voice_html}'
             f'<span class="pamf-cta">Read the {html.escape(noun)} →</span></a></article>')
@@ -5648,7 +5724,7 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + PAMPHLETS_PAGE_CSS,
         favicon=FAVICON, og_meta=og,
         motto=html.escape(cfg.get("motto", "")),
-        scene=scene_plate(scene_kind, extra_class="section-scene"),
+        scene=scene_plate(scene_kind, extra_class="section-scene", seed=f"{fname}:{scene_kind}"),
         blurb=html.escape(cfg.get("blurb", "")),
         stats=stats,
         body=body,
@@ -5888,7 +5964,7 @@ def build_pamphlet(out_dir, item, shell="", page=None):
         headline=html.escape(title),
         dek=dek_html,
         byline=byline_html,
-        scene=scene_plate(scene_kind, extra_class="article-scene", root="../"),
+        scene=scene_plate(scene_kind, extra_class="article-scene", root="../", seed=f"{subdir}:{slug}"),
         colophon=colophon_html,
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
@@ -7523,7 +7599,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         motto=html.escape(cfg.get("motto", "")),
         blurb=html.escape(cfg.get("blurb", "")),
         folio=folio, plate_extra=plate_extra,
-        scene=scene_plate("forecast", extra_class="page-scene"),
+        scene=scene_plate("forecast", extra_class="page-scene", seed=f"forecast-front:{fname}"),
         body="\n".join(parts),
         theme_js=LIBRARY_THEME_JS,
         app_js=FORECAST_PAGE_JS,
@@ -7927,7 +8003,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
         blurb="Every call is frozen when it is logged and scored against the official result when it resolves — "
               "hits and misses both stay on the ledger. That is the difference between a desk and a feed.",
         folio=folio, plate_extra=plate_extra,
-        scene=scene_plate("forecast", extra_class="page-scene"),
+        scene=scene_plate("forecast", extra_class="page-scene", seed=f"forecast-record:{fname}"),
         body="\n".join(parts),
         theme_js=LIBRARY_THEME_JS,
         app_js=FORECAST_PAGE_JS,
@@ -8052,7 +8128,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
             favicon=FAVICON, og_meta=og,
             motto=html.escape(prof.get("signature", criterion)),
             folio=folio, plate_extra="",
-            scene=scene_plate("forecast", extra_class="page-scene", root="../"),
+            scene=scene_plate("forecast", extra_class="page-scene", root="../", seed=f"forecaster:{key}"),
             body="\n".join(parts),
             blurb="Every call this predictor has made, graded honestly — the desk keeps no predictor's record off the books.",
             theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
@@ -8347,7 +8423,7 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
         motto="Seven models, one spectrum — no hiding behind a single number.",
         folio=f'    <span>{len(cols)} predictors</span>\n    <span class="fd-folio-c">every row comparable</span>',
         plate_extra="",
-        scene=scene_plate("forecast", extra_class="page-scene", root="../"),
+        scene=scene_plate("forecast", extra_class="page-scene", root="../", seed="forecaster:compare"),
         body=body,
         blurb="Every call this roster has made, graded honestly — the desk keeps no predictor's record off the books.",
         theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
@@ -8789,7 +8865,7 @@ def build_forecast_item(out_dir, item, shell="", records=None):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         kicker=f'The Forecast Desk · {"Graded market" if g else "Live market"}',
         headline=html.escape(d.get("question", title)),
-        scene=scene_plate("forecast", extra_class="detail-scene", root="../"),
+        scene=scene_plate("forecast", extra_class="detail-scene", root="../", seed=f"forecast-native:{slug}"),
         folio=folio,
         method_note=html.escape(d.get("method_note", "")),
         body="\n".join(parts),
@@ -9028,7 +9104,7 @@ def build_corpus_market_page(out_dir, m, shell="", records=None):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         kicker="The Forecast Desk · Research market",
         headline=html.escape(m["title"]),
-        scene=scene_plate("forecast", extra_class="detail-scene", root="../"),
+        scene=scene_plate("forecast", extra_class="detail-scene", root="../", seed=f"forecast-corpus:{m['slug']}"),
         folio=folio,
         method_note=html.escape(desk.get("method_note", "")) or
                     "Priced from the corpus’s forecast scenarios — every band grounded in the research it links to.",
@@ -9211,7 +9287,8 @@ def fingerprint_band_html(editions, cfg):
     mid = (f'<div class="fp-band-mid"><p class="fp-band-kicker">{kicker}</p>'
            f'<p class="fp-band-lead">{lead}</p>'
            f'<p class="fp-band-ticker">{ticker}</p></div>')
-    scene = scene_plate("fingerprint", extra_class="band-scene")
+    scene_seed = f"fingerprint-band:{editions[0].get('date', '') if editions else 'empty'}"
+    scene = scene_plate("fingerprint", extra_class="band-scene", seed=scene_seed)
     return (f'<div class="fp-band"><a href="fingerprint.html">{flag}{scene}{mid}'
             f'<span class="fp-band-cta">{cta}</span></a></div>')
 
@@ -9457,7 +9534,7 @@ def fingerprint_feature_html(ed):
     beats = _fp_beats_line(ed)
     beats_html = f'<p class="fpedf-beats">{beats}</p>' if beats else ""
     return (f'<article class="fped-feature"><a href="{_fp_ed_href(ed)}">'
-            f'{scene_plate("fingerprint", extra_class="feature-scene")}'
+            f'{scene_plate("fingerprint", extra_class="feature-scene", seed=_fp_ed_href(ed))}'
             f'<p class="fpedf-meta">{html.escape(meta)}</p>'
             f'<h2 class="fpedf-head">{headline}</h2>{dek_html}{beats_html}'
             f'<span class="fpedf-cta">Read the edition →</span></a></article>')
@@ -9499,7 +9576,7 @@ def build_fingerprint_page(out_dir, editions, cfg, shell=""):
         kicker=html.escape(cfg.get("kicker", "The global programmatic & Advanced TV market paper")),
         ridges=FP_RIDGES,
         motto=html.escape(cfg.get("motto", "All the news that's fit to Fingerprint")),
-        scene=scene_plate("fingerprint", extra_class="section-scene"),
+        scene=scene_plate("fingerprint", extra_class="section-scene", seed="fingerprint-front"),
         blurb=html.escape(cfg.get("blurb", "")),
         stats=stats,
         editions=body,
@@ -10058,7 +10135,7 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
         folio_meta=html.escape(folio_meta),
-        scene=scene_plate("fingerprint", extra_class="edition-scene", root="../"),
+        scene=scene_plate("fingerprint", extra_class="edition-scene", root="../", seed=f"fingerprint-edition:{date}"),
         watch=watch_html,
         data_json=json_for_html(data),
         marks_json=json_for_html(FP_MARKS),
@@ -10290,7 +10367,7 @@ def build_connections_page(out_dir, corpora, category_order, shell=""):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + CONNECTIONS_CSS, favicon=FAVICON, og_meta=OG_META,
         nav=main_nav_html(active="connections.html"),
         svg="".join(parts), legend=legend,
-        scene=scene_plate("map", extra_class="page-scene"),
+        scene=scene_plate("map", extra_class="page-scene", seed="connections-map"),
         data_json=json_for_html({"titles": titles, "reasons": reasons}),
         theme_js=LIBRARY_THEME_JS, app_js=CONNECTIONS_JS, shell=shell,
     )
@@ -10776,7 +10853,7 @@ def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
     mid = (f'<div class="fp-band-mid"><p class="fp-band-kicker">{html.escape(kicker)}</p>'
            f'<p class="fp-band-lead">{lead}</p>'
            f'<p class="fp-band-ticker">{ticker}</p></div>')
-    scene = scene_plate("briefing", extra_class="band-scene")
+    scene = scene_plate("briefing", extra_class="band-scene", seed=f"domain-band:{slug}:{lead}")
     return (f'<div class="fp-band"><a href="{slug}.html">{flag}{scene}{mid}'
             f'<span class="fp-band-cta">Enter the desk →</span></a></div>')
 
@@ -10954,9 +11031,9 @@ def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages
     return f'<section class="mirror-spread">{body}</section>'
 
 
-def _scroll_card_html(kicker, title, meta, href, scene_kind="pamphlet"):
+def _scroll_card_html(kicker, title, meta, href, scene_kind="pamphlet", seed=None):
     return (f'<a class="sr-card" href="{html.escape(href, quote=True)}">'
-            f'{scene_plate(scene_kind, extra_class="card-scene")}'
+            f'{scene_plate(scene_kind, extra_class="card-scene", seed=seed or href or title)}'
             f'<p class="sr-card-kicker">{html.escape(kicker)}</p>'
             f'<h3 class="sr-card-title">{html.escape(title)}</h3>'
             f'<p class="sr-card-meta">{html.escape(meta)}</p></a>')
@@ -11012,7 +11089,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
         stats=html.escape(stats),
         folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
-        scene=scene_plate(scene_kind, extra_class="section-scene"),
+        scene=scene_plate(scene_kind, extra_class="section-scene", seed=f"domain:{slug}"),
         hero=desk_hero_art(slug),
         bands=bands,
         tools=tools,
@@ -11479,7 +11556,8 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
         descr=html.escape(descr), nav=nav, back=back,
         favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + SCENE_PLATE_CSS + GLOSSARY_EXTRA_CSS, accent_css=accent_css,
         intro=intro, n=n, az=az, entries="".join(blocks), app_js=GLOSSARY_JS, shell=shell,
-        scene=scene_plate("briefing" if page.get("accent") else "research", extra_class="page-scene"),
+        scene=scene_plate("briefing" if page.get("accent") else "research",
+                          extra_class="page-scene", seed=f"glossary:{fname}"),
         cat_pills="".join(cat_pills), article_options="".join(article_opts),
     )
     (out / fname).write_text(page_html)
@@ -11562,7 +11640,7 @@ def build_quiz_page(out_dir, quiz_facts, all_passages, shell=""):
         favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + SCENE_PLATE_CSS + QUIZ_CSS + QUIZ_PAGE_CSS,
         nav=main_nav_html(active="quiz.html"),
         intro=intro, card=QUIZ_CARD_HTML, payloads=payloads,
-        scene=scene_plate("quiz", extra_class="page-scene"),
+        scene=scene_plate("quiz", extra_class="page-scene", seed="quiz-page"),
         app_js=LIBRARY_THEME_JS + QUIZ_JS, shell=shell,
     )
     (out / "quiz.html").write_text(page)
@@ -11597,7 +11675,7 @@ def build_wrapped_page(out_dir, wrapped_stats, shell="", category_order=None):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + WRAPPED_CSS,
         stats_json=json_for_html(wrapped_stats),
         holdings=holdings_chart_svg(wrapped_stats, category_order),
-        scene=scene_plate("wrapped", extra_class="page-scene"),
+        scene=scene_plate("wrapped", extra_class="page-scene", seed="wrapped-page"),
         theme_js=LIBRARY_THEME_JS,
         wrapped_js=WRAPPED_JS,
         shell=shell,
@@ -11977,7 +12055,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             back_href=_back_href,
             back_label=_back_label,
             scene=scene_plate("briefing" if p["category"] == "Media & Advertising" else "research",
-                              extra_class="reader-scene", cover_slugs=(p["slug"],)),
+                              extra_class="reader-scene", cover_slugs=(p["slug"],), seed=p["slug"]),
         ))
 
     # Collection pages — merged cross-corpus readers, rendered through the same
@@ -11990,7 +12068,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             css=CSS + SCENE_PLATE_CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
             data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
             back_href="research.html", back_label="Library",
-            scene=scene_plate("collection", extra_class="reader-scene", cover_slugs=meta.get("slugs"))))
+            scene=scene_plate("collection", extra_class="reader-scene",
+                              cover_slugs=meta.get("slugs"), seed=meta["slug"])))
     if resolved_collections:
         print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
 
@@ -12426,7 +12505,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         brand_logo=brand_logo_art(),
         stats=stats,
         hero=hero_art(),
-        hero_scene=scene_plate("research", extra_class="hero-scene"),
+        hero_scene=scene_plate("research", extra_class="hero-scene", seed="home-hero"),
         ticker=ticker_html,
         mirror=mirror_html,
         overture_head=OVERTURE_HEAD,
