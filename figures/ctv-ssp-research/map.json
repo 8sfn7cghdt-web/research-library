@@ -1,32 +1,17 @@
 [
-  {
-    "file": "00_Six_Easy_Pieces.md",
-    "after": "## Four: How it actually works",
-    "snippet": "auction_path_ledger.html"
-  },
-  {
-    "file": "01_How_The_Sell_Side_Was_Assembled.md",
-    "after": "## The Consolidation Deals",
-    "snippet": "consolidation_roster.html"
-  },
-  {
-    "file": "02_The_Independent_SSPs.md",
-    "after": "## The Roster, Sized Honestly",
-    "snippet": "disclosure_tiers.html"
-  },
-  {
-    "file": "03_The_Platform_Owned_Sell_Side.md",
-    "after": "## The Analytical Spine",
-    "snippet": "platform_squeeze.html"
-  },
-  {
-    "file": "06_AI_And_The_Agentic_Sell_Side.md",
-    "after": "## The Concrete Deployments",
-    "snippet": "frontier_burden.html"
-  },
-  {
-    "file": "Future_Trajectory.md",
-    "after": "## Bottom Line",
-    "snippet": "scenario_floor.html"
-  }
+  { "file": "00_Six_Easy_Pieces.md", "after": "## Five: The fight", "snippet": "scene_ad_break_auction.html" },
+  { "file": "01_How_The_Sell_Side_Was_Assembled.md", "after": "## The Video Ad Server Era", "snippet": "scene_video_ad_server.html" },
+  { "file": "01_How_The_Sell_Side_Was_Assembled.md", "after": "## The Roads Not Taken", "snippet": "scene_roads_not_taken.html" },
+  { "file": "02_The_Independent_SSPs.md", "after": "## The Roster, Sized Honestly", "snippet": "scene_disclosure_roster.html" },
+  { "file": "02_The_Independent_SSPs.md", "after": "## The response: attention, performance, and agentic trading", "snippet": "scene_response_machine.html" },
+  { "file": "03_The_Platform_Owned_Sell_Side.md", "after": "## Amazon: The Same Company Sits on Both Sides of the Table", "snippet": "scene_platform_two_sides.html" },
+  { "file": "03_The_Platform_Owned_Sell_Side.md", "after": "## The Analytical Spine", "snippet": "scene_platform_roles.html" },
+  { "file": "04_Attention_As_A_Currency.md", "after": "## What Attention Measurement Actually Is", "snippet": "scene_attention_panel.html" },
+  { "file": "04_Attention_As_A_Currency.md", "after": "## The Honest Verdict", "snippet": "scene_attention_verdict.html" },
+  { "file": "05_Performance_And_Outcomes.md", "after": "### The linking problem: identity resolution", "snippet": "scene_identity_linking.html" },
+  { "file": "05_Performance_And_Outcomes.md", "after": "### Is the premium bigger than the risk", "snippet": "scene_outcome_underwriting.html" },
+  { "file": "06_AI_And_The_Agentic_Sell_Side.md", "after": "## The Agentic Layer", "snippet": "scene_agentic_layer.html" },
+  { "file": "06_AI_And_The_Agentic_Sell_Side.md", "after": "## The Cross-Cutting Shocks That Could Reset the Board by 2029", "snippet": "scene_shocks_reset_board.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenario One", "snippet": "scene_squeezed_standing.html" },
+  { "file": "Future_Trajectory.md", "after": "## Scenario Four", "snippet": "scene_structural_break.html" }
 ]
