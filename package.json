@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build": "bash scripts/build_sites_dist.sh"
+  },
+  "dependencies": {}
+}
