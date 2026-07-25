@@ -1,0 +1,674 @@
+{
+  "edition_date": "2026-07-24",
+  "edition_number": 33,
+  "weekday": "Friday",
+  "subtitle": "All the news that's fit to Fingerprint",
+  "lead": {
+    "headline": "Peacock Turns Its First Profit as NBCU Ad Revenue Jumps 55%",
+    "dek": "The streamer earned $189 million in the quarter and now supplies a third of NBCUniversal's advertising — weeks before Comcast spins it away.",
+    "body": "Comcast reported on July 23 that Peacock delivered its first profitable quarter, posting $189 million in adjusted EBITDA on $1.9 billion of revenue against a $101 million loss a year earlier, and adding two million paid subscribers to reach 48 million. Advertising revenue in Comcast's media segment rose 55% to $2.16 billion, lifted by roughly $440 million of incremental FIFA World Cup revenue, while Peacock's own advertising revenue grew 68% to $717 million; the streamer's share of NBCUniversal advertising climbed to 33% from 26% in the first quarter. Executives credited the World Cup, the NBA playoffs and 'Love Island USA' for both the sign-ups and the sell-through. The results land while Comcast prepares to separate NBCUniversal and Sky into an independent publicly traded company, a transaction announced June 29 and expected to close within about a year — and while Comcast keeps FreeWheel, the ad-serving spine beneath much of the premium video market, on its own side of the split. For the market this is the clearest evidence yet that a general-entertainment streamer can reach profitability on an advertising-led model rather than in spite of one. The open question for buyers is what a standalone NBCU, judged every quarter on that advertising line, starts asking of them in scatter.",
+    "source_publication": "MediaPost",
+    "source_url": "https://www.mediapost.com/publications/article/416753/nbcu-ad-spend-soars-55-in-q2-peacock-posts-profi.html",
+    "sources": [
+      {
+        "publication": "MediaPost",
+        "url": "https://www.mediapost.com/publications/article/416753/nbcu-ad-spend-soars-55-in-q2-peacock-posts-profi.html",
+        "filed_date": "2026-07-23"
+      },
+      {
+        "publication": "AdExchanger",
+        "url": "https://www.adexchanger.com/tv/peacock-hits-profitability-as-comcast-prepares-to-spin-off-nbcu/",
+        "filed_date": "2026-07-23"
+      },
+      {
+        "publication": "CNBC",
+        "url": "https://www.cnbc.com/2026/07/23/comcast-earnings-nbcuniversal-strength-split.html",
+        "filed_date": "2026-07-23"
+      },
+      {
+        "publication": "Variety",
+        "url": "https://variety.com/2026/tv/news/comcast-q2-earnings-world-cup-peacock-profit-1236819033/",
+        "filed_date": "2026-07-23"
+      },
+      {
+        "publication": "Deadline",
+        "url": "https://deadline.com/2026/07/comcast-q2-earnings-peacock-subscribers-1237000945/",
+        "filed_date": "2026-07-23"
+      }
+    ],
+    "filed_date": "2026-07-23"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "CTV Growth Slows to 11% as Social Video Overtakes It",
+          "dek": "US connected TV spend reaches $29.3 billion — and 43% of buyers say they don't trust the inventory they buy.",
+          "body": "The IAB's 2026 Digital Video Ad Spend & Strategy report, published July 14 with Advertiser Perceptions and Guideline, projects US CTV ad spend rising 11% to $29.3 billion this year, down from 12% growth a year earlier, while social video grows 13% to $31.9 billion — the first year social video outspends CTV. The same study found 43% of buyers have somewhat to no confidence in inventory quality on the routes they trust most, direct insertion orders, programmatic guaranteed and self-serve; that figure rises to 55% for private marketplaces and 67% for open exchange and RTB. Buyers named fraud in programmatic CTV exchanges their leading concern at 56%, followed by unverified publisher sources at 48%. A decelerating spend curve paired with majority distrust of the open pipes is the whole commercial case for curation, direct integrations and seller-identity enforcement — and the reason the sell side is now being asked to prove where the impression actually ran.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416513/iab-2026-digital-video-ad-spend-11.html",
+              "filed_date": "2026-07-14"
+            },
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/marketing/digital-video-ad-spending-is-booming-trust-in-premium-inventory-isnt/",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "TVNewsCheck",
+              "url": "https://tvnewscheck.com/business/article/iab-report-finds-buyers-want-outcomes-and-more-transparency-in-digital-video-market/",
+              "filed_date": "2026-07-14"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/iab-43-of-ctv-buyers-doubt-where-their-ads-actually-ran/",
+              "filed_date": "2026-07-14"
+            },
+            {
+              "publication": "IAB",
+              "url": "https://www.iab.com/insights/video-ad-spend-report-2026/",
+              "filed_date": "2026-07-14"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/416513/iab-2026-digital-video-ad-spend-11.html",
+          "filed_date": "2026-07-14"
+        },
+        {
+          "headline": "Upfront Nears Its Close With Volume Down and Sports in Command",
+          "dek": "Roughly 75-80% of the market is committed, pricing is flat, and sellers are demanding match spending to release the marquee games.",
+          "body": "Buyers put the 2026-27 upfront at 75-80% complete with most priority deals closed and mainly tier-two cable left to negotiate, describing a market where overall dollar commitments are slightly down year over year and pricing is broadly flat — a volume story rather than a CPM story. Sellers leaned on match spending, requiring commitments against non-sports inventory to unlock marquee events including the Super Bowl and the Women's World Cup; Disney's opening Super Bowl asks of about $10 million per thirty seconds settled nearer $7.75 million to $8 million. Amazon closed talks with every major holding company ahead of the field, saying it exceeded its volume goal and grew year over year on the strength of Thursday Night Football, NBA on Prime and NASCAR. With total commitments flat and sports absorbing what growth there is, the incremental CTV dollar in 2026-27 has to be won in scatter and the biddable market — which is exactly where programmatic sellers and performance-CTV products compete.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/media-buying/the-upfront-market-is-nearly-done-as-sports-acts-as-both-negotiation-driver-and-obstacle/",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/convergent-tv/amazon-closes-upfront-talks-with-year-over-year-growth/",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "Variety",
+              "url": "https://variety.com/2026/tv/news/amazon-2026-upfront-commitments-grew-1236811252/",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/daily-news-roundup/sports-rule-the-tv-upfronts-are-reddit-and-google-breaking-up/",
+              "filed_date": "2026-07-23"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/the-upfront-market-is-nearly-done-as-sports-acts-as-both-negotiation-driver-and-obstacle/",
+          "filed_date": "2026-07-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Study Finds IP-Based CTV Targeting Misses the Household Three Times in Four",
+          "dek": "Only 23% of residential IP addresses reached the geography they were bought against.",
+          "body": "Adstra published an ID Connection Strength framework on July 15 alongside joint research with the independent agency InterMedia Advertising, reporting that just 23% of residential IP addresses reached their intended geographic target when used without ICS guidance. Device-level CTV identifiers held month-over-month consistency of 71% against 57% for IP addresses, a 24-point gap; the framework scores identifiers from one to six across recency, frequency, signal integrity, congruency and cardinality, covering hashed emails, UID2s, mobile ad IDs, CTV IDs, cookies and IPs. Adstra and Truthset — which has separately estimated that close to 40% of open-auction CTV spend lands on inaccurate identity data — both sell alternatives to IP-based addressing, and the figures should be read with that interest in view. IP plus geo remains the default addressability layer in open-market CTV, so error rates of this size give buyers a concrete reason to demand match-methodology disclosure before they pay a targeted CPM.",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/convergent-tv/ip-based-ctv-targeting-fails-3-in-every-4-times-new-research-finds/",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/ip-based-ctv-targeting-fails-3-in-4-times-adstra-study-finds/",
+              "filed_date": "2026-07-15"
+            }
+          ],
+          "source_publication": "Adweek",
+          "source_url": "https://www.adweek.com/convergent-tv/ip-based-ctv-targeting-fails-3-in-every-4-times-new-research-finds/",
+          "filed_date": "2026-07-15"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "Nielsen ONE Ads and VideoAmp Both Withdraw From MRC Audit",
+          "dek": "The two currencies proposed as television's cross-platform successor are now outside third-party accreditation together.",
+          "body": "The Media Rating Council's quarterly accreditation update, published July 13, removed Nielsen ONE Ads from in-process status because of planned material methodological changes, formally withdrawing the service from audit; a July 16 clarification confirmed the withdrawal covers the ads component only and not Nielsen ONE Content. VideoAmp was recharacterised from lacking intent to continue the audit toward a planned reassessment in 2027, with the company saying it is working through pre-audit feedback and may re-enter sooner. Comscore and iSpot retain their existing audience and ad-occurrence accreditations, while Nielsen's national and local television services remain under suspension. The two currencies most often proposed as the replacement for panel-based TV measurement now both sit outside third-party audit, at precisely the moment buyers say they want more independent proof of what they bought.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416482/videoamp-nielsen-one-pull-out-of-mrc-accreditatio.html",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "TVNewsCheck",
+              "url": "https://tvnewscheck.com/business/article/videoamp-nielsen-one-pull-out-of-mrc-accreditation-process/",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "Media Rating Council",
+              "url": "https://mediaratingcouncil.org/sites/default/files/News/MRC%20Accreditation%20Status%20Quarterly%20Update_Q2%2026%207.13.26.pdf",
+              "filed_date": "2026-07-13"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/416482/videoamp-nielsen-one-pull-out-of-mrc-accreditatio.html",
+          "filed_date": "2026-07-13"
+        },
+        {
+          "headline": "Pause Ads Get a Bidstream Vocabulary — and a Buy-Side Path",
+          "dek": "The Tech Lab's signaling guidance went final on Tuesday; two days later OpenPath opened a direct route to the format.",
+          "body": "The IAB Tech Lab marked its CTV Ad Portfolio signaling guidance final on July 22, standardising how six formats — pause, menu, screensaver, in-scene insertion, overlay and squeezeback — are described in the bidstream, after a comment process that ran to July 16. Two days later The Trade Desk published documentation enabling CTV pause ads through OpenPath, its direct publisher integration, with creative restricted to a static PNG or JPG served one to three seconds after a viewer pauses. Warner Bros. Discovery, which says its pause units drive more than 200% lift in site visits against benchmarks and will add a shoppable checkout version later this year, still sells most of that inventory through direct deals and has said programmatic availability waits on exactly this kind of spec alignment. Pause is the highest-priced inventory most streamers own and cannot yet sell at scale; a shared signal plus a direct buy-side route is what turns it from a bespoke sponsorship into a line item.",
+          "sources": [
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/trade-desk-gains-direct-ctv-pause-ad-supply-as-iab-finalizes-6-format-signals/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/ctv-roundup/how-warner-bros-discovery-is-creating-value-out-of-dead-air-with-pause-ads/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "Cynopsis",
+              "url": "https://www.cynopsis.com/cynopsis-7-23-26-warner-bros-discoverys-foray-into-shoppable-pause-ads/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "IAB Tech Lab",
+              "url": "https://iabtechlab.com/standards/ctv-ad-portfolio/",
+              "filed_date": "2026-07-22"
+            }
+          ],
+          "source_publication": "PPC Land",
+          "source_url": "https://ppc.land/trade-desk-gains-direct-ctv-pause-ad-supply-as-iab-finalizes-6-format-signals/",
+          "filed_date": "2026-07-24"
+        },
+        {
+          "headline": "Trade Desk Says Netflix Supply Is Now Open to Every Kokai Buyer",
+          "dek": "The claim rests on the buying platform's own product page — Netflix has said nothing.",
+          "body": "The Trade Desk said on July 20 that Netflix inventory is now selectable inside Sellers and Publishers 500+, its curated always-on marketplace, with no minimum spend, no separate integration and no change to the buying workflow. Netflix supply had previously been reachable only through programmatic guaranteed or one-to-one private marketplace deals carrying negotiated scale commitments. The claim originates on a Kokai product-update page on The Trade Desk's own site; Netflix has not commented and the change drew no tier-one trade coverage, so 'open to all' should be read as the seller's framing — SP500+ is a curated pool a buyer selects into, not the open auction. If it works as described it is the first time mid-market and smaller buyers can reach an ad tier Netflix says counts more than 250 million monthly active viewers without negotiating for the privilege.",
+          "sources": [
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/netflix-opens-250m-user-inventory-to-trade-desk-buyers-drops-spend-minimums/",
+              "filed_date": "2026-07-20"
+            },
+            {
+              "publication": "Media in Canada",
+              "url": "https://mediaincanada.com/2026/07/21/the-trade-desk-expands-programmatic-access-to-netflix/",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "The Trade Desk",
+              "url": "https://www.thetradedesk.com/resources/kokai-update-access-netflix-inventory-in-sellers-and-publishers-500",
+              "filed_date": "2026-07-20"
+            }
+          ],
+          "source_publication": "PPC Land",
+          "source_url": "https://ppc.land/netflix-opens-250m-user-inventory-to-trade-desk-buyers-drops-spend-minimums/",
+          "filed_date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Trade Desk Rebuilds Its Commercial Bench Two Weeks Before Earnings",
+          "dek": "Uber's advertising chief takes the seat vacant since last summer; a business development role is created alongside it.",
+          "body": "The Trade Desk named Kristi Argyilan, most recently global head of advertising at Uber, as chief commercial officer and executive vice president, where she takes over the data-partnerships organisation covering identity, measurement, retail media and governance — a seat vacant since Tim Sims left last summer. Two days later the company created a chief business development officer role for Ron Lamprecht, with both appointments effective July 27. They follow the arrival of Nate Olmstead as chief financial officer, the fourth in roughly a year, Sarah Gavin as chief marketing officer, and Penry Price on the board. With second-quarter results due August 6 and premium CTV supply increasingly reachable by other routes, a near-total refresh of the largest independent demand-side platform's commercial leadership is a counterparty change every CTV publisher and identity partner will be negotiating against.",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/media/ubers-top-ad-exec-kristi-argyilan-joins-the-trade-desk-as-chief-commercial-officer/",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "Investing.com",
+              "url": "https://www.investing.com/news/company-news/trade-desk-names-ron-lamprecht-as-chief-business-development-officer-93CH-4798484",
+              "filed_date": "2026-07-17"
+            },
+            {
+              "publication": "The Trade Desk",
+              "url": "https://investors.thetradedesk.com/news-and-events/news/news-details/2026/The-Trade-Desk-Appoints-Kristi-Argyilan-as-Chief-Commercial-Officer-Executive-Vice-President/default.aspx",
+              "filed_date": "2026-07-15"
+            }
+          ],
+          "source_publication": "Adweek",
+          "source_url": "https://www.adweek.com/media/ubers-top-ad-exec-kristi-argyilan-joins-the-trade-desk-as-chief-commercial-officer/",
+          "filed_date": "2026-07-17"
+        },
+        {
+          "headline": "Paramount Preps a Free, Login-Gated Tier to Sell Personalised Ads",
+          "dek": "The 'Free Front Porch' would trade library access for an account — and an advertising profile.",
+          "body": "Paramount is developing a free viewing tier, known internally as the 'Free Front Porch,' that would open part of its film and television library without a subscription while still requiring an account, with a mobile rollout reported for the third quarter. The log-in is the mechanism: it lets Paramount serve personalised advertising against free viewing and run an upsell path into the paid plans. Disney's product and technology leadership hinted this month at exploring something comparable, while Netflix's Greg Peters said a free offering could make sense in some markets but is not a near-term plan. Login-gated free tiers convert FAST-style reach into authenticated, addressable supply — which would put the largest subscription streamers into direct competition with Tubi, Pluto and The Roku Channel for the same open-market dollar.",
+          "sources": [
+            {
+              "publication": "The Desk",
+              "url": "https://thedesk.net/2026/07/report-paramount-plus-weighs-free-tier-with-limited-content/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/daily-news-roundup/friday-24072026/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "The Streamable",
+              "url": "https://thestreamable.com/paramount-plus-working-on-free-tier",
+              "filed_date": "2026-07-23"
+            }
+          ],
+          "source_publication": "The Desk",
+          "source_url": "https://thedesk.net/2026/07/report-paramount-plus-weighs-free-tier-with-limited-content/",
+          "filed_date": "2026-07-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "FCC Sets August 6 Vote to Repeal the 39% Ownership Cap",
+          "dek": "Case-by-case public interest review would replace the statutory limit on national broadcast reach.",
+          "body": "The FCC released a draft Report and Order on July 16 proposing to eliminate the national television audience reach cap, the rule barring a single owner from reaching more than 39% of US television households, along with its 50% UHF discount. If adopted at the August 6 open meeting, transactions above the current threshold would instead face case-by-case public interest review, weighing local programming investment against reduced local news and higher retransmission fees. Commissioner Anna Gomez dissented, arguing the repeal is unlawful because Congress wrote the cap into statute. Removing it clears the runway for a fresh round of broadcast consolidation, concentrating local avails, retransmission leverage and political inventory — much of the supply that feeds addressable and local CTV — into fewer sell-side hands.",
+          "sources": [
+            {
+              "publication": "CNBC",
+              "url": "https://www.cnbc.com/2026/07/15/fcc-to-vote-to-end-local-tv-station-ownership-cap.html",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "Variety",
+              "url": "https://variety.com/2026/tv/news/fcc-end-cap-national-broadcast-ownership-1236811655/",
+              "filed_date": "2026-07-15"
+            },
+            {
+              "publication": "TVNewsCheck",
+              "url": "https://tvnewscheck.com/regulation/article/fcc-plans-aug-6-vote-to-repeal-39-national-tv-ownership-cap/",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "FCC",
+              "url": "https://docs.fcc.gov/public/attachments/DOC-423139A1.pdf",
+              "filed_date": "2026-07-16"
+            }
+          ],
+          "source_publication": "CNBC",
+          "source_url": "https://www.cnbc.com/2026/07/15/fcc-to-vote-to-end-local-tv-station-ownership-cap.html",
+          "filed_date": "2026-07-16"
+        },
+        {
+          "headline": "Paramount's Warner Deal Cleared in Brussels, Frozen in Oakland",
+          "dek": "A conditional EU approval on Wednesday, a restraining order extended to August 18 on Thursday.",
+          "body": "The European Commission conditionally approved Paramount Skydance's roughly $110 billion acquisition of Warner Bros. Discovery on July 22, after Paramount agreed to exit a longstanding European film distribution agreement with Universal within 13 months of closing and to refrain from new Universal distribution partnerships in Europe for a decade. In the United States the deal is halted: Judge Araceli Martínez-Olguín extended her temporary restraining order on July 23 by a further fourteen days, to August 18, on a motion from a twelve-state coalition led by California's attorney general arguing the transaction violates the Clayton Act. A preliminary injunction hearing is set for August 3, and Paramount faces penalty payments if it cannot close by September 30. Whether Paramount+ and HBO Max advertising inventory ends up under one sales organisation is the largest open question in premium streaming supply, and buyers have spent the upfront using that uncertainty as leverage.",
+          "sources": [
+            {
+              "publication": "Deadline",
+              "url": "https://deadline.com/2026/07/paramount-warner-bros-merger-judge-extends-order-1237001966/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "Bloomberg",
+              "url": "https://www.bloomberg.com/news/articles/2026-07-22/paramount-s-110-billion-warner-deal-gets-eu-conditional-approval",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "Variety",
+              "url": "https://variety.com/2026/film/news/european-commission-approves-paramount-warner-bros-1236818353/",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "TheWrap",
+              "url": "https://www.thewrap.com/industry-news/deals-ma/paramount-warner-bros-restraining-order-extended-2-weeks/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "Axios",
+              "url": "https://www.axios.com/2026/07/20/paramount-skydance-warner-merger-paused",
+              "filed_date": "2026-07-20"
+            }
+          ],
+          "source_publication": "Deadline",
+          "source_url": "https://deadline.com/2026/07/paramount-warner-bros-merger-judge-extends-order-1237001966/",
+          "filed_date": "2026-07-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "FCC Defends Party Ad Discount as Fourth Circuit Fast-Tracks Case",
+          "dek": "Argument on August 7 decides whether party committees buy broadcast at the candidate rate this autumn.",
+          "body": "The FCC filed its brief on July 20 defending March guidance from its Media Bureau that extends the lowest unit charge — the statutory discount reserved for legally qualified candidates — to party committees making coordinated buys and to joint fundraising committees. The agency argued the notice merely restates longstanding broadcaster practice, cited a 2024 campaign's own records showing coordinated party ads billed at the discounted rate, and asked the court to dismiss on the grounds that the notice is not a final reviewable order. Senators Sherrod Brown and Jon Ossoff, Governor Roy Cooper and Representative Kristen McDonald Rivet brought the challenge through Elias Law Group; the NRCC and NRSC intervened, and argument is set for August 7. With the Supreme Court's June 30 decision in NRSC v. FEC lifting caps on coordinated party spending, the case sets how much of the midterm money buys broadcast at floor rates — and how much of the displaced brand and issue spend gets pushed into connected TV during the Labor Day crunch.",
+          "sources": [
+            {
+              "publication": "Inside Audio Marketing",
+              "url": "https://www.insideaudiomarketing.com/post/fcc-defends-lowest-unit-rate-guidance-with-candidates-own-campaign-records",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "Broadcast Law Blog",
+              "url": "https://www.broadcastlawblog.com/2026/07/articles/more-political-ads-at-lowest-unit-rates-supreme-court-allows-candidates-and-parties-to-coordinate-and-an-fcc-media-bureau-notice-says-coordinated-ad-buys-should-be-given-luc/",
+              "filed_date": "2026-07-03"
+            },
+            {
+              "publication": "Campaign Legal Center",
+              "url": "https://campaignlegal.org/cases-actions/challenging-fcc-guidance-enabling-discounted-ad-rates-super-pacs-brown-et-al-v-fcc-et",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "Elias Law Group",
+              "url": "https://elias.law/press-release/fourth-circuit-fast-tracks-challenge-to-fcc-guidance-giving-parties-access-to-discounted-ad-rates/",
+              "filed_date": "2026-07-01"
+            }
+          ],
+          "source_publication": "Inside Audio Marketing",
+          "source_url": "https://www.insideaudiomarketing.com/post/fcc-defends-lowest-unit-rate-guidance-with-candidates-own-campaign-records",
+          "filed_date": "2026-07-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — United Kingdom",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "CMA Opens Comment Period on Sky's £1.6bn Move for ITV",
+          "dek": "The regulator must first decide whether television advertising is still a market of its own.",
+          "body": "The Competition and Markets Authority has invited comments on Sky's £1.6 billion acquisition of ITV's Media & Entertainment division, with written representations due by August 6 and no formal Phase 1 investigation launched yet. The deal, agreed July 6, would combine ITVX with Sky's streaming assets and leave ITV Studios as a standalone producer, accounting for around 20% of all in-home viewing in the UK. Sky and ITV argue that once social and digital platforms are counted the combined business would hold roughly a fifth of total UK advertising, while regulators are expected to focus on ITV's roughly 32% share of commercial viewing; Ofcom and the culture department are running parallel processes and completion is not expected before the second half of 2027. How the CMA defines the market — television alone, or television alongside YouTube, Meta and the global streamers — is the precedent every consolidating European broadcast ad market will cite next.",
+          "sources": [
+            {
+              "publication": "Broadband TV News",
+              "url": "https://www.broadbandtvnews.com/2026/07/23/cma-invites-comments-on-sky-itv-merger/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "City A.M.",
+              "url": "https://www.cityam.com/sky-and-itv-mount-defence-of-1-6bn-merger-as-regulators-probe-deal/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "Advanced Television",
+              "url": "https://www.advanced-television.com/2026/07/23/cma-mulls-sky-itv-merger-inquiry/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "CMA",
+              "url": "https://www.gov.uk/cma-cases/sky-slash-itv-merger-inquiry",
+              "filed_date": "2026-07-23"
+            }
+          ],
+          "source_publication": "Broadband TV News",
+          "source_url": "https://www.broadbandtvnews.com/2026/07/23/cma-invites-comments-on-sky-itv-merger/",
+          "filed_date": "2026-07-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Amazon Folds MX Player Into Prime Video for Indian Advertisers",
+          "dek": "Free and premium inventory now sell as one destination through Amazon DSP.",
+          "body": "Amazon has integrated Amazon MX Player into Prime Video in India, retiring MX Player as a standalone destination and merging its free library with Prime Video's premium catalogue. Advertisers now buy across both through Amazon DSP using Amazon shopping, browsing and streaming signals, with formats including QR-code shoppable ads, branded carousels and pause ads alongside in-show integrations and season sponsorships. Girish Prabhu, who heads Amazon Ads in India, framed the combination as a single destination for sponsorship and custom creative. It hands Amazon a consolidated free-plus-premium inventory pool large enough to be priced against JioHotstar rather than beneath it — the first credible second bid in a market that cricket has otherwise concentrated.",
+          "sources": [
+            {
+              "publication": "Social Samosa",
+              "url": "https://www.socialsamosa.com/industry-updates/amazon-unifies-mx-player-prime-video-for-advertisers-12170955",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "afaqs",
+              "url": "https://www.afaqs.com/news/advertising/amazon-brings-prime-video-and-mx-player-under-one-advertising-platform-12172161",
+              "filed_date": "2026-07-17"
+            },
+            {
+              "publication": "MediaNews4U",
+              "url": "https://www.medianews4u.com/prime-video-and-amazon-mx-player-integration-begins-creates-expanded-opportunities-for-brands-and-advertisers/",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/amazon-kills-mx-player-brand-folding-it-into-prime-video-for-india-ad-reach/",
+              "filed_date": "2026-07-16"
+            }
+          ],
+          "source_publication": "Social Samosa",
+          "source_url": "https://www.socialsamosa.com/industry-updates/amazon-unifies-mx-player-prime-video-for-advertisers-12170955",
+          "filed_date": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Brazil on Course to Pass Canada as Second-Largest FAST Market",
+          "dek": "Omdia and MiQ put Brazilian online video revenue at $14.4 billion by 2029 — with measurement the binding constraint.",
+          "body": "A Latin American digital video study drawing on Omdia forecasts and MiQ proprietary data projects Brazil generating $14.4 billion in online video revenue by 2029, overtaking Canada as the second-largest international FAST market by revenue. It expects Brazilian CTV ad investment to rise 23.7% across 2026, with viewers averaging four hours of video a day, 95% of Latin American audiences reaching content through smart TVs and 59% saying they prefer ad-supported models; Brazilian households subscribe to an average of 8.2 streaming services, 3.6 of them free. A companion figure puts Mexican CTV ad investment growth at 27.6% for the year against a base of more than 51 million connected TV viewers, 88% of whom watch alongside someone else. Cross-screen measurement is named as the sector's main constraint, which is why LATAM budgets keep growing faster than the region's ability to prove what they delivered.",
+          "sources": [
+            {
+              "publication": "Forbes Brasil",
+              "url": "https://forbes.com.br/forbes-tech/2026/07/brasil-deve-movimentar-us-144-bilhoes-em-video-online-ate-2029-aponta-estudo/",
+              "filed_date": "2026-07-20"
+            },
+            {
+              "publication": "Tela Viva News",
+              "url": "https://telaviva.com.br/20/07/2026/brasil-deve-movimentar-us-144-bilhoes-em-receitas-de-video-online-ate-2029/",
+              "filed_date": "2026-07-20"
+            },
+            {
+              "publication": "Teletime",
+              "url": "https://teletime.com.br/20/07/2026/brasil-canais-fast-ate-2029/",
+              "filed_date": "2026-07-20"
+            },
+            {
+              "publication": "AdTech México",
+              "url": "https://adtech.com.mx/mas-streaming-con-anuncios-mas-fragmentacion-reporte-revela-el-nuevo-tablero-del-video-digital-en-mexico/",
+              "filed_date": "2026-07-18"
+            }
+          ],
+          "source_publication": "Forbes Brasil",
+          "source_url": "https://forbes.com.br/forbes-tech/2026/07/brasil-deve-movimentar-us-144-bilhoes-em-video-online-ate-2029-aponta-estudo/",
+          "filed_date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Corus Cuts 43 Jobs While the CRTC Decides Who Owns It",
+          "dek": "A debt swap would hand lenders 99% of the company; Quebecor is lobbying to buy it instead.",
+          "body": "Corus Entertainment is eliminating 43 unionised television positions and consolidating its Calgary and Edmonton Global News broadcasts, with further cuts landing in Winnipeg, Ontario, the Maritimes, British Columbia and Saskatoon. The company reported a third-quarter net loss of C$36.5 million on revenue down 16% year over year, and is still awaiting CRTC approval of a recapitalisation that would hand lenders 99% ownership in exchange for forgiving roughly C$500 million of debt. Quebecor continues to press the regulator to reject the plan and let it buy Corus instead, while the Unifor union argues the consolidation guts regional journalism. Whoever emerges owning Corus controls a large block of Canadian television and CTV advertising inventory — and that outcome is being settled by a regulator rather than by the market.",
+          "sources": [
+            {
+              "publication": "BNN Bloomberg",
+              "url": "https://www.bnnbloomberg.ca/business/company-news/2026/07/16/corus-to-centralize-calgary-edmonton-productions-of-global-news-some-jobs-to-be-cut/",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "The Globe and Mail",
+              "url": "https://www.theglobeandmail.com/business/article-corus-entertainment-alberta-global-news-layoffs/",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "Lethbridge Herald",
+              "url": "https://lethbridgeherald.com/entertainment/entertainment-news/2026/07/16/corus-to-centralize-calgary-edmonton-productions-of-global-news-43-jobs-cut/",
+              "filed_date": "2026-07-16"
+            }
+          ],
+          "source_publication": "BNN Bloomberg",
+          "source_url": "https://www.bnnbloomberg.ca/business/company-news/2026/07/16/corus-to-centralize-calgary-edmonton-productions-of-global-news-some-jobs-to-be-cut/",
+          "filed_date": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "China TV Shipments Head for a Seventeen-Year Low",
+          "dek": "Fewer sets, bigger screens: the installed base that funds Chinese OEM ad businesses is shrinking at home.",
+          "body": "The research firm RUNTO counted 14.95 million television shipments in mainland China in the first half of 2026, down 10.1% year over year, with the second quarter falling 11.6% and the market now in its fifth consecutive quarter of decline. RUNTO projects full-year shipments of 30.12 million units, down 8.4% and the smallest Chinese television market since 2010. Average selling prices rose even as volumes fell, sets of 75 inches and above took 47.9% of sales, and the top eight domestic brands hold 95.4% share. For TCL, Hisense and Xiaomi, whose advertising businesses monetise the installed base, the domestic screen count is contracting while the overseas one grows — which is why their CTV ad revenue story keeps moving offshore, and into inventory that Western buyers transact.",
+          "sources": [
+            {
+              "publication": "China.com",
+              "url": "https://m.tech.china.com/hea/hea/20260713/202607131915124.html",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "NetEase",
+              "url": "https://www.163.com/dy/article/L1NBCPF80519QIKK.html",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "RUNTO Technology",
+              "url": "http://www.runtotech.com/MarketInsights/info_itemid_6590_lcid_14.html",
+              "filed_date": "2026-07-13"
+            }
+          ],
+          "source_publication": "China.com",
+          "source_url": "https://m.tech.china.com/hea/hea/20260713/202607131915124.html",
+          "filed_date": "2026-07-13"
+        }
+      ]
+    },
+    {
+      "section_title": "The Watercooler",
+      "section_class": "watercooler",
+      "stories": [
+        {
+          "headline": "Cadent's Rozen: Viewers Get Persistence, Not Precision",
+          "body": "Cadent president Doug Rozen tells Mike Shields that siloed buying — separate video, search, programmatic and social teams each touching YouTube — produces frequency abuse rather than targeting, and pitches 'one plan, one audience, one time' across creators, television and YouTube. It matters because it attacks the device-based framing of CTV itself, putting contextual relevance back ahead of addressability.",
+          "sources": [
+            {
+              "publication": "Next in Media",
+              "url": "https://mikeshields.substack.com/p/media-buying-is-stuck-in-silos-its",
+              "filed_date": "2026-07-23"
+            }
+          ],
+          "source_publication": "Next in Media",
+          "source_url": "https://mikeshields.substack.com/p/media-buying-is-stuck-in-silos-its",
+          "filed_date": "2026-07-23"
+        },
+        {
+          "headline": "Weide: OpenAI's Ad Product Undercuts OpenAI's Ad Revolution",
+          "body": "W Media Research's Karsten Weide argues in Marketecture that OpenAI's actual offering is conventional contextual matching leaning on Criteo, Adobe and StackAdapt, with minimum spend cut from $200,000 to $10,000 and CPMs halving from $60 to roughly $25 in ten weeks. It matters because OpenAI's $2.5 billion 2026 advertising projection sits against industry estimates of under $1 billion for all AI-chatbot advertising combined.",
+          "sources": [
+            {
+              "publication": "Marketecture",
+              "url": "https://news.marketecture.tv/p/openai-wants-credit-for-an-ad-revolution-the-product-says-otherwise",
+              "filed_date": "2026-07-20"
+            }
+          ],
+          "source_publication": "Marketecture",
+          "source_url": "https://news.marketecture.tv/p/openai-wants-credit-for-an-ad-revolution-the-product-says-otherwise",
+          "filed_date": "2026-07-20"
+        },
+        {
+          "headline": "Wieser: The Paramount Antitrust Case Aims at the Wrong Market",
+          "body": "Madison and Wall's Brian Wieser calls the state attorneys general's case against Paramount a misallocation of enforcement, arguing viewers treat video services interchangeably and that concentration in theatrical film and cable networks is a legacy concern — streaming grew from $7 billion in 2015 to $60 billion in 2025 while pay television contracted. It matters because the same interchangeability logic is what buyers now use to price linear against CTV.",
+          "sources": [
+            {
+              "publication": "Madison and Wall",
+              "url": "https://madisonandwall.substack.com/p/m-and-w-saturday-summary-netflix",
+              "filed_date": "2026-07-18"
+            }
+          ],
+          "source_publication": "Madison and Wall",
+          "source_url": "https://madisonandwall.substack.com/p/m-and-w-saturday-summary-netflix",
+          "filed_date": "2026-07-18"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Interface Was the Last Thing You Could Refuse",
+          "dek": "When the assistant acts on your behalf, the consumer stops being the audience and becomes the content.",
+          "body": "Everyone is counting assistants. Which model answers, which one Brussels has just pried onto the Android home screen, which one the agency will license by autumn. That is the figure, and it is the least interesting thing in the room. The ground is the quiet disappearance of the interface itself — the menu, the search box, the cart, the thing you could look at and decline. We are told the assistant is a better servant. It is not a servant. It is an environment, and environments are invisible to the people inside them.\n\nEvery medium extends one faculty and amputates another. The printed page extended the eye and amputated the ear. The remote control extended the hand and amputated the schedule. The agent extends the will and amputates the act of choosing — which is to say it removes the very faculty by which you knew yourself to be a person shopping rather than a market being cleared. The buyer who instructs a machine to buy his media has not gained leverage. He has become inventory of a new kind: a standing instruction, discoverable and priceable by other machines. Ask the trade why it has suddenly grown so anxious about a common vocabulary for a video impression and it will tell you plainly. The agents cannot negotiate in dialect.\n\nWatch what becomes of the advertisement in such a world. It cannot interrupt, because there is no longer a sequence to interrupt. It cannot be looked at, because nothing is being looked at. It becomes a rumour circulating among machines, and the human is told about it afterward, in a summary, by something that loves him.\n\n— Marshall McLuhan",
+          "sources": [
+            {
+              "publication": "European Commission",
+              "url": "https://digital-markets-act.ec.europa.eu/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data-under-2026-07-16_en",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/the-iab-wants-to-get-ad-tech-speaking-the-same-language-about-digital-video/",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "Marketecture",
+              "url": "https://news.marketecture.tv/p/openai-wants-credit-for-an-ad-revolution-the-product-says-otherwise",
+              "filed_date": "2026-07-20"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://digital-markets-act.ec.europa.eu/commission-provides-guidance-google-ai-interoperability-android-and-sharing-google-search-data-under-2026-07-16_en",
+          "filed_date": "2026-07-24",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "The Machine Can Write a Thousand Ads. It Cannot Read the Report.",
+          "dek": "Speed was never the bottleneck in this business. Knowing the product was.",
+          "body": "The trade is congratulating itself on velocity again. One agency announces that nine in ten of its people are now proficient with the new machines. A platform boasts that it can refresh a commercial in an hour rather than a fortnight. A streamer promises artificial intelligence in the planning and the buying. In all of this cheerful noise I have yet to hear a single man say whether the advertisements sold anything. Speed is not a virtue in advertising. It is merely a way of arriving at the wrong idea sooner.\n\nI once spent three weeks reading about a motorcar before I wrote a word of copy. The headline I finally used was not written at all — it was found, buried in an engineer's technical report: at sixty miles an hour the loudest noise in the Rolls-Royce came from the electric clock. No machine on earth could have produced that line, because no machine had read the report. Remember that five times as many people read the headline as read the body copy. A device that generates ten thousand headlines nobody has researched has not multiplied your productivity. It has multiplied your waste, and done it at a very impressive speed.\n\nUse the machines where they belong. Give them the split runs, the recall scores, the coupon returns — the drudgery of testing, which I did by hand and would gladly have handed to a computer. But keep them away from the copy until somebody in your building has spent three weeks with the product and can tell you one true thing about it that the customer does not know. Find the fact first. Then let the machine set it in forty languages.\n\n— David Ogilvy",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/agencies/no-longer-ai-losers-havas-leans-into-ai-first-identity-as-north-america-revenue-grows/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416583/partnership-expands-ad-options-for-f1-yahoo-sport.html",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/is-netflix-in-a-slump-heres-what-its-q2-earnings-suggest/",
+              "filed_date": "2026-07-16"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.adweek.com/agencies/no-longer-ai-losers-havas-leans-into-ai-first-identity-as-north-america-revenue-grows/",
+          "filed_date": "2026-07-24",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Three clocks run down inside a fortnight. In Oakland, Judge Martínez-Olguín hears the states' injunction bid against Paramount-Warner on August 3, and the FCC votes on scrapping the 39% national ownership cap three days later — two decisions in one week that between them set how many sellers the 2027 premium video market has, and how concentrated the local supply beneath it becomes. In Richmond, the Fourth Circuit hears argument on August 7 over whether party committees may buy broadcast at candidate rates, which decides how much midterm money stays on spot television and how much is pushed into connected TV after Labor Day. And on August 6 The Trade Desk reports its second quarter with a commercial leadership bench assembled ten days earlier — the first read on whether the largest independent buying platform is gaining or losing ground as premium CTV supply quietly opens up around it."
+}

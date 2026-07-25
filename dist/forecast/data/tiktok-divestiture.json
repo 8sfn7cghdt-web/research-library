@@ -1,0 +1,409 @@
+{
+ "kind": "native_forecast",
+ "slug": "tiktok-divestiture",
+ "question": "Will the January-2026 US TikTok joint venture stand and be treated as a qualified divestiture under the divest-or-ban law, rather than being ruled not-qualified or judicially unwound back to ByteDance control?",
+ "title": "TikTok US Divestiture: Does the Deal Hold?",
+ "category": "Media & Advertising",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2027-01-31",
+ "resolution": "Grades on the status of TikTok's US operations by Jan 31 2027. Resolves YES if the January-2026 joint venture stands and is treated by the government/courts as a qualified divestiture under the divest-or-ban law (PAFACA) — including if it operates under an unresolved legal challenge. A formal determination that it is not a qualified divestiture, or a judicial unwind/collapse returning control to ByteDance, resolves NO.",
+ "consensus": {
+  "pick": "Qualified divestiture stands (YES)",
+  "flag": "🤝",
+  "band": "66–76%",
+  "band_low": 66,
+  "band_high": 76,
+  "runner_up": "Survives under legal cloud (YES)",
+  "runner_up_flag": "⚖️",
+  "runner_up_band": "13–19%",
+  "headline_case": "The likeliest outcome is the plainest one: the US TikTok joint venture that closed in January 2026 stands and is treated as a qualified divestiture, 66-76%. The control stack — Oracle and US investors holding the venture, the recommendation algorithm licensed and retrained under US oversight — clears the divest-or-ban statute on a standard read, and the ban markets that once priced an ~89% shutdown have already resolved the other way. The residual risk is not a fresh ban but a paperwork verdict: a pending lawsuit or a strict reading of 'qualified' that keeps the deal alive but under legal cloud (13-19%). A clean definitional NO (4-7%) or an actual judicial unwind returning control to ByteDance (3-6%) are real but thin tails.",
+  "why_over_runner_up": "The stands-clean and survives-under-cloud scenarios differ only in whether a court or resolver formally blesses a deal that, either way, keeps operating — and a completed, politically-brokered transaction is far likelier to be ratified than picked apart. The contested branch stays a runner-up because no challenger has yet shown a route to actually reverse the close.",
+  "dissent": "The Historian's case is the sharpest survivor: these deadline deals were born of pressure, not clean law — a lawsuit already contests the approval and the algorithm-license framework is unreviewed — so the honest home for the call may be 'survives under cloud' (13-19%) rather than a clean stand. The Prophet goes further, reading the saga's shape toward a reversal that snaps control back to ByteDance.",
+  "tally": [
+   {
+    "name": "Qualified divestiture stands (YES)",
+    "flag": "🤝",
+    "votes": 4
+   },
+   {
+    "name": "Survives under legal cloud (YES)",
+    "flag": "⚖️",
+    "votes": 1
+   },
+   {
+    "name": "Definitional NO",
+    "flag": "📵",
+    "votes": 1
+   },
+   {
+    "name": "Judicial unwind (NO)",
+    "flag": "🧨",
+    "votes": 1
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Qualified divestiture stands (YES)",
+   "pick_scenario": "Deal stands as a qualified divestiture (resolves YES, uncontested or dismissed)",
+   "flag": "🤝",
+   "prob": "66-76%",
+   "prob_num": 71,
+   "confidence": "medium",
+   "register": "terse tape-reading",
+   "blurb": "The ban markets already paid out. Kalshi's 'US bans TikTok before July 2026' resolved NO after the January close, and the 89% ban scare from September 2025 is a dead print. No live market prices the certification fight, so I read the settled tape: the deal closed and the ban didn't fire. Qualified divestiture stands, 66-76%.",
+   "evidence": "Kalshi ban markets resolved NO post-close; the ~89% Sept-2025 ban scare is now stale.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the decomposition and the models over recency and sentiment.",
+   "pick": "Qualified divestiture stands (YES)",
+   "pick_scenario": "Deal stands as a qualified divestiture (resolves YES, uncontested or dismissed)",
+   "flag": "🤝",
+   "prob": "66-76%",
+   "prob_num": 71,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Run the decomposition and the mass sits in one place. The joint venture signed, Oracle and the US investors hold the control stack, and the recommendation engine is licensed and retrained under US oversight — each leg clears the statute's 'qualified divestiture' test on a standard read. The contested and unwind branches are real but thin. Multiply them through and you land at 66-76% that it simply stands.",
+   "evidence": "JV control stack + licensed-algorithm structure clears the divest-or-ban test on a standard read.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counts the reference-class base rates and the venue's own history.",
+   "pick": "Survives under legal cloud (YES)",
+   "pick_scenario": "Certification contested but deal survives intact (still YES, under legal or political cloud)",
+   "flag": "⚖️",
+   "prob": "13-19%",
+   "prob_num": 16,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "Count the deadline's own history: extension upon extension, each sworn to be the last, until a bargain was struck under pressure and not under law's clean light. Such deals are born contested — a lawsuit already challenges the approval, and the compliance framework goes unreviewed. It survives, I judge, but under cloud: 13-19%, the deal intact and the gavel still raised.",
+   "evidence": "PYMNTS: a lawsuit challenges the JV approval; Lawfare flags the algorithm-license framework as unreviewed.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, draw, and path.",
+   "pick": "Qualified divestiture stands (YES)",
+   "pick_scenario": "Deal stands as a qualified divestiture (resolves YES, uncontested or dismissed)",
+   "flag": "🤝",
+   "prob": "66-76%",
+   "prob_num": 71,
+   "confidence": "high",
+   "register": "terse verdict-driven",
+   "blurb": "The deal already closed. January 2026. The route is walked, not planned. A certification challenge has to unwind a completed transaction, and courts do not unwind the done thing lightly. It stands. 66-76%.",
+   "evidence": "JV closed Jan 22 2026 (Variety, Semafor); challengers must reverse a completed deal.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Backs the elite individual actors — motivation and proven leadership.",
+   "pick": "Qualified divestiture stands (YES)",
+   "pick_scenario": "Deal stands as a qualified divestiture (resolves YES, uncontested or dismissed)",
+   "flag": "🤝",
+   "prob": "66-76%",
+   "prob_num": 71,
+   "confidence": "high",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "This was one man's deal to close, and he closed it. The President staked the outcome on his own hand, and the powerful actors — Oracle, the American investors, a White House that wanted the win — all leaned the same way at once. When the strong want the same ending, the ending holds. Qualified divestiture stands, 66-76%.",
+   "evidence": "Trump-brokered close with an aligned Oracle + US-investor consortium.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Definitional NO",
+   "pick_scenario": "Definitional NO — graded not-a-qualified-divestiture without a physical unwind",
+   "flag": "📵",
+   "prob": "4-7%",
+   "prob_num": 6,
+   "confidence": "low",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone has already declared this over, which is exactly when I start reading the fine print. 'Qualified divestiture' is a legal term of art, and the recommendation engine is licensed from ByteDance, not sold — a resolver reading the statute strictly could grade it not-qualified without anyone physically unwinding a thing. It's a 4-7% live path, and it's the one nobody is pricing.",
+   "evidence": "Algorithm licensed (not divested) from ByteDance — a strict statutory read could grade it not-qualified.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Reads divine providence — backs the fated, story-shaped ending, however long the odds.",
+   "pick": "Judicial unwind (NO)",
+   "pick_scenario": "Judicial unwind or geopolitical collapse — control reverts to ByteDance (resolves NO)",
+   "flag": "🧨",
+   "prob": "3-6%",
+   "prob_num": 5,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "The saga does not end with a quiet signing. Four years of reprieves, a Supreme Court that once upheld the ban, a structure half of Washington privately calls a fig leaf — a story wound this tight resolves with a reversal, not a shrug. I read the fated ending as a court or Beijing pulling the thread and control snapping back to ByteDance. The tape says 3-6%; providence says watch it.",
+   "evidence": "SCOTUS upheld divestiture in TikTok v. Garland; the unreviewed license framework leaves a live unwind thread.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Deal stands as a qualified divestiture (resolves YES, uncontested or dismissed)",
+   "low": 66,
+   "high": 76,
+   "description": "The Oracle/Silver Lake/MGX joint venture (TikTok USDS JV; ByteDance non-controlling at 19.9%) that closed January 22, 2026 remains in force through Q1 2027. Trump's qualified-divestiture certification is not overturned; DOJ's motions to dismiss the shareholder and engineer suits are granted on standing or timeliness, or the suits otherwise fail. No court reaches an adverse merits ruling and no authoritative body finds the structure non-compliant. Resolves YES on the plain reading — a qualifying deal was signed and closed before the deadline rather than the deadline lapsing with TikTok still ByteDance-controlled — and stays YES clean.",
+   "derivation": "Complement of the contested-cloud, definitional-NO, and reversion paths below. Anchored on stacked near-empty adverse classes (0/1 actual ban; 0/1 successful facial challenge in TikTok v. Garland, unanimous; 0-of-at-least-2 post-close suits with relief as of July 2026; near-empty certified-divestiture-reverted class) and the >0.8 signed-to-close-and-stays-closed M&A rate. A naive base-rate stack gives ~88-90%. Trimmed because two things it never priced survived scrutiny: the reversal class is empty partly for non-analogous reasons (no prior deal leased the adversary's own algorithm plus monitoring), and a definitional grading path exists. YES-clean = 1 minus contested-cloud (13-19%) minus definitional-NO (4-7%) minus reversion (3-6%).",
+   "drivers": [
+    "Affirmative outcome already realized — the deal closed before the deadline lapsed, so YES-clean requires only non-disturbance over ~9 months",
+    "Standing scarcity — the statute vests certification in the President; DOJ moving to dismiss both suits on injury and timeliness",
+    "Judicial deference to national-security certifications (Garland, unanimous) sets a high bar for any merits reversal",
+    "Enforcement discretion — the administration will not act against its own certified deal, consistent with the 2025 five-extension pattern",
+    "Both governments invested in the structure holding; Beijing signed the algorithm license"
+   ],
+   "signals_to_watch": [
+    "Rulings on DOJ's motions to dismiss — full dismissal locks this path",
+    "No new plaintiff with a stronger standing theory (state AG or injured competitor) emerges",
+    "Continued US-China commercial detente",
+    "No CRS/GAO/congressional finding questioning operational-separation compliance",
+    "Oracle/USDS data-custody and algorithm-retraining milestones reported on track"
+   ],
+   "time_horizon": "Now through Q1 2027 (~9 months)"
+  },
+  {
+   "name": "Certification contested but deal survives intact (still YES, under legal or political cloud)",
+   "low": 13,
+   "high": 19,
+   "description": "A suit clears a motion to dismiss, or a GAO/congressional finding issues, and the qualified-divestiture question gets litigated on the merits during the window — but the deal is NOT unwound and control is NOT reverted to ByteDance before Q1 2027 ends. A court defers, remands for recertification, grants only a stay pending appeal, or the matter simply remains unresolved at the horizon. The question stops being settled and becomes actively contested, yet still reads YES because the deal was signed and closed before the deadline and control has not reverted. This is where the strongest downside argument actually lands — reopening is real, but on a ~9-month clock a merits fight resolves YES-under-cloud, not NO.",
+   "derivation": "Middle band of the shared litigation decomposition. P(a suit survives dismissal OR a formal non-compliance finding issues) ~0.30 (standing and timeliness are strong defenses, but the operational-separation argument against a leased algorithm plus monitoring is live, and that prong is textual not discretionary). From ~0.30, subtract the ~3-4% reaching actual reversion and the fraction that dies at merits deference and folds back into YES-clean, leaving ~0.13-0.19 of live-but-not-reverted mass. The independent estimates disagreed: trend-continuation reads put this at 8-14%, discontinuity-led reads at 14-22%; the consensus takes the overlap and holds it as YES-contested, not downside.",
+   "drivers": [
+    "Live statutory-qualification argument — a licensed (not transferred) algorithm plus mandated monitoring is in facial tension with the no-operational-relationship language",
+    "The expedited D.C. Circuit review path lowers the procedural cost of a merits ruling landing in-window",
+    "Judicial deference tilts a surviving challenge toward remand or stay rather than reversion",
+    "Litigation clock — appeals and stays make a final revert order within ~9 months hard even if a plaintiff prevails at district level"
+   ],
+   "signals_to_watch": [
+    "A denial of DOJ's motion to dismiss in either pending suit",
+    "A GAO report or congressional oversight letter formally questioning operational-separation compliance",
+    "A Lawfare/CAP/FDD critique converted into a filed complaint with a plausible standing theory",
+    "In-camera judicial review of the non-public compliance documents ordered",
+    "An appellate stay that keeps the JV operating pending review"
+   ],
+   "time_horizon": "Now through Q1 2027 (~9 months)"
+  },
+  {
+   "name": "Definitional NO — graded not-a-qualified-divestiture without a physical unwind",
+   "low": 4,
+   "high": 7,
+   "description": "Even absent a court reverting control, an authoritative-enough determination — a controlling merits opinion, a CRS/GAO finding, or a strict-text resolver applying the statute — concludes the license-plus-monitoring structure is NOT a qualified divestiture, and the question is graded NO because the deal that closed did not satisfy the statutory definition. Turns on the load-bearing word 'qualified' plus the demonstrated resolution-dispute history on adjacent TikTok markets (ban-vs-deal, acquisition-leg mapping). This is the path the trend-continuation reads structurally could not see, because they folded all NO into a physical reversion.",
+   "derivation": "P(the definitional fight goes live enough to produce an authoritative non-qualifying determination) ~0.20 times P(a resolver marks NO on that basis rather than following the certification and the physical fact of a closed, majority-US-owned, non-controlling-ByteDance app) ~0.30 = ~0.06. Held thin (4-7%): most graders follow the certification and the concrete closed structure, and Garland-style deference makes a controlling contrary merits opinion unlikely in ~9 months. Carved out of the naive base-rate stack, which never priced grading ambiguity. The estimates disagreed on whether this deserves its own bucket; kept distinct because it can resolve NO via an authoritative determination without the revert order the next scenario needs.",
+   "drivers": [
+    "The load-bearing word 'qualified' — resolution hinges on statutory satisfaction, not mere deal existence",
+    "Demonstrated resolution-dispute history on adjacent TikTok markets",
+    "Non-public certification — a grader cannot verify statutory compliance from the public record",
+    "The ~20% ByteDance stake plus the leased algorithm give a strict grader concrete grounds"
+   ],
+   "signals_to_watch": [
+    "How any successor market writes its qualified-divestiture resolution criteria",
+    "A CRS/GAO determination characterizing the deal as non-compliant",
+    "Legal commentary converging that the structure fails the statutory test",
+    "Any leaked or FOIA'd certification detail showing continued ByteDance algorithm operation"
+   ],
+   "time_horizon": "Now through Q1 2027 (~9 months)"
+  },
+  {
+   "name": "Judicial unwind or geopolitical collapse — control reverts to ByteDance (resolves NO)",
+   "low": 3,
+   "high": 6,
+   "description": "The genuine physical-NO tail: a court clears standing, rules on the merits that the licensed-algorithm-plus-monitoring structure is not a qualified divestiture, and grants reversion relief that takes effect within the horizon; OR a US-China rupture collapses the algorithm license and reverts or freezes the JV such that TikTok is deemed still ByteDance-controlled with no qualifying divestiture in force. Requires overcoming standing, then merits despite deference, then an extraordinary remedy — all inside ~9 months — or a Beijing move against the license it retained.",
+   "derivation": "Litigation: P(survive dismissal) ~0.30 x P(win merits | survive, against Garland deference, credited up for the novel leased-adversary-algorithm hook) ~0.32 x P(final reversion in force before end-Q1-2027, not remand or stay | win) ~0.35 = ~0.034. Geopolitical: P(rupture severe enough to threaten the license in ~9 months) ~0.15-0.20 x P(revocation/revert vs. renegotiation | rupture) ~0.35 = ~0.05-0.07, but most yields the contested-cloud or a renegotiated license, so only ~+0.01-0.02 reaches reversion. Sum ~0.04-0.05, expressed 3-6% (never park a live legal outcome at zero; ceiling held down as each stage is unlikely on a short clock). The discontinuity read's higher tail was defeated on horizon — it rested on ~18 months and double-booked the 2020 lever.",
+   "drivers": [
+    "Statutory operational-separation and no-algorithm-cooperation prongs give a court a real hook if standing clears",
+    "A hostile court reading the statute strictly against a licensed-algorithm structure, or a change in administration posture",
+    "A US-China rupture that collapses the algorithm license — the single factor that killed the 2020 Oracle/Walmart deal, and the leverage the 2026 structure preserved rather than removed"
+   ],
+   "signals_to_watch": [
+    "A preliminary injunction granted against the certification or JV — the strongest tell",
+    "A merits ruling adopting the strict preclude-any-operational-relationship reading and signaling reversion, not remand",
+    "A severe US-China rupture freezing the algorithm license, or a Beijing MOFCOM move against it",
+    "A new administration or DOJ posture treating the deal as non-compliant",
+    "The Oracle/Silver Lake/MGX consortium exiting, forcing a fresh control-composition question"
+   ],
+   "time_horizon": "Now through Q1 2027 (~9 months)"
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "Who will acquire TikTok?",
+   "detail": "N/A — resolved/historical; no live price. A cited ~12% 'sale' flash figure is stale",
+   "volume": "Heavily traded through 2025; resolved-leg volume not verified",
+   "pulled": "2026-07-03"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Will TikTok be banned by March 31?",
+   "detail": "N/A — resolved/historical; any prior figure is stale",
+   "volume": "Not verified (multi-million range at peak)",
+   "pulled": "2026-07-03"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "TikTok sale announced before April?",
+   "detail": "N/A — resolved/historical (signed JV reported Dec 2025); not current",
+   "volume": "Not verified",
+   "pulled": "2026-07-03"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Will an acquisition of TikTok be announced this year?",
+   "detail": "N/A — resolved/historical; no live price",
+   "volume": "Not verified",
+   "pulled": "2026-07-03"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "US bans TikTok before July 2026?",
+   "detail": "N/A as current — deal closed Jan 22, 2026, so resolves NO; a ~89% Sept 2025 figure is stale",
+   "volume": "~$2.23M reported Sept 2025 (stale)",
+   "pulled": "2026-07-03"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Will Trump delay the TikTok ban again before October?",
+   "detail": "N/A — superseded by the Jan 2026 deal close; not verified",
+   "volume": "Not verified",
+   "pulled": "2026-07-03"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "6 of 6",
+   "text": "Trump TikTok enforcement handling Jan 2025-Jan 2026: 6 of 6 deadline windows resolved by extension-or-deal rather than a ban (five executive-order extensions, then a close). The ban/lapse path is near-empty and the streak ended in an affirmative qualified-divestiture close — anchors the modal YES but is silent on whether the closed structure legally qualifies."
+  },
+  {
+   "stat": "0 of 1",
+   "text": "PAFACA divest-or-ban events resulting in an actual TikTok ban: 0 of 1. The law has never been enforced to remove TikTok; every deadline was bridged. NO-via-ban is extremely unlikely."
+  },
+  {
+   "stat": "0 of 1",
+   "text": "Facial/statutory challenges to PAFACA that succeeded: 0 of 1 (TikTok v. Garland, SCOTUS unanimous Jan 2025). Courts are unreceptive and deferential to national-security certifications — but this is the statute's validity, a different question than the deal's COMPLIANCE, which is where the live residual sits."
+  },
+  {
+   "stat": "2026",
+   "text": "Post-close suits seeking to void the TikTok deal that obtained relief as of July 2026: 0 of at least 2 (Public Integrity Project v. Trump/Bondi; the D.C. Circuit engineer/shareholder challenge), DOJ moving to dismiss both. A point-in-time 0-for-2 with both motions unresolved: 'no relief yet' over ~9 months is weaker than 'no relief possible,' and one standing win reopens the merits."
+  },
+  {
+   "stat": "",
+   "text": "Executive-certified, foreign-government-approved national-security divestitures later judicially reversed and reverted to prior control: near-empty US reference class. Argues for YES, but empty partly for NON-analogous reasons (no prior deal leased the adversary's own algorithm plus mandated monitoring), so it floors rather than zeroes the NO tail and caps rather than manufactures confidence."
+  },
+  {
+   "stat": "1 of 2",
+   "text": "TikTok forced-divestiture attempts that actually CLOSED: 1 of 2 (2020 Oracle/Walmart blessed but never closed, killed by Chinese algorithm-export controls plus injunctions; 2025-26 JV signed AND closed). The 2020 case is the warning that a blessed deal can die via the retained algorithm-license lever — the leverage the 2026 deal preserved."
+  },
+  {
+   "stat": "80%",
+   "text": "Signed/definitive large-tech M&A reaching and staying at close: well above 80%. TikTok signed Dec 18, 2025, closed Jan 22, 2026 — consistent with the high signed-to-close rate, but this speaks to CLOSING, not statutory QUALIFICATION."
+  },
+  {
+   "stat": "2 of 2",
+   "text": "CFIUS-ordered Chinese-owned US tech divestitures completed once a hard order plus willing buyer existed: 2 of 2 (Grindr/Kunlun; StayNTouch/Shiji) — small, uncontested, no algorithm chokepoint; weak analog for whether THIS structure legally severs control."
+  }
+ ],
+ "triggers": [
+  "A federal court denies DOJ's motion to dismiss in either pending TikTok-deal challenge — the single highest-leverage event; it converts a settled YES into an actively contested designation and shifts mass toward the contested-cloud and NO scenarios.",
+  "A merits ruling, stay, or preliminary injunction touching the certification or the JV's operation — reversion-signaling relief moves mass to NO; remand/recertification keeps it YES-contested.",
+  "A CRS/GAO/congressional finding, or in-camera review of the sealed compliance documents, concluding the licensed-algorithm-plus-monitoring structure fails the statute's operational-separation prong — the trigger for the definitional-NO path.",
+  "The administration withdraws, amends, or fails to defend its qualified-divestiture certification (decertification).",
+  "A severe US-China rupture in which Beijing reviews, freezes, or revokes ByteDance's algorithm license to the JV — the 2020-style kill switch, compressed by the ~9-month window.",
+  "A new plaintiff with unambiguous standing (state AG, injured competitor, or Congress via a fresh statutory hook), or a consortium member exit forcing a fresh control-composition question.",
+  "How any successor prediction market writes its 'qualified divestiture' resolution language — a direct read on grading risk."
+ ],
+ "sources": [
+  {
+   "label": "CNN Business — The deal to secure TikTok's future in the US has finally closed (Jan 22 2026)",
+   "url": "https://www.cnn.com/2026/01/22/tech/tiktok-us-deal-closes"
+  },
+  {
+   "label": "TechCrunch — TikTok agrees to deal to cede control of US business (Dec 18 2025)",
+   "url": "https://techcrunch.com/2025/12/18/tiktok-agrees-to-deal-to-cede-control-of-u-s-business-to-american-investor-group/"
+  },
+  {
+   "label": "Lawfare — A TikTok 'Deal'? (algorithm-license compliance framework; unreviewable certification)",
+   "url": "https://www.lawfaremedia.org/article/a-tiktok--deal"
+  },
+  {
+   "label": "Center for American Progress — The TikTok Deal Leaves Many Questions Unanswered (operational-relationship / MGX / no enforcement mechanism)",
+   "url": "https://www.americanprogress.org/article/the-tiktok-deal-leaves-many-questions-unanswered/"
+  },
+  {
+   "label": "PYMNTS — Lawsuit Challenges US Approval of TikTok Joint Venture Deal (Public Integrity Project, DC Circuit, seeks renegotiation)",
+   "url": "https://www.pymnts.com/cpi-posts/lawsuit-challenges-us-approval-of-tiktok-joint-venture-deal/"
+  },
+  {
+   "label": "No Labels — TikTok Ban Timeline: How Trump Keeps Pushing the Deadline (5 extensions)",
+   "url": "https://nolabels.org/the-latest/tiktok-ban-timeline-how-trump-keeps-pushing-the-deadline/"
+  },
+  {
+   "label": "Fortune — Why China's ByteDance could be a big winner in its TikTok deal (algorithm licensing, 20% revenue/50% profits, Beijing approval)",
+   "url": "https://fortune.com/2026/01/27/tiktok-deal-china-us-bytedance-winner-trump/"
+  },
+  {
+   "label": "ITIF — Five Takeaways from the TikTok Deal (Jan 26 2026)",
+   "url": "https://itif.org/publications/2026/01/26/five-takeaways-from-the-tiktok-deal/"
+  },
+  {
+   "label": "Congress.gov CRS LSB11261 — TikTok Inc. v. Garland: SCOTUS upholds divestiture law (Jan 17 2025)",
+   "url": "https://www.congress.gov/crs-product/LSB11261"
+  },
+  {
+   "label": "Wikipedia — TikTok USDS (joint-venture ownership structure)",
+   "url": "https://en.wikipedia.org/wiki/TikTok_USDS"
+  },
+  {
+   "label": "Forbes / Antonio Pequeño IV — Deal For TikTok's U.S. Operations Finalized By U.S. And China (Jan 22, 2026)",
+   "url": "https://www.forbes.com/sites/antoniopequenoiv/2026/01/22/us-finalizes-deal-with-tiktok-for-control-of-apps-american-business/"
+  },
+  {
+   "label": "Wikipedia — Efforts to ban TikTok in the United States (extension chronology)",
+   "url": "https://en.wikipedia.org/wiki/Efforts_to_ban_TikTok_in_the_United_States"
+  },
+  {
+   "label": "Federal Register — Saving TikTok While Protecting National Security (EO, Sep 25/30 2025)",
+   "url": "https://www.federalregister.gov/documents/2025/09/30/2025-19139/saving-tiktok-while-protecting-national-security"
+  }
+ ],
+ "method_note": "Grounded research-first: a fresh sweep of the deal's status, the divest-or-ban statute (PAFACA), and reference cases, plus a prediction-market scan on 2026-07-03 (the relevant ban/sale markets have already resolved post-close, leaving no live price on certification). Four scenario trees were argued against each other and fused by grounding strength; every probability is a decomposition, a base rate, or a resolved-market read. Horizon: through Q1 2027.",
+ "honesty_note": "Even at 66-76%, 'stands as a qualified divestiture' leaves a real one-in-four chance the call lands in the contested or unwind branches instead. The deepest markets here are already resolved, so this leans harder on statutory reading and reference classes than on a live price — treat the tails as live."
+}

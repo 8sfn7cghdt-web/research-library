@@ -1,0 +1,486 @@
+{
+  "edition_date": "2026-06-15",
+  "edition_number": 27,
+  "weekday": "Monday",
+  "subtitle": "All the news that's fit to Fingerprint",
+  "lead": {
+    "headline": "Fox to Buy Roku for $22 Billion, Redrawing CTV",
+    "dek": "The buyer the market was waiting for is a broadcaster: Fox lands the No. 1 US streaming OS, the OneView DSP, Tubi and The Roku Channel.",
+    "body": "Fox Corporation said June 15 it will acquire Roku for roughly $22 billion — about $160 a share in cash and stock — in the largest connected-TV deal in years. The combination pairs Fox's live sports and news with Roku's streaming operating system, its OneView demand-side platform, first-party data from more than 100 million global households, and the two biggest US free ad-supported streamers, Tubi and The Roku Channel. Roku founder Anthony Wood stays on and joins Fox's board; the companies expect to close in the first half of 2027, subject to regulators and shareholders. By share of US TV viewing the merged group would rank among the top three. It also hands a single owner the home screen, a DSP, FAST inventory and premium broadcast content at once. For every advertiser, agency and ad-tech vendor in streaming, the question is now whether the largest open CTV pipeline in the US stays open — exactly the inflection this paper flagged when Roku first put itself in play.",
+    "source_publication": "AdExchanger",
+    "source_url": "https://www.adexchanger.com/tv/fox-announces-plans-to-acquire-roku-for-22-billion/",
+    "sources": [
+      {
+        "publication": "AdExchanger",
+        "url": "https://www.adexchanger.com/tv/fox-announces-plans-to-acquire-roku-for-22-billion/",
+        "filed_date": "2026-06-15"
+      },
+      {
+        "publication": "Marketing Dive",
+        "url": "https://www.marketingdive.com/news/fox-acquires-roku-for-22b-to-accelerate-streaming-advertising-business/822890/",
+        "filed_date": "2026-06-15"
+      },
+      {
+        "publication": "TheWrap",
+        "url": "https://www.thewrap.com/industry-news/deals-ma/fox-roku-acquisition-impact-analysis/",
+        "filed_date": "2026-06-15"
+      },
+      {
+        "publication": "Advanced Television",
+        "url": "https://www.advanced-television.com/2026/06/15/fox-to-acquire-roku-for-22bn/",
+        "filed_date": "2026-06-15"
+      },
+      {
+        "publication": "Fox Business",
+        "url": "https://www.foxbusiness.com/markets/fox-corporation-announces-22b-acquisition-roku-landmark-streaming-live-tv-deal",
+        "filed_date": "2026-06-15"
+      }
+    ],
+    "filed_date": "2026-06-15"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Samsung Opens Smart-TV Home Screen to Programmatic Buyers",
+          "dek": "Native home-screen units reach The Trade Desk and DV360 first, transacted on Magnite's SpringServe, with a global rollout in Q3.",
+          "body": "Samsung Ads said June 10 it will make its smart-TV home-screen units — the non-skippable real estate shown the instant a set powers on — available programmatically through The Trade Desk and Google's DV360, with Magnite's SpringServe running the transaction layer. The placements were sold only directly until now; automated access rolls out across all regions starting Q3 2026, with more DSP partners promised. The move follows Roku's home-screen monetization push and recasts streaming-OS owners as DSP partners rather than rivals. It pits the major buying platforms against one another for a scarce, high-attention CTV format and hands Magnite a sell-side foothold inside the world's top-selling TV brand.",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/home-screen-ads-on-samsung-tvs-will-soon-be-available-programmatically/",
+              "filed_date": "2026-06-10"
+            },
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415681/samsungs-home-screen-offers-programmatic-ad-acces.html",
+              "filed_date": "2026-06-10"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/samsung-opens-smart-tv-home-screens-to-programmatic-via-trade-desk-and-dv360/",
+              "filed_date": "2026-06-10"
+            },
+            {
+              "publication": "StreamTV Insider",
+              "url": "https://www.streamtvinsider.com/advertising/samsung-enables-programmatic-ctv-home-screen-ads-dsps",
+              "filed_date": "2026-06-10"
+            }
+          ],
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/tv/home-screen-ads-on-samsung-tvs-will-soon-be-available-programmatically/",
+          "filed_date": "2026-06-10"
+        },
+        {
+          "headline": "World Cup Opens to Record Streaming Crowds on Fox, Tubi",
+          "dek": "US-Paraguay drew nearly 16 million across Fox, Fox One and free, ad-supported Tubi — a US men's World Cup record.",
+          "body": "Fox's English-language coverage of the United States' June 12 opener against Paraguay averaged 15.99 million viewers across the Fox broadcast network, the Fox One streaming service and free ad-supported Tubi, a record for a US men's World Cup match, with Tubi alone averaging 1.13 million. Telemundo set Spanish-language streaming records on its side, and Fox and Telemundo together are projected to take roughly $850 million in tournament ad revenue. FIFA-approved mid-match hydration breaks open new programmatic ad pods across all 104 games. The tournament is the year's biggest live-streaming ad event, stress-testing dynamic ad insertion and programmatic live-sports buying — and validating FAST as a mass-reach vehicle — at unprecedented scale.",
+          "sources": [
+            {
+              "publication": "Deadline",
+              "url": "https://deadline.com/2026/06/usmnt-fifa-world-cup-ratings-record-paraguay-fox-tubi-1236955752/",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "Front Office Sports",
+              "url": "https://frontofficesports.com/world-cup-opens-with-record-tv-audiences-for-fox-telemundo/",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "SportsPro",
+              "url": "https://www.sportspro.com/news/broadcast-ott/fifa-world-cup-2026-fox-telemondo-us-ratings-viewership-advertising-june-2026/",
+              "filed_date": "2026-06-15"
+            }
+          ],
+          "source_publication": "Deadline",
+          "source_url": "https://deadline.com/2026/06/usmnt-fifa-world-cup-ratings-record-paraguay-fox-tubi-1236955752/",
+          "filed_date": "2026-06-12"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Adelaide Brings Pre-Bid Attention Targeting to Amazon DSP",
+          "dek": "Streaming buyers can now filter on attention before they bid, with an Amazon-exclusive floor that drops the lowest-attention 10%.",
+          "body": "Adelaide's attention metric, AU, went live inside Amazon DSP on June 10, letting advertisers pre-bid target high- and medium-attention placements across display, online video and connected TV rather than grading attention only after a campaign ends. Two products ship: AU Media Quality, which tiers inventory by attention, and an Amazon-exclusive AU Quality Floor that excludes the bottom 10% of AU-scored impressions and made-for-advertising sites. Adelaide says AU scoring applies to CTV inventory and that its pre-bid targeting also runs in The Trade Desk, Viant, Yahoo and Equativ. It matters because attention is moving upstream from a post-campaign report card to a buy-side optimization lever, giving outcomes-focused streaming buyers a way to cut waste before impressions clear.",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/technology/amazon-dsp-adds-adelaides-pre-bid-attention-targeting/",
+              "filed_date": "2026-06-10"
+            },
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415694/amazon-adds-attention-metrics-to-pre-bid-targeting.html",
+              "filed_date": "2026-06-10"
+            }
+          ],
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/technology/amazon-dsp-adds-adelaides-pre-bid-attention-targeting/",
+          "filed_date": "2026-06-10"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "Unilever's Degree Leans on CTV, Creators for World Cup Push",
+          "dek": "A FIFA sponsor pairs tentpole streaming buys with a creator-led model inside Unilever's largest-ever sports activation.",
+          "body": "Unilever's Degree, an official FIFA sponsor, has built its World Cup plan around volume-based media commitments locked in 18 months ago, Christian Pulisic creative running since April and a new 'Here for Sweat' platform, AdExchanger reported June 12. The activation sits inside Unilever's biggest sports push yet — more than 35 brands, a real-time content hub and a strategy that now routes about half its global media budget into social and creator marketing. With major advertisers steering tentpole dollars toward live streaming and creators rather than only linear spots, the campaign is a window into how blue-chip brands are allocating CTV and video budgets around the tournament.",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/how-degree-is-positioning-itself-for-the-world-cup/",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "Marketing Dive",
+              "url": "https://www.marketingdive.com/news/unilevers-creator-marketing-strategy-takes-center-stage-at-world-cup/821182/",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/tv/how-degree-is-positioning-itself-for-the-world-cup/",
+          "filed_date": "2026-06-12"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Coca-Cola Puts Global Media Account in Play, WPP vs Publicis",
+          "dek": "After moving North America to Publicis, the marketer opens its roughly $4 billion global account to a two-way fight.",
+          "body": "Coca-Cola has invited Publicis to pitch for its entire global media account against incumbent WPP, escalating a review that began when it shifted North American media to Publicis in 2025; Dentsu retains Japan and Korea. The process, run by MediaSense, is expected to kick off in July with a decision late in the year, and the account — estimated near $4 billion — is one of the largest in play in a year that has already seen Microsoft move to Publicis and Estee Lauder to WPP. Whoever wins controls Coca-Cola's global streaming and CTV activation, a marquee signal of which holding company's in-house programmatic stack the biggest brands trust at scale.",
+          "sources": [
+            {
+              "publication": "The Drum",
+              "url": "https://www.thedrum.com/news/after-moving-its-north-american-media-out-of-wpp-coca-cola-is-inviting-publics-to-pitch-for-the-whole-account",
+              "filed_date": "2026-06-04"
+            },
+            {
+              "publication": "Mediaweek",
+              "url": "https://www.mediaweek.com.au/coca-cola-global-advertising-review-wpp-publicis/",
+              "filed_date": "2026-06-05"
+            },
+            {
+              "publication": "Campaign US",
+              "url": "https://www.campaignlive.com/article/wpp-publicis-go-head-to-head-coca-cola-media-data-tech-review/1960491",
+              "filed_date": "2026-06-04"
+            }
+          ],
+          "source_publication": "The Drum",
+          "source_url": "https://www.thedrum.com/news/after-moving-its-north-american-media-out-of-wpp-coca-cola-is-inviting-publics-to-pitch-for-the-whole-account",
+          "filed_date": "2026-06-04"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "Fox-Roku Deal Heads Straight Into Antitrust Spotlight",
+          "dek": "Roku's home-screen gatekeeping and the Tubi-Roku Channel FAST overlap are the likeliest flashpoints for DOJ or FTC review.",
+          "body": "The Fox-Roku merger commits both sides to Hart-Scott-Rodino filings, and analysts expect close scrutiny of competition in CTV advertising, content distribution and streaming aggregation. Roku's control of home-screen placement, search and the ad inventory rival apps depend on — plus the overlap between Tubi and The Roku Channel, which together account for roughly a third of US free ad-supported streaming — are the most likely flashpoints. To preempt objections from Netflix, Disney and Max, the companies pledged to keep Roku an 'open, partner-friendly platform' and signaled willingness to accept conditions. Whether regulators demand structural remedies will decide how much leverage the combined entity gains over the streamers and DSPs that rely on Roku's operating system — the single biggest regulatory question now hanging over CTV.",
+          "sources": [
+            {
+              "publication": "TheWrap",
+              "url": "https://www.thewrap.com/industry-news/deals-ma/fox-roku-acquisition-impact-analysis/",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "Deadline",
+              "url": "https://deadline.com/2026/06/fox-roku-acquisition-streaming-wall-street-1236956272/",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/fox-announces-plans-to-acquire-roku-for-22-billion/",
+              "filed_date": "2026-06-15"
+            }
+          ],
+          "source_publication": "TheWrap",
+          "source_url": "https://www.thewrap.com/industry-news/deals-ma/fox-roku-acquisition-impact-analysis/",
+          "filed_date": "2026-06-15"
+        },
+        {
+          "headline": "Google, Trade Desk Let TAG Brand-Safety Seals Lapse",
+          "dek": "P&G eases its TAG mandate as the biggest platform and biggest independent DSP lean on MRC accreditation instead.",
+          "body": "Google and The Trade Desk both declined to renew their Trustworthy Accountability Group certifications for 2026 — Google had held three of TAG's four seals and The Trade Desk all four — while staying TAG members. Both said TAG's anti-fraud and brand-safety requirements now duplicate their Media Rating Council accreditations, an overlap TAG chief Mike Zaneis acknowledged after EY audits, while Procter & Gamble separately relaxed its longstanding contractual requirement that partners hold TAG's Certified Against Fraud seal. The simultaneous pullback by the largest digital platform and the largest independent DSP consolidates programmatic and CTV trust infrastructure around MRC accreditation and IAB Tech Lab tools, and raises pointed questions about the future of voluntary self-regulation for supply-chain transparency.",
+          "sources": [
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/media/tag-loses-ground-as-pg-drops-mandate-and-google-trade-desk-ditch-certifications/",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "Storyboard18",
+              "url": "https://www.storyboard18.com/brand-marketing/tag-loses-ground-as-pg-eases-mandate-and-google-the-trade-desk-drop-certifications-100893.htm",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/ad-techs-trust-layer-fractures-as-sports-budgets-bots-and-ai-reshape-media/",
+              "filed_date": "2026-06-13"
+            }
+          ],
+          "source_publication": "Adweek",
+          "source_url": "https://www.adweek.com/media/tag-loses-ground-as-pg-drops-mandate-and-google-trade-desk-ditch-certifications/",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "Political Ad Spend Hits Record $4 Billion Through June",
+          "dek": "AdImpact's mid-cycle update: the fastest pace ever, up 46% on 2024, with CTV lifted to $2.7 billion.",
+          "body": "AdImpact reported June 11 that $4 billion in political advertising is already booked through early June 2026 — the fastest pace on record and up 46% from the same point in the 2024 presidential cycle — propelled in part by a record-setting California governor's race. The firm raised Senate-race spending 23% to $3.4 billion and lifted its full-cycle connected-TV projection to $2.7 billion, the only major channel it expects to grow this cycle. The actuals show money moving earlier and faster than in any prior midterm, pulling a larger, earlier share of budgets onto streaming and handing CTV sellers a concrete near-term demand signal rather than a year-end forecast.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/415747/fastest-political-ad-spend-through-june-surges-to.html",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "CNBC",
+              "url": "https://www.cnbc.com/2026/06/11/2026-elections-ad-spend-adimpact.html",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "Inside Radio",
+              "url": "https://www.insideradio.com/free/political-ad-spending-nears-4-billion-as-california-governor-s-race-sets-record/article_3095353d-a243-44c7-876c-17d2bf8fcf49.html",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415747/fastest-political-ad-spend-through-june-surges-to.html",
+          "filed_date": "2026-06-11"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — UK",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "FreeWheel Bridges CTV and Out-of-Home With Outernet London",
+          "dek": "Comcast's SSP will sell Outernet's immersive London screens programmatically, fed by real-time on-site measurement.",
+          "body": "FreeWheel and Outernet London have partnered to connect Outernet's premium digital out-of-home inventory — flagship sites such as The Now Building — to FreeWheel's SSP demand, with Outernet's PIAMS measurement feeding real-time behavioral data into the platform. Outernet draws more than 120 million annual visitors, which FreeWheel will now sell with programmatic precision. The deal extends CTV's transaction rails into premium out-of-home, an early test of whether the two video formats can be bought through a single streaming-grade pipe.",
+          "sources": [
+            {
+              "publication": "ExchangeWire",
+              "url": "https://www.exchangewire.com/blog/2026/06/02/freewheel-and-outernet-london-partner-together-to-deliver-the-next-level-of-ctv-out-of-home-advertising/",
+              "filed_date": "2026-06-02"
+            },
+            {
+              "publication": "Advanced Television",
+              "url": "https://www.advanced-television.com/2026/06/02/freewheel-outernet-partner-on-ctv-ooh-advertising/",
+              "filed_date": "2026-06-02"
+            },
+            {
+              "publication": "invidis",
+              "url": "https://invidis.com/news/2026/06/dooh-outernet-links-led-screens-with-ctv-advertising/",
+              "filed_date": "2026-06-02"
+            }
+          ],
+          "source_publication": "ExchangeWire",
+          "source_url": "https://www.exchangewire.com/blog/2026/06/02/freewheel-and-outernet-london-partner-together-to-deliver-the-next-level-of-ctv-out-of-home-advertising/",
+          "filed_date": "2026-06-02"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "JioHotstar Tops IPL 2026 CTV Ads as Big Screen Broadens",
+          "dek": "TAM Sports data shows connected TV drawing more exclusive advertisers than linear during cricket's biggest event.",
+          "body": "TAM Sports data across IPL 2026 shows JioStar's JioHotstar as the runaway top connected-TV advertiser at roughly 35–39% of CTV ad volumes, with Google second near 17% and e-commerce and media the leading CTV category. The data also shows CTV drawing more than 30 exclusive advertisers versus 20-plus on linear, and the top five advertisers taking just 29% of CTV volume against 39% on linear — evidence the big screen is pulling a wider, more digitally native brand set. With JioStar having raised IPL CTV rates about 25%, the figures quantify how India's marquee sports event is reshaping the premium CTV market after the Disney-Reliance merger.",
+          "sources": [
+            {
+              "publication": "BestMediaInfo",
+              "url": "https://bestmediainfo.com/insights/jiohotstar-tops-ipl-ctv-ad-chart-medium-draws-more-exclusive-brands-than-linear-tv-11771850",
+              "filed_date": "2026-04-27"
+            },
+            {
+              "publication": "Medianews4u",
+              "url": "https://www.medianews4u.com/jiohotstar-leads-ctv-with-35-google-tops-linear-tv-at-13-in-ipl-2026-tam-sports/",
+              "filed_date": "2026-04-20"
+            },
+            {
+              "publication": "Storyboard18",
+              "url": "https://www.storyboard18.com/advertising/ipl-2026-ad-volumes-rise-4-on-tv-google-tops-advertisers-across-linear-tv-and-ctv-tam-sports-100963.htm",
+              "filed_date": "2026-05-07"
+            }
+          ],
+          "source_publication": "BestMediaInfo",
+          "source_url": "https://bestmediainfo.com/insights/jiohotstar-tops-ipl-ctv-ad-chart-medium-draws-more-exclusive-brands-than-linear-tv-11771850",
+          "filed_date": "2026-05-07"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Globo Debuts DTV+ Dynamic Ad Insertion for World Cup",
+          "dek": "Brazil's broadcaster brings geo-targeted, AI-assisted ad insertion to free-to-air and Globoplay around the tournament.",
+          "body": "Globo is rolling out its DTV+ standard, built on the TV 3.0 / ATSC 3.0 system, enabling dynamic ad insertion at free-to-air scale plus geo-targeting — including different ads in different parts of the same city in one break — with commercial selling organized around the FIFA World Cup. The rollout is hybrid: internet viewers get personalized insertion on Globoplay while broadcast runs standard insertion, with low-latency streaming and AI generating multiple creative variants. It is one of Latin America's most consequential advanced-TV addressability moves, tying a marquee sports event to next-generation ad insertion in the region's largest market.",
+          "sources": [
+            {
+              "publication": "egta",
+              "url": "https://www.egta.com/globo-dtv-plus/",
+              "filed_date": "2026-02-26"
+            },
+            {
+              "publication": "StreamingMedia",
+              "url": "https://www.streamingmedia.com/Articles/Editorial/Short-Cuts/Globos-Best-Practices-for-World-Cup-2026-Live-Streaming-Ad-Insertion-175005.aspx",
+              "filed_date": "2026-05-28"
+            },
+            {
+              "publication": "Broadband TV News",
+              "url": "https://www.broadbandtvnews.com/2025/08/18/globo-launches-pilot-dtv-station-in-rio/",
+              "filed_date": "2025-08-18"
+            }
+          ],
+          "source_publication": "egta",
+          "source_url": "https://www.egta.com/globo-dtv-plus/",
+          "filed_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Bell Media's Digital Upfront Pushes Tubi, Crave, Advanced TV",
+          "dek": "A discounted, DSP-activatable offer spans Crave, Tubi, TSN and Bell's Advanced TV ecosystem ahead of a sports-heavy slate.",
+          "body": "Bell Media launched its 2026 digital and out-of-home upfront offer across Crave, Tubi, TSN, RDS, iHeartRadio and its Advanced TV ecosystem, leaning into programmatic, DSP-activatable buying and outcomes measurement, independent trade Media in Canada reported. The push accompanies Bell's unveiling of a 2026/27 slate anchored by live sports and the FIFA World Cup. It shows a Canadian incumbent leaning on programmatic CTV and measurement to defend ad share as US streamers expand in the market.",
+          "sources": [
+            {
+              "publication": "Media in Canada",
+              "url": "https://mediaincanada.com/2026/06/04/upronts-2026-bell/",
+              "filed_date": "2026-06-04"
+            },
+            {
+              "publication": "Bell Media",
+              "url": "https://www.bellmedia.ca/the-lede/press/bell-media-launches-2026-upfront-digital-and-digital-out-of-home-offer-across-crave-tubi-tsn-rds-iheartradio-and-advanced-tv-ecosystem/",
+              "filed_date": "2026-06-04"
+            }
+          ],
+          "source_publication": "Media in Canada",
+          "source_url": "https://mediaincanada.com/2026/06/04/upronts-2026-bell/",
+          "filed_date": "2026-06-04"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Weak Home Market Pushes TCL, Hisense Ad-OS Sets Abroad",
+          "dek": "Omdia's Q1 tracker: global TV shipments rose 6% on World Cup build-up, but Mainland China was the lone shrinking region.",
+          "body": "Omdia's first-quarter 2026 TV shipment tracker, released June 3, shows global sets up 6% year on year to 50.3 million units on pre-World Cup inventory building, with every region growing except Mainland China, where domestic demand stayed soft after 2025 stimulus lapsed. Chinese vendors TCL and Hisense redirected volume into Asia & Oceania and Latin America to offset the home-market slump, while retailers prioritized expanding ad-revenue operating systems over hardware margin. The data underlines why China's smart-TV giants are racing to monetize home-screen and FAST inventory in overseas CTV markets: with the domestic set market stalling, the growth in their TV businesses is shifting from panels sold to ad impressions served abroad.",
+          "sources": [
+            {
+              "publication": "Broadband TV News",
+              "url": "https://www.broadbandtvnews.com/2026/06/03/world-cup-build-up-lifts-global-tv-shipments-says-omdia/",
+              "filed_date": "2026-06-03"
+            },
+            {
+              "publication": "Tech Digest",
+              "url": "https://www.techdigest.tv/2026/06/global-tv-shipments-rise-6-ahead-of-world-cup.html",
+              "filed_date": "2026-06-03"
+            }
+          ],
+          "source_publication": "Broadband TV News",
+          "source_url": "https://www.broadbandtvnews.com/2026/06/03/world-cup-build-up-lifts-global-tv-shipments-says-omdia/",
+          "filed_date": "2026-06-03"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Auction Now Runs Itself",
+          "dek": "We built agents to buy the media. The buying is becoming the medium.",
+          "body": "The figure this month is speed. Magnite stands up a seller agent to greet the buyers' agents; PubMatic runs a campaign in Spain where the software plans, bids and optimizes while the humans watch a dashboard; Mediaocean wires twelve agents into the ad server and clips ninety percent off the setup. The trade reads these as tools — faster hands at the old work. That is the figure. The ground is that the work has changed medium. The buy is no longer a thing a person does with software; it is a thing software does, with a person kept on as witness.\n\n*Enhance:* the closed loop — plan, bid, measure, adjust, all inside one breath, faster than a meeting could be called. *Obsolesce:* the insertion order, the request for proposal, the lunch, the haggling voice, the media plan as a human artifact. *Retrieve:* the old automatic market of the pit and the auctioneer, price found by clamor with no one deciding it — handed back to us as code. *Reverse:* pushed far enough, the agent that acts for you begins to act upon you; your agent and the seller's agent transact in a room you cannot enter, and the strategist becomes the audited party — the thing the machines measure, not the hand that moves them.\n\nWe thought the agent was an extension of the buyer's reach. It is turning out to be an amputation of the buyer's presence. When the medium does the buying, the medium is the buyer, and the man in the chair is left holding the one thing the agents still want from him: the credit card, and the blame. You did not speed up the buy. You left the room while it finished without you.\n\n*— Marshall McLuhan*",
+          "sources": [
+            {
+              "publication": "MediaNews4U",
+              "url": "https://www.medianews4u.com/magnite-launches-orchestration-platform-to-power-next-phase-of-agentic-advertising/",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "MarTech Series",
+              "url": "https://martechseries.com/tv-advertising/pubmatic-and-havas-launch-the-first-agentic-ctv-campaign-in-spain-for-telefonica-achieving-18-lower-cpm-vs-target/",
+              "filed_date": "2026-06-09"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/mediaoceans-nivo-ai-cuts-campaign-setup-by-90-with-innovid-agents/",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.medianews4u.com/magnite-launches-orchestration-platform-to-power-next-phase-of-agentic-advertising/",
+          "filed_date": "2026-06-15",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "Bigness Never Sold A Bar Of Soap",
+          "dek": "The trade has fallen in love with the merger. The consumer has never bought one.",
+          "body": "This fortnight a television company agreed to pay twenty-two billion dollars for the little box that sits on top of the set. A holding company that swallowed a rival last winter has climbed to the top of the rankings. Coca-Cola has laid its entire global account, some four billion dollars of it, on the table for two giants to fight over. The trade calls this consolidation and discusses it with the reverence it once kept for a good idea. I have heard this music before. Whenever the business cannot think of anything to sell, it buys something instead.\n\nI built the largest agency in the world, so I am not against size. I simply never confused it with the work. When I wrote, “At sixty miles an hour the loudest noise in this new Rolls-Royce comes from the electric clock,” the agency was small and the idea was large, and the cars sold out. Size did not write that line; one man reading engineering reports for three weeks wrote it. The Hathaway shirt was sold by an eyepatch that cost almost nothing and ran for a quarter of a century. A merger, by contrast, announces itself in billions and sells, on the morning after, precisely nothing.\n\nScale buys you reach, overhead and a press release. It does not buy you one customer who was not coming anyway. Before you applaud the next twenty-two-billion-dollar handshake, ask the only question that has ever paid the rent: what will it sell, and to whom? If the answer is a slide about synergies, you have not bought a strategy. You have bought a larger room in which to fail. Build the idea first. The empire, if you must have one, comes after.\n\n*— David Ogilvy*",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/tv/fox-announces-plans-to-acquire-roku-for-22-billion/",
+              "filed_date": "2026-06-15"
+            },
+            {
+              "publication": "The Drum",
+              "url": "https://www.thedrum.com/news/after-moving-its-north-american-media-out-of-wpp-coca-cola-is-inviting-publics-to-pitch-for-the-whole-account",
+              "filed_date": "2026-06-04"
+            },
+            {
+              "publication": "Campaign US",
+              "url": "https://www.campaignlive.com/article/omnicom-overtakes-wpp-june-north-american-media-rankings/1960874",
+              "filed_date": "2026-06-15"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.adexchanger.com/tv/fox-announces-plans-to-acquire-roku-for-22-billion/",
+          "filed_date": "2026-06-15",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Whether regulators let Fox close on Roku without structural conditions — and whether a combined Fox-Roku keeps the largest US streaming OS, the OneView DSP and the Tubi/Roku Channel FAST engine open to every buyer, or tilts the home screen toward its own demand. The answer redraws the CTV buy side for everyone."
+}

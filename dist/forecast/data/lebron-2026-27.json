@@ -1,0 +1,206 @@
+{
+  "kind": "native_forecast",
+  "slug": "lebron-2026-27",
+  "question": "Which NBA team will LeBron James play for during the 2026-27 regular season?",
+  "title": "LeBron's Next Team, 2026-27",
+  "category": "Sport & Games",
+  "status": "open",
+  "logged": "2026-07-03",
+  "grades": "2026-10-31",
+  "resolution": "Resolves to the first active NBA franchise LeBron James signs an official contract with, or takes the floor for, in the 2026-27 regular season. Market deadline ~Oct 31, 2026; in practice likely settled within days of the July 6 moratorium lift.",
+  "consensus": {
+    "pick": "Cleveland Cavaliers",
+    "flag": "🍷",
+    "band": "36–44%",
+    "band_low": 36,
+    "band_high": 44,
+    "runner_up": "Golden State Warriors",
+    "runner_up_flag": "🌉",
+    "runner_up_band": "24–31%",
+    "headline_case": "Cleveland is the top price on the only two markets that matter — Polymarket at 41.2% and Kalshi at ~40%, the two most-traded books on the question (~$9.5M and ~$35M), agreeing within a point on the exact-question resolution. The romance and the roster point the same way: Akron is home, the 2016 title was delivered here, and an Eastern-Conference executive called the Cavaliers the 'cleanest fit.' The band sits a few points under the raw ~40% because Cleveland is the one leading suitor that cannot actually pay LeBron above the veteran minimum (~$3.9M) unless the Lakers cooperate on a sign-and-trade — a real, unresolved failure point a locked-in favorite would not carry.",
+    "why_over_runner_up": "As single teams, Cleveland out-prices Golden State on both liquid books — ~40% versus ~21–30% — and carries the stronger legacy and fit case. Golden State's edge is purely mechanical: it holds the full ~$15M mid-level exception outright, needs no third team, and offers Bay-Area proximity plus the 2024 Olympic relationship with Curry and Green. That clean-money path is why the Warriors briefly led the market on July 1 before Cleveland retook it — but a signable path is not a signed one, and the deepest money settled back on Cleveland.",
+    "dissent": "The clean-money case is the best survivor. Cleveland can only pay the minimum without a Lakers sign-and-trade the Lakers have every reason to refuse, while Golden State can write the full mid-level check today — which is why the sharpest divergence on the board is a sportsbook (DraftKings) that had Golden State at -500 while the prediction markets held the top team near 40%. If a Cleveland sign-and-trade stalls, this dissent becomes the lead.",
+    "tally": [
+      { "team": "Cleveland Cavaliers", "flag": "🍷", "votes": 4 },
+      { "team": "Golden State Warriors", "flag": "🌉", "votes": 2 },
+      { "team": "Philadelphia 76ers", "flag": "🔔", "votes": 1 }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "Cleveland Cavaliers",
+      "flag": "🍷",
+      "prob": "40%",
+      "prob_num": 40,
+      "confidence": "high",
+      "register": "Terse tape-reading",
+      "blurb": "I don't have a favorite. I have two order books. Polymarket at 41.2% and Kalshi at forty cents both put Cleveland on top, and between them they've moved thirty-five million dollars and nine million more. The Warriors led for a single day on July 1 and the money took it right back. Read the tape. Cleveland is the price.",
+      "evidence": "Cleveland is the leader on both liquid exact-question books — Polymarket 41.2% and Kalshi ~40% (~$9.5M and ~$35M traded), pulled 2026-07-03.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "market-reader"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the mechanics and the models — cap sheets, exceptions, roster fit — over recency and sentiment.",
+      "pick": "Golden State Warriors",
+      "flag": "🌉",
+      "prob": "30%",
+      "prob_num": 30,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "Everyone reads the hometown story; I read the cap sheet, and it tells a stranger tale. Only a team holding the full mid-level exception can hand LeBron real money without begging a third franchise for help — and that team is Golden State, which declined Draymond's option to clear the room and already shares a 2024 Olympic locker room with him. Cleveland's ~40% is a sentiment price: strip the romance and the Cavaliers can offer the veteran minimum plus a sign-and-trade that runs through the very team he is leaving. The mechanism, not the myth, points to the Bay.",
+      "evidence": "Golden State holds the full ~$15M non-taxpayer MLE and declined Draymond Green's ~$27.6M option to clear room; Cleveland is minimum-only (~$3.9M) absent a Lakers sign-and-trade.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "quant"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference classes — LeBron's own prior moves, aging-star patterns, full-circle rarity.",
+      "pick": "Cleveland Cavaliers",
+      "flag": "🍷",
+      "prob": "38%",
+      "prob_num": 38,
+      "confidence": "medium",
+      "register": "Prophetic bardic catalog",
+      "blurb": "Turn the ledger of the man's own leavings and it sings one refrain — Miami for the crown, then home to Cleveland, then west to the Lakers, each a chosen thing, each announced by his own mouth, none an accident. Twice the road bent back toward Akron, and the road remembers. Yet the same ledger keeps a colder column: few kings end where they began, and the full circle is the rarest shape in the book. So I set him home, but at thirty-eight rather than forty, and let the counted years temper the song.",
+      "evidence": "Each of LeBron's prior franchise moves (2010 Miami, 2014 Cleveland, 2018 Lakers) was a multi-year, self-authored contention/legacy play — two of them hometown-adjacent — but stars ending with their original franchise is rare.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "historian"
+    },
+    {
+      "name": "The Path Reader",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual signable route — which team can legally pay him without a third party.",
+      "pick": "Golden State Warriors",
+      "flag": "🌉",
+      "prob": "29%",
+      "prob_num": 29,
+      "confidence": "medium",
+      "register": "Terse verdict-driven",
+      "blurb": "Forget the jersey. Read the route by which the money can legally reach him. One road needs no permission: the full mid-level exception, held outright, paid by a contender who already knows him — that is Golden State, and Anthony Davis may yet ride in beside him. The Cleveland road runs straight through the Lakers' front office, a toll booth manned by the team he just walked out on. Back the open road, not the sentimental one.",
+      "evidence": "Golden State's full-MLE path needs no third team; Cleveland's above-minimum path depends entirely on a Lakers sign-and-trade the Lakers have no incentive to grant.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "path-reader"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights the elite individual — motivation, legacy, and the pull of the story the player is writing.",
+      "pick": "Cleveland Cavaliers",
+      "flag": "🍷",
+      "prob": "41%",
+      "prob_num": 41,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "Hear the oldest story the game still tells — the king who left, who conquered abroad, who comes home at the last to finish where the first ball left his hand. Akron made him; the 2016 title was the debt repaid; and now, at forty-two, with the rings counted and legacy the only prize still worth chasing, the pull of the beginning is the strongest force on the board. Motivation is the variable the spreadsheets cannot price, and every ounce of his points to the wine and gold. I set him home at forty-one.",
+      "evidence": "At 42, with money secondary (per Rich Paul) and legacy the stated driver, the hometown full-circle to Akron/Cleveland and the 2016 title concentrate motivation on the Cavaliers.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "talisman"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and the field is hot — hunts the underpriced live path the story forgot.",
+      "pick": "Philadelphia 76ers",
+      "flag": "🔔",
+      "prob": "17%",
+      "prob_num": 17,
+      "confidence": "medium",
+      "register": "Wry contrarian-desk",
+      "blurb": "Consider the comedy: the crowd has crowned a favorite who can't clear forty-one percent and a runner-up who whipsawed from leader to also-ran in a single day — and while those two wrestle, nobody is watching the third door. Philadelphia sits near seventeen percent with a mid-level check to write and a win-now core that would love an eleventh-hour headliner. Favorites at this price fail more often than they win, and the field the story forgot is exactly the bet the market forgot to price. I'll take the sleeper.",
+      "evidence": "Philadelphia is priced ~16.8% on Polymarket (~13% Kalshi) with a ~$6M taxpayer MLE and a win-now core — the strongest of the underpriced #3 lane the top-two duel obscures.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "contrarian"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Cleveland Cavaliers",
+      "flag": "🍷",
+      "prob": "40%",
+      "prob_num": 40,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the shape of the story, not the spread. This is the oldest ending the game still keeps — the king who left his home to win his crowns and comes back at the last to lay them down where they were forged. The omens run all one way: the 2014 return already rehearsed this scene, Akron never stopped being home, and a man of forty-two who tells you money no longer matters is being pulled by the ending, not the cap sheet. The market calls forty percent a coin-flip; I tell you the fated door is the one that opens. He comes home.",
+      "evidence": "The full-circle homecoming is the story the whole arc has been writing — the 2014 return, the 2016 title delivered at home, and a stated legacy-over-money endgame all point to Cleveland as the destined close.",
+      "record": { "graded": 0, "hits": 0 },
+      "persona": "prophet"
+    }
+  ],
+  "field": [
+    { "team": "Cleveland Cavaliers", "flag": "🍷", "price": 40 },
+    { "team": "Golden State Warriors", "flag": "🌉", "price": 26 },
+    { "team": "Philadelphia 76ers", "flag": "🔔", "price": 15 },
+    { "team": "Miami Heat", "flag": "🔥", "price": 10 },
+    { "team": "New York Knicks", "flag": "🗽", "price": 3 },
+    { "team": "Denver Nuggets", "flag": "⛏️", "price": 2.5 },
+    { "team": "Minnesota Timberwolves", "flag": "🐺", "price": 2.4 },
+    { "team": "San Antonio Spurs", "flag": "🤠", "price": 2 },
+    { "team": "Washington Wizards", "flag": "🧙", "price": 2 },
+    { "team": "Los Angeles Lakers (stay/return)", "flag": "💜", "price": 1.5 }
+  ],
+  "markets": [
+    {
+      "platform": "Kalshi",
+      "market": "Next NBA team (exact) — KXNEXTTEAMNBA",
+      "detail": "Cleveland ~40% · Golden State ~30% · Philadelphia ~13% · Miami ~9% · Knicks ~4% · Denver ~3% · Minnesota ~3% · Lakers/stay-retire ~3% · San Antonio ~2% · Washington ~2%",
+      "volume": "~$35.2M traded (swelled from ~$5.5M after the leave-LA report) — among Kalshi's highest-volume sports markets",
+      "pulled": "2026-07-03"
+    },
+    {
+      "platform": "Polymarket",
+      "market": "Next team (exact)",
+      "detail": "Cleveland 41.2% · Golden State 21.3% · Philadelphia 16.8% · Miami 11.4% · Denver 2.5% · Minnesota 2.4% · Knicks 2.3% · San Antonio 1.3% · Lakers 0.7%",
+      "volume": "~$9.53M volume · ~$706K liquidity · ~$1.32M open interest",
+      "pulled": "2026-07-03"
+    },
+    {
+      "platform": "Polymarket",
+      "market": "Sign with a former team?",
+      "detail": "~73% YES — next team is Cleveland, Miami, or the Lakers; implies ~27% a team he has never played for",
+      "volume": "Part of a ~12-market LeBron cluster; thinner than the main next-team book",
+      "pulled": "2026-07-03"
+    },
+    {
+      "platform": "Sportsbooks (divergence)",
+      "market": "Next team odds vs the prediction markets",
+      "detail": "DraftKings had Golden State ~-500 (~83%) on July 1 while the sharper prediction markets kept the top team ~33–41%; odds whipsawed (Warriors led ~45–62% July 1 before Cleveland retook the lead) — treat the split as fluid",
+      "volume": "Books diverge from the exchanges; take the deeper, lower exchange number as the anchor",
+      "pulled": "2026-07-02"
+    }
+  ],
+  "base_rates": [
+    { "stat": "~40%", "text": "Cleveland's price on both liquid books (Polymarket 41%, Kalshi ~40%) — the leader in a genuine three-way race, not a locked favorite." },
+    { "stat": "~$15M", "text": "The full non-taxpayer mid-level exception — the most any over-the-cap suitor can pay without a sign-and-trade. The binding money constraint." },
+    { "stat": "~$3.9M", "text": "The veteran minimum — all Cleveland can offer unless the Lakers agree to a sign-and-trade. The gap the Cavaliers case has to clear." },
+    { "stat": "~73%", "text": "Market-implied odds his next team is one he's already played for — Cleveland, Miami, or the Lakers." },
+    { "stat": "3 of 3", "text": "Of LeBron's prior free-agent moves, each was a multi-year contention/legacy play he announced himself — favoring a deliberate contender pick." },
+    { "stat": "0 signed", "text": "Teams LeBron has agreed with as of July 3 — the moratorium lifts July 6, so nothing is final and reports move the price daily." }
+  ],
+  "triggers": [
+    "LeBron signs once the July 6 moratorium lifts — the market resolves and this forecast grades within days, not months.",
+    "A Lakers–Cleveland sign-and-trade is reported as agreed — removes the money-path risk and pushes the Cavaliers toward the mid-40s.",
+    "Golden State completes an Anthony Davis trade or formally tenders the full MLE — firms the Warriors' clean-money contender case and could retake the lead, as it briefly held on July 1.",
+    "Miami's or Philadelphia's price surges again on a concrete cap path — the underpriced #3 lane the contrarian is buying goes live.",
+    "Rich Paul signals a specific visit or timeline — the field collapses toward one team fast.",
+    "Any credible retirement or Lakers-reconciliation report — lifts the small residual tail off its ~3% floor."
+  ],
+  "sources": [
+    { "label": "ESPN — LeBron informs Lakers he plans to play elsewhere in 2026-27 (Shams Charania)", "url": "https://www.espn.com/nba/story/_/id/49226472/lebron-james-informs-lakers-plans-play-elsewhere-2026-27" },
+    { "label": "ESPN — LeBron James free agency: pros and cons of potential destinations", "url": "https://www.espn.com/nba/story/_/id/49239600/lebron-james-free-agency-pros-cons-potential-destinations-cavaliers-warriors-heat" },
+    { "label": "NBA.com — Reports: LeBron James will play for a team other than the Lakers in 2026-27", "url": "https://www.nba.com/news/lebron-james-free-agency-2026" },
+    { "label": "Hoops Rumors — LeBron Tells Lakers He'll Play Elsewhere (MLE / sign-and-trade mechanics)", "url": "https://www.hoopsrumors.com/2026/06/lebron-james-tells-lakers-hell-play-elsewhere-in-2026-27.html" },
+    { "label": "Covers.com — Millions traded at prediction sites on LeBron's next team", "url": "https://www.covers.com/industry/millions-traded-at-prediction-sites-on-lebron-james-next-team-july-1-2026" },
+    { "label": "Oddschecker — Cavaliers take over as leader from Warriors", "url": "https://www.oddschecker.com/us/insight/basketball/nba/20260702-lebron-james-next-team-odds-cavaliers-take-over-as-leader-from-warriors-in-current-lebron-chase" },
+    { "label": "Polymarket — NBA: LeBron James Next Team", "url": "https://polymarket.com/event/nba-lebron-james-next-team" },
+    { "label": "Kalshi — LeBron's next NBA team (KXNEXTTEAMNBA)", "url": "https://kalshi.com/markets/kxnextteamnba/next-nba-team/kxnextteamnba-26ljam" }
+  ],
+  "method_note": "Seven standing predictor profiles each committed to a single named team by a fixed criterion; the call was fused to one team by grounding strength, not vote count, with the strongest dissent preserved. Two liquid exact-question markets (~$35M Kalshi, ~$9.5M Polymarket, pulled 2026-07-03) were swept first as the external anchor, and every number is grounded in a market price, a cap-mechanics decomposition, or a counted reference class.",
+  "honesty_note": "Cleveland is the single most likely destination at ~36–44%, which also means it is more likely than not that LeBron signs somewhere else. This is a live three-way race — Golden State and the Philadelphia/Miami field are all in reach — and prices have swung double digits on single reports. The pick names the favorite; it does not claim certainty. Nothing is signable until the moratorium lifts July 6."
+}

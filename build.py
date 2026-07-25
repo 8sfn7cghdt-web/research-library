@@ -865,6 +865,82 @@ def hero_svg():
     )
 
 
+def library_agent_svg():
+    """The Research Library's own hero agent — a robed archivist under the house arch."""
+    return (
+        "<svg viewBox='0 0 420 420' xmlns='http://www.w3.org/2000/svg' role='img' "
+        "aria-label='The Research Library hero agent, an archivist with a book'>"
+        "<defs>"
+        "<linearGradient id='lib-halo' x1='0' y1='0' x2='0' y2='1'>"
+        "<stop offset='0%' stop-color='#f4e6cd' stop-opacity='.95'/>"
+        "<stop offset='100%' stop-color='#f4e6cd' stop-opacity='0'/>"
+        "</linearGradient>"
+        "<linearGradient id='lib-robe' x1='0' y1='0' x2='1' y2='1'>"
+        "<stop offset='0%' stop-color='#201b17'/>"
+        "<stop offset='100%' stop-color='#4f3628'/>"
+        "</linearGradient>"
+        "<linearGradient id='lib-book' x1='0' y1='0' x2='1' y2='1'>"
+        "<stop offset='0%' stop-color='#b7865f'/>"
+        "<stop offset='100%' stop-color='#81563c'/>"
+        "</linearGradient>"
+        "</defs>"
+        "<circle cx='210' cy='170' r='128' fill='url(#lib-halo)' opacity='.9'/>"
+        "<path class='agent-ink' d='M88 328 C88 102, 332 102, 332 328' fill='none' stroke='currentColor' stroke-width='6'/>"
+        "<path d='M142 340 C154 264, 171 222, 210 214 C249 222, 266 264, 278 340 Z' fill='url(#lib-robe)'/>"
+        "<path d='M158 278 C176 262, 194 254, 210 254 C226 254, 244 262, 262 278 L250 322 C236 308, 224 302, 210 302 C196 302, 184 308, 170 322 Z' fill='#6f4b36' opacity='.92'/>"
+        "<ellipse cx='210' cy='184' rx='44' ry='54' fill='#ead9c2'/>"
+        "<path d='M173 176 C181 142, 241 142, 248 176 C239 160, 223 152, 210 152 C197 152, 181 160, 173 176 Z' fill='#2b221d'/>"
+        "<circle cx='195' cy='188' r='4.5' fill='#2b221d'/><circle cx='225' cy='188' r='4.5' fill='#2b221d'/>"
+        "<path d='M196 212 C204 218, 216 218, 224 212' fill='none' stroke='#2b221d' stroke-width='3' stroke-linecap='round'/>"
+        "<path d='M154 248 L114 292 L138 308 L174 276 Z' fill='#201b17' opacity='.98'/>"
+        "<path d='M266 248 L306 292 L282 308 L246 276 Z' fill='#201b17' opacity='.98'/>"
+        "<path d='M165 286 L210 270 L255 286 L247 332 L210 320 L173 332 Z' fill='url(#lib-book)' stroke='#6a4631' stroke-width='3'/>"
+        "<path d='M210 270 L210 320' fill='none' stroke='#f3e4cf' stroke-width='2' opacity='.9'/>"
+        "<path class='hero-core' d='M210 96 L219 118 L243 120 L225 136 L231 160 L210 147 L189 160 L195 136 L177 120 L201 118 Z' fill='#9a2c1a' opacity='.98'/>"
+        "</svg>"
+    )
+
+
+def adtech_agent_svg():
+    """The Ad Tech desk's hero agent — a market operator framed by screens and signal arcs."""
+    return (
+        "<svg viewBox='0 0 420 420' xmlns='http://www.w3.org/2000/svg' role='img' "
+        "aria-label='The Ad Tech hero agent, a market operator watching connected screens'>"
+        "<defs>"
+        "<linearGradient id='ad-halo' x1='0' y1='0' x2='0' y2='1'>"
+        "<stop offset='0%' stop-color='#7ce0ef' stop-opacity='.75'/>"
+        "<stop offset='100%' stop-color='#7ce0ef' stop-opacity='0'/>"
+        "</linearGradient>"
+        "<linearGradient id='ad-jacket' x1='0' y1='0' x2='1' y2='1'>"
+        "<stop offset='0%' stop-color='#0f2430'/>"
+        "<stop offset='100%' stop-color='#184756'/>"
+        "</linearGradient>"
+        "<linearGradient id='ad-screen' x1='0' y1='0' x2='1' y2='1'>"
+        "<stop offset='0%' stop-color='#153f4c'/>"
+        "<stop offset='100%' stop-color='#0a2128'/>"
+        "</linearGradient>"
+        "</defs>"
+        "<circle cx='210' cy='160' r='132' fill='url(#ad-halo)' opacity='.95'/>"
+        "<rect x='48' y='110' width='90' height='58' rx='10' fill='url(#ad-screen)' stroke='currentColor' stroke-width='3' opacity='.92'/>"
+        "<rect x='282' y='110' width='90' height='58' rx='10' fill='url(#ad-screen)' stroke='currentColor' stroke-width='3' opacity='.92'/>"
+        "<path d='M67 139 H120 M300 139 H352' stroke='#62aab8' stroke-width='4' stroke-linecap='round' opacity='.95'/>"
+        "<path d='M67 151 H104 M316 151 H352' stroke='#62aab8' stroke-width='4' stroke-linecap='round' opacity='.6'/>"
+        "<path d='M110 84 C160 48, 260 48, 310 84' fill='none' stroke='#62aab8' stroke-width='4' stroke-linecap='round' opacity='.7'/>"
+        "<path d='M128 90 C168 66, 252 66, 292 90' fill='none' stroke='#62aab8' stroke-width='2.5' stroke-linecap='round' opacity='.55'/>"
+        "<path d='M142 336 C154 260, 175 224, 210 218 C245 224, 266 260, 278 336 Z' fill='url(#ad-jacket)'/>"
+        "<path d='M170 336 L210 278 L250 336 Z' fill='#0e2c35'/>"
+        "<ellipse cx='210' cy='182' rx='42' ry='52' fill='#e6d7c5'/>"
+        "<path d='M175 176 C182 145, 239 145, 245 176 C235 159, 222 153, 210 153 C198 153, 185 159, 175 176 Z' fill='#10151b'/>"
+        "<circle cx='195' cy='187' r='4.5' fill='#10151b'/><circle cx='225' cy='187' r='4.5' fill='#10151b'/>"
+        "<path d='M195 211 C203 216, 217 216, 225 211' fill='none' stroke='#10151b' stroke-width='3' stroke-linecap='round'/>"
+        "<path d='M156 252 L118 296 L140 310 L176 278 Z' fill='#12313b'/>"
+        "<path d='M264 252 L302 296 L280 310 L244 278 Z' fill='#12313b'/>"
+        "<path class='hero-core' d='M210 286 l14 28 32 5 -23 21 6 31 -29 -15 -29 15 6 -31 -23 -21 32 -5 z' fill='#0d5b68' stroke='#9fe7f2' stroke-width='2'/>"
+        "<circle cx='210' cy='317' r='8' fill='#dff7fb'/>"
+        "</svg>"
+    )
+
+
 def embedded_image(filename, class_name, alt):
     """Embed a project image as a data URI so index.html remains self-contained."""
     img = HERE / filename
@@ -896,6 +972,13 @@ def hero_art():
         img = embedded_image(HERO_IMAGE, "hero-img mascot-img", "Divine Hero Agent")
         if img:
             return img
+    return library_agent_svg()
+
+
+def desk_hero_art(slug=""):
+    """Section-front hero art for detached desks."""
+    if slug == "adtech":
+        return adtech_agent_svg()
     return hero_svg()
 
 
@@ -907,7 +990,7 @@ def hero_art():
 # pages one directory down; `active` is the bare filename of the current
 # section (e.g. "adtech.html") to underline, or None.
 MAIN_NAV_ITEMS = [
-    ("The Research", "index.html"),
+    ("The Research", "research.html"),
     ("The Ghost of Times", "ghost.html"),
     ("Ad Tech", "adtech.html"),
     ("The Pamphlets", "pamphlets.html"),
@@ -4547,7 +4630,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="ghost-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -4930,7 +5013,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
   <section id="gh-facts"></section>
   <footer class="gh-foot">
     {watch}
-    <p class="gh-colophon"><a href="../ghost.html">← All editions</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+    <p class="gh-colophon"><a href="../ghost.html">← All editions</a> &nbsp;·&nbsp; <a href="../research.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
@@ -5419,7 +5502,7 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
     h1 = page.get("title", "The Pamphlets")
     kicker = page.get("kicker", "Writer-voiced essays")
     nav = page.get("nav", PAMPHLETS_NAV_DEFAULT)
-    back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
+    back = page.get("back", '<a href="research.html">← Back to the Research Library</a>')
     noun = page.get("noun", "pamphlet")
     subdir = page.get("subdir", "pamphlets")
     accent = page.get("accent")
@@ -5453,7 +5536,7 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
         theme_js=LIBRARY_THEME_JS,
         shell=shell,
     )
-    (out / fname).write_text(page_html)
+    (out / fname).write_text(_persona_public_copy(page_html))
     print(f"  ✓ {h1}  ({len(items)} {noun}{'s' if len(items) != 1 else ''}) → {fname}")
 
 
@@ -5591,7 +5674,7 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
   </article>
   <footer class="pm-foot">
     {colophon}
-    <p class="pm-nav"><a href="../{list_href}">← All {list_noun}s</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+    <p class="pm-nav"><a href="../{list_href}">← All {list_noun}s</a> &nbsp;·&nbsp; <a href="../research.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
@@ -5805,27 +5888,53 @@ def read_forecast_data(out_dir, slug):
 # data files carry a stable `persona` id so a market-localized display name
 # ("The Bracket Surgeon") still accrues to its standing persona's record.
 FD_PERSONAS = [
-    ("market-reader", "The Market Reader", "📈", "Follows the deepest, most liquid market prices."),
-    ("quant", "The Quant", "🧮", "Trusts the simulation models over recency and sentiment."),
-    ("historian", "The Historian", "📜", "Counted reference-class base rates and venue history."),
-    ("path-reader", "The Path Reader", "🔪", "Ignores reputation; reads the actual route, draw, and path."),
-    ("talisman", "The Talisman", "⭐", "Elite individual actors, motivation, proven leadership."),
-    ("contrarian", "The Contrarian", "🎭", "Favorites usually fail; hunts the underpriced live path."),
-    ("prophet", "The Prophet", "🕊", "Divine providence — backs the fated, story-shaped ending, however long the odds."),
+    ("market-reader", "Mira Tape", "📈", "Follows the deepest, most liquid market prices."),
+    ("quant", "Quinn Ratio", "🧮", "Trusts the simulation models over recency and sentiment."),
+    ("historian", "Ada Ledger", "📜", "Counted reference-class base rates and venue history."),
+    ("path-reader", "Rowan Wayfinder", "🔪", "Ignores reputation; reads the actual route, draw, and path."),
+    ("talisman", "Stella North", "⭐", "Elite individual actors, motivation, proven leadership."),
+    ("contrarian", "Nico Tilt", "🎭", "Favorites usually fail; hunts the underpriced live path."),
+    ("prophet", "Elias Lantern", "🕊", "Divine providence — backs the fated, story-shaped ending, however long the odds."),
 ]
 FD_PERSONA_DETAILS = {
-    "market-reader": {"agent": "Mira Tape", "role": "The Market Reader", "monogram": "MT", "mascot": "ticker lens"},
-    "quant": {"agent": "Quinn Ratio", "role": "The Quant", "monogram": "QR", "mascot": "ratio grid"},
-    "historian": {"agent": "Ada Ledger", "role": "The Historian", "monogram": "AL", "mascot": "archive stack"},
-    "path-reader": {"agent": "Rowan Wayfinder", "role": "The Path Reader", "monogram": "RW", "mascot": "route compass"},
-    "talisman": {"agent": "Stella North", "role": "The Talisman", "monogram": "SN", "mascot": "north star"},
-    "contrarian": {"agent": "Nico Tilt", "role": "The Contrarian", "monogram": "NT", "mascot": "split mask"},
-    "prophet": {"agent": "Elias Lantern", "role": "The Prophet", "monogram": "EL", "mascot": "signal lantern"},
+    "market-reader": {"agent": "Mira Tape", "role": "Ticker-lens agent", "monogram": "MT", "mascot": "ticker lens"},
+    "quant": {"agent": "Quinn Ratio", "role": "Ratio-grid agent", "monogram": "QR", "mascot": "ratio grid"},
+    "historian": {"agent": "Ada Ledger", "role": "Archive-stack agent", "monogram": "AL", "mascot": "archive stack"},
+    "path-reader": {"agent": "Rowan Wayfinder", "role": "Route-compass agent", "monogram": "RW", "mascot": "route compass"},
+    "talisman": {"agent": "Stella North", "role": "North-star agent", "monogram": "SN", "mascot": "north star"},
+    "contrarian": {"agent": "Nico Tilt", "role": "Split-mask agent", "monogram": "NT", "mascot": "split mask"},
+    "prophet": {"agent": "Elias Lantern", "role": "Signal-lantern agent", "monogram": "EL", "mascot": "signal lantern"},
 }
 FD_PERSONA_ALIASES = {
     "the bracket surgeon": "path-reader",
+    "the market reader": "market-reader",
+    "the quant": "quant",
+    "the historian": "historian",
+    "the path reader": "path-reader",
+    "the talisman": "talisman",
+    "the contrarian": "contrarian",
+    "the prophet": "prophet",
     **{v["agent"].casefold(): k for k, v in FD_PERSONA_DETAILS.items()},
 }
+FD_PERSONA_PUBLIC_REPLACEMENTS = {
+    "The Market Reader": "Mira Tape",
+    "The Quant": "Quinn Ratio",
+    "The Historian": "Ada Ledger",
+    "The Path Reader": "Rowan Wayfinder",
+    "The Talisman": "Stella North",
+    "The Contrarian": "Nico Tilt",
+    "The Prophet": "Elias Lantern",
+}
+
+
+def _persona_public_copy(value):
+    """Swap legacy archetype names in imported forecast copy for agent names."""
+    if not isinstance(value, str):
+        return value
+    for old, new in FD_PERSONA_PUBLIC_REPLACEMENTS.items():
+        value = value.replace(old, new)
+        value = value.replace(old.replace("The ", "the "), new)
+    return value
 
 
 def _persona_agent_name(key, fallback=""):
@@ -7161,7 +7270,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     h1 = page.get("title", "The Forecast Desk")
     kicker = page.get("kicker", "Predictions, by category")
     nav = page.get("nav", FORECAST_NAV_DEFAULT)
-    back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
+    back = page.get("back", '<a href="research.html">← Back to the Research Library</a>')
     record_fname = page.get("record_fname", "forecast-record.html")
     accent_css = _accent_css(page.get("accent"))
     category_order = category_order or []
@@ -7251,7 +7360,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         app_js=FORECAST_PAGE_JS,
         shell=shell,
     )
-    (out / fname).write_text(page_html)
+    (out / fname).write_text(_persona_public_copy(page_html))
     print(f"  ✓ {h1}  ({n_markets} markets, {n_outcomes} outcomes, {n_graded} graded) → {fname}")
 
 
@@ -7777,7 +7886,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
             blurb="Every call this predictor has made, graded honestly — the desk keeps no predictor's record off the books.",
             theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
         )
-        (out / f"{key}.html").write_text(page)
+        (out / f"{key}.html").write_text(_persona_public_copy(page))
         n_rendered += 1
     print(f"  ✓ Predictor profiles ({n_rendered}) → forecasters/")
 
@@ -8071,7 +8180,7 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
         blurb="Every call this roster has made, graded honestly — the desk keeps no predictor's record off the books.",
         theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
     )
-    (out / "compare.html").write_text(page)
+    (out / "compare.html").write_text(_persona_public_copy(page))
     print("  ✓ Compare the Predictors → forecasters/compare.html")
 
 
@@ -8310,7 +8419,7 @@ FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="fd-foot">
   <p class="epigraph">{method_note}</p>
-  <p class="colophon"><a href="../forecast.html">← The Forecast Desk</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+  <p class="colophon"><a href="../forecast.html">← The Forecast Desk</a> &nbsp;·&nbsp; <a href="../research.html">The Research Library</a></p>
 </footer>
 </div>
 <script>{theme_js}</script>
@@ -8515,7 +8624,7 @@ def build_forecast_item(out_dir, item, shell="", records=None):
         shell=shell,
     )
     (out / "forecast").mkdir(parents=True, exist_ok=True)
-    (out / "forecast" / f"{slug}.html").write_text(page)
+    (out / "forecast" / f"{slug}.html").write_text(_persona_public_copy(page))
     return True
 
 
@@ -8754,7 +8863,7 @@ def build_corpus_market_page(out_dir, m, shell="", records=None):
         shell=shell,
     )
     (out / "forecast").mkdir(parents=True, exist_ok=True)
-    (out / "forecast" / f"{m['slug']}.html").write_text(page)
+    (out / "forecast" / f"{m['slug']}.html").write_text(_persona_public_copy(page))
     return True
 
 
@@ -9027,7 +9136,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="fpp-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="index.html">The Research Library</a></p>
+  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="research.html">The Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -9265,7 +9374,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
   <div id="fp-body"></div>
   <footer class="fp-foot">
     {watch}
-    <p class="fp-colophon"><a href="../fingerprint.html">← All editions</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+    <p class="fp-colophon"><a href="../fingerprint.html">← All editions</a> &nbsp;·&nbsp; <a href="../research.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
@@ -9900,7 +10009,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
   <p class="cx-hint">Lines connect works that share the most thematic vocabulary. Tab through the map by keyboard, or open any work to read it.</p>
 </main>
 <footer class="cx-foot">
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
 </footer>
 <script id="cx-data" type="application/json">{data_json}</script>
 <script>{theme_js}</script>
@@ -10300,14 +10409,19 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
   </nav>
 </div>
 <header class="dk-plate">
-  <p class="dk-kicker">{kicker}</p>
-  <h1 class="dk-name">{title}</h1>
-  <p class="dk-motto">{subtitle}</p>
-  {scene}
-  <div class="dk-folio">
-    <span>{folio_left}</span>
-    <span class="dk-folio-c">{stats}</span>
-    <span>{folio_right}</span>
+  <div class="dk-hero">
+    <div class="dk-copy">
+      <p class="dk-kicker">{kicker}</p>
+      <h1 class="dk-name">{title}</h1>
+      <p class="dk-motto">{subtitle}</p>
+      {scene}
+      <div class="dk-folio">
+        <span>{folio_left}</span>
+        <span class="dk-folio-c">{stats}</span>
+        <span>{folio_right}</span>
+      </div>
+    </div>
+    <div class="dk-hero-art">{hero}</div>
   </div>
 </header>
 {bands}
@@ -10320,7 +10434,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">{epigraph}</p>
-  <p class="colophon"><a href="index.html">← Back to the Research Library</a></p>
+  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -10331,7 +10445,9 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 DOMAIN_PAGE_CSS = """
 /* A detached domain front (the Ad Tech desk) — a working-desk nameplate signed
    in the Fingerprint's petrol teal, over the shared library card grid. */
-.dk-plate { display: block; max-width: 900px; margin: 1.9rem auto 0; padding: 0 2rem; text-align: center; }
+.dk-plate { display: block; max-width: 1080px; margin: 1.9rem auto 0; padding: 0 2rem; }
+.dk-hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, .8fr); gap: 2rem; align-items: center; }
+.dk-copy { text-align: center; }
 .dk-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: .14em; color: #0d5b68; margin: 0 0 .5rem; }
 .dk-kicker::before { content: ""; display: inline-block; width: 8px; height: 8px; background: #0d5b68; margin-right: .5rem; }
@@ -10349,11 +10465,15 @@ DOMAIN_PAGE_CSS = """
     linear-gradient(180deg, var(--text) 0 3px, transparent 3px 5px, var(--text) 5px 6px, transparent 6px) 36px 0 / 112px 8px no-repeat; }
 .dk-motto { font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.5;
   color: var(--muted); max-width: 640px; margin: 0 auto 1.4rem; }
+.dk-hero-art { min-width: 0; display: flex; justify-content: center; color: #12313b; }
+.dk-hero-art svg { width: min(100%, 360px); height: auto; display: block; }
 .dk-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
   border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
   font-family: var(--mono); font-size: .72rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--text); }
 .dk-folio .dk-folio-c { color: #0d5b68; font-weight: 600; }
+[data-theme="dark"] .dk-hero-art { color: #d6ecf0; }
+[data-theme="dark"] .dk-hero-art .hero-core { fill: #62aab8; stroke: #dff7fb; }
 [data-theme="dark"] .dk-folio .dk-folio-c { color: #62aab8; }
 footer .colophon a { color: var(--accent); text-decoration: none; }
 footer .colophon a:hover { text-decoration: underline; }
@@ -10361,6 +10481,11 @@ footer .colophon a:hover { text-decoration: underline; }
   .dk-folio { font-size: .58rem; letter-spacing: .04em; }
   .dk-tools { padding: 0 1.2rem; }
   .dk-tool { padding: 1.05rem 1.1rem; }
+}
+@media (max-width: 860px) {
+  .dk-hero { grid-template-columns: 1fr; gap: 1rem; }
+  .dk-hero-art { order: -1; }
+  .dk-hero-art svg { width: min(78vw, 320px); }
 }
 
 /* the desk's own apparatus — its forecaster + dictionary, as teal-ruled tool plates */
@@ -10597,7 +10722,7 @@ def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages
     body = (
         '<div class="mirror-grid">'
         '<div class="mirror-col mc-lib">'
-        '<h2 class="mirror-h" id="library"><a href="#library">The Research Library</a></h2>'
+        '<h2 class="mirror-h" id="library"><a href="research.html">The Research Library</a></h2>'
         f'<p class="mirror-sub">{html.escape(library_meta)}</p>'
         '<div class="dp-pane mc-lib" id="daily-passage-lib" hidden></div>'
         f'<script id="passages-data-lib" type="application/json">{json_for_html(lib_passages)}</script>'
@@ -10622,6 +10747,23 @@ def mirror_spread_html(library_pane, library_meta, lib_passages, adtech_passages
         )
     body += '</div>'
     return f'<section class="mirror-spread">{body}</section>'
+
+
+def research_front_html(library_pane, library_meta, lib_passages):
+    """A standalone Research Library front that reuses the home page's left pane
+    without the detached desk mirror, so the library can live as its own page."""
+    return (
+        '<section class="mirror-spread"><div class="mirror-grid">'
+        '<div class="mirror-col mc-lib">'
+        '<h2 class="mirror-h" id="library"><a href="research.html">The Research Library</a></h2>'
+        f'<p class="mirror-sub">{html.escape(library_meta)}</p>'
+        '<div class="dp-pane mc-lib" id="daily-passage-lib" hidden></div>'
+        f'<script id="passages-data-lib" type="application/json">{json_for_html(lib_passages)}</script>'
+        '<div id="resume"></div>'
+        '<section id="foryou" hidden></section>'
+        f'{library_pane}'
+        '</div></div></section>'
+    )
 
 
 def _scroll_card_html(kicker, title, meta, href, scene_kind="pamphlet"):
@@ -10680,6 +10822,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         stats=html.escape(stats),
         folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
         scene=scene_plate("briefing", extra_class="section-scene"),
+        hero=desk_hero_art(slug),
         bands=bands,
         tools=tools,
         quiz=quiz,
@@ -10830,7 +10973,7 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 </header>
 <figure class="wr-holdings" aria-label="Every corpus in the library, one square each">{holdings}<figcaption>The holdings — one square per corpus, inked by subject</figcaption></figure>
 <main id="wrapped-body"></main>
-<footer class="wr-foot"><a href="index.html">← Back to the Research Library</a></footer>
+<footer class="wr-foot"><a href="research.html">← Back to the Research Library</a></footer>
 <script id="wrapped-stats" type="application/json">{stats_json}</script>
 <script>{theme_js}</script>
 <script>{wrapped_js}</script>
@@ -11046,7 +11189,7 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
     kicker = page.get("kicker", "Reference")
     scope = page.get("scope", "across the research library")
     nav = page.get("nav", GLOSSARY_NAV_DEFAULT)
-    back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
+    back = page.get("back", '<a href="research.html">← Back to the Research Library</a>')
     accent_css = _accent_css(page.get("accent"))
     merged = {}
     for g in glossary_index:
@@ -11991,7 +12134,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # Every section name is a live link: The Research stays on this page (#library);
     # the rest jump straight to their section fronts.
     fp_moved = any("fingerprint" in ((d.get("page") or {}).get("include") or []) for d in domains)
-    ov_links = ([("The Research", "#library"), ("The Ghost of Times", "ghost.html")]
+    ov_links = ([("The Research", "research.html"), ("The Ghost of Times", "ghost.html")]
                 + ([] if fp_moved else [("The Fingerprint", "fingerprint.html")])
                 + [("The Pamphlets", "pamphlets.html"), ("The Forecast Desk", "forecast.html")]
                 + [((d["page"].get("title") or d.get("title", "")),
@@ -12030,6 +12173,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     lib_passages = [p for p in all_passages if p["slug"] not in _adtech_slugs]
     adtech_passages = [p for p in all_passages if p["slug"] in _adtech_slugs]
     mirror_html = mirror_spread_html(library_body, stats, lib_passages, adtech_passages, hub_desk)
+    research_html = research_front_html(library_body, stats, lib_passages)
 
     # Bottom scrolls — Ghost of Times, the Fingerprint, Pamphlets, and (if the
     # desk has filed any) its Briefings rack, as light horizontal carousels at
@@ -12093,8 +12237,28 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS + OVERTURE_JS,
         shell=shell_root,
     ))
+    (out / "research.html").write_text(LIBRARY_TEMPLATE.format(
+        site_title=html.escape(site_title),
+        site_subtitle=html.escape(site_subtitle),
+        css=library_css,
+        favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(active="research.html"),
+        top_header="",
+        brand_logo=brand_logo_art(),
+        stats=stats,
+        hero=library_agent_svg(),
+        ticker="",
+        mirror=research_html,
+        overture_head="",
+        overture="",
+        collections=collections_html,
+        quiz=QUIZ_CTA_HTML,
+        bottom_scrolls="",
+        theme_js=LIBRARY_THEME_JS + LIBRARY_FILTER_JS + DAILY_PASSAGE_JS + HOME_JS,
+        shell=shell_root,
+    ))
     build_wrapped_page(out, wrapped_stats, shell=shell_root, category_order=category_order)
-    print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html")
+    print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html, {out}/research.html")
 
 
 def load_config(path):

@@ -1,0 +1,252 @@
+{
+ "kind": "native_forecast",
+ "slug": "brazil-norway-r16",
+ "question": "Will Brazil advance past Norway in the 2026 World Cup Round of 16?",
+ "title": "Brazil or Norway — World Cup Round of 16",
+ "category": "Sport & Games",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-07-05",
+ "resolution": "Resolves July 5, 2026 to the team that advances to the quarterfinals from the Round of 16 tie at MetLife Stadium — final result including extra time and penalties.",
+ "consensus": {
+  "pick": "Brazil",
+  "flag": "🇧🇷",
+  "band": "62–68%",
+  "band_low": 62,
+  "band_high": 68,
+  "runner_up": "Norway",
+  "runner_up_flag": "🇳🇴",
+  "runner_up_band": "32–38%",
+  "headline_case": "Brazil advances. The two liquid exact-question 'to advance' markets — Kalshi and a Robinhood event, both resolving on the final result including extra time and penalties — price Brazil around 67¢ to Norway's 36¢, devigging to roughly Brazil 65% / Norway 35% to reach the quarterfinal. That advance price sits about thirteen points above Brazil's ~52% win-in-90 line, and the gap is exactly the mechanical value of the extra-time and shootout path a favorite gets for free. A firmer Ancelotti back line and a deeper attack (Vinicius, Raphinha, Cunha) against Norway's leaky group defense back the number up. We center near 65% in a 62–68% band.",
+  "why_over_runner_up": "Norway to advance tops out near 32–38% because its live mechanism is one man and one moment: Haaland converting the single-match variance a low-scoring knockout invites. That is real — he has five goals this tournament and buried the R32 winner — but it is a narrower path than a clear quality gap played over 90 minutes plus extra time plus penalties, where Brazil gets repeated bites. The upside for Norway is priced; it is not ignored.",
+  "dissent": "The sharpest surviving counter is the hoodoo-plus-Haaland case: Norway has never beaten — sorry, never lost to — Brazil in four meetings (2 draws, 2 Norway wins, including the 1998 World Cup 2-1), and World Cup favorites priced ~65% to advance have posted negative returns across the last two tournaments. A single Haaland strike in a tense tie is exactly the failure mode that record predicts, which is why roughly a third of the resolution mass sits with Norway.",
+  "tally": [
+   {
+    "team": "Brazil",
+    "flag": "🇧🇷",
+    "votes": 5
+   },
+   {
+    "team": "Norway",
+    "flag": "🇳🇴",
+    "votes": 2
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Brazil advances",
+   "flag": "🇧🇷",
+   "prob": "62–68%",
+   "prob_num": 65,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "Two exact-question books, both counting extra time and penalties. Brazil sixty-seven cents, Norway thirty-six. Devig it and Brazil sits at sixty-five to reach the quarterfinal. The tape already knows Haaland scored the winner to get here and priced it in. I take the number. Brazil, 65%.",
+   "evidence": "Kalshi/Robinhood to-advance markets ~67¢ Brazil / ~36¢ Norway (incl. ET/pens), ~168k/163k contracts, pulled 2026-07-03; devigs to ~65% Brazil."
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the decomposition and the simulation over recency and sentiment.",
+   "pick": "Brazil advances",
+   "flag": "🇧🇷",
+   "prob": "62–68%",
+   "prob_num": 64,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Build it from parts. Brazil wins in ninety about fifty-two percent of the time on the three-way line; add a twenty-six percent draw times a compressed shootout edge near fifty-five, and the advance number lands around sixty-six. The thirteen-point gap between the win line and the advance line is simply the extra-time path, priced correctly. I hold at 62–68%.",
+   "evidence": "3-way moneyline Brazil ~52% win-in-90 + P(draw ~26%)×P(win ET/shootout ~55%) ≈ 14% → ~66% advance; matches the market."
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counts the reference class — stage-specific base rates and the long ledger of the fixture.",
+   "pick": "Brazil advances",
+   "flag": "🇧🇷",
+   "prob": "62–68%",
+   "prob_num": 66,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "The long book speaks in two voices. In the Round of 16 since 1986 Brazil has passed six times in seven, felled only once, by Argentina in 1990 — near ninety percent at this exact gate. Yet the same ledger records a stranger truth: in four meetings Brazil has never once beaten Norway. The larger, fresher class governs; the hoodoo is folklore. Brazil, but the ancients left a warning.",
+   "evidence": "Brazil R16 record 6-of-7 since 1986 (~86%); Brazil 0 wins in 4 vs Norway (2 draws, 2 Norway wins incl. 1998 WC 2-1)."
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, the matchup, the state of the tie.",
+   "pick": "Brazil advances",
+   "flag": "🇧🇷",
+   "prob": "62–68%",
+   "prob_num": 64,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "blurb": "Forget the badge. Norway's defense leaked through the group; Brazil's is firmer under Ancelotti and its attack runs deeper. On the route, Brazil is the better team and should win it. One thing spoils the read: a single Haaland goal turns a comfortable ninety minutes into a coin. Brazil advances. Not cleanly.",
+   "evidence": "Brazil firmer defensively + deeper attack (Vinicius, Raphinha, Cunha) vs Norway's leaky group defense; Haaland the single-shot spoiler."
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Backs elite individual actors, motivation, and proven big-stage leadership.",
+   "pick": "Brazil advances",
+   "flag": "🇧🇷",
+   "prob": "62–68%",
+   "prob_num": 63,
+   "confidence": "medium",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "Count the giants in yellow: Vinicius, who scored in every game of the group; Raphinha, Cunha, a bench deep with the anointed. This is the five-time champion, the archetype that has walked this stage more than any nation alive, and it wants the trophy. Norway has one colossus; Brazil has a pantheon. The weight of proven greatness tilts it.",
+   "evidence": "Brazil attacking depth — Vinicius scored every group game — plus five-time-champion pedigree vs Norway's single-star reliance."
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail somewhere; hunts the underpriced, live upset path.",
+   "pick": "Norway advances",
+   "flag": "🇳🇴",
+   "prob": "32–38%",
+   "prob_num": 35,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Here is the number nobody quotes: World Cup favorites priced around sixty-five percent to advance have returned NEGATIVE money across the last two tournaments. Now stack the hoodoo — Norway unbeaten against Brazil in four — on a striker with five goals this tournament who buried the winner to arrive here. That is not a 36-cent long shot; that is a live dog. Norway to advance, and it is underpriced.",
+   "evidence": "Danger-zone favorites (~65%) posted negative ROI last two WCs; Norway unbeaten vs Brazil in 4; Haaland 5 goals + 86th-min R32 winner."
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Reads narrative inevitability — backs the fated, story-shaped ending, however long the odds.",
+   "pick": "Norway advances",
+   "flag": "🇳🇴",
+   "prob": "32–38%",
+   "prob_num": 34,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "Attend to the shape of the thing. Norway had not seen a World Cup since 1998 — the very year it last struck Brazil down, two goals to one, and it has never once lost to them. Now the appointed one, Haaland, drags the old country back and scores in every round he touches. An unbeaten ledger, a hero in his tournament, a return foretold across a generation: this is what a giant-killing looks like before it happens. The tape says thirty-five. The story says it is written. I quote the thirty-five and keep the faith.",
+   "evidence": "Norway's first WC since 1998 (year of last Brazil win), never beaten by Brazil in 4; Haaland scoring every round — a story-shaped upset."
+  }
+ ],
+ "field": [
+  {
+   "team": "Brazil (advance)",
+   "flag": "🇧🇷",
+   "price": 65
+  },
+  {
+   "team": "Norway (advance)",
+   "flag": "🇳🇴",
+   "price": 35
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Kalshi",
+   "market": "World Cup Advance — Brazil vs Norway (KXWCADVANCE, incl. ET/pens)",
+   "detail": "Brazil ~67¢ (opening, drifting ~65¢) · Norway ~36¢→38¢ — the exact resolution question",
+   "volume": "KXWCADVANCE series; among the more liquid regulated venues"
+  },
+  {
+   "platform": "Robinhood",
+   "market": "Round of 16: Brazil vs Norway To Advance",
+   "detail": "Brazil ~67¢ (~67%) · Norway ~35¢",
+   "volume": "Brazil ~168,609 contracts · Norway ~162,883 contracts"
+  },
+  {
+   "platform": "Polymarket / Kalshi",
+   "market": "Match winner — 90-minute result",
+   "detail": "Brazil ~52% · draw ~26% · Norway ~22% (Norway ~8% to win in regulation on Polymarket framing)",
+   "volume": "~$521K traded on the Polymarket event as of Jul 3"
+  },
+  {
+   "platform": "Metaculus",
+   "market": "2026 World Cup winner (related)",
+   "detail": "Brazil ~10% to win the whole tournament",
+   "volume": "Community forecast (no money)"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "~65%",
+   "text": "Devigged exact-question 'to advance' price (Kalshi/Robinhood, incl. ET & penalties): Brazil ~65% / Norway ~35% to reach the quarterfinal — the strongest anchor."
+  },
+  {
+   "stat": "6 of 7",
+   "text": "Brazil's Round-of-16 record since the 16-team knockout returned in 1986 (~86%); the only loss was Argentina 1990."
+  },
+  {
+   "stat": "0 in 4",
+   "text": "Brazil has never beaten Norway — 2 draws and 2 Norway wins, including the 1998 World Cup 2-1. Folklore-grade: last meeting was 2006, squads fully turned over."
+  },
+  {
+   "stat": "~52%",
+   "text": "Brazil to win inside 90 minutes on the three-way line; the ~13-point gap up to the advance price is the mechanical value of the extra-time and shootout path."
+  },
+  {
+   "stat": "<60%",
+   "text": "Even top market-value teams win World Cup penalty shootouts under 60% — near a coin flip — capping how much Brazil's quality helps once the tie is level."
+  },
+  {
+   "stat": "2 of 8",
+   "text": "Upsets already banked this cycle: Paraguay knocked out Germany and Morocco beat the Netherlands on penalties — underdog live-ness is empirical in 2026."
+  }
+ ],
+ "triggers": [
+  "Confirmed Haaland injury or absence from the starting XI — collapses the Norway-advance path and pushes Brazil's clean-win branch up sharply; the single biggest swing.",
+  "To-advance line moving: Norway above ~40¢ (or Brazil below ~62¢) signals the market catching the upset case; Norway below ~32¢ argues the tail is too fat.",
+  "Brazil naming a full-strength, unrested XI shades the upset down; resting key attackers ahead of a likely quarterfinal shades it up.",
+  "A pre-match Brazil centre-back injury or suspension (e.g. Marquinhos) raises the Haaland-converts-a-lapse path.",
+  "An early goal: Brazil scoring inside 20' collapses the residual Norway mass; Norway scoring first opens the variance branch.",
+  "The tie level entering the final 15 minutes raises the extra-time / penalty branch, where Brazil's edge is thinnest."
+ ],
+ "sources": [
+  {
+   "label": "Kalshi — World Cup Advance, Brazil vs Norway",
+   "url": "https://kalshi.com/markets/kxwcadvance/world-cup-advance/kxwcadvance-26jul05branor"
+  },
+  {
+   "label": "Robinhood — Round of 16 Brazil vs Norway To Advance",
+   "url": "https://robinhood.com/us/en/prediction-markets/soccer/events/round-of-16-brazil-vs-norway-to-advance-jul-05-2026/"
+  },
+  {
+   "label": "Polymarket — Brazil vs. Norway (Jul 5, 2026)",
+   "url": "https://polymarket.com/sports/world-cup/fifwc-bra-nor-2026-07-05"
+  },
+  {
+   "label": "ESPN — Brazil vs. Norway odds/spread",
+   "url": "https://www.espn.com/soccer/odds/_/gameId/760504"
+  },
+  {
+   "label": "SportsBettingDime — Brazil vs Norway moneyline & odds to advance",
+   "url": "https://www.sportsbettingdime.com/news/soccer/brazil-vs-norway-odds-opening-moneyline-total-odds-advance-round-16/"
+  },
+  {
+   "label": "Yahoo Sports — Brazil have never beaten Norway (H2H)",
+   "url": "https://sports.yahoo.com/articles/hoodoo-brazil-never-beaten-norway-193200997.html"
+  },
+  {
+   "label": "11v11 — Norway record vs Brazil (unbeaten, 2W 2D)",
+   "url": "https://www.11v11.com/teams/norway/tab/opposingTeams/opposition/Brazil/"
+  },
+  {
+   "label": "FIFA.com — Norway 2-1 Brazil, 1998 World Cup",
+   "url": "https://www.fifa.com/en/tournaments/mens/worldcup/articles/norway-brazil-upset"
+  },
+  {
+   "label": "Goal.com — Haaland: Norway chance 'very slim' vs Brazil",
+   "url": "https://www.goal.com/en-ca/lists/don-t-know-if-we-ll-make-it-erling-haaland-claims-norway-only-have-very-slim-chance-of-beating-brazil-in-world-cup-round-of-16/bltfd7b6dc121cdd898"
+  },
+  {
+   "label": "Tips.GG — Brazil v Norway player props (Haaland 2.2, Vinicius 2.3)",
+   "url": "https://tips.gg/article/brazil-v-norway-player-props-wc2026/"
+  }
+ ],
+ "method_note": "Grounded on two liquid exact-question 'to advance' markets (resolving on the final result including extra time and penalties), a three-way moneyline decomposition, and stage-specific base rates. Brazil's ~65% advance price sits above its ~52% win-in-90 line by the mechanical value of the extra-time and shootout path. The main surviving disagreement is how much weight the Haaland single-match threat and the never-beaten-by-Norway record deserve against a clear quality gap — carried as the ~33% Norway-advance mass. Some pre-match form reads came from previews that appear partly simulated; the market prices and the historical base rates are the load-bearing inputs.",
+ "honesty_note": "Brazil to advance at ~65% is a favorite, not a lock — roughly one time in three, Norway goes through. A single Haaland goal can turn a 90-minute favorite into a coin flip once the tie is level, and Norway has never lost to Brazil in four meetings. The honest read is a strong lean, not a safe bet."
+}

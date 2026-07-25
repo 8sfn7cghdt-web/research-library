@@ -1,0 +1,343 @@
+{
+  "kind": "native_forecast",
+  "slug": "world-cup-2026",
+  "question": "Who will win the 2026 FIFA World Cup?",
+  "title": "Who Will Win the 2026 World Cup",
+  "category": "Sport & Games",
+  "status": "open",
+  "logged": "2026-06-30",
+  "grades": "2026-07-19",
+  "resolution": "Resolves to the national team that lifts the trophy in the final at MetLife Stadium, 19 July 2026, per official FIFA result.",
+  "consensus": {
+    "pick": "France",
+    "flag": "🇫🇷",
+    "band": "28–32%",
+    "band_low": 28,
+    "band_high": 32,
+    "runner_up": "Argentina",
+    "runner_up_flag": "🇦🇷",
+    "runner_up_band": "18–19%",
+    "headline_case": "France is the single strongest team-level node on every market that matters: the highest exact-winner price (~33.3% across the ~$3.59B Polymarket and >$130M Kalshi books, agreeing within a point) and the highest reach-the-final price (55%), each roughly double the nearest single rival. The bracket has moved with the money rather than against it — France's half is gutted, with Germany and the Netherlands both eliminated on penalties in the R32 and only a soft Paraguay tie in the Round of 16. Opta's model floor (18.7% post-group, the field's highest survival) confirms the same node even after discounting market sentiment. The council sets the band a few points under the raw ~33% to respect the Europeans-in-the-Americas headwind and the ~23% favorite-conversion rate.",
+    "why_over_runner_up": "As single teams, France out-prices Argentina on every board — ~33% vs ~18–19% to win, 55% vs 40% to reach the final — and Argentina carries the back-to-back headwind (only 2 repeat champions in 21 tries). Crucially, the 30% South-American market mass is split across Argentina, Brazil, and Colombia, so no single CONMEBOL team clears France's ~33%.",
+    "dissent": "The Historian's case is the best survivor: all three prior North-American World Cups went to CONMEBOL and Europe has won in the Americas only 1 of 9 times — a venue base rate the France price underweights, which restores Argentina at ~26% as the true favorite. The Contrarian seconds the mechanism but routes the discount to Brazil at ~6.7%. If France is dragged to penalties by Paraguay in the Round of 16, this dissent gets a lot louder.",
+    "tally": [
+      {
+        "team": "France",
+        "flag": "🇫🇷",
+        "votes": 3
+      },
+      {
+        "team": "Argentina",
+        "flag": "🇦🇷",
+        "votes": 2
+      },
+      {
+        "team": "Brazil",
+        "flag": "🇧🇷",
+        "votes": 2
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "France",
+      "flag": "🇫🇷",
+      "prob": "33%",
+      "prob_num": 33,
+      "confidence": "high",
+      "register": "Terse tape-reading",
+      "blurb": "I do not have a hunch. I have a price. A $3.59B Polymarket book and Kalshi's $130M-plus agree within a point that France is champion at 33.3%, and that is nearly double the next name, Argentina at 18–19%. That kind of money does not agree by accident, and France tops the reach-the-final market at 55% while Germany and the Netherlands are already out of its half. You do not argue with the deepest money. You read it, and you take the price.",
+      "evidence": "France priced ~33.3% across two independent liquid markets — nearly 2× the next team — and leads the reach-the-final market at 55%.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "market-reader"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the simulation models (Opta supercomputer, Elo, xG) over recency and sentiment.",
+      "pick": "France",
+      "flag": "🇫🇷",
+      "prob": "27%",
+      "prob_num": 27,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "Read the numbers rather than the headlines and a hidden order surfaces: Opta's 25k-sim run seats France at 18.7% post-group, the highest survival probability in the field, and the 55% reach-final price is the model quietly confessing that France's half is structurally soft. Here is the paradox the fashionable table misses — I discount the market's 33% as sentiment-inflated, and yet even after I strip that flattery away, the model floor plus a cleared path still leaves France standing as the top node. Argentina's figure is the more seductive story precisely because it is a story: it leans on Messi-narrative recency and the back-to-back headwind, and a story is exactly the thing I fade. Strip the sentiment from both and the same quiet arithmetic keeps pointing one way.",
+      "evidence": "Opta's 25k-sim gives France the highest post-group win probability (18.7%); the 55% reach-final price confirms a bracket cleared of Germany and Netherlands.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "quant"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference-class base rates: confederation, host-venue history, and how favorites and holders actually convert.",
+      "pick": "Argentina",
+      "flag": "🇦🇷",
+      "prob": "26%",
+      "prob_num": 26,
+      "confidence": "medium",
+      "register": "Prophetic bardic catalog",
+      "blurb": "I read the ledger of the Americas and the ledger does not stammer: a European side has won just 1 of 9 World Cups held on this soil, and every prior North-American reckoning fell to CONMEBOL — Brazil 1970, Argentina 1986, Brazil 1994, three-for-three, clean, unanswered. Against such a field I find Argentina the strongest single body upon it — the reigning holder, the group won 3-0-0, a soft Round-of-32 draw before them, Scaloni whole and unbroken at the helm. Yet the record keeps another entry I will not pretend away, for only 2 repeat champions have risen in 21 tries, and against that back-to-back headwind even the favored must bow. So I shade my hand and set it down at 26%, and I let the counted years be my verdict.",
+      "evidence": "All 3 prior North-American World Cups were won by CONMEBOL; a European team has won in the Americas only 1 of 9 times — a venue base rate the market ignores.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "historian"
+    },
+    {
+      "name": "The Bracket Surgeon",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual draw — who is left in each half and the real path to the final.",
+      "pick": "France",
+      "flag": "🇫🇷",
+      "prob": "36%",
+      "prob_num": 36,
+      "confidence": "medium",
+      "register": "Terse verdict-driven",
+      "blurb": "I do not read the badge. I read the road, and France's road has been cleared. Germany and the Netherlands, the two heavyweights who could have blocked the path, are both out on penalties in the Round of 32 — gone, and the half they guarded lies open. What remains for France in the Round of 16 is Paraguay, a soft tie, the shortest and least-mined route of any survivor: 55% to reach the final against Argentina's 40%. Here is the verdict, and it is a hard one — you back the cleared road, not the name upon the shirt.",
+      "evidence": "France's half is cleared of both Germany and Netherlands (out on penalties, R32); its R16 opponent is Paraguay — a market-leading 55% to reach the final.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "path-reader"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights elite individual talent, motivation, and proven manager craft in single-elimination football.",
+      "pick": "Argentina",
+      "flag": "🇦🇷",
+      "prob": "24%",
+      "prob_num": 24,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "I sing the one figure who bends a whole tournament to his will, for knockout football turns on one moment from one great player, and no side left holds a purer concentration of talent, motive, and craft than this one — Messi in his final tournament, the most motivated figure left, the aging king riding out for a last campaign that means more than the crown itself. Read the omens and the body both: a 3-0-0 group and a soft Cabo Verde tie say the side is peaking, while Scaloni, a proven closer who has already won this prize and two Copa Américas, stands as the steady hand that knows how such stories end. Beneath the man is the older pattern, the one every watching crowd already feels in its chest, and patterns like that gather force the nearer they come to their close. So I price them above the market's 18–19%, because these intangibles — the fire, the fated shape of it — are the very things single-elimination systematically underprices.",
+      "evidence": "Reigning-champion core, 3-0-0 group, soft R32 draw — Messi's final tournament under a manager who has already won a World Cup and two Copa Américas.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "talisman"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and knockout variance is hot — hunts the underpriced side with a live path to shock the field.",
+      "pick": "Brazil",
+      "flag": "🇧🇷",
+      "prob": "14%",
+      "prob_num": 14,
+      "confidence": "medium",
+      "register": "Wry contrarian-desk",
+      "blurb": "Notice what the crowd has done: it has crowned France at ~33% in a tournament where the pre-tournament favorite wins only ~23% of the time, and where both top-market favorites have already drowned on penalties in the Round of 32 — the throne is loudest just before it topples. So I stop admiring the favorites and count. First, the market pays Europe 63% against a base rate that says the Americas eat European favorites — every prior North-American World Cup went to CONMEBOL, and Europe has won in the Americas just 1 of 9 times. Second, a deep Brazilian squad is quietly through and priced at only ~6.7%, which is the plain arithmetic of a live champion mistaken for a long shot; I buy the side the story forgot.",
+      "evidence": "All 3 prior North-American World Cups went to CONMEBOL and Europe has won there just 1/9 — yet the market prices Europe at 63% and Brazil at only ~6.7%.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "contrarian"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Brazil",
+      "pick_scenario": "Brazil",
+      "flag": "🇧🇷",
+      "prob": "7%",
+      "prob_num": 7,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the ledger as scripture. Three World Cups have come to North America, and three times the crown went south. Brazil was crowned in Mexico in 1970 and on American soil in 1994, and now the road returns to both lands at once. The price says 7 in 100. The price also said no to 2016. A sixth star, won where the fifth era began — that is the ending these years have been spelling.",
+      "evidence": "CONMEBOL is 3-for-3 at North American World Cups; Brazil won both prior editions on the 2026 host soil (Mexico '70, USA '94); priced ~6.7% in the field.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet"
+    }
+  ],
+  "field": [
+    {
+      "team": "France",
+      "flag": "🇫🇷",
+      "price": 33.0,
+      "reach_final": 55
+    },
+    {
+      "team": "Argentina",
+      "flag": "🇦🇷",
+      "price": 18.5,
+      "reach_final": 40
+    },
+    {
+      "team": "Spain",
+      "flag": "🇪🇸",
+      "price": 10.0,
+      "reach_final": 21
+    },
+    {
+      "team": "England",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "price": 9.5,
+      "reach_final": 21
+    },
+    {
+      "team": "Brazil",
+      "flag": "🇧🇷",
+      "price": 6.7,
+      "reach_final": 18
+    },
+    {
+      "team": "Portugal",
+      "flag": "🇵🇹",
+      "price": 6.0,
+      "reach_final": 13
+    },
+    {
+      "team": "USA",
+      "flag": "🇺🇸",
+      "price": 3.5,
+      "reach_final": 5
+    },
+    {
+      "team": "Morocco",
+      "flag": "🇲🇦",
+      "price": 3.2,
+      "reach_final": 9
+    },
+    {
+      "team": "Colombia",
+      "flag": "🇨🇴",
+      "price": 2.8,
+      "reach_final": 11
+    },
+    {
+      "team": "Mexico",
+      "flag": "🇲🇽",
+      "price": 2.8,
+      "reach_final": 7
+    }
+  ],
+  "markets": [
+    {
+      "platform": "Polymarket",
+      "market": "Winner (exact)",
+      "detail": "France 33.3% · Argentina 18.1% · Spain 10.1% · England 9.8% · Brazil 6.7% · Portugal 5.6% · Morocco 3.2% · USA 3.1%",
+      "volume": "~$3.59B cumulative",
+      "pulled": "2026-06-30"
+    },
+    {
+      "platform": "Kalshi",
+      "market": "Winner (exact)",
+      "detail": "France 33.5% · Argentina 19.3% · Spain 9.8% · England 9.0% · Brazil 6.6% · Portugal 6.4% · USA 4.0% · Mexico 3.3%",
+      "volume": ">$130M reported",
+      "pulled": "2026-06-30"
+    },
+    {
+      "platform": "Polymarket",
+      "market": "Reach the final",
+      "detail": "France 55% · Argentina 40% · Spain 21% · England 21% · Brazil 18% · Portugal 13% · Colombia 11% · Morocco 9%",
+      "volume": "~$7.0M",
+      "pulled": "2026-06-30"
+    },
+    {
+      "platform": "Polymarket",
+      "market": "Winning continent",
+      "detail": "Europe 63% · South America 30% · Africa 4.5% · North America 4.3% — the 30% CONMEBOL mass splits 3 ways; no single team reaches France",
+      "volume": "~$7.9M",
+      "pulled": "2026-06-30"
+    },
+    {
+      "platform": "Opta",
+      "market": "25k-sim model",
+      "detail": "France 18.7% post-group (~half the market); pre-tournament Spain was #1 at 16.1% over France 13.0%",
+      "volume": "Supercomputer",
+      "pulled": "2026-06-30"
+    }
+  ],
+  "base_rates": [
+    {
+      "stat": "~23%",
+      "text": "Pre-tournament favorite wins ~5 of 22 World Cups — the base of the Contrarian's fade."
+    },
+    {
+      "stat": "0 / 22",
+      "text": "Finals featuring a non-UEFA/CONMEBOL side — the hard cap on any dark-horse title."
+    },
+    {
+      "stat": "1 / 9",
+      "text": "European wins in a World Cup held in the Americas (only Germany 2014) — the Historian's headwind."
+    },
+    {
+      "stat": "3 / 3",
+      "text": "North-American editions won by CONMEBOL (Brazil '70, Argentina '86, Brazil '94)."
+    },
+    {
+      "stat": "2 / 21",
+      "text": "Back-to-back title defenses ever won (none since 1962) — the cap on Argentina's repeat."
+    },
+    {
+      "stat": "2 of 6",
+      "text": "Opening R32 ties to a shootout — both favorites (Germany, Netherlands) lost. Variance running hot."
+    }
+  ],
+  "triggers": [
+    "France is dragged to penalties by Paraguay in the Round of 16 — the premium collapses and the Historian's Argentina case takes over. Winning it clean in regulation validates the ~33%.",
+    "Opta's next post-quarterfinal sim revises France above 25%, or the market drifts toward Opta's 18.7% — resolves the market-vs-model gap between the Market Reader and the Quant.",
+    "Spain or England exits in the Round of 32 (1–3 July) — thins the challenger field and firms France's edge.",
+    "Both Argentina and Brazil exit before the semifinals — collapses the CONMEBOL dissent entirely, redistributing to France and the European tier.",
+    "Mbappé (France) or Messi (Argentina) ruled out by injury — drop the affected team below its market price and re-rank.",
+    "Shootout frequency stays above ~1-in-3 across the next knockout round — lifts the whole dark-horse tail and rewards the Contrarian's variance read."
+  ],
+  "sources": [
+    {
+      "label": "Polymarket — World Cup Winner",
+      "url": "https://polymarket.com/event/world-cup-winner"
+    },
+    {
+      "label": "Polymarket — Nation to Reach Final",
+      "url": "https://polymarket.com/event/world-cup-nation-to-reach-final"
+    },
+    {
+      "label": "Polymarket — Which continent wins",
+      "url": "https://polymarket.com/event/which-continent-will-win-the-world-cup"
+    },
+    {
+      "label": "Kalshi — Men's World Cup Winner (KXMENWORLDCUP-26)",
+      "url": "https://kalshi.com/markets/kxmenworldcup/mens-world-cup-winner/kxmenworldcup-26"
+    },
+    {
+      "label": "Opta Analyst — Knockout-stage predictions",
+      "url": "https://theanalyst.com/articles/world-cup-2026-knockout-stage-predictions-opta-supercomputer"
+    },
+    {
+      "label": "Opta Analyst — Pre-tournament predictions",
+      "url": "https://theanalyst.com/articles/who-will-win-2026-fifa-world-cup-predictions-opta-supercomputer"
+    },
+    {
+      "label": "FIFA — What happened to the World Cup favourites?",
+      "url": "https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/what-happened-to-the-fifa-world-cup-favourites"
+    },
+    {
+      "label": "Wikipedia — 2026 knockout stage",
+      "url": "https://en.wikipedia.org/wiki/2026_FIFA_World_Cup_knockout_stage"
+    },
+    {
+      "label": "Nate Silver — PELE model predictions",
+      "url": "https://www.natesilver.net/p/world-cup-2026-odds-predictions"
+    }
+  ],
+  "method_note": "Six standing predictor profiles each committed to a single named champion by a fixed criterion; the Chair fused them to one team by grounding strength, not vote count, preserving the strongest dissent. Prediction markets were swept first as the external anchor and every number is grounded in a market price, a decomposition, or a counted base rate.",
+  "honesty_note": "France is the most likely single champion at ~28–32%, which also means it is more likely than not that some other team wins. The pick names the favorite; it does not claim certainty."
+}

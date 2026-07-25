@@ -1,0 +1,28 @@
+{
+  "pamphlets": [
+    {
+      "slug": "hemingway-on-the-world-cup",
+      "title": "The Cooling Break",
+      "dek": "On the 2026 World Cup",
+      "writer": "Ernest Hemingway",
+      "subject": "The 2026 World Cup",
+      "date": "2026-07-02"
+    },
+    {
+      "slug": "whitman-on-september-11th",
+      "title": "The Climbing Men",
+      "dek": "On the eleventh of September",
+      "writer": "Walt Whitman",
+      "subject": "September 11th",
+      "date": "2026-06-26"
+    },
+    {
+      "slug": "carlyle-on-the-assassination-of-charlie-kirk",
+      "title": "The Answering Bullet",
+      "dek": "On the assassination of Charlie Kirk",
+      "writer": "Thomas Carlyle",
+      "subject": "The assassination of Charlie Kirk",
+      "date": "2026-06-26"
+    }
+  ]
+}

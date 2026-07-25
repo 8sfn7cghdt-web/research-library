@@ -1,0 +1,244 @@
+{
+  "edition_date": "2026-05-31",
+  "edition_number": 24,
+  "weekday": "Sunday",
+  "subtitle": "All the news that's fit to Fingerprint",
+  "lead": {
+    "kicker": "Above the Fold",
+    "headline": "Walmart Cracks Open CTV Data, Routes VIZIO Audiences To Yahoo DSP",
+    "dek": "Magnite-piped integration ends single-DSP exclusivity on Walmart's first-party shoppers and brings closed-loop sales to a second buying surface.",
+    "body": "Walmart Connect on May 28 made its first-party shopper audiences available inside Yahoo DSP for VIZIO connected-TV inventory, routed through Magnite supply with closed-loop measurement tied back to Walmart sales. Yahoo says the integration brings roughly 150 million Walmart shoppers into the DSP, and it marks the first time Walmart Connect's audiences have been activated outside its proprietary stack — a structural departure from the walled-garden posture Walmart has held since acquiring VIZIO. MediaPost, Beet.TV and AdExchanger covered the move as part of a broader Walmart Connect retooling of its offsite media stack and an explicit accommodation of multi-DSP buying.\n\nThis is the week's most consequential partnership signal for the open market. Retail purchase data layered on SmartCast ACR via a neutral DSP gives planners a credible alternative to Amazon Ads and Roku Curate retail packages — and validates the multi-DSP, neutral-curation thesis that independent demand sells against the walled gardens. The question now for buy-side strategists is which Yahoo DSP buys already route through Magnite-SpringServe on VIZIO, and how quickly Walmart extends the same arrangement to The Trade Desk and DV360 — the breadth of that rollout will determine how far retail data travels beyond any single platform's stack.",
+    "source_publication": "MediaPost",
+    "source_url": "https://www.mediapost.com/publications/article/415372/walmart-connect-expands-offsite-ad-targeting-with.html",
+    "filed_date": "2026-05-28"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Roku Redesigns Home Screen, Opens New Ad Real Estate",
+          "dek": "AI-driven layout picks from billions of household combinations and expands marquee placements.",
+          "body": "Roku began rolling out its biggest home-screen overhaul in more than a decade on May 27, with an AI personalization engine that selects from billions of layout combinations per household, plus new Top Picks, a Quick Access apps row, a subscriptions area and a 'Your Daily Scoop' trending row. The redesign preserves Roku's three-column structure but expands right-rail ad real estate and pushes ad placements deeper into discovery surfaces. AdExchanger framed it as Roku trying to 'appease both consumers and advertisers' as ad-free subscriptions cap in-stream reach. The redesign is an explicit invitation to plan home-screen and marquee placements into Roku-led CTV plans — and a reminder for the open market that OEM/OS inventory is now a distinct line item alongside in-stream pods, sitting upstream of any streamer's ad break.",
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/tv/roku-revamps-its-home-screen-to-appease-both-consumers-and-advertisers/",
+          "filed_date": "2026-05-28"
+        },
+        {
+          "headline": "Upfront Commitments Now Drive Streaming's Programmatic Market",
+          "dek": "Disney says 70% of biddable demand is upfront-aligned; Warner Bros. Discovery near 50%.",
+          "body": "Digiday's Future of TV Briefing this week reports that upfront commitments are driving the majority of programmatic activity at major streamers — 70% of Disney's biddable demand is upfront-aligned, with Warner Bros. Discovery approaching half. Sellers are increasingly routing upfront deals into PMPs to give buyers bidding flexibility while protecting committed dollars, accelerating what Digiday calls the collapse of the wall between upfront and programmatic. The piece frames biddable PMPs as the fastest-growing programmatic segment at Disney. The structural shift from open-market CTV to upfront-funded PMPs reshapes publisher relationships and curated deal IDs across the market — programmatic guarantee and biddable PMPs, not open auction, are increasingly where the streaming dollars actually clear, which changes how curators and DSPs have to source premium streaming supply.",
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/future-of-tv/future-of-tv-briefing-the-upfront-is-overtaking-streamings-programmatic-marketplace/",
+          "filed_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Gracenote Pegs Show-Level Data As Linear-To-CTV Unlock",
+          "dek": "86% of US planners would shift more linear dollars to CTV with content-graph targeting and reporting.",
+          "body": "Nielsen's Gracenote unit released an upfront-aligned study circulated through late May reporting that 86% of US media planners would move more linear budget to CTV if show-level targeting and reporting were available, with 65% willing to shift programmatic-video and 63% display dollars on the same condition. 47% of planners flag limited show- or content-level data as the primary barrier, and 89% expect to keep moving budget from linear to CTV over the next 24 months. Gracenote pitches its Content Graph and unique content IDs as the resolution layer. The data is a clean talking point for content-graph-powered CTV curation across the market, and it confirms that 'where the ad ran, in what show' — not just 'who saw it' — is the next measurement battleground for buy-side strategists and sellers alike.",
+          "source_publication": "Nielsen",
+          "source_url": "https://www.nielsen.com/news-center/2026/ctv-data-gap-is-holding-back-bigger-ad-budgets/",
+          "filed_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "AdExchanger: Email IDs Face A Credibility Crisis In CTV",
+          "dek": "Buyers and sellers question whether one-to-one identity fits a household, lean-back medium.",
+          "body": "AdExchanger published a sharp look on May 28 at email-based identifiers like UID2 in CTV, arguing emails are a one-to-one display signal mis-applied to a co-viewing, household-level channel that historically transacts on IP and HHID. Critics in the piece say alt-ID providers do not audit whether underlying emails are accurate or consented, that FAST channels without logins are sourcing emails from third-party brokers, and that UID2's opacity gives 'a false sense of confidence in identity.' The story lands the same week Roku's home-screen redesign and Walmart's VIZIO-DSP move both lean on household and ACR signals rather than email matches. This is the sharpest mainstream challenge yet to the email-ID stack underpinning much of programmatic CTV — pushing the whole buy side toward articulating a household-plus-ACR-plus-retail ID philosophy that holds up against the UID2-skeptic narrative.",
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/tv/why-critics-say-email-based-ids-dont-work-for-ctv/",
+          "filed_date": "2026-05-28"
+        },
+        {
+          "headline": "IAB Tech Lab Standardises Pause And Menu Ad Signaling",
+          "dek": "OpenRTB updates open public comment through June 5; SSPs queued to align.",
+          "body": "IAB Tech Lab opened a public-comment window through June 5 on updates to its technical specs that standardise how the CTV Ad Portfolio's non-interruptive formats — Pause, Menu, Overlay and Squeeze-Back — are signalled programmatically across OpenRTB. The goal is fewer manual workarounds, clearer buyer/seller expectations and easier scale-out of emerging formats, with AdMonsters framing it as a key sell-side enablement step. Standardised signaling for non-linear CTV formats is exactly the rails the open market needs to bid Pause and Menu inventory at scale across publishers — the development to track is which SSPs (especially Magnite SpringServe) align to the new specs first, since curated deal IDs can only queue against standardised formats once the supply side adopts them.",
+          "source_publication": "AdMonsters",
+          "source_url": "https://www.admonsters.com/what-the-iab-tech-labs-latest-ctv-standards-mean-for-the-sell-side/",
+          "filed_date": "2026-05-28"
+        },
+        {
+          "headline": "Measured Ships MCP Server, Pipes Incrementality Into ChatGPT, Claude",
+          "dek": "Trevor Testwuide's pitch: ask the chatbot how the media performed.",
+          "body": "Measured launched a Model Context Protocol server on May 28 that lets marketers query ChatGPT, Claude, Gemini and other LLMs about media performance, drawing on more than 30,000 incrementality tests across 200-plus Measured clients. The pitch is conversational, on-demand incrementality reads grounded in causal methodology rather than last-click reporting, with CEO Trevor Testwuide noting that roughly 15% of clients still refuse to expose data to AI while others want to feed everything in. AdExchanger separately framed this as the first major MCP rollout from a TV-relevant measurement firm. MCP servers from measurement partners are the rails on which agentic media-buying will run — raising the bar for whether any outcomes-reporting stack in the market is similarly LLM-queryable for the clients and partners who will soon expect to ask their data questions in natural language.",
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/measurement/measured-has-a-new-tool-that-lets-marketers-chat-with-their-incrementality-data/",
+          "filed_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Sorrell-Backed Olyzon Raises $10M For Agentic CTV Decisioning",
+          "dek": "Paris-based startup deploys five AI agents to orchestrate DSPs across global TV budgets.",
+          "body": "Olyzon, a Paris-based TV ad decisioning platform with offices in New York and London, announced a $10 million Series A on May 28 led by Sir Martin Sorrell and Sanja Partalo's S4S Ventures, with participation from Cassius Capital, Ventech and Eurazeo. The platform runs five AI agents (Map, Score, Adapt, Activate, Prove) that orchestrate planning, activation and measurement across DSPs, SSPs and walled-garden CTV inventory, and is already live with brands including McDonald's, DoorDash, Audi and Mastercard via managed service. Sorrell framed Olyzon as sitting 'at the intersection of two forces reshaping our industry: the agentic AI revolution and the consolidation of CTV onto programmatic infrastructure.' A well-funded agentic decisioning layer that explicitly claims to orchestrate DSPs rather than replace them is both a partnership target and a strategic competitor for the independent programmatic stack — the question for the market is where Olyzon's managed-service motion overlaps the planning workflows curators and agencies already run.",
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/daily-news-roundup/sir-martin-funds-a-ctv-platform-neutral-on-neutrality/",
+          "filed_date": "2026-05-28"
+        },
+        {
+          "headline": "Omdia Forecasts CTV Ad Market To Hit $81B By 2030",
+          "dek": "Google, Amazon and Netflix projected to capture half of all CTV ad dollars.",
+          "body": "Omdia research re-circulated through trade press May 26-29 forecasts global CTV ad revenue rising from $44 billion in 2025 to $81 billion by 2030, with Google projected at 26% share, Amazon 13% and Netflix 9% — collectively roughly half the market. The report frames the living-room contest as a fight for 'the platform, the advertising layer, the operating system, the data and ultimately the consumer relationship,' not just streaming content. The forecast crystallises the platform-concentration problem that the independence pitch sells against — and it anchors the strategic question for the open market on the other 50% of CTV inventory that won't sit inside the three walled gardens by 2030, which is where independent demand and neutral curation have room to compete.",
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/415255/google-netflix-amazon-to-dominate-ctv-by-2030s.html",
+          "filed_date": "2026-05-26"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "FTC Hits Cox Media Group With $880K Over 'Active Listening' Pitch",
+          "dek": "Agency calls smart-device ad targeting a 'phantom' service built on resold broker email lists.",
+          "body": "The Federal Trade Commission required Cox Media Group, MindSift and 1010 Digital Works to pay $930,000 total to settle charges that they deceptively marketed an 'Active Listening' AI service claiming to target ads from conversations captured by smart devices. The FTC found the service did not listen to anything and instead resold marked-up email lists from data brokers, and rejected the idea that app terms-of-service clicks constitute opt-in consent for in-home voice surveillance. CMG will pay $880,000; MindSift and 1010 Digital Works each pay $25,000. The order sharpens FTC scrutiny of AI ad-tech overclaiming and tightens the consent standard for any CTV partner pitching device-graph or acoustic-signal data — a diligence bar that buy-side strategists now have to apply to every data partner across the open market.",
+          "source_publication": "Federal Trade Commission",
+          "source_url": "https://www.ftc.gov/news-events/news/press-releases/2026/05/ftc-require-cox-media-group-two-other-firms-pay-nearly-1-million-settle-charges-they-deceived",
+          "filed_date": "2026-05-22"
+        },
+        {
+          "headline": "EU AI Act Omnibus Keeps Article 50 Ad-Labelling Live For August",
+          "dek": "May 7 political deal extends some deadlines but preserves AI-content disclosure rules and fines.",
+          "body": "EU lawmakers reached political agreement on May 7 on the AI Act 'omnibus' amendments, clarifying existing requirements, extending several high-risk system deadlines, and introducing rules on AI-generated intimate content — but the August 2 start date for Article 50 transparency obligations on AI-generated content was preserved. From August 2, anyone publishing AI-generated content must label it as such unless it has been reviewed and approved through a human editorial process, with penalties up to €15M or 3% of global turnover. The Commission's final Code of Practice on marking and labelling AI-generated content is due in June. The 90-day countdown to AI-labelling enforcement means every generative creative asset in an EMEA CTV flight needs a documented human-review trail — a compliance burden that agencies, DSPs and their creative partners across the European market have to build into delivery before August.",
+          "source_publication": "Latham & Watkins",
+          "source_url": "https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines",
+          "filed_date": "2026-05-29"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "AdImpact Holds 2026 Cycle At $10.8B, CTV Share At $2.5B",
+          "dek": "Senate spend on track to set a new record; broadcast still 49% of total political dollars.",
+          "body": "AdImpact's latest political projections keep the 2026 cycle on track to reach $10.8 billion — more than 20% above 2022 and the most expensive midterm on record — with $2.5 billion expected to flow to CTV, the fastest-growing channel in the mix. Broadcast retains the largest single share at 49% of total political spend, Senate spending is projected at $2.8 billion (a new record), and House spend crosses $2 billion for the first time. Cumulative cycle ad spend had hit $2.01 billion by late January, pacing 46% ahead of the equivalent point in the 2022 cycle. The numbers anchor agency and broadcaster conversations across the political go-to-market and reinforce CTV as the highest-growth political channel into Q4 — a benchmark the whole buy side will plan against as midterm dollars accelerate.",
+          "source_publication": "AdImpact",
+          "source_url": "https://adimpact.com/political-projections-26",
+          "filed_date": "2026-05-28"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — UK",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "ITV Lights Up Live Addressable+ On ITV1 With Omnicom Beta",
+          "dek": "Targeted spots arrive on live linear for the first time, bought through Planet V.",
+          "body": "ITV on May 19 launched Live Addressable+, extending addressable ad targeting from ITVX into its live linear channels — ITV1, ITV2, ITV3, ITV4 and ITV Quiz — via an exclusive beta with Omnicom Media Group covering more than 20 advertiser brands across automotive, retail and telecoms. Bought through ITV's Planet V stack, the product layers first-party audiences, Carwow and Tesco Clubcard data via ITV Retail Match, and targeting against life stage, income, location and shopping behaviour. The technology will roll out to the wider market in the coming weeks. This is the strongest signal yet that the UK linear ad-pod is becoming biddable inventory, and Planet V is now the addressable rail that the Sky-ITV-C4 joint marketplace will eventually plug agencies into — a structural shift the British buy side will have to fold into addressable TV plans.",
+          "source_publication": "ITV Press Centre",
+          "source_url": "https://www.itv.com/presscentre/media-releases/itv-launches-live-addressable-omnicom",
+          "filed_date": "2026-05-19"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "JioStar Closes IPL 2026 Book With 27 Sponsors As Final Hits May 31",
+          "dek": "Google AI Mode, Campa and Havells co-present; CTV base rate up 25% to Rs 600.",
+          "body": "JioStar closed its IPL 2026 commercial book with 27 sponsors across the final weeks of the May 31-ending tournament, including Google Search AI Mode, Campa Energy, Havells and Lloyd as co-presenters, plus Asian Paints, MRF, Flipkart, Google Pay, TVS and Amul among associates. The publisher pushed its 10-second CTV base rate up 25% to Rs 600 for the season and opened self-serve buys to SMEs from Rs 4,000. IPL on JioHotstar is now the world's largest live streaming ad event with a tiered CTV/mobile rate card and an SME funnel — a template for how marquee sports inventory in growth markets gets sliced for addressable and biddable demand, and a forcing function for the open market to lock JioStar PMP frameworks ahead of WPL 2026 and Asia Cup.",
+          "source_publication": "Storyboard18",
+          "source_url": "https://www.storyboard18.com/advertising/tata-ipl-2026-attracts-27-sponsors-on-jiostar-including-google-amazon-hero-motocorp-ws-e-93660.htm",
+          "filed_date": "2026-05-20"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Samsung Ads Stacks LATAM Bench To Press CTV Expansion",
+          "dek": "New Brazil sales lead, regional agency and operations heads in place under GM Melchert.",
+          "body": "Samsung Ads named Eraldo Benazzi Head of Sales Brazil, Cris Camargo Head of Agencies and Indirect Sales LATAM and Felipe Lacordaire Head of Business Operations and Finance LATAM, completing a leadership build-out that began with regional GM Melchert's October 2025 arrival. The expansion is being framed internally as a response to CTV's role as the lead driver of the LATAM advertising ecosystem, with Mexico's CTV ad market alone forecast at 23%-plus CAGR through 2031. The largest smart-TV OEM in Brazil and Mexico doubling its agency-facing sell is a green light for activating Samsung Ads inventory inside LATAM plans that currently lean on Globo and Roku — broadening the OEM supply available to independent demand across the region.",
+          "source_publication": "Adnews Brasil",
+          "source_url": "https://adnews.com.br/post/samsung-ads-reforca-lideranca-no-brasil-e-mexico-para-acelerar-expansao-em-ctv",
+          "filed_date": "2026-05-20"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "CRTC Triples Streamer Cancon Levy To 15%, Sparks Trade Fight",
+          "dek": "Netflix, Disney, Paramount and Amazon all in scope; Ottawa says ruling will stand.",
+          "body": "The CRTC on May 21 finalised rules requiring foreign streaming services with at least C$25 million in Canadian revenue to contribute 15% of those revenues to Canadian content — a tripling of the prior 5% benchmark — and to direct 30% of qualifying spend to partnerships with Canadian broadcasters and producers. The Motion Picture Association called it discriminatory and a CUSMA violation, and Ottawa said on May 29 it could not reverse the ruling. The decision is forecast to push more than C$2 billion a year into Canadian and Indigenous content. The levy effectively re-anchors global streamers to Canadian broadcaster co-pros, strengthening Bell Media, Corus and Quebecor as both content partners and ad-sales houses for the resulting Cancon inventory — reshaping where addressable demand can reach Canadian audiences across the market.",
+          "source_publication": "Globe and Mail",
+          "source_url": "https://www.theglobeandmail.com/business/article-crtc-canadian-content-rules-streamers-programming-funding-requirement/",
+          "filed_date": "2026-05-21"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Nexxen Plugs TCL FFALCON Home-Screen Inventory Into Programmatic",
+          "dek": "Smart-TV launchpad units join VIDAA, TiVo in a biddable global home-screen stack.",
+          "body": "Nexxen on May 13 expanded its TV Home Screen offering to include TCL FFALCON and TiVo Ads native inventory, making TCL's Android-TV launchpad units in the US and Canada exclusively accessible through Nexxen's DSP and TiVo's home-screen inventory biddable across North America and the UK. Nielsen data cited by Nexxen pegs the home-screen browsing window at up to 10.5 minutes per session, and the platform already includes Hisense's VIDAA — number two globally behind Samsung Tizen with 7.8% smart-TV share. The dominant Chinese OEM operating systems are now buyable in the same DSP construct as US smart-TV inventory, broadening the addressable footprint for independent demand into surfaces that sit upstream of any streamer's ad pod.",
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/media-buying/nexxen-and-hisense-open-up-smart-tv-programmatic-floodgates/",
+          "filed_date": "2026-05-13"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Dashboard Becomes the Content of the Chat",
+          "dek": "When the buyer asks a question instead of clicking a tile, the trade has changed mediums.",
+          "body": "Measured ships a Model Context Protocol server. Cadent installs itself inside Gemini Enterprise. Olyzon raises a Series A for five conversational agents that buy where the buyer once buttoned. Three motions in one week, three vendors who two years ago were dashboards. That is the figure. The figure is not the story. The *ground* is the chat window — the new console of the trade — and the dashboards have become its content. McLuhan's law: the content of any medium is always another medium. The content of the chat is the spreadsheet. The content of the spreadsheet was the ledger. The content of the ledger was the verbal report a clerk gave the merchant before the printing press. We have walked the chain backwards in eighteen months.\n\nThe tetrad reads cleanly. *Enhance:* the question, the natural-language probe, the act of asking what happened. *Obsolesce:* the tile, the filter, the dropdown — the literate furniture of the post-Excel buyer. *Retrieve:* the oral office, the apprentice asking the master what the day brought, the medium of the desk read out loud. *Reverse:* fluent enough and the answer becomes liturgy; the buyer who once tested a hypothesis now consults an oracle. The chat that compresses every dashboard into a sentence will, at the limit, compress every sentence into a posture of trust.\n\nWatch the ratios. The eye, which had been hired by the dashboard, is being retired. The ear is being recalled to the office. The hand, which clicked, will now type a paragraph or speak it. The trade is becoming conversational again. Whether it remains a trade depends on whether the questions remain real.\n\n— *Marshall McLuhan*\nColumnist, Wire Opinion",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan",
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.adexchanger.com/measurement/measured-has-a-new-tool-that-lets-marketers-chat-with-their-incrementality-data/",
+          "filed_date": "2026-05-31"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "Count What Sold. Then Build What Sells Next Year.",
+          "dek": "Performance CTV is a discipline, not a strategy. The brand pays for the next decade of receipts.",
+          "body": "Every announcement this week is a receipt. Walmart pipes its shopper data into a second DSP. Gracenote says eighty-six per cent of planners will move more linear money the moment they can target a show. DeepIntent reports that healthcare CTV drives twice the new-to-brand prescription rate of online video. Three good pieces of news. All of them count what sold this quarter. None of them build what will sell in 2031. The principle they obscure is the oldest one in the file: a brand pays for next year's sales out of this year's investment, and a campaign that only books closed-loop returns starves the brand that produced them.\n\nI wrote the Hathaway shirt ad in 1951. The eyepatch sold thirty-six per cent more shirts in the first quarter; a fair receipt. It also kept selling Hathaway shirts for the next eighteen years, which is the receipt the spreadsheet does not show. The man with the eyepatch was not a measurement event; he was a brand image. Schweppes ran Commander Whitehead for eighteen years because we tested him and because we believed him. We sold the Schweppes case. We also built the Schweppes name. The Rolls-Royce ad — 'At sixty miles an hour…' — sold the inventory and made the car the standard against which every other quiet luxury was, for a generation, judged.\n\nMeasure everything you can. Then defend the budget that builds the name. If the platform makes it easier to count CPGs through to Kroger receipts, splendid — count them. But do not let the receipt become the campaign. We sell, or else. Build the brand the receipt will, one day, ring up.\n\n— *David Ogilvy*\nColumnist, Wire Opinion",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy",
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.nielsen.com/news-center/2026/ctv-data-gap-is-holding-back-bigger-ad-budgets/",
+          "filed_date": "2026-05-31"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Whether Walmart Connect extends its Yahoo DSP arrangement to The Trade Desk and DV360 before the upfronts close, and how quickly competing retailers (Kroger, Target Roundel) mirror the multi-DSP posture."
+}

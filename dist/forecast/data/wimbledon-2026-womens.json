@@ -1,0 +1,290 @@
+{
+ "kind": "native_forecast",
+ "slug": "wimbledon-2026-womens",
+ "question": "Who will win the 2026 Wimbledon Ladies' Singles title?",
+ "title": "Who Wins Wimbledon 2026 — Women",
+ "category": "Sport & Games",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-07-11",
+ "resolution": "Resolves to the player who wins the 2026 Wimbledon Ladies' Singles final on 11 July 2026, per official AELTC result.",
+ "consensus": {
+  "headline_case": "Aryna Sabalenka is the single most likely name at 25–30%, held right at her ~28.5% Polymarket price ($27.98M volume) with Kalshi's ~28c corroborating — the lone clear favorite, no rival within sixteen points, an Elo top-four grass player drawn into a favorable half. An independent check agrees: a Slam favorite wins ~78.5% per match, so 0.785^4 ≈ 38% raw, discounted toward market for her conversion problem (three semifinals, no final, all three lost in three sets). Yet a champion is collectively more likely to come from the rest of the field; she simply has no equal as a single name.",
+  "runner_up": "A named mid-tier contender (9th straight first-time champion)",
+  "runner_up_band": "22–30%",
+  "why_over_runner_up": "The mid-tier block (Pegula, Osaka, Gauff, Anisimova, Muchova, Keys, Krejcikova) sums to a comparable 22–30%, and the outside view — eight straight first-time champions, no repeat since 2016, median champion seed ~11 — genuinely favors that dispersed field. But it is spread across seven-plus names, none priced above 7.8%, while Sabalenka concentrates 28.5% on one player. As a single-name bet she wins; as a bloc, the field is the live threat and the honest runner-up.",
+  "dissent": "The Historian's case is the sharpest surviving counter: no No.1 seed or pre-event favorite has won this event in nine completed editions (2017–2025), the defending-champion repeat rate is 0-of-9 since 2016, and eight straight champions arrived first-time — a wall of outside-view evidence that says the trophy goes to the field, not the favorite. Sabalenka's own 0-for-3 in semifinals, every loss in three sets, is exactly the failure mode that base rate predicts.",
+  "pick": "Sabalenka",
+  "flag": "🇧🇾",
+  "band": "25–30%",
+  "band_low": 25,
+  "band_high": 30,
+  "runner_up_flag": "🎾",
+  "tally": [
+   {
+    "team": "Sabalenka",
+    "flag": "🇧🇾",
+    "votes": 5
+   },
+   {
+    "team": "The field / mid-tier",
+    "flag": "🎾",
+    "votes": 1
+   },
+   {
+    "team": "Unseeded shock",
+    "flag": "🎾",
+    "votes": 1
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on",
+   "pick": "Sabalenka",
+   "pick_scenario": "Sabalenka finally converts (the favorite holds)",
+   "prob": "25–30%",
+   "prob_num": 28,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "flag": "",
+   "blurb": "The tape is clean. Sabalenka trades 28.5% on Polymarket, last trade thirty cents, twenty-eight million in volume. Kalshi says twenty-eight cents. Nobody else is within sixteen points. I take the number the deep book made. I do not argue with it.",
+   "evidence": "Polymarket 28.5% (last trade 30¢), $27.98M event volume; Kalshi ~28¢ corroborates; next name Rybakina 12.5%."
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts simulation models and structured decompositions over recency and sentiment",
+   "pick": "Sabalenka",
+   "pick_scenario": "Sabalenka finally converts (the favorite holds)",
+   "prob": "25–30%",
+   "prob_num": 28,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "flag": "",
+   "blurb": "Build it up from the parts and it holds. A Slam favorite wins about 78.5% per match; four more wins is 0.785 to the fourth, near 38% raw. Then discount for the real defect — three semifinals, no final, all three lost in three sets — and the compound lands almost exactly where the market sits, near 28%. Two roads, one crossing. That agreement is the signal.",
+   "evidence": "0.785^4 ≈ 38% raw favorite compound; discounted for 3 SFs / 0 finals / all SF losses in three sets → converges on the ~28.5% market price."
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates and venue history",
+   "pick": "Named mid-tier contender",
+   "pick_scenario": "A named mid-tier contender wins (first-time champion, 9th straight)",
+   "prob": "22–30%",
+   "prob_num": 26,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "flag": "",
+   "blurb": "Count the ledger and hear what it sings. Eight editions running, eight first-time champions, and no woman has repeated since 2016; the No.1 seed has not lifted this trophy in nine tries. The champion's seed marches low and various — 14, 11, 7, unseeded, 31, 8 — a median near eleven, the roll-call of the mid-tier and not the crown. The grass keeps making new names, and I stand with the many who are coming, not the one who is favored.",
+   "evidence": "8 of 8 first-time champions 2017–2025; 0-of-9 No.1 seeds; champion seeds 14/11/7/1/17/unseeded/31/8, median ~11; 6 of 8 seeded 7+ or unseeded."
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence",
+   "pick": "Sabalenka",
+   "pick_scenario": "Sabalenka finally converts (the favorite holds)",
+   "prob": "25–30%",
+   "prob_num": 28,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "flag": "",
+   "blurb": "Read the route, not the name. Her rivals sit in the opposite half, so she owns a cleaner four matches than anyone. The mechanism that beats her is known and it is late — the semifinal, three sets, where she has failed three times. If the QF scorelines are straight, the path is real and she is 28%. If she scrapes a three-setter early, the old wound reopens.",
+   "evidence": "Rivals in opposite half (favorable geometry); failure point is the SF (0-of-3, all three-set losses); straight-set R4/QF wins confirm the path."
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actors, motivation, proven leadership",
+   "pick": "Sabalenka",
+   "pick_scenario": "Sabalenka finally converts (the favorite holds)",
+   "prob": "25–30%",
+   "prob_num": 28,
+   "confidence": "medium",
+   "register": "bardic-incantatory, archetypal",
+   "flag": "",
+   "blurb": "Here is the one force the draw cannot dilute — the world's first ranked player, the best first-strike serve left standing, an Elo top-four soul on grass. She carries the hunger of the almost: three times to the semifinal, three times turned back, no final yet, no grass crown. That unfinished want is the engine. The great individual bends the bracket to her will, and she is priced at 28.5%.",
+   "evidence": "World No.1, Elo top-four grass player, best first-strike serve in the draw; carries 3 SFs / 0 finals / 0 grass titles; priced 28.5%."
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path",
+   "pick": "Deep-field unseeded shock",
+   "pick_scenario": "Deep-field / unseeded shock (a Vondrousova-2023 archetype)",
+   "prob": "8–13%",
+   "prob_num": 10.5,
+   "confidence": "low",
+   "register": "wry contrarian-desk",
+   "flag": "",
+   "blurb": "Everyone crowds the favorite, so let me stand where the room isn't. Grass is the one slam that manufactures ghosts — Vondrousova unseeded in '23, Krejcikova the 31 seed in '24 — and this edition has already fed top-eight seeds to the wolves, Andreeva gone in the second round. One unseeded champion in the last eight is 12.5%, and I'll take that tail at 8–13% while the crowd overpays the chalk. It usually doesn't hit. When it does, nobody else was standing here.",
+   "evidence": "1 unseeded champion in 8 editions (Vondrousova '23) ≈ 12.5%; Krejcikova '24 seed 31; realized early carnage (Andreeva out R2, Svitolina R1)."
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Divine providence; backs the fated, story-shaped outcome the ending seems to be scripting",
+   "pick": "Sabalenka",
+   "pick_scenario": "Sabalenka finally converts (the favorite holds)",
+   "prob": "25–30%",
+   "prob_num": 28,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "flag": "",
+   "blurb": "Read the shape of the thing and you feel it turning toward one ending. Three times she climbed to the semifinal and three times the third set took her — a wound repeated until it becomes a story, and stories like that are told for the sake of their mending. The one lawn she has never conquered, the last crown missing from her hand, the eight-year reign of first-timers waiting for the favorite who was always meant to break it. This is the redemption the whole draw has been foreshadowing, and it is priced honest at 28.5%. When it lands, everyone will swear it was written.",
+   "evidence": "Redemption arc: 3 Wimbledon SFs all lost in three sets, 0 finals, 0 grass titles, No.1 favorite poised to end the 8-year first-time-champion run; priced 28.5%."
+  }
+ ],
+ "field": [
+  {
+   "team": "Sabalenka",
+   "flag": "🇧🇾",
+   "price": 28.5
+  },
+  {
+   "team": "Rybakina",
+   "flag": "🇰🇿",
+   "price": 12.5
+  },
+  {
+   "team": "Swiatek",
+   "flag": "🇵🇱",
+   "price": 10.4
+  },
+  {
+   "team": "Pegula",
+   "flag": "🇺🇸",
+   "price": 7.8
+  },
+  {
+   "team": "Osaka",
+   "flag": "🇯🇵",
+   "price": 5.5
+  },
+  {
+   "team": "Gauff",
+   "flag": "🇺🇸",
+   "price": 4.2
+  },
+  {
+   "team": "Anisimova",
+   "flag": "🇺🇸",
+   "price": 4.2
+  },
+  {
+   "team": "Field (others)",
+   "flag": "🎾",
+   "price": 27
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "2026 Women's Wimbledon Winner (per-player Yes/No legs)",
+   "detail": "Sabalenka 28.5% (last trade 30¢); Rybakina 12.5%; Świątek 10.4%; Pegula 7.8%; Osaka 5.5%; Gauff 4.2%; Anisimova 4.2%; Muchová 3.8%; Keys 3.6%. Mid-tournament board; eliminated players resolved No.",
+   "volume": "$27.98M event volume; $1.11M liquidity; ~$198k 24hr"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Wimbledon Women's Singles Winner (series KXWWOMENSINGLES)",
+   "detail": "Sabalenka ~28¢ (~28%), clear favorite (sourced Jul 1). June 26 pre-tournament read had Sabalenka 23%, Rybakina 15%, Andreeva 10%, Gauff 8%, Świątek 7%. Only Sabalenka's price treated as current (rate-limited SPA).",
+   "volume": "US-regulated real-money; exact current 2026-event volume not retrievable via API"
+  },
+  {
+   "platform": "Manifold",
+   "market": "2026 Wimbledon Women's singles winner",
+   "detail": "Sabalenka 21.9%; 'Other' 35.1%; Świątek 13.2%; Pegula 10.9%; Rybakina 9.9%; Gauff 5.0%. Thin and stale (Andreeva ~1% though already out) — weak sanity check only.",
+   "volume": "≈14,289 MANA play-money; 21 unique bettors"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Per-match markets (series KXWTAMATCH), e.g. Sabalenka vs Ostapenko",
+   "detail": "Live per-match win probabilities (Sabalenka heavily favored in her R3 vs Ostapenko) — the round-by-round sub-events a champion must win. Individual prices not pulled.",
+   "volume": "Among the more liquid Kalshi tennis contracts; per-match figures not retrieved"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "0 of 9",
+   "text": "No.1 seed or pre-event favorite winning Wimbledon women's singles, 2017–2025 (Barty 2021 the only top-2-seed champion). A real outside-view headwind — but already baked into Sabalenka's sub-30% price, so it caps her at market rather than below it."
+  },
+  {
+   "stat": "8 of 8",
+   "text": "Consecutive editions 2017–2025 won by a first-time-that-cycle Wimbledon champion; no repeat since Serena 2016. A 9th straight first-timer is the historically modal outcome, favoring the dispersed field over the two former champions."
+  },
+  {
+   "stat": "0 of 9",
+   "text": "Defending champions who repeated since Serena 2015–16. A headwind on the Swiatek leg even before her reported R3 exit."
+  },
+  {
+   "stat": "median ~11",
+   "text": "Champion's seed 2017–2025 (14, 11, 7, 1, 17, unseeded, 31, 8): only 1 of 8 was top seed; 6 of 8 seeded 7+ or unseeded. The winner's seed skews low — but most of that mass sits on NAMED mid-seeds, not the off-board tail."
+  },
+  {
+   "stat": "1 ever",
+   "text": "Unseeded women's Wimbledon champions in history: Vondrousova 2023; Krejcikova (seed 31) won 2024. Deep-field runs have live, recent precedent here, flooring the shock scenario above zero."
+  },
+  {
+   "stat": "0.785^4 ≈ 38%",
+   "text": "A Grand Slam favorite wins ~78.5% per match, so ~4 more wins compounds to about 38% raw — discounted toward the ~28.5% market for conversion risk. An independent cross-check that lands on the price."
+  }
+ ],
+ "triggers": [
+  "Confirmation of whether Rybakina and Świątek are actually still in the draw — the single largest unresolved input. A history read reports both already out (Świątek to Eala R3, Rybakina to Boisson) while the board still prices them 12.5%/10.4%; this swings the distribution ~10 points either way.",
+  "Sabalenka reaching the final flips the picture — 'Sabalenka converts' jumps to ~55–65% and the field scenarios collapse; her elimination before the final zeroes it and pushes ~28% into the three field scenarios.",
+  "Sabalenka's Polymarket/Kalshi leg sustained above ~35% after the QF lifts her toward the high end; below ~22% signals draw trouble and widens the field.",
+  "A named mid-tier survivor (Pegula, Osaka, Gauff, Anisimova, Muchova, Keys) reaching a semifinal from a favorite-free path lifts the mid-tier block toward its 30% top.",
+  "An unseeded or sub-top-20 player reaching the semifinals raises the deep-field shock above ~15% (re-invoking Vondrousova/Krejcikova); a QF field entirely of top-10 seeds cuts it toward 4–5%.",
+  "The semifinal composition set July 8–10 is the master signal: two-plus named mid-tier players confirms the field scenarios; the top three plus a former champion confirms the favorite/grass-champion path."
+ ],
+ "sources": [
+  {
+   "label": "Polymarket — 2026 Women's Wimbledon Winner",
+   "url": "https://polymarket.com/event/2026-womens-wimbledon-winner"
+  },
+  {
+   "label": "Kalshi — Wimbledon Women's Singles (KXWWOMENSINGLES)",
+   "url": "https://kalshi.com/markets/kxwwomensingles/wimbledon-womens-singles"
+  },
+  {
+   "label": "Manifold — 2026 Wimbledon Women's singles winner",
+   "url": "https://manifold.markets/McLovin/2026-wimbledon-womens-singles-winne"
+  },
+  {
+   "label": "SI Betting — 2026 Women's Wimbledon odds and prediction",
+   "url": "https://www.si.com/betting/2026-womens-wimbledon-odds-and-prediction-aryna-sabalenka-elena-rybakina-and-iga-swiatek-top-odds-list-01kw4q75eqs1"
+  },
+  {
+   "label": "Wikipedia — 2026 Wimbledon Championships, Women's singles",
+   "url": "https://en.wikipedia.org/wiki/2026_Wimbledon_Championships_%E2%80%93_Women%27s_singles"
+  },
+  {
+   "label": "The Eagle / AP — Wimbledon women's final continues first-time-winner trend",
+   "url": "https://theeagle.com/sports/professional/other/article_2c1bd41e-e0bc-5d28-bc0c-11fd6bbd88ed.html"
+  },
+  {
+   "label": "CBS Sports — Vondrousova first unseeded woman to win Wimbledon (2023)",
+   "url": "https://www.cbssports.com/tennis/news/wimbledon-2023-marketa-vondrousova-becomes-first-unseeded-woman-to-win-singles-title-at-the-all-england-club/"
+  },
+  {
+   "label": "Smarkets — Grand Slam favorite win-rate (78.5%)",
+   "url": "https://help.smarkets.com/hc/en-gb/articles/115000821689-Tennis-Grand-Slam-trading-strategy"
+  },
+  {
+   "label": "WTA — Sabalenka survives Kessler, sets Ostapenko R3 meeting",
+   "url": "https://www.wtatennis.com/news/4529407/sabalenka-saves-set-points-vs-kessler-at-wimbledon-sets-ostapenko-meeting"
+  }
+ ],
+ "method_note": "Horizon: days, resolves July 11. Anchor: the liquid exact-question market — Polymarket ($27.98M volume, 2026-07-03) prices Sabalenka 28.5%, Kalshi ~28c corroborating. She was held AT market; a decomposition (0.785^4 ≈ 38% raw, discounted for her semifinal record) agrees. The former champions' ~23% is a conditional 13–22% haircut; the tail is held 8–13% and the mid-tier booked disjoint at 22–30%. No price was invented.",
+ "honesty_note": "Even the modal call — Sabalenka at 25–30% — is more likely to NOT happen than to happen; roughly seven times in ten the champion is someone else. She is simply the best single bet in a genuinely open field, not a probable winner. Treat the sub-30% favorite and the comparably-sized field bloc as two live stories, not a lock."
+}

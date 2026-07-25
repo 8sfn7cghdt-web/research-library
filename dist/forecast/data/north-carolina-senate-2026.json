@@ -1,0 +1,304 @@
+{
+ "kind": "native_forecast",
+ "slug": "north-carolina-senate-2026",
+ "question": "Who will win the 2026 U.S. Senate election in North Carolina — Democrat Roy Cooper or Republican Michael Whatley?",
+ "title": "North Carolina U.S. Senate — Cooper vs. Whatley",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-11-03",
+ "resolution": "Resolves to the winner of the North Carolina U.S. Senate general election on Nov 3, 2026.",
+ "consensus": {
+  "headline_case": "Cooper is the favorite; the argument is about margin, not who wins. Liquid markets converge near 85% (Polymarket 86%, Kalshi ~85% secondary, Manifold 83.6-86%), but that price sits on thin, partly play-money depth and hasn't priced the compression of a large summer lead four months out. Discount total Cooper win probability to ~76-80% (the ~78% geometric mean of three independent midpoints), then split by margin: the modal outcome is a Cooper win that tightens but stays clear, D+4 to D+8. His crossover brand, ~7:1 hard-cash edge to define a ~53%-undefined Whatley, and the out-party tailwind (20 of 22 postwar midterms) hold the floor as $71M nationalizes the race.",
+  "why_over_runner_up": "The narrow-win path (26-34%) trusts the compression drivers to win most of the argument — SLF's $71M defines Whatley up and NC's federal-Republican gravity reasserts late, as Tillis's 2014 and 2020 recoveries show. But it stops short of the modal path because the reversion has to erase nearly all of a double-digit lead to squeeze Cooper into the NC 2-3 pt band, and both his crossover appeal and the midterm environment resist that full a collapse.",
+  "runner_up": "Michael Whatley",
+  "runner_up_band": "18-24%",
+  "dissent": "The Historian's case is the strongest counter: NC Senate finals cluster tight and lean Republican — Tillis R+1.6 (2014), Tillis R+1.8 (2020), Budd R+3.2 (2022), with only Hagan's D+8.5 (2008) breaking pattern — and no NC Democrat has won a federal race since 2008 (0-for-~9). That drought is the mechanism behind the Whatley tail (18-24%, sitting deliberately above the market's ~15%): if the summer lead is a name-ID mirage and Senate races nationalize the way governor races don't, the reversion overshoots and flips the seat.",
+  "pick": "Roy Cooper",
+  "flag": "🔵",
+  "band": "74-82%",
+  "band_low": 74,
+  "band_high": 82,
+  "runner_up_flag": "🔴",
+  "tally": [
+   {
+    "team": "Roy Cooper",
+    "flag": "🔵",
+    "votes": 5
+   },
+   {
+    "team": "Michael Whatley",
+    "flag": "🔴",
+    "votes": 2
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "flag": "🔵",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Cooper (~78%)",
+   "pick_scenario": "Roy Cooper",
+   "prob": "78%",
+   "prob_num": 78,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "Three books, one number. Polymarket has Cooper at 86, Kalshi near 85, Manifold from 83.6 to 86. The tape is thin — about $71K real money, the rest play — so I shave it. Total Cooper somewhere in the high seventies, the clear win takes most of that mass. I back the modal path and I take the ~48.",
+   "evidence": "Polymarket 86% / Kalshi ~85% / Manifold 83.6-86% converge; geometric mean of midpoints ~78% Cooper total win.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "flag": "🔵",
+   "criterion": "Trusts the simulation and the structured decomposition over recency and sentiment.",
+   "pick": "Cooper, clear",
+   "pick_scenario": "Roy Cooper",
+   "prob": "78%",
+   "prob_num": 78,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "The decomposition is disciplined about the thing sentiment ignores: a face-value 85% has not accounted for what $71M does to a ~53%-undefined opponent over four months. So the ~78% total Cooper mass splits by margin, and roughly 0.62 of the win outcomes finish wider than three points — 0.78 times that is about 0.48. I do not average the disagreement; I keep it as the band. The clear win is where the arithmetic lands.",
+   "evidence": "0.78 total Cooper win x ~0.62 clear-win share ≈ 0.48; band 44-52% carries the split uncertainty.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "flag": "🔴",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Whatley (reversion)",
+   "pick_scenario": "Michael Whatley",
+   "prob": "22%",
+   "prob_num": 22,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "Count them with me — Tillis by 1.6, Tillis again by 1.8, Budd by 3.2, and only Hagan, back in 2008, breaking the other way. Three of four inside three points, and every one kept by the Republican. Since that lone Hagan year the Democrats have gone 0 for nearly nine in federal North Carolina, a drought the ledger does not forget. I stand where the record stands, and I price Whatley at 18 to 24, above the market's timid 15.",
+   "evidence": "NC Senate finals 3 of 4 inside ~3 pts, all won by the Republican; NC federal races Democrats 0-for-~9 since 2008.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "flag": "🔵",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "Cooper, narrow",
+   "pick_scenario": "Roy Cooper",
+   "prob": "76%",
+   "prob_num": 76,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "blurb": "Watch the mechanism, not the summer number. SLF's $71M plus a record ~$800M in total spend saturates the air, defines Whatley up, nationalizes a race that governor contests never were. The lead compresses the way Tillis recovered in 2014 and again in 2020. But two floors hold and it stops short of a flip: the crossover slice and a midterm without a president on the ballot. Cooper by one to three.",
+   "evidence": "0.78 Cooper win x ~0.38 squeaker share ≈ 0.30; NC finals cluster R+2-3, crossover floor stops the compression short of zero.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "flag": "🔵",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "Cooper, tested",
+   "pick_scenario": "Roy Cooper",
+   "prob": "80%",
+   "prob_num": 80,
+   "confidence": "high",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "One man here has been tested and one has not. Six times he has faced the whole state and six times he has won, twice made governor while the state itself turned to Trump — the mark of a figure who bends the electorate to himself. Against him stands a first-time name, ~53% still a blank to the voters, borrowed money doing the work a record should. I back the proven one on the clear path, and I take the ~48.",
+   "evidence": "Cooper 6-for-6 statewide, won governor 2016 and 2020 with Trump carrying NC; Whatley ~53% undefined, no electoral record.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "flag": "🔴",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Whatley (live dog)",
+   "pick_scenario": "Michael Whatley",
+   "prob": "24%",
+   "prob_num": 24,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Everybody has piled onto the obvious favorite — thin books, retail, play money, all nodding at 85 like it's a foregone thing. That is precisely the shape of a mispricing. The one line the crowd is underpaying for: a state that hasn't sent a Democrat to a federal seat since 2008, and a $71M machine about to introduce a still-unknown Republican. I'll take the reversion that actually flips it, priced at 18 to 24 while the market cowers at 15.",
+   "evidence": "Market cuts Whatley to ~15% only because Cooper is unusually strong; unconditional NC federal baseline ~90% Republican; thin/play-money depth underprices reversion.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "flag": "🔵",
+   "criterion": "Divine providence; backs the fated, story-shaped outcome the ending seems to be scripting — however long the odds.",
+   "pick": "Cooper, the streak",
+   "pick_scenario": "Roy Cooper",
+   "prob": "78%",
+   "prob_num": 78,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "Read the shape of it. Six times sent forth, six times returned undefeated, twice crowned while the very ground beneath him leaned the other way — a man does not gather a streak like that unless the story is saving him for one last door. The seat left open, the drought of his party, the long summer lead: these are the foreshadowing that makes the ending read as written. When the great money lands and the margin narrows but does not break, that will be the moment everyone swears was fated. I take the clear win at the modal ~48.",
+   "evidence": "Cooper 6-for-6 statewide, governor twice while Trump carried NC; open Tillis seat, out-party tailwind (20 of 22 midterms) — the arc points to the crossover figure closing it.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "field": [
+  {
+   "team": "Roy Cooper (D)",
+   "flag": "🔵",
+   "price": 78
+  },
+  {
+   "team": "Michael Whatley (R)",
+   "flag": "🔴",
+   "price": 22
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "1 of ~10",
+   "text": "Democratic wins in NC U.S. Senate races 1998-2024 (only Hagan 2008, D+8.5); 0-for since 2008. A ~10% unconditional floor — the market marks Cooper far above it only because he is an unusually strong candidate."
+  },
+  {
+   "stat": "3 of 4",
+   "text": "Recent NC Senate finals decided inside ~3 pts — Tillis R+1.6 (2014), Tillis R+1.8 (2020), Budd R+3.2 (2022); only Hagan's D+8.5 (2008) was wide. All four won by the Republican. The natural R+2-3 resting point."
+  },
+  {
+   "stat": "0 of ~9",
+   "text": "NC federal races (President or Senate) won by Democrats since 2008. The drought Cooper must break, and the engine behind the Whatley tail — state-level crossover does not fully offset it."
+  },
+  {
+   "stat": "3 of 3",
+   "text": "Democratic NC gubernatorial wins in the last three presidential cycles (2016/2020/2024) with Trump carrying the state — the crossover class Cooper embodies. But STATE, not federal; the floor under him, bounded by the federal-vs-state gap."
+  },
+  {
+   "stat": "20 of 22",
+   "text": "Postwar midterms in which the president's party lost House ground (since 1938), ~4 Senate seats on average. The out-party tailwind that keeps Cooper modal and caps how far Whatley can be pushed up."
+  },
+  {
+   "stat": "~78%",
+   "text": "Geometric mean of three independent midpoints for Cooper's total win probability (~85% / ~80% / ~66%). The level the consensus adopts after discounting the ~85% market for thin depth and unpriced compression."
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "North Carolina Senate Election Winner (Cooper vs Whatley)",
+   "detail": "Roy Cooper (D) 86%, Michael Whatley (R) 14%. The strongest single exact-question anchor, but modest depth.",
+   "volume": "~$71.4K total (launched Oct 13, 2025)"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "North Carolina Senate winner? (senatenc-26)",
+   "detail": "Cooper / Democrat ~85%, Republican ~15%. Secondary read only — live page returned 429/403, not a direct pull today.",
+   "volume": "Not captured"
+  },
+  {
+   "platform": "Manifold",
+   "market": "Will the Democratic Party candidate win the 2026 NC Senate race?",
+   "detail": "83.6% Yes. Deepest Manifold NC market; a sibling 'Will Roy Cooper win' market reads 86% Yes. Play-money throughout.",
+   "volume": "4,650 mana, 27 traders"
+  },
+  {
+   "platform": "Metaculus",
+   "market": "Who will control the US Senate after the 2026 midterms? (related, not NC-specific)",
+   "detail": "Republicans ~55.5%, Democrats ~44.4% chamber control; no NC-specific Metaculus question exists. Community forecast, no money.",
+   "volume": "Community forecast"
+  }
+ ],
+ "triggers": [
+  "Post-Labor-Day live-caller polls: a Cooper lead holding at +7 or better across ≥3 pollsters pushes weight back toward the market's ~85% Cooper; a lead inside 3 pts shifts weight to the narrow-win and Whatley scenarios.",
+  "Whatley's 'no opinion / never heard' share: falling toward ~30% with net-negative favorables confirms Cooper is defining Whatley; staying >45% into October means the tightening engine failed; net-positive favorables mean the definition gap is closing in Whatley's favor.",
+  "Cooper's independent margin (currently ~+27) collapsing below ~+10 breaks the crossover floor and materially raises the Whatley scenario.",
+  "National environment: generic ballot drifting from ~D+7-10 back toward even/R, or Trump's NC approval recovering above ~47% (from 43/54), erodes the out-party tailwind and lifts Whatley.",
+  "SLF's $71M pledge converting to actually-booked, airing ad reservations by August — the mechanism the entire tightening case depends on; if the money never airs, the definition gap stays open and Cooper's lead holds.",
+  "Any candidate withdrawal, health disclosure, indictment, or Trump-Whatley endorsement rupture immediately re-bases the whole distribution.",
+  "A liquid exact-question market repricing materially away from ~85% Cooper (below ~72% or above ~92%) on rising volume re-anchors the entire distribution."
+ ],
+ "sources": [
+  {
+   "label": "Polymarket — North Carolina Senate Election Winner",
+   "url": "https://polymarket.com/event/north-carolina-senate-election-winner"
+  },
+  {
+   "label": "Kalshi — North Carolina Senate race (senatenc-26)",
+   "url": "https://kalshi.com/markets/senatenc/north-carolina-senate-race/senatenc-26"
+  },
+  {
+   "label": "Metaculus — US Senate control after 2026 midterms",
+   "url": "https://www.metaculus.com/questions/35046/who-will-control-the-us-senate-after-2026-midterms/"
+  },
+  {
+   "label": "Carolina Journal — Cooper holds 14-point lead as Trump stays underwater (Catawba-YouGov)",
+   "url": "https://www.carolinajournal.com/poll-cooper-holds-14-point-lead-over-whatley-as-trump-stays-underwater/"
+  },
+  {
+   "label": "Carolina Journal — Cook moves NC Senate from Toss-up to Lean D",
+   "url": "https://www.carolinajournal.com/major-ranking-moves-ncs-senate-race-from-toss-up-to-lean-d/"
+  },
+  {
+   "label": "Carolina Journal — Cooper outraises Whatley Q1 $13.8M to $5M",
+   "url": "https://www.carolinajournal.com/cooper-outraises-whatley-in-q1-13-8m-to-5m/"
+  },
+  {
+   "label": "WRAL — Senate Leadership Fund pledges $71M for Whatley",
+   "url": "https://www.wral.com/news/nccapitol/nc-senate-cooper-whatley-spending-election-2026-republican-slf-march-2026/"
+  },
+  {
+   "label": "Emerson College Polling — NC 2026: Cooper six-point lead, name-recognition edge",
+   "url": "https://emersoncollegepolling.com/north-carolina-2026-poll-cooper-starts-us-senate-race-with-six-point-lead-and-clear-name-recognition-advantage-over-whatley/"
+  },
+  {
+   "label": "NYT/Siena — NC poll (July 1, 2026)",
+   "url": "https://sri.siena.edu/2026/07/01/new-york-times-siena-polls-in-alaska-iowa-north-carolina-and-ohio/"
+  },
+  {
+   "label": "Brookings — What history tells us about the 2026 midterms",
+   "url": "https://www.brookings.edu/articles/what-history-tells-us-about-the-2026-midterm-elections/"
+  },
+  {
+   "label": "Wikipedia — 2008 NC Senate election (Hagan D+8.5)",
+   "url": "https://en.wikipedia.org/wiki/2008_United_States_Senate_election_in_North_Carolina"
+  },
+  {
+   "label": "NPR — Budd beats Beasley 2022 (R+3.2)",
+   "url": "https://www.npr.org/2022/11/08/1133151487/budd-beasley-north-carolina-senate-midterms-results"
+  },
+  {
+   "label": "Sabato's Crystal Ball — Incumbents need not poll at 50% to win (summer-lead reversion)",
+   "url": "https://centerforpolitics.org/crystalball/incumbent-senators-do-not-need-to-poll-at-50-to-win/"
+  },
+  {
+   "label": "Wikipedia — 2026 U.S. Senate election in North Carolina",
+   "url": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_North_Carolina"
+  }
+ ],
+ "method_note": "Numbers are anchored in the liquid markets (Polymarket 86%, Kalshi ~85% secondary, Manifold 83.6-86%, pulled July 3, 2026), reconciled against counted NC and midterm base rates. Three independent reads were kept as scenario uncertainty, not averaged: one took ~85% whole, one shaved to ~80%, one cut to ~66% for thin play-money depth. That puts Cooper total win at ~76-80% (~78% geometric mean), split by margin: clear ~48%, narrow ~30%, Whatley ~20%, shock ~3-6%. Horizon: through Nov 3, 2026.",
+ "honesty_note": "The modal call — a clear Cooper win at 44-52% — is the single most likely outcome, but it is not more likely than not: roughly half the probability lies elsewhere (a narrow win, a Whatley flip, or a late shock). And it rests on a thin, partly play-money market four months out; fall polling should move these numbers."
+}

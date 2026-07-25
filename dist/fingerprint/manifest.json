@@ -1,0 +1,208 @@
+{
+  "editions": [
+    {
+      "date": "2026-05-31",
+      "weekday": "Sunday",
+      "edition_number": 24,
+      "file": "fingerprint/2026-05-31-fingerprint.html",
+      "lead_headline": "Walmart Cracks Open CTV Data, Routes VIZIO Audiences To Yahoo DSP",
+      "lead_dek": "Magnite-piped integration ends single-DSP exclusivity on Walmart's first-party shoppers and brings closed-loop sales to a second buying surface.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 17
+    },
+    {
+      "date": "2026-06-07",
+      "weekday": "Sunday",
+      "edition_number": 25,
+      "file": "fingerprint/2026-06-07-fingerprint.html",
+      "lead_headline": "PubMatic Names MiQ Among First Partners In AI-In-The-Auction Layer",
+      "lead_dek": "Decision Fabric lets approved buy-side models run as Docker containers inside AgenticOS bid requests, returning segment IDs in under ten milliseconds.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 17
+    },
+    {
+      "date": "2026-06-13",
+      "weekday": "Saturday",
+      "edition_number": 26,
+      "file": "fingerprint/2026-06-13-fingerprint.html",
+      "lead_headline": "Roku Explores Sale as $19B Ad Platform Draws Bidders",
+      "lead_dek": "Stock jumps more than 20% on reports of a strategic-options review, including a full sale.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 16
+    },
+    {
+      "date": "2026-06-15",
+      "weekday": "Monday",
+      "edition_number": 27,
+      "file": "fingerprint/2026-06-15-fingerprint.html",
+      "lead_headline": "Fox to Buy Roku for $22 Billion, Redrawing CTV",
+      "lead_dek": "The buyer the market was waiting for is a broadcaster: Fox lands the No. 1 US streaming OS, the OneView DSP, Tubi and The Roku Channel.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 14
+    },
+    {
+      "date": "2026-06-18",
+      "weekday": "Thursday",
+      "edition_number": 28,
+      "file": "fingerprint/2026-06-18-fingerprint.html",
+      "lead_headline": "Fox Bought Roku for Its Identity Graph, Not Its Shows",
+      "lead_dek": "Three days on, the market reads the $22 billion deal as a play for ACR data, 100 million households and the home screen itself.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 16
+    },
+    {
+      "date": "2026-06-23",
+      "weekday": "Tuesday",
+      "edition_number": 29,
+      "file": "fingerprint/2026-06-23-fingerprint.html",
+      "lead_headline": "Walmart Buys Vibe.co for $1.4B to Pull SMBs Into Streaming",
+      "lead_dek": "The retailer's largest ad-tech deal yet pairs a self-serve CTV platform with Vizio screens and Walmart's commerce data — a direct answer to Amazon.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 16
+    },
+    {
+      "date": "2026-06-26",
+      "weekday": "Friday",
+      "edition_number": 30,
+      "file": "fingerprint/2026-06-26-fingerprint.html",
+      "lead_headline": "Sky Agrees Terms to Buy ITV's Broadcast and Streaming Arm for £1.6bn",
+      "lead_dek": "A Comcast-owned acquisition would fold ITVX and ITV's channels into Sky, concentrating the bulk of UK premium broadcaster ad inventory under one owner — pending CMA, Ofcom and government clearance.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 16
+    },
+    {
+      "date": "2026-06-26-cannes",
+      "weekday": "",
+      "edition_number": 31,
+      "file": "fingerprint/2026-06-26-cannes-fingerprint.html",
+      "lead_headline": "OpenAI Debuts at Cannes, Declaring Itself an Advertising Business",
+      "lead_dek": "On the Croisette, the AI lab told marketers the attention economy is giving way to an “intelligence economy” — and that it now sells ads against it.",
+      "beats": [
+        "On the Croisette — Awards & Culture",
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 26
+    },
+    {
+      "date": "2026-06-30",
+      "weekday": "Tuesday",
+      "edition_number": 32,
+      "file": "fingerprint/2026-06-30-fingerprint.html",
+      "lead_headline": "Comcast to Spin Off NBCUniversal and Sky Into Standalone Company",
+      "lead_dek": "Tax-free split hands the streamers and studios their independence — while FreeWheel, the ad-serving spine of premium video, stays behind with Comcast.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 19
+    },
+    {
+      "date": "2026-07-24",
+      "weekday": "Friday",
+      "edition_number": 33,
+      "file": "fingerprint/2026-07-24-fingerprint.html",
+      "lead_headline": "Peacock Turns Its First Profit as NBCU Ad Revenue Jumps 55%",
+      "lead_dek": "The streamer earned $189 million in the quarter and now supplies a third of NBCUniversal's advertising — weeks before Comcast spins it away.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 20
+    },
+    {
+      "date": "2026-07-25",
+      "weekday": "Saturday",
+      "edition_number": 34,
+      "file": "fingerprint/2026-07-25-fingerprint.html",
+      "lead_headline": "YouTube Tops $11B as Alphabet Raises AI Capex to $205B",
+      "lead_dek": "Search and video ad revenue both beat estimates on World Cup viewership, but the capex hike sent GOOGL shares lower anyway.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 17
+    }
+  ]
+}

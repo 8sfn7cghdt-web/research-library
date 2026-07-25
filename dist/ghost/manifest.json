@@ -1,0 +1,71 @@
+{
+  "editions": [
+    {
+      "date": "2026-05-29",
+      "weekday": "Friday",
+      "edition_number": 1,
+      "file": "ghost/2026-05-29-ghost-of-times.html",
+      "lead_headline": "Nobody Ends a War. A Master Persuader Buys Sixty Days.",
+      "lead_dek": "The Iran deal isn't a peace agreement. It's an anchor. And if you know how anchors work, you already know how this ends.",
+      "lead_writer": "Scott Adams",
+      "writers": [
+        "Scott Adams",
+        "Thomas Carlyle",
+        "G.K. Chesterton",
+        "Ernest Hemingway",
+        "Walt Whitman"
+      ]
+    },
+    {
+      "date": "2026-06-13",
+      "weekday": "Saturday",
+      "edition_number": 6,
+      "file": "ghost/2026-06-13-ghost-of-times.html",
+      "lead_headline": "A Tower of Stone, and Six Who Came to Be Heard",
+      "lead_dek": "What the old man saw in Spain, walking past the parliament to the masons and the migrants and the wounded.",
+      "lead_writer": "Walt Whitman",
+      "writers": [
+        "Walt Whitman",
+        "Thomas Carlyle",
+        "G.K. Chesterton",
+        "Ernest Hemingway",
+        "C.G. Jung",
+        "Scott Adams"
+      ]
+    },
+    {
+      "date": "2026-06-18",
+      "weekday": "Thursday",
+      "edition_number": 7,
+      "file": "ghost/2026-06-18-ghost-of-times.html",
+      "lead_headline": "Peace Signed Digitally; And the Oil Shall Flow For Sixty Days",
+      "lead_dek": "A War ended by Memorandum at Versailles, with Fourteen Points and a smell of Mammon over all.",
+      "lead_writer": "Thomas Carlyle",
+      "writers": [
+        "Thomas Carlyle",
+        "G.K. Chesterton",
+        "Ernest Hemingway",
+        "C.G. Jung",
+        "Scott Adams",
+        "Walt Whitman"
+      ]
+    },
+    {
+      "date": "2026-07-25",
+      "weekday": "Saturday",
+      "edition_number": 8,
+      "file": "ghost/2026-07-25-ghost-of-times.html",
+      "lead_headline": "On Being Told America Has Reached a Dead End",
+      "lead_dek": "It is a curious thing that a nation should be pronounced childless by men who have never once considered the neighbours.",
+      "lead_writer": "G.K. Chesterton",
+      "writers": [
+        "G.K. Chesterton",
+        "Thomas Carlyle",
+        "Ernest Hemingway",
+        "C.G. Jung",
+        "Scott Adams",
+        "Walt Whitman"
+      ]
+    }
+  ]
+}

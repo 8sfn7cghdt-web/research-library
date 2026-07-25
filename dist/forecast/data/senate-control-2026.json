@@ -1,0 +1,357 @@
+{
+ "kind": "native_forecast",
+ "slug": "senate-control-2026",
+ "question": "Which party will control the U.S. Senate after the November 3, 2026 midterm elections?",
+ "title": "Control of the U.S. Senate, 2026",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-03",
+ "grades": "2026-11-03",
+ "resolution": "Resolves to the party organizing a majority of the U.S. Senate after the Nov 3, 2026 election (a 50-50 chamber resolves to the party holding the vice presidency).",
+ "consensus": {
+  "pick": "Narrow Republican hold",
+  "flag": "🔴",
+  "band": "46-54%",
+  "band_low": 46,
+  "band_high": 54,
+  "runner_up": "Democratic flip",
+  "runner_up_flag": "🔵",
+  "runner_up_band": "34-42%",
+  "headline_case": "Republicans are favored to keep the Senate, and the reason is the map, not the mood. The national environment is strongly against them — Trump near 37% approval, a Democratic generic-ballot edge, and the president's party punished in most midterms — and it has moved the deepest markets from a spring dead heat to roughly 55-60% Republican today. But control turns on seats, not sentiment: Democrats must net four while defending Georgia and Michigan, and the honest paths get them North Carolina and Maine and then run dry short of the fourth. Add the R-hold sub-paths together — a narrow hold, an outright expansion, and a 50-50 the vice president breaks — and Republican control sits near 58%. The single most likely picture is a narrow GOP hold as the map absorbs a real Democratic wind.",
+  "why_over_runner_up": "The Democratic flip is a live 34-42%, not a long shot — it is the structural inverse of 2018, the environment is genuinely hostile to the GOP, and the recruiting class (Cooper, Peltola) is strong. But it stays the runner-up because it requires winning almost every toss-up: North Carolina and Maine are gettable, but the fourth seat lives in Alaska, Ohio, or Iowa, where the state lean still favors Republicans. A wave that wins the national Senate vote can still fall a seat short against this map, which is exactly what the market is pricing.",
+  "dissent": "The strongest counter is the wind reading: a president at minus-seventeen has produced Senate routs before, the generic ballot sits near D+7, and 2026 defends the mirror-image map of 2018. On that view Democrats belong closer to a coin flip than the ~42% the market allows — and if Alaska and Ohio break their way in October, the flip becomes the modal outcome, not the runner-up.",
+  "tally": [
+   {
+    "team": "Narrow Republican hold",
+    "flag": "🔴",
+    "votes": 4
+   },
+   {
+    "team": "Democratic flip",
+    "flag": "🔵",
+    "votes": 3
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+   "pick": "Narrow GOP hold",
+   "pick_scenario": "Narrow Republican hold",
+   "flag": "🔴",
+   "prob": "55-58%",
+   "prob_num": 56,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "Read the tape, not the mood music. Five books — Kalshi, Polymarket, PredictIt, Manifold, Metaculus — aggregate to about 57.8% Republican, and the money moved there from a spring dead heat, not the other way. That is the market saying the wind is real and the map eats it anyway. I take the hold at the price. The mood says wave; the tape says the wall stands.",
+   "evidence": "Five-book control aggregate ~57.8% R / ~42.2% D (electionbettingodds, 2026-07-02); the market moved toward the GOP off a spring 50/50.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the simulation models and structured decompositions over recency and sentiment.",
+   "pick": "Democrats flip",
+   "pick_scenario": "Democratic flip",
+   "flag": "🔵",
+   "prob": "38-42%",
+   "prob_num": 40,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Decompose the thing the tape smooths over. A president at minus-seventeen, a generic ballot near D+7, and a map that is the exact inverse of 2018 — the model does not read that as a comfortable hold. It reads it as a flip that lives or dies on two seats past North Carolina and Maine. The distribution has real mass on Democrats reaching fifty-one; I put it near forty percent, higher than the raw base rate because the structure, not the sentiment, is doing the work.",
+   "evidence": "President's party has lost 4+ Senate seats in ~35% of midterms; 2026 defends the mirror map of 2018 (out-party gained +2 that year).",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counts the reference-class base rates and the venue history.",
+   "pick": "Narrow GOP hold",
+   "pick_scenario": "Narrow Republican hold",
+   "flag": "🔴",
+   "prob": "50-56%",
+   "prob_num": 53,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "Count them, and the count steadies the hand. Senate control has passed to the out-party in a midterm but twice in twenty postwar tries — 1986 against Reagan, 2006 against Bush — a one-in-ten floor for the clean flip. The wind punishes the president's party in seats, yes, but a punishment is not a conquest, and control is a higher bar than a bruising. The map is the old wall of 2018 turned around to face the other army. I back the wall to hold, narrowly.",
+   "evidence": "Senate control flipped to the out-party in only ~2 of ~20 postwar midterms (~10% raw); a net +4 sits at the edge of the seat-loss distribution.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, the map, and the seat-by-seat path to a majority.",
+   "pick": "Narrow GOP hold",
+   "pick_scenario": "Narrow Republican hold",
+   "flag": "🔴",
+   "prob": "50-56%",
+   "prob_num": 53,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "blurb": "Walk the actual route to fifty-one. Democrats take North Carolina. They take Maine. Now find two more — and the road runs through Alaska, Ohio, Iowa, states that still lean the other way even in a good year. Winning the national Senate vote does not seat you; winning the fourth-hardest race does. The path is real but it dead-ends one seat short more often than not. Narrow hold.",
+   "evidence": "Democrats' fourth flip requires AK, OH, or IA — states rated Toss-up-to-Lean-R even after Sabato's July shifts.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Reads the elite individual actors — recruits, incumbents, and their proven ability to outrun a map.",
+   "pick": "Democrats flip",
+   "pick_scenario": "Democratic flip",
+   "flag": "🔵",
+   "prob": "38-42%",
+   "prob_num": 40,
+   "confidence": "low",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "Names win Senate seats, and the Democrats have gathered the names. A former governor already six-for-six across North Carolina. A congresswoman who carried Alaska outright. A lone Republican in Maine sitting at her lowest approval in a generation. Against a hostile sky, candidates who bend a state to themselves are exactly how a table gets run. I read the roster and I see the four seats — a flip, held together by the people carrying it.",
+   "evidence": "Strong Democratic recruits (Cooper in NC, Peltola in AK) against Collins at a record-low ~38% approval in a Harris-won state.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually get overpriced; hunts the underpriced live path the crowd is fading.",
+   "pick": "Democrats flip",
+   "pick_scenario": "Democratic flip",
+   "flag": "🔵",
+   "prob": "42-46%",
+   "prob_num": 44,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone has decided the map settles it, which is precisely when maps get overrated. A hated president at thirty-seven, a generic ballot near D+7, and the exact mirror of the year the out-party gained seats — that is a flip the crowd is pricing at forty because the last two midterms fooled them the other way. I will take the Democratic side a few points north of the tape and let October's Alaska and Ohio polls come to me. The wall has a door.",
+   "evidence": "Trump ~-17 net, generic ballot ~D+7; the control aggregate at ~42% Dem may underprice a mirror-of-2018 map.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Reads divine providence and narrative inevitability — the outcome the story so far seems to be writing.",
+   "pick": "Narrow GOP hold",
+   "pick_scenario": "Narrow Republican hold",
+   "flag": "🔴",
+   "prob": "48-54%",
+   "prob_num": 51,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "Read the shape of the age. The wind rises and the crowds are sure the wall comes down — and yet the map was laid, seat by seat, as if built for this exact storm: the president's party sheltered behind ground it need not defend, the challengers made to climb four walls to win, not three. The story that keeps happening is the one where the flood reaches the last gate and stops. I read the map as the thing that was written to hold, and it holds — narrowly, against a real tide.",
+   "evidence": "2026 is the structural inverse of 2018; both 2018 and 2022 saw the president's party defy the Senate midterm penalty on map grounds.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Narrow Republican hold — the map absorbs the wind",
+   "low": 46.0,
+   "high": 54.0,
+   "description": "Republicans keep the Senate with a 50-52 seat majority. The national anti-incumbent-party wind is real, but the 2026 map blunts it: Democrats defend Georgia and Michigan while needing to win almost every genuine toss-up to net four. They take North Carolina and one more, fall short of the run, and the GOP holds even as it loses the national popular vote for the chamber.",
+   "derivation": "Market anchor, decomposed. The five-book aggregate prices Republican control at ~57.8% (Kalshi ~59-60, Polymarket ~57-59, PredictIt ~59-60, Manifold 55, Metaculus ~55.5). Carve the R-hold mass into a narrow hold (49-52 seats) versus an expansion (54+): the narrow band takes the large majority of hold outcomes because a D+7 generic environment makes GOP seat gains unlikely, so ~0.58 x ~0.85 ~= 0.49. Band 46-54% carries the seat-count uncertainty.",
+   "drivers": [
+    "The 2026 map: 35 seats up, 23 Republican-held, but Democrats must net +4 and defend Georgia and Michigan",
+    "The vote-to-seat curve: a Democratic national Senate-vote edge does not convert to four flips against this map",
+    "Incumbency and the ~90% Senate incumbent survival rate anchoring GOP-held toss-ups",
+    "Sabato/Cook still rating the GOP a favorite even after moving NC to Lean D and AK/OH to Toss-up"
+   ],
+   "signals": [
+    "Sabato/Cook toss-up count staying tilted GOP rather than collapsing to Lean-D",
+    "Polls in AK, OH, and IA not moving decisively toward Democrats by October",
+    "The control-market aggregate holding above ~55% Republican"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "Democratic flip — the wind runs the table",
+   "low": 34.0,
+   "high": 42.0,
+   "description": "Democrats net the four seats they need and take a 51-seat majority. The reference-class midterm punishment on a president at ~37% approval lands at close to full force: they win North Carolina and Maine, hold Georgia and Michigan, and convert two of the harder tier (Alaska, Ohio, Iowa) as the wave overpowers the map.",
+   "derivation": "Market complement plus a base-rate lift. The books price Democratic control at ~40-42% (control aggregate ~42.2% Dem). This sits well above the raw ~10% control-flip floor (control has flipped to the out-party in only ~2 of ~20 postwar midterms) because 2026 is the structural inverse of 2018 (the party defending the lopsided map bears the seat risk) and the environment is strongly Democratic (Trump ~-17 net, generic ~D+7). The out-party has lost Senate seats in 13 of 20 midterms; a net +4 sits at the edge of the distribution (~35% of midterms see the president's party lose 4+ Senate seats), which the near-market ~40% reflects.",
+   "drivers": [
+    "Midterm punishment on the president's party, amplified by Trump's ~-17 net approval",
+    "The 2026 map as the inverse of 2018: Republicans defend more exposed ground",
+    "Strong Democratic recruits (Cooper in NC, Peltola in AK) and Collins's record-low ~38% approval in Maine",
+    "A generic-ballot edge (~D+7 in some reads) that, if it holds, converts down-ballot"
+   ],
+   "signals": [
+    "Live-caller polls showing Democrats ahead in three-plus GOP-held toss-ups by October",
+    "Trump approval sliding below ~37% across aggregators",
+    "Alaska and Ohio moving from Toss-up to Lean-D"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "Republican expansion — the wave fails",
+   "low": 8.0,
+   "high": 14.0,
+   "description": "The national environment reverts toward the fundamentals, Trump's approval partially recovers, and Republicans not only hold but net a seat or two (to 54-55), knocking off Georgia or Michigan. The wind that looked like a Democratic wave in the summer never materializes at the ballot box.",
+   "derivation": "Reference class of president's-party Senate gains. The president's party has netted Senate seats in a midterm in 6 of 23 cycles since 1934 (1962, 1970, 1982, 2002, 2018, and a 1998-style hold), ~26% raw — but almost all came with the president above water. Conditioning on Trump's ~-17 net cuts that sharply; the ~8-14% band reflects a gain that requires a genuine environment reversal the current data does not show.",
+   "drivers": [
+    "Reversion of a summer environment toward the structural R+ lean of the Senate map",
+    "A Trump approval recovery above ~42%",
+    "GOP conversion of a Democratic-held Trump-won seat (Georgia or Michigan)"
+   ],
+   "signals": [
+    "Trump approval trending up through the fall",
+    "Georgia or Michigan polling moving Republican",
+    "The generic ballot compressing below D+2"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "50-50 split — Republicans keep the gavel by the tiebreak",
+   "low": 6.0,
+   "high": 12.0,
+   "description": "The chamber lands at exactly 50-50 and Republican control turns on the vice president's tiebreaking vote — a real slice of the outcome space (2000 and 2020 both produced 50-50 Senates). Democrats fall one seat short of an outright majority; organization and the gavel stay Republican.",
+   "derivation": "Direct base rate. Exactly-tied Senates occurred in 2 of ~13 post-1994 cycles (~15% raw); haircut to 6-12% here because a tie requires the net swing to land on a single knife-edge value rather than one seat either side, and the current spread of toss-ups makes an exact tie less likely than a one-seat margin.",
+   "drivers": [
+    "A near-even national swing landing on the exact tipping seat",
+    "Split outcomes across the toss-up tier netting to precisely 50-50",
+    "The vice-presidential tiebreak deciding organization"
+   ],
+   "signals": [
+    "Toss-up polls clustering within a point of each other into November",
+    "Forecasters' modal seat count sitting at 50-50"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "~57.8%",
+   "text": "Five-book market aggregate for Republican Senate control (Kalshi, Polymarket, PredictIt, Manifold, Metaculus), 2026-07-02 — up from a spring 50/50."
+  },
+  {
+   "stat": "2 of ~20",
+   "text": "Postwar midterms in which Senate control flipped to the out-party (1986 vs Reagan, 2006 vs Bush) — a ~10% raw flip floor before map and environment adjustments."
+  },
+  {
+   "stat": "13 of 20",
+   "text": "Midterms since 1934 in which the president's party lost Senate seats — the wind blows against the GOP, but seat losses need not reach a net four."
+  },
+  {
+   "stat": "~35%",
+   "text": "Share of midterms in which the president's party lost 4+ Senate seats — the size of swing Democrats need, sitting at the edge of the distribution."
+  },
+  {
+   "stat": "+2 in 2018",
+   "text": "The president's party GAINED Senate seats defending the mirror-image map; 2026 hands that lopsided-map risk to the Republicans instead."
+  },
+  {
+   "stat": "~37%",
+   "text": "Trump approval average (net ~-17/-18), July 2026 — the punishing end of the range that drives the flip tail."
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "Which party will win the Senate in 2026?",
+   "detail": "Republican ~57-59% / Democrat ~41-43%",
+   "volume": "~$2.86M on the control market; $17M+ Senate cluster"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Which party will win the U.S. Senate?",
+   "detail": "Republican ~59-60% / Democrat ~40-41%",
+   "volume": "Deep real-money book"
+  },
+  {
+   "platform": "Election Betting Odds",
+   "market": "Senate Control 2026 (5-market aggregate)",
+   "detail": "~57.8% Republican / ~42.2% Democrat",
+   "volume": "~$8.8M aggregated"
+  },
+  {
+   "platform": "Metaculus",
+   "market": "Who will control the US Senate after 2026?",
+   "detail": "Republicans ~55.5% / Democrats ~44.4%",
+   "volume": "357 forecasters (no money)"
+  },
+  {
+   "platform": "Manifold",
+   "market": "Who will control the U.S. Senate after the 2026 midterms?",
+   "detail": "Republicans 55% / Democrats 45%",
+   "volume": "Play-money; 566 traders"
+  },
+  {
+   "platform": "Metaculus",
+   "market": "US Congress Control After 2026 (combination)",
+   "detail": "R-Senate/D-House ~61%; D-Senate/D-House ~30%; R-Senate/R-House ~9%",
+   "volume": "Community forecast"
+  }
+ ],
+ "triggers": [
+  "The five-book control aggregate falling below ~50% Republican and staying there",
+  "A second Republican-held toss-up beyond North Carolina (e.g. Alaska or Ohio) moving to Lean-D",
+  "Trump approval recovering above ~44% across aggregators (pushes toward the R-expansion tail)",
+  "The generic ballot widening past D+8 into the fall (lifts the Democratic flip toward modal)",
+  "Democrats opening stable leads in Alaska OR Ohio in October live-caller polls"
+ ],
+ "sources": [
+  {
+   "label": "Polymarket — Which party will win the Senate in 2026",
+   "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026"
+  },
+  {
+   "label": "Kalshi — Which party will win the U.S. Senate",
+   "url": "https://kalshi.com/markets/controls/senate-winner/controls-2026"
+  },
+  {
+   "label": "Election Betting Odds — Senate Control 2026",
+   "url": "https://electionbettingodds.com/Senate-Control-2026.html"
+  },
+  {
+   "label": "Sabato's Crystal Ball — 2026 Senate",
+   "url": "https://centerforpolitics.org/crystalball/2026-senate/"
+  },
+  {
+   "label": "American Presidency Project — Seats gained/lost by the president's party in midterms",
+   "url": "https://www.presidency.ucsb.edu/statistics/data/seats-in-congress-gained-lost-by-the-presidents-party-in-mid-term-elections"
+  },
+  {
+   "label": "Silver Bulletin — Trump approval average",
+   "url": "https://www.natesilver.net/p/trump-approval-ratings-nate-silver-bulletin"
+  },
+  {
+   "label": "CNN — 9 Senate seats most likely to flip (July 2, 2026)",
+   "url": "https://www.cnn.com/2026/07/02/politics/senate-race-rankings-july-2026"
+  },
+  {
+   "label": "Wikipedia — 2026 United States Senate elections",
+   "url": "https://en.wikipedia.org/wiki/2026_United_States_Senate_elections"
+  },
+  {
+   "label": "270toWin — 2026 Senate forecast & rating aggregators",
+   "url": "https://www.270towin.com/2026-senate-election-predictions/"
+  }
+ ],
+ "method_note": "Grounded first in the prediction-market aggregate for Senate control (five books at ~57.8% Republican on 2026-07-02), then cross-checked against reference-class base rates for midterm Senate flips and the specific 2026 map, in which Democrats must net four seats while defending Georgia and Michigan. Scenario probabilities are the market-anchored control split decomposed into narrow-hold, flip, expansion, and 50-50 paths; the horizon is Election Day, Nov 3, 2026.",
+ "honesty_note": "A narrow Republican hold near 46-54% is the single most likely picture, and the sub-paths together put GOP control near 58% — but that still leaves better than a one-in-three chance Democrats flip the chamber. The pick names the favorite; it is not a prediction of certainty, and this map could break either way."
+}
