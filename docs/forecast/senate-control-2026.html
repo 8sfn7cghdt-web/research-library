@@ -596,6 +596,10 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fdt-spectrum { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
   padding: 1.2rem 1.1rem .8rem; overflow-x: auto; }
 .fdt-spectrum svg { display: block; width: 100%; height: auto; min-width: 560px; }
+.fdt-spx-link { cursor: pointer; }
+.fdt-spx-link circle:nth-of-type(2) { transition: r .12s var(--ease); }
+.fdt-spx-link:hover circle:nth-of-type(2) { r: 15; }
+.fdt-spx-link:hover text { text-decoration: underline; }
 .fdt-p-zone { font-family: var(--sans); font-size: .56rem; font-weight: 800; text-transform: uppercase;
   letter-spacing: .12em; padding: .16rem .5rem; border-radius: 999px; border: 1px solid currentColor;
   white-space: nowrap; }

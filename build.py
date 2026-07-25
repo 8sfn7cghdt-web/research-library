@@ -6567,6 +6567,10 @@ FORECAST_PAGE_CSS = """
 .fdt-spectrum { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
   padding: 1.2rem 1.1rem .8rem; overflow-x: auto; }
 .fdt-spectrum svg { display: block; width: 100%; height: auto; min-width: 560px; }
+.fdt-spx-link { cursor: pointer; }
+.fdt-spx-link circle:nth-of-type(2) { transition: r .12s var(--ease); }
+.fdt-spx-link:hover circle:nth-of-type(2) { r: 15; }
+.fdt-spx-link:hover text { text-decoration: underline; }
 .fdt-p-zone { font-family: var(--sans); font-size: .56rem; font-weight: 800; text-transform: uppercase;
   letter-spacing: .12em; padding: .16rem .5rem; border-radius: 999px; border: 1px solid currentColor;
   white-space: nowrap; }
@@ -7112,10 +7116,15 @@ def _fdt_spectrum_svg():
         ny = ax - 32 if above else ax + 40
         y_conn = ny + (11 if above else -13)
         parts.append(f'<line x1="{x:.0f}" y1="{ax}" x2="{x:.0f}" y2="{y_conn:.0f}" stroke="{col}" stroke-width="1" opacity=".4"/>')
-        parts.append(f'<circle cx="{x:.0f}" cy="{ax}" r="13" fill="#10161f" stroke="{col}" stroke-width="2"/>')
-        parts.append(f'<text x="{x:.0f}" y="{ax + 5:.0f}" text-anchor="middle" font-size="14">{av}</text>')
-        parts.append(f'<text x="{x:.0f}" y="{ny:.0f}" text-anchor="middle" fill="{col}" '
-                     f'font-family="-apple-system,sans-serif" font-size="10" font-weight="700">{html.escape(name)}</text>')
+        parts.append(
+            f'<a href="forecasters/{key}.html" class="fdt-spx-link">'
+            f'<title>{html.escape(name)} — full profile</title>'
+            f'<circle cx="{x:.0f}" cy="{ax}" r="16" fill="transparent"/>'
+            f'<circle cx="{x:.0f}" cy="{ax}" r="13" fill="#10161f" stroke="{col}" stroke-width="2"/>'
+            f'<text x="{x:.0f}" y="{ax + 5:.0f}" text-anchor="middle" font-size="14">{av}</text>'
+            f'<text x="{x:.0f}" y="{ny:.0f}" text-anchor="middle" fill="{col}" '
+            f'font-family="-apple-system,sans-serif" font-size="10" font-weight="700">{html.escape(name)}</text>'
+            f'</a>')
     return (f'<svg viewBox="0 0 {W} {H}" xmlns="http://www.w3.org/2000/svg" role="img" '
             f'aria-label="The forecaster roster arranged from mathematical rigor to creative hypothesis">'
             f'{"".join(parts)}</svg>')
