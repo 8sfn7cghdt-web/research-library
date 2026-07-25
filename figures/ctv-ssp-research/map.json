@@ -1,0 +1,32 @@
+[
+  {
+    "file": "00_Six_Easy_Pieces.md",
+    "after": "## Four: How it actually works",
+    "snippet": "auction_path_ledger.html"
+  },
+  {
+    "file": "01_How_The_Sell_Side_Was_Assembled.md",
+    "after": "## The Consolidation Deals",
+    "snippet": "consolidation_roster.html"
+  },
+  {
+    "file": "02_The_Independent_SSPs.md",
+    "after": "## The Roster, Sized Honestly",
+    "snippet": "disclosure_tiers.html"
+  },
+  {
+    "file": "03_The_Platform_Owned_Sell_Side.md",
+    "after": "## The Analytical Spine",
+    "snippet": "platform_squeeze.html"
+  },
+  {
+    "file": "06_AI_And_The_Agentic_Sell_Side.md",
+    "after": "## The Concrete Deployments",
+    "snippet": "frontier_burden.html"
+  },
+  {
+    "file": "Future_Trajectory.md",
+    "after": "## Bottom Line",
+    "snippet": "scenario_floor.html"
+  }
+]

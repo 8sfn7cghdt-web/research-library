@@ -879,6 +879,32 @@ def hero_art():
 
 # ---------------------------------------------------------------- templates
 
+# The site-wide header nav — one canonical link set rendered identically on
+# every page (index, sections, desks, editions, detail pages), so no page ever
+# shows a subset of the others. `prefix` is "" at the docs/ root or "../" for
+# pages one directory down; `active` is the bare filename of the current
+# section (e.g. "adtech.html") to underline, or None.
+MAIN_NAV_ITEMS = [
+    ("The Research", "index.html"),
+    ("The Ghost of Times", "ghost.html"),
+    ("Ad Tech", "adtech.html"),
+    ("The Pamphlets", "pamphlets.html"),
+    ("The Forecast Desk", "forecast.html"),
+    ("Connections", "connections.html"),
+    ("Glossary", "glossary.html"),
+    ("Quiz", "quiz.html"),
+    ("Wrapped", "wrapped.html"),
+]
+
+
+def main_nav_html(prefix="", active=None):
+    lines = []
+    for label, href in MAIN_NAV_ITEMS:
+        cls = ' class="active"' if href == active else ''
+        lines.append(f'    <a href="{prefix}{href}"{cls}>{label}</a>')
+    return "\n".join(lines)
+
+
 READER_TEMPLATE = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3150,15 +3176,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
-    <a href="connections.html">Connections</a>
-    <a href="glossary.html">Glossary</a>
-    <a href="quiz.html">Quiz</a>
-    <a href="wrapped.html">Wrapped</a>
-    <a href="#library">The Research</a>
+{nav}
   </nav>
 </div>
 <header>
@@ -3170,6 +3188,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   </div>
   <div class="hero-art">{hero}</div>
 </header>
+{hub}
 {daily_passage}
 {resume}
 {foryou}
@@ -4348,11 +4367,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html" class="active">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <header class="ghost-plate">
@@ -4555,6 +4570,7 @@ def build_ghost_page(out_dir, editions, ghost_cfg, shell=""):
     page = GHOST_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + GHOST_PAGE_CSS,
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(active="ghost.html"),
         ornament=GHOST_NIB,
         motto=html.escape(ghost_cfg.get("motto", "")),
         blurb=html.escape(ghost_cfg.get("blurb", "")),
@@ -4732,11 +4748,7 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="../index.html">The Research</a>
-    <a href="../ghost.html" class="active">The Ghost of Times</a>
-    <a href="../adtech.html">Ad Tech</a>
-    <a href="../pamphlets.html">The Pamphlets</a>
-    <a href="../forecast.html">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <main class="gh-edition">
@@ -4900,6 +4912,7 @@ def build_ghost_edition(out_dir, ed, shell=""):
         title=html.escape(f"{lead_head} — The Ghost of Times"),
         description=html.escape(data.get("lead", {}).get("dek", "") or "The Ghost of Times"),
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(prefix="../", active="ghost.html"),
         css=LIBRARY_CSS + GHOST_EDITION_CSS,
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
@@ -4988,8 +5001,8 @@ def read_pamphlets_manifest(out_dir, subdir="pamphlets"):
     return items
 
 
-def _pamphlet_href(p):
-    return html.escape(p.get("file") or f"pamphlets/{p.get('slug','')}.html", quote=True)
+def _pamphlet_href(p, subdir="pamphlets"):
+    return html.escape(p.get("file") or f"{subdir}/{p.get('slug','')}.html", quote=True)
 
 
 def _pamphlet_voice(p):
@@ -4997,9 +5010,9 @@ def _pamphlet_voice(p):
     return f"In the voice of {w}" if w else ""
 
 
-def _pamphlet_meta(p, lead=False):
+def _pamphlet_meta(p, lead=False, noun="pamphlet"):
     """A '· '-joined dateline: [Latest ·] subject · long date."""
-    bits = ["Latest pamphlet"] if lead else []
+    bits = [f"Latest {noun}"] if lead else []
     if p.get("subject"):
         bits.append(p["subject"])
     if p.get("date"):
@@ -5185,45 +5198,39 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 """
 
 
-def pamphlet_feature_html(p):
-    """The latest pamphlet, rendered like a section lead."""
-    meta = _pamphlet_meta(p, lead=True)
-    headline = html.escape(p.get("title") or "Untitled pamphlet")
+def pamphlet_feature_html(p, subdir="pamphlets", noun="pamphlet"):
+    """The latest pamphlet (or desk briefing), rendered like a section lead."""
+    meta = _pamphlet_meta(p, lead=True, noun=noun)
+    headline = html.escape(p.get("title") or f"Untitled {noun}")
     dek = html.escape(p.get("dek") or "")
     dek_html = f'<p class="pamf-dek">{dek}</p>' if dek else ""
     voice = html.escape(_pamphlet_voice(p))
     voice_html = f'<p class="pamf-by">{voice}</p>' if voice else ""
-    return (f'<article class="pam-feature"><a href="{_pamphlet_href(p)}">'
+    return (f'<article class="pam-feature"><a href="{_pamphlet_href(p, subdir)}">'
             f'<p class="pamf-meta">{html.escape(meta)}</p>'
             f'<h2 class="pamf-head">{headline}</h2>{dek_html}{voice_html}'
-            f'<span class="pamf-cta">Read the pamphlet →</span></a></article>')
+            f'<span class="pamf-cta">Read the {html.escape(noun)} →</span></a></article>')
 
 
-def pamphlet_row_html(p):
-    """An archive row for an older pamphlet."""
+def pamphlet_row_html(p, subdir="pamphlets"):
+    """An archive row for an older pamphlet (or desk briefing)."""
     headline = html.escape(p.get("title") or "Untitled pamphlet")
     voice = html.escape(_pamphlet_voice(p))
     voice_html = f'<span class="pam-row-by">{voice}</span>' if voice else ""
     when = html.escape(_long_date(p.get("date", "")) if p.get("date") else "")
-    return (f'<a class="pam-row" href="{_pamphlet_href(p)}">'
+    return (f'<a class="pam-row" href="{_pamphlet_href(p, subdir)}">'
             f'<span class="pam-row-body"><span class="pam-row-head">{headline}</span>{voice_html}</span>'
             f'<span class="pam-row-date">{when}</span></a>')
 
 
-PAMPHLETS_NAV_DEFAULT = (
-    '    <a href="index.html">The Research</a>\n'
-    '    <a href="ghost.html">The Ghost of Times</a>\n'
-    '    <a href="adtech.html">Ad Tech</a>\n'
-    '    <a href="pamphlets.html" class="active">The Pamphlets</a>\n'
-    '    <a href="forecast.html">The Forecast Desk</a>'
-)
+PAMPHLETS_NAV_DEFAULT = main_nav_html(active="pamphlets.html")
 
 
 def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
     """Render an essay-rack section front — docs/pamphlets.html by default: a
     featured latest essay + the rest. A `page` override renders a desk's own
     rack (e.g. the Ad Tech desk's Briefings): {fname, title (h1), kicker, nav,
-    back, empty, noun, accent (light, dark)}."""
+    back, empty, noun, subdir, accent (light, dark)}."""
     out = Path(out_dir)
     page = page or {}
     fname = page.get("fname", "pamphlets.html")
@@ -5232,16 +5239,17 @@ def build_pamphlets_page(out_dir, items, cfg, shell="", page=None):
     nav = page.get("nav", PAMPHLETS_NAV_DEFAULT)
     back = page.get("back", '<a href="index.html">← Back to the Research Library</a>')
     noun = page.get("noun", "pamphlet")
+    subdir = page.get("subdir", "pamphlets")
     accent = page.get("accent")
     accent_css = (f'\nbody {{ --accent: {accent[0]}; }} [data-theme="dark"] body {{ --accent: {accent[1]}; }}'
                   if accent else "")
     if items:
         n = len(items)
         stats = f"{n} {noun}{'s' if n != 1 else ''}"
-        body = pamphlet_feature_html(items[0])
+        body = pamphlet_feature_html(items[0], subdir=subdir, noun=noun)
         rest = items[1:]
         if rest:
-            rows = "\n".join(pamphlet_row_html(p) for p in rest)
+            rows = "\n".join(pamphlet_row_html(p, subdir=subdir) for p in rest)
             body += f'<section class="pam-issues"><h2 class="pam-issues-h">More {noun}s</h2>{rows}</section>'
     else:
         body = '<p class="pam-empty">' + html.escape(page.get(
@@ -5377,17 +5385,13 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="../index.html">The Research</a>
-    <a href="../ghost.html">The Ghost of Times</a>
-    <a href="../adtech.html">Ad Tech</a>
-    <a href="../pamphlets.html" class="active">The Pamphlets</a>
-    <a href="../forecast.html">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <main class="pm-essay">
   <header class="pm-nameplate">
-    <p class="pm-kicker">Writer-voiced essays</p>
-    <a class="pm-name" href="../pamphlets.html">The Pamphlets</a>
+    <p class="pm-kicker">{list_kicker}</p>
+    <a class="pm-name" href="../{list_href}">{list_name}</a>
     <div class="pm-folio">
       <span>{folio_writer}</span>
       <span class="pm-folio-c">{folio_subject}</span>
@@ -5403,7 +5407,7 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
   </article>
   <footer class="pm-foot">
     {colophon}
-    <p class="pm-nav"><a href="../pamphlets.html">← All pamphlets</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
+    <p class="pm-nav"><a href="../{list_href}">← All {list_noun}s</a> &nbsp;·&nbsp; <a href="../index.html">The Research Library</a></p>
   </footer>
 </main>
 <button id="theme-btn" title="Light / dark">◐ Theme</button>
@@ -5430,9 +5434,10 @@ body.querySelectorAll('a[href^="http"]').forEach(a => { a.target = '_blank'; a.r
 """
 
 
-def read_pamphlet_data(out_dir, slug):
-    """Load docs/pamphlets/data/{slug}.json → dict, or None if absent/unreadable."""
-    path = Path(out_dir) / "pamphlets" / "data" / f"{slug}.json"
+def read_pamphlet_data(out_dir, slug, subdir="pamphlets"):
+    """Load docs/<subdir>/data/{slug}.json → dict, or None if absent/unreadable.
+    subdir lets a desk essay rack (e.g. "briefings") share this loader."""
+    path = Path(out_dir) / subdir / "data" / f"{slug}.json"
     if not path.exists():
         return None
     try:
@@ -5442,13 +5447,19 @@ def read_pamphlet_data(out_dir, slug):
         return None
 
 
-def build_pamphlet(out_dir, item, shell=""):
+def build_pamphlet(out_dir, item, shell="", page=None):
     """Render one pamphlet page (docs/pamphlets/{slug}.html) from its data file.
+    A `page` override renders a desk's own essay rack instead (e.g. the Ad Tech
+    desk's Briefings): {subdir, list_href, list_name, nav_active}.
 
     Returns True if rendered, False if the data file is absent (page left untouched)."""
     out = Path(out_dir)
+    page = page or {}
+    subdir = page.get("subdir", "pamphlets")
+    list_href = page.get("list_href", "pamphlets.html")
+    list_name = page.get("list_name", "The Pamphlets")
     slug = item.get("slug", "")
-    data = read_pamphlet_data(out, slug)
+    data = read_pamphlet_data(out, slug, subdir=subdir)
     if data is None:
         return False
 
@@ -5470,11 +5481,17 @@ def build_pamphlet(out_dir, item, shell=""):
     byline_html = f'<p class="pm-byline">In the voice of {html.escape(writer)}</p>' if writer else ""
     colophon_html = f'<p class="pm-colophon">{html.escape(voice_note)}</p>' if voice_note else ""
 
-    page = PAMPHLET_TEMPLATE.format(
-        title=html.escape(f"{title} — The Pamphlets"),
+    nav_active = page.get("nav_active", list_href)
+    page_html = PAMPHLET_TEMPLATE.format(
+        title=html.escape(f"{title} — {list_name}"),
         description=html.escape(dek or subject or "A pamphlet"),
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(prefix="../", active=nav_active),
         css=LIBRARY_CSS + PAMPHLET_CSS,
+        list_kicker=html.escape(page.get("kicker", "Writer-voiced essays")),
+        list_href=html.escape(list_href, quote=True),
+        list_name=html.escape(list_name),
+        list_noun=html.escape(page.get("noun", "pamphlet")),
         folio_writer=html.escape(writer),
         folio_subject=html.escape(subject),
         folio_date=html.escape(_long_date(date) if date else ""),
@@ -5488,8 +5505,8 @@ def build_pamphlet(out_dir, item, shell=""):
         app_js=PAMPHLET_JS,
         shell=shell,
     )
-    (out / "pamphlets").mkdir(parents=True, exist_ok=True)
-    (out / "pamphlets" / f"{slug}.html").write_text(page)
+    (out / subdir).mkdir(parents=True, exist_ok=True)
+    (out / subdir / f"{slug}.html").write_text(page_html)
     return True
 
 
@@ -6469,6 +6486,8 @@ FORECAST_PAGE_CSS = """
 .fdt-p-call .v.up { color: var(--fdup); } .fdt-p-call .v.dn { color: var(--fddn); }
 .fdt-p-none { font-family: var(--serif); font-style: italic; font-size: .8rem; color: var(--fdmut);
   border-top: 1px solid var(--fdline); margin-top: .7rem; padding-top: .6rem; }
+.fdt-p-cta { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--fdup); margin-top: .8rem; }
 .fdt-cal { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: 1.1rem 1.25rem; }
 .fdt-cal svg { display: block; width: 100%; height: auto; }
 .fdt-cal-leg { display: flex; gap: 1.1rem; flex-wrap: wrap; font-family: var(--sans); font-size: .7rem;
@@ -6796,13 +6815,7 @@ def _fd_tape(native_items, markets):
             f'<div class="fd-tape-inner" style="animation-duration:{dur}s">{row}{row}</div></div>')
 
 
-FORECAST_NAV_DEFAULT = (
-    '    <a href="index.html">The Research</a>\n'
-    '    <a href="ghost.html">The Ghost of Times</a>\n'
-    '    <a href="adtech.html">Ad Tech</a>\n'
-    '    <a href="pamphlets.html">The Pamphlets</a>\n'
-    '    <a href="forecast.html" class="active">The Forecast Desk</a>'
-)
+FORECAST_NAV_DEFAULT = main_nav_html(active="forecast.html")
 
 
 def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None, shell="", page=None, native_data=None, sections=None):
@@ -7212,11 +7225,12 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
                 rec = '<div class="fdt-p-rec"><div class="r">0–0</div><div class="b">no grades yet</div></div>'
                 tail = '<div class="fdt-p-none">First call on the ledger — awaiting its grade.</div>'
             cards.append(
-                f'<article class="fdt-p" style="border-top:3px solid {col}">'
+                f'<a class="fdt-p fdt-p-link" href="forecasters/{p["key"]}.html" style="border-top:3px solid {col}">'
                 f'<div class="fdt-p-top"><span class="fdt-p-av">{p["avatar"]}</span>'
                 f'<div><div class="fdt-p-nm">{html.escape(p["name"])}</div>'
                 f'<div class="fdt-p-crit">{html.escape(p["criterion"])}</div></div>{rec}</div>'
-                f'{model_html}{doc_html}{spx_html}{bankline}{tail}</article>')
+                f'{model_html}{doc_html}{spx_html}{bankline}{tail}'
+                f'<span class="fdt-p-cta">Full profile →</span></a>')
         parts.append(f'<div class="fdt-roster">{"".join(cards)}</div>')
         n += 1
     # 03 — calibration.
@@ -7300,6 +7314,124 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
     )
     (out / fname).write_text(page_html)
     print(f"  ✓ {h1}  ({desk['graded']} graded, {n_open} open) → {fname}")
+
+
+def _fdp_spectrum_bar(spectrum, color):
+    """One persona's position on the rigor→story axis, standalone at profile-page
+    scale (the roster card's version is a compressed pip; this is the full bar)."""
+    pct = max(0.0, min(1.0, spectrum)) * 100
+    return (f'<div class="fdp-spx"><span class="fdp-spx-end">trust the number</span>'
+            f'<span class="fdp-spx-track"><span class="fdp-spx-pip" style="left:{pct:.1f}%;background:{color}"></span></span>'
+            f'<span class="fdp-spx-end">trust the story</span></div>')
+
+
+def build_persona_pages(out_dir, led, book, shell=""):
+    """Render one full profile page per standing Forecast Desk persona
+    (docs/forecasters/{key}.html) — its model, its betting doctrine, its position
+    on the rigor→story spectrum, its cumulative record and Brier score, its play-
+    money bankroll, and every call it has ever made (graded and still open). The
+    roster cards on the Track Record page link here, so clicking a predictor
+    always resolves to its complete record, not just the summary chip.
+    `led` is build_forecast_ledger's output and `book` is build_book's — both
+    computed once, site-wide, from every market (native + harvested + desk-scoped),
+    so a persona's profile is never partial just because it also works a desk."""
+    out = Path(out_dir) / "forecasters"
+    out.mkdir(parents=True, exist_ok=True)
+    n_rendered = 0
+    for key, name, avatar, criterion in FD_PERSONAS:
+        p = led["personas"].get(key) or {"key": key, "name": name, "avatar": avatar,
+                                          "criterion": criterion, "graded": 0, "hits": 0,
+                                          "briers": [], "calls": []}
+        prof = FD_PERSONA_PROFILES.get(key, {})
+        acct = book["personas"].get(key)
+        color = FDT_SERIES_COLORS.get(key, "#9aa1af")
+        losses = p["graded"] - p["hits"]
+        rec_txt = f'{p["hits"]}–{losses}' if p["graded"] else "0–0"
+        hitrate = f'{p["hits"] / p["graded"] * 100:.0f}%' if p["graded"] else "—"
+        brier = _fdt_fmt_brier(p["briers"]) if p["briers"] else "—"
+
+        parts = [f'<p class="fdp-crit">{html.escape(criterion)}</p>']
+        n = 1
+        if prof.get("spectrum") is not None:
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Where It Sits on the Desk\'s Spectrum</h2>'
+                         f'<p class="fdp-zone">{html.escape(prof.get("zone", ""))}</p>'
+                         + _fdp_spectrum_bar(prof["spectrum"], color))
+            n += 1
+        if prof.get("model"):
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Model — how it forecasts</h2>'
+                         f'<p class="fdp-prose">{html.escape(prof["model"])}</p>')
+            n += 1
+        if prof.get("doctrine"):
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Doctrine — how it bets</h2>'
+                         f'<p class="fdp-prose">{html.escape(prof["doctrine"])}</p>')
+            n += 1
+        bank_html = ""
+        if acct:
+            bpnl = acct["pnl"]
+            bcls = "up" if bpnl > 0.5 else ("dn" if bpnl < -0.5 else "")
+            bank_html = (f'<div class="fdt-stat"><div class="big">{_fd_money(acct["bankroll"])}</div><div class="lbl">the book</div></div>'
+                        f'<div class="fdt-stat"><div class="big {bcls}">{_fd_signed(acct["pnl"])}</div><div class="lbl">P&amp;L, play money</div></div>')
+        parts.append(
+            f'<h2 class="fdd-h"><span class="n">{n:02d}</span>The Record — mathematical rigor, scored</h2>'
+            f'<div class="fdt-sum">'
+            f'<div class="fdt-stat"><div class="big">{p["graded"]}</div><div class="lbl">markets graded</div></div>'
+            f'<div class="fdt-stat"><div class="big {"up" if p["graded"] and p["hits"] * 2 >= p["graded"] else ""}">{rec_txt}</div><div class="lbl">record, hits–misses</div></div>'
+            f'<div class="fdt-stat"><div class="big">{hitrate}</div><div class="lbl">hit rate</div></div>'
+            f'<div class="fdt-stat"><div class="big gold">{brier}</div><div class="lbl">mean Brier score</div></div>'
+            f'{bank_html}'
+            f'</div>'
+            f'<p class="fdt-note">Brier score = (stated probability − what happened)², averaged over every graded '
+            f'call. 0 is clairvoyance, 0.25 is a coin flip, 1 is confident wrongness. Lower is better — it is the '
+            f'one number that punishes both a wrong call and an overconfident right one.</p>')
+        n += 1
+        if p["calls"]:
+            rows = "".join(
+                f'<tr><td><a href="../{html.escape(c.get("href", "") or "forecast.html", quote=True)}">{html.escape(c["market"])}</a></td>'
+                f'<td>{html.escape((c.get("flag", "") + " " + c["pick"]).strip())}</td>'
+                f'<td class="num">{c["prob"]:g}%</td>'
+                f'<td class="{"v-hit" if c["hit"] else "v-miss"}">{"✓ hit" if c["hit"] else "✗ miss"}</td>'
+                f'<td class="num">{c["brier"]:.3f}</td></tr>'
+                for c in sorted(p["calls"], key=lambda c: c.get("market", ""))
+            )
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Every Graded Call ({p["graded"]})</h2>'
+                        f'<div class="fdt-ledger"><table><thead><tr><th>Market</th><th>The call</th>'
+                        f'<th>Price</th><th>Verdict</th><th>Brier</th></tr></thead>'
+                        f'<tbody>{rows}</tbody></table></div>')
+        else:
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Every Graded Call</h2>'
+                        f'<p class="fdt-empty">No graded calls yet — this predictor\'s first market is still open.</p>')
+        n += 1
+        if acct and acct["open"]:
+            rows = "".join(
+                f'<a href="../{html.escape(o["href"], quote=True)}"><span class="t">{html.escape(o["market"])} '
+                f'— {html.escape((o.get("flag", "") + " " + o["pick"]).strip())} @ {o["p"]:g}%</span>'
+                f'<span class="w">{"grades " + html.escape(_long_date(o["due"])) if o.get("due") else "horizon open"}</span></a>'
+                for o in acct["open"]
+            )
+            parts.append(f'<h2 class="fdd-h"><span class="n">{n:02d}</span>Open Positions ({len(acct["open"])})</h2>'
+                        f'<div class="fdt-pend">{rows}</div>')
+
+        title = f"{name} — The Forecast Desk"
+        og = og_tags(title, criterion, f"{SITE_URL}/forecasters/{key}.html", f"{SITE_URL}/{OG_IMAGE}")
+        folio = (f'    <span>{p["graded"]} graded</span>\n'
+                f'    <span class="fd-folio-c">record {rec_txt}</span>\n'
+                f'    <span>{html.escape(prof.get("zone", "The desk"))}</span>')
+        page = FORECAST_PAGE_TEMPLATE.format(
+            page_title=html.escape(title), h1=html.escape(f"{avatar} {name}"),
+            kicker="The Forecast Desk · Predictor profile",
+            nav=main_nav_html(prefix="../", active="forecast.html"),
+            back='<a href="../forecast-record.html">← The Track Record</a>',
+            css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
+            favicon=FAVICON, og_meta=og,
+            motto=html.escape(prof.get("signature", criterion)),
+            folio=folio, plate_extra="",
+            body="\n".join(parts),
+            blurb="Every call this predictor has made, graded honestly — the desk keeps no predictor's record off the books.",
+            theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
+        )
+        (out / f"{key}.html").write_text(page)
+        n_rendered += 1
+    print(f"  ✓ Predictor profiles ({n_rendered}) → forecasters/")
 
 
 # ------------------------------------------------------------- native forecast pages
@@ -7464,6 +7596,20 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
     transition-duration: .01ms !important;
   }
 }
+
+/* predictor profile page */
+.fdp-crit { font-family: var(--serif); font-style: italic; color: var(--fdmut); font-size: 1rem;
+  line-height: 1.5; margin: 0 0 .5rem; }
+.fdp-zone { font-family: var(--sans); font-size: .72rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--fdmut); margin: 0 0 .7rem; }
+.fdp-prose { font-family: var(--serif); font-size: .98rem; line-height: 1.62; color: #c6d0e0; margin: 0; }
+.fdp-spx { display: grid; grid-template-columns: auto 1fr auto; gap: .7rem; align-items: center; margin-top: .3rem; }
+.fdp-spx-end { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); white-space: nowrap; }
+.fdp-spx-track { position: relative; height: 4px; background: var(--fdline); border-radius: 2px; }
+.fdp-spx-pip { position: absolute; top: 50%; width: 14px; height: 14px; border-radius: 50%;
+  transform: translate(-50%, -50%); border: 2px solid #10161f; }
+.fdt-p-link { display: block; text-decoration: none; color: inherit; transition: transform .12s, border-color .12s; }
+.fdt-p-link:hover { transform: translateY(-2px); border-color: var(--fdup) !important; }
 """
 
 FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
@@ -7482,11 +7628,7 @@ FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="../index.html">The Research</a>
-    <a href="../ghost.html">The Ghost of Times</a>
-    <a href="../adtech.html">Ad Tech</a>
-    <a href="../pamphlets.html">The Pamphlets</a>
-    <a href="../forecast.html" class="active">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <div class="fdd-wrap">
@@ -7691,6 +7833,7 @@ def build_forecast_item(out_dir, item, shell="", records=None):
         title=html.escape(f"{title} — The Forecast Desk"),
         description=html.escape(d.get("question", title)),
         favicon=FAVICON, og_meta=og,
+        nav=main_nav_html(prefix="../", active="forecast.html"),
         css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
         kicker=f'The Forecast Desk · {"Graded market" if g else "Live market"}',
         headline=html.escape(d.get("question", title)),
@@ -7928,6 +8071,7 @@ def build_corpus_market_page(out_dir, m, shell="", records=None):
         title=html.escape(f"{m['title']} — The Forecast Desk"),
         description=html.escape(m.get("subtitle") or m["title"]),
         favicon=FAVICON, og_meta=og,
+        nav=main_nav_html(prefix="../", active="forecast.html"),
         css=LIBRARY_CSS + FORECAST_DETAIL_CSS,
         kicker="The Forecast Desk · Research market",
         headline=html.escape(m["title"]),
@@ -8191,12 +8335,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="fingerprint.html" class="active">The Fingerprint</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <header class="fpp-plate">
@@ -8398,6 +8537,7 @@ def build_fingerprint_page(out_dir, editions, cfg, shell=""):
     page = FINGERPRINT_PAGE_TEMPLATE.format(
         css=LIBRARY_CSS + FINGERPRINT_BAND_CSS + FINGERPRINT_PAGE_CSS,
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(active="adtech.html"),
         kicker=html.escape(cfg.get("kicker", "The global programmatic & Advanced TV market paper")),
         ridges=FP_RIDGES,
         motto=html.escape(cfg.get("motto", "All the news that's fit to Fingerprint")),
@@ -8430,12 +8570,7 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="../index.html">The Research</a>
-    <a href="../ghost.html">The Ghost of Times</a>
-    <a href="../adtech.html">Ad Tech</a>
-    <a href="../fingerprint.html" class="active">The Fingerprint</a>
-    <a href="../pamphlets.html">The Pamphlets</a>
-    <a href="../forecast.html">The Forecast Desk</a>
+{nav}
   </nav>
 </div>
 <main class="fp-edition">
@@ -8958,6 +9093,7 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
         title=html.escape(f"{lead_head} — The Fingerprint"),
         description=html.escape(data.get("lead", {}).get("dek", "") or "The Fingerprint"),
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(prefix="../", active="adtech.html"),
         css=css,
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
@@ -9073,14 +9209,7 @@ CONNECTIONS_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
-    <a href="connections.html" class="active">Connections</a>
-    <a href="glossary.html">Glossary</a>
-    <a href="quiz.html">Quiz</a>
+{nav}
   </nav>
 </div>
 <main class="cx-wrap">
@@ -9173,6 +9302,7 @@ def build_connections_page(out_dir, corpora, category_order, shell=""):
     titles = {n["slug"]: n["title"] for n in nodes}
     page = CONNECTIONS_TEMPLATE.format(
         css=LIBRARY_CSS + CONNECTIONS_CSS, favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(active="connections.html"),
         svg="".join(parts), legend=legend,
         data_json=json_for_html({"titles": titles}),
         theme_js=LIBRARY_THEME_JS, app_js=CONNECTIONS_JS, shell=shell,
@@ -9489,10 +9619,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="{slug}.html" class="active">{title}</a>
+{nav}
   </nav>
 </div>
 <header class="dk-plate">
@@ -9648,6 +9775,82 @@ def domain_band_html(page_cfg, dom, n_corpora, fp_editions=None):
             f'<span class="fp-band-cta">Enter the desk →</span></a></div>')
 
 
+HOME_HUB_CSS = """
+/* The home hub — three doorways under the masthead: two co-equal desks
+   (Research / Ad Tech) and a smaller third door to the Forecast Desk. Reads
+   as one choice, not a wall of nav, so the rest of the index still scrolls
+   as a normal reading page beneath it. */
+.home-hub { max-width: 1120px; margin: .4rem auto 1.6rem; padding: 0 2rem; }
+.hh-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.hh-card { --hh-accent: var(--hh-accent-l, var(--accent));
+  display: flex; flex-direction: column; justify-content: space-between; gap: .9rem;
+  text-decoration: none; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border); border-top: 3px solid var(--hh-accent, var(--accent));
+  border-radius: 0; padding: 1.3rem 1.4rem 1.2rem; position: relative; overflow: hidden;
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease), border-color .16s var(--ease); }
+[data-theme="dark"] .hh-card { --hh-accent: var(--hh-accent-d, var(--accent)); }
+.hh-card:hover, .hh-card:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-2);
+  border-color: var(--hh-accent, var(--accent)); }
+.hh-kicker { font-family: var(--sans); font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--hh-accent, var(--accent)); margin: 0; }
+.hh-title { font-family: var(--display); font-weight: 600; font-size: 1.7rem; line-height: 1.05;
+  margin: .3rem 0 0; }
+.hh-meta { font-family: var(--sans); font-size: .82rem; line-height: 1.5; color: var(--muted); margin: .5rem 0 0; }
+.hh-cta { align-self: flex-start; font-family: var(--sans); font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; white-space: nowrap;
+  color: var(--hh-accent, var(--accent)); border: 1px solid currentColor; border-radius: 0;
+  padding: .4rem .8rem; transition: background-color .16s var(--ease), color .16s var(--ease),
+  transform .16s var(--ease); }
+.hh-card:hover .hh-cta, .hh-card:focus-visible .hh-cta { background: var(--hh-accent, var(--accent));
+  border-color: var(--hh-accent, var(--accent)); color: var(--bg); transform: translateX(3px); }
+.hh-more { margin-top: .9rem; }
+.hh-more a { display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  text-decoration: none; color: var(--text); background: transparent;
+  border: 1px dashed var(--border); border-radius: 0; padding: .7rem 1.1rem; }
+.hh-more a:hover, .hh-more a:focus-visible { border-color: var(--hh-accent, var(--accent)); border-style: solid; }
+.hh-more .hh-more-label { font-family: var(--sans); font-size: .76rem; font-weight: 600; color: var(--text); }
+.hh-more .hh-more-label small { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 400;
+  color: var(--muted); margin-top: .15rem; }
+.hh-more .hh-more-cta { font-family: var(--sans); font-size: .66rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--hh-accent-fd, #15803d); white-space: nowrap; }
+[data-theme="dark"] .hh-more .hh-more-cta { color: var(--hh-accent-fd-dark, #4ade80); }
+@media (max-width: 760px) {
+  .hh-grid { grid-template-columns: 1fr; }
+  .hh-title { font-size: 1.45rem; }
+}
+"""
+
+
+def home_hub_html(library_card, desk_card, forecast_card):
+    """The home page's front door: two co-equal cards (Research Library, the
+    detached desk — e.g. Ad Tech) plus a smaller dashed strip pointing at the
+    Forecast Desk. Each *_card dict: href, kicker, title, meta, cta, accent
+    (light, dark) — forecast_card additionally: label, sub."""
+    def _card(c):
+        accent = c.get("accent")
+        style = (f' style="--hh-accent-l:{accent[0]};--hh-accent-d:{accent[1]}"'
+                 if accent and len(accent) > 1 else "")
+        return (
+            f'<a class="hh-card" href="{html.escape(c["href"], quote=True)}"{style}>'
+            f'<div><p class="hh-kicker">{html.escape(c["kicker"])}</p>'
+            f'<h2 class="hh-title">{html.escape(c["title"])}</h2>'
+            f'<p class="hh-meta">{html.escape(c["meta"])}</p></div>'
+            f'<span class="hh-cta">{html.escape(c.get("cta", "Enter →"))}</span></a>'
+        )
+    more = (
+        f'<div class="hh-more"><a href="{html.escape(forecast_card["href"], quote=True)}">'
+        f'<span class="hh-more-label">{html.escape(forecast_card["title"])}'
+        f'<small>{html.escape(forecast_card["meta"])}</small></span>'
+        f'<span class="hh-more-cta">{html.escape(forecast_card.get("cta", "See the board →"))}</span></a></div>'
+    ) if forecast_card else ""
+    return (
+        '<section class="home-hub">'
+        f'<div class="hh-grid">{_card(library_card)}{_card(desk_card) if desk_card else ""}</div>'
+        f'{more}'
+        '</section>'
+    )
+
+
 def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands="", tools="", quiz="", shell=""):
     """Render a detached domain front (docs/<slug>.html): nameplate, any bands it
     pulled off the home page (the wire, its Briefings rack), its own apparatus row
@@ -9688,6 +9891,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         slug=slug,
         favicon=FAVICON,
         og_meta=og,
+        nav=main_nav_html(active=f"{slug}.html"),
         css=(LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + DOMAIN_PAGE_CSS
              + (QUIZ_CSS if quiz else "")),
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
@@ -9833,12 +10037,7 @@ WRAPPED_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
-    <a href="wrapped.html" class="active">Wrapped</a>
+{nav}
   </nav>
 </div>
 <header class="wr-plate">
@@ -10047,16 +10246,7 @@ GLOSSARY_TEMPLATE = """<!DOCTYPE html>
 </html>
 """
 
-GLOSSARY_NAV_DEFAULT = (
-    '    <a href="index.html">The Research</a>\n'
-    '    <a href="ghost.html">The Ghost of Times</a>\n'
-    '    <a href="adtech.html">Ad Tech</a>\n'
-    '    <a href="pamphlets.html">The Pamphlets</a>\n'
-    '    <a href="forecast.html">The Forecast Desk</a>\n'
-    '    <a href="connections.html">Connections</a>\n'
-    '    <a href="glossary.html" class="active">Glossary</a>\n'
-    '    <a href="quiz.html">Quiz</a>'
-)
+GLOSSARY_NAV_DEFAULT = main_nav_html(active="glossary.html")
 
 
 def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", page=None):
@@ -10207,14 +10397,7 @@ QUIZ_PAGE_TEMPLATE = """<!DOCTYPE html>
 <div class="masthead">
   <span class="mh-brand">calvincollins · xyz</span>
   <nav class="mh-nav">
-    <a href="index.html">The Research</a>
-    <a href="ghost.html">The Ghost of Times</a>
-    <a href="adtech.html">Ad Tech</a>
-    <a href="pamphlets.html">The Pamphlets</a>
-    <a href="forecast.html">The Forecast Desk</a>
-    <a href="connections.html">Connections</a>
-    <a href="glossary.html">Glossary</a>
-    <a href="quiz.html" class="active">Quiz</a>
+{nav}
   </nav>
 </div>
 <main class="qz-wrap">
@@ -10254,6 +10437,7 @@ def build_quiz_page(out_dir, quiz_facts, all_passages, shell=""):
                 f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>')
     page = QUIZ_PAGE_TEMPLATE.format(
         favicon=FAVICON, og_meta=og, css=LIBRARY_CSS + QUIZ_CSS + QUIZ_PAGE_CSS,
+        nav=main_nav_html(active="quiz.html"),
         intro=intro, card=QUIZ_CARD_HTML, payloads=payloads,
         app_js=LIBRARY_THEME_JS + QUIZ_JS, shell=shell,
     )
@@ -10285,6 +10469,7 @@ def build_wrapped_page(out_dir, wrapped_stats, shell="", category_order=None):
     out = Path(out_dir)
     page = WRAPPED_TEMPLATE.format(
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(active="wrapped.html"),
         css=LIBRARY_CSS + WRAPPED_CSS,
         stats_json=json_for_html(wrapped_stats),
         holdings=holdings_chart_svg(wrapped_stats, category_order),
@@ -10758,6 +10943,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # desk-scoped ones included; each detached desk also gets its own scoped copy.
     build_record_page(out, forecast_items, fd_markets, forecast_cfg, shell=shell_root,
                        native_data=fd_native_data)
+    # One full profile page per standing predictor (docs/forecasters/{key}.html),
+    # computed from every market site-wide so a desk-scoped record still rolls up
+    # into the same complete history. The roster cards on both Track Record pages
+    # (site-wide and each desk's own) link here.
+    build_persona_pages(out, build_forecast_ledger(forecast_items, fd_markets),
+                        build_book(forecast_items, fd_markets, fd_native_data), shell=shell_root)
 
     # ---- Detached domain fronts: a config domain carrying a "page" object is
     # lifted off the home page onto its own top-level section of the site (e.g.
@@ -10768,6 +10959,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # tools row. The home page gets a desk band pointing at the section instead.
     index_cards = [c for c in cards if c["category"] not in detached_cats]
     home_bands = []
+    hub_desk = None  # first detached domain (e.g. Ad Tech) — feeds the home hub's co-equal door
     for d in detached:
         pcfg = d["page"]
         slug = pcfg.get("slug", "adtech")
@@ -10777,18 +10969,23 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         dws = [w for w in wrapped_stats if w["category"] in dcats]
         dstats = (f"{len(dcards)} corpora · {sum(w['chapters'] for w in dws)} chapters · "
                   f"{round(sum(w['words'] for w in dws) / 1000)}k words")
+        if hub_desk is None:
+            hub_desk = {
+                "href": f"{slug}.html",
+                "kicker": pcfg.get("kicker", "A separate desk"),
+                "title": title,
+                "meta": f"{dstats} — plus the desk's own wire, board, and glossary",
+                "cta": "Enter the desk →",
+                "accent": ("#0d5b68", "#62aab8"),
+            }
         inc = pcfg.get("include") or []
         takes_fp = "fingerprint" in inc
         bands = fingerprint_band if takes_fp else ""
         if takes_fp:
             fingerprint_band = ""   # the wire band now lives on the desk, not the index
-        # The desk's own apparatus, scoped to just its categories.
-        desk_nav = (
-            '    <a href="index.html">The Research</a>\n'
-            '    <a href="ghost.html">The Ghost of Times</a>\n'
-            f'    <a href="{slug}.html" class="active">{html.escape(title)}</a>\n'
-            '    <a href="pamphlets.html">The Pamphlets</a>\n'
-            '    <a href="forecast.html">The Forecast Desk</a>')
+        # The desk's own apparatus, scoped to just its categories — same
+        # canonical nav as every other page, underlining this desk's own link.
+        desk_nav = main_nav_html(active=f"{slug}.html")
         desk_back = f'<a href="{slug}.html">← Back to the {html.escape(title)} desk</a>'
         tools = []
         if "forecast" in inc:
@@ -10858,7 +11055,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             build_pamphlets_page(out, b_items, b_cfg, shell=shell_root,
                                  page={"fname": f"{b_slug}.html", "title": b_title,
                                        "kicker": pcfg.get("briefings_kicker", f"Essays from the {title} desk"),
-                                       "nav": desk_nav, "back": desk_back, "noun": "briefing",
+                                       "nav": desk_nav, "back": desk_back, "noun": "briefing", "subdir": b_slug,
                                        "empty": f"No briefings filed yet. Drop an essay into "
                                                 f"docs/{b_slug}/data/ and list it in the manifest "
                                                 f"to see it here.",
@@ -10866,6 +11063,15 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             bands += pamphlets_band_html(b_items, b_cfg,
                                          page={"name": b_title, "flag": "The<br>Briefings",
                                                "href": f"{b_slug}.html", "cls": "brf"})
+            b_rendered = sum(build_pamphlet(out, p, shell=shell_sub,
+                                            page={"subdir": b_slug, "list_href": f"{b_slug}.html",
+                                                  "list_name": b_title, "nav_active": f"{slug}.html",
+                                                  "kicker": pcfg.get("briefings_kicker",
+                                                                     f"Essays from the {title} desk"),
+                                                  "noun": "briefing"})
+                             for p in b_items)
+            if b_items:
+                print(f"  ✓ Rendered {b_rendered}/{len(b_items)} {b_title} essay page(s) from data")
         quiz_html = ""
         if "quiz" in inc:
             # The desk's own Test Yourself — the quiz engine scoped (via
@@ -10980,7 +11186,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     )
 
     # The Fingerprint + Pamphlets bands share the library CSS, so fold them in once.
-    library_css = LIBRARY_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + FORECAST_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
+    library_css = LIBRARY_CSS + HOME_HUB_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + FORECAST_BAND_CSS + OVERTURE_CSS + QUIZ_CSS
     # First-visit overture markup — built from the existing brand only (no new copy).
     # The Fingerprint bills under its desk's name once a detached domain takes it.
     # Every section name is a live link: The Research stays on this page (#library);
@@ -11011,13 +11217,34 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         f'<script id="passages-data" type="application/json">{json_for_html(all_passages)}</script>'
     )
     collections_html = collections_section_html([m for _cc, m in resolved_collections])
+    # The home hub — the front door's two co-equal choices (Research Library,
+    # the detached desk) plus a smaller third door to the Forecast Desk.
+    _hub_n_markets = len(forecast_items) + len(fd_markets)
+    _hub_n_outcomes = sum(len(m["outcomes"]) for m in fd_markets) + len(forecast_items)
+    library_card = {
+        "href": "#library",
+        "kicker": "The library",
+        "title": "The Research Library",
+        "meta": stats,
+        "cta": "Start reading →",
+        "accent": ("#9a2c1a", "#d98055"),
+    }
+    forecast_card = {
+        "href": "forecast.html",
+        "title": "The Forecast Desk",
+        "meta": f"{_hub_n_markets} markets · {_hub_n_outcomes} priced outcomes, every one grounded in the research",
+        "cta": "See the board →",
+    } if _hub_n_markets else None
+    hub_html = home_hub_html(library_card, hub_desk, forecast_card)
     (out / "index.html").write_text(LIBRARY_TEMPLATE.format(
         site_title=html.escape(site_title),
         site_subtitle=html.escape(site_subtitle),
         css=library_css,
         favicon=FAVICON, og_meta=OG_META,
+        nav=main_nav_html(active="index.html"),
         stats=stats,
         hero=hero_art(),
+        hub=hub_html,
         overture_head=OVERTURE_HEAD,
         overture=overture_html,
         daily_passage=daily_passage,
