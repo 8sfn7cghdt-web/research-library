@@ -4,5 +4,7 @@
   { "file": "03_Players_And_Market_Structure.md", "after": "## 1.1 The accept/refuse map", "snippet": "refuser_split.html" },
   { "file": "04_Ad_Impact_And_Effectiveness.md", "after": "## 3. The Measurement-Validity Problem", "snippet": "reach_vs_effect.html" },
   { "file": "06_Regulation_Privacy_And_Risk.md", "after": "## 1. The FCC Gap", "snippet": "regulatory_gap.html" },
-  { "file": "Future_Trajectory.md", "after": "## Base Rates", "snippet": "scenario_fan.html" }
+  { "file": "Future_Trajectory.md", "after": "## Base Rates", "snippet": "scenario_fan.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "How an ad actually finds your couch", "snippet": "scene_district_to_couch.html" },
+  { "file": "02_The_Addressability_Stack.md", "after": "Layer 1 — The Glass: Smart-TV ACR Data", "snippet": "scene_measured_screen.html" }
 ]
