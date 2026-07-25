@@ -1052,6 +1052,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
   </div>
   <section id="related"></section>
 </main>
+<template id="reader-scene-template">{scene}</template>
 <script id="corpus-data" type="application/json">{data_json}</script>
 <script>{marked_js}</script>
 <script>{app_js}</script>
@@ -1525,6 +1526,10 @@ function show(i, anchorText) {
   well.textContent = 'Chapter ' + (current + 1) + ' of ' + docs.length + ' · ' + mins + ' min read · Machine Humanities';
   var h1 = content.querySelector('h1');
   if (h1) h1.insertAdjacentElement('afterend', well); else content.insertAdjacentElement('afterbegin', well);
+  var sceneTpl = document.getElementById('reader-scene-template');
+  if (sceneTpl && h1 && sceneTpl.content && sceneTpl.content.firstElementChild) {
+    well.insertAdjacentElement('afterend', sceneTpl.content.firstElementChild.cloneNode(true));
+  }
   armReveals(content);
   toc.querySelectorAll('a').forEach((a, j) => a.classList.toggle('active', j === current));
   document.getElementById('prev').disabled = current === 0;
@@ -3292,6 +3297,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
     <h1>{site_title}</h1>
     <p class="tagline">{site_subtitle}</p>
     <p class="stats">{stats}</p>
+    {hero_scene}
   </div>
   <div class="hero-art">{hero}</div>
 </header>
@@ -3325,10 +3331,16 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 LIBRARY_THEME_JS = ""
 
 SCENE_LABELS = {
+    "research": "A research-library table with open books, marked passages, and lamplight on the reading desk.",
+    "collection": "A curated reading table with stacked chapters, notes, and a stitched path through the library.",
     "ghost": "A late-night editorial room with a lamp, marked pages, and a window beyond the desk.",
     "fingerprint": "A market-wire signal room with screens, broadcast arcs, and ticker bars.",
     "pamphlet": "A letterpress table with fresh pamphlet sheets, rollers, and a locked-up chase.",
     "briefing": "A briefing desk with screens, notes, and trade signals arranged for review.",
+    "forecast": "A forecast desk with signal screens, probability sheets, and a small broadcast tower.",
+    "map": "A map room with linked panes, table notes, and signal lines between ideas.",
+    "quiz": "A study desk with question cards, marked pages, and a lit review lamp.",
+    "wrapped": "A reading ledger table with stacked holdings, square marks, and a private year-end tally.",
 }
 
 
@@ -3421,12 +3433,28 @@ SCENE_PLATE_CSS = """
 .scene-briefing .sc-roller, .scene-briefing .sc-tower { display: none; }
 .scene-briefing .sc-paper { bottom: 25%; }
 .scene-plate.band-scene { width: 142px; min-width: 142px; }
+.scene-plate.hero-scene { max-width: 360px; margin: 1.1rem 0 0; }
 .scene-plate.section-scene { max-width: 560px; margin: 1.05rem auto 1.25rem; }
 .scene-plate.feature-scene { margin: 0 0 1rem; }
 .scene-plate.article-scene, .scene-plate.edition-scene { max-width: 620px; margin: 0 auto 2rem; }
 .scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
+.scene-plate.reader-scene { aspect-ratio: 16 / 10; margin: 1rem 0 1.65rem; }
+.scene-plate.page-scene { max-width: 560px; margin: 1.05rem auto 1.35rem; }
+.scene-plate.detail-scene { max-width: 620px; margin: 1rem auto 1.2rem; }
+.scene-research, .scene-collection, .scene-map, .scene-quiz, .scene-wrapped { --sc-accent: var(--accent); }
+.scene-research .sc-screen, .scene-research .sc-roller, .scene-research .sc-tower,
+.scene-collection .sc-screen, .scene-collection .sc-roller, .scene-collection .sc-tower,
+.scene-quiz .sc-screen, .scene-quiz .sc-roller, .scene-quiz .sc-tower,
+.scene-wrapped .sc-screen, .scene-wrapped .sc-roller, .scene-wrapped .sc-tower { display: none; }
+.scene-map .sc-lamp, .scene-map .sc-glow, .scene-map .sc-roller { display: none; }
+.scene-map .sc-line { height: 1px; opacity: .9; }
+.scene-forecast .sc-window, .scene-forecast .sc-lamp, .scene-forecast .sc-glow,
+.scene-forecast .sc-roller { display: none; }
+.scene-forecast { --sc-accent: #eab308; }
+[data-theme="dark"] .scene-forecast { --sc-accent: #facc15; }
 @media (max-width: 680px) {
   .scene-plate.band-scene { width: 100%; min-width: 0; max-width: 320px; }
+  .scene-plate.hero-scene { max-width: 320px; }
   .scene-plate.section-scene { margin-top: .9rem; }
 }
 """
