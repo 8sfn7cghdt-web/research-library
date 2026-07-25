@@ -66,6 +66,9 @@ SITE_URL = "https://calvincollins.xyz"
 OG_IMAGE = "machine-humanities-homepage.png"  # source lives in corpus-app/; copied into out/ at build time
 TOP_HEADER_IMAGE = OG_IMAGE
 HERO_IMAGE = "divine-hero-agent-logo-v3.png"
+RESEARCH_HERO_IMAGE = "research-hero-agent-logo-v1.png"
+ADTECH_HERO_IMAGE = "adtech-hero-agent-logo-v1.png"
+SITE_IMAGE_ASSETS = (OG_IMAGE, RESEARCH_HERO_IMAGE, ADTECH_HERO_IMAGE)
 USE_TOP_HEADER_IMAGE = True
 USE_HERO_IMAGE = True  # Use the Divine Hero Agent mascot; flip to False for the engraved lintel SVG.
 
@@ -893,8 +896,9 @@ def section_agent_art(kind="library", compact=False):
     """Reuse the homepage mascot with section-specific framing so the agents feel like siblings."""
     accent = "library" if kind == "library" else "adtech"
     label = "Research agent" if kind == "library" else "Ad Tech agent"
+    filename = RESEARCH_HERO_IMAGE if kind == "library" else ADTECH_HERO_IMAGE
     wrap = "agent-chip compact" if compact else "agent-chip"
-    img = embedded_image(HERO_IMAGE, f"hero-img mascot-img agent-portrait {accent}", "Divine Hero Agent")
+    img = embedded_image(filename, f"hero-img mascot-img agent-portrait {accent}", label)
     if not img:
         return hero_svg()
     return (
@@ -3284,117 +3288,253 @@ SCENE_LABELS = {
 }
 
 
-def scene_plate(kind, label=None, extra_class=""):
-    """A small CSS-built scene plate. It uses shared spans; each `scene-*`
-    class turns them into the relevant visual setting."""
+SCENE_COVERS = {
+    "research": ("american-pragmatism-research", "mcluhan-research", "carlyle-research", "jesus-research"),
+    "collection": ("civil-war-religion-whitman-research", "dickinson-research", "emerson-research", "carlyle-research"),
+    "ghost": ("carlyle-research", "dickinson-research", "mcluhan-research", "emerson-research"),
+    "fingerprint": ("fox-roku-research", "agentic-advertising-protocols-research", "ctv-identity-signals-research", "india-advertising-research"),
+    "pamphlet": ("carlyle-french-revolution-research", "carlyle-friedrich-research", "emerson-research", "dickinson-research"),
+    "briefing": ("ctv-dsp-ssp-research", "containerized-bidding-research", "political-ctv-research", "walmart-vibe-research"),
+    "forecast": ("walmart-vibe-research", "us-geopolitics-research", "fox-roku-research", "ctv-ssp-research"),
+    "map": ("american-pragmatism-research", "jesus-research", "mcluhan-research", "india-advertising-research"),
+    "quiz": ("piaget-research", "pareto-research", "jung-research", "deutsch-good-explanations-research"),
+    "wrapped": ("carlyle-research", "american-pragmatism-research", "mcluhan-research", "jesus-research"),
+}
+
+SCENE_STAMPS = {
+    "research": "FIELD NOTES",
+    "collection": "CURATED PATH",
+    "ghost": "NIGHT EDITION",
+    "fingerprint": "MARKET WIRE",
+    "pamphlet": "LETTERPRESS",
+    "briefing": "BRIEFING ROOM",
+    "forecast": "PROBABILITY DESK",
+    "map": "IDEA ATLAS",
+    "quiz": "QUESTION SET",
+    "wrapped": "PRIVATE LEDGER",
+}
+
+
+def _scene_cover_images(kind, root="", cover_slugs=None):
+    slugs = []
+    for slug in (cover_slugs or ()):
+        if slug and slug not in slugs:
+            slugs.append(slug)
+    for slug in SCENE_COVERS.get(kind, ()):
+        if slug and slug not in slugs:
+            slugs.append(slug)
+
+    imgs = []
+    asset_root = root or ""
+    for slug in slugs:
+        img = find_cover_image(slug)
+        if img is None:
+            continue
+        src = html.escape(f"{asset_root}covers/{img.name}", quote=True)
+        imgs.append(
+            f'<img class="sc-cover sc-c{len(imgs) + 1}" src="{src}" alt="" loading="lazy" decoding="async">'
+        )
+        if len(imgs) >= 4:
+            break
+    return "".join(imgs)
+
+
+def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None):
+    """A cover-like scene plate built from the corpus visual language."""
     kind = kind if kind in SCENE_LABELS else "pamphlet"
     cls = f"scene-plate scene-{kind}" + (f" {extra_class}" if extra_class else "")
     aria = html.escape(label or SCENE_LABELS[kind], quote=True)
+    stamp = html.escape(SCENE_STAMPS.get(kind, "FIELD NOTES"))
     return (
         f'<figure class="{html.escape(cls, quote=True)}" role="img" aria-label="{aria}">'
-        '<span class="sc-sky"></span><span class="sc-floor"></span>'
-        '<span class="sc-window sc-w1"></span><span class="sc-window sc-w2"></span>'
-        '<span class="sc-screen sc-s1"></span><span class="sc-screen sc-s2"></span><span class="sc-screen sc-s3"></span>'
-        '<span class="sc-table"></span><span class="sc-lamp"></span><span class="sc-glow"></span>'
-        '<span class="sc-paper sc-p1"></span><span class="sc-paper sc-p2"></span><span class="sc-paper sc-p3"></span>'
-        '<span class="sc-line sc-l1"></span><span class="sc-line sc-l2"></span><span class="sc-line sc-l3"></span>'
-        '<span class="sc-roller sc-r1"></span><span class="sc-roller sc-r2"></span><span class="sc-tower"></span>'
+        '<span class="sc-wall" aria-hidden="true"></span><span class="sc-window" aria-hidden="true"></span>'
+        '<span class="sc-pin sc-pin1" aria-hidden="true"></span><span class="sc-pin sc-pin2" aria-hidden="true"></span>'
+        '<span class="sc-wire sc-wire1" aria-hidden="true"></span><span class="sc-wire sc-wire2" aria-hidden="true"></span>'
+        f'{_scene_cover_images(kind, root=root, cover_slugs=cover_slugs)}'
+        '<span class="sc-screen sc-screen1" aria-hidden="true"></span><span class="sc-screen sc-screen2" aria-hidden="true"></span>'
+        '<span class="sc-mapgrid" aria-hidden="true"></span><span class="sc-path sc-path1" aria-hidden="true"></span>'
+        '<span class="sc-path sc-path2" aria-hidden="true"></span><span class="sc-path sc-path3" aria-hidden="true"></span>'
+        '<span class="sc-table" aria-hidden="true"></span><span class="sc-book" aria-hidden="true"></span>'
+        '<span class="sc-sheet sc-s1" aria-hidden="true"></span><span class="sc-sheet sc-s2" aria-hidden="true"></span>'
+        '<span class="sc-sheet sc-s3" aria-hidden="true"></span><span class="sc-ticket sc-t1" aria-hidden="true"></span>'
+        '<span class="sc-ticket sc-t2" aria-hidden="true"></span><span class="sc-ticket sc-t3" aria-hidden="true"></span>'
+        '<span class="sc-roller sc-r1" aria-hidden="true"></span><span class="sc-roller sc-r2" aria-hidden="true"></span>'
+        '<span class="sc-lamp" aria-hidden="true"></span><span class="sc-glow" aria-hidden="true"></span>'
+        f'<span class="sc-stamp" aria-hidden="true">{stamp}</span>'
         '</figure>'
     )
 
 
 SCENE_PLATE_CSS = """
-/* Scene plates — small, content-depicting CSS scenes used where the periodicals
-   and essay racks used to be typography-only. */
-.scene-plate { --sc-accent: var(--accent); --sc-ink: var(--text); --sc-paper: var(--panel);
-  --sc-soft: color-mix(in srgb, var(--muted) 32%, transparent);
-  --sc-bg-a: color-mix(in srgb, var(--panel) 88%, var(--bg));
-  --sc-bg-b: color-mix(in srgb, var(--bg) 80%, var(--accent) 20%);
-  position: relative; display: block; width: 100%; aspect-ratio: 3 / 2; overflow: hidden;
-  margin: 0; border: 1px solid var(--border); border-radius: 2px; background:
-    linear-gradient(180deg, var(--sc-bg-a), var(--sc-bg-b)); box-shadow: none; }
-[data-theme="dark"] .scene-plate { --sc-soft: color-mix(in srgb, var(--muted) 42%, transparent);
-  --sc-bg-a: color-mix(in srgb, var(--panel) 86%, #000 14%);
-  --sc-bg-b: color-mix(in srgb, var(--bg) 72%, var(--accent) 28%); }
-.scene-plate > span { position: absolute; display: block; }
-.sc-sky { inset: 0; background:
-  linear-gradient(90deg, transparent 0 48%, color-mix(in srgb, var(--sc-accent) 12%, transparent) 48% 49%, transparent 49%),
-  radial-gradient(circle at 78% 24%, color-mix(in srgb, var(--sc-accent) 28%, transparent), transparent 20%); opacity: .9; }
-.sc-floor { left: 0; right: 0; bottom: 0; height: 31%; background:
-  linear-gradient(180deg, color-mix(in srgb, var(--sc-ink) 10%, transparent), transparent 22%),
-  repeating-linear-gradient(90deg, color-mix(in srgb, var(--sc-ink) 12%, transparent) 0 1px, transparent 1px 20px); }
-.sc-table { left: 10%; right: 8%; bottom: 17%; height: 8%; background: var(--sc-ink); opacity: .8; }
-.sc-table::before, .sc-table::after { content: ""; position: absolute; top: 100%; width: 3px; height: 42px; background: var(--sc-ink); opacity: .65; }
-.sc-table::before { left: 12%; } .sc-table::after { right: 12%; }
-.sc-paper { background: color-mix(in srgb, var(--bg) 72%, #fff 28%); border: 1px solid var(--border);
-  box-shadow: 0 1px 0 color-mix(in srgb, var(--sc-ink) 12%, transparent); }
-.sc-p1 { width: 25%; height: 18%; left: 16%; bottom: 28%; transform: rotate(-7deg); }
-.sc-p2 { width: 22%; height: 15%; left: 38%; bottom: 31%; transform: rotate(4deg); }
-.sc-p3 { width: 18%; height: 13%; right: 17%; bottom: 29%; transform: rotate(-2deg); }
-.sc-line { height: 2px; background: var(--sc-accent); opacity: .72; }
-.sc-l1 { width: 15%; left: 20%; bottom: 39%; transform: rotate(-7deg); }
-.sc-l2 { width: 13%; left: 43%; bottom: 40%; transform: rotate(4deg); }
-.sc-l3 { width: 10%; right: 21%; bottom: 37%; transform: rotate(-2deg); }
-.sc-window { top: 15%; height: 28%; border: 1px solid var(--border);
-  background: linear-gradient(180deg, color-mix(in srgb, var(--sc-accent) 10%, transparent), transparent); }
-.sc-window::before { content: ""; position: absolute; inset: 50% 0 auto; border-top: 1px solid var(--border); }
-.sc-window::after { content: ""; position: absolute; inset: 0 50% 0 auto; border-left: 1px solid var(--border); }
-.sc-w1 { left: 12%; width: 20%; } .sc-w2 { right: 12%; width: 20%; }
-.sc-lamp { width: 9%; height: 22%; left: 48%; bottom: 34%; border-left: 2px solid var(--sc-ink); }
-.sc-lamp::before { content: ""; position: absolute; left: -13px; top: -3px; width: 28px; height: 13px;
-  background: var(--sc-accent); clip-path: polygon(18% 0, 82% 0, 100% 100%, 0 100%); }
-.sc-glow { width: 22%; height: 15%; left: 40%; bottom: 27%; border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--sc-accent) 33%, transparent), transparent 68%);
-  opacity: .75; }
-.sc-screen { background: color-mix(in srgb, var(--sc-ink) 86%, #000 14%); border: 1px solid var(--border); }
-.sc-screen::before { content: ""; position: absolute; left: 10%; right: 10%; top: 28%; height: 2px;
-  background: var(--sc-accent); box-shadow: 0 8px 0 color-mix(in srgb, var(--sc-accent) 55%, transparent), 0 16px 0 var(--sc-soft); }
-.sc-s1 { width: 24%; height: 22%; left: 11%; top: 17%; }
-.sc-s2 { width: 21%; height: 18%; left: 39%; top: 12%; }
-.sc-s3 { width: 24%; height: 22%; right: 11%; top: 17%; }
-.sc-roller { height: 12%; border-radius: 999px; background: var(--sc-ink); opacity: .82; }
-.sc-r1 { left: 18%; right: 18%; bottom: 36%; }
-.sc-r2 { left: 26%; right: 26%; bottom: 50%; background: var(--sc-accent); opacity: .72; }
-.sc-tower { left: 50%; top: 22%; width: 2px; height: 35%; background: var(--sc-accent); opacity: .9; }
-.sc-tower::before, .sc-tower::after { content: ""; position: absolute; left: 50%; top: -16%;
-  width: 72px; height: 72px; border: 1px solid var(--sc-accent); border-bottom: 0; border-radius: 72px 72px 0 0;
-  transform: translateX(-50%); opacity: .55; }
-.sc-tower::after { top: -32%; width: 110px; height: 110px; opacity: .32; }
+/* Scene plates: cover-wall/tabletop compositions that reuse the corpus covers
+   and the archive-room language of the chapter scenes. */
+.scene-plate { --sc-accent: var(--accent); --sc-ink: var(--text); --sc-paper: #f6f2e7;
+  --sc-warm: #b9854b; --sc-blue: #274d5f; --sc-green: #566b40; --sc-red: #9a2c1a;
+  --sc-shadow: rgba(31, 24, 17, .22); --sc-glass: rgba(255, 255, 255, .34);
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
+  margin: 0; border: 1px solid color-mix(in srgb, var(--border) 72%, var(--text) 28%);
+  border-radius: 3px; isolation: isolate; background:
+    radial-gradient(circle at 22% 18%, color-mix(in srgb, var(--sc-accent) 32%, transparent), transparent 23%),
+    radial-gradient(circle at 82% 26%, rgba(185, 133, 75, .22), transparent 25%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel) 88%, #fff 12%), color-mix(in srgb, var(--bg) 78%, var(--sc-accent) 22%));
+  box-shadow: 0 18px 44px color-mix(in srgb, var(--sc-shadow) 65%, transparent); }
+[data-theme="dark"] .scene-plate { --sc-paper: #242018; --sc-shadow: rgba(0, 0, 0, .48);
+  --sc-glass: rgba(255, 255, 255, .12); background:
+    radial-gradient(circle at 22% 18%, color-mix(in srgb, var(--sc-accent) 36%, transparent), transparent 24%),
+    radial-gradient(circle at 82% 26%, rgba(217, 128, 85, .18), transparent 25%),
+    linear-gradient(135deg, color-mix(in srgb, var(--panel) 76%, #000 24%), color-mix(in srgb, var(--bg) 76%, var(--sc-accent) 24%)); }
+.scene-plate::before { content: ""; position: absolute; inset: 0; z-index: 9; pointer-events: none; background:
+  repeating-linear-gradient(0deg, rgba(80, 62, 36, .08) 0 1px, transparent 1px 5px),
+  repeating-linear-gradient(90deg, rgba(80, 62, 36, .05) 0 1px, transparent 1px 7px),
+  radial-gradient(circle at 50% 42%, transparent 0 54%, rgba(31, 24, 17, .18) 100%);
+  mix-blend-mode: multiply; opacity: .72; }
+[data-theme="dark"] .scene-plate::before { mix-blend-mode: screen; opacity: .2; }
+.scene-plate::after { content: ""; position: absolute; inset: 10px; z-index: 8; pointer-events: none;
+  border: 1px solid rgba(255,255,255,.28); box-shadow: inset 0 0 0 1px rgba(40, 31, 22, .18); }
+.scene-plate > span, .scene-plate > img { position: absolute; display: block; }
+.sc-wall { inset: 0; z-index: 0; background:
+  linear-gradient(90deg, transparent 0 18%, rgba(255,255,255,.16) 18% 18.5%, transparent 18.5% 62%, rgba(255,255,255,.12) 62% 62.5%, transparent 62.5%),
+  radial-gradient(circle at 48% 18%, color-mix(in srgb, var(--sc-accent) 25%, transparent), transparent 22%); }
+.sc-window { right: 7%; top: 11%; width: 24%; height: 38%; z-index: 1; border: 1px solid color-mix(in srgb, var(--sc-ink) 36%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--sc-blue) 30%, transparent), transparent);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); opacity: .68; }
+.sc-window::before, .sc-window::after { content: ""; position: absolute; background: color-mix(in srgb, var(--sc-ink) 32%, transparent); }
+.sc-window::before { left: 0; right: 0; top: 50%; height: 1px; }
+.sc-window::after { top: 0; bottom: 0; left: 50%; width: 1px; }
+.sc-cover { z-index: 3; object-fit: cover; border: 1px solid rgba(255,255,255,.48);
+  box-shadow: 0 14px 28px var(--sc-shadow), 0 0 0 1px rgba(39, 30, 21, .2);
+  filter: saturate(.92) contrast(1.06); background: var(--sc-paper); }
+.sc-c1 { left: 9%; top: 12%; width: 28%; height: 58%; transform: rotate(-7deg); }
+.sc-c2 { left: 29%; top: 8%; width: 24%; height: 52%; transform: rotate(4deg); }
+.sc-c3 { right: 15%; top: 16%; width: 23%; height: 50%; transform: rotate(8deg); }
+.sc-c4 { right: 33%; top: 22%; width: 19%; height: 42%; transform: rotate(-3deg); opacity: .9; }
+.sc-pin { width: 9px; height: 9px; border-radius: 50%; z-index: 5; background: var(--sc-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sc-accent) 20%, transparent), 0 2px 8px var(--sc-shadow); }
+.sc-pin1 { left: 18%; top: 15%; } .sc-pin2 { right: 22%; top: 21%; }
+.sc-wire { height: 1px; z-index: 2; transform-origin: 0 50%; background: color-mix(in srgb, var(--sc-accent) 72%, #fff 28%);
+  box-shadow: 0 0 9px color-mix(in srgb, var(--sc-accent) 42%, transparent); }
+.sc-wire1 { left: 22%; top: 19%; width: 42%; transform: rotate(8deg); }
+.sc-wire2 { left: 43%; top: 18%; width: 35%; transform: rotate(-13deg); }
+.sc-table { left: -5%; right: -5%; bottom: -1%; height: 34%; z-index: 4; background:
+  linear-gradient(180deg, color-mix(in srgb, var(--sc-paper) 62%, #fff 38%), color-mix(in srgb, var(--sc-warm) 50%, #302114 50%));
+  border-top: 1px solid color-mix(in srgb, var(--sc-ink) 24%, transparent);
+  box-shadow: 0 -12px 30px color-mix(in srgb, var(--sc-shadow) 55%, transparent); transform: skewY(-2deg); }
+.sc-book { left: 31%; bottom: 16%; width: 34%; height: 20%; z-index: 6; background: var(--sc-paper);
+  border: 1px solid rgba(43, 34, 25, .28); border-radius: 1px 1px 12px 12px;
+  box-shadow: 0 10px 18px var(--sc-shadow); transform: rotate(-1deg); }
+.sc-book::before { content: ""; position: absolute; left: 49.5%; top: 0; bottom: 0; width: 1px; background: rgba(43, 34, 25, .34); }
+.sc-book::after { content: ""; position: absolute; left: 8%; right: 8%; top: 28%; height: 1px; background: rgba(43, 34, 25, .32);
+  box-shadow: 0 8px 0 rgba(43, 34, 25, .22), 0 16px 0 rgba(43, 34, 25, .18); }
+.sc-sheet { z-index: 6; background: color-mix(in srgb, var(--sc-paper) 82%, #fff 18%);
+  border: 1px solid rgba(43, 34, 25, .25); box-shadow: 0 8px 18px var(--sc-shadow); }
+.sc-sheet::before { content: ""; position: absolute; left: 10%; right: 10%; top: 23%; height: 1px; background: rgba(43, 34, 25, .34);
+  box-shadow: 0 8px 0 rgba(43, 34, 25, .18), 0 16px 0 rgba(43, 34, 25, .15), 0 24px 0 rgba(43, 34, 25, .12); }
+.sc-s1 { left: 12%; bottom: 20%; width: 20%; height: 18%; transform: rotate(-8deg); }
+.sc-s2 { right: 14%; bottom: 18%; width: 21%; height: 17%; transform: rotate(6deg); }
+.sc-s3 { left: 60%; bottom: 34%; width: 16%; height: 13%; transform: rotate(-3deg); opacity: .92; }
+.sc-lamp { left: 50%; bottom: 35%; width: 2px; height: 27%; z-index: 6; background: color-mix(in srgb, var(--sc-ink) 88%, #000 12%);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.12); }
+.sc-lamp::before { content: ""; position: absolute; left: -19px; top: -10px; width: 40px; height: 20px;
+  background: color-mix(in srgb, var(--sc-accent) 82%, #fff 18%); clip-path: polygon(20% 0, 80% 0, 100% 100%, 0 100%);
+  box-shadow: 0 9px 28px color-mix(in srgb, var(--sc-accent) 52%, transparent); }
+.sc-glow { left: 37%; bottom: 22%; width: 30%; height: 22%; z-index: 5; border-radius: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--sc-accent) 42%, transparent), transparent 68%); opacity: .88; }
+.sc-screen { z-index: 4; background: color-mix(in srgb, var(--sc-blue) 78%, #050505 22%);
+  border: 1px solid color-mix(in srgb, var(--sc-blue) 48%, #fff 12%); box-shadow: 0 14px 28px var(--sc-shadow); }
+.sc-screen::before { content: ""; position: absolute; left: 10%; right: 10%; top: 20%; height: 2px;
+  background: color-mix(in srgb, var(--sc-accent) 82%, #fff 18%);
+  box-shadow: 0 9px 0 rgba(255,255,255,.45), 0 18px 0 color-mix(in srgb, var(--sc-accent) 46%, transparent), 0 30px 0 rgba(255,255,255,.22); }
+.sc-screen1 { left: 9%; top: 12%; width: 26%; height: 28%; transform: rotate(-2deg); }
+.sc-screen2 { right: 8%; top: 14%; width: 25%; height: 27%; transform: rotate(3deg); }
+.sc-ticket { z-index: 7; width: 18%; height: 17%; background: color-mix(in srgb, var(--sc-paper) 78%, #fff 22%);
+  border: 1px solid rgba(43, 34, 25, .28); box-shadow: 0 9px 16px var(--sc-shadow); }
+.sc-ticket::before { content: ""; position: absolute; left: 10%; right: 10%; top: 24%; height: 3px; background: var(--sc-accent);
+  box-shadow: 0 11px 0 rgba(43, 34, 25, .28), 0 22px 0 rgba(43, 34, 25, .16); }
+.sc-t1 { left: 15%; bottom: 18%; transform: rotate(-8deg); }
+.sc-t2 { left: 42%; bottom: 18%; transform: rotate(3deg); }
+.sc-t3 { right: 14%; bottom: 18%; transform: rotate(8deg); }
+.sc-mapgrid { left: 12%; right: 10%; top: 12%; bottom: 22%; z-index: 2; border: 1px solid rgba(43, 34, 25, .22);
+  background: linear-gradient(90deg, transparent 0 32%, rgba(43,34,25,.16) 32% 32.5%, transparent 32.5% 66%, rgba(43,34,25,.12) 66% 66.5%, transparent 66.5%),
+  linear-gradient(0deg, transparent 0 45%, rgba(43,34,25,.12) 45% 45.5%, transparent 45.5%); opacity: .58; }
+.sc-path { z-index: 5; width: 12px; height: 12px; border-radius: 50%; background: var(--sc-accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--sc-accent) 18%, transparent), 0 0 20px color-mix(in srgb, var(--sc-accent) 40%, transparent); }
+.sc-path1 { left: 22%; top: 32%; } .sc-path2 { left: 49%; top: 24%; } .sc-path3 { right: 24%; top: 42%; }
+.sc-roller { z-index: 7; height: 12%; border-radius: 999px; background: color-mix(in srgb, var(--sc-ink) 84%, #000 16%);
+  box-shadow: 0 10px 18px var(--sc-shadow); }
+.sc-r1 { left: 18%; right: 18%; bottom: 27%; transform: rotate(-2deg); }
+.sc-r2 { left: 25%; right: 25%; bottom: 42%; background: var(--sc-accent); opacity: .82; transform: rotate(2deg); }
+.sc-stamp { right: 7%; bottom: 8%; z-index: 10; padding: .34rem .5rem .3rem; font-family: var(--mono);
+  font-size: clamp(.48rem, 1.15vw, .68rem); font-weight: 700; letter-spacing: .12em; color: var(--sc-accent);
+  border: 1px solid currentColor; background: color-mix(in srgb, var(--sc-paper) 76%, transparent);
+  transform: rotate(-3deg); box-shadow: 0 8px 14px var(--sc-shadow); white-space: nowrap; }
+.scene-plate.band-scene { width: 164px; min-width: 164px; aspect-ratio: 4 / 3; }
+.scene-plate.hero-scene { max-width: 420px; margin: 1.1rem 0 0; }
+.scene-plate.section-scene { max-width: 640px; margin: 1.05rem auto 1.25rem; }
+.scene-plate.feature-scene { margin: 0 0 1rem; }
+.scene-plate.article-scene, .scene-plate.edition-scene { max-width: 680px; margin: 0 auto 2rem; }
+.scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
+.scene-plate.reader-scene { aspect-ratio: 16 / 9; margin: 1rem 0 1.65rem; }
+.scene-plate.page-scene { max-width: 640px; margin: 1.05rem auto 1.35rem; }
+.scene-plate.detail-scene { max-width: 680px; margin: 1rem auto 1.2rem; }
 .scene-ghost { --sc-accent: #9a2c1a; }
 [data-theme="dark"] .scene-ghost { --sc-accent: #d98055; }
-.scene-ghost .sc-screen, .scene-ghost .sc-roller, .scene-ghost .sc-tower { display: none; }
 .scene-fingerprint, .scene-briefing { --sc-accent: #0d5b68; }
 [data-theme="dark"] .scene-fingerprint, [data-theme="dark"] .scene-briefing { --sc-accent: #62aab8; }
-.scene-fingerprint .sc-window, .scene-fingerprint .sc-lamp, .scene-fingerprint .sc-glow,
-.scene-fingerprint .sc-paper, .scene-fingerprint .sc-line, .scene-fingerprint .sc-roller { display: none; }
-.scene-pamphlet .sc-window, .scene-pamphlet .sc-screen, .scene-pamphlet .sc-lamp, .scene-pamphlet .sc-glow,
-.scene-pamphlet .sc-tower { display: none; }
-.scene-briefing .sc-window, .scene-briefing .sc-lamp, .scene-briefing .sc-glow,
-.scene-briefing .sc-roller, .scene-briefing .sc-tower { display: none; }
-.scene-briefing .sc-paper { bottom: 25%; }
-.scene-plate.band-scene { width: 142px; min-width: 142px; }
-.scene-plate.hero-scene { max-width: 360px; margin: 1.1rem 0 0; }
-.scene-plate.section-scene { max-width: 560px; margin: 1.05rem auto 1.25rem; }
-.scene-plate.feature-scene { margin: 0 0 1rem; }
-.scene-plate.article-scene, .scene-plate.edition-scene { max-width: 620px; margin: 0 auto 2rem; }
-.scene-plate.card-scene { aspect-ratio: 16 / 9; margin: 0 0 .75rem; }
-.scene-plate.reader-scene { aspect-ratio: 16 / 10; margin: 1rem 0 1.65rem; }
-.scene-plate.page-scene { max-width: 560px; margin: 1.05rem auto 1.35rem; }
-.scene-plate.detail-scene { max-width: 620px; margin: 1rem auto 1.2rem; }
-.scene-research, .scene-collection, .scene-map, .scene-quiz, .scene-wrapped { --sc-accent: var(--accent); }
-.scene-research .sc-screen, .scene-research .sc-roller, .scene-research .sc-tower,
-.scene-collection .sc-screen, .scene-collection .sc-roller, .scene-collection .sc-tower,
-.scene-quiz .sc-screen, .scene-quiz .sc-roller, .scene-quiz .sc-tower,
-.scene-wrapped .sc-screen, .scene-wrapped .sc-roller, .scene-wrapped .sc-tower { display: none; }
-.scene-map .sc-lamp, .scene-map .sc-glow, .scene-map .sc-roller { display: none; }
-.scene-map .sc-line { height: 1px; opacity: .9; }
-.scene-forecast .sc-window, .scene-forecast .sc-lamp, .scene-forecast .sc-glow,
-.scene-forecast .sc-roller { display: none; }
-.scene-forecast { --sc-accent: #eab308; }
-[data-theme="dark"] .scene-forecast { --sc-accent: #facc15; }
+.scene-pamphlet { --sc-accent: #8f2c18; }
+.scene-forecast { --sc-accent: #b98512; }
+[data-theme="dark"] .scene-forecast { --sc-accent: #f1c34e; }
+.scene-map { --sc-accent: #5d6f36; }
+.scene-quiz { --sc-accent: #69538f; }
+.scene-wrapped { --sc-accent: #b36a2e; }
+.scene-fingerprint .sc-lamp, .scene-fingerprint .sc-glow, .scene-fingerprint .sc-book, .scene-fingerprint .sc-roller,
+.scene-fingerprint .sc-sheet, .scene-fingerprint .sc-window,
+.scene-briefing .sc-lamp, .scene-briefing .sc-glow, .scene-briefing .sc-book, .scene-briefing .sc-window, .scene-briefing .sc-roller,
+.scene-forecast .sc-lamp, .scene-forecast .sc-glow, .scene-forecast .sc-book, .scene-forecast .sc-window, .scene-forecast .sc-roller { display: none; }
+.scene-fingerprint .sc-screen, .scene-briefing .sc-screen, .scene-forecast .sc-screen { display: block; }
+.scene-fingerprint .sc-c1, .scene-briefing .sc-c1, .scene-forecast .sc-c1 { left: 35%; top: 10%; width: 22%; height: 48%; transform: rotate(-4deg); }
+.scene-fingerprint .sc-c2, .scene-briefing .sc-c2, .scene-forecast .sc-c2 { left: 55%; top: 17%; width: 20%; height: 43%; transform: rotate(5deg); }
+.scene-fingerprint .sc-c3, .scene-briefing .sc-c3, .scene-forecast .sc-c3 { display: none; }
+.scene-fingerprint .sc-ticket, .scene-briefing .sc-ticket { height: 15%; bottom: 17%; }
+.scene-pamphlet .sc-screen, .scene-pamphlet .sc-window, .scene-pamphlet .sc-lamp, .scene-pamphlet .sc-glow,
+.scene-pamphlet .sc-book, .scene-pamphlet .sc-mapgrid, .scene-pamphlet .sc-path,
+.scene-pamphlet .sc-wire, .scene-pamphlet .sc-pin { display: none; }
+.scene-pamphlet .sc-c1 { left: 10%; top: 12%; width: 25%; height: 56%; }
+.scene-pamphlet .sc-c2 { right: 11%; top: 14%; left: auto; width: 23%; height: 50%; }
+.scene-pamphlet .sc-sheet { display: block; }
+.scene-pamphlet .sc-s1 { width: 23%; height: 20%; left: 19%; bottom: 18%; }
+.scene-pamphlet .sc-s2 { width: 23%; height: 20%; right: 19%; bottom: 18%; }
+.scene-pamphlet .sc-s3 { left: 41%; bottom: 38%; width: 20%; height: 15%; }
+.scene-research .sc-screen, .scene-research .sc-ticket, .scene-research .sc-roller, .scene-research .sc-mapgrid, .scene-research .sc-path,
+.scene-collection .sc-screen, .scene-collection .sc-ticket, .scene-collection .sc-roller, .scene-collection .sc-mapgrid, .scene-collection .sc-path,
+.scene-quiz .sc-screen, .scene-quiz .sc-roller, .scene-quiz .sc-mapgrid, .scene-quiz .sc-path,
+.scene-wrapped .sc-screen, .scene-wrapped .sc-roller, .scene-wrapped .sc-mapgrid, .scene-wrapped .sc-path { display: none; }
+.scene-map .sc-lamp, .scene-map .sc-glow, .scene-map .sc-book, .scene-map .sc-roller, .scene-map .sc-ticket,
+.scene-map .sc-screen, .scene-map .sc-window { display: none; }
+.scene-map .sc-mapgrid, .scene-map .sc-path { display: block; }
+.scene-map .sc-c1 { left: 12%; top: 17%; width: 20%; height: 42%; transform: rotate(-4deg); }
+.scene-map .sc-c2 { left: 41%; top: 10%; width: 18%; height: 38%; transform: rotate(3deg); }
+.scene-map .sc-c3 { right: 13%; top: 24%; width: 19%; height: 40%; transform: rotate(7deg); }
+.scene-map .sc-c4 { left: 29%; top: 39%; width: 17%; height: 34%; transform: rotate(-8deg); }
+.scene-ghost .sc-screen, .scene-ghost .sc-roller, .scene-ghost .sc-ticket, .scene-ghost .sc-mapgrid, .scene-ghost .sc-path { display: none; }
+.scene-ghost .sc-window { display: block; opacity: .78; }
+.scene-ghost .sc-c1, .scene-ghost .sc-c2, .scene-ghost .sc-c3 { filter: grayscale(.12) sepia(.14) contrast(1.04); opacity: .94; }
+.scene-quiz .sc-ticket { display: block; }
+.scene-quiz .sc-t1::before, .scene-quiz .sc-t2::before, .scene-quiz .sc-t3::before { background: transparent;
+  box-shadow: inset 0 0 0 2px var(--sc-accent), 0 13px 0 rgba(43, 34, 25, .2), 0 26px 0 rgba(43, 34, 25, .13); }
+.scene-wrapped .sc-ticket { display: block; }
+.scene-wrapped .sc-t1, .scene-wrapped .sc-t2, .scene-wrapped .sc-t3 { height: 22%; }
+.scene-plate.band-scene .sc-stamp { display: none; }
+.scene-plate.band-scene .sc-c4, .scene-plate.band-scene .sc-s3, .scene-plate.band-scene .sc-ticket,
+.scene-plate.band-scene .sc-window, .scene-plate.band-scene .sc-mapgrid, .scene-plate.band-scene .sc-path { display: none; }
+.scene-plate.band-scene .sc-c1 { width: 42%; height: 58%; left: 9%; top: 13%; }
+.scene-plate.band-scene .sc-c2 { width: 36%; height: 50%; left: 45%; top: 18%; }
+.scene-plate.band-scene .sc-c3 { width: 30%; height: 42%; right: 8%; top: 32%; }
+.scene-plate.band-scene .sc-book { left: 18%; bottom: 16%; width: 48%; height: 19%; }
+.scene-plate.band-scene .sc-sheet { width: 28%; height: 17%; bottom: 18%; }
+.scene-plate.band-scene .sc-lamp { left: 62%; bottom: 32%; height: 24%; }
 @media (max-width: 680px) {
   .scene-plate.band-scene { width: 100%; min-width: 0; max-width: 320px; }
-  .scene-plate.hero-scene { max-width: 320px; }
+  .scene-plate.hero-scene { max-width: 360px; }
   .scene-plate.section-scene { margin-top: .9rem; }
 }
 """
@@ -5143,7 +5283,7 @@ def build_ghost_edition(out_dir, ed, shell=""):
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
         folio_writers=html.escape(folio_writers),
-        scene=scene_plate("ghost", extra_class="edition-scene"),
+        scene=scene_plate("ghost", extra_class="edition-scene", root="../"),
         watch=watch_html,
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
@@ -5748,7 +5888,7 @@ def build_pamphlet(out_dir, item, shell="", page=None):
         headline=html.escape(title),
         dek=dek_html,
         byline=byline_html,
-        scene=scene_plate(scene_kind, extra_class="article-scene"),
+        scene=scene_plate(scene_kind, extra_class="article-scene", root="../"),
         colophon=colophon_html,
         data_json=json_for_html(data),
         marked_js=MARKED_JS,
@@ -6782,12 +6922,31 @@ FORECAST_PAGE_CSS = """
 .fdm-cmp:hover { text-decoration: underline; }
 .fdm-roster-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .55rem; }
 .fd-agent-mascot { --agent-color: #9aa1af; position: relative; display: inline-block; flex: none;
-  width: 44px; height: 44px; color: var(--agent-color); background: #0c1117; border: 1px solid var(--agent-color);
-  border-radius: 2px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,.04); }
-.fd-agent-mascot::before, .fd-agent-mascot::after { content: ""; position: absolute; box-sizing: border-box; }
-.fd-agent-mark { position: absolute; right: 3px; bottom: 3px; z-index: 2; font-family: var(--fdmono);
+  width: 44px; height: 44px; color: var(--agent-color); background:
+  radial-gradient(circle at 50% 28%, rgba(255,255,255,.08), transparent 34%), #0c1117;
+  border: 1px solid var(--agent-color); border-radius: 7px; overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 8px 18px rgba(0,0,0,.22); }
+.fd-agent-mascot::before { content: ""; position: absolute; inset: 5px; border-radius: 6px;
+  background: radial-gradient(circle at 50% 22%, currentColor, transparent 55%); opacity: .15; }
+.fd-agent-mascot::after { content: ""; position: absolute; left: 14%; right: 14%; bottom: 8%;
+  height: 12%; border-radius: 50%; background: currentColor; opacity: .16; }
+.fd-agent-glow, .fd-agent-prop, .fd-agent-prop2, .fd-agent-body, .fd-agent-head,
+.fd-agent-eye, .fd-agent-mouth, .fd-agent-arm, .fd-agent-mark { position: absolute; box-sizing: border-box; }
+.fd-agent-glow { inset: 7%; border-radius: 50%; background: currentColor; opacity: .08; filter: blur(3px); }
+.fd-agent-body { z-index: 2; left: 29%; bottom: 14%; width: 42%; height: 33%; border: 1.5px solid currentColor;
+  border-radius: 45% 45% 12% 12%; background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0)), currentColor;
+  opacity: .46; }
+.fd-agent-arm { z-index: 2; top: 58%; width: 20%; height: 2px; border-radius: 2px; background: currentColor; opacity: .78; }
+.fd-agent-arm.left { left: 18%; transform: rotate(24deg); }
+.fd-agent-arm.right { right: 18%; transform: rotate(-24deg); }
+.fd-agent-head { z-index: 3; left: 31%; top: 24%; width: 38%; height: 36%; border: 1.5px solid currentColor;
+  border-radius: 48% 48% 42% 42%; background: #dfd0bd; overflow: hidden; box-shadow: inset 0 -7px 0 rgba(12,17,23,.08); }
+.fd-agent-eye { top: 42%; width: 9%; height: 9%; border-radius: 50%; background: #0c1117; }
+.fd-agent-eye.eye-l { left: 29%; } .fd-agent-eye.eye-r { right: 29%; }
+.fd-agent-mouth { left: 37%; bottom: 22%; width: 26%; height: 10%; border-bottom: 1.4px solid #0c1117; border-radius: 50%; }
+.fd-agent-mark { right: 3px; bottom: 3px; z-index: 5; font-family: var(--fdmono);
   font-size: .52rem; font-weight: 800; line-height: 1; color: #0c1117; background: var(--agent-color);
-  padding: 2px 3px; border-radius: 1px; letter-spacing: 0; }
+  padding: 2px 3px; border-radius: 2px; letter-spacing: 0; }
 .fd-agent-mini { width: 38px; height: 38px; }
 .fd-agent-table { width: 34px; height: 34px; vertical-align: middle; margin-right: .5rem; }
 .fd-agent-card { width: 46px; height: 46px; }
@@ -6797,23 +6956,44 @@ FORECAST_PAGE_CSS = """
 .fd-profile-name .txt { display: inline-flex; flex-direction: column; align-items: flex-start; line-height: 1; }
 .fd-profile-name .role { font-family: var(--sans); font-size: .78rem; font-weight: 800; text-transform: uppercase;
   letter-spacing: 0; color: var(--fdmut); margin-top: .3rem; }
-.fdmas-market-reader::before { left: 10px; top: 11px; width: 23px; height: 17px; border-left: 2px solid currentColor;
-  border-bottom: 2px solid currentColor; background: linear-gradient(135deg, transparent 54%, currentColor 55%, currentColor 61%, transparent 62%); opacity: .9; }
-.fdmas-market-reader::after { left: 14px; top: 19px; width: 18px; height: 2px; background: currentColor; transform: rotate(-18deg); }
-.fdmas-quant::before { left: 10px; top: 9px; width: 24px; height: 24px; border: 1px solid currentColor;
-  background: radial-gradient(currentColor 1.4px, transparent 1.8px) 2px 2px / 8px 8px; opacity: .9; }
-.fdmas-quant::after { left: 21px; top: 8px; width: 2px; height: 26px; background: currentColor; box-shadow: -9px 9px 0 currentColor, 9px 9px 0 currentColor; opacity: .55; }
-.fdmas-historian::before { left: 12px; top: 9px; width: 20px; height: 25px; border: 2px solid currentColor; background: #0c1117; box-shadow: -4px 4px 0 #0c1117, -5px 5px 0 currentColor; }
-.fdmas-historian::after { left: 17px; top: 16px; width: 11px; height: 2px; background: currentColor; box-shadow: 0 6px 0 currentColor; opacity: .8; }
-.fdmas-path-reader::before { left: 9px; top: 25px; width: 27px; height: 2px; background: currentColor; transform: rotate(-25deg); transform-origin: left center; }
-.fdmas-path-reader::after { left: 10px; top: 25px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 18px -9px 0 currentColor; }
-.fdmas-talisman::before { left: 11px; top: 9px; width: 23px; height: 23px; background: currentColor;
+.fdmas-market-reader .fd-agent-prop { z-index: 1; left: 9%; top: 25%; width: 31%; height: 21%;
+  border-left: 1.7px solid currentColor; border-bottom: 1.7px solid currentColor;
+  background: linear-gradient(135deg, transparent 52%, currentColor 53%, currentColor 60%, transparent 61%); opacity: .78; }
+.fdmas-market-reader .fd-agent-prop2 { z-index: 4; right: 11%; top: 16%; width: 23%; height: 23%; border: 1.8px solid currentColor;
+  border-radius: 50%; box-shadow: 5px 6px 0 -3px currentColor; transform: rotate(-12deg); }
+.fdmas-quant .fd-agent-prop { z-index: 1; inset: 14%; border: 1px solid currentColor;
+  background: radial-gradient(currentColor 1.2px, transparent 1.7px) 2px 2px / 8px 8px; opacity: .32; }
+.fdmas-quant .fd-agent-prop2 { z-index: 4; left: 14%; bottom: 19%; width: 9%; height: 9%; border-radius: 50%;
+  background: currentColor; box-shadow: 9px -8px 0 currentColor, 18px 1px 0 currentColor, 27px -9px 0 currentColor; opacity: .82; }
+.fdmas-historian .fd-agent-prop { z-index: 4; left: 9%; bottom: 17%; width: 27%; height: 10%;
+  border: 1.5px solid currentColor; background: #0c1117; box-shadow: 3px -5px 0 #0c1117, 4px -6px 0 currentColor, 7px -10px 0 #0c1117, 8px -11px 0 currentColor; }
+.fdmas-historian .fd-agent-prop2 { z-index: 1; right: 11%; top: 17%; width: 21%; height: 30%;
+  border: 1.5px solid currentColor; background: #0c1117; opacity: .7; }
+.fdmas-historian .fd-agent-prop2::after { content: ""; position: absolute; left: 22%; right: 22%; top: 30%; height: 1.5px;
+  background: currentColor; box-shadow: 0 6px 0 currentColor; }
+.fdmas-path-reader .fd-agent-prop { z-index: 4; left: 11%; top: 62%; width: 58%; height: 2px; border-radius: 2px;
+  background: currentColor; transform: rotate(-27deg); transform-origin: left center; }
+.fdmas-path-reader .fd-agent-prop2 { z-index: 4; right: 12%; top: 16%; width: 22%; height: 22%;
+  border: 1.7px solid currentColor; transform: rotate(45deg); }
+.fdmas-path-reader .fd-agent-prop2::after { content: ""; position: absolute; left: 38%; top: -35%; width: 26%; height: 170%;
+  background: currentColor; opacity: .75; }
+.fdmas-talisman .fd-agent-prop { z-index: 4; left: 22%; top: 5%; width: 56%; height: 36%; background: currentColor;
   clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 56%, 80% 96%, 50% 72%, 20% 96%, 32% 56%, 2% 35%, 39% 35%); }
-.fdmas-talisman::after { left: 20px; top: 4px; width: 4px; height: 34px; background: currentColor; opacity: .22; }
-.fdmas-contrarian::before { inset: 8px; border: 2px solid currentColor; background: linear-gradient(135deg, currentColor 0 46%, transparent 47%); opacity: .8; }
-.fdmas-contrarian::after { left: 23px; top: 12px; width: 7px; height: 7px; background: #0c1117; border: 2px solid currentColor; transform: rotate(45deg); }
-.fdmas-prophet::before { left: 14px; top: 10px; width: 17px; height: 23px; border: 2px solid currentColor; border-radius: 9px 9px 3px 3px; }
-.fdmas-prophet::after { left: 20px; top: 16px; width: 5px; height: 9px; background: currentColor; box-shadow: 0 -10px 0 -2px currentColor; opacity: .9; }
+.fdmas-talisman .fd-agent-prop2 { z-index: 1; left: 47%; top: 6%; width: 6%; height: 74%; background: currentColor; opacity: .14; }
+.fdmas-talisman .fd-agent-head { top: 29%; }
+.fdmas-contrarian .fd-agent-head::before { content: ""; position: absolute; inset: 0 50% 0 0; background: currentColor; opacity: .28; }
+.fdmas-contrarian .fd-agent-mouth { transform: rotate(-10deg); }
+.fdmas-contrarian .fd-agent-prop { z-index: 1; inset: 15%; border: 1.8px solid currentColor;
+  background: linear-gradient(135deg, currentColor 0 45%, transparent 46%); opacity: .28; transform: rotate(-12deg); }
+.fdmas-contrarian .fd-agent-prop2 { z-index: 4; right: 13%; top: 18%; width: 17%; height: 17%; border: 1.6px solid currentColor;
+  background: #0c1117; transform: rotate(45deg); }
+.fdmas-prophet .fd-agent-glow { opacity: .2; filter: blur(4px); }
+.fdmas-prophet .fd-agent-prop { z-index: 4; right: 9%; bottom: 18%; width: 23%; height: 31%;
+  border: 1.7px solid currentColor; border-radius: 48% 48% 10% 10%; background: rgba(12,17,23,.82); }
+.fdmas-prophet .fd-agent-prop::before { content: ""; position: absolute; left: 30%; right: 30%; top: -22%; height: 24%;
+  border: 1.4px solid currentColor; border-bottom: 0; border-radius: 50% 50% 0 0; }
+.fdmas-prophet .fd-agent-prop2 { z-index: 5; right: 16%; bottom: 30%; width: 8%; height: 18%; border-radius: 50% 50% 45% 45%;
+  background: currentColor; box-shadow: 0 0 10px currentColor; }
 .fdm-card { display: flex; flex-direction: column; align-items: center; gap: .2rem; text-align: center;
   text-decoration: none; color: inherit; background: var(--fdcard); border: 1px solid var(--fdline);
   border-top: 3px solid var(--fdmut); border-radius: 2px; padding: .65rem .35rem .6rem;
@@ -7872,7 +8052,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
             favicon=FAVICON, og_meta=og,
             motto=html.escape(prof.get("signature", criterion)),
             folio=folio, plate_extra="",
-            scene=scene_plate("forecast", extra_class="page-scene"),
+            scene=scene_plate("forecast", extra_class="page-scene", root="../"),
             body="\n".join(parts),
             blurb="Every call this predictor has made, graded honestly — the desk keeps no predictor's record off the books.",
             theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
@@ -8167,7 +8347,7 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
         motto="Seven models, one spectrum — no hiding behind a single number.",
         folio=f'    <span>{len(cols)} predictors</span>\n    <span class="fd-folio-c">every row comparable</span>',
         plate_extra="",
-        scene=scene_plate("forecast", extra_class="page-scene"),
+        scene=scene_plate("forecast", extra_class="page-scene", root="../"),
         body=body,
         blurb="Every call this roster has made, graded honestly — the desk keeps no predictor's record off the books.",
         theme_js=LIBRARY_THEME_JS, app_js="", shell=shell,
@@ -8609,7 +8789,7 @@ def build_forecast_item(out_dir, item, shell="", records=None):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         kicker=f'The Forecast Desk · {"Graded market" if g else "Live market"}',
         headline=html.escape(d.get("question", title)),
-        scene=scene_plate("forecast", extra_class="detail-scene"),
+        scene=scene_plate("forecast", extra_class="detail-scene", root="../"),
         folio=folio,
         method_note=html.escape(d.get("method_note", "")),
         body="\n".join(parts),
@@ -8848,7 +9028,7 @@ def build_corpus_market_page(out_dir, m, shell="", records=None):
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         kicker="The Forecast Desk · Research market",
         headline=html.escape(m["title"]),
-        scene=scene_plate("forecast", extra_class="detail-scene"),
+        scene=scene_plate("forecast", extra_class="detail-scene", root="../"),
         folio=folio,
         method_note=html.escape(desk.get("method_note", "")) or
                     "Priced from the corpus’s forecast scenarios — every band grounded in the research it links to.",
@@ -9878,7 +10058,7 @@ def build_fingerprint_edition(out_dir, ed, shell=""):
         folio_no=html.escape(folio_no),
         folio_date=html.escape(folio_date),
         folio_meta=html.escape(folio_meta),
-        scene=scene_plate("fingerprint", extra_class="edition-scene"),
+        scene=scene_plate("fingerprint", extra_class="edition-scene", root="../"),
         watch=watch_html,
         data_json=json_for_html(data),
         marks_json=json_for_html(FP_MARKS),
@@ -10362,7 +10542,7 @@ def resolve_collection(col, corpora_by_slug, idx):
                   "author": "", "generated": "", "documents": docs}
     meta = {"i": idx, "id": cid, "slug": slug, "title": col.get("title", cid), "essay": col.get("essay", ""),
             "n_ch": len(docs), "n_corpora": len(set(used)), "reading": reading,
-            "palette": col.get("palette")}
+            "palette": col.get("palette"), "slugs": list(dict.fromkeys(used))}
     return col_corpus, meta
 
 
@@ -11380,11 +11560,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
           fingerprint_cfg=None, pamphlets_cfg=None, forecast_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    # Copy the link-preview image into the served output so the absolute
-    # og:image URL (SITE_URL/OG_IMAGE) resolves on the live site.
-    og_src = HERE / OG_IMAGE
-    if og_src.exists():
-        shutil.copy(og_src, out / OG_IMAGE)
+    # Copy top-level image assets into the served output so absolute URLs resolve on the live site.
+    for image_asset in SITE_IMAGE_ASSETS:
+        src = HERE / image_asset
+        if src.exists():
+            shutil.copy(src, out / image_asset)
     ghost_cfg = ghost_cfg or {}
     fingerprint_cfg = fingerprint_cfg or {}
     pamphlets_cfg = pamphlets_cfg or {}
@@ -11747,7 +11927,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             back_href=_back_href,
             back_label=_back_label,
             scene=scene_plate("briefing" if p["category"] == "Media & Advertising" else "research",
-                              extra_class="reader-scene"),
+                              extra_class="reader-scene", cover_slugs=(p["slug"],)),
         ))
 
     # Collection pages — merged cross-corpus readers, rendered through the same
@@ -11760,7 +11940,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             css=CSS + SCENE_PLATE_CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
             data_json=json_for_html(col_corpus), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
             back_href="research.html", back_label="Library",
-            scene=scene_plate("collection", extra_class="reader-scene")))
+            scene=scene_plate("collection", extra_class="reader-scene", cover_slugs=meta.get("slugs"))))
     if resolved_collections:
         print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
 
