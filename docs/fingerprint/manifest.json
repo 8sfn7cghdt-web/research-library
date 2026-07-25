@@ -185,6 +185,24 @@
         "The Watercooler"
       ],
       "dispatches": 20
+    },
+    {
+      "date": "2026-07-25",
+      "weekday": "Saturday",
+      "edition_number": 34,
+      "file": "fingerprint/2026-07-25-fingerprint.html",
+      "lead_headline": "YouTube Tops $11B as Alphabet Raises AI Capex to $205B",
+      "lead_dek": "Search and video ad revenue both beat estimates on World Cup viewership, but the capex hike sent GOOGL shares lower anyway.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk"
+      ],
+      "dispatches": 17
     }
   ]
 }

@@ -1,0 +1,551 @@
+{
+  "edition_date": "2026-07-25",
+  "edition_number": 34,
+  "weekday": "Saturday",
+  "subtitle": "All the news that's fit to Fingerprint",
+  "lead": {
+    "headline": "YouTube Tops $11B as Alphabet Raises AI Capex to $205B",
+    "dek": "Search and video ad revenue both beat estimates on World Cup viewership, but the capex hike sent GOOGL shares lower anyway.",
+    "body": "Alphabet's Q2 2026 earnings, reported July 22, showed YouTube ad revenue at $11.06 billion, up roughly 13% year over year and above Street estimates, with the company crediting the FIFA World Cup for more than 1.7 billion related video views. Google Search and Other revenue rose 17% to $63.3 billion, with executives saying AI Overviews and AI Mode are generating new query volume and ad inventory rather than cannibalizing legacy Search clicks — though Network revenue, the programmatic exchange business CTV and open-web buyers route spend through, slipped about 1%. Alphabet also raised full-year AI infrastructure capex guidance to $195-205 billion from $180-190 billion, even as Google Cloud revenue jumped 82% to $24.8 billion and net income nearly quadrupled to $112.1 billion. GOOGL shares fell in after-hours trading on the spending hike despite the beat. For the market, the print confirms YouTube remains the single largest video ad seller heading into 2027 upfronts, while the widening capex commitment signals Alphabet is prepared to keep redirecting cash toward AI compute even at the cost of near-term margin optics.",
+    "source_publication": "CNBC",
+    "source_url": "https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html",
+    "sources": [
+      {
+        "publication": "CNBC",
+        "url": "https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html",
+        "filed_date": "2026-07-22"
+      },
+      {
+        "publication": "Variety",
+        "url": "https://variety.com/2026/digital/news/youtube-q2-2026-ad-sales-alphabet-google-earnings-results-1236818132/",
+        "filed_date": "2026-07-22"
+      },
+      {
+        "publication": "Hollywood Reporter",
+        "url": "https://www.hollywoodreporter.com/business/business-news/youtube-ad-revenue-reported-giant-alphabet-google-profits-1236654342/",
+        "filed_date": "2026-07-22"
+      },
+      {
+        "publication": "PPC Land",
+        "url": "https://ppc.land/google-search-ads-gain-17-to-63-3-billion-while-network-drops-1/",
+        "filed_date": "2026-07-22"
+      },
+      {
+        "publication": "BestMediaInfo",
+        "url": "https://bestmediainfo.com/mediainfo/mediainfo-digital/google-ad-revenue-rises-14-to-816-billion-as-ai-opens-new-search-inventory-12189700",
+        "filed_date": "2026-07-23"
+      }
+    ],
+    "filed_date": "2026-07-22"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Paramount+ Plots Free Tier as Netflix Downplays FAST Talk",
+          "dek": "Paramount's internal 'front porch' plan and Netflix's Q2 hedging show streamers split on how far to chase free, ad-funded reach.",
+          "body": "Paramount+ is developing a login-required free tier internally nicknamed the 'front porch,' giving viewers select movies and shows at no cost while enabling personalized ad serving and upsell paths to paid tiers, according to an internal presentation reported by Business Insider and targeted for Q3. Netflix co-CEOs used their Q2 earnings call to downplay a parallel Wall Street Journal report on live, always-on channels, with Greg Peters saying the company has 'no near-term plans to launch something' free. The split signals a widening divide in how legacy and pure-play streamers plan to monetize ad-supported reach heading into 2027 upfronts.",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/daily-news-roundup/friday-24072026/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "Cord Cutters News",
+              "url": "https://cordcuttersnews.com/paramount-is-working-on-a-new-free-tier/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "The Desk",
+              "url": "https://thedesk.net/2026/07/report-paramount-plus-weighs-free-tier-with-limited-content/",
+              "filed_date": "2026-07-24"
+            }
+          ],
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/daily-news-roundup/friday-24072026/",
+          "filed_date": "2026-07-24"
+        },
+        {
+          "headline": "IAB Tech Lab Finalizes Standards for Pause and Menu Ads",
+          "dek": "First formal spec for six CTV ad formats aims to unlock programmatic trading beyond pre-roll.",
+          "body": "The IAB Tech Lab finalized its CTV Ad Portfolio Signaling Guidance on July 22 after a second public-comment round, standardizing signals for six emerging CTV formats: pause ads, menu ads, screensavers, in-scene placements, squeezebacks and overlays. It is the first formal specification enabling consistent creative production, programmatic buying and cross-platform measurement for pause ads specifically, a format publishers have long sold but buyers have struggled to transact at scale. The standard gives DSPs and SSPs a common signal set to build against, potentially accelerating adoption of non-pre-roll CTV inventory heading into 2027 planning.",
+          "sources": [
+            {
+              "publication": "TV Tech",
+              "url": "https://www.tvtechnology.com/business/iab-tech-lab-introduces-standardized-signals-for-ctv-ad-portfolio",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "StreamTV Insider",
+              "url": "https://www.streamtvinsider.com/advertising/iab-tech-lab-releases-standards-six-ctv-ad-formats",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "AdMonsters",
+              "url": "https://www.admonsters.com/what-the-iab-tech-labs-latest-ctv-standards-mean-for-the-sell-side/",
+              "filed_date": "2026-07-23"
+            }
+          ],
+          "source_publication": "TV Tech",
+          "source_url": "https://www.tvtechnology.com/business/iab-tech-lab-introduces-standardized-signals-for-ctv-ad-portfolio",
+          "filed_date": "2026-07-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "Study Finds 78% of APAC Co-Viewing Happens on CTV",
+          "dek": "Shared viewing is driving stronger ad attention and recall than solo viewing, new PubMatic research finds.",
+          "body": "New PubMatic research finds that 78% of co-viewing (multiple people watching together) across the APAC region happens on Connected TV, with shared viewing sessions producing measurably stronger ad attention and recall than solo viewing. Sell-side platforms are already using the data to court regional brand budgets ahead of 2026 planning cycles, positioning CTV's household-viewing context as a performance advantage over single-viewer mobile and desktop formats. For buyers, it's fresh outcomes-linked evidence that CTV's context, not just its reach, is doing measurable work at the point of attention.",
+          "sources": [
+            {
+              "publication": "MARKETECH APAC",
+              "url": "https://marketech-apac.com/shared-viewing-on-ctv-boosts-ad-attention-action-among-apac-audiences-report/",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "PubMatic Newsroom",
+              "url": "https://pubmatic.com/news/pubmatic-highlights-programmatic-opportunity-as-co-viewing-redefines-attention-for-apac-marketers/",
+              "filed_date": "2026-07-21"
+            }
+          ],
+          "source_publication": "MARKETECH APAC",
+          "source_url": "https://marketech-apac.com/shared-viewing-on-ctv-boosts-ad-attention-action-among-apac-audiences-report/",
+          "filed_date": "2026-07-21"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "VideoAmp and Nielsen One Ads Both Exit MRC Accreditation",
+          "dek": "Two rival CTV measurement currencies withdraw from the industry's audit process within days of each other.",
+          "body": "VideoAmp and Nielsen One Ads both pulled out of the Media Rating Council's accreditation process in mid-July, with the MRC characterizing VideoAmp's exit as a plan to 'reassess in 2027' and Nielsen One Ads' withdrawal as driven by 'planned material methodological changes' to the service. The near-simultaneous withdrawals leave buyers without MRC-audited status on two of the leading Nielsen alternatives just as VideoAmp positions itself as Paramount's primary measurement partner. It complicates the industry's push toward a common, trusted CTV measurement currency at a moment when advertisers are demanding more, not less, third-party verification.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416482/videoamp-nielsen-one-pull-out-of-mrc-accreditatio.html",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "TV News Check",
+              "url": "https://tvnewscheck.com/business/article/videoamp-nielsen-one-pull-out-of-mrc-accreditation-process/",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "MediaPost (follow-up)",
+              "url": "https://www.mediapost.com/publications/article/416550/mrc-clarifies-nielsen-one-videoamp-accreditation.html",
+              "filed_date": "2026-07-16"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/416482/videoamp-nielsen-one-pull-out-of-mrc-accreditatio.html",
+          "filed_date": "2026-07-16"
+        },
+        {
+          "headline": "Business Insider Launches Its Own FAST Channel via Magnite",
+          "dek": "Publisher picks SpringServe to run ad serving on a standalone streaming channel outside YouTube.",
+          "body": "Business Insider launched a standalone, ad-supported FAST channel carrying its journalism and documentary programming across third-party CTV platforms, selecting Magnite's SpringServe as primary ad server and programmatic monetization system. The move lets the publisher, which has 38 million subscribers across YouTube, take direct ownership of distribution and ad sales rather than relying solely on platform-native monetization. It's another data point in publishers building owned-and-operated CTV footprints, and a competitive win for Magnite against rival ad servers in the FAST-channel infrastructure fight.",
+          "sources": [
+            {
+              "publication": "The Desk",
+              "url": "https://thedesk.net/2026/07/magnite-to-support-launch-of-business-insider-streaming-tv-channel/",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "GlobeNewswire via Manila Times",
+              "url": "https://www.manilatimes.net/2026/07/21/tmt-newswire/globenewswire/business-insider-launches-standalone-fast-channel-partners-with-magnites-springserve-for-next-phase-of-streaming-growth/2388417",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "ppc.land",
+              "url": "https://ppc.land/business-insider-builds-own-fast-channel-picks-magnite-to-run-ctv-ad-sales/",
+              "filed_date": "2026-07-21"
+            }
+          ],
+          "source_publication": "The Desk",
+          "source_url": "https://thedesk.net/2026/07/magnite-to-support-launch-of-business-insider-streaming-tv-channel/",
+          "filed_date": "2026-07-21"
+        },
+        {
+          "headline": "Fubo Brings The Athletic to CTV for the First Time",
+          "dek": "Sports publisher's video content gets a dedicated hub with sponsor takeovers and interactive ad units.",
+          "body": "Fubo and The Athletic launched The Athletic Video Hub, marking the first time the sports-media publisher's video content has had a home on Connected TV. The multi-year partnership expansion opens six shows to sponsorship, including home-screen takeovers, interactive CTV ads and custom branded content produced by The Athletic's T Brand Studio. The move gives advertisers a new premium sports-adjacent CTV inventory pool as Fubo continues differentiating its ad stack ahead of a competitive fall sports calendar.",
+          "sources": [
+            {
+              "publication": "Sports Video Group",
+              "url": "https://www.sportsvideo.org/2026/07/24/fubo-launches-the-athletic-video-hub-on-ctv/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "Businesswire",
+              "url": "https://www.businesswire.com/news/home/20260723157571/en/Fubo-Launches-The-Athletics-First-CTV-Sports-Video-Hub-Expanding-Multi-Year-Partnership",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "ppc.land",
+              "url": "https://ppc.land/the-athletic-gains-its-first-ctv-home-as-fubo-opens-6-shows-to-sponsors/",
+              "filed_date": "2026-07-24"
+            }
+          ],
+          "source_publication": "Sports Video Group",
+          "source_url": "https://www.sportsvideo.org/2026/07/24/fubo-launches-the-athletic-video-hub-on-ctv/",
+          "filed_date": "2026-07-24"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Magnite Grows While PubMatic Bets the Business on Agentic AI",
+          "dek": "Diverging Q1 results sharpen the strategic split between two of the largest independent sell-side platforms.",
+          "body": "Magnite's Q1 2026 revenue rose 6% year over year to $164.4 million, while PubMatic's fell 2% to $62.6 million, underscoring a widening performance gap between the two publicly traded sell-side platforms. PubMatic is leaning heavily into an agentic-AI narrative to reposition itself, while Magnite has continued expanding CTV and curation partnerships without the same AI framing. With both companies due to report Q2 results in the coming weeks, the divergence is becoming a proxy fight over which growth story wins with sell-side customers.",
+          "sources": [
+            {
+              "publication": "ppc.land",
+              "url": "https://ppc.land/pubmatic-bets-everything-on-agentic-ai-while-magnite-just-grows/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "PitchBook",
+              "url": "https://pitchbook.com/profiles/company/54118-36",
+              "filed_date": "2026-07-20"
+            }
+          ],
+          "source_publication": "ppc.land",
+          "source_url": "https://ppc.land/pubmatic-bets-everything-on-agentic-ai-while-magnite-just-grows/",
+          "filed_date": "2026-07-24"
+        },
+        {
+          "headline": "Trade Desk Shares Slide Ahead of Aug. 6 Earnings, New CCO",
+          "dek": "TTD stock extends a three-year slump as former Uber ad chief Kristi Argyilan prepares to start July 27.",
+          "body": "The Trade Desk closed at $18.24 on July 21, down 2.17% on a day the S&P 500 gained 0.89%, extending a slide driven by rate-hold fears and mounting competitive pressure from Amazon's DSP push into Netflix, Roku and Disney inventory. The company confirmed it will report Q2 2026 results after market close on August 6. New chief commercial officer Kristi Argyilan, formerly Uber's global ad chief, is set to start July 27 as TTD looks to shore up retail-media and identity partnerships heading into that print.",
+          "sources": [
+            {
+              "publication": "Yahoo Finance",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/trade-desk-ttd-stock-declines-214505262.html",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/media/ubers-top-ad-exec-kristi-argyilan-joins-the-trade-desk-as-chief-commercial-officer/",
+              "filed_date": "2026-07-15"
+            }
+          ],
+          "source_publication": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/markets/stocks/articles/trade-desk-ttd-stock-declines-214505262.html",
+          "filed_date": "2026-07-21"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "Brussels Hits Google With €890M Fine Over DMA Breaches",
+          "dek": "First-ever EU non-compliance ruling against Google covers Search self-preferencing and Play Store steering restrictions.",
+          "body": "The European Commission fined Google €890 million ($1.03B) for Digital Markets Act violations — €460 million for favoring its own services in Search results, and €430 million for restricting how app developers steer users to outside payment options in Google Play. Google must end the practices within 60 days or face penalties up to 5% of global turnover, and says it will appeal. The ruling adds regulatory uncertainty for Google's ad and app-distribution businesses in its largest advertising market outside the US.",
+          "sources": [
+            {
+              "publication": "European Commission",
+              "url": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1670",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "gHacks",
+              "url": "https://www.ghacks.net/2026/07/24/european-commission-fines-google-e890-million-for-search-and-play-store-dma-violations/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "Security Affairs",
+              "url": "https://securityaffairs.com/195963/laws-and-regulations/google-fined-e890m-under-eu-digital-markets-act-over-search-and-play-store-practices.html",
+              "filed_date": "2026-07-24"
+            }
+          ],
+          "source_publication": "European Commission",
+          "source_url": "https://ec.europa.eu/commission/presscorner/detail/en/ip_26_1670",
+          "filed_date": "2026-07-23"
+        },
+        {
+          "headline": "EU Adopts Final AI Act Transparency Rules for Ads",
+          "dek": "Deepfake and synthetic-content labeling duties for advertisers take effect August 2.",
+          "body": "The European Commission adopted the final Guidelines on Article 50 transparency obligations under the AI Act on July 20, covering disclosure of AI-generated or manipulated image, audio and video content, less than two weeks before the obligations become enforceable on August 2. Non-compliance carries fines up to €15 million or 3% of global turnover, and the guidance explicitly reaches advertising uses of emotion-recognition and biometric categorization systems. Programmatic buyers and creative teams running AI-generated CTV and video creative into EU markets now face a hard compliance deadline just over a week out.",
+          "sources": [
+            {
+              "publication": "Bird & Bird",
+              "url": "https://www.twobirds.com/en/insights/2026/european-commission-adopts-final-guidelines-on-ai-act-article-50-transparency-obligations-first-impr",
+              "filed_date": "2026-07-20"
+            },
+            {
+              "publication": "Tech Times",
+              "url": "https://www.technology.org/2026/07/17/eu-ai-act-what-actually-applies-on-2-august-2026/",
+              "filed_date": "2026-07-17"
+            },
+            {
+              "publication": "Licentium",
+              "url": "https://www.licentium.io/post/eu-ai-act-article-50-transparency-guidelines-2-august-2026",
+              "filed_date": "2026-07-20"
+            }
+          ],
+          "source_publication": "Bird & Bird",
+          "source_url": "https://www.twobirds.com/en/insights/2026/european-commission-adopts-final-guidelines-on-ai-act-article-50-transparency-obligations-first-impr",
+          "filed_date": "2026-07-20"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "SCOTUS Ruling Sets Up Fourth Circuit's Broadcast-Rate Fight",
+          "dek": "NRSC v. FEC cleared unlimited party-candidate ad coordination, the backdrop for an Aug. 7 appeals argument on CTV-relevant spend.",
+          "body": "The Supreme Court ruled 6-3 on June 30 in NRSC v. FEC that federal limits on coordinated expenditures between political parties and candidates are unconstitutional, overturning FEC v. Colorado Republican (2001) and letting party committees coordinate unlimited spending with candidates while accessing the broadcast 'Lowest Unit Charge.' The ruling is the direct backdrop to the Fourth Circuit's August 7 argument over whether party committees may buy broadcast at candidate rates, a case this paper flagged last edition as a key midterm inflection point. With roughly $2.5 billion projected for CTV/streaming in the 2026 midterms, the ruling points toward more political ad-buying power consolidating inside national party committees rather than individual campaigns.",
+          "sources": [
+            {
+              "publication": "Skadden",
+              "url": "https://www.skadden.com/insights/publications/2026/07/nrsc-v-fec",
+              "filed_date": "2026-07-01"
+            },
+            {
+              "publication": "Wiley Law",
+              "url": "https://www.wiley.law/alert-Supreme-Court-Decision-Renews-Focus-on-Political-Advertising-and-Lowest-Unit-Charge",
+              "filed_date": "2026-07-02"
+            },
+            {
+              "publication": "Mayer Brown",
+              "url": "https://www.mayerbrown.com/en/insights/publications/2026/07/supreme-court-strikes-down-limits-on-political-party-coordinated-expenditures",
+              "filed_date": "2026-07-01"
+            }
+          ],
+          "source_publication": "Skadden",
+          "source_url": "https://www.skadden.com/insights/publications/2026/07/nrsc-v-fec",
+          "filed_date": "2026-07-01"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — United Kingdom",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Amazon DSP Adds News UK's Octave Audio Inventory",
+          "dek": "talkSPORT, Times Radio and Virgin Radio UK become buyable programmatically through Amazon.",
+          "body": "Amazon Ads and Octave, News UK's audio-visual ad platform, announced a programmatic integration putting News UK's audio brands — including talkSPORT, Virgin Radio UK, Talk, Times Radio and podcasts from The Times — into Amazon DSP. The deal opens access to more than 15.5 million monthly connected UK listeners and lets buyers layer Amazon's first-party shopping and streaming signals onto Octave's audience data. It extends Amazon's push to bundle audio alongside its CTV and retail inventory in a single buy, deepening its UK omnichannel footprint against Global and Bauer.",
+          "sources": [
+            {
+              "publication": "Advanced Television",
+              "url": "https://www.advanced-television.com/2026/07/24/amazon-ads-expands-audio-offering-with-news-uk-deal/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "RadioToday",
+              "url": "https://www.radiotoday.uk/2026/07/amazon-dsp-adds-news-uk-audio-via-octave/",
+              "filed_date": "2026-07-24"
+            },
+            {
+              "publication": "Performance Marketing World",
+              "url": "https://www.performancemarketingworld.com/article/1965605/exclusive-amazon-ads-expands-audio-offering-news-uk-partnership",
+              "filed_date": "2026-07-24"
+            }
+          ],
+          "source_publication": "Advanced Television",
+          "source_url": "https://www.advanced-television.com/2026/07/24/amazon-ads-expands-audio-offering-with-news-uk-deal/",
+          "filed_date": "2026-07-24"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "InMobi Taps JPMorgan, Jefferies for Near-$1B India IPO",
+          "dek": "SoftBank-backed mobile ad platform pursues a $5-6B valuation as it redomiciles from Singapore to India ahead of listing.",
+          "body": "InMobi has appointed JPMorgan, Jefferies, Kotak Mahindra Capital and Axis Capital to lead a proposed $1 billion IPO, seeking a valuation between $5 billion and $6 billion. The company, India's first unicorn, is completing a full redomiciliation from Singapore to India to list on Indian exchanges, after its founders bought back stakes from SoftBank to consolidate ownership. A successful listing would be one of the largest ad-tech IPOs in years and a bellwether for India's mobile and CTV ad-tech sector, whose CTV base has reached roughly 46 million households, the third largest globally.",
+          "sources": [
+            {
+              "publication": "Bloomberg",
+              "url": "https://www.bloomberg.com/news/articles/2026-07-21/inmobi-appoints-jpmorgan-jefferies-for-nearly-1-billion-ipo",
+              "filed_date": "2026-07-21"
+            },
+            {
+              "publication": "BestMediaInfo",
+              "url": "https://bestmediainfo.com/mediainfo/mediainfo-marketing/inmobi-appoints-four-banks-for-proposed-1-billion-ipo-12189703",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "Business Standard",
+              "url": "https://www.business-standard.com/markets/ipo/inmobi-appoints-jpmorgan-jefferies-kotak-and-axis-for-1-billion-ipo-126072101655_1.html",
+              "filed_date": "2026-07-21"
+            }
+          ],
+          "source_publication": "Bloomberg",
+          "source_url": "https://www.bloomberg.com/news/articles/2026-07-21/inmobi-appoints-jpmorgan-jefferies-for-nearly-1-billion-ipo",
+          "filed_date": "2026-07-21"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "TelevisaUnivision's ViX Streaming Powers Mexico Ad Surge",
+          "dek": "World Cup coverage on ViX drove a 23% jump in Mexico advertising revenue even as U.S. ad sales slumped 29%.",
+          "body": "TelevisaUnivision's Q2 2026 earnings, reported July 23, showed Mexico advertising revenue climbing 23% to $353 million, with total Mexico revenue up 53%, fueled by 104 FIFA World Cup matches streamed on its CTV platform ViX that drew 675 million total viewers across linear and streaming. The results contrast sharply with the U.S. business, where Telemundo (not TelevisaUnivision) held Spanish-language World Cup rights, sending TelevisaUnivision's U.S. ad revenue down 29%. It's a live case study of live-sports-on-CTV monetization power in LATAM, showing streaming ad dollars can swing sharply on regional rights allocation.",
+          "sources": [
+            {
+              "publication": "The Hollywood Reporter",
+              "url": "https://www.hollywoodreporter.com/business/business-news/televisaunivision-q2-earnings-world-cup-us-ad-revenue-drop-1236654756/",
+              "filed_date": "2026-07-23"
+            },
+            {
+              "publication": "Radio & Television Business Report (RBR)",
+              "url": "https://rbr.com/televisaunivision-cup-bump-in-mexico-as-u-s-ad-sales-slump/",
+              "filed_date": "2026-07-23"
+            }
+          ],
+          "source_publication": "The Hollywood Reporter",
+          "source_url": "https://www.hollywoodreporter.com/business/business-news/televisaunivision-q2-earnings-world-cup-us-ad-revenue-drop-1236654756/",
+          "filed_date": "2026-07-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Canada Softens Online Streaming Act Content-Spend Rules",
+          "dek": "Ottawa directs CRTC to revisit Canadian-content investment mandates after affordability pushback.",
+          "body": "Canada's federal government confirmed it is directing the CRTC to adjust its implementation of the Online Streaming Act, rolling back the requirement that Netflix, Disney+, Amazon and other streamers commit a fixed share of Canadian revenue (raised earlier this year to 15%) to domestic content production. The move pairs a $600 million federal cultural-sector investment with more flexibility for streamers on compliance spend. For CTV ad sellers and streaming platforms operating in Canada, softer content-investment mandates could ease cost pressure that had been pushing toward ad-tier price hikes.",
+          "sources": [
+            {
+              "publication": "Fasken",
+              "url": "https://www.fasken.com/en/knowledge/2026/06/the-federal-government-announces-review-of-the-online-streaming",
+              "filed_date": "2026-06-04"
+            },
+            {
+              "publication": "Canadian Inquirer",
+              "url": "https://canadianinquirer.net/2026/07/16/canadas-government-to-adjust-online-streaming-act/",
+              "filed_date": "2026-07-16"
+            },
+            {
+              "publication": "Media in Canada",
+              "url": "https://mediaincanada.com/2026/06/04/bcpq-what-crtc-streaming-rule-reversal-means-for-advertisers/",
+              "filed_date": "2026-06-04"
+            }
+          ],
+          "source_publication": "Fasken",
+          "source_url": "https://www.fasken.com/en/knowledge/2026/06/the-federal-government-announces-review-of-the-online-streaming",
+          "filed_date": "2026-07-16"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "China's SAMR Enforcement Campaign Targets Ad Data Claims",
+          "dek": "New rules require advertisers to verify claimed data and let users opt out of ad personalization entirely.",
+          "body": "China's State Administration for Market Regulation is running a six-month nationwide enforcement campaign targeting disclosure and warning language in advertising, and in June promulgated new Advertising Quotation Content Enforcement Guidelines requiring advertisers to verify the authenticity of any data, statistics or survey results cited in ads. Separately, internet advertising platforms must now offer a personalized-recommendation opt-out and halt data collection once a user opts out. For programmatic and CTV players operating in China, the rules tighten both ad-claim substantiation and consent-driven targeting requirements simultaneously.",
+          "sources": [
+            {
+              "publication": "DLA Piper",
+              "url": "https://www.dlapiper.com/en-us/insights/publications/2026/03/china-launches-six-month-enforcement-campaign-targeting-advertising-cautionary-statements",
+              "filed_date": "2026-03-13"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/chinas-2026-privacy-crackdown-targets-adtech-apps-and-facial-recognition/",
+              "filed_date": "2026-04-02"
+            }
+          ],
+          "source_publication": "DLA Piper",
+          "source_url": "https://www.dlapiper.com/en-us/insights/publications/2026/03/china-launches-six-month-enforcement-campaign-targeting-advertising-cautionary-statements",
+          "filed_date": "2026-06-12"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The List Was Never the Point",
+          "dek": "Everyone is counting whether AI Overviews cannibalize the click. The click was never the medium.",
+          "body": "Alphabet says its new AI answers are not eating the search business; the trade press is counting clicks to check. This is the wrong instrument. The results page was never a list of ten blue links pretending to be neutral information — that was the figure. The ground was always retrieval on demand, and retrieval on demand has just changed shape. A page you scanned has become a voice you consult. The question is not whether the answer steals the click. The question is what kind of medium a “results page” now is.\n\nA list of links is a hot medium: dense, high-definition, demanding almost nothing of the reader but the choice of which link to click. A conversational answer is cool: sparse on its face, asking the user to keep talking, correcting, narrowing — completing the thing the way a listener completes a story told by a fire rather than a filing cabinet. The printed index was itself a retrieval of the oral question; the search engine mechanized the index; the assistant now retrieves the oral question again, dressed as software. Every advertiser who built a business on the ten-blue-links ground is discovering that ground was never solid. It was only the last figure standing.\n\nI neither approve nor disapprove of the answer that talks back. I notice only that the page has stopped being a page. What returns is the older form: not a document handed to you, but a voice answering a question you were still forming. There is no inevitability in this, only a habit of scanning about to lose the ground it stood on.\n\n— Marshall McLuhan",
+          "sources": [
+            {
+              "publication": "CNBC",
+              "url": "https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "PPC Land",
+              "url": "https://ppc.land/google-search-ads-gain-17-to-63-3-billion-while-network-drops-1/",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "Search Engine Roundtable",
+              "url": "https://www.seroundtable.com/google-ad-revenue-earnings-41738.html",
+              "filed_date": "2026-07-22"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.cnbc.com/2026/07/22/google-earnings-q2-goog-live-updates.html",
+          "filed_date": "2026-07-25",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "Uncertified Is Not a Strategy",
+          "dek": "Two companies asking you to buy their numbers just walked out of the room where the numbers get checked.",
+          "body": "Two of the loudest candidates to replace Nielsen have pulled their arithmetic out of the one room where anyone checks it. VideoAmp and Nielsen ONE Ads both withdrew from the Media Rating Council's audit process in July, within days of each other, and both used the same soft word for it: reassess. I have heard that word before. It is what a copywriter says when the panel did not like his headline. In this business, walking away from the audit is not a pause. It is an answer.\n\nI learned to count at Gallup, and I have never unlearned it. The Hathaway shirt sold thirty-six per cent more because we tested the eyepatch before we ran it everywhere. The Schweppes campaign ran eighteen years because the numbers kept saying yes. Advertising people who ignore research are as dangerous as generals who ignore decoded enemy signals — and a currency that removes itself from third-party audit has done something worse than ignore the signal. It has switched the radio off. Comscore and iSpot stayed in the room. VideoAmp and Nielsen ONE Ads did not. Buyers building CTV plans on either company's numbers this quarter are buying arithmetic nobody outside the building has checked.\n\nTest the currency the way you test the copy. Ask who audited it, when, and what changed since. If the answer is we are reassessing, reassess your budget. A number you cannot check is not measurement. It is a claim, dressed up in decimals. We sell, or else — and nobody has ever sold anything by asking the buyer to take the receipt on faith.\n\n— David Ogilvy",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416482/videoamp-nielsen-one-pull-out-of-mrc-accreditatio.html",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "TV News Check",
+              "url": "https://tvnewscheck.com/business/article/videoamp-nielsen-one-pull-out-of-mrc-accreditation-process/",
+              "filed_date": "2026-07-13"
+            },
+            {
+              "publication": "MediaPost (follow-up)",
+              "url": "https://www.mediapost.com/publications/article/416550/mrc-clarifies-nielsen-one-videoamp-accreditation.html",
+              "filed_date": "2026-07-16"
+            }
+          ],
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.mediapost.com/publications/article/416482/videoamp-nielsen-one-pull-out-of-mrc-accreditatio.html",
+          "filed_date": "2026-07-25",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Four dates now sit inside a two-week window. The EU's AI Act Article 50 transparency obligations become enforceable August 2, putting a hard compliance deadline on AI-generated ad creative running into European markets. Criteo reports Q2 on August 5 with a Vista Equity/Quinti Capital buyout offer still live. The Trade Desk reports August 6 with new chief commercial officer Kristi Argyilan four days into the job. And the Fourth Circuit hears argument August 7 on whether party committees can buy broadcast at candidate rates — a case NRSC v. FEC has already reshaped from the Supreme Court down."
+}
