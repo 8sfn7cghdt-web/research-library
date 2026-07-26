@@ -36,6 +36,51 @@ HERE = Path(__file__).resolve().parent
 COVERS_DIR = HERE / "covers"  # optional per-corpus photo covers: covers/<slug>.<ext>
 FIGURES_DIR = HERE / "figures"
 SCENE_ASSET_DIRNAME = "research-scenes"
+GENERATED_SCENES_DIR = HERE / "assets" / "generated-scenes"
+GENERATED_SCENE_MAP = {
+    "domain:adtech": ("adtech-home-v1.webp", "A media trader and publisher-side operator route one connected-TV ad opportunity between an auction room and a family living room."),
+    "fingerprint-band:2026-07-25": ("fingerprint-band-v1.webp", "Editors verify the morning's streaming-industry news in a pre-dawn newsroom as the press begins to run."),
+    "The Briefings:mcluhan-on-pause-ad-standards": ("briefings-band-v1.webp", "Experts examine the evidence behind a connected-TV measurement standard in a glass-walled night briefing."),
+    "ipv4-ipv6-ctv-research": ("reader-ipv4-ipv6-ctv-v1.webp", "Families stream television above a network engineer managing an overloaded shared address gateway beside a clean new network route."),
+    "mcluhan-research": ("reader-mcluhan-v1.webp", "Marshall McLuhan studies his own multiplying image across cathode-ray monitors in a late-1960s television studio."),
+    "fox-roku-research": ("reader-fox-roku-v1.webp", "A family watches television while deal teams behind the screen exchange control of the connected living-room infrastructure."),
+    "india-advertising-research": ("reader-india-advertising-v1.webp", "An Indian family and neighborhood watch cricket across connected screens while a local shopkeeper launches a digital campaign."),
+    "latam-ctv-research": ("reader-latam-ctv-v1.webp", "Latin American families stream football as media planners confront an audience map whose reach exceeds the available advertising money."),
+    "ctv-dsp-ssp-research": ("reader-ctv-dsp-ssp-v1.webp", "A connected-TV advertising payment passes through a sequence of intermediary toll gates before reaching the publisher."),
+    "ctv-identity-signals-research": ("reader-ctv-identity-signals-v1.webp", "Signals from a family's connected devices enter a privacy chamber where analysts compare encrypted traces without seeing the household directly."),
+    "agentic-advertising-protocols-research": ("reader-agentic-protocols-v1.webp", "Human media buyers oversee software agents negotiating between an open marketplace and a sealed private platform."),
+    "miq-research": ("reader-miq-v1.webp", "An independent media-trading team works above the vast data and auction infrastructure on which its campaigns depend."),
+    "ctv-brand-safety-research": ("reader-ctv-brand-safety-v1.webp", "Investigators trace a connected-TV advertisement from a family living room back through clean, chaotic, and fraudulent supply environments."),
+    "containerized-bidding-research": ("reader-containerized-bidding-v1.webp", "An engineer moves a sealed bidding machine into the exchange's secure data-center hall beside the auction core."),
+    "political-ctv-research": ("reader-political-ctv-v1.webp", "A campaign strategist traces a district audience from a neighborhood map to a family watching television across town."),
+    "walmart-vibe-research": ("reader-walmart-vibe-v1.webp", "A new doorway connects a retail checkout, media infrastructure, and a family's connected television."),
+    "social-ctv-retargeting-research": ("reader-social-ctv-retargeting-v1.webp", "A commuter's phone signal travels through identity routes and reappears as a connected-TV advertisement at home."),
+    "ctv-ssp-research": ("reader-ctv-ssp-v1.webp", "A publisher-side agent holds one connected-TV ad slot while market participants approach through separate auction entrances."),
+    "ancestry-research": ("reader-ancestry-v1.webp", "A nineteenth-century emigrant family consults a worn map and letters beside their luggage as a steamship waits at the Atlantic port."),
+    "carlyle-french-revolution-research": ("reader-carlyle-french-revolution-v1.webp", "Thomas Carlyle confronts an empty manuscript box and dying fireplace embers before beginning his history again."),
+    "carlyle-friedrich-research": ("reader-carlyle-friedrich-v1.webp", "Frederick the Great commands a Prussian war room while Thomas Carlyle reconstructs the ruler's world from a mountain of archival evidence."),
+    "carlyle-research": ("reader-carlyle-v1.webp", "Thomas Carlyle writes in his Chelsea study before dawn as the industrial city and its working crowds gather beyond the window."),
+    "civil-war-religion-whitman-research": ("reader-civil-war-religion-whitman-v1.webp", "Walt Whitman reads a letter to a wounded soldier in a Civil War field hospital at dusk."),
+    "democratic-socialism-research": ("reader-democratic-socialism-v1.webp", "Workers and neighbors debate public institutions around a circular table in a converted factory town hall."),
+    "deutsch-good-explanations-research": ("reader-deutsch-good-explanations-v1.webp", "Physicists test a simple explanation against an exacting beam experiment and a wall of failed contraptions."),
+    "dickinson-research": ("reader-dickinson-v1.webp", "Emily Dickinson binds a private fascicle beside pressed flowers while winter morning fills her Amherst room."),
+    "emerson-research": ("reader-emerson-v1.webp", "Ralph Waldo Emerson pauses on a rain-darkened Concord woodland path as neighbors cross the stream ahead."),
+    "great-awakenings-research": ("reader-great-awakenings-v1.webp", "A colonial outdoor revival draws belief, skepticism, grief, and expectation from a diverse crowd after a storm."),
+    "jesus-research": ("reader-jesus-v1.webp", "Jesus shares an evening meal with outsiders and working families in a first-century Galilean village."),
+    "john-the-baptist-research": ("reader-john-the-baptist-v1.webp", "John the Baptist addresses villagers, soldiers, laborers, and officials on the banks of the Jordan."),
+    "jung-research": ("reader-jung-v1.webp", "Carl Jung listens to a patient's dream inside his stone tower at Bollingen beside tools and carved river stones."),
+    "pareto-research": ("reader-pareto-v1.webp", "Vilfredo Pareto observes one governing elite descend as its successors rise through a crowded parliamentary hall."),
+    "phenomenology-pragmatism-research": ("reader-phenomenology-pragmatism-v1.webp", "Philosophers and a craftsperson bring perception, experiment, and practical repair to the same machine."),
+    "piaget-research": ("reader-piaget-v1.webp", "Children revise their reasoning through hands-on experiments while Jean Piaget and a colleague observe."),
+    "roman-catholicism-research": ("reader-roman-catholicism-v1.webp", "A layered old parish hosts a contemporary meal, vigil, and argument while the modern city moves beyond its doors."),
+    "us-economy-financial-system-research": ("reader-us-economy-financial-system-v1.webp", "Ports, factories, transit, shops, and financial operations wake together in an interconnected American city."),
+    "us-geopolitics-research": ("reader-us-geopolitics-v1.webp", "Civilian and military officials debate amid a harbor where trade, naval power, cables, and displaced people share one horizon."),
+    "uap-research": ("reader-uap-v1.webp", "Pilots and analysts compare ambiguous sensor evidence at a remote radar station before dawn."),
+    "american-pragmatism-research": ("reader-american-pragmatism-v1.webp", "American pragmatists, engineers, and residents test ideas by repairing a broken public water pump together."),
+    "forecast-corpus:ctv-dsp-ssp-research": ("forecast-ctv-dsp-ssp-v1.webp", "Publisher engineers, buyer-side traders, and an auditor reconcile a completed connected-TV auction through its technical handoffs and fees."),
+    "forecast-corpus:containerized-bidding-research": ("forecast-containerized-bidding-v1.webp", "Engineers and a security reviewer open a sealed compute chamber beside a publisher's live auction core."),
+    "forecast-corpus:walmart-vibe-research": ("forecast-walmart-vibe-v1.webp", "Retail-media and streaming teams test whether a purchase signal can safely bridge a store and a family's connected television."),
+}
 MARKED_JS = (HERE / "vendor" / "marked.min.js").read_text()
 # GFM strikethrough fires on a SINGLE tilde, so prose tildes meaning
 # "approximately" (~$22B, ~50%, ~12-month-old) get rendered crossed-out — the
@@ -78,6 +123,179 @@ USE_HERO_IMAGE = True  # Use the Divine Hero Agent mascot; flip to False for the
 # Open Graph + Twitter card tags so a shared link renders a rich preview with an
 # image. The result is passed as a VALUE into each template's .format() (never as
 # part of the format string), so any braces in a title pass through untouched.
+def _fmt_words(n):
+    """Word counts as a reader says them: 1.8M, not 1817k. Past a million the
+    'k' form stops being legible — 1817k reads as a typo, not a boast."""
+    if n >= 1_000_000:
+        m = n / 1_000_000
+        return f"{m:.1f}M words".replace(".0M", "M")
+    if n >= 1_000:
+        return f"{round(n / 1000)}k words"
+    return f"{n} words"
+
+
+# ------------------------------------------------------------------- about
+# The site's front door for anyone arriving from outside: what the library is,
+# how it is actually made, what it is evidence of, and how to make contact.
+# Every number on it is computed from the build, so the page cannot drift away
+# from the library it describes.
+
+CONTACT_EMAIL = "calvinpokorny128@gmail.com"
+
+ABOUT_CSS = """
+.ab-wrap { max-width: 820px; margin: 0 auto; padding: 2.4rem 2rem 4rem; }
+.ab-wrap header.ab-head { display: block; max-width: none; margin: 0 0 2.4rem; padding: 0;
+  text-align: center; }
+.ab-head .kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
+.ab-head h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2.4rem, 6vw, 3.6rem);
+  line-height: 1; margin: 0 0 .7rem; }
+.ab-lede { font-family: var(--serif); font-size: 1.18rem; line-height: 1.65; color: var(--muted);
+  max-width: 640px; margin: 0 auto; }
+.ab-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px;
+  background: var(--border); border: 1px solid var(--border); margin: 2.4rem 0; }
+.ab-fig { background: var(--bg); padding: 1.1rem 1rem; text-align: center; }
+.ab-fig b { display: block; font-family: var(--display); font-size: 1.75rem; line-height: 1.1;
+  color: var(--accent); font-variant-numeric: tabular-nums; }
+.ab-fig span { display: block; font-family: var(--mono); font-size: .62rem; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--muted); margin-top: .35rem; }
+.ab-wrap h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; margin: 2.4rem 0 .8rem; }
+.ab-wrap h2::after { content: ""; display: block; width: 92px; height: 6px; margin-top: .55rem;
+  background: linear-gradient(var(--accent), var(--accent)) 0 0 / 24px 6px no-repeat,
+              linear-gradient(180deg, var(--text) 0 2px, transparent 2px 4px, var(--text) 4px 5px, transparent 5px) 30px 0 / 62px 6px no-repeat; }
+.ab-wrap p { font-family: var(--serif); font-size: 1.02rem; line-height: 1.72; margin: 0 0 1rem; }
+.ab-wrap p a { color: var(--accent); }
+.ab-steps { list-style: none; margin: 1.2rem 0 0; padding: 0; counter-reset: ab; }
+.ab-steps li { position: relative; padding: 0 0 1.1rem 2.6rem; counter-increment: ab;
+  font-family: var(--serif); font-size: 1.02rem; line-height: 1.65; }
+.ab-steps li::before { content: counter(ab, decimal-leading-zero); position: absolute; left: 0; top: .15rem;
+  font-family: var(--mono); font-size: .72rem; font-weight: 600; color: var(--accent);
+  border: 1px solid var(--border); padding: .12rem .34rem; }
+.ab-steps b { font-family: var(--sans); font-weight: 600; }
+.ab-contact { border: 1px solid var(--border); border-left: 3px solid var(--accent); background: var(--bg);
+  padding: 1.8rem 1.9rem; margin: 2.6rem 0 0; box-shadow: var(--shadow-1); }
+.ab-contact h2 { margin-top: 0; }
+.ab-contact h2::after { display: none; }
+.ab-cta { display: inline-block; margin-top: .5rem; font-family: var(--sans); font-size: .95rem;
+  font-weight: 600; text-decoration: none; background: var(--accent); color: var(--bg);
+  padding: .72rem 1.3rem; border: 1px solid var(--accent);
+  transition: transform .16s var(--ease), box-shadow .16s var(--ease), filter .16s var(--ease); }
+.ab-cta:hover, .ab-cta:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-2); filter: brightness(1.06); }
+.ab-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .9rem 0 0; }
+.ab-cta:hover, .ab-cta:focus-visible { color: var(--bg); }
+footer .colophon a { color: var(--accent); text-decoration: none; }
+footer .colophon a:hover, footer .colophon a:focus-visible { text-decoration: underline; }
+@media (max-width: 560px) { .ab-wrap { padding: 1.6rem 1.2rem 3rem; } .ab-contact { padding: 1.3rem 1.2rem; } }
+"""
+
+ABOUT_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
+<title>About — calvincollins · xyz</title>
+<meta name="description" content="{descr}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
+  <nav class="mh-nav">
+{nav}
+  </nav>
+</div>
+<main class="ab-wrap">
+  <header class="ab-head">
+    <p class="kicker">About this library</p>
+    <h1>Machine Humanities</h1>
+    <p class="ab-lede">A working library of deep research — written by an agentic pipeline I design and run,
+    verified claim by claim against its sources, and made to argue in public where anyone can check it.</p>
+  </header>
+
+  <div class="ab-figures">{figures}</div>
+
+  <h2>What this is</h2>
+  <p>Every work here starts as a question and ends as a book-length corpus: chapters of narrative
+  argument, a glossary, a set of figures drawn from the material itself, and a forecast that commits
+  to a number. The subjects run from Connected-TV auction mechanics to Carlyle, Dickinson, and the
+  Great Awakenings, because the method does not care what it is pointed at.</p>
+  <p>Alongside the library sit three standing desks: <a href="adtech.html">Ad Tech</a>, a trade desk
+  covering the programmatic and Advanced-TV market with a daily wire; <a href="ghost.html">The Ghost of
+  Times</a>, a paper of writer-voiced op-eds; and <a href="forecast.html">The Forecast Desk</a>, where
+  the predictions are priced, logged, and graded against what actually happened.</p>
+
+  <h2>How it is made</h2>
+  <p>The pipeline is the point. It is not a chatbot asked for an essay — it is a research process with
+  adversarial stages built into it:</p>
+  <ol class="ab-steps">
+    <li><b>Multi-round research.</b> Successive sweeps widen coverage, then a critic names what is still
+    missing and sends the process back out to fill the gaps.</li>
+    <li><b>Adversarial verification.</b> Claims are re-checked against independent sources by readers whose
+    job is to refute them. Refuted claims are corrected in place, not quietly dropped — several corpora
+    here carry dozens of corrections made this way.</li>
+    <li><b>Priced forecasts.</b> Every probability is the output of a process — a market price, a counted
+    base rate, or a decomposition — never a number someone liked the look of.</li>
+    <li><b>Public grading.</b> Calls are frozen when logged and scored when they resolve. Misses stay on
+    the board next to the hits, with Brier scores and a calibration curve.</li>
+  </ol>
+
+  <h2>What it is evidence of</h2>
+  <p>Read commercially, this site is a portfolio of three things: designing agentic systems that do real
+  intellectual work end to end and survive contact with their own errors; deep, current coverage of the
+  programmatic and Connected-TV ad market, from auction plumbing to identity to regulation; and
+  calibrated forecasting with a track record kept in the open rather than a deck of confident claims.</p>
+  <p>The <a href="forecast-record.html">Track Record</a> is the honest version of that argument. It is
+  public precisely because it includes the losses.</p>
+
+  <div class="ab-contact">
+    <h2>Get in touch</h2>
+    <p>I am Calvin Collins. If you want to talk about the research, the ad-tech work, the pipeline behind
+    it, or a project you think it fits — the fastest route is email.</p>
+    <a class="ab-cta" href="mailto:{email}?subject=Machine%20Humanities">Email me <span aria-hidden="true">&#8594;</span></a>
+    <p class="ab-note">Or start with <a href="adtech.html">the Ad Tech desk</a> if you came for the market
+    work, and <a href="research.html">the library</a> if you came for everything else.</p>
+  </div>
+</main>
+<footer>
+  <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+  <p class="colophon"><a href="index.html">&#8592; Back to the homepage</a></p>
+</footer>
+<script>{theme_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def build_about_page(out_dir, figures, shell=""):
+    """Render docs/about.html — the front door for a first-time visitor.
+
+    `figures` is a list of (number, label) pairs, all computed from the build so
+    the page's claims stay true to the library it sits in front of."""
+    out = Path(out_dir)
+    descr = ("Machine Humanities — a library of agentic deep research by Calvin Collins, "
+             "with a Connected-TV trade desk and a publicly graded forecast record.")
+    fig_html = "".join(
+        f'<div class="ab-fig"><b>{html.escape(str(n))}</b><span>{html.escape(label)}</span></div>'
+        for n, label in figures
+    )
+    (out / "about.html").write_text(ABOUT_TEMPLATE.format(
+        favicon=FAVICON,
+        og_meta=og_tags("About — Machine Humanities", descr, f"{SITE_URL}/about.html", f"{SITE_URL}/{OG_IMAGE}"),
+        css=LIBRARY_CSS + ABOUT_CSS,
+        descr=html.escape(descr, quote=True),
+        nav=main_nav_html(active="about.html"),
+        figures=fig_html,
+        email=CONTACT_EMAIL,
+        theme_js=LIBRARY_THEME_JS,
+        shell=shell,
+    ))
+    print("  \u2713 About & contact \u2192 about.html")
+
+
 def og_tags(title, description, url, image):
     """Build a page's Open Graph + Twitter-card <meta> block (a string)."""
     esc = lambda s: html.escape(str(s), quote=True)
@@ -1024,6 +1242,7 @@ def hero_cta_html(hub_desk=None):
     if hub_desk:
         links.append((hub_desk["href"], hub_desk["title"], ''))
     links.append(('forecast.html', 'The Forecast Desk', ''))
+    links.append(('about.html', 'About & contact', ''))
     out = []
     for href, label, kind in links:
         cls = "hero-cta-btn" + (" primary" if kind == 'primary' else "")
@@ -1068,6 +1287,7 @@ MAIN_NAV_ITEMS = [
     ("Glossary", "glossary.html"),
     ("Quiz", "quiz.html"),
     ("Wrapped", "wrapped.html"),
+    ("About", "about.html"),
 ]
 
 
@@ -1086,6 +1306,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
+<meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
 {og_meta}
 <style>{css}</style>
@@ -3379,6 +3600,7 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">“The medium is the message.” — Marshall McLuhan</p>
   <p class="colophon"><span class="mh-stamp">Machine generated</span></p>
+  <p class="colophon"><a class="foot-contact" href="about.html">About</a> · <a class="foot-contact" href="mailto:{contact_email}?subject=Machine%20Humanities">Get in touch</a></p>
   <p class="colophon marc">
   <span class="marc-l"><b>008</b> Generated by machine — Claude (Anthropic)</span>
   <span class="marc-l"><b>245</b> Machine Humanities : agentic scholarship</span>
@@ -3442,6 +3664,10 @@ SCENE_STAMPS = {
 
 _SCENE_COVER_SLUGS_CACHE = None
 _RESEARCH_SCENES_CACHE = None
+_RESEARCH_SCENE_POOL_CACHE = None
+_SCENE_ASSET_ASSIGNMENTS = {}
+_USED_RESEARCH_SCENE_ASSETS = set()
+_ACTIVE_RESEARCH_SCENE_DIR = None
 
 
 def _all_scene_cover_slugs():
@@ -3498,12 +3724,144 @@ def _research_scenes():
     return scenes
 
 
+def _research_scene_pool():
+    """Return every content scene available to the site, grouped by corpus.
+
+    Unlike ``_research_scenes()``, which retains the original one-per-corpus
+    compatibility view, this pool lets each scene-plate topic receive its own
+    piece of real chapter artwork instead of recycling a representative image.
+    """
+    global _RESEARCH_SCENE_POOL_CACHE
+    if _RESEARCH_SCENE_POOL_CACHE is not None:
+        return _RESEARCH_SCENE_POOL_CACHE
+
+    pool = {}
+    if FIGURES_DIR.is_dir():
+        for folder in sorted(p for p in FIGURES_DIR.iterdir() if p.is_dir()):
+            scenes = []
+            snippets = sorted(folder.glob("scene_*.html"))
+            snippets.sort(key=lambda p: ("future" in p.stem.lower(), p.name))
+            for snippet in snippets:
+                text = snippet.read_text(errors="ignore")
+                img = re.search(
+                    r'<img\b[^>]*\bsrc=["\']data:image/(jpeg|jpg|png|webp);base64,([^"\']+)["\'][^>]*>',
+                    text,
+                    re.IGNORECASE,
+                )
+                if not img:
+                    continue
+                tag = img.group(0)
+                alt_match = re.search(r'\balt=(["\'])(.*?)\1', tag, re.IGNORECASE)
+                ext = "jpg" if img.group(1).lower() in ("jpeg", "jpg") else img.group(1).lower()
+                scenes.append({
+                    "bytes": base64.b64decode(img.group(2)),
+                    "ext": ext,
+                    "alt": html.unescape(alt_match.group(2)) if alt_match else "",
+                    "source": snippet.stem,
+                    "slug": folder.name,
+                })
+            if scenes:
+                pool[folder.name] = scenes
+    _RESEARCH_SCENE_POOL_CACHE = pool
+    return pool
+
+
 def publish_research_scenes(out):
-    """Materialize representative interior scenes into the served build."""
+    """Prepare the served scene directory and reset one-to-one assignments."""
+    global _ACTIVE_RESEARCH_SCENE_DIR
     scene_dir = Path(out) / SCENE_ASSET_DIRNAME
     scene_dir.mkdir(parents=True, exist_ok=True)
-    for slug, scene in _research_scenes().items():
-        (scene_dir / f"{slug}.{scene['ext']}").write_bytes(scene["bytes"])
+    for stale in scene_dir.glob("*--*.*"):
+        stale.unlink()
+    _ACTIVE_RESEARCH_SCENE_DIR = scene_dir
+    _SCENE_ASSET_ASSIGNMENTS.clear()
+    _USED_RESEARCH_SCENE_ASSETS.clear()
+
+
+def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
+    """Assign one real chapter scene to one scene-plate topic.
+
+    Each placement receives its own illustration, including separate card and
+    feature treatments of the same content. No two placements are handed the
+    same source artwork.
+    """
+    pool = _research_scene_pool()
+    if not pool:
+        return None
+
+    assignment_key = f"{kind}:{seed}:{placement}"
+    if assignment_key in _SCENE_ASSET_ASSIGNMENTS:
+        return _SCENE_ASSET_ASSIGNMENTS[assignment_key]
+
+    subject = _explicit_scene_subject(cover_slugs=cover_slugs, seed=seed)
+    if subject:
+        candidates = list(pool.get(subject, ()))
+    else:
+        # Generic desks may draw from the whole library, but the first scene in
+        # every corpus is held back for that corpus's own reader/forecast/card.
+        # This makes relevance independent of page build order.
+        candidates = [
+            scene
+            for slug, scenes in pool.items()
+            for scene in scenes[1:]
+        ]
+        preferred = set(SCENE_COVERS.get(kind, ()))
+        candidates.sort(key=lambda scene: (
+            0 if scene["slug"] in preferred else 1,
+            _scene_rank(assignment_key, f"{scene['slug']}:{scene['source']}"),
+        ))
+    if subject:
+        candidates.sort(key=lambda scene: _scene_rank(
+            assignment_key, f"{scene['slug']}:{scene['source']}"
+        ))
+
+    selected = next(
+        (scene for scene in candidates
+         if (scene["slug"], scene["source"]) not in _USED_RESEARCH_SCENE_ASSETS),
+        None,
+    )
+    if selected is None:
+        # A small corpus can run out before the entire site does. Preserve
+        # uniqueness by widening to the full research-scene pool.
+        all_candidates = [scene for scenes in pool.values() for scene in scenes]
+        all_candidates.sort(key=lambda scene: _scene_rank(
+            assignment_key, f"{scene['slug']}:{scene['source']}"
+        ))
+        selected = next(
+            (scene for scene in all_candidates
+             if (scene["slug"], scene["source"]) not in _USED_RESEARCH_SCENE_ASSETS),
+            all_candidates[0] if all_candidates else None,
+        )
+    if selected is None:
+        return None
+
+    _USED_RESEARCH_SCENE_ASSETS.add((selected["slug"], selected["source"]))
+    published_bytes = selected["bytes"]
+    published_ext = selected["ext"]
+    try:
+        from PIL import Image
+        with Image.open(io.BytesIO(selected["bytes"])) as image:
+            image = image.convert("RGB")
+            if image.width > 640:
+                height = round(image.height * (640 / image.width))
+                image = image.resize((640, height), Image.Resampling.LANCZOS)
+            optimized = io.BytesIO()
+            image.save(optimized, "WEBP", quality=58, method=6)
+            published_bytes = optimized.getvalue()
+            published_ext = "webp"
+    except Exception:
+        # Pillow is optional; the original embedded research image remains a
+        # valid fallback when the build runs in a minimal Python environment.
+        pass
+    filename = f"{selected['slug']}--{selected['source']}.{published_ext}"
+    if _ACTIVE_RESEARCH_SCENE_DIR is not None:
+        (_ACTIVE_RESEARCH_SCENE_DIR / filename).write_bytes(published_bytes)
+    result = {
+        **selected,
+        "filename": filename,
+    }
+    _SCENE_ASSET_ASSIGNMENTS[assignment_key] = result
+    return result
 
 
 def _scene_subject_slug(kind, cover_slugs=None, seed=""):
@@ -3525,22 +3883,34 @@ def _scene_subject_slug(kind, cover_slugs=None, seed=""):
     return min(pool, key=lambda slug: _scene_rank(f"{kind}:{seed}", slug))
 
 
-def _scene_image(kind, root="", cover_slugs=None, seed=""):
-    """Return (src, alt) for a real research scene, falling back to its cover."""
-    slug = _scene_subject_slug(kind, cover_slugs=cover_slugs, seed=seed)
-    if not slug:
-        return None, ""
+def _explicit_scene_subject(cover_slugs=None, seed=""):
+    """Return a corpus explicitly named by this placement, if there is one."""
+    pool = _research_scene_pool()
+    available = list(pool)
+    requested = [slug for slug in (cover_slugs or ()) if slug in available]
+    if requested:
+        # Multi-corpus collection plates should not consume the sole scene from
+        # a corpus that will need it for its own dedicated page later.
+        return next((slug for slug in requested if len(pool[slug]) > 1), requested[0])
+    matches = [slug for slug in available if slug in (seed or "")]
+    return max(matches, key=len) if matches else None
 
-    scene = _research_scenes().get(slug)
+
+def _scene_image(kind, root="", cover_slugs=None, seed="", placement=""):
+    """Return (src, alt) for a generated or uniquely assigned research scene."""
+    generated = GENERATED_SCENE_MAP.get(seed)
+    if generated:
+        filename, alt = generated
+        return f"{root}generated-scenes/{filename}", alt
+
+    scene = _unique_research_scene(
+        kind, cover_slugs=cover_slugs, seed=seed, placement=placement
+    )
     if scene:
         return (
-            f"{root}{SCENE_ASSET_DIRNAME}/{slug}.{scene['ext']}",
-            scene["alt"] or f"A narrative scene from the {humanize(slug)} research.",
+            f"{root}{SCENE_ASSET_DIRNAME}/{scene['filename']}",
+            scene["alt"] or f"A narrative scene from the {humanize(scene['slug'])} research.",
         )
-
-    cover = find_cover_image(slug)
-    if cover:
-        return f"{root}covers/{cover.name}", f"Cover scene for the {humanize(slug)} research."
     return None, ""
 
 
@@ -3590,7 +3960,9 @@ def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None, see
     kind = kind if kind in SCENE_LABELS else "pamphlet"
     variant = _scene_variant(kind, seed)
     cls = f"scene-plate scene-{kind} scene-v{variant}" + (f" {extra_class}" if extra_class else "")
-    src, scene_alt = _scene_image(kind, root=root, cover_slugs=cover_slugs, seed=seed)
+    src, scene_alt = _scene_image(
+        kind, root=root, cover_slugs=cover_slugs, seed=seed, placement=extra_class
+    )
     if not src:
         return ""
     alt = label or scene_alt or SCENE_LABELS[kind]
@@ -7476,7 +7848,7 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
+  <a class="mh-brand" href="{brand_href}" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -7825,7 +8197,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
                  f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
     page_html = FORECAST_PAGE_TEMPLATE.format(
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
-        nav=nav, back=back,
+        nav=nav, back=back, brand_href="index.html",
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_PAGE_CSS,
         accent_css=_accent_css(page.get("accent")),
         favicon=FAVICON, og_meta=og,
@@ -8228,7 +8600,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
                  f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
     page_html = FORECAST_PAGE_TEMPLATE.format(
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
-        nav=nav, back=back,
+        nav=nav, back=back, brand_href="index.html",
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         accent_css=_accent_css(page.get("accent")),
         favicon=FAVICON, og_meta=og,
@@ -8354,7 +8726,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
         page = FORECAST_PAGE_TEMPLATE.format(
             page_title=html.escape(title), h1=headline,
             kicker="The Forecast Desk · Predictor profile",
-            nav=main_nav_html(prefix="../", active="forecast.html"),
+            nav=main_nav_html(prefix="../", active="forecast.html"), brand_href="../index.html",
             back='<a href="../forecast-record.html">← The Track Record</a>',
             css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
             accent_css="",
@@ -8648,7 +9020,7 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
     page = FORECAST_PAGE_TEMPLATE.format(
         page_title=html.escape(title), h1="Compare the Predictors",
         kicker="The Forecast Desk · All seven, side by side",
-        nav=main_nav_html(prefix="../", active="forecast.html"),
+        nav=main_nav_html(prefix="../", active="forecast.html"), brand_href="../index.html",
         back='<a href="../forecast-record.html">← The Track Record</a>',
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         accent_css="",
@@ -10967,7 +11339,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">{epigraph}</p>
-  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
+  <p class="colophon">{back_link}</p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -11004,13 +11376,23 @@ DOMAIN_PAGE_CSS = """
     linear-gradient(180deg, var(--text) 0 3px, transparent 3px 5px, var(--text) 5px 6px, transparent 6px) 36px 0 / 112px 8px no-repeat; }
 .dk-motto { font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.5;
   color: var(--muted); max-width: 640px; margin: 0 auto 1.4rem; }
-.dk-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+.dk-folio { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem;
   border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
   font-family: var(--mono); font-size: .72rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--text); }
-.dk-folio .dk-folio-c { color: var(--accent); font-weight: 600; }
+.dk-folio > :first-child { justify-self: start; }
+.dk-folio > :last-child { justify-self: end; text-align: right; }
+.dk-folio .dk-folio-c { color: var(--accent); font-weight: 600; justify-self: center; text-align: center; }
+.dk-folio a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
+.dk-folio a:hover, .dk-folio a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
+@media (max-width: 700px) {
+  /* three mono labels across a phone is a pile-up — keep the count, drop the rails */
+  .dk-folio { grid-template-columns: 1fr; justify-items: center; gap: .3rem; }
+  .dk-folio > :first-child, .dk-folio > :last-child { justify-self: center; text-align: center; }
+}
 footer .colophon a { color: var(--accent); text-decoration: none; }
 footer .colophon a:hover { text-decoration: underline; }
+.foot-contact { font-family: var(--sans); font-weight: 600; letter-spacing: .01em; }
 @media (max-width: 560px) {
   .dk-hero { grid-template-columns: 1fr; }
   .dk-agent { order: -1; }
@@ -11382,7 +11764,12 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         accent_css=accent_css,
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
         stats=html.escape(stats),
-        folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
+        folio_right=page_cfg.get("folio_right_html")
+                    or html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
+        # Every desk front is a sibling of the homepage, not a child of the
+        # library — pointing them all at research.html made research.html's own
+        # footer link to itself.
+        back_link=page_cfg.get("back_link", '<a href="index.html">← Back to the homepage</a>'),
         scene=scene_plate(scene_kind, extra_class="section-scene", seed=f"domain:{slug}"),
         hero=desk_hero_art(slug),
         bands=bands,
@@ -11983,6 +12370,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     publish_research_scenes(out)
+    if GENERATED_SCENES_DIR.is_dir():
+        generated_out = out / "generated-scenes"
+        generated_out.mkdir(parents=True, exist_ok=True)
+        for asset in GENERATED_SCENES_DIR.iterdir():
+            if asset.is_file():
+                shutil.copy(asset, generated_out / asset.name)
     # Copy top-level image assets into the served output so absolute URLs resolve on the live site.
     for image_asset in SITE_IMAGE_ASSETS:
         src = HERE / image_asset
@@ -12476,7 +12869,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         dcards = [c for c in cards if c["category"] in dcats]
         dws = [w for w in wrapped_stats if w["category"] in dcats]
         dstats = (f"{len(dcards)} corpora · {sum(w['chapters'] for w in dws)} chapters · "
-                  f"{round(sum(w['words'] for w in dws) / 1000)}k words")
+                  f"{_fmt_words(sum(w['words'] for w in dws))}")
         if hub_desk is None:
             hub_desk = {
                 "href": f"{slug}.html",
@@ -12614,7 +13007,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     index_ws = [w for w in wrapped_stats if w["category"] not in detached_cats]
     stats = (f"{len(index_cards)} corpora · {sum(w['chapters'] for w in index_ws)} chapters · "
-             f"{round(sum(w['words'] for w in index_ws) / 1000)}k words")
+             f"{_fmt_words(sum(w['words'] for w in index_ws))}")
 
     # The index carries only a quiz invitation band — the full quiz lives on
     # quiz.html and spans every shelf, desks included; the desks additionally
@@ -12795,6 +13188,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         site_subtitle=html.escape(site_subtitle),
         css=library_css,
         favicon=FAVICON, og_meta=OG_META,
+        contact_email=CONTACT_EMAIL,
         nav=main_nav_html(active="index.html"),
         top_header=top_header_art(),
         brand_logo=brand_logo_art(),
@@ -12821,9 +13215,15 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         "accent": ("#9a2c1a", "#d98055"),
         "epigraph": "“The medium is the message.” — Marshall McLuhan",
         "folio_left": "The library",
-        "folio_right": "Corpora, collections, and reference",
+        # was "Corpora, collections, and reference" — a third label saying what
+        # the other two already said. The rail is better spent as a route out.
+        "folio_right_html": '<a href="about.html">About &amp; contact →</a>',
         "kicker": "A library of deep research",
-        "subtitle": site_subtitle,
+        # The site subtitle is a two-word brand line; a desk front needs to say
+        # what a reader actually gets when they open a shelf.
+        "subtitle": ("Book-length research on whatever the question turns out to need — media theory, "
+                     "market plumbing, theology, poetry. Written by an agentic pipeline, checked against "
+                     "its sources claim by claim, and made to commit to a forecast at the end."),
         "title": site_title,
     }
     research_tools = [
@@ -12845,6 +13245,22 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                       tools=_desk_tools_html(research_tools), quiz=research_quiz,
                       bottom_bands=collections_html, shell=shell_root)
     build_wrapped_page(out, wrapped_stats, shell=shell_root, category_order=category_order)
+    # The front door. Its figures are computed here so the page can never claim
+    # more (or less) than the library actually holds.
+    _ab_words = sum(w["words"] for w in wrapped_stats)
+    _ab_terms = sum(len({t["term"].lower() for t in g["terms"]}) for g in glossary_index)
+    _ab_graded = _fd_site_led["desk"]["graded"]
+    _ab_figs = [
+        (len(wrapped_stats), "research corpora"),
+        (sum(w["chapters"] for w in wrapped_stats), "chapters"),
+        (_fmt_words(_ab_words).replace(" words", ""), "words"),
+        (f"{len(fp_editions)}", "wire editions"),
+        (f"{_ab_terms:,}", "glossary terms"),
+    ]
+    if _ab_graded:
+        _ab_hits = _fd_site_led["desk"]["hits"]
+        _ab_figs.append((f"{_ab_hits}–{_ab_graded - _ab_hits}", "forecast record"))
+    build_about_page(out, _ab_figs, shell=shell_root)
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html, {out}/research.html")
 
 
