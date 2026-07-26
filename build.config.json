@@ -63,7 +63,7 @@
         "slug": "adtech",
         "title": "Ad Tech",
         "kicker": "Programmatic & Advanced TV",
-        "subtitle": "The trade desk of the library — deep research on the programmatic and Connected-TV ad market, alongside The Fingerprint, its daily wire.",
+        "subtitle": "Deep research on the programmatic and Connected-TV market — auction plumbing, identity, measurement, and the regulation closing in on all three. Every claim traced to its sources; every forecast graded in public. The Fingerprint files the daily wire.",
         "accent": [
           "#0d5b68",
           "#62aab8"
@@ -74,7 +74,9 @@
           "glossary",
           "quiz",
           "briefings"
-        ]
+        ],
+        "folio_left": "The desk",
+        "folio_right_html": "<a href=\"about.html\">About &amp; contact →</a>"
       }
     },
     {
