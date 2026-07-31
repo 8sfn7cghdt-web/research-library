@@ -204,7 +204,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
   .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
-  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
+  /* Stacked under the wordmark the nav is its own block, so it hangs off the
+     left margin with it — flush-right against a flush-left brand reads as
+     overflow rather than as an index. */
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; justify-content: flex-start; }
 }
 header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
@@ -909,6 +912,16 @@ html.show-overture .ov-skip { animation-delay: .7s; }
 @keyframes ovOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
 @keyframes ovRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; } }
 @keyframes ovTrack { from { opacity: 0; letter-spacing: .3em; } to { opacity: 1; letter-spacing: .04em; } }
+/* The separator dots sit in the gutter to the right of each link, so once the
+   rail wraps the last link on every line strands one against the margin. */
+@media (max-width: 680px) {
+  .ov-sections { gap: .5rem 1.1rem; margin-bottom: 1.9rem; }
+  .ov-sections a:not(:last-child)::after { content: none; }
+}
+/* No Esc key to press — the enter button is the whole affordance there. */
+@media (hover: none) and (pointer: coarse) {
+  .ov-skip { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   html.show-overture #overture, html.show-overture .ov-inner > * { animation: none !important; }
   #ov-enter, #ov-enter:hover, #ov-enter:focus-visible, #ov-enter:active,

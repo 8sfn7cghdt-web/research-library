@@ -204,7 +204,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
   .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
-  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
+  /* Stacked under the wordmark the nav is its own block, so it hangs off the
+     left margin with it — flush-right against a flush-left brand reads as
+     overflow rather than as an index. */
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; justify-content: flex-start; }
 }
 header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
