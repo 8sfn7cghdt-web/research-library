@@ -1342,7 +1342,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
   </div>
   <section id="related"></section>
 </main>
-<template id="reader-scene-template">{scene}</template>
+<script id="reader-scenes-data" type="application/json">{scenes_json}</script>
 <script id="corpus-data" type="application/json">{data_json}</script>
 <script>{marked_js}</script>
 <script>{app_js}</script>
@@ -1816,9 +1816,17 @@ function show(i, anchorText) {
   well.textContent = 'Chapter ' + (current + 1) + ' of ' + docs.length + ' · ' + mins + ' min read · Machine Humanities';
   var h1 = content.querySelector('h1');
   if (h1) h1.insertAdjacentElement('afterend', well); else content.insertAdjacentElement('afterbegin', well);
-  var sceneTpl = document.getElementById('reader-scene-template');
-  if (sceneTpl && h1 && sceneTpl.content && sceneTpl.content.firstElementChild) {
-    well.insertAdjacentElement('afterend', sceneTpl.content.firstElementChild.cloneNode(true));
+  var sceneData = document.getElementById('reader-scenes-data');
+  var sceneHtmls = [];
+  if (sceneData) {
+    try { sceneHtmls = JSON.parse(sceneData.textContent || '[]') || []; } catch (e) { sceneHtmls = []; }
+  }
+  if (sceneHtmls.length && h1) {
+    var sceneTpl = document.createElement('template');
+    sceneTpl.innerHTML = sceneHtmls[current % sceneHtmls.length] || '';
+    if (sceneTpl.content && sceneTpl.content.firstElementChild) {
+      well.insertAdjacentElement('afterend', sceneTpl.content.firstElementChild.cloneNode(true));
+    }
   }
   armReveals(content);
   toc.querySelectorAll('a').forEach((a, j) => a.classList.toggle('active', j === current));
@@ -3778,6 +3786,34 @@ def publish_research_scenes(out):
     _USED_RESEARCH_SCENE_ASSETS.clear()
 
 
+def _publish_research_scene_asset(selected):
+    """Write one scene-pool item as a served asset and return it with filename."""
+    published_bytes = selected["bytes"]
+    published_ext = selected["ext"]
+    try:
+        from PIL import Image
+        with Image.open(io.BytesIO(selected["bytes"])) as image:
+            image = image.convert("RGB")
+            if image.width > 640:
+                height = round(image.height * (640 / image.width))
+                image = image.resize((640, height), Image.Resampling.LANCZOS)
+            optimized = io.BytesIO()
+            image.save(optimized, "WEBP", quality=58, method=6)
+            published_bytes = optimized.getvalue()
+            published_ext = "webp"
+    except Exception:
+        # Pillow is optional; the original embedded research image remains a
+        # valid fallback when the build runs in a minimal Python environment.
+        pass
+    filename = f"{selected['slug']}--{selected['source']}.{published_ext}"
+    if _ACTIVE_RESEARCH_SCENE_DIR is not None:
+        (_ACTIVE_RESEARCH_SCENE_DIR / filename).write_bytes(published_bytes)
+    return {
+        **selected,
+        "filename": filename,
+    }
+
+
 def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
     """Assign one real chapter scene to one scene-plate topic.
 
@@ -3836,30 +3872,7 @@ def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
         return None
 
     _USED_RESEARCH_SCENE_ASSETS.add((selected["slug"], selected["source"]))
-    published_bytes = selected["bytes"]
-    published_ext = selected["ext"]
-    try:
-        from PIL import Image
-        with Image.open(io.BytesIO(selected["bytes"])) as image:
-            image = image.convert("RGB")
-            if image.width > 640:
-                height = round(image.height * (640 / image.width))
-                image = image.resize((640, height), Image.Resampling.LANCZOS)
-            optimized = io.BytesIO()
-            image.save(optimized, "WEBP", quality=58, method=6)
-            published_bytes = optimized.getvalue()
-            published_ext = "webp"
-    except Exception:
-        # Pillow is optional; the original embedded research image remains a
-        # valid fallback when the build runs in a minimal Python environment.
-        pass
-    filename = f"{selected['slug']}--{selected['source']}.{published_ext}"
-    if _ACTIVE_RESEARCH_SCENE_DIR is not None:
-        (_ACTIVE_RESEARCH_SCENE_DIR / filename).write_bytes(published_bytes)
-    result = {
-        **selected,
-        "filename": filename,
-    }
+    result = _publish_research_scene_asset(selected)
     _SCENE_ASSET_ASSIGNMENTS[assignment_key] = result
     return result
 
@@ -3972,6 +3985,54 @@ def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None, see
         f'alt="{html.escape(alt, quote=True)}" loading="lazy" decoding="async">'
         '</figure>'
     )
+
+
+def reader_scene_json(corpus, kind="research", cover_slugs=None, root=""):
+    """Return one deterministic scene-plate HTML string per reader chapter."""
+    scenes = []
+    slug = corpus.get("slug", "")
+    local_pool = list(_research_scene_pool().get(slug, ()))
+    local_used = set()
+    local_srcs = set()
+    for i, doc in enumerate(corpus.get("documents", ())):
+        seed = f"{slug}:chapter:{i}:{doc.get('title', '')}"
+        extra_class = f"reader-scene reader-scene-ch{i + 1}"
+        candidates = sorted(
+            (scene for scene in local_pool if scene["source"] not in local_used),
+            key=lambda scene: _scene_rank(seed, scene["source"]),
+        )
+        selected = candidates[0] if candidates else None
+        if selected:
+            local_used.add(selected["source"])
+            _USED_RESEARCH_SCENE_ASSETS.add((selected["slug"], selected["source"]))
+            asset = _publish_research_scene_asset(selected)
+            src = f"{root}{SCENE_ASSET_DIRNAME}/{asset['filename']}"
+            alt = asset["alt"] or f"A narrative scene from the {humanize(asset['slug'])} research."
+            cls = f"scene-plate scene-{kind if kind in SCENE_LABELS else 'pamphlet'} scene-v{_scene_variant(kind, seed)} {extra_class}"
+            scenes.append(
+                f'<figure class="{html.escape(cls, quote=True)}">'
+                f'<img class="sc-scene" src="{html.escape(src, quote=True)}" '
+                f'alt="{html.escape(alt, quote=True)}" loading="lazy" decoding="async">'
+                '</figure>'
+            )
+            local_srcs.add(src)
+            continue
+
+        fallback = scene_plate(
+            kind,
+            extra_class=extra_class,
+            root=root,
+            cover_slugs=cover_slugs,
+            seed=seed,
+        )
+        src_match = re.search(r'\bsrc="([^"]+)"', fallback)
+        if src_match and src_match.group(1) in local_srcs:
+            scenes.append("")
+        else:
+            if src_match:
+                local_srcs.add(src_match.group(1))
+            scenes.append(fallback)
+    return json_for_html(scenes)
 
 
 SCENE_PLATE_CSS = """
@@ -11570,8 +11631,15 @@ HOME_MIRROR_CSS = """
   transition: background-color .16s var(--ease), color .16s var(--ease), transform .16s var(--ease); }
 .mirror-more:hover, .mirror-more:focus-visible { background: var(--mc-accent, var(--accent)); color: var(--bg);
   transform: translateX(3px); }
+/* Stacked, the two panes are no longer level with each other, so the shared
+   three-row scaffolding has to come off with the second column. Leaving
+   `grid-row: 1 / -1` on the panes makes auto-placement push the second one
+   into an *implicit* second column instead of stacking it — the 1fr track
+   then collapses to 0 and the panes render on top of each other. */
 @media (max-width: 900px) {
   .mirror-head, .mirror-grid { grid-template-columns: 1fr; }
+  .mirror-grid { grid-template-rows: none; row-gap: 2.6rem; }
+  .mirror-col { grid-column: 1; grid-row: auto; grid-template-rows: none; }
 }
 
 /* Bottom scrolls — Ghost of Times / Pamphlets / Briefings as horizontal
@@ -12444,6 +12512,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             f"{SITE_URL}/{corpus['slug']}.html",
             cover_url or f"{SITE_URL}/{OG_IMAGE}",
         )
+        category = override.get("category") or "Other"
         # Defer the reader render until the full library manifest exists, so the
         # shared command-palette shell (injected below) can see every corpus.
         pages.append({
@@ -12453,7 +12522,12 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             "theme_style": render_theme_style(theme),
             "reader_og": reader_og,
             "data_json": json_for_html(corpus),
-            "category": override.get("category") or "Other",
+            "scenes_json": reader_scene_json(
+                corpus,
+                "briefing" if category == "Media & Advertising" else "research",
+                cover_slugs=(corpus["slug"],),
+            ),
+            "category": category,
         })
         n = len(corpus["documents"])
         words = sum(len(d["body"].split()) for d in corpus["documents"])
@@ -12466,7 +12540,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         # build.config.json "descriptions" — useful when a corpus has no manifest
         # subtitle, or its manifest carries a long sharpened_question / boilerplate.
         card_sub = descriptions.get(corpus["slug"], corpus["subtitle"] or "")
-        category = override.get("category") or "Other"
         # A lowercase haystack the index search box matches against (title, blurb, category).
         search_text = html.escape(
             " ".join([corpus["title"], card_sub, category]).lower(), quote=True
@@ -12742,8 +12815,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             shell=shell_root,
             back_href=_back_href,
             back_label=_back_label,
-            scene=scene_plate("briefing" if p["category"] == "Media & Advertising" else "research",
-                              extra_class="reader-scene", cover_slugs=(p["slug"],), seed=p["slug"]),
+            scenes_json=p["scenes_json"],
         ))
 
     # Collection pages — merged cross-corpus readers, rendered through the same
@@ -12756,8 +12828,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             css=CSS + SCENE_PLATE_CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
             data_json=shrink_data_uris(json_for_html(col_corpus)), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
             back_href="research.html", back_label="Library",
-            scene=scene_plate("collection", extra_class="reader-scene",
-                              cover_slugs=meta.get("slugs"), seed=meta["slug"])))
+            scenes_json=reader_scene_json(
+                col_corpus,
+                "collection",
+                cover_slugs=meta.get("slugs"),
+            )))
     if resolved_collections:
         print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
 
