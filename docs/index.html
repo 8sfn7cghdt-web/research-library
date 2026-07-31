@@ -668,6 +668,8 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   transform: translateX(3px); }
 @media (max-width: 900px) {
   .mirror-head, .mirror-grid { grid-template-columns: 1fr; }
+  .mirror-grid { grid-template-rows: none; row-gap: 2.6rem; }
+  .mirror-col { grid-column: 1; grid-row: auto; grid-template-rows: none; }
 }
 
 /* Bottom scrolls — Ghost of Times / Pamphlets / Briefings as horizontal
