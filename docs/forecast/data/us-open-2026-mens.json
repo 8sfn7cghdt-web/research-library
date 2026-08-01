@@ -1,0 +1,214 @@
+{
+ "kind": "native_forecast",
+ "slug": "us-open-2026-mens",
+ "question": "Who will win the 2026 US Open Men's Singles title?",
+ "title": "Who Wins the 2026 US Open — Men",
+ "category": "Sport & Games",
+ "status": "open",
+ "logged": "2026-07-31",
+ "grades": "2026-09-13",
+ "resolution": "Resolves to the player who wins the 2026 US Open Men's Singles final on 13 September 2026 at the USTA Billie Jean King National Tennis Center, per official result.",
+ "consensus": {
+  "pick": "Sinner",
+  "flag": "🇮🇹",
+  "band": "48–55%",
+  "band_low": 48,
+  "band_high": 55,
+  "runner_up": "Alcaraz",
+  "runner_up_flag": "🇪🇸",
+  "runner_up_band": "18–24%",
+  "headline_case": "Jannik Sinner is the strongest single node in the field: world No. 1, a 44-3 season record, and a fifth major already banked this year at Wimbledon in July. Polymarket has him at roughly 53% and climbing through July, nearly double the next name. But this is not a repeat of the Wimbledon call — Carlos Alcaraz, the man who beat Sinner in last year's US Open final, is back. Alcaraz sat out from April through the summer with a wrist injury, missed Wimbledon and the Canadian Open, but reports him 100% healed and re-entering the tour at Cincinnati in August, a live tune-up before Flushing Meadows. The market's ~53% for Sinner already discounts a rusty Alcaraz; we shade a few points under that to respect the real chance a healthy Alcaraz — the defending champion on this exact court — finds his form in Cincinnati and re-shortens the gap before the draw is even made.",
+  "why_over_runner_up": "Sinner outprices Alcaraz roughly 2-to-1 on every board that has posted odds (53% vs ~22% on Polymarket), and unlike Wimbledon, Sinner is not the only proven hard-court closer in the field — but Alcaraz is a matter of games and match-fitness, not talent, and the market is already pricing that uncertainty into his number rather than treating him as a co-favorite.",
+  "dissent": "The Path Reader's case is the sharpest: Alcaraz is the reigning champion on this exact hard court, beat Sinner in last year's final, and gets a full August of live match play at Cincinnati before New York. If he wins Cincinnati clean, the gap to Sinner collapses fast and the market has historically underpriced a healthy Alcaraz's ceiling.",
+  "tally": [
+   {
+    "team": "Sinner",
+    "flag": "🇮🇹",
+    "votes": 4
+   },
+   {
+    "team": "Alcaraz",
+    "flag": "🇪🇸",
+    "votes": 2
+   },
+   {
+    "team": "Field (Zverev/Djokovic/dark horse)",
+    "flag": "🎾",
+    "votes": 1
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+   "pick": "Sinner",
+   "flag": "🇮🇹",
+   "prob": "53%",
+   "prob_num": 53,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "I do not guess. I read the board, and the board says Sinner at 53%, nearly double Alcaraz's 22% on a $4.77M Polymarket book. That price has held and climbed since early July. Alcaraz's rust is not a secret to the market — it is already baked into his number. I take the price as given.",
+   "evidence": "Polymarket has Sinner at 53% (up from 45% in early July) on $4.77M volume, with Alcaraz second at 22%.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "market-reader"
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts simulation/model over recency and sentiment.",
+   "pick": "Sinner",
+   "flag": "🇮🇹",
+   "prob": "50%",
+   "prob_num": 50,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Recency wants to hand this to Sinner outright off a Wimbledon title and a 44-3 record; I want to know what a wrist injury actually costs a top-five player over four lost months. History says returning players need two to three tournaments to rebuild timing on serve returns, which argues Alcaraz is not fully priced back to his ceiling by September even if he wins Cincinnati. That discount belongs to Sinner, not to the field — so I sit a shade under the market's 53%, not above it.",
+   "evidence": "Layoff-return base rate: players returning from multi-month injuries typically need 2-3 tournaments to regain serve-return timing, capping Alcaraz's realistic September ceiling below his pre-injury level.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "quant"
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates: hard-court major conversion, defending-champion history, injury-return history.",
+   "pick": "Sinner",
+   "flag": "🇮🇹",
+   "prob": "49%",
+   "prob_num": 49,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "I read the ledger of hard courts and it favors the man already crowned twice on them — Sinner has taken two of the last three US Opens and sits world No. 1 on a 44-3 mark. Yet the ledger keeps another line I will not erase: defending champions on this court have converted only a minority of the time across the last two decades, the field always finds a way in. So I set my hand at 49%, honoring the favorite without crowning him twice over.",
+   "evidence": "Sinner has reached or won two of the last three US Open finals; defending men's US Open champions have converted in roughly a third to a half of recent editions, capping automatic reconversion.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "historian"
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Reads the actual draw/schedule/route, ignores reputation.",
+   "pick": "Alcaraz",
+   "flag": "🇪🇸",
+   "prob": "24%",
+   "prob_num": 24,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "blurb": "I do not read the ranking. I read the calendar. Alcaraz gets Cincinnati in mid-August — a full hard-court tournament, live rounds, before the Open even seeds. That is not a rusty man walking cold into Flushing Meadows; that is a former champion given a runway to sharpen exactly the surface and exactly the shots New York will demand. He beat Sinner here last year. The road back is shorter than the market thinks.",
+   "evidence": "Alcaraz returns to the tour at the Cincinnati Open in August — a full hard-court event before the US Open — after being declared fully healed from his wrist injury.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "path-reader"
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actor, motivation, proven leadership.",
+   "pick": "Sinner",
+   "flag": "🇮🇹",
+   "prob": "55%",
+   "prob_num": 55,
+   "confidence": "high",
+   "register": "bardic-incantatory",
+   "blurb": "I sing of the man who has not stopped winning. Forty-four and three this year, a fifth major seized at Wimbledon in July, and now the number one seed walks into the city that has already crowned him twice. There is no injury to nurse, no rust to shed — only a champion in the middle of the finest season of his career, arriving at the one major left that still owes him nothing. The field must catch a man who is not slowing down.",
+   "evidence": "44-3 season record, fifth career major won at Wimbledon in July, two prior US Open finals reached with one title — a champion at the peak of current form.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "talisman"
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail, hunts the underpriced live path.",
+   "pick": "Alcaraz",
+   "flag": "🇪🇸",
+   "prob": "26%",
+   "prob_num": 26,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Notice what the market has done: it has priced a two-time major finalist who beat the favorite on this exact court last September down to 22%, purely because he skipped a few months with a wrist that is now, by every report, fine. That is a discount for an injury that no longer exists by the time the tournament starts. I buy the defending champion the market forgot to re-rate.",
+   "evidence": "Alcaraz is the reigning 2025 US Open champion, reportedly 100% healed, yet priced at less than half of Sinner despite beating him head-to-head in last year's final.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "contrarian"
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+   "pick": "Alcaraz",
+   "flag": "🇪🇸",
+   "prob": "22%",
+   "prob_num": 22,
+   "confidence": "medium",
+   "register": "oracular destiny-reading",
+   "blurb": "Read the story as it wants to be told. A champion is struck down in the spring, healed in silence through the summer, and returns to the exact court where he last held the trophy. The rivalry that owns this decade meets again where it was last decided — not at Wimbledon, where Sinner's story ran, but here, where Alcaraz's does. The price says one in four. The shape of the tale says the return is the point.",
+   "evidence": "Alcaraz is the defending champion on this exact court, returning from injury at the venue and surface where his rivalry with Sinner was last settled in his favor.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "prophet"
+  }
+ ],
+ "field": [
+  { "team": "Sinner", "flag": "🇮🇹", "price": 53.0 },
+  { "team": "Alcaraz", "flag": "🇪🇸", "price": 22.0 },
+  { "team": "Zverev", "flag": "🇩🇪", "price": 7.4 },
+  { "team": "Djokovic", "flag": "🇷🇸", "price": 3.8 },
+  { "team": "Fritz", "flag": "🇺🇸", "price": 3.0 },
+  { "team": "Field (others)", "flag": "🎾", "price": 10.8 }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "2026 Men's US Open Winner",
+   "detail": "Sinner 53% · Alcaraz 22% · Zverev 7.4% · Djokovic 3.8% · Fritz 3%",
+   "volume": "~$4.77M",
+   "pulled": "2026-07-31"
+  },
+  {
+   "platform": "Polymarket (historical read)",
+   "market": "2026 Men's US Open Winner — mid-July snapshot",
+   "detail": "Sinner rose from 45% (Jul 4) to 53-56.5% (Jul 13-15) as Wimbledon confirmed his form",
+   "volume": "Trend across July",
+   "pulled": "2026-07-15"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "2 of last 3",
+   "text": "Sinner has reached or won two of the last three US Open finals — the strongest recent hard-court reference class in the field."
+  },
+  {
+   "stat": "44-3",
+   "text": "Sinner's 2026 season record, plus a fifth major (Wimbledon, July 2026) — the best current-form case of any player in the draw."
+  },
+  {
+   "stat": "1 (2025)",
+   "text": "Alcaraz is the reigning US Open champion and beat Sinner head-to-head in that final — the strongest counter-precedent to a clean Sinner repeat."
+  },
+  {
+   "stat": "~2-3 events",
+   "text": "Typical number of tournaments a top-5 player needs after a multi-month injury layoff to rebuild full match sharpness — Cincinnati (August) is Alcaraz's first, the Open would be roughly his second."
+  }
+ ],
+ "triggers": [
+  "Alcaraz wins or reaches the final of the Cincinnati Open in August — sharply narrows the gap to Sinner and should lift his live price toward co-favorite.",
+  "Alcaraz suffers any wrist setback in his Cincinnati return — collapses his case back toward the field.",
+  "Sinner is upset or struggles physically before the Open (heat, fatigue off a heavy season) — opens space for Zverev or a dark horse.",
+  "The draw seeds Sinner and Alcaraz into the same half — removes the guaranteed-final scenario and changes both of their true title odds.",
+  "Djokovic or Zverev string a hot run through the summer hard-court swing (Cincinnati/Canada) — should be re-priced into the field share."
+ ],
+ "sources": [
+  { "label": "Polymarket — 2026 Men's US Open Winner (Tennis)", "url": "https://polymarket.com/event/2026-mens-us-open-winner-tennis" },
+  { "label": "CryptoSlate — 2026 Men's US Open Winner Prediction Market Analysis", "url": "https://cryptoslate.com/predictions/market/2026-mens-us-open-winner-tennis/" },
+  { "label": "Deadspin — 2026 US Open Tennis Men's Singles: Can Sinner Continue His Hot Streak", "url": "https://deadspin.com/prediction-markets/trending/2026-us-open-tennis-mens-singles-can-jannik-sinner-continue-his-hot-streak/" },
+  { "label": "ATP Tour — US Open 2026 entry list", "url": "https://www.atptour.com/en/news/us-open-2026-entry-list" },
+  { "label": "Forbes — Carlos Alcaraz, Novak Djokovic, Coco Gauff Headline U.S. Open Entry Field", "url": "https://www.forbes.com/sites/adamzagoria/2026/07/21/carlos-alcaraz-novak-djokovic-coco-gauff-headline-us-open-entry-field/" },
+  { "label": "E! News — Why Isn't Carlos Alcaraz at Wimbledon 2026: Wrist Injury", "url": "https://www.eonline.com/news/1433360/why-isnt-carlos-alcaraz-at-wimbledon-2026-wrist-injury-recovery" }
+ ],
+ "method_note": "Seven standing predictor profiles each committed to a single named champion by a fixed criterion. Anchored on the Polymarket exact-question market (Sinner 53%, Alcaraz 22%, $4.77M volume, pulled 2026-07-31), cross-checked against the July price trend (45% to 53-56%) and Alcaraz's confirmed return-to-tour plan at Cincinnati in August, ahead of the tournament running Aug 30-Sep 13, 2026.",
+ "honesty_note": "Sinner is the favorite at 48-55%, not a lock — the market itself says he loses roughly as often as he wins across a nine-day two-week window. Alcaraz's price is depressed by a real injury layoff that, by all current reporting, has already resolved; that gap between his market price and his on-court ceiling is exactly what the dissent is pricing."
+}

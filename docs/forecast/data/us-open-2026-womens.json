@@ -1,0 +1,222 @@
+{
+ "kind": "native_forecast",
+ "slug": "us-open-2026-womens",
+ "question": "Who will win the 2026 US Open Women's Singles title?",
+ "title": "Who Wins the 2026 US Open — Women",
+ "category": "Sport & Games",
+ "status": "open",
+ "logged": "2026-07-31",
+ "grades": "2026-09-12",
+ "resolution": "Resolves to the player who wins the 2026 US Open Women's Singles final on 12 September 2026 at the USTA Billie Jean King National Tennis Center, per official result.",
+ "consensus": {
+  "pick": "Sabalenka",
+  "flag": "🇧🇾",
+  "band": "28–33%",
+  "band_low": 28,
+  "band_high": 33,
+  "runner_up": "Swiatek",
+  "runner_up_flag": "🇵🇱",
+  "runner_up_band": "15–19%",
+  "headline_case": "Aryna Sabalenka is chasing a third straight US Open title — something no woman has done since Serena Williams — and the case for her is a hard-court résumé almost no rival can match this year: 23-1 on hard courts in 2026, a Sunshine Double (Indian Wells and Miami back to back), and back-to-back US Open trophies already in hand. FanDuel and Polymarket independently price her near 31-32%, essentially agreeing. The one real dent is a January loss to Elena Rybakina in the Australian Open final, which is why the field is not more lopsided than it is. We hold the band at the market's own 28-33% rather than push higher: a three-peat this rare has never been free, even for a dominant favorite.",
+  "why_over_runner_up": "Sabalenka outprices Swiatek by roughly 13-18 points across books (32% vs 14-19%) and has the deeper hard-court sample this year (23-1 vs a clay-and-grass-leaning season for Swiatek); Swiatek's game has historically traveled less cleanly to hard courts than Sabalenka's raw power serve-and-forehand style.",
+  "dissent": "The Contrarian's case is live: Rybakina, priced as low as 9-12%, is the one player with a positive 2026 head-to-head over Sabalenka this season, having beaten her in the Australian Open final. A rematch anywhere in the draw is live danger the market may be underpricing relative to Swiatek and Gauff.",
+  "tally": [
+   {
+    "team": "Sabalenka",
+    "flag": "🇧🇾",
+    "votes": 4
+   },
+   {
+    "team": "Swiatek",
+    "flag": "🇵🇱",
+    "votes": 1
+   },
+   {
+    "team": "Rybakina",
+    "flag": "🇰🇿",
+    "votes": 2
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+   "pick": "Sabalenka",
+   "flag": "🇧🇾",
+   "prob": "31%",
+   "prob_num": 31,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "Two independent boards, one number. FanDuel prices Sabalenka at roughly 32% implied, Polymarket at 31 cents on the contract. That is not noise, that is agreement. Swiatek sits a full 12-17 points back. I take the price as the read: Sabalenka, and it is not close.",
+   "evidence": "FanDuel implies ~32% for Sabalenka (Swiatek ~19%); Polymarket prices Sabalenka at 31¢ — independent books within a point of each other.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "market-reader"
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts simulation/model over recency and sentiment.",
+   "pick": "Sabalenka",
+   "flag": "🇧🇾",
+   "prob": "30%",
+   "prob_num": 30,
+   "confidence": "high",
+   "register": "measured analytic contrarian",
+   "blurb": "Strip the narrative — the Rybakina loss, the three-peat storyline — and look only at the surface-specific sample: 23 wins against 1 loss on hard courts this season is as clean a signal as tennis produces. A single final loss against a player who beat almost no one else at that level does not overturn a season-long base rate this dominant. I sit at 30%, a shade under the market only because a field this deep at a major always retains real variance.",
+   "evidence": "Sabalenka is 23-1 on hard courts in the 2026 season, including a completed Sunshine Double (Indian Wells + Miami) — the strongest surface-specific form line of any contender.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "quant"
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates: three-peat history, defending-champion conversion.",
+   "pick": "Sabalenka",
+   "flag": "🇧🇾",
+   "prob": "28%",
+   "prob_num": 28,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "I count the years and find the ledger sparse: no woman has taken three straight US Opens since Serena Williams, and that gap has stood for over a decade. Sabalenka is the strongest name to attempt it in all that time, holder of the last two crowns and a 23-1 hard-court record. Yet I will not pretend a three-peat is ordinary; I set my mark at the low edge of the band, honoring how rare this feat has been even for the greatest.",
+   "evidence": "No woman has won three consecutive US Open titles since Serena Williams; Sabalenka is the strongest active bid at that feat in over a decade, but the base rate for the feat itself remains thin."
+  ,
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "historian"
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Reads the actual draw/schedule/route, ignores reputation.",
+   "pick": "Sabalenka",
+   "flag": "🇧🇾",
+   "prob": "33%",
+   "prob_num": 33,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "blurb": "I do not care whose name is on the trophy case. I care who is healthy and playing on the surface that suits them entering New York. Sabalenka's whole summer has been built on hard courts — Indian Wells, Miami, now this — while several rivals split their year across clay and grass. The road favors the player already living on this surface. That is Sabalenka, and it is not a close call.",
+   "evidence": "Sabalenka's 2026 title run (Sunshine Double plus Brisbane) is entirely hard-court, matching the US Open surface directly, unlike rivals whose peak form came on clay or grass.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "path-reader"
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actor, motivation, proven leadership.",
+   "pick": "Sabalenka",
+   "flag": "🇧🇾",
+   "prob": "32%",
+   "prob_num": 32,
+   "confidence": "high",
+   "register": "bardic-incantatory",
+   "blurb": "I sing of the champion chasing a name only one woman has earned in this century — a third straight crown at the tournament that has already made her twice. Motivation like that does not fade; it sharpens. She walks into Flushing Meadows as the two-time defending queen of this exact court, with the power game that has never needed the surface to cooperate. The history she is chasing is the very thing driving her.",
+   "evidence": "Back-to-back defending champion chasing an outcome (three straight US Opens) matched by only one other woman this century — a singular, self-motivating target.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "talisman"
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail, hunts the underpriced live path.",
+   "pick": "Rybakina",
+   "flag": "🇰🇿",
+   "prob": "16%",
+   "prob_num": 16,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone is busy admiring the favorite; I am busy noting who actually beat her this year. Rybakina did, in a major final, the last time these two shared a trophy match. The market prices that upset winner down near 9 cents while the favorite sits at 31 — a gap that treats the January result as a fluke rather than a live head-to-head edge. I am not backing the story the room is telling itself; I am backing the woman with the receipts.",
+   "evidence": "Rybakina beat Sabalenka 6-4, 4-6, 6-4 in the 2026 Australian Open final — the only player with a 2026 win over the favorite in a major final — yet is priced around 9-12%.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "contrarian"
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+   "pick": "Sabalenka",
+   "flag": "🇧🇾",
+   "prob": "31%",
+   "prob_num": 31,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "Read the years as scripture. Serena stood alone atop this mountain for over a decade, three crowns running, and no woman since has been given the chance to stand beside her. Now one arrives at the same gate, twice crowned already, a season of hard courts behind her that reads like preparation for exactly this. The number the market gives is thirty-one in a hundred. The shape of the story says the gate is about to open a third time.",
+   "evidence": "Sabalenka enters as back-to-back champion attempting the first US Open three-peat since Serena Williams, on the back of a 23-1 hard-court season — the strongest story-shaped case in the field.",
+   "record": { "graded": 0, "hits": 0 },
+   "persona_flag": "prophet"
+  }
+ ],
+ "field": [
+  { "team": "Sabalenka", "flag": "🇧🇾", "price": 31.0 },
+  { "team": "Swiatek", "flag": "🇵🇱", "price": 17.0 },
+  { "team": "Rybakina", "flag": "🇰🇿", "price": 10.0 },
+  { "team": "Gauff", "flag": "🇺🇸", "price": 9.0 },
+  { "team": "Andreeva", "flag": "🇷🇺", "price": 6.5 },
+  { "team": "Field (others)", "flag": "🎾", "price": 26.5 }
+ ],
+ "markets": [
+  {
+   "platform": "FanDuel Sportsbook",
+   "market": "2026 US Open Women's Winner",
+   "detail": "Sabalenka +210 (~32%) · Swiatek +430 (~19%) · Rybakina +650 (~13%) · Gauff +750 (~12%) · Andreeva +850 (~11%)",
+   "volume": "Sportsbook futures board",
+   "pulled": "2026-07-31"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "2026 US Open Women's Singles Winner",
+   "detail": "Sabalenka 31¢ · Rybakina 9.2¢ — deadspin/analyst framing labels Sabalenka \"overpriced\" relative to Rybakina's live head-to-head edge",
+   "volume": "Prediction-market contract pricing",
+   "pulled": "2026-07-31"
+  },
+  {
+   "platform": "William Hill / Unibet / BetUS (blended)",
+   "market": "2026 US Open Women's Winner",
+   "detail": "Sabalenka 3.00 (2/1) · Swiatek 6.00 (5/1) · Gauff 8.00 (7/1) — Swiatek and Gauff the closest chasers behind Sabalenka",
+   "volume": "European/US sportsbook odds",
+   "pulled": "2026-07-31"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "1 since Serena",
+   "text": "No woman has won three straight US Opens since Serena Williams — the feat Sabalenka is attempting is genuinely rare even for a dominant favorite."
+  },
+  {
+   "stat": "23-1",
+   "text": "Sabalenka's 2026 hard-court record, including a completed Sunshine Double (Indian Wells + Miami) — the deepest surface-specific form of any contender."
+  },
+  {
+   "stat": "2 straight",
+   "text": "Sabalenka has won the last two US Open titles outright, beating Amanda Anisimova in last year's final."
+  },
+  {
+   "stat": "1 major final loss (2026)",
+   "text": "Rybakina beat Sabalenka in the Australian Open final in January 2026 — the one blemish on an otherwise dominant season and the market's live dissent case."
+  }
+ ],
+ "triggers": [
+  "Sabalenka loses to Rybakina again anywhere on the summer hard-court swing (Cincinnati/Canada) before New York — should meaningfully re-rate the head-to-head price.",
+  "Swiatek strings a hard-court title run in August — narrows her gap to Sabalenka from the current 12-17 points.",
+  "Any injury or fatigue signal from Sabalenka's heavy 2026 schedule (27-3 overall) emerges pre-tournament — softens the favorite.",
+  "Gauff or Andreeva reaches a hard-court final in the run-up — pulls meaningful market share into the next tier.",
+  "The draw seeds Sabalenka and Rybakina into the same half — turns the Contrarian's dissent into an earlier, higher-stakes collision."
+ ],
+ "sources": [
+  { "label": "FanDuel Research — US Open Betting Odds for 2026 Women's Tournament", "url": "https://www.fanduel.com/research/us-open-betting-odds-for-2026-womens-tournament" },
+  { "label": "Deadspin — 2026 US Open Women's Singles: Can Sabalenka Three-Peat", "url": "https://deadspin.com/prediction-markets/trending/2026-us-open-womens-singles-tournament-winner-predictions-07-31-2026/" },
+  { "label": "BetUS — Women's US Open Tennis Odds to Win", "url": "https://www.betus.com.pa/sportsbook/us-open/women/futures/us-open-women-outrights/" },
+  { "label": "WTA Tennis — Back-to-back champion Sabalenka tops 2026 US Open entry list", "url": "https://www.wtatennis.com/news/4540318/back-to-back-champion-aryna-sabalenka-tops-2026-us-open-entry-list" },
+  { "label": "ESPN — Sabalenka, Sinner headline 2026 US Open fields", "url": "https://www.espn.com/tennis/story/_/id/49419981/two-defending-champ-sabalenka-sinner-lead-us-open-fields" },
+  { "label": "Wikipedia — 2026 Aryna Sabalenka tennis season", "url": "https://en.wikipedia.org/wiki/2026_Aryna_Sabalenka_tennis_season" }
+ ],
+ "method_note": "Seven standing predictor profiles each committed to a single named champion by a fixed criterion. Anchored on independent agreement between FanDuel's sportsbook line (~32% implied) and Polymarket's contract price (31¢) for Sabalenka, cross-checked against her 2026 hard-court record (23-1) and the live Rybakina head-to-head dissent, ahead of the tournament running Aug 30-Sep 12, 2026 for the women's final.",
+ "honesty_note": "Sabalenka is the clear single favorite at 28-33%, but that still means roughly two times in three the trophy goes elsewhere. The three-peat she is chasing has been done exactly once since Serena Williams — this pick names the most likely champion, not a certainty."
+}

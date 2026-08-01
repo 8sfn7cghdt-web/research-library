@@ -1,0 +1,225 @@
+{
+ "kind": "native_forecast",
+ "slug": "mlb-astros-2026-playoffs",
+ "question": "Will the Houston Astros make the 2026 MLB playoffs?",
+ "title": "Will the Astros Make the 2026 MLB Playoffs",
+ "category": "Sport & Games",
+ "status": "open",
+ "logged": "2026-07-31",
+ "grades": "2026-10-04",
+ "resolution": "Resolves YES if the Houston Astros clinch an American League postseason berth (division title or Wild Card) by the end of the 2026 regular season (~Oct 4 2026); NO otherwise.",
+ "consensus": {
+  "pick": "Astros miss the playoffs (NO)",
+  "flag": "🚫",
+  "band": "66–72%",
+  "band_low": 66,
+  "band_high": 72,
+  "runner_up": "Astros make the playoffs (YES)",
+  "runner_up_band": "28–34%",
+  "headline_case": "As of July 31, the Astros sit at 55-55, dead even with the Minnesota Twins and half a game behind the Cleveland Guardians for the last true American League Wild Card spot — one of the tightest bunches in baseball this season, with five teams within 2.5 games of a playoff line. Sportsbooks price Houston to make the postseason at only roughly 29-32% (BetMGM +250, DraftKings +210), meaningfully worse than a straight bubble coin flip, because the underlying team is judged a game under .500-quality and the two clubs chasing the same space — Seattle and Texas — are viewed by oddsmakers as deeper, healthier rosters better positioned for the stretch run and trade deadline. We hold the band at the market's own 66-72% NO rather than lean on the standings alone: the raw games-back gap looks like a near coin flip, but the market is pricing real underlying quality gaps the bare win-loss column hides.",
+  "why_over_runner_up": "NO leads because missing the playoffs is simply the base rate for any team currently outside a guaranteed spot with roughly a third of the season left — five-plus teams are fighting over three AL Wild Card slots, only one of the tightly bunched group can hold all three by October, and both sportsbooks price Houston as the softer bet in that logjam.",
+  "dissent": "The Talisman's case is the sharpest survivor: Houston has been here before, is a proven front-office organization that reliably upgrades at the trade deadline, and needs to jump only half a game in a wild-card structure where three other teams (Twins, Orioles, Mariners) are just as vulnerable to a bad August. A single hot two-week stretch or a strong deadline addition resolves this toward YES.",
+  "tally": [
+   { "name": "Astros miss the playoffs (NO)", "flag": "🚫", "votes": 5 },
+   { "name": "Astros make the playoffs (YES)", "flag": "🚀", "votes": 2 }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Astros miss the playoffs (NO)",
+   "pick_scenario": "Astros miss the playoffs (NO)",
+   "prob": "68-71%",
+   "prob_num": 70,
+   "confidence": "medium",
+   "register": "terse tape-reading",
+   "flag": "🚫",
+   "blurb": "BetMGM has Houston at +250 to make the playoffs, DraftKings at +210. Blend those books and you get roughly 29-32% YES, which means NO is priced at 68-71%. That is real money on a real bubble team, not a guess. I take the number as given: the books see Houston as the softer bet in a crowded field.",
+   "evidence": "BetMGM +250 (~28.6% YES) and DraftKings +210 (~32.3% YES) to make the 2026 playoffs — both books price Houston below a coin flip despite the tight standings gap.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts simulation/model over recency and sentiment.",
+   "pick": "Astros miss the playoffs (NO)",
+   "pick_scenario": "Astros miss the playoffs (NO)",
+   "prob": "65-68%",
+   "prob_num": 66,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "flag": "🚫",
+   "blurb": "The naive read off the standings — half a game back with 50-plus to play — looks like a near coin flip, and that is exactly the trap. A .500 record with roughly 52 games left carries wide variance either way, but the sportsbook lines, which price underlying run differential and roster quality rather than the win column alone, sit meaningfully worse than 50% for Houston. When the model-adjacent price and the naive base rate disagree this much, I trust the price that accounts for quality, not just games back.",
+   "evidence": "Sportsbook lines (28-32% YES) sit well under the ~45-50% a naive games-back-only model would imply for a team half a game out with a third of the season left — a gap attributable to underlying roster/run-differential quality, not schedule position.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counted reference-class base rates for bubble teams at the trade deadline.",
+   "pick": "Astros make the playoffs (YES)",
+   "pick_scenario": "Astros make the playoffs (YES)",
+   "prob": "32%",
+   "prob_num": 32,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "flag": "🚀",
+   "blurb": "I count the ledger of bubbles past: a team within a game of a wild card spot on the last day of July has, across the modern expanded-playoff era, gone on to claim a berth close to a third to two-fifths of the time — the door is narrow but it is not shut. Houston sits closer to that door than most of the pack chasing it. I set my mark near the market's own edge, honoring both the counted history and the current price.",
+   "evidence": "Teams within roughly one game of a Wild Card line at the July 31 trade deadline have historically claimed a playoff spot in a meaningful minority of cases — a real but sub-even chance, consistent with the sportsbook range.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Reads the actual schedule and standing, ignores reputation.",
+   "pick": "Astros miss the playoffs (NO)",
+   "pick_scenario": "Astros miss the playoffs (NO)",
+   "prob": "66%",
+   "prob_num": 66,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "flag": "🚫",
+   "blurb": "I do not care about the franchise's track record. I count the bodies ahead of them. Cleveland holds the spot Houston needs, tied with Minnesota just ahead, with Baltimore and Seattle both lurking within a game and a half. That is not one team to pass — it is a logjam of four or five, and Houston has to clear all of them while none of the others fold. The road is crowded, not clear.",
+   "evidence": "Five AL teams (Guardians, Twins, Astros, Orioles, Mariners) sit within roughly 2.5 games of the final Wild Card line as of July 31 — Houston must outlast the whole pack, not just one rival.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Elite individual actor, motivation, proven leadership.",
+   "pick": "Astros make the playoffs (YES)",
+   "pick_scenario": "Astros make the playoffs (YES)",
+   "prob": "38%",
+   "prob_num": 38,
+   "confidence": "medium",
+   "register": "bardic-incantatory",
+   "flag": "🚀",
+   "blurb": "I sing of an organization that has made the playoffs in nearly every recent season of this era — a front office that trades for the stretch run better than almost anyone in the sport, a culture built for exactly this position. Half a game is nothing to a team that has closed bigger gaps before under October pressure. The number on the board underrates the will of a roster that has been here, and won here, again and again.",
+   "evidence": "Houston has one of the most consistent recent-era playoff appearance streaks in MLB and a front office with a strong trade-deadline track record — intangibles the raw price may underweight.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Astros miss the playoffs (NO)",
+   "pick_scenario": "Astros miss the playoffs (NO)",
+   "prob": "72%",
+   "prob_num": 72,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "flag": "🚫",
+   "blurb": "Everyone wants to tell the nostalgic story about a team that always finds a way. I look at what the analysts covering this exact race are actually saying: too many obstacles, with Seattle and Texas viewed as deeper, healthier clubs with more paths to upgrade before the deadline. When the beat writers covering the race itself doubt the team the fans still trust on reputation, that is the signal, not the record book. I fade the name and back the field.",
+   "evidence": "Deadline analysis frames Houston as facing 'too many obstacles' relative to Seattle and Texas, described as better-positioned rivals for the same Wild Card space.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Divine providence — backs the fated, story-shaped outcome, however long the odds.",
+   "pick": "Astros make the playoffs (YES)",
+   "pick_scenario": "Astros make the playoffs (YES)",
+   "prob": "35%",
+   "prob_num": 35,
+   "confidence": "medium",
+   "register": "oracular destiny-reading",
+   "flag": "🚀",
+   "blurb": "Read the standings as scripture: half a game separates this team from its place, and half a game is the smallest gap a season can leave open. Every dynasty has a summer where the door narrows to a crack before it opens wide again in September. The market says roughly one in three. The shape of a proud era does not end quietly at half a game short — it closes that gap in the final six weeks, the way it always seems to.",
+   "evidence": "Houston sits half a game out of the final AL Wild Card spot with roughly a third of the season remaining — the narrowest possible gap for a late-summer turn.",
+   "record": { "graded": 0, "hits": 0 }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Astros make the playoffs (YES)",
+   "low": 28,
+   "high": 34,
+   "description": "Houston claims either the AL West or, more likely, the third AL Wild Card berth, finishing the stretch run ahead of the current logjam (Cleveland, Minnesota, Baltimore, Seattle).",
+   "derivation": "Anchored on the blended sportsbook price: BetMGM +250 (~28.6%) and DraftKings +210 (~32.3%) to make the 2026 playoffs, both pulled in the trade-deadline window (mid-to-late July 2026). Cross-checked against the standings gap (0.5 GB behind the last AL Wild Card spot, 55-55 record, ~52 games remaining) and a rough historical base rate for bubble teams at the July 31 deadline (roughly a third to two-fifths convert).",
+   "drivers": [
+    "Trade-deadline upgrades (Houston's front office has a strong recent track record here)",
+    "Health of the current roster core through the stretch run",
+    "Performance of direct rivals (Twins, Guardians, Orioles, Mariners) — a cold spell from any of them opens the door"
+   ],
+   "signals": [
+    "Games back of the final AL Wild Card line at the August 1 non-waiver-adjacent point",
+    "Run differential trend over the next two to three weeks",
+    "Trade-deadline additions/subtractions by Houston, Seattle, and Texas"
+   ],
+   "horizon": "Through the end of the 2026 regular season (~Oct 4 2026)"
+  },
+  {
+   "name": "Astros miss the playoffs (NO)",
+   "low": 66,
+   "high": 72,
+   "description": "Houston is passed by the current pack (Cleveland, Minnesota, Baltimore, and/or Seattle) and finishes outside the top three AL Wild Card spots and outside the AL West lead.",
+   "derivation": "Complement of the YES price: 100% minus the blended sportsbook YES range (28-34%) yields 66-72% NO, consistent with beat-writer framing that rates Seattle and Texas as deeper rosters with more paths to improve before the deadline.",
+   "drivers": [
+    "Continued strong play from Cleveland/Minnesota atop the current Wild Card logjam",
+    "Seattle or Texas making a stronger trade-deadline addition than Houston",
+    "Any Houston injury to a core contributor during the stretch run"
+   ],
+   "signals": [
+    "Houston's record relative to .500 over the next 10-15 games",
+    "Whether Houston is a net buyer or seller at the trade deadline",
+    "Widening (not narrowing) games-back gap by mid-August"
+   ],
+   "horizon": "Through the end of the 2026 regular season (~Oct 4 2026)"
+  }
+ ],
+ "markets": [
+  {
+   "platform": "BetMGM",
+   "market": "Astros to make the 2026 MLB playoffs",
+   "detail": "+250 (~28.6% implied)",
+   "volume": "Sportsbook futures line",
+   "pulled": "2026-07-31"
+  },
+  {
+   "platform": "DraftKings",
+   "market": "Astros to make the 2026 MLB playoffs",
+   "detail": "+210 to make (~32.3% implied) / -250 to miss (~71.4% implied)",
+   "volume": "Sportsbook futures line",
+   "pulled": "2026-07-31"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "55-55",
+   "text": "Houston's record as of July 31, 2026 — exactly .500, tied with Minnesota, half a game behind Cleveland for the last AL Wild Card spot."
+  },
+  {
+   "stat": "5 teams / 2.5 GB",
+   "text": "Five AL teams (Guardians, Twins, Astros, Orioles, Mariners) are packed within 2.5 games of the final Wild Card line — one of the tightest bubbles in the league this season."
+  },
+  {
+   "stat": "~52 games left",
+   "text": "Games remaining in Houston's regular season as of July 31 — enough runway for a real swing in either direction, but not enough to erase a sustained cold or hot streak."
+  }
+ ],
+ "triggers": [
+  "Houston is a clear buyer at the July 31-Aug 1 trade deadline (adds a rotation arm or bat) — should lift the YES price toward the top of the band.",
+  "Houston is a seller instead — collapses the YES case immediately.",
+  "Cleveland or Minnesota goes on an extended losing streak — opens the door Houston needs.",
+  "Seattle or Texas make notable roster upgrades — strengthens the NO case per the Contrarian's read.",
+  "Houston's games-back gap widens past 3 games by August 15 — should be treated as a strong signal toward NO.",
+  "Any significant injury to a Houston core player during August — sharply cuts the YES case."
+ ],
+ "sources": [
+  { "label": "ESPN — MLB Standings, Wild Card view", "url": "https://www.espn.com/mlb/standings/_/view/wild-card" },
+  { "label": "BetMGM — Astros Playoff Picture: Chances, Bracket, Seed for 2026", "url": "https://sports.betmgm.com/en/blog/mlb/astros-playoff-odds-bracket-seed-bm23/" },
+  { "label": "DraftKings Network — MLB Best Bets: Will the Houston Astros make the playoffs in 2026?", "url": "https://dknetwork.draftkings.com/2026/07/15/mlb-best-bets-will-the-houston-astros-make-the-playoffs-in-2026/" },
+  { "label": "MLB.com — 2026 MLB Standings and Records: Wild Card", "url": "https://www.mlb.com/standings/wild-card" }
+ ],
+ "method_note": "Seven standing predictor profiles each committed to a YES/NO scenario by a fixed criterion. Anchored on two independent sportsbook futures lines (BetMGM +250, DraftKings +210) pulled in the trade-deadline window, cross-checked against the live AL standings (five teams within 2.5 games of the final Wild Card spot as of July 31, 2026) and beat-writer commentary on Houston's relative roster strength versus Seattle and Texas.",
+ "honesty_note": "The standings alone (half a game out) look close to a coin flip, but the market prices Houston meaningfully below 50% because of underlying roster quality, not schedule position — this pick leans NO-favored-but-live, not a settled outcome; a hot two-to-three-week stretch or a strong trade-deadline addition would flip the read."
+}
