@@ -93,6 +93,16 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .mh-nav a.active { color: var(--text); }
 .mh-nav a.active::after { transform: scaleX(1); }
+/* The masthead's search control: a bordered pill, so it reads as an action and
+   not as one more destination in the nav list. */
+.mh-nav a.mh-search { display: inline-flex; align-items: center; gap: .38rem; padding: .26rem .62rem;
+  margin: -.26rem 0; border: 1px solid var(--border); border-radius: 999px; color: var(--text);
+  transition: color .2s ease, border-color .2s ease, background .2s ease; }
+.mh-nav a.mh-search svg { width: 11px; height: 11px; flex: 0 0 auto; }
+.mh-nav a.mh-search::after { display: none; }
+.mh-nav a.mh-search:hover, .mh-nav a.mh-search:focus-visible {
+  color: var(--accent); border-color: var(--accent); }
+.mh-nav a.mh-search.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .section-title { max-width: 1120px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
   font-weight: 600; font-size: 1.9rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; width: 148px; height: 8px; margin-top: .65rem; border-radius: 0;
@@ -226,7 +236,25 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
   background: transparent; border: 0; box-shadow: var(--shadow-2); }
 .hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+/* Home-page search: the widest single entry point into the library, sitting
+   above the section buttons because it reaches all of them. */
+.hero-search { display: flex; align-items: center; gap: .5rem; margin: 1.6rem 0 0; max-width: 30rem;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: .1rem .35rem .1rem .85rem;
+  transition: border-color .2s ease; }
+.hero-search:focus-within { border-color: var(--accent); }
+.hero-search .hs-ic { display: inline-flex; color: var(--muted); flex: 0 0 auto; }
+.hero-search .hs-ic svg { width: 14px; height: 14px; }
+.hero-search input { flex: 1 1 auto; min-width: 0; font-family: var(--sans); font-size: .82rem;
+  color: var(--text); background: none; border: 0; padding: .62rem 0; letter-spacing: 0; text-transform: none; }
+.hero-search input::placeholder { color: var(--muted); }
+.hero-search input:focus { outline: none; }
+.hero-search button { flex: 0 0 auto; font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--bg); background: var(--text);
+  border: 1px solid var(--text); border-radius: 999px; padding: .44rem .9rem; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease; }
+.hero-search button:hover { background: var(--accent); border-color: var(--accent); }
+.hero-search button:focus-visible { outline: none; box-shadow: var(--ring); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.1rem 0 0; }
 .hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
   padding: .78rem 1.25rem; white-space: nowrap;
@@ -766,6 +794,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     <a href="quiz.html">Quiz</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="about.html">About</a>
+    <a class="mh-search" href="search.html" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg><span>Search</span></a>
   </nav>
 </div>
 <header class="fpp-plate">
@@ -773,7 +802,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   <h1 class="fpp-name">The Fingerprint</h1>
   <div class="fpp-ridges" aria-hidden="true"><svg viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" class="fpp-ridge-svg"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><circle cx="120" cy="54" r="2" fill="currentColor" stroke="none"/><path d="M 104 54 A 16 16 0 0 1 136 54"/><path d="M 92 54 A 28 28 0 0 1 148 54"/><path d="M 80 54 A 40 40 0 0 1 160 54"/><path d="M 68 54 A 52 52 0 0 1 172 54"/><path d="M 56 54 A 64 64 0 0 1 184 54"/></g></svg></div>
   <p class="fpp-motto">“All the news that&#x27;s fit to Fingerprint”</p>
-  <figure class="scene-plate scene-fingerprint scene-v4 section-scene"><img class="sc-scene" src="research-scenes/carlyle-research--scene_09_boston_sartor.webp" alt="Ralph Waldo Emerson and a printer examine fresh proof sheets beside a packed book crate overlooking Boston Harbor." loading="lazy" decoding="async"></figure>
+  
   <div class="fpp-folio">
     <span>Vol. 1</span>
     <span class="fpp-folio-c">11 editions</span>
@@ -781,7 +810,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   </div>
 </header>
 <main class="fped-wrap">
-<article class="fped-feature"><a href="fingerprint/2026-07-25-fingerprint.html"><figure class="scene-plate scene-fingerprint scene-v0 feature-scene"><img class="sc-scene" src="research-scenes/ipv4-ipv6-ctv-research--scene_address_latam_login_cgnat.webp" alt="Latin American apartment towers and homes compressed through CGNAT pools while a warm login path connects a CTV household." loading="lazy" decoding="async"></figure><p class="fpedf-meta">Latest edition · Nº 34 · Saturday, July 25, 2026</p><h2 class="fpedf-head">YouTube Tops $11B as Alphabet Raises AI Capex to $205B</h2><p class="fpedf-dek">Search and video ad revenue both beat estimates on World Cup viewership, but the capex hike sent GOOGL shares lower anyway.</p><p class="fpedf-beats">Platform Watch · Performance CTV · Partnership Signals · Competitor Moves · Regulatory Wire · Campaign Wire · Global Desk</p><span class="fpedf-cta">Read the edition →</span></a></article><section class="fped-issues"><h2 class="fped-issues-h">Back issues</h2><a class="fped-row" href="fingerprint/2026-07-24-fingerprint.html"><span class="fped-row-no">Nº 33</span><span class="fped-row-body"><span class="fped-row-head">Peacock Turns Its First Profit as NBCU Ad Revenue Jumps 55%</span><span class="fped-row-meta">20 dispatches</span></span><span class="fped-row-date">Friday · 2026-07-24</span></a>
+<article class="fped-feature"><a href="fingerprint/2026-07-25-fingerprint.html"><p class="fpedf-meta">Latest edition · Nº 34 · Saturday, July 25, 2026</p><h2 class="fpedf-head">YouTube Tops $11B as Alphabet Raises AI Capex to $205B</h2><p class="fpedf-dek">Search and video ad revenue both beat estimates on World Cup viewership, but the capex hike sent GOOGL shares lower anyway.</p><p class="fpedf-beats">Platform Watch · Performance CTV · Partnership Signals · Competitor Moves · Regulatory Wire · Campaign Wire · Global Desk</p><span class="fpedf-cta">Read the edition →</span></a></article><section class="fped-issues"><h2 class="fped-issues-h">Back issues</h2><a class="fped-row" href="fingerprint/2026-07-24-fingerprint.html"><span class="fped-row-no">Nº 33</span><span class="fped-row-body"><span class="fped-row-head">Peacock Turns Its First Profit as NBCU Ad Revenue Jumps 55%</span><span class="fped-row-meta">20 dispatches</span></span><span class="fped-row-date">Friday · 2026-07-24</span></a>
 <a class="fped-row" href="fingerprint/2026-06-30-fingerprint.html"><span class="fped-row-no">Nº 32</span><span class="fped-row-body"><span class="fped-row-head">Comcast to Spin Off NBCUniversal and Sky Into Standalone Company</span><span class="fped-row-meta">19 dispatches</span></span><span class="fped-row-date">Tuesday · 2026-06-30</span></a>
 <a class="fped-row" href="fingerprint/2026-06-26-cannes-fingerprint.html"><span class="fped-row-no">Nº 31</span><span class="fped-row-body"><span class="fped-row-head">OpenAI Debuts at Cannes, Declaring Itself an Advertising Business</span><span class="fped-row-meta">26 dispatches</span></span><span class="fped-row-date">Friday · 2026-06-26-cannes</span></a>
 <a class="fped-row" href="fingerprint/2026-06-26-fingerprint.html"><span class="fped-row-no">Nº 30</span><span class="fped-row-body"><span class="fped-row-head">Sky Agrees Terms to Buy ITV&#x27;s Broadcast and Streaming Arm for £1.6bn</span><span class="fped-row-meta">16 dispatches</span></span><span class="fped-row-date">Friday · 2026-06-26</span></a>

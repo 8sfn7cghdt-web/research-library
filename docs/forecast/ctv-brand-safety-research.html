@@ -91,6 +91,16 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .mh-nav a.active { color: var(--text); }
 .mh-nav a.active::after { transform: scaleX(1); }
+/* The masthead's search control: a bordered pill, so it reads as an action and
+   not as one more destination in the nav list. */
+.mh-nav a.mh-search { display: inline-flex; align-items: center; gap: .38rem; padding: .26rem .62rem;
+  margin: -.26rem 0; border: 1px solid var(--border); border-radius: 999px; color: var(--text);
+  transition: color .2s ease, border-color .2s ease, background .2s ease; }
+.mh-nav a.mh-search svg { width: 11px; height: 11px; flex: 0 0 auto; }
+.mh-nav a.mh-search::after { display: none; }
+.mh-nav a.mh-search:hover, .mh-nav a.mh-search:focus-visible {
+  color: var(--accent); border-color: var(--accent); }
+.mh-nav a.mh-search.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .section-title { max-width: 1120px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
   font-weight: 600; font-size: 1.9rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; width: 148px; height: 8px; margin-top: .65rem; border-radius: 0;
@@ -224,7 +234,25 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
   background: transparent; border: 0; box-shadow: var(--shadow-2); }
 .hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+/* Home-page search: the widest single entry point into the library, sitting
+   above the section buttons because it reaches all of them. */
+.hero-search { display: flex; align-items: center; gap: .5rem; margin: 1.6rem 0 0; max-width: 30rem;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: .1rem .35rem .1rem .85rem;
+  transition: border-color .2s ease; }
+.hero-search:focus-within { border-color: var(--accent); }
+.hero-search .hs-ic { display: inline-flex; color: var(--muted); flex: 0 0 auto; }
+.hero-search .hs-ic svg { width: 14px; height: 14px; }
+.hero-search input { flex: 1 1 auto; min-width: 0; font-family: var(--sans); font-size: .82rem;
+  color: var(--text); background: none; border: 0; padding: .62rem 0; letter-spacing: 0; text-transform: none; }
+.hero-search input::placeholder { color: var(--muted); }
+.hero-search input:focus { outline: none; }
+.hero-search button { flex: 0 0 auto; font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--bg); background: var(--text);
+  border: 1px solid var(--text); border-radius: 999px; padding: .44rem .9rem; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease; }
+.hero-search button:hover { background: var(--accent); border-color: var(--accent); }
+.hero-search button:focus-visible { outline: none; box-shadow: var(--ring); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.1rem 0 0; }
 .hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
   padding: .78rem 1.25rem; white-space: nowrap;
@@ -1189,6 +1217,35 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   line-height: 1.55; color: #c6d0e0; }
 .cmp-zone { display: block; font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .08em; color: var(--fdmut); margin-bottom: .4rem; }
+
+/* comparison sections, charts + legend */
+.cmp-sec { margin: 0 0 2.6rem; }
+.cmp-kick { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0;
+  max-width: 62ch; margin: 0 0 1.1rem; }
+.cmp-kick em { color: var(--fdtext); font-style: italic; }
+.cmp-fig { margin: 0; background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: 1.1rem 1.2rem; }
+.cmp-fig svg { display: block; width: 100%; height: auto; }
+.cmp-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; margin-top: .9rem; padding-top: .8rem;
+  border-top: 1px solid var(--fdline); }
+.cmp-legend > span { display: inline-flex; align-items: center; gap: .38rem; font-family: var(--sans);
+  font-size: .68rem; font-weight: 700; color: var(--fdmut); }
+
+/* head-to-head grid */
+.h2h-table { border-collapse: collapse; width: 100%; min-width: 900px; }
+.h2h-table th, .h2h-table td { border: 1px solid var(--fdline); padding: .5rem .6rem; text-align: center;
+  vertical-align: middle; font-family: var(--sans); font-size: .7rem; }
+.h2h-table thead th { background: #0c1117; }
+.h2h-persona { border-top: 3px solid var(--fdmut) !important; width: 96px; }
+.h2h-m { text-align: left !important; min-width: 210px; position: sticky; left: 0; background: var(--fdcard); }
+.h2h-m a { display: block; font-weight: 800; color: var(--fdtext); text-decoration: none; line-height: 1.3; }
+.h2h-m a:hover { color: var(--fdblue); }
+.h2h-w { display: block; font-family: var(--fdmono); font-size: .62rem; color: var(--fdmut); margin-top: .2rem; }
+.h2h-pick { display: block; font-weight: 700; line-height: 1.25; }
+.h2h-prob { display: block; font-family: var(--fdmono); font-size: .64rem; opacity: .8; margin-top: .12rem; }
+.h2h-hit { background: rgba(34,197,94,.14); color: var(--fdup); }
+.h2h-miss { background: rgba(239,68,68,.12); color: #f0a3a3; }
+.h2h-none { color: var(--fdline); }
 </style>
 </head>
 <body>
@@ -1206,13 +1263,14 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     <a href="../quiz.html">Quiz</a>
     <a href="../wrapped.html">Wrapped</a>
     <a href="../about.html">About</a>
+    <a class="mh-search" href="../search.html" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg><span>Search</span></a>
   </nav>
 </div>
 <div class="fdd-wrap">
 <header class="fd-plate">
   <p class="fd-kicker">The Forecast Desk · Research market</p>
   <h1 class="fd-name" style="font-size:clamp(1.9rem,4.6vw,3rem)">Safe Beside What?</h1>
-  <figure class="scene-plate scene-forecast scene-v4 detail-scene"><img class="sc-scene" src="../research-scenes/latam-ctv-research--scene_latam_netflix_five_dsps.webp" alt="Five demand-side pipes feeding premium streaming inventory across Brazil and Mexico." loading="lazy" decoding="async"></figure>
+  <figure class="scene-plate scene-forecast scene-v4 detail-scene"><img class="sc-scene" src="../research-scenes/ctv-brand-safety-research--scene_hidden_seam.webp" alt="An analyst studies a streaming server room where one clean video stream branches into several risky verification paths." loading="lazy" decoding="async"></figure>
   <div class="fd-folio">
     <span>through 2030</span>
     <span class="fd-folio-c">5 priced outcomes</span>

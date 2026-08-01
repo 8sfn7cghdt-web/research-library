@@ -1253,7 +1253,15 @@ def hero_cta_html(hub_desk=None):
         arrow = ' <span aria-hidden="true">→</span>' if kind == 'primary' else ''
         out.append(f'<a class="{cls}" href="{html.escape(href, quote=True)}">'
                    f'{html.escape(label)}{arrow}</a>')
-    return f'<div class="hero-cta">{"".join(out)}</div>'
+    # A real GET form, not a JS field: it submits to the search page and works
+    # with scripting off, and the browser treats it as the page's search box.
+    search = ('<form class="hero-search" role="search" action="search.html" method="get">'
+              f'<span class="hs-ic" aria-hidden="true">{SEARCH_GLYPH}</span>'
+              '<input type="search" name="q" autocomplete="off"'
+              ' placeholder="Search every corpus, edition and pamphlet…"'
+              ' aria-label="Search the library">'
+              '<button type="submit">Search</button></form>')
+    return f'{search}<div class="hero-cta">{"".join(out)}</div>'
 
 
 def hero_art():
@@ -1296,11 +1304,22 @@ MAIN_NAV_ITEMS = [
 ]
 
 
+SEARCH_GLYPH = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '
+                'stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/>'
+                '<line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>')
+
+
 def main_nav_html(prefix="", active=None):
     lines = []
     for label, href in MAIN_NAV_ITEMS:
         cls = ' class="active"' if href == active else ''
         lines.append(f'    <a href="{prefix}{href}"{cls}>{label}</a>')
+    # Search rides in the nav row so it inherits the wrap, but is drawn as a
+    # control rather than a twelfth nav word — the list is already two lines deep
+    # at desktop width and another label would only make that worse.
+    on = " active" if active == "search.html" else ""
+    lines.append(f'    <a class="mh-search{on}" href="{prefix}search.html" '
+                 f'aria-label="Search the site">{SEARCH_GLYPH}<span>Search</span></a>')
     return "\n".join(lines)
 
 
@@ -1333,6 +1352,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
     <button id="type-btn" title="Text size &amp; width" aria-haspopup="true">Aa</button>
     <button id="terms-btn" title="Glossary of terms" aria-haspopup="true" hidden>❔ Terms</button>
     <a id="quiz-btn" href="quiz.html" title="Test yourself on this corpus">✏ Quiz</a>
+    <a id="searchall-btn" href="search.html" title="Search every corpus, edition and pamphlet">⌕ Search all</a>
     <button id="share-btn" title="Share this chapter">Share ↗</button>
     <button id="theme-btn">◐ Theme</button>
   </div>
@@ -3839,11 +3859,13 @@ def _publish_research_scene_asset(selected):
 
 
 def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
-    """Assign one real chapter scene to one scene-plate topic.
+    """Assign a placement one piece of the artwork belonging to its own subject.
 
-    Each placement receives its own illustration, including separate card and
-    feature treatments of the same content. No two placements are handed the
-    same source artwork.
+    Relevance is the whole rule: a plate either shows art drawn from the
+    research it is about, or it shows nothing at all. A placement that names no
+    corpus — a desk front, a market page, a glossary, an edition of the paper —
+    gets no illustration, because the only illustration available to it would
+    be one borrowed from unrelated research.
     """
     pool = _research_scene_pool()
     if not pool:
@@ -3854,44 +3876,20 @@ def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
         return _SCENE_ASSET_ASSIGNMENTS[assignment_key]
 
     subject = _explicit_scene_subject(cover_slugs=cover_slugs, seed=seed)
-    if subject:
-        candidates = list(pool.get(subject, ()))
-    else:
-        # Generic desks may draw from the whole library, but the first scene in
-        # every corpus is held back for that corpus's own reader/forecast/card.
-        # This makes relevance independent of page build order.
-        candidates = [
-            scene
-            for slug, scenes in pool.items()
-            for scene in scenes[1:]
-        ]
-        preferred = set(SCENE_COVERS.get(kind, ()))
-        candidates.sort(key=lambda scene: (
-            0 if scene["slug"] in preferred else 1,
-            _scene_rank(assignment_key, f"{scene['slug']}:{scene['source']}"),
-        ))
-    if subject:
-        candidates.sort(key=lambda scene: _scene_rank(
-            assignment_key, f"{scene['slug']}:{scene['source']}"
-        ))
+    if not subject:
+        return None
 
-    selected = next(
-        (scene for scene in candidates
-         if (scene["slug"], scene["source"]) not in _USED_RESEARCH_SCENE_ASSETS),
-        None,
+    # Prefer art this build has not placed yet, but never leave the subject's
+    # own pool: one corpus's scene reappearing on that corpus's other page is
+    # far better than a stranger's scene appearing on either.
+    candidates = sorted(
+        pool.get(subject, ()),
+        key=lambda scene: (
+            (scene["slug"], scene["source"]) in _USED_RESEARCH_SCENE_ASSETS,
+            _scene_rank(assignment_key, f"{scene['slug']}:{scene['source']}"),
+        ),
     )
-    if selected is None:
-        # A small corpus can run out before the entire site does. Preserve
-        # uniqueness by widening to the full research-scene pool.
-        all_candidates = [scene for scenes in pool.values() for scene in scenes]
-        all_candidates.sort(key=lambda scene: _scene_rank(
-            assignment_key, f"{scene['slug']}:{scene['source']}"
-        ))
-        selected = next(
-            (scene for scene in all_candidates
-             if (scene["slug"], scene["source"]) not in _USED_RESEARCH_SCENE_ASSETS),
-            all_candidates[0] if all_candidates else None,
-        )
+    selected = candidates[0] if candidates else None
     if selected is None:
         return None
 
@@ -5026,6 +5024,16 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .mh-nav a.active { color: var(--text); }
 .mh-nav a.active::after { transform: scaleX(1); }
+/* The masthead's search control: a bordered pill, so it reads as an action and
+   not as one more destination in the nav list. */
+.mh-nav a.mh-search { display: inline-flex; align-items: center; gap: .38rem; padding: .26rem .62rem;
+  margin: -.26rem 0; border: 1px solid var(--border); border-radius: 999px; color: var(--text);
+  transition: color .2s ease, border-color .2s ease, background .2s ease; }
+.mh-nav a.mh-search svg { width: 11px; height: 11px; flex: 0 0 auto; }
+.mh-nav a.mh-search::after { display: none; }
+.mh-nav a.mh-search:hover, .mh-nav a.mh-search:focus-visible {
+  color: var(--accent); border-color: var(--accent); }
+.mh-nav a.mh-search.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .section-title { max-width: 1120px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
   font-weight: 600; font-size: 1.9rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; width: 148px; height: 8px; margin-top: .65rem; border-radius: 0;
@@ -5159,7 +5167,25 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
   background: transparent; border: 0; box-shadow: var(--shadow-2); }
 .hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+/* Home-page search: the widest single entry point into the library, sitting
+   above the section buttons because it reaches all of them. */
+.hero-search { display: flex; align-items: center; gap: .5rem; margin: 1.6rem 0 0; max-width: 30rem;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: .1rem .35rem .1rem .85rem;
+  transition: border-color .2s ease; }
+.hero-search:focus-within { border-color: var(--accent); }
+.hero-search .hs-ic { display: inline-flex; color: var(--muted); flex: 0 0 auto; }
+.hero-search .hs-ic svg { width: 14px; height: 14px; }
+.hero-search input { flex: 1 1 auto; min-width: 0; font-family: var(--sans); font-size: .82rem;
+  color: var(--text); background: none; border: 0; padding: .62rem 0; letter-spacing: 0; text-transform: none; }
+.hero-search input::placeholder { color: var(--muted); }
+.hero-search input:focus { outline: none; }
+.hero-search button { flex: 0 0 auto; font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--bg); background: var(--text);
+  border: 1px solid var(--text); border-radius: 999px; padding: .44rem .9rem; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease; }
+.hero-search button:hover { background: var(--accent); border-color: var(--accent); }
+.hero-search button:focus-visible { outline: none; box-shadow: var(--ring); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.1rem 0 0; }
 .hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
   padding: .78rem 1.25rem; white-space: nowrap;
@@ -9114,12 +9140,50 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
         _row("P&amp;L, play money", lambda c: c["pnl"]),
         _row("Signature", lambda c: f'<span class="cmp-sig">{html.escape(c["signature"])}</span>'),
     ])
-    body = (
-        '<p class="fdp-crit">Every standing predictor, side by side — the same rows the profile pages carry '
-        'separately, read straight across so the differences in method (not just outcome) are visible at a glance.</p>'
-        f'<div class="cmp-wrap"><table class="cmp-table"><thead><tr><th></th>{head_cells}</tr></thead>'
-        f'<tbody>{rows}</tbody></table></div>'
-    )
+    def _sec(n, title, kicker, inner):
+        return (f'<section class="cmp-sec"><h2 class="fdd-h"><span class="n">{n:02d}</span>{html.escape(title)}</h2>'
+                f'<p class="cmp-kick">{kicker}</p>{inner}</section>')
+
+    legend = _fd_persona_legend_html()
+    race = _fdc_bankroll_race_svg(book)
+    bars = _fdc_record_bars_svg(led)
+    scatter = _fdc_rigor_accuracy_svg(led)
+    h2h = _fdc_head_to_head_html(led)
+
+    secs = [_sec(1, "The card",
+                 'Every agent, side by side — the same rows the profile pages carry separately, read '
+                 'straight across so the differences in <em>method</em>, not just outcome, are visible at a glance.',
+                 f'<div class="cmp-wrap"><table class="cmp-table"><thead><tr><th></th>{head_cells}</tr></thead>'
+                 f'<tbody>{rows}</tbody></table></div>')]
+    n = 2
+    if bars:
+        secs.append(_sec(n, "The record, ranked",
+                         'Graded markets as the full bar, hits shaded in each agent’s own colour, best hit '
+                         'rate first. A short bar means few calls have come due yet — not a quiet record.',
+                         f'<figure class="cmp-fig">{bars}</figure>'))
+        n += 1
+    if race:
+        secs.append(_sec(n, "The bankroll race",
+                         'Each agent opens with the same $1,000 and sizes every bet by its own doctrine — so '
+                         'the same call can cost one agent a token ante and another a quarter of its book. '
+                         'Traced across every settled market in the order it graded.',
+                         f'<figure class="cmp-fig">{race}{legend}</figure>'))
+        n += 1
+    if scatter:
+        secs.append(_sec(n, "Rigor against accuracy",
+                         'The roster’s own premise, tested: does sitting further toward mathematical rigor '
+                         'actually buy a lower Brier score? On a handful of graded calls this is a picture, '
+                         'not a finding — but it is the picture that will either harden or collapse as the '
+                         'ledger fills.',
+                         f'<figure class="cmp-fig">{scatter}</figure>'))
+        n += 1
+    if h2h:
+        secs.append(_sec(n, "Head to head",
+                         'Every graded market as a row, every agent’s pick as a cell — green where it landed, '
+                         'red where it didn’t, dash where its doctrine sat the market out. Read a row to see '
+                         'where the desk agreed; read a column to see one agent’s whole book.',
+                         h2h))
+    body = "".join(secs)
     title = "Compare the Predictors — The Forecast Desk"
     og = og_tags(title, "Every standing predictor's model, doctrine, and record, compared side by side.",
                  f"{SITE_URL}/forecasters/compare.html", f"{SITE_URL}/{OG_IMAGE}")
@@ -9344,6 +9408,35 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
   line-height: 1.55; color: #c6d0e0; }
 .cmp-zone { display: block; font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .08em; color: var(--fdmut); margin-bottom: .4rem; }
+
+/* comparison sections, charts + legend */
+.cmp-sec { margin: 0 0 2.6rem; }
+.cmp-kick { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0;
+  max-width: 62ch; margin: 0 0 1.1rem; }
+.cmp-kick em { color: var(--fdtext); font-style: italic; }
+.cmp-fig { margin: 0; background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: 1.1rem 1.2rem; }
+.cmp-fig svg { display: block; width: 100%; height: auto; }
+.cmp-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; margin-top: .9rem; padding-top: .8rem;
+  border-top: 1px solid var(--fdline); }
+.cmp-legend > span { display: inline-flex; align-items: center; gap: .38rem; font-family: var(--sans);
+  font-size: .68rem; font-weight: 700; color: var(--fdmut); }
+
+/* head-to-head grid */
+.h2h-table { border-collapse: collapse; width: 100%; min-width: 900px; }
+.h2h-table th, .h2h-table td { border: 1px solid var(--fdline); padding: .5rem .6rem; text-align: center;
+  vertical-align: middle; font-family: var(--sans); font-size: .7rem; }
+.h2h-table thead th { background: #0c1117; }
+.h2h-persona { border-top: 3px solid var(--fdmut) !important; width: 96px; }
+.h2h-m { text-align: left !important; min-width: 210px; position: sticky; left: 0; background: var(--fdcard); }
+.h2h-m a { display: block; font-weight: 800; color: var(--fdtext); text-decoration: none; line-height: 1.3; }
+.h2h-m a:hover { color: var(--fdblue); }
+.h2h-w { display: block; font-family: var(--fdmono); font-size: .62rem; color: var(--fdmut); margin-top: .2rem; }
+.h2h-pick { display: block; font-weight: 700; line-height: 1.25; }
+.h2h-prob { display: block; font-family: var(--fdmono); font-size: .64rem; opacity: .8; margin-top: .12rem; }
+.h2h-hit { background: rgba(34,197,94,.14); color: var(--fdup); }
+.h2h-miss { background: rgba(239,68,68,.12); color: #f0a3a3; }
+.h2h-none { color: var(--fdline); }
 """
 
 FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>

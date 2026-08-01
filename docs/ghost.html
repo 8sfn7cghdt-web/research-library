@@ -93,6 +93,16 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .mh-nav a.active { color: var(--text); }
 .mh-nav a.active::after { transform: scaleX(1); }
+/* The masthead's search control: a bordered pill, so it reads as an action and
+   not as one more destination in the nav list. */
+.mh-nav a.mh-search { display: inline-flex; align-items: center; gap: .38rem; padding: .26rem .62rem;
+  margin: -.26rem 0; border: 1px solid var(--border); border-radius: 999px; color: var(--text);
+  transition: color .2s ease, border-color .2s ease, background .2s ease; }
+.mh-nav a.mh-search svg { width: 11px; height: 11px; flex: 0 0 auto; }
+.mh-nav a.mh-search::after { display: none; }
+.mh-nav a.mh-search:hover, .mh-nav a.mh-search:focus-visible {
+  color: var(--accent); border-color: var(--accent); }
+.mh-nav a.mh-search.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .section-title { max-width: 1120px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
   font-weight: 600; font-size: 1.9rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; width: 148px; height: 8px; margin-top: .65rem; border-radius: 0;
@@ -226,7 +236,25 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
   background: transparent; border: 0; box-shadow: var(--shadow-2); }
 .hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
-.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
+/* Home-page search: the widest single entry point into the library, sitting
+   above the section buttons because it reaches all of them. */
+.hero-search { display: flex; align-items: center; gap: .5rem; margin: 1.6rem 0 0; max-width: 30rem;
+  background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: .1rem .35rem .1rem .85rem;
+  transition: border-color .2s ease; }
+.hero-search:focus-within { border-color: var(--accent); }
+.hero-search .hs-ic { display: inline-flex; color: var(--muted); flex: 0 0 auto; }
+.hero-search .hs-ic svg { width: 14px; height: 14px; }
+.hero-search input { flex: 1 1 auto; min-width: 0; font-family: var(--sans); font-size: .82rem;
+  color: var(--text); background: none; border: 0; padding: .62rem 0; letter-spacing: 0; text-transform: none; }
+.hero-search input::placeholder { color: var(--muted); }
+.hero-search input:focus { outline: none; }
+.hero-search button { flex: 0 0 auto; font-family: var(--sans); font-size: .7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em; color: var(--bg); background: var(--text);
+  border: 1px solid var(--text); border-radius: 999px; padding: .44rem .9rem; cursor: pointer;
+  transition: background .2s ease, border-color .2s ease; }
+.hero-search button:hover { background: var(--accent); border-color: var(--accent); }
+.hero-search button:focus-visible { outline: none; box-shadow: var(--ring); }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.1rem 0 0; }
 .hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
   padding: .78rem 1.25rem; white-space: nowrap;
@@ -699,6 +727,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
     <a href="quiz.html">Quiz</a>
     <a href="wrapped.html">Wrapped</a>
     <a href="about.html">About</a>
+    <a class="mh-search" href="search.html" aria-label="Search the site"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg><span>Search</span></a>
   </nav>
 </div>
 <header class="ghost-plate">
@@ -706,7 +735,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   <h1 class="gp-name">The Ghost of Times</h1>
   <div class="gp-ornament" aria-hidden="true"><svg viewBox="0 0 240 72" xmlns="http://www.w3.org/2000/svg" class="gp-nib-svg"><g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M 100 14 Q 120 7 140 14 Q 134 36 120 60 Q 106 36 100 14 Z"/><circle cx="120" cy="26" r="4.2"/><line x1="120" y1="30.2" x2="120" y2="55"/></g></svg></div>
   <p class="gp-motto">“Written by those who lived it. Reporting for those who do.”</p>
-  <figure class="scene-plate scene-ghost scene-v4 section-scene"><img class="sc-scene" src="research-scenes/india-advertising-research--scene_billion-screens-bharat-living-room.webp" alt="A small-town Indian family watches regional entertainment on a smart television above a busy local street." loading="lazy" decoding="async"></figure>
+  
   <div class="gp-folio">
     <span>Vol. 1</span>
     <span class="gp-folio-c">4 editions</span>
@@ -714,7 +743,7 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
   </div>
 </header>
 <main class="ged-wrap">
-<article class="ged-feature"><a href="ghost/2026-07-25-ghost-of-times.html"><figure class="scene-plate scene-ghost scene-v0 feature-scene"><img class="sc-scene" src="research-scenes/ctv-identity-signals-research--scene_00_resolution_household.webp" alt="A family living room where glowing signal trails from a television, phone, laptop, and router converge on a translucent household graph." loading="lazy" decoding="async"></figure><p class="gedf-meta">Latest edition · Nº 08 · Saturday, July 25, 2026</p><h2 class="gedf-head">On Being Told America Has Reached a Dead End</h2><p class="gedf-dek">It is a curious thing that a nation should be pronounced childless by men who have never once considered the neighbours.</p><p class="gedf-writers">6 writers · G.K. Chesterton · Thomas Carlyle · Ernest Hemingway · C.G. Jung · Scott Adams · Walt Whitman</p><span class="gedf-cta">Read the edition →</span></a></article><section class="ged-issues"><h2 class="ged-issues-h">Back issues</h2><a class="ged-row" href="ghost/2026-06-18-ghost-of-times.html"><span class="ged-row-no">Nº 07</span><span class="ged-row-body"><span class="ged-row-head">Peace Signed Digitally; And the Oil Shall Flow For Sixty Days</span><span class="ged-row-meta">6 writers · Thomas Carlyle · G.K. Chesterton · Ernest Hemingway · C.G. Jung · Scott Adams · Walt Whitman</span></span><span class="ged-row-date">Thursday · 2026-06-18</span></a>
+<article class="ged-feature"><a href="ghost/2026-07-25-ghost-of-times.html"><p class="gedf-meta">Latest edition · Nº 08 · Saturday, July 25, 2026</p><h2 class="gedf-head">On Being Told America Has Reached a Dead End</h2><p class="gedf-dek">It is a curious thing that a nation should be pronounced childless by men who have never once considered the neighbours.</p><p class="gedf-writers">6 writers · G.K. Chesterton · Thomas Carlyle · Ernest Hemingway · C.G. Jung · Scott Adams · Walt Whitman</p><span class="gedf-cta">Read the edition →</span></a></article><section class="ged-issues"><h2 class="ged-issues-h">Back issues</h2><a class="ged-row" href="ghost/2026-06-18-ghost-of-times.html"><span class="ged-row-no">Nº 07</span><span class="ged-row-body"><span class="ged-row-head">Peace Signed Digitally; And the Oil Shall Flow For Sixty Days</span><span class="ged-row-meta">6 writers · Thomas Carlyle · G.K. Chesterton · Ernest Hemingway · C.G. Jung · Scott Adams · Walt Whitman</span></span><span class="ged-row-date">Thursday · 2026-06-18</span></a>
 <a class="ged-row" href="ghost/2026-06-13-ghost-of-times.html"><span class="ged-row-no">Nº 06</span><span class="ged-row-body"><span class="ged-row-head">A Tower of Stone, and Six Who Came to Be Heard</span><span class="ged-row-meta">6 writers · Walt Whitman · Thomas Carlyle · G.K. Chesterton · Ernest Hemingway · C.G. Jung · Scott Adams</span></span><span class="ged-row-date">Saturday · 2026-06-13</span></a>
 <a class="ged-row" href="ghost/2026-05-29-ghost-of-times.html"><span class="ged-row-no">Nº 01</span><span class="ged-row-body"><span class="ged-row-head">Nobody Ends a War. A Master Persuader Buys Sixty Days.</span><span class="ged-row-meta">5 writers · Scott Adams · Thomas Carlyle · G.K. Chesterton · Ernest Hemingway · Walt Whitman</span></span><span class="ged-row-date">Friday · 2026-05-29</span></a></section>
 </main>
