@@ -7642,9 +7642,29 @@ FORECAST_PAGE_CSS = """
 .fd-live-meta b { color: var(--fdtext); }
 @media (max-width: 640px) { .fd-live-grid { grid-template-columns: 1fr; } }
 
+/* the board index — the jump nav over every wing and shelf, pinned under the
+   tape and roster. One row per wing; the wing's own chip leads its row. */
+.fd-index { border: 1px solid var(--fdline); border-radius: 2px; background: #0f131a;
+  padding: .8rem .95rem .95rem; margin: 0 0 1.6rem; }
+.fd-index-h { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--fdmut); margin: 0 0 .6rem; }
+.fd-index-body { display: flex; flex-direction: column; gap: .45rem; }
+.fd-ix-row { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.fd-ix { --c: var(--fdmut); display: inline-flex; align-items: center; gap: .4rem; text-decoration: none;
+  font-family: var(--sans); font-size: .72rem; color: var(--fdtext); background: #161b24;
+  border: 1px solid var(--fdline); border-left: 3px solid var(--c); border-radius: 2px;
+  padding: .26rem .55rem; transition: border-color .15s var(--ease), background .15s var(--ease); }
+.fd-ix:hover, .fd-ix:focus-visible { border-color: var(--c); background: #1c222c; }
+.fd-ix b { font-family: var(--fdmono); font-size: .68rem; font-weight: 700; color: var(--c);
+  font-variant-numeric: tabular-nums; }
+.fd-ix-w { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .68rem;
+  background: #1c222c; }
+@media (max-width: 640px) { .fd-index-body { gap: .6rem; } }
+
 /* category shelves + market cards */
 .fd-cat-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
-  color: #c9cdd6; border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem; }
+  color: #c9cdd6; border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem;
+  scroll-margin-top: 1rem; }
 .fd-cat-h .tick { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: .55rem; vertical-align: -1px; }
 .fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
@@ -7653,7 +7673,8 @@ FORECAST_PAGE_CSS = """
    standalone live calls), From the Research (corpus markets), Ad Tech & Media.
    Bigger and heavier than a category shelf head; each wears its own accent. */
 .fd-sec { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
-  margin: 2.8rem 0 1.3rem; padding-bottom: .7rem; border-bottom: 2px solid var(--fdtext); }
+  margin: 2.8rem 0 1.3rem; padding-bottom: .7rem; border-bottom: 2px solid var(--fdtext);
+  scroll-margin-top: 1rem; }
 .fd-sec:first-of-type { margin-top: 1.4rem; }
 .fd-sec-bar { align-self: center; display: inline-block; width: 15px; height: 15px; border-radius: 3px; }
 .fd-sec-t { font-family: var(--display); font-weight: 600; font-size: clamp(1.35rem, 3vw, 1.85rem);
@@ -7661,6 +7682,9 @@ FORECAST_PAGE_CSS = """
 .fd-sec-k { font-family: var(--serif); font-style: italic; font-size: .92rem; color: var(--fdmut); }
 .fd-sec-n { margin-left: auto; align-self: center; font-family: var(--fdmono); font-size: .72rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fd-sec-up { color: var(--fdmut); text-decoration: none; margin-left: .55rem; padding: 0 .3rem;
+  border: 1px solid var(--fdline); border-radius: 2px; }
+.fd-sec-up:hover, .fd-sec-up:focus-visible { color: var(--fdtext); border-color: var(--fdmut); }
 @media (max-width: 640px) { .fd-sec-k { flex-basis: 100%; } .fd-sec-n { margin-left: 0; } }
 .fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
 .fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
@@ -7698,6 +7722,22 @@ FORECAST_PAGE_CSS = """
 @media (prefers-reduced-motion: no-preference) {
   .fd-fill { animation: fd-grow .8s cubic-bezier(.22,1,.36,1); }
 }
+/* a native live call in compact shelf form — the council's pick where a research
+   card carries its outcome rows */
+.fd-card-live .fd-card-hz b { color: var(--fdtext); font-weight: 600; }
+.fd-lc-pick { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap;
+  background: #0c1117; border: 1px solid var(--fdline); border-radius: 2px;
+  padding: .55rem .7rem; margin: 0 0 .75rem; }
+.fd-lc-pick .f { font-size: 1rem; line-height: 1; }
+.fd-lc-pick .t { font-family: var(--sans); font-weight: 800; font-size: .92rem; }
+.fd-lc-pick .p { margin-left: auto; font-family: var(--fdmono); font-weight: 700; font-size: .92rem;
+  color: var(--fdup); font-variant-numeric: tabular-nums; }
+.fd-lc-pick.graded { flex-direction: column; align-items: stretch; gap: .3rem; }
+.fd-lc-pick .w { font-family: var(--sans); font-weight: 800; font-size: .92rem; color: var(--fdup); }
+.fd-lc-pick .w em { font-style: normal; font-weight: 600; color: var(--fdmut); }
+.fd-lc-pick .c { font-family: var(--fdmono); font-size: .74rem; color: var(--fdmut); }
+.fd-lc-pick .c.miss { color: var(--fddn); }
+
 .fd-card-foot { display: flex; justify-content: space-between; align-items: center; gap: .8rem;
   border-top: 1px solid var(--fdline); margin-top: auto; padding-top: .6rem;
   font-family: var(--sans); font-size: .68rem; color: var(--fdmut); }
@@ -8166,6 +8206,87 @@ def _fd_live_hero(f):
     )
 
 
+def _fd_live_card(f):
+    """A native live call in compact shelf form — what a sub-shelf uses for every
+    call after its lead. Same frame as a research market card; the council's pick
+    stands in for the outcome rows, and a graded call wears its verdict."""
+    q = html.escape(f.get("question") or f.get("title") or "Live forecast")
+    cc = _fd_cat_color(f.get("category", ""))
+    pick = html.escape(f.get("pick", ""))
+    flagc = html.escape(f.get("pick_flag", ""))
+    band = html.escape(f.get("band", ""))
+    dek = (f'<p class="fd-card-sub">{html.escape(f["dek"])}</p>' if f.get("dek") else "")
+    href = html.escape(f.get("file") or f"forecast/{f['slug']}.html", quote=True)
+    g = f.get("_graded")
+    if g:
+        c = g["consensus"]
+        hit = c["hit"]
+        chip = f'<span class="fd-chip-graded{"" if hit else " miss"}">{"✓" if hit else "✗"} Graded</span>'
+        top_right = html.escape(_long_date(g["resolved"]) if g.get("resolved") else "resolved")
+        rows = (f'<div class="fd-lc-pick graded"><span class="w">{html.escape(g.get("winner_flag", "")) or "🏆"} '
+                f'{html.escape(g["winner"])} <em>won</em></span>'
+                f'<span class="c{"" if hit else " miss"}">{flagc} called {pick} {band}</span></div>')
+        vcol = "var(--fdup)" if hit else "var(--fddn)"
+        foot = (f'<div class="fd-card-foot"><span style="color:{vcol}">'
+                f'{"✓ the desk called it" if hit else "✗ the desk missed"} · Brier {c["brier"]:.3f}</span>'
+                f'<span class="go" style="color:{cc}">The grade →</span></div>')
+    else:
+        chip = '<span class="fd-chip-live"><span class="d"></span>Live</span>'
+        top_right = (f'<b data-grades="{html.escape(f["grades"], quote=True)}">'
+                     f'grades {html.escape(_long_date(f["grades"]))}</b>' if f.get("grades") else "")
+        rows = (f'<div class="fd-lc-pick"><span class="f">{flagc}</span>'
+                f'<span class="t">{pick}</span><span class="p">{band}</span></div>')
+        n = f.get("profiles_n")
+        foot = (f'<div class="fd-card-foot"><span>{f"{n} predictor profiles · " if n else ""}on the ledger</span>'
+                f'<span class="go" style="color:{cc}">Full forecast →</span></div>')
+    return (
+        f'<a class="fd-card fd-card-live{" graded" if g else ""}" href="{href}" '
+        f'style="border-top:3px solid {cc}">'
+        f'<div class="fd-card-top">{chip}<span class="fd-card-hz">{top_right}</span></div>'
+        f'<h3 class="fd-card-q">{q}</h3>{dek}{rows}{foot}</a>'
+    )
+
+
+def _fd_native_shelf(f):
+    """The sub-shelf a native live call sits on: its own `subcategory` when the
+    forecaster wrote one, else its category. Older manifests carry no
+    subcategory and simply shelve under their category, as they always did."""
+    return (f.get("subcategory") or f.get("category") or "Live Calls").strip()
+
+
+def _fd_anchor(*parts):
+    """A stable in-page id for a board heading, e.g. ('shelf', 'Sport & Games')
+    → 'shelf-sport-games'. Callers de-duplicate."""
+    s = re.sub(r"[^a-z0-9]+", "-", "-".join(str(p) for p in parts if p).lower()).strip("-")
+    return s or "sec"
+
+
+def _fd_board_index(wings):
+    """The board index — a jump nav over the whole board: every wing, and every
+    shelf inside it, with its market count. On a board of fifty markets across a
+    dozen shelves this is what makes the thing navigable. `wings` is
+    build_forecast_page's nav model: [{label, anchor, n, color, children:[...]}],
+    where an unlabeled wing means a flat board with no super-sections. Renders
+    only when there is actually something to jump between."""
+    shelves = sum(len(w["children"]) for w in wings)
+    if shelves + sum(1 for w in wings if w.get("label")) < 3:
+        return ""
+    rows = []
+    for w in wings:
+        chips = []
+        if w.get("label"):
+            chips.append(f'<a class="fd-ix fd-ix-w" href="#{w["anchor"]}" '
+                         f'style="--c:{w["color"]}">{html.escape(w["label"])}'
+                         f'<b>{w["n"]}</b></a>')
+        for c in w["children"]:
+            chips.append(f'<a class="fd-ix" href="#{c["anchor"]}" style="--c:{c["color"]}">'
+                         f'{html.escape(c["label"])}<b>{c["n"]}</b></a>')
+        rows.append(f'<div class="fd-ix-row">{"".join(chips)}</div>')
+    return (f'<nav class="fd-index" id="fd-index" aria-label="Jump to a section of the board">'
+            f'<span class="fd-index-h">On the board</span>'
+            f'<div class="fd-index-body">{"".join(rows)}</div></nav>')
+
+
 def _fd_tape(native_items, markets):
     """The ticker tape: every market's leading outcome as one tick; graded
     markets tick their verdict instead."""
@@ -8246,9 +8367,14 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     the Ad Tech Board): {fname, title (h1), kicker, nav, back, record_fname}.
     `sections`, when given, splits the board into labeled super-section bands
     instead of one flat run of shelves — an ordered list of section dicts:
-    {title, kicker, color, native:True} pins the standalone native heroes; a
-    {title, kicker, color, categories:[...]} or {..., rest:True} band groups
-    the category shelves it claims (rest = every category no other band took)."""
+    {title, kicker, color, native_categories:[...]} claims the standalone live
+    calls in those categories, and {..., native:True} takes whatever live calls
+    no other band claimed; {title, kicker, color, categories:[...]} or
+    {..., rest:True} groups the corpus category shelves it claims (rest = every
+    category no other band took). A band may claim both. Within a band the live
+    calls shelve again by their own `subcategory` — Tennis, The 2026 Midterms —
+    each shelf leading with its newest open call and shelving the rest as cards,
+    and every wing and shelf is linkable from the board index at the top."""
     out = Path(out_dir)
     page = page or {}
     fname = page.get("fname", "forecast.html")
@@ -8271,43 +8397,104 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
         if m["category"] not in cats:
             cats.append(m["category"])
 
+    # Every wing and shelf gets a unique in-page id so the board index can jump
+    # to it; `nav_wings` is the model that index is rendered from.
+    seen_anchors, nav_wings = set(), []
+
+    def _anchor(kind, label):
+        base = _fd_anchor(kind, label)
+        a, i = base, 2
+        while a in seen_anchors:
+            a, i = f"{base}-{i}", i + 1
+        seen_anchors.add(a)
+        return a
+
+    def _shelf_head(label, n, color, anchor):
+        return (f'<h2 class="fd-cat-h" id="{anchor}">'
+                f'<span class="tick" style="background:{color}"></span>'
+                f'{html.escape(label)} <span class="n" style="color:{color}">{n}</span></h2>')
+
     def _shelf(c):
+        """One shelf of research markets — a corpus category."""
         group = sorted([m for m in markets if m["category"] == c],
                        key=lambda m: bool(m.get("resolution")))
-        cards = "".join(_fd_market_card(m) for m in group)
         cc = _fd_cat_color(c)
-        return (f'<h2 class="fd-cat-h"><span class="tick" style="background:{cc}"></span>'
-                f'{html.escape(c)} <span class="n" style="color:{cc}">{len(group)}</span></h2>'
-                f'<div class="fd-grid">{cards}</div>', len(group))
+        a = _anchor("shelf", c)
+        cards = "".join(_fd_market_card(m) for m in group)
+        return (_shelf_head(c, len(group), cc, a) + f'<div class="fd-grid">{cards}</div>',
+                {"label": c, "anchor": a, "n": len(group), "color": cc})
+
+    def _native_shelves(items):
+        """The live calls of a wing, shelved by subcategory. Each shelf leads
+        with its newest still-open call as a hero and shelves the rest as compact
+        cards, so a wing of twenty live markets stays scannable. One shelf on its
+        own needs no head — the wing's own title already names it."""
+        order, by = [], {}
+        for f in items:
+            s = _fd_native_shelf(f)
+            if s not in by:
+                by[s] = []
+                order.append(s)
+            by[s].append(f)
+        out_html, entries = [], []
+        for s in order:
+            grp = sorted(by[s], key=lambda f: bool(f.get("_graded")))
+            cc = _fd_cat_color(grp[0].get("category", ""))
+            if len(order) > 1:
+                a = _anchor("shelf", s)
+                out_html.append(_shelf_head(s, len(grp), cc, a))
+                entries.append({"label": s, "anchor": a, "n": len(grp), "color": cc})
+            out_html.append(_fd_live_hero(grp[0]))
+            if len(grp) > 1:
+                out_html.append('<div class="fd-grid">'
+                                + "".join(_fd_live_card(f) for f in grp[1:]) + "</div>")
+        return out_html, entries
 
     if sections:
         claimed = {c for sec in sections for c in sec.get("categories", [])}
+        nclaimed = {c for sec in sections for c in sec.get("native_categories", [])}
         for sec in sections:
-            band, n = [], 0
-            if sec.get("native"):
-                band = [_fd_live_hero(f) for f in native_items]
-                n = len(native_items)
-            else:
-                sec_cats = ([c for c in cats if c not in claimed] if sec.get("rest")
-                            else [c for c in cats if c in sec.get("categories", [])])
-                for c in sec_cats:
-                    shtml, cnt = _shelf(c)
-                    band.append(shtml)
-                    n += cnt
+            band, entries, n = [], [], 0
+            if sec.get("native") or sec.get("native_categories"):
+                nats = ([f for f in native_items if f.get("category") not in nclaimed]
+                        if sec.get("native") else
+                        [f for f in native_items if f.get("category") in sec["native_categories"]])
+                if nats:
+                    bhtml, ents = _native_shelves(nats)
+                    band += bhtml
+                    entries += ents
+                    n += len(nats)
+            sec_cats = ([c for c in cats if c not in claimed] if sec.get("rest")
+                        else [c for c in cats if c in sec.get("categories", [])])
+            for c in sec_cats:
+                shtml, ent = _shelf(c)
+                band.append(shtml)
+                entries.append(ent)
+                n += ent["n"]
             if not band:
                 continue
             col = sec.get("color", "#9aa1af")
+            a = _anchor("sec", sec["title"])
             parts.append(
-                f'<div class="fd-sec"><span class="fd-sec-bar" style="background:{col}"></span>'
+                f'<div class="fd-sec" id="{a}"><span class="fd-sec-bar" style="background:{col}"></span>'
                 f'<h2 class="fd-sec-t">{html.escape(sec["title"])}</h2>'
                 f'<span class="fd-sec-k">{html.escape(sec.get("kicker", ""))}</span>'
-                f'<span class="fd-sec-n">{n} {"market" if n == 1 else "markets"}</span></div>')
+                f'<span class="fd-sec-n">{n} {"market" if n == 1 else "markets"}'
+                f'<a class="fd-sec-up" href="#fd-index" title="Back to the board index">↑</a>'
+                f'</span></div>')
             parts.extend(band)
+            nav_wings.append({"label": sec["title"], "anchor": a, "n": n,
+                              "color": col, "children": entries})
     else:
-        for f in native_items:
-            parts.append(_fd_live_hero(f))
+        bhtml, entries = _native_shelves(native_items)
+        parts.extend(bhtml)
         for c in cats:
-            parts.append(_shelf(c)[0])
+            shtml, ent = _shelf(c)
+            parts.append(shtml)
+            entries.append(ent)
+        nav_wings.append({"label": "", "anchor": "", "n": 0, "children": entries})
+    # The index sits under the tape and roster, above the first wing.
+    parts.insert(2, _fd_board_index(nav_wings))
     n_outcomes = sum(len(m["outcomes"]) for m in markets) + len(native_items)
     n_markets = len(native_items) + len(markets)
     # The plate's graded line + the standing link to the track record.
@@ -14373,6 +14560,11 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                     for c in d.get("categories", [])}
     fc_desk_cats = {c for d in detached if "forecast" in (d["page"].get("include") or [])
                     for c in d.get("categories", [])}
+    # A desk's standalone live calls sit in their own forecast category (the
+    # forecaster files them under e.g. "Media & Advertising", not under a corpus
+    # category), so a desk names them separately from the corpora it collects.
+    fc_desk_native_cats = {c for d in detached if "forecast" in (d["page"].get("include") or [])
+                           for c in (d["page"].get("forecast_native_categories") or [])}
     qz_desk_cats = {c for d in detached if "quiz" in (d["page"].get("include") or [])
                     for c in d.get("categories", [])}
 
@@ -14424,18 +14616,28 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         print(f"  ✓ Rendered {pam_rendered}/{len(pamphlet_items)} pamphlet page(s) from data")
 
     # The Forecast Desk (fifth top-level section). The site-wide board is split
-    # into three labeled wings: the standalone live calls (sports & politics),
-    # the research corpora, and the Ad Tech markets. Ad Tech shows on BOTH the
-    # main board (this wing) and its own detached desk board (built below), so
+    # into labeled wings, and inside each wing the live calls shelve again by
+    # their own subcategory (Tennis, The 2026 Midterms, …) so no wing is a flat
+    # run of twenty heroes. Ad Tech shows on BOTH the main board (its wing here,
+    # live calls included) and its own detached desk board (built below), so
     # unlike glossary/quiz the forecast markets are NOT held back here.
     adtech_title = next((d.get("title", "Ad Tech & Media") for d in detached
                          if "forecast" in (d["page"].get("include") or [])), "Ad Tech & Media")
     fd_sections = [
-        {"title": "Sports & Politics", "color": "#f59e0b", "native": True,
-         "kicker": "Standalone live calls — bare-topic questions, not drawn from a corpus"},
+        {"title": "Sport & Games", "color": _fd_cat_color("Sport & Games"),
+         "native_categories": ["Sport & Games"],
+         "kicker": "Live calls on games with a scoreboard — graded the moment the whistle goes"},
+        {"title": "Politics & the Economy", "color": _fd_cat_color("The Modern World"),
+         "native_categories": ["The Modern World"],
+         "kicker": "Elections, Washington, and the wars — bare-topic calls, not drawn from a corpus"},
+        # A catch-all so a future forecaster run in a category no wing claims
+        # still lands on the board; it renders only when it actually has calls.
+        {"title": "Other Live Calls", "color": "#f59e0b", "native": True,
+         "kicker": "Standalone calls on questions that don’t yet have a wing of their own"},
         {"title": "From the Research", "color": "#60a5fa", "rest": True,
          "kicker": "Every research corpus's forecast, priced as a market"},
         {"title": adtech_title, "color": _fd_cat_color("Media & Advertising"),
+         "native_categories": sorted(fc_desk_native_cats),
          "categories": sorted(fc_desk_cats),
          "kicker": "The trade desk's predictions — also on the Ad Tech board"},
     ]
@@ -14510,7 +14712,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         tools = []
         if "forecast" in inc:
             dmarkets = [m for m in fd_markets if m["category"] in dcats]
-            dnative = [f for f in forecast_items if f.get("category") in dcats]
+            dnat_cats = set(dcats) | set(pcfg.get("forecast_native_categories") or [])
+            dnative = [f for f in forecast_items if f.get("category") in dnat_cats]
             if dmarkets or dnative:
                 fc_title = pcfg.get("forecast_title", f"The {title} Board")
                 build_forecast_page(out, dnative, dmarkets, forecast_cfg, category_order=dcats,

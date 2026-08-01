@@ -695,9 +695,29 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fd-live-meta b { color: var(--fdtext); }
 @media (max-width: 640px) { .fd-live-grid { grid-template-columns: 1fr; } }
 
+/* the board index — the jump nav over every wing and shelf, pinned under the
+   tape and roster. One row per wing; the wing's own chip leads its row. */
+.fd-index { border: 1px solid var(--fdline); border-radius: 2px; background: #0f131a;
+  padding: .8rem .95rem .95rem; margin: 0 0 1.6rem; }
+.fd-index-h { display: block; font-family: var(--sans); font-size: .68rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .12em; color: var(--fdmut); margin: 0 0 .6rem; }
+.fd-index-body { display: flex; flex-direction: column; gap: .45rem; }
+.fd-ix-row { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; }
+.fd-ix { --c: var(--fdmut); display: inline-flex; align-items: center; gap: .4rem; text-decoration: none;
+  font-family: var(--sans); font-size: .72rem; color: var(--fdtext); background: #161b24;
+  border: 1px solid var(--fdline); border-left: 3px solid var(--c); border-radius: 2px;
+  padding: .26rem .55rem; transition: border-color .15s var(--ease), background .15s var(--ease); }
+.fd-ix:hover, .fd-ix:focus-visible { border-color: var(--c); background: #1c222c; }
+.fd-ix b { font-family: var(--fdmono); font-size: .68rem; font-weight: 700; color: var(--c);
+  font-variant-numeric: tabular-nums; }
+.fd-ix-w { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .68rem;
+  background: #1c222c; }
+@media (max-width: 640px) { .fd-index-body { gap: .6rem; } }
+
 /* category shelves + market cards */
 .fd-cat-h { font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
-  color: #c9cdd6; border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem; }
+  color: #c9cdd6; border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 1.8rem 0 1rem;
+  scroll-margin-top: 1rem; }
 .fd-cat-h .tick { display: inline-block; width: 10px; height: 10px; border-radius: 2px;
   margin-right: .55rem; vertical-align: -1px; }
 .fd-cat-h .n { color: var(--fdup); font-family: var(--fdmono); }
@@ -706,7 +726,8 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
    standalone live calls), From the Research (corpus markets), Ad Tech & Media.
    Bigger and heavier than a category shelf head; each wears its own accent. */
 .fd-sec { display: flex; align-items: baseline; gap: .7rem; flex-wrap: wrap;
-  margin: 2.8rem 0 1.3rem; padding-bottom: .7rem; border-bottom: 2px solid var(--fdtext); }
+  margin: 2.8rem 0 1.3rem; padding-bottom: .7rem; border-bottom: 2px solid var(--fdtext);
+  scroll-margin-top: 1rem; }
 .fd-sec:first-of-type { margin-top: 1.4rem; }
 .fd-sec-bar { align-self: center; display: inline-block; width: 15px; height: 15px; border-radius: 3px; }
 .fd-sec-t { font-family: var(--display); font-weight: 600; font-size: clamp(1.35rem, 3vw, 1.85rem);
@@ -714,6 +735,9 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .fd-sec-k { font-family: var(--serif); font-style: italic; font-size: .92rem; color: var(--fdmut); }
 .fd-sec-n { margin-left: auto; align-self: center; font-family: var(--fdmono); font-size: .72rem; font-weight: 600;
   text-transform: uppercase; letter-spacing: .1em; color: var(--fdmut); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fd-sec-up { color: var(--fdmut); text-decoration: none; margin-left: .55rem; padding: 0 .3rem;
+  border: 1px solid var(--fdline); border-radius: 2px; }
+.fd-sec-up:hover, .fd-sec-up:focus-visible { color: var(--fdtext); border-color: var(--fdmut); }
 @media (max-width: 640px) { .fd-sec-k { flex-basis: 100%; } .fd-sec-n { margin-left: 0; } }
 .fd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 1rem; }
 .fd-card { display: flex; flex-direction: column; text-decoration: none; color: var(--fdtext);
@@ -751,6 +775,22 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 @media (prefers-reduced-motion: no-preference) {
   .fd-fill { animation: fd-grow .8s cubic-bezier(.22,1,.36,1); }
 }
+/* a native live call in compact shelf form — the council's pick where a research
+   card carries its outcome rows */
+.fd-card-live .fd-card-hz b { color: var(--fdtext); font-weight: 600; }
+.fd-lc-pick { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap;
+  background: #0c1117; border: 1px solid var(--fdline); border-radius: 2px;
+  padding: .55rem .7rem; margin: 0 0 .75rem; }
+.fd-lc-pick .f { font-size: 1rem; line-height: 1; }
+.fd-lc-pick .t { font-family: var(--sans); font-weight: 800; font-size: .92rem; }
+.fd-lc-pick .p { margin-left: auto; font-family: var(--fdmono); font-weight: 700; font-size: .92rem;
+  color: var(--fdup); font-variant-numeric: tabular-nums; }
+.fd-lc-pick.graded { flex-direction: column; align-items: stretch; gap: .3rem; }
+.fd-lc-pick .w { font-family: var(--sans); font-weight: 800; font-size: .92rem; color: var(--fdup); }
+.fd-lc-pick .w em { font-style: normal; font-weight: 600; color: var(--fdmut); }
+.fd-lc-pick .c { font-family: var(--fdmono); font-size: .74rem; color: var(--fdmut); }
+.fd-lc-pick .c.miss { color: var(--fddn); }
+
 .fd-card-foot { display: flex; justify-content: space-between; align-items: center; gap: .8rem;
   border-top: 1px solid var(--fdline); margin-top: auto; padding-top: .6rem;
   font-family: var(--sans); font-size: .68rem; color: var(--fdmut); }

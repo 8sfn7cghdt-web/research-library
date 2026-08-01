@@ -75,6 +75,9 @@
           "quiz",
           "briefings"
         ],
+        "forecast_native_categories": [
+          "Media & Advertising"
+        ],
         "folio_left": "The desk",
         "folio_right_html": "<a href=\"about.html\">About &amp; contact →</a>"
       }
