@@ -11764,8 +11764,11 @@ def quiz_facts_for(corpus, folder):
         # Anchor on the event's most distinctive located word (fewest chapters
         # mention it), so "Read in context" flashes near the fact rather than
         # the first occurrence of some common word like "Christianity".
+        # dict.fromkeys dedupes while keeping first-appearance order, so ties on
+        # the (fewest chapters, longest word) key resolve to the earliest word in
+        # the event — a plain set would reshuffle the winner on every build.
         best = None
-        for w in set(re.findall(r"[A-Za-z][A-Za-z'\-]{5,}", event)):
+        for w in dict.fromkeys(re.findall(r"[A-Za-z][A-Za-z'\-]{5,}", event)):
             hits = [i for i, t in enumerate(texts) if w.lower() in t]
             if hits and (best is None or (len(hits), -len(w)) < (len(best[1]), -len(best[0]))):
                 best = (w, hits)
@@ -13063,8 +13066,10 @@ def build_glossary_page(out_dir, glossary_index, category_order=None, shell="", 
             for c in e_cats:
                 if c in cat_counts:
                     cat_counts[c] += 1
-            # a lowercase haystack for the client text filter (term + aliases)
-            hay = html.escape((e["term"] + " " + " ".join(e["aliases"])).lower(), quote=True)
+            # a lowercase haystack for the client text filter (term + aliases).
+            # Aliases are a set — sort them so the attribute is byte-stable
+            # across builds (PYTHONHASHSEED otherwise reshuffles it every run).
+            hay = html.escape((e["term"] + " " + " ".join(sorted(e["aliases"]))).lower(), quote=True)
             # pipe-delimited membership lists for the category / article filters
             cats_attr = html.escape("|" + "|".join(sorted(e_cats)) + "|", quote=True)
             slugs_attr = html.escape("|" + "|".join(sorted(e_slugs)) + "|", quote=True)
