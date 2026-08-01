@@ -30,6 +30,7 @@ import re
 import shutil
 import subprocess
 import sys
+from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -1284,6 +1285,7 @@ MAIN_NAV_ITEMS = [
     ("The Pamphlets", "pamphlets.html"),
     ("The Forecast Desk", "forecast.html"),
     ("Connections", "connections.html"),
+    ("The Receipts", "receipts.html"),
     ("Glossary", "glossary.html"),
     ("Quiz", "quiz.html"),
     ("Wrapped", "wrapped.html"),
@@ -3640,6 +3642,8 @@ SCENE_LABELS = {
     "map": "A map room with linked panes, table notes, and signal lines between ideas.",
     "quiz": "A study desk with question cards, marked pages, and a lit review lamp.",
     "wrapped": "A reading ledger table with stacked holdings, square marks, and a private year-end tally.",
+    "receipts": "An evidence desk with claim slips, source stacks, and a checking lamp over the ledger.",
+    "errata": "A correction desk with struck lines, margin notes, and a fresh proof set beside them.",
 }
 
 
@@ -3654,6 +3658,8 @@ SCENE_COVERS = {
     "map": ("american-pragmatism-research", "jesus-research", "mcluhan-research", "india-advertising-research"),
     "quiz": ("piaget-research", "pareto-research", "jung-research", "deutsch-good-explanations-research"),
     "wrapped": ("carlyle-research", "american-pragmatism-research", "mcluhan-research", "jesus-research"),
+    "receipts": ("ctv-identity-signals-research", "roman-catholicism-research", "political-ctv-research", "mcluhan-research"),
+    "errata": ("mcluhan-research", "ctv-dsp-ssp-research", "emerson-research", "dickinson-research"),
 }
 
 SCENE_STAMPS = {
@@ -3667,6 +3673,8 @@ SCENE_STAMPS = {
     "map": "IDEA ATLAS",
     "quiz": "QUESTION SET",
     "wrapped": "PRIVATE LEDGER",
+    "receipts": "EVIDENCE LEDGER",
+    "errata": "STET / CORRECTED",
 }
 
 
@@ -4483,6 +4491,16 @@ html.show-overture .ov-skip { animation-delay: .7s; }
 @keyframes ovOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
 @keyframes ovRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; } }
 @keyframes ovTrack { from { opacity: 0; letter-spacing: .3em; } to { opacity: 1; letter-spacing: .04em; } }
+/* The separator dots sit in the gutter to the right of each link, so once the
+   rail wraps the last link on every line strands one against the margin. */
+@media (max-width: 680px) {
+  .ov-sections { gap: .5rem 1.1rem; margin-bottom: 1.9rem; }
+  .ov-sections a:not(:last-child)::after { content: none; }
+}
+/* No Esc key to press — the enter button is the whole affordance there. */
+@media (hover: none) and (pointer: coarse) {
+  .ov-skip { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   html.show-overture #overture, html.show-overture .ov-inner > * { animation: none !important; }
   #ov-enter, #ov-enter:hover, #ov-enter:focus-visible, #ov-enter:active,
@@ -5105,7 +5123,10 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
   .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
-  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
+  /* Stacked under the wordmark the nav is its own block, so it hangs off the
+     left margin with it — flush-right against a flush-left brand reads as
+     overflow rather than as an index. */
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; justify-content: flex-start; }
 }
 header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
@@ -11263,6 +11284,266 @@ def quiz_facts_for(corpus, folder):
     return facts
 
 
+# ------------------------------------------------------------------- the receipts
+# Every research manifest carries the pipeline's own audit trail: `key_claims`
+# (each with a type, stakes, confidence and a verification verdict) and a
+# `verification` block (depth, tier counts, and the claims a skeptic panel
+# refuted, contested, or flagged as resting on one source). Thirty-odd runs
+# wrote that block thirty-odd slightly different ways — corrections live under
+# five different key names, claim IDs appear as "1.4", "Claim 1.4", "01:2.3", a
+# {id, doc, what} record, and sometimes as bare prose carrying no ID at all —
+# so everything here is normalisation before it is presentation. Nothing is
+# inferred: a corpus with no verification block is reported as unaudited rather
+# than quietly counted as clean.
+
+# "Claim 1.4" / "01:2.3" / "C4.1" / "1.4 — what changed" → the bare ID.
+CLAIM_ID_RE = re.compile(r"^(?:claim\s+)?(?:\d+\s*:\s*)?([A-Za-z]?\d+(?:\.\d+)+)", re.I)
+
+# The five key names under which runs recorded "a skeptic panel took this out or
+# rewrote it", the four for preserved dissent, and the three for one-source flags.
+VERIFY_CORRECTION_KEYS = ("refuted_and_corrected", "refuted_claim_ids", "corrected_claims",
+                          "corrections_applied", "refuted_and_excluded")
+VERIFY_CONTESTED_KEYS = ("contested_dissent", "contested_claim_ids", "contested_claims",
+                         "contested_preserved")
+VERIFY_FLAG_KEYS = ("single_source_claim_ids", "single_source_flagged", "single_source_flags")
+# Prose that means the audit did not finish. Checked against the block's own
+# status/method/note fields, which is where interrupted runs left their apology.
+INCOMPLETE_MARKERS = ("interrupt", "spend limit", "spend cap", "stall", "did not run",
+                      "did not complete", "not complete", "failed", "halted", "partial",
+                      "unavailable", "was lost", "were lost", "not returned", "trimmed",
+                      "hand-reconciled", "by hand", "not computed", "not re-run")
+
+
+def split_claim_ref(raw):
+    """Split one correction/flag entry into (claim_id, note).
+
+    Entries arrive as bare IDs ("1.4"), as an ID carrying its own account of what
+    was wrong ("Claim 2.7 (overclaimed 'mainstream' — corrected to …)"), as a
+    {id, doc, what} record, or as pure prose with no ID ("marriage date
+    1935->1939 (Doc 01)"). Prose-only entries keep their text and return no ID —
+    they are still corrections, they just cannot be joined to a claim.
+    """
+    if isinstance(raw, dict):
+        cid = norm_claim_id(raw.get("id") or raw.get("claim") or "")
+        note = str(raw.get("what") or raw.get("note") or raw.get("correction") or "").strip()
+        return cid, note
+    s = str(raw or "").strip()
+    m = CLAIM_ID_RE.match(s)
+    if not m:
+        return None, s
+    return m.group(1), s[m.end():].strip(" \t—–-:().,;")
+
+
+def norm_claim_id(raw):
+    m = CLAIM_ID_RE.match(str(raw or "").strip())
+    return m.group(1) if m else None
+
+
+def _source_count(sources):
+    """How many sources a corpus was built on. Runs recorded this as `count`,
+    `total_count` or `count_approx` depending on vintage."""
+    if not isinstance(sources, dict):
+        return None
+    for k in ("count", "total_count", "count_approx"):
+        if isinstance(sources.get(k), int):
+            return sources[k]
+    return None
+
+
+def claim_verdict(status):
+    """Collapse ~22 free-text verification_status spellings into one vocabulary.
+
+    Order matters: "unverified, corroborated in source" contains both "verif"
+    and "corroborat", and must not be read as verified.
+    """
+    s = str(status or "").strip().lower()
+    if not s:
+        return "unrated"
+    if "refut" in s or "correct" in s:
+        return "corrected"
+    if "contest" in s:
+        return "contested"
+    if "unverified" in s:
+        return "unverified"
+    if "verif" in s:
+        return "verified"
+    if "corroborat" in s:
+        return "corroborated"
+    if "single" in s:
+        return "unverified"
+    if "inference" in s:
+        return "inference"
+    return "unrated"
+
+
+VERDICT_LABELS = {
+    "verified": "Verified",
+    "corroborated": "Corroborated",
+    "corrected": "Refuted &amp; corrected",
+    "contested": "Contested",
+    "unverified": "Unverified",
+    "inference": "Inference",
+    "unrated": "Unrated",
+}
+
+
+def _audit_state(v):
+    """(state, note) for a corpus's verification block.
+
+    `full` — an adversarial panel ran to completion. `partial` — it ran but was
+    interrupted, trimmed, or reconstructed by hand afterwards. `none` — no
+    verification block exists at all.
+    """
+    if not isinstance(v, dict) or not v:
+        return "none", ""
+    parts = []
+    for k in ("status", "method", "note", "phase_status", "reconciliation", "depth",
+              "skeptic_panels_completed", "tier_counts", "depth_tier"):
+        val = v.get(k)
+        if isinstance(val, str) and val.strip():
+            parts.append(val.strip())
+    note = " ".join(parts)
+    state = "partial" if any(w in note.lower() for w in INCOMPLETE_MARKERS) else "full"
+    return state, note
+
+
+def receipts_for(corpus, folder, category):
+    """The audit record for one corpus: its claims, its corrections, its flags.
+
+    Returns None for a corpus whose manifest carries no claims at all (the three
+    early runs that predate the key_claims schema) — they would otherwise show
+    up on the ledger as a corpus with a perfect record and nothing behind it.
+    """
+    try:
+        m = json.loads((Path(folder) / "manifest.json").read_text())
+    except Exception:
+        return None
+    raw_claims = [c for c in (m.get("key_claims") or []) if isinstance(c, dict)]
+    if not raw_claims:
+        return None
+    v = m.get("verification")
+    v = v if isinstance(v, dict) else {}
+
+    def harvest(keys):
+        """Every entry under any of `keys`, split into (id, note) pairs."""
+        out = []
+        for k in keys:
+            val = v.get(k)
+            if isinstance(val, str):
+                val = [val]
+            if not isinstance(val, list):
+                continue
+            for item in val:
+                cid, note = split_claim_ref(item)
+                if cid or note:
+                    out.append((cid, note))
+        return out
+
+    claims, by_id = [], {}
+    for c in raw_claims:
+        cid = str(c.get("id") or "").strip()
+        text = str(c.get("claim") or c.get("statement") or c.get("label") or "").strip()
+        if not text:
+            continue
+        srcs = c.get("supporting_sources") or c.get("citation") or c.get("evidence") or []
+        if isinstance(srcs, str):
+            srcs = [srcs]
+        # A few early runs stored supporting_sources as bare indices into the
+        # corpus's Sources.md ([1, 2, 10]); those carry nothing a reader can
+        # check, so they are dropped rather than rendered as "1".
+        srcs = [s for s in srcs if not str(s).strip().isdigit()]
+        entry = {
+            "id": cid,
+            "doc": str(c.get("document") or c.get("doc") or "").strip(),
+            "t": _clean_passage(text, 620),
+            "ty": str(c.get("type") or c.get("claim_type") or "").strip().lower(),
+            "st": str(c.get("stakes") or "").strip().lower(),
+            "cf": str(c.get("confidence") or "").strip().lower(),
+            "v": claim_verdict(c.get("verification_status")),
+            "vr": str(c.get("verification_status") or "").strip(),
+            "tier": str(c.get("verification_tier") or "").strip().lower(),
+            "s": [_clean_passage(str(s), 220) for s in srcs[:4] if str(s).strip()],
+        }
+        if c.get("single_source") is True:
+            entry["one"] = 1
+        claims.append(entry)
+        nid = norm_claim_id(cid)
+        if nid and nid not in by_id:
+            by_id[nid] = entry
+
+    # Corrections: the verification block's own list, joined by ID to the claim
+    # text now standing in the corpus, plus any claim the panel marked corrected
+    # that the block never listed. Prose-only entries are kept verbatim.
+    corrections, seen = [], set()
+    for cid, note in harvest(VERIFY_CORRECTION_KEYS):
+        nid = norm_claim_id(cid) if cid else None
+        joined = by_id.get(nid) if nid else None
+        key = nid or note
+        if key in seen:
+            continue
+        seen.add(key)
+        corrections.append({
+            "id": (joined or {}).get("id") or cid or "",
+            "doc": (joined or {}).get("doc", ""),
+            "note": note,
+            "claim": (joined or {}).get("t", ""),
+            "stakes": (joined or {}).get("st", ""),
+        })
+    for c in claims:
+        nid = norm_claim_id(c["id"])
+        if c["v"] == "corrected" and nid and nid not in seen:
+            seen.add(nid)
+            corrections.append({"id": c["id"], "doc": c["doc"], "note": "",
+                                "claim": c["t"], "stakes": c["st"]})
+
+    def flagged(keys, sweep):
+        """The block's own flag list, plus any claim `sweep` recognises that the
+        block never got round to listing."""
+        out, seen_f = [], set()
+        for cid, note in harvest(keys):
+            nid = norm_claim_id(cid) if cid else None
+            joined = by_id.get(nid) if nid else None
+            key = nid or note
+            if key in seen_f:
+                continue
+            seen_f.add(key)
+            out.append({"id": (joined or {}).get("id") or cid or "", "note": note,
+                        "claim": (joined or {}).get("t", "")})
+        for c in claims:
+            nid = norm_claim_id(c["id"])
+            if sweep(c) and nid and nid not in seen_f:
+                seen_f.add(nid)
+                out.append({"id": c["id"], "note": "", "claim": c["t"]})
+        return out
+
+    state, note = _audit_state(v)
+    tiers = v.get("tiers") if isinstance(v.get("tiers"), dict) else {}
+    if not tiers and isinstance(v.get("tier_counts"), dict):
+        tiers = v["tier_counts"]
+    counts = Counter(c["v"] for c in claims)
+    return {
+        "slug": corpus["slug"], "title": corpus["title"], "category": category,
+        "href": f"{corpus['slug']}.html",
+        "state": state, "note": _clean_passage(note, 700),
+        "depth": str(v.get("depth") or v.get("depth_tier") or "").strip(),
+        "checked": v.get("claims_checked") if isinstance(v.get("claims_checked"), int) else None,
+        "tiers": {k: tiers.get(k, 0) for k in ("deep", "standard", "light")
+                  if isinstance(tiers.get(k), int)},
+        "gap_rounds": v.get("gap_rounds") if isinstance(v.get("gap_rounds"), int) else None,
+        "sources": _source_count(m.get("sources")),
+        "n": len(claims),
+        "load_bearing": sum(1 for c in claims if c["st"] == "load-bearing"),
+        "counts": dict(counts),
+        "corrections": corrections,
+        "contested": flagged(VERIFY_CONTESTED_KEYS, lambda c: c["v"] == "contested"),
+        # Only genuine one-source claims — the explicit single_source flag, or a
+        # verdict that says so. "unverified, corroborated in source" is neither.
+        "single_source": flagged(VERIFY_FLAG_KEYS,
+                                 lambda c: c.get("one") == 1 or "single" in c["vr"].lower()),
+        "claims": claims,
+    }
+
+
 def build_similarity(corpus_meta, top_k=3):
     """corpus_meta: list of {slug, title, category, keywords}. Returns {slug: [related entries]}."""
     out = {}
@@ -12433,6 +12714,588 @@ def build_wrapped_page(out_dir, wrapped_stats, shell="", category_order=None):
     print("  ✓ Research Wrapped → wrapped.html")
 
 
+# ------------------------------------------------------------------- the receipts
+# Two pages off one payload. The Receipts is the standing evidence ledger — every
+# claim in the library with its verdict, its stakes and its sources, plus a
+# per-corpus audit record that says plainly where a verification panel finished
+# and where it was cut off. Errata is the narrower, sharper page: the claims a
+# skeptic panel refuted, and what they say now.
+
+RECEIPTS_CSS = """
+#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+.rc-wrap { max-width: 1140px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+.rc-head { margin: .6rem 0 .4rem; }
+.rc-head .kicker { margin: 0 0 .5rem; }
+.rc-head h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); margin: 0; }
+.rc-head h1::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .7rem;
+  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.rc-head .tagline { max-width: 62ch; margin: 1rem 0 0; }
+.rc-sub { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: .9rem 0 0; }
+.rc-sub a { color: var(--accent); }
+
+/* the assay — headline counts */
+.rc-assay { display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); gap: 0;
+  margin: 2.2rem 0 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+.rc-assay div { padding: .95rem 1rem; border-right: 1px solid var(--border); }
+.rc-assay div:last-child { border-right: 0; }
+.rc-assay b { display: block; font-family: var(--display); font-size: 1.75rem; line-height: 1.1;
+  font-weight: 400; font-variant-numeric: tabular-nums; }
+.rc-assay span { display: block; font-family: var(--sans); font-size: .66rem; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--muted); margin-top: .35rem; }
+.rc-assay .rc-flag b { color: var(--accent); }
+
+.rc-note { font-family: var(--sans); font-size: .82rem; line-height: 1.65; color: var(--muted);
+  max-width: 74ch; margin: 1.6rem 0 0; }
+.rc-note strong { color: var(--text); font-weight: 600; }
+
+h2.rc-h { font-family: var(--display); font-size: 1.5rem; font-weight: 400; margin: 3rem 0 .3rem;
+  padding-bottom: .5rem; border-bottom: 1px solid var(--border); }
+.rc-h-sub { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: .55rem 0 1.2rem; max-width: 74ch; }
+
+/* verdict vocabulary — one colour per verdict, used by bars, pills and legend */
+.v-verified { --vc: var(--t4); }
+.v-corroborated { --vc: var(--t3); }
+.v-corrected { --vc: var(--t1); }
+.v-contested { --vc: var(--t2); }
+.v-unverified { --vc: var(--muted); }
+.v-inference { --vc: var(--t5); }
+.v-unrated { --vc: var(--border); }
+.rc-legend { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-family: var(--sans);
+  font-size: .72rem; color: var(--muted); margin: 0 0 1.3rem; }
+.rc-legend span { display: inline-flex; align-items: center; gap: .38rem; }
+.rc-legend i { width: 9px; height: 9px; border-radius: 2px; background: var(--vc); display: inline-block; }
+
+/* the ledger table */
+.rc-scroll { overflow-x: auto; }
+table.rc-tbl { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .8rem; min-width: 720px; }
+table.rc-tbl th { text-align: left; font-size: .66rem; letter-spacing: .09em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; padding: .5rem .6rem; border-bottom: 1px solid var(--border);
+  cursor: pointer; white-space: nowrap; user-select: none; }
+table.rc-tbl th:hover { color: var(--accent); }
+table.rc-tbl th[data-dir]::after { content: " ▾"; }
+table.rc-tbl th[data-dir="asc"]::after { content: " ▴"; }
+table.rc-tbl td { padding: .6rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+table.rc-tbl tbody tr:hover { background: var(--panel); }
+table.rc-tbl .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.rc-tbl a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+table.rc-tbl a:hover { color: var(--accent); border-color: var(--accent); }
+.rc-cat { display: block; font-size: .68rem; color: var(--muted); margin-top: .2rem; }
+.rc-bar { display: flex; height: 9px; width: 128px; border-radius: 2px; overflow: hidden; background: var(--border); }
+.rc-bar i { display: block; height: 100%; background: var(--vc); }
+.rc-zero { color: var(--muted); }
+.rc-hit { color: var(--accent); font-weight: 600; }
+.state { display: inline-block; font-size: .64rem; letter-spacing: .07em; text-transform: uppercase;
+  padding: .18rem .45rem; border-radius: 3px; border: 1px solid var(--border); white-space: nowrap; }
+.state-full { color: var(--t4); border-color: var(--t4); }
+.state-partial { color: var(--t2); border-color: var(--t2); }
+.state-none { color: var(--muted); }
+
+/* the claim browser */
+.rc-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.1rem; font-family: var(--sans); }
+.rc-filters select, .rc-filters input { font-family: var(--sans); font-size: .78rem; color: var(--text);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: .42rem .55rem; }
+.rc-filters input { flex: 1 1 220px; min-width: 0; }
+.rc-filters select:focus-visible, .rc-filters input:focus-visible { outline: none; box-shadow: var(--ring); }
+.rc-count { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0 0 1rem; }
+.rc-claim { border-top: 1px solid var(--border); padding: 1rem 0 1.05rem; }
+.rc-claim:last-child { border-bottom: 1px solid var(--border); }
+.rc-claim p { margin: 0; font-family: var(--serif); font-size: .95rem; line-height: 1.6; }
+.rc-meta { display: flex; flex-wrap: wrap; gap: .4rem .7rem; align-items: baseline; font-family: var(--sans);
+  font-size: .7rem; color: var(--muted); margin: 0 0 .5rem; }
+.rc-meta a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
+.rc-meta a:hover { color: var(--accent); border-color: var(--accent); }
+.pill { display: inline-block; font-size: .64rem; letter-spacing: .06em; text-transform: uppercase;
+  padding: .16rem .42rem; border-radius: 3px; border: 1px solid var(--vc, var(--border)); color: var(--vc, var(--muted)); }
+.pill-lb { border-color: var(--accent); color: var(--accent); }
+.rc-src { font-family: var(--sans); font-size: .72rem; color: var(--muted); margin: .55rem 0 0;
+  padding-left: .8rem; border-left: 2px solid var(--border); line-height: 1.55; }
+.rc-more { display: block; margin: 1.6rem auto 0; font-family: var(--sans); font-size: .78rem;
+  color: var(--muted); background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: .55rem 1.1rem; cursor: pointer; }
+.rc-more:hover { color: var(--accent); border-color: var(--accent); }
+.rc-empty { font-family: var(--sans); font-size: .82rem; color: var(--muted); padding: 2rem 0; }
+
+/* errata */
+.er-block { margin: 2.2rem 0 0; }
+.er-block > h3 { font-family: var(--display); font-size: 1.12rem; font-weight: 400; margin: 0 0 .15rem; }
+.er-block > h3 a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+.er-block > h3 a:hover { color: var(--accent); border-color: var(--accent); }
+.er-block .er-cat { font-family: var(--sans); font-size: .7rem; color: var(--muted); margin: 0 0 .8rem; }
+.er-item { border-left: 2px solid var(--t1); padding: .1rem 0 .1rem .95rem; margin: 0 0 1.1rem; }
+.er-id { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
+.er-what { font-family: var(--sans); font-size: .86rem; line-height: 1.6; margin: .25rem 0 0; color: var(--text); }
+.er-now { font-family: var(--serif); font-size: .88rem; line-height: 1.6; color: var(--muted); margin: .45rem 0 0; }
+.er-now b { font-family: var(--sans); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); font-weight: 600; display: block; margin-bottom: .2rem; }
+.er-thin { font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted);
+  border-left: 2px solid var(--border); padding: .1rem 0 .1rem .95rem; margin: 0 0 1.1rem; }
+.er-thin b { color: var(--text); font-weight: 600; }
+@media (max-width: 640px) {
+  .rc-wrap { padding: 1.4rem 1.3rem 4rem; }
+  .rc-assay { grid-template-columns: repeat(2, 1fr); }
+  .rc-assay div:nth-child(2n) { border-right: 0; }
+}
+"""
+
+
+TABLE_SORT_JS = """
+// Click-to-sort for the audit ledger. Cells carry a data-v sort key so the
+// visible cell can stay formatted (thousands separators, a bar, an em dash)
+// while the comparison uses the underlying value.
+(function () {
+  var tbl = document.getElementById('rc-ledger');
+  if (!tbl) return;
+  var heads = [].slice.call(tbl.tHead.rows[0].cells);
+  heads.forEach(function (th, i) {
+    th.addEventListener('click', function () {
+      var dir = th.getAttribute('data-dir') === 'desc' ? 'asc' : 'desc';
+      heads.forEach(function (h) { h.removeAttribute('data-dir'); });
+      th.setAttribute('data-dir', dir);
+      var num = th.getAttribute('data-sort') === 'num';
+      var body = tbl.tBodies[0];
+      [].slice.call(body.rows).map(function (row) {
+        var cell = row.cells[i];
+        var raw = cell.getAttribute('data-v');
+        if (raw === null) raw = cell.textContent.trim();
+        return [num ? (parseFloat(raw) || 0) : String(raw).toLowerCase(), row];
+      }).sort(function (a, b) {
+        return (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0) * (dir === 'asc' ? 1 : -1);
+      }).forEach(function (p) { body.appendChild(p[1]); });
+    });
+  });
+})();
+"""
+
+
+RECEIPTS_JS = """
+// The claim browser. receipts.json is ~1.4MB, so it is fetched on idle rather
+// than inlined; until it lands the page is already useful (the assay and the
+// per-corpus ledger are server-rendered).
+(function () {
+  var PAGE = 40;
+  var all = null, view = [], shown = 0;
+  var listEl = document.getElementById('rc-list');
+  var countEl = document.getElementById('rc-count');
+  var moreEl = document.getElementById('rc-more');
+  if (!listEl) return;
+  var f = {
+    corpus: document.getElementById('f-corpus'), verdict: document.getElementById('f-verdict'),
+    stakes: document.getElementById('f-stakes'), type: document.getElementById('f-type'),
+    q: document.getElementById('f-q')
+  };
+  var LABEL = {verified:'Verified', corroborated:'Corroborated', corrected:'Refuted & corrected',
+               contested:'Contested', unverified:'Unverified', inference:'Inference', unrated:'Unrated'};
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+  function docLabel(d) { return String(d || '').replace(/\\.md$/, '').replace(/_/g, ' '); }
+
+  function apply() {
+    if (!all) return;
+    var q = (f.q.value || '').trim().toLowerCase();
+    var c = f.corpus.value, v = f.verdict.value, s = f.stakes.value, t = f.type.value;
+    view = all.filter(function (x) {
+      if (c && x.slug !== c) return false;
+      if (v && x.v !== v) return false;
+      if (s && x.st !== s) return false;
+      if (t && x.ty !== t) return false;
+      if (q && x.t.toLowerCase().indexOf(q) < 0 && x.title.toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+    shown = 0; listEl.innerHTML = '';
+    countEl.textContent = view.length.toLocaleString() + (view.length === 1 ? ' claim' : ' claims')
+      + (view.length < all.length ? ' of ' + all.length.toLocaleString() : '');
+    render();
+  }
+
+  function render() {
+    if (!view.length) {
+      listEl.innerHTML = '<p class="rc-empty">No claim matches those filters.</p>';
+      moreEl.hidden = true; return;
+    }
+    var slice = view.slice(shown, shown + PAGE), out = [];
+    slice.forEach(function (x) {
+      // Every entry must be its own element: contiguous bare text nodes collapse
+      // into one anonymous flex item and lose the row's gap between them.
+      var meta = ['<a href="' + esc(x.href) + '">' + esc(x.title) + '</a>'];
+      if (x.doc) meta.push('<span>' + esc(docLabel(x.doc)) + '</span>');
+      if (x.id) meta.push('<span class="er-id">' + esc(x.id) + '</span>');
+      meta.push('<span class="pill v-' + esc(x.v) + '">' + esc(LABEL[x.v] || x.v) + '</span>');
+      if (x.st === 'load-bearing') meta.push('<span class="pill pill-lb">Load-bearing</span>');
+      else if (x.st) meta.push('<span class="pill">' + esc(x.st) + '</span>');
+      if (x.ty) meta.push('<span>' + esc(x.ty) + '</span>');
+      if (x.cf) meta.push('<span>' + esc(x.cf) + ' confidence</span>');
+      if (x.one) meta.push('<span class="pill v-unverified">Single source</span>');
+      var src = (x.s && x.s.length)
+        ? '<p class="rc-src">' + x.s.map(esc).join('<br>') + '</p>' : '';
+      out.push('<article class="rc-claim"><div class="rc-meta">' + meta.join('') + '</div><p>'
+               + esc(x.t) + '</p>' + src + '</article>');
+    });
+    listEl.insertAdjacentHTML('beforeend', out.join(''));
+    shown += slice.length;
+    moreEl.hidden = shown >= view.length;
+    moreEl.textContent = 'Show ' + Math.min(PAGE, view.length - shown) + ' more';
+  }
+
+  Object.keys(f).forEach(function (k) {
+    if (!f[k]) return;
+    f[k].addEventListener(f[k].tagName === 'INPUT' ? 'input' : 'change', apply);
+  });
+  moreEl.addEventListener('click', render);
+
+  function load() {
+    fetch('receipts.json').then(function (r) { return r.json(); }).then(function (data) {
+      all = [];
+      data.forEach(function (c) {
+        c.claims.forEach(function (x) {
+          x.slug = c.slug; x.title = c.title; x.href = c.href; all.push(x);
+        });
+      });
+      var opts = data.slice().sort(function (a, b) { return a.title.localeCompare(b.title); })
+        .map(function (c) { return '<option value="' + esc(c.slug) + '">' + esc(c.title) + '</option>'; });
+      f.corpus.insertAdjacentHTML('beforeend', opts.join(''));
+      var url = new URL(location.href);
+      ['corpus', 'verdict', 'stakes'].forEach(function (k) {
+        var val = url.searchParams.get(k);
+        if (val && f[k]) f[k].value = val;
+      });
+      apply();
+    }).catch(function () {
+      listEl.innerHTML = '<p class="rc-empty">The claim ledger could not be loaded.</p>';
+    });
+  }
+  if (window.requestIdleCallback) requestIdleCallback(load, {timeout: 1500});
+  else setTimeout(load, 300);
+})();
+"""
+
+
+RECEIPTS_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
+<title>{title} — calvincollins · xyz</title>
+<meta name="description" content="{desc}">
+<link rel="icon" href="{favicon}">
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
+  <nav class="mh-nav">
+{nav}
+  </nav>
+</div>
+<main class="rc-wrap">
+  <header class="rc-head">
+    <p class="kicker">{kicker}</p>
+    <h1>{h1}</h1>
+    <p class="tagline">{tagline}</p>
+    <p class="rc-sub">{sub}</p>
+    {scene}
+  </header>
+  {body}
+</main>
+<footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
+  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
+</footer>
+<button id="theme-btn" title="Light / dark">◐ Theme</button>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+VERDICT_ORDER = ("verified", "corroborated", "corrected", "contested",
+                 "unverified", "inference", "unrated")
+
+AUDIT_STATE_LABEL = {"full": "Panel completed", "partial": "Partial", "none": "Unaudited"}
+
+
+def verdict_bar_html(counts, total):
+    """A stacked hairline bar of one corpus's verdict mix, widest verdict first."""
+    if not total:
+        return ""
+    segs = []
+    for v in VERDICT_ORDER:
+        n = counts.get(v, 0)
+        if n:
+            segs.append(f'<i class="v-{v}" style="width:{n / total * 100:.1f}%" '
+                        f'title="{VERDICT_LABELS[v]}: {n}"></i>')
+    return '<span class="rc-bar">' + "".join(segs) + "</span>"
+
+
+def receipts_legend_html():
+    return ('<p class="rc-legend">' + "".join(
+        f'<span class="v-{v}"><i></i>{VERDICT_LABELS[v]}</span>' for v in VERDICT_ORDER
+    ) + "</p>")
+
+
+def build_receipts_page(out_dir, receipts, shell="", n_corpora=None):
+    """Render docs/receipts.html + docs/receipts.json — the evidence ledger.
+
+    The assay and the per-corpus audit table are server-rendered; the 2,400-claim
+    browser is client-side off a lazily-fetched payload.
+    """
+    out = Path(out_dir)
+    if not receipts:
+        return False
+    totals = Counter()
+    for r in receipts:
+        totals.update(r["counts"])
+    n_claims = sum(r["n"] for r in receipts)
+    n_lb = sum(r["load_bearing"] for r in receipts)
+    n_corr = sum(len(r["corrections"]) for r in receipts)
+    # How many of those corrections are visible in the claim browser: the ones
+    # whose claim record itself carries the corrected verdict.
+    n_corr_joined = totals.get("corrected", 0)
+    n_cont = sum(len(r["contested"]) for r in receipts)
+    n_one = sum(len(r["single_source"]) for r in receipts)
+    n_srcs = sum(r["sources"] or 0 for r in receipts)
+    # Not every run recorded a source count; only claim a library-wide total when
+    # most of them did, and say "at least" either way.
+    n_src_reported = sum(1 for r in receipts if r["sources"])
+    audited = sum(1 for r in receipts if r["state"] != "none")
+
+    assay = [("Claims on the record", f"{n_claims:,}", ""),
+             ("Load-bearing", f"{n_lb:,}", ""),
+             ("Refuted &amp; corrected", f"{n_corr:,}", "rc-flag"),
+             ("Contested", f"{n_cont:,}", ""),
+             ("Single-source", f"{n_one:,}", ""),
+             ("Corpora audited", f"{audited}/{len(receipts)}", "")]
+    assay_html = ('<div class="rc-assay">' + "".join(
+        f'<div class="{cls}"><b>{val}</b><span>{lab}</span></div>' for lab, val, cls in assay
+    ) + "</div>")
+
+    rows = []
+    for r in sorted(receipts, key=lambda x: (-x["n"], x["title"])):
+        corr, cont = len(r["corrections"]), len(r["contested"])
+        depth = r["depth"].split("(")[0].strip() or "—"
+        src_cell = f"{r['sources']:,}" if r["sources"] else "—"
+        rows.append(
+            f'<tr data-slug="{html.escape(r["slug"], quote=True)}">'
+            f'<td><a href="{r["href"]}">{html.escape(r["title"])}</a>'
+            f'<span class="rc-cat">{html.escape(r["category"] or "")}</span></td>'
+            f'<td class="num" data-v="{r["n"]}">{r["n"]:,}</td>'
+            f'<td class="num" data-v="{r["load_bearing"]}">{r["load_bearing"] or "—"}</td>'
+            f'<td class="num" data-v="{r["sources"] or 0}">{src_cell}</td>'
+            f'<td data-v="{depth}">{html.escape(depth)}</td>'
+            f'<td data-v="{r["counts"].get("verified", 0)}">{verdict_bar_html(r["counts"], r["n"])}</td>'
+            f'<td class="num {"rc-hit" if corr else "rc-zero"}" data-v="{corr}">{corr or "—"}</td>'
+            f'<td class="num {"" if cont else "rc-zero"}" data-v="{cont}">{cont or "—"}</td>'
+            f'<td data-v="{r["state"]}"><span class="state state-{r["state"]}" '
+            f'title="{html.escape(r["note"], quote=True)}">{AUDIT_STATE_LABEL[r["state"]]}</span></td>'
+            f"</tr>")
+
+    ledger = (
+        '<h2 class="rc-h" id="ledger">The audit record</h2>'
+        '<p class="rc-h-sub">One row per corpus: how many claims it rests on, how deeply they were '
+        'checked, and how far the adversarial panel actually got. Sort by any column. Hover an audit '
+        'state to read that run\'s own account of itself.</p>'
+        + receipts_legend_html() +
+        '<div class="rc-scroll"><table class="rc-tbl" id="rc-ledger"><thead><tr>'
+        '<th data-sort="text">Corpus</th><th data-sort="num" class="num">Claims</th>'
+        '<th data-sort="num" class="num">Load-bearing</th><th data-sort="num" class="num">Sources</th>'
+        '<th data-sort="text">Depth</th>'
+        '<th data-sort="num">Verdicts</th><th data-sort="num" class="num">Corrected</th>'
+        '<th data-sort="num" class="num">Contested</th><th data-sort="text">Audit</th>'
+        '</tr></thead><tbody>' + "".join(rows) + "</tbody></table></div>")
+
+    browser = (
+        '<h2 class="rc-h" id="claims">Every claim</h2>'
+        '<p class="rc-h-sub">The whole ledger, filterable. Each entry carries the verdict a '
+        'verification pass returned, what the corpus was staking on it, and the sources it was '
+        'checked against.</p>'
+        '<div class="rc-filters">'
+        '<select id="f-corpus" aria-label="Corpus"><option value="">All corpora</option></select>'
+        '<select id="f-verdict" aria-label="Verdict"><option value="">Any verdict</option>'
+        + "".join(f'<option value="{v}">{VERDICT_LABELS[v]}</option>' for v in VERDICT_ORDER) +
+        '</select>'
+        '<select id="f-stakes" aria-label="Stakes"><option value="">Any stakes</option>'
+        '<option value="load-bearing">Load-bearing</option><option value="standard">Standard</option>'
+        '<option value="minor">Minor</option></select>'
+        '<select id="f-type" aria-label="Type"><option value="">Any type</option>'
+        '<option value="established">Established</option><option value="contested">Contested</option>'
+        '<option value="inference">Inference</option></select>'
+        '<input id="f-q" type="search" placeholder="Search the claims…" aria-label="Search claims">'
+        '</div>'
+        '<p class="rc-count" id="rc-count">Loading the ledger…</p>'
+        '<div id="rc-list"></div>'
+        '<button class="rc-more" id="rc-more" hidden>Show more</button>')
+
+    src_phrase = (f" drawn from at least {n_srcs:,} sources"
+                  if n_src_reported >= len(receipts) * 0.6 else "")
+    # Corpora that predate the claim-ledger schema carry no claims at all; say so
+    # rather than letting the page imply it covers the whole shelf.
+    n_absent = (n_corpora or len(receipts)) - len(receipts)
+    missing_phrase = ""
+    if n_absent > 0:
+        missing_phrase = (
+            f' A further {n_absent} corpora on the shelf predate this record and carry no claim '
+            'ledger, so nothing here speaks for them.' if n_absent > 1 else
+            ' One further corpus on the shelf predates this record and carries no claim ledger, '
+            'so nothing here speaks for it.')
+    note = (
+        '<p class="rc-note">Every corpus on this site is built by a pipeline that writes down what it '
+        f'is claiming and how sure it is. Across {len(receipts)} of them that comes to <strong>{n_claims:,} '
+        f'recorded claims</strong>{src_phrase}, each tagged with its type, its '
+        'stakes, and the verdict an adversarial verification pass returned. This page publishes that '
+        f'record whole — including the <strong>{n_corr} claims a skeptic panel refuted</strong> and sent '
+        'back for correction, and the runs where the panel never finished. A corpus with no verification '
+        'block is marked <em>unaudited</em> here rather than counted as clean.</p>'
+        f'<p class="rc-note">Of those {n_corr} corrections, {n_corr_joined} carry a verdict on the claim '
+        'record itself and can be filtered below; the remainder were logged by their run only as a '
+        f'correction note against a claim ID, and appear in full on the Errata page.{missing_phrase}</p>')
+
+    body = (assay_html + note +
+            f'<p class="rc-sub" style="margin-top:1.4rem"><a href="errata.html">→ Read the Errata</a> '
+            f'— the {n_corr} corrections in full, and what each claim says now.</p>'
+            + ledger + browser)
+
+    payload = [{k: r[k] for k in ("slug", "title", "href", "claims")} for r in receipts]
+    (out / "receipts.json").write_text(json.dumps(payload, ensure_ascii=False))
+
+    og = og_tags("The Receipts",
+                 "Every claim the research library rests on — with its verdict, its stakes, and its sources.",
+                 f"{SITE_URL}/receipts.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = RECEIPTS_TEMPLATE.format(
+        title="The Receipts", favicon=FAVICON, og_meta=og,
+        desc="Every claim the research library rests on — with its verdict, its stakes, and its sources.",
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + RECEIPTS_CSS,
+        nav=main_nav_html(active="receipts.html"),
+        kicker="Evidence", h1="The Receipts",
+        tagline=("What this library claims, and what happened when those claims were checked."),
+        sub='The standing evidence ledger. <a href="errata.html">Errata →</a>',
+        scene=scene_plate("receipts", extra_class="page-scene", seed="receipts-page"),
+        body=body, app_js=LIBRARY_THEME_JS + TABLE_SORT_JS + RECEIPTS_JS, shell=shell,
+    )
+    (out / "receipts.html").write_text(page)
+    print(f"  ✓ The Receipts  ({n_claims:,} claims, {n_corr} corrections) → receipts.html")
+    return True
+
+
+def build_errata_page(out_dir, receipts, shell=""):
+    """Render docs/errata.html — the corrections, in full, per corpus."""
+    out = Path(out_dir)
+    with_corr = [r for r in receipts if r["corrections"]]
+    n_corr = sum(len(r["corrections"]) for r in receipts)
+    if not n_corr:
+        return False
+
+    UNLOGGED = ("The verification panel refuted this claim as first written; it was corrected "
+                "before publication. That run recorded the claim ID but not the wording it replaced.")
+    blocks = []
+    for r in sorted(with_corr, key=lambda x: (-len(x["corrections"]), x["title"])):
+        # When a run logged no per-claim account of what was wrong, say that once
+        # for the whole corpus rather than repeating it under all 64 entries.
+        any_note = any(c["note"] for c in r["corrections"])
+        items = []
+        for c in r["corrections"]:
+            head = f'<span class="er-id">{html.escape(c["id"])}</span>' if c["id"] else ""
+            if c["doc"]:
+                head += f' <span class="er-id">· {html.escape(str(c["doc"]).replace(".md", "").replace("_", " "))}</span>'
+            if c["note"]:
+                what = f'<p class="er-what">{html.escape(c["note"])}</p>'
+            elif any_note:
+                what = f'<p class="er-what">{UNLOGGED}</p>'
+            else:
+                what = ""      # covered by the block-level note below
+            label = "Now reads" if (c["note"] or any_note) else "Corrected; now reads"
+            now = (f'<p class="er-now"><b>{label}</b>{html.escape(c["claim"])}</p>'
+                   if c["claim"] else "")
+            if not (what or now):
+                now = f'<p class="er-now">{UNLOGGED}</p>'
+            items.append(f'<div class="er-item">{head}{what}{now}</div>')
+        preface = "" if any_note else (
+            f'<p class="er-cat">This run recorded which claims its panel refuted, but not the '
+            f'wording each one replaced. The text below is what each claim says after correction.</p>')
+        blocks.append(
+            f'<section class="er-block"><h3><a href="{r["href"]}">{html.escape(r["title"])}</a> '
+            f'<span class="er-id">· {len(r["corrections"])} corrected</span></h3>'
+            f'<p class="er-cat">{html.escape(r["category"] or "")}</p>{preface}'
+            + "".join(items) + "</section>")
+
+    thin = []
+    for r in sorted(receipts, key=lambda x: x["title"]):
+        if r["state"] == "full":
+            continue
+        why = r["note"] or ("No verification block was recorded for this run, so nothing here "
+                            "should be read as an independent verdict on its claims.")
+        thin.append(f'<p class="er-thin"><b>{html.escape(r["title"])}</b> — '
+                    f'{AUDIT_STATE_LABEL[r["state"]].lower()}. {html.escape(why)}</p>')
+
+    cont_blocks = []
+    for r in sorted(receipts, key=lambda x: -len(x["contested"])):
+        if not r["contested"]:
+            continue
+        items = []
+        for c in r["contested"][:14]:
+            txt = c["claim"] or c["note"]
+            if not txt:
+                continue
+            cid = f'<span class="er-id">{html.escape(c["id"])} </span>' if c["id"] else ""
+            items.append(f'<p class="er-thin">{cid}{html.escape(txt)}</p>')
+        if items:
+            extra = (f'<p class="er-cat">…and {len(r["contested"]) - 14} more.</p>'
+                     if len(r["contested"]) > 14 else "")
+            cont_blocks.append(
+                f'<section class="er-block"><h3><a href="{r["href"]}">{html.escape(r["title"])}</a> '
+                f'<span class="er-id">· {len(r["contested"])} contested</span></h3>'
+                + "".join(items) + extra + "</section>")
+
+    n_lost = sum(1 for r in receipts if r["state"] != "full")
+    body = (
+        f'<div class="rc-assay"><div class="rc-flag"><b>{n_corr}</b><span>Claims corrected</span></div>'
+        f'<div><b>{len(with_corr)}</b><span>Corpora affected</span></div>'
+        f'<div><b>{sum(len(r["contested"]) for r in receipts)}</b><span>Contested, preserved</span></div>'
+        f'<div><b>{n_lost}</b><span>Runs left incomplete</span></div></div>'
+        '<p class="rc-note">These are the claims an adversarial verification panel challenged and sent '
+        'back. <strong>All of them were corrected before publication</strong> — the wording quoted below '
+        'is what the corpus says today, not the error. They are collected here because a research record '
+        'that never shows its corrections is not showing you very much. Where a run recorded what was '
+        'wrong, that account is printed first; where it logged only a claim ID, that is said plainly '
+        'rather than papered over.</p>'
+        '<h2 class="rc-h">The corrections</h2>' + "".join(blocks))
+    if cont_blocks:
+        body += ('<h2 class="rc-h">Contested, and left that way</h2>'
+                 '<p class="rc-h-sub">Claims where the panel could not reach agreement, or where the '
+                 'underlying dispute is real. These were kept in the corpora with the disagreement '
+                 'attached rather than resolved by fiat.</p>' + "".join(cont_blocks))
+    if thin:
+        body += ('<h2 class="rc-h">Where the record is thin</h2>'
+                 '<p class="rc-h-sub">Runs whose verification phase was cut short — usually by a spend '
+                 'cap or a tool failure mid-pipeline — or that predate the verification schema '
+                 'altogether. Their claims carry the research agents\' own flags, not an independent '
+                 'verdict.</p>' + "".join(thin))
+
+    og = og_tags("Errata",
+                 "The claims a skeptic panel refuted, what was wrong, and what they say now.",
+                 f"{SITE_URL}/errata.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = RECEIPTS_TEMPLATE.format(
+        title="Errata", favicon=FAVICON, og_meta=og,
+        desc="The claims a skeptic panel refuted, what was wrong, and what they say now.",
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + RECEIPTS_CSS,
+        nav=main_nav_html(active="receipts.html"),
+        kicker="Corrections", h1="Errata",
+        tagline="The claims that did not survive checking, and what they say now.",
+        sub='<a href="receipts.html">← The Receipts</a> — the full evidence ledger.',
+        scene=scene_plate("errata", extra_class="page-scene", seed="errata-page"),
+        body=body, app_js=LIBRARY_THEME_JS, shell=shell,
+    )
+    (out / "errata.html").write_text(page)
+    print(f"  ✓ Errata  ({n_corr} corrections across {len(with_corr)} corpora) → errata.html")
+    return True
+
+
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
           fingerprint_cfg=None, pamphlets_cfg=None, forecast_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
@@ -12478,6 +13341,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
     atlas_corpora = {}     # {slug: {title,href,accent,img,chapters}} for the Atlas map
     wrapped_stats = []     # per-corpus {slug,title,category,chapters,words} for Research Wrapped
+    receipts = []          # per-corpus claims + verification record, for The Receipts / Errata
     fd_markets = []        # harvested Forecast Desk markets (one per corpus with scenarios)
     total_chapters = 0
     total_words = 0
@@ -12586,6 +13450,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         _qf = quiz_facts_for(corpus, folder)
         if any(_qf.values()):
             quiz_facts.append(dict(_qf, slug=corpus["slug"]))
+        _rc = receipts_for(corpus, folder, category)
+        if _rc:
+            receipts.append(_rc)
         corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
         _atlas_img = find_cover_image(corpus["slug"])
         atlas_corpora[corpus["slug"]] = {
@@ -12756,6 +13623,16 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     manifest.append({"title": "Connections", "kind": "section",
                      "category": "The map of ideas", "href": "connections.html",
                      "meta": "how the corpora relate"})
+    if receipts:
+        _rc_corr = sum(len(r["corrections"]) for r in receipts)
+        _rc_n = sum(r["n"] for r in receipts)
+        manifest.append({"title": "The Receipts", "kind": "section", "category": "Evidence",
+                         "href": "receipts.html",
+                         "meta": f"all {_rc_n:,} claims, with their verdicts"})
+        if _rc_corr:
+            manifest.append({"title": "Errata", "kind": "section", "category": "Evidence",
+                             "href": "errata.html",
+                             "meta": f"the {_rc_corr} claims that were refuted and corrected"})
     if glossary_index:
         _gterms = sum(len({t["term"].lower() for t in g["terms"]}) for g in glossary_index)
         manifest.append({"title": "Glossary", "kind": "section", "category": "Reference",
@@ -12857,6 +13734,13 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # Test Yourself quizzes the WHOLE library — desk corpora included; a quiz on
     # what you read spans every shelf, unlike the desk-scoped reference pages.
     build_quiz_page(out, quiz_facts, all_passages, shell=shell_root)
+
+    # The Receipts + Errata — the library's own audit trail. Like the quiz, these
+    # span every shelf: the point is one standard of proof across the whole site,
+    # not a per-desk one.
+    if receipts:
+        build_receipts_page(out, receipts, shell=shell_root, n_corpora=len(wrapped_stats))
+        build_errata_page(out, receipts, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site). Its
     # old single-line home-page teaser is gone — the front page now carries a
