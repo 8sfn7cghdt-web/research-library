@@ -1,0 +1,329 @@
+{
+ "kind": "native_forecast",
+ "slug": "government-shutdown-sep-2026",
+ "question": "When the FY2027 appropriations/continuing-resolution fight comes to a head around September 30, 2026, does the federal government suffer a funding lapse (shutdown), or is one averted by a CR or deal?",
+ "title": "FY2027 Funding Fight: Does the Government Shut Down?",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-31",
+ "grades": "2026-10-05",
+ "resolution": "Grades on the status of federal appropriations around the September 30, 2026 FY2027 deadline. Resolves 'CR or deal averts a lapse' if funding continues without interruption (via the House-passed stopgap to December 4, an amended Senate version, or a full-year deal) and no agency experiences a funding lapse. Resolves 'Brief shutdown' if a lapse occurs but funding is restored within roughly two weeks. Resolves 'Extended shutdown' if a lapse occurs and runs longer than about two weeks, echoing the 43-day October-November 2025 precedent. Graded as of October 5, 2026.",
+ "consensus": {
+  "pick": "CR or deal averts a lapse (NO SHUTDOWN)",
+  "flag": "🤝",
+  "band": "42–52%",
+  "band_low": 42,
+  "band_high": 52,
+  "runner_up": "Extended shutdown (2+ weeks)",
+  "runner_up_flag": "🪦",
+  "runner_up_band": "18–26%",
+  "headline_case": "This is a genuine near three-way split, not a formality. The House has already passed a stopgap to December 4 on a near-party-line 220-205 vote, and it needs roughly seven Senate Democrats to clear the 60-vote cloture threshold — a bar this Congress has cleared before, late and painfully, in November 2025. That legislative path plus explicit bipartisan negotiation (Thune working with Collins) keeps a clean averted outcome in the lead at 42-52%. But the same Congress has already let two funding lapses happen in this fiscal year alone — the 43-day October-November 2025 shutdown and a second lapse tied to an unresolved ICE/CBP dispute around January 31, 2026 — so a shutdown of some length is close behind, not a tail case.",
+  "why_over_runner_up": "Averted edges the extended-shutdown case because the House has already taken the affirmative step of passing a stopgap, and Senate leadership is on record negotiating rather than posturing — that is more legislative machinery already in motion than existed ahead of either 2025-26 lapse at the same point in their own calendars. But the edge is narrow: the underlying ICE/CBP fight that caused the January lapse was never resolved, only paused, and reappears as leverage for either side.",
+  "dissent": "The Historian's case is the sharpest survivor: count this fiscal year's own deadlines and the government has already failed to fund itself on time twice. A recent record of 2-for-3 actual lapses is a strong pull toward some kind of shutdown, and once a lapse starts under this Congress it has not resolved quickly — the 2025 lapse ran 43 days. The Prophet reads the same pattern as a story that has not finished repeating itself.",
+  "tally": [
+   {
+    "name": "CR or deal averts a lapse (NO SHUTDOWN)",
+    "flag": "🤝",
+    "votes": 3
+   },
+   {
+    "name": "Extended shutdown (2+ weeks)",
+    "flag": "🪦",
+    "votes": 3
+   },
+   {
+    "name": "Brief shutdown (resolved within ~2 weeks)",
+    "flag": "⏳",
+    "votes": 1
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Brief shutdown (resolved within ~2 weeks)",
+   "pick_scenario": "Brief shutdown, resolved within roughly two weeks",
+   "flag": "⏳",
+   "prob": "26-34%",
+   "prob_num": 30,
+   "confidence": "medium",
+   "register": "terse tape-reading",
+   "blurb": "No single deep market prices this exact deadline yet, so I read the tape this cycle has actually printed. Kalshi and Polymarket shutdown contracts before both 2026 lapses ran hot — mid-70s to high-80s at points — and both times the lapse happened. That is a market that keeps telling you to expect the interruption, not the clean save. I read a short one: 26-34%.",
+   "evidence": "Kalshi/Polymarket shutdown contracts priced elevated (mid-70s to high-80s at various points) ahead of both the Oct 2025 and Jan 2026 lapses, and both occurred.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the decomposition and the models over recency and sentiment.",
+   "pick": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "pick_scenario": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "flag": "🤝",
+   "prob": "42-52%",
+   "prob_num": 47,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Decompose the cloture math. The House bill needs about seven Democratic senators to cross; the November 2025 resolution needed eight and got them, under nearly identical pressure. Multiply a moderate-to-good chance of finding those votes by the added chance of a late substitute deal if cloture first fails, and the averted path comes out ahead of either single shutdown branch — 42-52%, not a landslide.",
+   "evidence": "Cloture requires ~7 Senate Democratic votes; a comparable 8-vote crossover resolved the Nov 2025 lapse under similar pressure.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counts the reference-class base rates and the venue's own history.",
+   "pick": "Extended shutdown (2+ weeks)",
+   "pick_scenario": "Extended shutdown (2+ weeks)",
+   "flag": "🪦",
+   "prob": "18-26%",
+   "prob_num": 22,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "Count this fiscal year's own reckonings: a 43-day lapse in October-November, a second lapse near the end of January, both born of the same unresolved ICE and CBP dispute. Two failures in three deadlines is not an aberration to wave off — it is this Congress's demonstrated pattern. And when the lapse comes, it has not come short: forty-three days was the longest in the nation's history. I count the pattern and stand with the long shutdown, 18-26%.",
+   "evidence": "This fiscal year alone: 43-day Oct-Nov 2025 lapse (longest in US history) plus a second Jan 31 2026 lapse tied to the ICE/CBP dispute — 2 of the last 3 deadlines ended in an actual shutdown.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, draw, and path.",
+   "pick": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "pick_scenario": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "flag": "🤝",
+   "prob": "42-52%",
+   "prob_num": 50,
+   "confidence": "high",
+   "register": "terse verdict-driven",
+   "blurb": "Walk the route as it stands. House already passed a bill. Senate cloture is scheduled. Thune is publicly negotiating with Collins, not stonewalling. Both parties know a shutdown landing weeks before the midterms is the worst possible optics for whoever gets blamed. The mechanism for a deal exists and is already moving. That is the path. 42-52%.",
+   "evidence": "House-passed stopgap already in the Senate queue with a scheduled cloture vote; active Thune-Collins negotiation reported ahead of the midterms.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Backs the elite individual actors — motivation and proven leadership.",
+   "pick": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "pick_scenario": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "flag": "🤝",
+   "prob": "42-52%",
+   "prob_num": 45,
+   "confidence": "medium",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "Two hands are on this deal, and both have closed one before. Thune brought a caucus to the table once already and got the votes to reopen a government forty-three days shut. Collins works the appropriations seams for a living. When the deal-makers who have done this exact thing under this exact pressure sit down again, they tend to find the door. CR or deal averts, 42-52%.",
+   "evidence": "Thune's caucus delivered the Nov 2025 cloture votes; Collins chairs Senate Appropriations and is reported actively negotiating anomalies with the House side.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Extended shutdown (2+ weeks)",
+   "pick_scenario": "Extended shutdown (2+ weeks)",
+   "flag": "🪦",
+   "prob": "18-26%",
+   "prob_num": 24,
+   "confidence": "low",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone's betting on a repeat of November's last-minute save, which is exactly why I'd check the fine print. The December 4 punt doesn't resolve the ICE/CBP fight — it just moves the fuse. Punt fights have a habit of arriving angrier the second time, with both sides having already proven they can survive a shutdown politically. The long lapse is the case nobody wants to price twice. 18-26%, and I'm not folding it into the tail.",
+   "evidence": "The Dec 4 stopgap punts the same unresolved ICE/CBP dispute that already caused the Jan 2026 lapse, rather than settling it.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Reads divine providence — backs the fated, story-shaped ending, however long the odds.",
+   "pick": "Extended shutdown (2+ weeks)",
+   "pick_scenario": "Extended shutdown (2+ weeks)",
+   "flag": "🪦",
+   "prob": "18-26%",
+   "prob_num": 20,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "This is not a tale with one shutdown in it — it already has two, wound from the same unhealed grievance. A punt to December does not close a wound; it only postpones the reckoning to a season closer to an election, when both sides have the least reason to yield first. I read the arc and it bends toward a third telling of the same story, longer and louder before the votes finally arrive. Extended shutdown, and I hold that read with real confidence even against the crowd.",
+   "evidence": "Two shutdowns already in one fiscal year over the same unresolved dispute — a recurring conflict, not a settled one, reappearing on a delayed clock right before the midterms.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "low": 42,
+   "high": 52,
+   "description": "The House-passed stopgap (funding through December 4, 2026) clears the Senate's 60-vote threshold — either as passed or amended — and is signed before any funding gap opens, or an alternate full-year/omnibus deal is reached in time. No agency experiences a lapse in appropriations around the September 30 deadline.",
+   "derivation": "Built from the cloture math: the House bill needs roughly seven Senate Democrats beyond the six who already crossed in the House. The nearest precedent — November 2025, when eight Senate Democrats crossed to end the 43-day lapse under comparable pressure — shows that bar has been cleared before. Weighted down from a naive majority-favorite read because the underlying ICE/CBP dispute that caused the January 2026 lapse remains unresolved and gives holdouts a live reason to withhold votes again.",
+   "drivers": [
+    "House has already passed a stopgap, giving the Senate a live vehicle rather than a blank page",
+    "Thune-Collins bipartisan negotiation reported underway on funding \"anomalies\"",
+    "Shared midterm-timing incentive: neither party wants to be blamed for a shutdown weeks before November",
+    "Precedent that Senate Democrats have crossed over before under similar pressure (Nov 2025)"
+   ],
+   "signals_to_watch": [
+    "Result of the Senate cloture vote on the House-passed vehicle (scheduled early August)",
+    "Whether Collins and Thune produce an amended Senate substitute with more Democratic buy-in",
+    "Whether the ICE/CBP dispute resurfaces as an explicit rider fight",
+    "Trump's public posture toward signing a bipartisan compromise vs. a GOP-only bill"
+   ],
+   "time_horizon": "Now through October 5, 2026"
+  },
+  {
+   "name": "Brief shutdown (resolved within ~2 weeks)",
+   "low": 26,
+   "high": 34,
+   "description": "A funding lapse opens at or near September 30, but Congress and the White House reach a resolution — a revised CR, a narrower deal, or the original stopgap passed late — within roughly two weeks, limiting furloughs and disruption.",
+   "derivation": "Treated as the middle path between a clean save and a long standoff: cloture fails on the first attempt but the same negotiating machinery (Thune-Collins, midterm pressure) that could avert a lapse entirely instead produces a fast patch once the political cost of a visible shutdown becomes concrete. Anchored partly on the market pattern this cycle, where shutdown-adjacent contracts have run consistently elevated ahead of deadlines.",
+   "drivers": [
+    "Political cost of a visible shutdown becomes concrete once furloughs start, accelerating a deal",
+    "Existing bipartisan talks (Thune-Collins) give a fast off-ramp once leverage shifts",
+    "Neither 2025-26 lapse pattern shows an instant same-day resolution, but neither took months either"
+   ],
+   "signals_to_watch": [
+    "Speed of any post-lapse negotiating sessions",
+    "Whether furloughed-worker or SNAP/WIC disruption headlines accelerate pressure to settle",
+    "A narrower stopgap (days-to-weeks, not to December 4) emerging as a fallback"
+   ],
+   "time_horizon": "A lapse opening near Sept 30 and resolving by roughly Oct 14"
+  },
+  {
+   "name": "Extended shutdown (2+ weeks)",
+   "low": 18,
+   "high": 26,
+   "description": "A funding lapse opens and runs longer than about two weeks without resolution by the October 5, 2026 grading date, echoing the 43-day October-November 2025 shutdown and the pattern of the unresolved ICE/CBP dispute recurring as a sticking point.",
+   "derivation": "Anchored on this fiscal year's own base rate: 2 of the last 3 funding deadlines under this Congress ended in an actual lapse, one of them the longest in US history. Because the underlying dispute was paused rather than settled at the January 2026 lapse's resolution, it remains available as leverage for a repeat confrontation. Held below a coin-flip because the House has, unlike in October 2025, already passed an affirmative stopgap vehicle before the deadline arrived.",
+   "drivers": [
+    "This fiscal year's own recent lapse rate (2 of 3 deadlines)",
+    "The ICE/CBP dispute that caused the Jan 2026 lapse was postponed, not resolved",
+    "Precedent that once a lapse starts under this Congress, it has run long (43 days)",
+    "Midterm proximity raises the incentive for each side to hold out rather than be seen folding first"
+   ],
+   "signals_to_watch": [
+    "Whether cloture fails repeatedly with no substitute vehicle emerging",
+    "Renewed ICE/CBP rider demands surfacing explicitly in negotiations",
+    "Furlough notices issued to federal agencies",
+    "Public statements ruling out compromise from either side's leadership"
+   ],
+   "time_horizon": "A lapse opening near Sept 30 and still unresolved by Oct 5, continuing beyond"
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Kalshi",
+   "market": "Will there be a government shutdown in 2026? / shutdown-adjacent contracts",
+   "detail": "Referenced in coverage of the Jan 31 2026 lapse at elevated levels (roughly 79% at one point ahead of that deadline); no live, independently-verified price specific to the Sept 30/Dec 4 FY2027 fight was found as of this pull.",
+   "volume": "Not independently verified for the current contract",
+   "pulled": "2026-07-31"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Government shutdown by October 1? (2025-26 vintage)",
+   "detail": "This specific contract refers to the already-resolved FY2026 Oct 2025 lapse (over $13.5M volume since Sep 2025), not the FY2027 question graded here — flagged as historical context, not a live current-cycle price.",
+   "volume": "~$13.5M lifetime (historical instance)",
+   "pulled": "2026-07-31"
+  },
+  {
+   "platform": "Polymarket / Kalshi",
+   "market": "Broader 'shutdown' market category",
+   "detail": "Both platforms maintain active shutdown-category markets (Polymarket citing roughly 500 active markets and $30M+ cumulative volume in the category as of early August); no single live number for the Sept 30/Dec 4-specific question was independently confirmed.",
+   "volume": "Category-level, not question-specific",
+   "pulled": "2026-07-31"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "2 of 3",
+   "text": "This fiscal year's own deadlines: 2 of the last 3 funding deadlines faced by this Congress (Oct 2025, Jan 2026) ended in an actual lapse; only the current Sept/Dec 2026 fight is still pending."
+  },
+  {
+   "stat": "43 days",
+   "text": "The Oct 1-Nov 12, 2025 shutdown was the longest complete shutdown in US history, ending only after roughly 8 Senate Democrats crossed to supply cloture votes."
+  },
+  {
+   "stat": "220-205",
+   "text": "House vote on the Dec 4 stopgap: near party-line, with only 6 Democrats in favor — leaving the Senate's 60-vote threshold as the real hurdle."
+  },
+  {
+   "stat": "20",
+   "text": "Roughly 20 funding lapses/shutdowns since 1976, averaging about 8 days each — this fiscal year's 43-day lapse was a major outlier on the high end."
+  },
+  {
+   "stat": "$11B",
+   "text": "CBO's estimate of the real GDP loss from the Oct-Nov 2025 shutdown alone, underscoring the economic stakes both parties cite in negotiations."
+  }
+ ],
+ "triggers": [
+  "Outcome of the Senate cloture vote on the House-passed stopgap (scheduled on/around Aug 3, 2026)",
+  "Whether Thune and Collins produce an amended Senate substitute with broader Democratic buy-in",
+  "Whether the unresolved ICE/CBP dispute resurfaces explicitly as a rider or sticking point",
+  "Progress on the 12 full-year FY27 appropriations bills already advanced through House committee",
+  "Any Trump statement on willingness to sign a bipartisan compromise versus a GOP-only bill",
+  "Furlough notices or agency shutdown-contingency-plan activation as Sept 30 approaches"
+ ],
+ "sources": [
+  {
+   "label": "House Appropriations Committee (R) — Committee Takes Proactive Step to Prevent Partisan Shutdown",
+   "url": "https://appropriations.house.gov/news/press-releases/committee-takes-proactive-step-prevent-partisan-shutdown-protect-full-year"
+  },
+  {
+   "label": "Government Executive — Lawmakers look to avoid government shutdown, and reconsider getting rid of them entirely",
+   "url": "https://www.govexec.com/management/2026/07/lawmakers-avoid-shutdown-and-reconsider-getting-rid-them-entirely/414949/"
+  },
+  {
+   "label": "NPR — House votes to extend government funding, aiming to avoid an election-year shutdown",
+   "url": "https://www.npr.org/2026/07/21/nx-s1-5902245/government-funding-house-vote-continuing-resolution"
+  },
+  {
+   "label": "HNGN — House Set To Vote On Government Funding Bill Through Dec. 4, Pushing Shutdown Past Midterms",
+   "url": "https://www.hngn.com/articles/272233/20260721/house-set-vote-government-funding-bill-through-dec-4-pushing-shutdown-past-midterms.htm"
+  },
+  {
+   "label": "Washington Times — House passes stopgap bill to fund government as Senate eyes alternative",
+   "url": "https://www.washingtontimes.com/news/2026/jul/21/house-passes-stopgap-bill-fund-government-december-senate-eyes/"
+  },
+  {
+   "label": "Roll Call — Funding extension passes House, heads for Senate rewrite",
+   "url": "https://rollcall.com/2026/07/21/funding-extension-passes-house-heads-for-senate-rewrite/"
+  },
+  {
+   "label": "Wikipedia — 2025 United States federal government shutdown",
+   "url": "https://en.wikipedia.org/wiki/2025_United_States_federal_government_shutdown"
+  },
+  {
+   "label": "Committee for a Responsible Federal Budget — Government Shutdowns Q&A: Everything You Should Know",
+   "url": "https://www.crfb.org/papers/government-shutdowns-qa-everything-you-should-know"
+  },
+  {
+   "label": "The Hill — Senators seek to limit Trump budget office power in funding deal",
+   "url": "https://thehill.com/homenews/senate/6001064-senate-funding-deal-omb-rule/"
+  }
+ ],
+ "method_note": "Grounded research-first: a fresh sweep on 2026-07-31 of the FY2027 appropriations status, the House-passed Dec 4 stopgap, Senate cloture math, and this fiscal year's two prior funding lapses, plus a scan of Kalshi/Polymarket shutdown-category pricing (no single live market was found pricing this exact Sept 30/Dec 4 question, so reasoning leans on the cloture math and this cycle's own base rate). Three scenario paths were argued against each other and fused by grounding strength; every probability is a decomposition or a counted base rate. Horizon: through October 5, 2026.",
+ "honesty_note": "This is a genuine three-way split — the leading call sits at only 42-52%, meaning it is roughly as likely as not that some kind of shutdown occurs. No live market was found pricing this specific deadline, so the numbers lean more than usual on legislative mechanics and this fiscal year's own two-lapse track record; treat both the brief- and extended-shutdown tails as genuinely live, not formalities."
+}

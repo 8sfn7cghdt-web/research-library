@@ -1,0 +1,329 @@
+{
+ "kind": "native_forecast",
+ "slug": "fed-rate-cut-sep-2026",
+ "question": "What does the Federal Reserve do to its target interest rate at the September 16, 2026 FOMC meeting — hold, cut, or hike?",
+ "title": "The Fed's September Verdict: Hold, Cut, or Hike?",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-07-31",
+ "grades": "2026-09-17",
+ "resolution": "Grades on the FOMC's announced target range decision at the September 16, 2026 meeting. Resolves 'Hold' if the target range stays at 3.50%-3.75%. Resolves 'Hike' if the Committee raises the range by 25bp or more. Resolves 'Cut' if the Committee lowers the range by 25bp or more. Graded the day after the meeting.",
+ "consensus": {
+  "pick": "Hike — 25bp increase to 3.75%–4.00%",
+  "flag": "🔥",
+  "band": "45–55%",
+  "band_low": 45,
+  "band_high": 55,
+  "runner_up": "Hold — rates unchanged at 3.50%–3.75%",
+  "runner_up_flag": "⏸",
+  "runner_up_band": "35–45%",
+  "headline_case": "The live story here inverted the question most people are still asking. This was framed as a will-the-Fed-cut question; the actual tape, as of late July 2026, prices a hike as modestly more likely than a hold, with a cut a thin tail. Oil above $100 a barrel has revived inflation fear just as Kevin Warsh — confirmed in the most divisive Senate vote in Fed history and sworn in as Chair in May — has told Congress he has \"no tolerance\" for elevated inflation. The Fed already split 9-3 to hold in July, with three dissents pushing for a hike; Kalshi's September contract puts a 25bp hike at roughly 45-55%, hold at 35-45%, and a cut at just 3%.",
+  "why_over_runner_up": "Hike edges hold because the marginal information since July — the oil spike and Warsh's explicit hawkish rhetoric — both point toward more hawks joining the three July dissenters, not fewer. But the gap is not wide: this same market showed real volatility within a single week in late July (odds cited as high as 81% hike after the oil move, moderating to roughly 60% after Warsh's July 29 press conference), so treat this as a lean, not a settled call.",
+  "dissent": "The Historian's case is the sharpest survivor: a brand-new Fed chair reversing from a 9-3 hold to an actual hike within four months of taking office, on a single inflation scare, would be a fast break from the institution's normal gradualism. The Contrarian goes further, arguing the whole market has been chasing a single oil headline and will settle back toward hold once the data cycle catches up.",
+  "tally": [
+   {
+    "name": "Hike — 25bp increase to 3.75%–4.00%",
+    "flag": "🔥",
+    "votes": 5
+   },
+   {
+    "name": "Hold — rates unchanged at 3.50%–3.75%",
+    "flag": "⏸",
+    "votes": 2
+   },
+   {
+    "name": "Cut — any 25bp+ reduction",
+    "flag": "❄️",
+    "votes": 0
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Hike — 25bp increase to 3.75%–4.00%",
+   "pick_scenario": "Hike — 25bp increase to 3.75%–4.00%",
+   "flag": "🔥",
+   "prob": "45-55%",
+   "prob_num": 50,
+   "confidence": "medium",
+   "register": "terse tape-reading",
+   "blurb": "Read the contract, not the headline. Kalshi's September FOMC market prices a 25bp hike ahead of a hold, with a cut down at 3 cents. That's the live number, and it moved there fast — up from near a coin-flip in early July once oil ripped. I don't fight a tape that's been consistent for two weeks running. Hike, 45-55%.",
+   "evidence": "Kalshi's Sept 2026 FOMC contract: hike ~45-59%, hold ~35-41%, cut ~3%, tracked through late July.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "criterion": "Trusts the decomposition and the models over recency and sentiment.",
+   "pick": "Hike — 25bp increase to 3.75%–4.00%",
+   "pick_scenario": "Hike — 25bp increase to 3.75%–4.00%",
+   "flag": "🔥",
+   "prob": "45-55%",
+   "prob_num": 48,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Count the votes, not the vibe. Three of twelve already dissented toward a hike in July on the same inflation data that has since gotten worse, not better, with oil past $100. A new hawkish Chair publicly pledging zero tolerance for inflation is a swing-vote magnet for the undecided middle of the committee. Run the vote math forward and a majority hike is a coin-flip tilted slightly positive: 45-55%.",
+   "evidence": "3 of 12 FOMC members dissented toward a hike in July; oil move since then adds fresh inflation pressure on the same data set.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "criterion": "Counts the reference-class base rates and the venue's own history.",
+   "pick": "Hold — rates unchanged at 3.50%–3.75%",
+   "pick_scenario": "Hold — rates unchanged at 3.50%–3.75%",
+   "flag": "⏸",
+   "prob": "35-45%",
+   "prob_num": 40,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "Count the chairs who came before. A Federal Reserve newly seated rarely lurches in its first season — gradualism is the institution's oldest habit, tested across decades of transitions. This chair inherited a 9-3 hold just two months ago; nine votes is not a committee straining at the leash. I count the pattern of institutional caution and stand with the hold, 35-45%, even as the crowd chases the oil headline.",
+   "evidence": "The Committee held 9-3 in July — a clear majority for caution — barely two months before this meeting; new-chair transitions historically favor continuity over abrupt reversal.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "Hike — 25bp increase to 3.75%–4.00%",
+   "pick_scenario": "Hike — 25bp increase to 3.75%–4.00%",
+   "flag": "🔥",
+   "prob": "45-55%",
+   "prob_num": 52,
+   "confidence": "high",
+   "register": "terse verdict-driven",
+   "blurb": "Three dissents in July. One oil shock since. A Chair on record pledging action. That's the mechanism, not a hunch — it only takes a couple of the undecided middle to flip and the majority moves. The route from a 9-3 hold to a hike is short and it's already been walked partway. 45-55%.",
+   "evidence": "3 hawkish dissents already on record in July, plus a fresh inflation datapoint (oil > $100/bbl) landing squarely in the same direction.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "criterion": "Backs the elite individual actors — motivation and proven leadership.",
+   "pick": "Hike — 25bp increase to 3.75%–4.00%",
+   "pick_scenario": "Hike — 25bp increase to 3.75%–4.00%",
+   "flag": "🔥",
+   "prob": "45-55%",
+   "prob_num": 47,
+   "confidence": "high",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "This Chair was confirmed in the most divided vote his institution has ever seen, precisely because he promised to be no one's soft hand on inflation. He told Congress plainly: no tolerance. A man who staked his confirmation on that word does not let the first real test of it pass quietly. The hike is not a guess about the data — it is a read of the man who now holds the gavel. 45-55%.",
+   "evidence": "Warsh confirmed 54-45 explicitly as an inflation hawk; told Congress he has \"no tolerance\" for elevated inflation and pledged the Fed would act if needed.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Hold — rates unchanged at 3.50%–3.75%",
+   "pick_scenario": "Hold — rates unchanged at 3.50%–3.75%",
+   "flag": "⏸",
+   "prob": "35-45%",
+   "prob_num": 42,
+   "confidence": "low",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone's chasing the same oil headline right now, and headline-chasing is exactly how you overpay for a hike that hasn't happened yet. This market swung from near-even to 81% hike to back around 60% inside about a week — that's not conviction, that's noise looking for a story. A Chair two months into the job, sitting on a committee that just held 9-3, has every reason to want one more clean data cycle before moving. I'll take the boring outcome the crowd keeps trading past. 35-45%.",
+   "evidence": "The hike-probability estimate itself swung from near-even to as high as 81% to back near 60% within roughly a week in late July — evidence of an overreacting, not settled, market.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "criterion": "Reads divine providence — backs the fated, story-shaped ending, however long the odds.",
+   "pick": "Hike — 25bp increase to 3.75%–4.00%",
+   "pick_scenario": "Hike — 25bp increase to 3.75%–4.00%",
+   "flag": "🔥",
+   "prob": "45-55%",
+   "prob_num": 55,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "A new steward was installed for one purpose, in a vote so divided it broke the institution's own record for discord — and a steward chosen for that purpose does not sit idle the first time the fire he was hired to fight actually appears. Oil climbing past a hundred dollars is not background noise in this telling; it is the summons. The arc bends toward the hawk proving himself a hawk, not toward another quiet season of the old caution. I read the hike, and I read it with confidence the tape has not fully caught up to yet.",
+   "evidence": "A hawkish Chair installed via the most divisive Fed confirmation vote on record, now facing his first real inflation test (oil > $100/bbl) within four months of taking the gavel.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Hike — 25bp increase to 3.75%–4.00%",
+   "low": 45,
+   "high": 55,
+   "description": "The FOMC raises its target range by 25 basis points at the September 16, 2026 meeting, taking the range from 3.50%-3.75% to 3.75%-4.00%, in response to the resurgence in oil-driven inflation and under new Chair Kevin Warsh's publicly hawkish posture.",
+   "derivation": "Anchored on Kalshi's September FOMC contract (kxfeddecision-26sep), which as of late July 2026 priced a 25bp hike in the roughly 45-59% range against a 35-41% hold and a 3% cut. Corroborated by the vote-count read: 3 of 12 FOMC members already dissented toward a hike in July on data that has since worsened with oil crossing $100/barrel, plus Warsh's explicit \"no tolerance\" public commitment. Held at 45-55% rather than higher because the same pricing showed real volatility (a single week saw estimates range from near-even to 81% to ~60%), arguing against treating the current lean as fully settled.",
+   "drivers": [
+    "Oil prices crossing $100/barrel reviving realized and expected inflation",
+    "3 of 12 FOMC members already dissented toward a hike at the July meeting",
+    "New Chair Warsh's explicit public \"no tolerance for elevated inflation\" commitment",
+    "A hawkish chair's incentive to establish credibility early in his term"
+   ],
+   "signals_to_watch": [
+    "August/September CPI and PCE inflation prints ahead of the meeting",
+    "Whether oil prices hold above $100/barrel or retreat",
+    "Additional public remarks from Warsh or other FOMC members between now and Sept 16",
+    "Whether more than 3 members signal hawkish intent in pre-meeting communications (Beige Book, speeches)"
+   ],
+   "time_horizon": "The September 16, 2026 FOMC decision"
+  },
+  {
+   "name": "Hold — rates unchanged at 3.50%–3.75%",
+   "low": 35,
+   "high": 45,
+   "description": "The FOMC leaves its target range unchanged at 3.50%-3.75%, continuing the majority position from the July meeting (which held 9-3) despite the intervening inflation scare, judging the oil-driven price pressure as not yet durable enough to warrant action.",
+   "derivation": "The complement of the hike/cut paths within Kalshi's pricing band. Anchored on institutional-inertia reasoning: a brand-new Fed chair reversing a 9-3 majority hold within roughly two months, on the strength of a single commodity-driven inflation scare, would be a fast break from the Fed's typical preference for confirming data trends before acting. Reconciled against the hike lean by treating the observed within-week volatility in market pricing (near-even to 81% to ~60%) as evidence the market itself is not confident the hike case has fully solidified.",
+   "drivers": [
+    "The July vote was a clear 9-3 majority for holding, not a narrow split",
+    "New-chair transitions historically favor continuity over abrupt reversal",
+    "A desire for one more full data cycle (CPI, PCE, employment) before acting on an oil-driven spike",
+    "Risk that a premature hike chokes off growth if the oil move proves transient"
+   ],
+   "signals_to_watch": [
+    "Any retreat in oil prices back toward pre-spike levels before the meeting",
+    "Softening employment data that would argue against tightening",
+    "Warsh or other officials signaling a wait-and-see posture in August remarks",
+    "Kalshi/CME pricing settling back toward hold rather than hike as the meeting approaches"
+   ],
+   "time_horizon": "The September 16, 2026 FOMC decision"
+  },
+  {
+   "name": "Cut — any 25bp+ reduction",
+   "low": 3,
+   "high": 8,
+   "description": "The FOMC lowers its target range by 25 basis points or more, a path that was live earlier in 2026 under the prior policy regime but has been sharply repriced down given the oil-driven inflation resurgence and the new Chair's hawkish posture.",
+   "derivation": "Directly anchored on Kalshi's September contract, which priced a cut at roughly 3% as of late July 2026 — down sharply from levels reported earlier in the summer before the oil move and Warsh's hawkish public statements. Held as a thin but non-zero tail rather than rounded to zero, since a sudden reversal in oil prices or a sharp negative employment surprise could still revive the case before mid-September.",
+   "drivers": [
+    "A sharp reversal in oil prices back to pre-spike levels would remove the primary hawkish catalyst",
+    "A significant negative surprise in employment data could tip the balance back toward easing",
+    "The cut path was reportedly live (Kalshi priced ~54% at one point in mid-to-late July) before the oil-driven repricing, showing it is not structurally impossible"
+   ],
+   "signals_to_watch": [
+    "Any sudden oil price collapse before the meeting",
+    "A weak jobs report or rising unemployment claims",
+    "Reversion of Kalshi/CME cut pricing back toward the levels seen earlier in July"
+   ],
+   "time_horizon": "The September 16, 2026 FOMC decision"
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Kalshi",
+   "market": "Fed decision in September? (kxfeddecision-26sep)",
+   "detail": "As of late July 2026: 25bp hike priced roughly 45-59%, hold roughly 35-41%, 25bp cut roughly 3%. Odds moved substantially within the month as oil prices rose.",
+   "volume": "Not independently itemized in sourcing",
+   "pulled": "2026-07-29"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Number of rate cuts in 2026?",
+   "detail": "Traders assigned roughly a 76% chance the Fed delivers no cuts at all in 2026, consistent with the September contract's thin cut pricing.",
+   "volume": "Not independently itemized in sourcing",
+   "pulled": "2026-07-09"
+  },
+  {
+   "platform": "CME FedWatch",
+   "market": "September 2026 target-rate probabilities",
+   "detail": "Coverage was noisy and inconsistent across sources within the same week — one snapshot cited a 54.4% cut probability (likely stale/from an earlier period), another cited an extreme 0% cut / 19% hold / 81% hike split after the oil spike. Neither extreme snapshot is treated as reliable on its own; the corroborated Kalshi-based hike lean (45-59%) is used as the anchor instead.",
+   "volume": "N/A",
+   "pulled": "2026-07-30"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "9-3",
+   "text": "The FOMC held rates 9-3 at its July 2026 meeting — a clear majority for caution, but with three dissenting votes already pushing for a hike on the same inflation backdrop."
+  },
+  {
+   "stat": "54-45",
+   "text": "Kevin Warsh was confirmed as Fed Chair by the Senate 54-45 on May 13, 2026 — described as the most divisive confirmation vote in the institution's history — and sworn in May 22."
+  },
+  {
+   "stat": "3.50-3.75%",
+   "text": "The Fed funds target range held since the July 2026 meeting; the two live alternatives graded here are 3.75-4.00% (hike) or a reduction (cut)."
+  },
+  {
+   "stat": "$100+/bbl",
+   "text": "Oil prices crossed $100 a barrel in July 2026, the proximate driver of the renewed inflation concern behind the hike repricing."
+  },
+  {
+   "stat": "~76%",
+   "text": "Kalshi's implied probability, as of early July, that the Fed delivers zero rate cuts across all of 2026 — consistent with the near-zero cut pricing for the September meeting specifically."
+  }
+ ],
+ "triggers": [
+  "August and September CPI/PCE inflation prints ahead of the Sept 16 meeting",
+  "Whether oil prices hold above $100/barrel or retreat toward earlier-2026 levels",
+  "Any additional FOMC dissents signaled in official communications or speeches between July and September",
+  "Warsh's public remarks and any pre-meeting guidance from the Fed",
+  "Employment and labor-market data that could counterweight the inflation case",
+  "Whether Kalshi/CME pricing stabilizes or continues to swing sharply into September"
+ ],
+ "sources": [
+  {
+   "label": "CNBC — Fed rate decision: Odds surge for hike as oil rips higher",
+   "url": "https://www.cnbc.com/2026/07/23/fed-interest-rate-odds-oil-jobless-claims.html"
+  },
+  {
+   "label": "CNBC — Fed meeting recap: Warsh says Fed won't hesitate to stop inflation, but bond market has doubts",
+   "url": "https://www.cnbc.com/2026/07/29/fed-meeting-today-live-updates.html"
+  },
+  {
+   "label": "CNBC — Kalshi traders see roughly 50% odds of a rate hike in 2026 as Fed is split on policy",
+   "url": "https://www.cnbc.com/2026/07/09/kalshi-traders-see-roughly-50percent-odds-of-a-rate-hike-in-2026-as-fed-is-split-on-policy.html"
+  },
+  {
+   "label": "Washington Times — The Federal Reserve is expected to keep rates unchanged for now despite high prices",
+   "url": "https://www.washingtontimes.com/news/2026/jul/29/federal-reserve-expected-keep-rates-unchanged/"
+  },
+  {
+   "label": "CNN Business — Kevin Warsh confirmed as Fed chair, succeeding Jerome Powell",
+   "url": "https://edition.cnn.com/2026/05/13/economy/kevin-warsh-confirmation-trump-fed-chair"
+  },
+  {
+   "label": "NPR — Senate confirms Kevin Warsh as next chair of the Federal Reserve",
+   "url": "https://www.npr.org/2026/05/13/nx-s1-5816235/kevin-warsh-federal-reserve-chair-jerome-powell"
+  },
+  {
+   "label": "Al Jazeera — US Federal Reserve holds rates steady under new chair Warsh",
+   "url": "https://www.aljazeera.com/economy/2026/6/17/us-federal-reserve-holds-rates-steady-under-new-chair-warsh"
+  },
+  {
+   "label": "Federal Reserve — Meeting calendars and information (Sept 16, 2026 FOMC date)",
+   "url": "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
+  },
+  {
+   "label": "Kalshi — Fed decision in September? (kxfeddecision-26sep)",
+   "url": "https://kalshi.com/markets/kxfeddecision/fed-meeting/kxfeddecision-26sep"
+  }
+ ],
+ "method_note": "Grounded research-first: a fresh sweep on 2026-07-29/31 of the current Fed funds rate, the July 2026 FOMC vote, Chair Warsh's confirmation and public statements, oil-driven inflation news, and Kalshi's live September FOMC contract. The market-first read flipped the assumed frame — the live risk is a hike, not a cut — and every probability here is either a direct market read or a decomposition built from the July vote count. Horizon: the September 16, 2026 decision.",
+ "honesty_note": "The leading call (hike, 45-55%) is a lean, not a lock — hold sits close behind at 35-45%, and the underlying market itself swung by tens of points within a single week in late July. Treat this as genuinely undecided territory that a single inflation print or oil move could flip before September 16."
+}

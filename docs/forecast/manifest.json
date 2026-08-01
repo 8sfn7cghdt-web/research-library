@@ -269,6 +269,36 @@
    "band": "60–70%",
    "profiles_n": 7,
    "file": "forecast/netflix-ad-tier.html"
+  },
+  {
+   "slug": "government-shutdown-sep-2026",
+   "title": "FY2027 Funding Fight: Does the Government Shut Down?",
+   "question": "When the FY2027 appropriations/continuing-resolution fight comes to a head around September 30, 2026, does the federal government suffer a funding lapse (shutdown), or is one averted by a CR or deal?",
+   "dek": "A near three-way split: a CR or deal narrowly leads at 42–52%, with an extended shutdown running neck-and-neck at 18–26% given this Congress already logged two funding lapses this fiscal year — the desk splits 3 averted / 3 extended / 1 brief.",
+   "category": "The Modern World",
+   "status": "open",
+   "logged": "2026-07-31",
+   "grades": "2026-10-05",
+   "pick": "CR or deal averts a lapse (NO SHUTDOWN)",
+   "pick_flag": "🤝",
+   "band": "42–52%",
+   "profiles_n": 7,
+   "file": "forecast/government-shutdown-sep-2026.html"
+  },
+  {
+   "slug": "fed-rate-cut-sep-2026",
+   "title": "The Fed's September Verdict: Hold, Cut, or Hike?",
+   "question": "What does the Federal Reserve do to its target interest rate at the September 16, 2026 FOMC meeting — hold, cut, or hike?",
+   "dek": "The live story flips the assumed question: a 25bp hike narrowly leads at 45–55%, not a cut, as oil above $100/bbl and hawkish new Chair Kevin Warsh push against a bare 35–45% hold — the desk splits 5 hike / 2 hold, a cut all but priced out at 3–8%.",
+   "category": "The Modern World",
+   "status": "open",
+   "logged": "2026-07-31",
+   "grades": "2026-09-17",
+   "pick": "Hike — 25bp increase to 3.75%–4.00%",
+   "pick_flag": "🔥",
+   "band": "45–55%",
+   "profiles_n": 7,
+   "file": "forecast/fed-rate-cut-sep-2026.html"
   }
  ]
 }
