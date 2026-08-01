@@ -1,0 +1,232 @@
+{
+ "kind": "native_forecast",
+ "slug": "michigan-senate-2026",
+ "question": "Who will win the 2026 U.S. Senate election in Michigan — the Democratic nominee (Abdul El-Sayed heavily favored over Haley Stevens in the Aug 4 primary) or Republican Mike Rogers?",
+ "title": "Michigan U.S. Senate — Abdul El-Sayed vs. Mike Rogers",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-08-01",
+ "grades": "2026-11-03",
+ "resolution": "Resolves to the winner of the Michigan U.S. Senate general election on Nov 3, 2026, for the open seat vacated by retiring Sen. Gary Peters. The Democratic nominee is not yet locked at the time of writing — the primary is Aug 4, 2026, three days out — so this record picks the market-favored primary winner (Abdul El-Sayed) as the named Democrat, with a Haley Stevens upset carried as a priced dissent branch rather than ignored.",
+ "consensus": {
+  "headline_case": "Abdul El-Sayed is favored to both win the Aug 4 Democratic primary (Polymarket prices him at 97%, up from 94% five days out, on the strength of a 15-point Emerson lead over Haley Stevens released Jul 30) and go on to hold the seat for Democrats, but the general-election math is far tighter than the primary math. Trump's Michigan approval has collapsed to the low-to-mid 30s, and Republicans haven't won a Michigan Senate race since Spencer Abraham in 1994 — ten straight losses, most recently Mike Rogers's own 0.3-point defeat by Elissa Slotkin in 2024. Stacked against that streak is the trend inside it: Michigan Senate margins have compressed nearly every cycle (Peters +13 in 2008, Stabenow +6.5 in 2018, Peters <2 in 2020, Slotkin +0.3 in 2024), and El-Sayed's own general-election polling (tied 43-43 with Rogers) is measurably weaker than Stevens's (+5). Decomposing the nomination odds through the matchup numbers lands the race narrower than the raw party-line market implies.",
+  "runner_up": "Mike Rogers",
+  "runner_up_band": "33-41%",
+  "why_over_runner_up": "Rogers is a two-time statewide candidate with the largest war chest in the race ($5.66M cash-on-hand) running his second consecutive cycle against Michigan's Trump-approval headwind, and he came within 16,000-odd votes of winning outright two years ago against a stronger Democratic recruit (Slotkin) than either of this cycle's leading Democrats have shown themselves to be in early polling. He stays runner-up, not favorite, because that Trump drag is materially worse now (33-37% approval vs. a healthier number in 2024) and the streak — ten Michigan Senate races, zero Republican wins since 1994 — is real information, not just noise sitting on top of a coin flip.",
+  "dissent": "The Historian's case is that the streak is the wrong anchor and the trend line is the right one: three consecutive cycles of compression ending in a photo-finish loss says Michigan is drifting toward true toss-up territory regardless of who's on the ballot, and El-Sayed's flat 43-43 test against Rogers — worse than Stevens's +5 — means the party may be about to nominate its weaker general-election candidate in a year the race can least afford it. If post-primary polling holds El-Sayed within 2 points of Rogers through October while Trump's approval stabilizes rather than keeps falling, the Historian's Rogers case gets vindicated over the market's confidence.",
+  "pick": "Abdul El-Sayed",
+  "flag": "🔵",
+  "band": "52-60%",
+  "band_low": 52,
+  "band_high": 60,
+  "runner_up_flag": "🔴",
+  "tally": [
+   { "team": "Abdul El-Sayed", "flag": "🔵", "votes": 5 },
+   { "team": "Mike Rogers", "flag": "🔴", "votes": 2 }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "flag": "🔵",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "El-Sayed (reads ~64%)",
+   "pick_scenario": "Abdul El-Sayed",
+   "prob": "64%",
+   "prob_num": 64,
+   "confidence": "medium",
+   "register": "terse tape-reading",
+   "blurb": "Two tapes, read together. Polymarket's exact-question general-election market prints Democrat 67, Republican 33. Polymarket's primary market prints El-Sayed 97, up from 94 five days back. Multiply the party price by the odds the party's nominee is El-Sayed and you get roughly 65 on the nose. Kalshi's Michigan hold price (70, per Newsweek's Aug pull) and a thinner aggregator quote (Democrat 72/Republican 29, PredictionHunt) both sit in the same neighborhood. I don't fight three books pointing the same way.",
+   "evidence": "Polymarket Michigan Senate Election Winner: Democrat 67% / Republican 33% (pulled Aug 1, 2026); Polymarket Michigan Democratic Senate Primary Winner: El-Sayed 97% (up from 94% five days out); Kalshi Michigan hold ~70% (via Newsweek, ~100 days out); PredictionHunt Michigan Senate winner: Democrat 72c / Republican 29c (thin, doesn't sum to 100 - noise, not signal).",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "flag": "🔵",
+   "criterion": "Trusts the simulation models and structured decompositions over recency and sentiment.",
+   "pick": "El-Sayed, narrow",
+   "pick_scenario": "Abdul El-Sayed",
+   "prob": "49%",
+   "prob_num": 49,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Don't multiply the party price by the primary price - multiply the primary price by the actual matchup numbers for each candidate, because Emerson tested them separately and they aren't the same race. P(El-Sayed nominee) is about 0.90, discounted off Polymarket's 0.97 for undecided-voter volatility three days out. P(El-Sayed beats Rogers | nominee) is about 0.54, off a tied 43-43 test nudged up for Trump's collapsing approval. Product: about 0.49. Stevens's branch - P(nominee) about 0.08 times P(beats Rogers) about 0.56, her stronger +5 test - adds about 0.045. Sum the Democratic mass and it's about 54%, but El-Sayed's own number, the one that matters for a named pick, is under 50. Still the largest single slice on the board.",
+   "evidence": "0.90 (El-Sayed nominee, primary market discounted) x 0.54 (beats Rogers, off Emerson's tied 43-43) = 0.49; Stevens branch 0.08 x 0.56 (her Emerson +5 test) = 0.045; total Democratic mass ~54%.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "flag": "🔴",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Rogers (the trend, not the streak)",
+   "pick_scenario": "Mike Rogers",
+   "prob": "40%",
+   "prob_num": 40,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "I count two things, and they point different directions, and I trust the second more. The streak: ten Michigan Senate races since Spencer Abraham's 1994 win, ten Democratic holds. But the trend inside that streak is what the streak-counters miss - Peters by thirteen points in 2008, Stabenow by six-and-a-half in 2018, Peters by under two in 2020, and then Rogers himself, the very man on this year's ballot, falling short by three-tenths of one point in 2024. A line that compresses that consistently, four cycles running, does not reset itself because the calendar turned. It keeps compressing until someone crosses it.",
+   "evidence": "Republicans 0-for-10 in Michigan Senate races since 1994; margin trend Peters +13 (2008) -> Stabenow +6.5 (2018) -> Peters <2 (2020) -> Slotkin +0.3 (2024, Rogers as the Republican nominee both times).",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "flag": "🔵",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "El-Sayed, narrow",
+   "pick_scenario": "Abdul El-Sayed",
+   "prob": "54%",
+   "prob_num": 54,
+   "confidence": "medium",
+   "register": "terse verdict-driven",
+   "blurb": "Follow the actual mechanism, not the label. Rogers's route runs through the largest war chest ($5.66M) and a base that gives Trump 80% approval - but that base isn't the electorate, and Trump's statewide number (33-37%) is the worst midterm environment a Michigan Republican has run in since the streak began. El-Sayed's route runs through a consolidated progressive coalition - McMorrow's July 5 suspension didn't just remove a rival, it freed her voters, and El-Sayed topped the quarter's fundraising at $4.57M. That mechanism gets him the nomination comfortably. The general is closer, because his own matchup number is soft. Still the favored route.",
+   "evidence": "Rogers $5.66M cash-on-hand (largest in the field) vs. an 80%-approve Republican primary base against a 33-37% statewide Trump number; El-Sayed $4.57M Q2 fundraising (top of field) plus McMorrow's Jul 5 suspension consolidating the progressive lane.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "flag": "🔵",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "El-Sayed, consolidating",
+   "pick_scenario": "Abdul El-Sayed",
+   "prob": "60%",
+   "prob_num": 60,
+   "confidence": "low",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "I read the man the field is consolidating around, not the man with the fattest war chest. A Flint-born health commissioner who built his name fighting a poisoned water crisis, now outraising every rival in the field's final quarter, with the movement's other rising star stepping aside rather than split him. That is the shape of momentum, not just money. Rogers, by contrast, is running the same race a second time, against the same numbers that beat him once already, with a president dragging him down harder than before. I back the man still gaining ground over the man repeating himself.",
+   "evidence": "El-Sayed: Flint water-crisis public-health profile, $4.57M Q2 fundraising leader, beneficiary of McMorrow's suspension; Rogers: second consecutive statewide run against a worse Trump-approval number than his 2024 loss.",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "flag": "🔴",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Rogers (live dog)",
+   "pick_scenario": "Mike Rogers",
+   "prob": "42%",
+   "prob_num": 42,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Everybody's reading the primary market into the general market like the two are the same trade. They aren't. The crowd is pricing 'Democrat wins Michigan' off a 97-cent primary favorite whose actual general-election number, tested head-to-head, is a coin flip - 43-43 against a man who lost by three-tenths of a point last time running. Rogers at 33-37 cents on the party books is a man who has already proven he can get within a rounding error of this seat, running again with more name ID, against a nominee who tests weaker than the one he barely lost to. That's underpriced, not overpriced.",
+   "evidence": "Emerson: El-Sayed 43 / Rogers 43 (tied), vs. Stevens 47 / Rogers 42 (+5) - the market's Democratic favorite tests as the weaker Democratic candidate; Rogers already lost by 0.3 points in 2024 against a stronger nominee (Slotkin).",
+   "record": { "graded": 0, "hits": 0 }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "flag": "🔵",
+   "criterion": "Divine providence; backs the fated, story-shaped outcome the ending events seem to be scripting.",
+   "pick": "El-Sayed, the outsider's turn",
+   "pick_scenario": "Abdul El-Sayed",
+   "prob": "58%",
+   "prob_num": 58,
+   "confidence": "medium",
+   "register": "oracular destiny-reading",
+   "blurb": "Look at the shape of this year, not just this seat: an establishment favorite pushed aside by a movement candidate the party apparatus didn't choose, in a season when the incumbent president's own approval is cratering in the exact state that once sent him a senator by inches. El-Sayed's rise reads like the story this cycle keeps telling itself - the outsider who wasn't supposed to clear the field clearing it anyway. Rogers's arc, by contrast, is a man running the same play twice against a worsening wind. The story bends toward the first arc, not the second.",
+   "evidence": "El-Sayed's primary surge (94% to 97% Polymarket in the final week) mirrors a broader 2025-26 pattern of insurgent Democratic primary wins nationally; Trump's Michigan approval falling further (33-37%) than at the time of Rogers's 2024 near-miss.",
+   "record": { "graded": 0, "hits": 0 }
+  }
+ ],
+ "field": [
+  { "team": "Abdul El-Sayed (D)", "flag": "🔵", "price": 55 },
+  { "team": "Mike Rogers (R)", "flag": "🔴", "price": 37 },
+  { "team": "Haley Stevens (D, if primary upset)", "flag": "🔵", "price": 6 }
+ ],
+ "base_rates": [
+  {
+   "stat": "0 of 10",
+   "text": "Republican wins in Michigan U.S. Senate races since Spencer Abraham's 1994 victory - ten straight Democratic holds, most recently Elissa Slotkin's 0.3-point win over this year's Republican nominee, Mike Rogers, in 2024. The single strongest structural anchor for a Democratic hold."
+  },
+  {
+   "stat": "13pt -> 6.5pt -> <2pt -> 0.3pt",
+   "text": "The compression trend across the last four Michigan Senate cycles (Peters 2008, Stabenow 2018, Peters 2020, Slotkin 2024) - the streak has held, but by a shrinking margin nearly every time, culminating in Rogers's own near-miss last cycle. The Historian's and Contrarian's central argument."
+  },
+  {
+   "stat": "97%",
+   "text": "Polymarket's Michigan Democratic Senate Primary Winner price on Abdul El-Sayed, up from 94% five days before the Aug 4 primary - the deepest read on who the Democratic nominee will actually be, pulled Aug 1, 2026."
+  },
+  {
+   "stat": "43-43 vs. 47-42",
+   "text": "Emerson College's late-July general-election tests: El-Sayed ties Rogers at 43%, while Stevens leads Rogers 47-42. The likely nominee tests measurably weaker than the alternative the market is discounting - the core of the quant's and contrarian's downward adjustment."
+  },
+  {
+   "stat": "33-37%",
+   "text": "Trump's Michigan approval as of the two most recent independent polls (EPIC-MRA ~33%, Glengariff/Detroit Regional Chamber 37.1%) - down from 44.2% in May 2025, and among independents specifically 21.9% approve vs. 64.6% disapprove. The strongest single driver behind the Democratic lean."
+  },
+  {
+   "stat": "$5.66M vs. $4.57M vs. $3.4M",
+   "text": "Cash-on-hand/fundraising snapshot as of mid-2026: Rogers holds the largest war chest ($5.66M cash-on-hand); El-Sayed led the field in Q2 receipts ($4.57M) but trails Stevens in cash-on-hand ($2.7M vs. $3.4M) as of June 30."
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "Michigan Senate Election Winner (2026)",
+   "detail": "Democrat 67% / Republican 33%. Resolves to the party of the general-election winner, inclusive of whichever nominee is chosen. Pulled Aug 1, 2026.",
+   "volume": "Not returned by aggregator pull for this specific event; treated as moderate-to-deep given the race's national profile as one of two Cook/Sabato Toss-ups."
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Michigan Democratic Senate Primary Winner (2026)",
+   "detail": "Abdul El-Sayed 97%, up from 94% five days before the Aug 4, 2026 primary, per Polymarket's own posted update. Haley Stevens and the remaining field split the residual.",
+   "volume": "~$1,730,987 traded as of Aug 1, 2026 pull - the deepest-liquidity market swept for this record."
+  },
+  {
+   "platform": "Kalshi",
+   "market": "Michigan Senate hold/flip (per Newsweek's Kalshi Midterm Hub coverage)",
+   "detail": "Democrats priced at ~70% to hold the seat, per a Newsweek piece pulled ~100 days from the midterms citing Kalshi's Midterm Hub; a separate 270toWin citation of the same hub put the number as high as ~77.9% on a different date. Not pulled directly from Kalshi's own market page - treated as a secondary-sourced cross-check, not a primary read.",
+   "volume": "Not independently confirmed; flagged as a secondary source, used only as a directional sanity check."
+  },
+  {
+   "platform": "PredictionHunt (aggregator)",
+   "market": "Michigan Senate winner?",
+   "detail": "Democrat 72c / Republican 29c - the two sides don't sum to 100, a sign of a thin, poorly-arbitraged book. Directionally consistent with Polymarket and Kalshi but not weighted as an independent anchor.",
+   "volume": "Not disclosed; thin aggregator quote."
+  }
+ ],
+ "triggers": [
+  "The actual Aug 4, 2026 Democratic primary result - if Stevens wins instead of El-Sayed, replace the named pick and re-run the general-election math off her stronger (+5) matchup number.",
+  "Two consecutive post-primary live-caller polls showing the Democratic nominee up 8+ on Rogers - shifts mass toward a comfortable Democratic hold.",
+  "Any single post-Labor Day poll showing Rogers ahead or the race inside 2 points - vindicates the Historian/Contrarian reversion case and shifts mass toward Rogers.",
+  "Trump's Michigan approval recovering above 40% in either EPIC-MRA or the Glengariff/Detroit Regional Chamber series - removes the single largest driver behind the Democratic lean.",
+  "Polymarket's general-election Republican leg moving above 40 cents or below 25 cents - a real-money re-pricing that re-weights every scenario here.",
+  "Rogers closing the cash-on-hand gap materially via national NRSC transfers, or a comparable late surge for the Democratic nominee - shifts the path-reader's mechanism case.",
+  "October likely-voter turnout signals in Wayne/Oakland/Macomb counties diverging sharply from 2024 - the most decisive on-the-ground signal for which side of the compression trend 2026 lands on."
+ ],
+ "sources": [
+  { "label": "Ballotpedia — United States Senate election in Michigan, 2026 (August 4 Democratic primary)", "url": "https://ballotpedia.org/United_States_Senate_election_in_Michigan,_2026_(August_4_Democratic_primary)" },
+  { "label": "Wikipedia — 2026 United States Senate election in Michigan", "url": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Michigan" },
+  { "label": "ClickOnDetroit — Key races in Michigan's 2026 primary election", "url": "https://www.clickondetroit.com/news/local/2026/07/30/heres-a-look-at-the-key-races-in-michigans-2026-primary-election/" },
+  { "label": "Emerson College Polling — Abdul El-Sayed Leads Haley Stevens for Democratic US Senate Nomination", "url": "https://emersoncollegepolling.com/michigan-2026-poll-abdul-el-sayed-leads-haley-stevens-for-democratic-us-senate-nomination/" },
+  { "label": "The Hill — Abdul El-Sayed leads Haley Stevens by 15 points in Michigan Senate primary: Poll", "url": "https://thehill.com/homenews/campaign/5997606-el-sayed-leads-stevens-michigan-senate-poll/" },
+  { "label": "Polymarket — Michigan Senate Election Winner (2026)", "url": "https://polymarket.com/event/michigan-senate-election-winner" },
+  { "label": "Polymarket — Michigan Democratic Senate Primary Winner (2026)", "url": "https://polymarket.com/event/michigan-democratic-senate-primary-winner" },
+  { "label": "Dimers — Live Polymarket odds and predictions, 2026 Michigan Senate race", "url": "https://www.dimers.com/news/live-polymarket-odds-2026-michigan-senate-race-winner" },
+  { "label": "PredictionHunt — Michigan Senate winner? Odds", "url": "https://www.predictionhunt.com/odds/michigan-senate-winner/7178" },
+  { "label": "Newsweek — Can Democrats Flip the Senate? Chances 100 Days From Midterms", "url": "https://www.newsweek.com/can-democrats-flip-senate-chances-100-days-midterms-12245883" },
+  { "label": "Michigan Advance — Rogers, Stevens lead fundraising in crowded Michigan U.S. Senate race", "url": "https://michiganadvance.com/2026/02/03/rogers-stevens-lead-fundraising-in-crowded-michigan-u-s-senate-race-enter-year-flush-with-cash/" },
+  { "label": "Detroit News — Abdul El-Sayed tops Stevens, Rogers in Michigan Senate fundraising", "url": "https://www.detroitnews.com/story/news/politics/2026/07/15/abdul-el-sayed-haley-stevens-mike-rogers-michigan-senate-race-fundraising/90933599007/" },
+  { "label": "Detroit News — McMorrow seizes Senate fundraising lead; Rogers holds cash advantage", "url": "https://www.detroitnews.com/story/news/politics/2026/04/15/mallory-mcmorrow-fundraising-lead-michigan-u-s-senate-race-mike-rogers-cash-stevens-el-sayed/89630523007/" },
+  { "label": "WLNS — Poll: Trump's Michigan approval plunges, undermining GOP hopes for key Senate seat", "url": "https://www.wlns.com/your-local-election-hq/poll-trumps-michigan-approval-plunges-undermining-gop-hopes-for-key-senate-seat/" },
+  { "label": "Detroit Regional Chamber / Glengariff Group — Michigan Voter Survey, May 2026", "url": "https://www.detroitchamber.com/wp-content/uploads/2026/05/DRC_Glengariff-Group_2026-Mackinac-Policy-Conference_POLITICAL-REPORT.pdf" },
+  { "label": "Fox 47 News — Michigan voters split on Trump as new poll shows 37% approval rating in state", "url": "https://www.fox47news.com/news/state/michigan-voters-split-on-trump-as-new-poll-shows-37-approval-rating-in-state" },
+  { "label": "Wikipedia — 2024 United States Senate election in Michigan", "url": "https://en.wikipedia.org/wiki/2024_United_States_Senate_election_in_Michigan" },
+  { "label": "The Michigan Independent — Democrat Elissa Slotkin wins Michigan U.S. Senate seat, narrowly defeating Mike Rogers", "url": "https://michiganindependent.com/politics/senate-2024-election-slotkin-rogers-stabenow/" },
+  { "label": "Fox 2 Detroit — Mike Rogers vs. Elissa Slotkin: Track Michigan Senate results", "url": "https://www.fox2detroit.com/news/mike-rogers-vs-elissa-slotkin-track-michigan-senate-results" },
+  { "label": "270toWin — Sabato's Crystal Ball 2026 Senate Race Ratings", "url": "https://www.270towin.com/2026-senate-election/sabatos-crystal-ball-senate-2026" }
+ ],
+ "method_note": "Anchored on two distinct market reads that must be composed, not conflated: Polymarket's exact-question general-election price (Democrat 67% / Republican 33%, Aug 1, 2026) and its separate Democratic primary price (El-Sayed 97%). Composing them naively gives El-Sayed ~64%; decomposing through Emerson's candidate-specific general-election tests (El-Sayed tied 43-43 with Rogers, versus Stevens leading 47-42) pulls the specific El-Sayed number down toward high-40s/low-50s, because the likely nominee tests weaker than the market's implied party-level confidence assumes. The consensus splits the difference by grounding-strength: the market anchor and the fundraising/coalition mechanism support a mid-50s El-Sayed number; the historian's margin-compression trend and the contrarian's matchup-gap argument pull toward a live Rogers path in the mid-to-upper 30s. Horizon: through November 3, 2026, with the Aug 4 primary as an intermediate resolution point for which Democrat is actually on the ballot.",
+ "honesty_note": "This record picks a name — Abdul El-Sayed — three days before the primary that actually determines the Democratic nominee. That is a real source of risk beyond normal electoral uncertainty: if Stevens wins Aug 4 instead (her share of the Polymarket primary market was in the single digits at last pull, so this is a low-probability but non-trivial branch), the general-election math changes materially given her stronger head-to-head number against Rogers. Even conditional on El-Sayed winning the primary, the consensus band (52-60%) sits closer to a coin flip than the raw party-level market price (67%) suggests, because the tied 43-43 Emerson test is the freshest look at the actual matchup. Treat this as a lean with a real, well-documented Republican path (Rogers has already come within 0.3 points once), not a settled Democratic hold."
+}

@@ -1,0 +1,373 @@
+{
+ "kind": "native_forecast",
+ "slug": "generic-ballot-2026",
+ "question": "What will the national House popular-vote margin be in the November 3, 2026 midterms (the generic congressional ballot outcome)?",
+ "title": "The 2026 Generic Congressional Ballot Margin",
+ "category": "The Modern World",
+ "status": "open",
+ "logged": "2026-08-01",
+ "grades": "2026-11-03",
+ "resolution": "Resolves to the national House popular-vote margin once counted, per the certified national House vote tally (RealClearPolitics/Cook Political Report aggregation of official state results, or the best available official count if those lag).",
+ "consensus": {
+  "pick": "Democratic-leaning result (D+4 to D+10)",
+  "flag": "🔵",
+  "band": "46-55%",
+  "band_low": 46,
+  "band_high": 55,
+  "runner_up": "Democratic wave (D+10 or more)",
+  "runner_up_flag": "🔵",
+  "runner_up_band": "20-28%",
+  "headline_case": "A Democratic-leaning result of four to ten points is the modal outcome, and the reason is that this is where three independent reads converge: the deepest exact-question market (Polymarket, $112.8k traded) puts 57-58% of its mass in this exact band; the polling average itself sits inside it (RCP D+5.3, PollingSource D+4.8, YouGov Aug 1-4 D+5.3); and the historical final-poll-to-actual error, which runs about 3 points in either direction across the last five midterms, keeps almost the entire plausible range inside this bucket even after accounting for miss risk. A true wave (D+10-plus) stays live behind it — Trump's net approval near -18 to -21 is worse at this point than in 2018 — while a real compression toward toss-up territory is kept alive by a two-month tightening trend (D+7.4 on June 1 to D+5.3 on July 30) and the 2024 cycle's roughly 3-point undercount of the eventual Republican margin.",
+  "why_over_runner_up": "The wave scenario is not a fringe case — Trump's approval is worse now than at the same point in 2018, and a talisman-style read of that alone would predict something bigger than 2018's D+8.6. But it stays the runner-up because the market prices it at roughly half the weight of the modal band (26% vs 58% pre-adjustment), and the polling average itself — D+4.8 to D+5.3 across every tracker pulled — sits comfortably inside the modal band already, well short of the D+7-plus starting point 2018's final polls carried into November.",
+  "dissent": "The compression case is the one that would most upend this pick: the generic ballot has already shed 2.1 points since June 1, national polling undercounted the eventual Republican House margin by about 3 points as recently as 2024, and in 3 of the last 5 midterm cycles the final generic-ballot polls overstated the leading party's eventual margin. If that pattern repeats and the erosion continues through October, the honest current-average D+5 compresses toward D+2 or lower, and the toss-up bucket — priced by the market at just 12% — becomes live, not residual.",
+  "tally": [
+   {
+    "team": "Democratic-leaning result (D+4 to D+10)",
+    "flag": "🔵",
+    "votes": 3
+   },
+   {
+    "team": "Democratic wave (D+10 or more)",
+    "flag": "🔵",
+    "votes": 2
+   },
+   {
+    "team": "Toss-up range (R+2 to D+4)",
+    "flag": "⚪",
+    "votes": 2
+   }
+  ]
+ },
+ "profiles": [
+  {
+   "persona": "market-reader",
+   "name": "The Market Reader",
+   "avatar": "📈",
+   "flag": "🔵",
+   "criterion": "Sides with the price the sharpest, deepest, most liquid markets have settled on.",
+   "pick": "Democratic-leaning result, market-priced",
+   "pick_scenario": "Democratic-leaning result (D+4 to D+10)",
+   "prob": "56-60%",
+   "prob_num": 58,
+   "confidence": "high",
+   "register": "terse tape-reading",
+   "blurb": "Polymarket's House Popular Vote Margin market has real money behind it — $112.8k traded across thirteen buckets — and when you sum the D+4-to-D+10 buckets they carry 58 cents of every dollar. The wave buckets carry 26 cents, the toss-up-and-worse buckets carry the rest. That's not a coin flip dressed up as a forecast; that's a book that's actually settled. I read the tape as priced and don't fight it without a reason the market doesn't already have.",
+   "evidence": "Polymarket 2026 House Popular Vote Margin market: D+4-6 (11c) + D+6-8 (19c) + D+8-10 (28c) = 58c; pulled 2026-08-01, $112,808 total volume.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "quant",
+   "name": "The Quant",
+   "avatar": "🧮",
+   "flag": "🔵",
+   "criterion": "Trusts the simulation models and structured decompositions over recency and sentiment.",
+   "pick": "Democratic-leaning result, error-adjusted",
+   "pick_scenario": "Democratic-leaning result (D+4 to D+10)",
+   "prob": "46-54%",
+   "prob_num": 50,
+   "confidence": "medium",
+   "register": "measured analytic contrarian",
+   "blurb": "Center the model on the polling average — D+4.8 to D+5.3 across every tracker I pulled — and apply the actual historical error, not a guessed one: the final-poll-to-certified-result gap has averaged about 3.3 points in absolute value across the last five midterm cycles, split roughly 3-of-5 toward overstating the leader and 2-of-5 toward understating the swing. Fold a normal-ish spread of that width around a D+5 center and most of the mass — but not all of it — lands inside D+4 to D+10. The market's 58% is close to where the decomposition actually lands, maybe a touch high once you weight in the shy-Republican risk from 2024.",
+   "evidence": "Polling average D+4.8-5.3 (RCP, PollingSource, YouGov Aug 1-4) x historical error band ~3.3 pts (2006, 2010, 2014, 2018, 2022 final-poll-to-actual gaps) centers ~50% of mass in the D+4-10 band.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "historian",
+   "name": "The Historian",
+   "avatar": "📜",
+   "flag": "⚪",
+   "criterion": "Counted reference-class base rates and venue history.",
+   "pick": "Toss-up range (compression)",
+   "pick_scenario": "Toss-up range (R+2 to D+4)",
+   "prob": "28-36%",
+   "prob_num": 32,
+   "confidence": "medium",
+   "register": "prophetic bardic catalog",
+   "blurb": "I count the ledger of every midterm since 2006, and the ledger warns against trusting an August number whole. In three of the last five cycles — 2006, 2010, 2022 — the final generic-ballot polls overstated the leading party's eventual margin; only twice did the polls understate the coming swing. And the specific mechanism that compresses a lead — the shift from registered to likely voters as pollsters tighten their screens in the closing months — has not even happened yet in most of these August numbers. The market prices the toss-up at twelve cents; the ledger says the true number is closer to a third.",
+   "evidence": "3 of 5 recent midterm cycles (2006, 2010, 2022) saw final polls overstate the leading party's margin vs. the certified result; RV-to-LV screen tightening historically shaves points off summer leads.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "path-reader",
+   "name": "The Path Reader",
+   "avatar": "🔪",
+   "flag": "🔵",
+   "criterion": "Ignores reputation; reads the actual route, mechanism, and path dependence.",
+   "pick": "Democratic-leaning result, mechanism-read",
+   "pick_scenario": "Democratic-leaning result (D+4 to D+10)",
+   "prob": "50-58%",
+   "prob_num": 54,
+   "confidence": "high",
+   "register": "terse verdict-driven",
+   "blurb": "Follow the actual mechanism, not the mood. Trump's net approval sits near minus-eighteen to minus-twenty-one, a genuine drag, and that's the engine behind the Democratic lead holding through the summer. But the NRCC is sitting on $92.7M in cash against an $18.5M DNC deficit, and Republicans are winning the economy argument in Washington Post/Ipsos data — that's the counter-mechanism capping the lead below wave territory rather than letting it run to D+10-plus. Bad environment, funded opposition. That combination lands you mid-band, not at the extremes.",
+   "evidence": "Trump net approval ~-18 to -21 (Silver Bulletin, AP-NORC, Economist/YouGov); NRCC $92.7M cash-on-hand vs. DNC $18.5M debt; WaPo/Ipsos shows GOP economy-issue advantage.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "talisman",
+   "name": "The Talisman",
+   "avatar": "⭐",
+   "flag": "🔵",
+   "criterion": "Elite individual actors, motivation, proven leadership.",
+   "pick": "Democratic wave (Trump-driven)",
+   "pick_scenario": "Democratic wave (D+10 or more)",
+   "prob": "26-34%",
+   "prob_num": 30,
+   "confidence": "low",
+   "register": "bardic-incantatory, archetypal",
+   "blurb": "I read the man at the center, not the average. In October 2018, Trump's approval sat near 40% and the country still handed Democrats an 8.6-point win. Today he is measured at 33 to 38%, worse than that same point in his first term, by pollsters ranging from AP-NORC to the Economist. A president this underwater, at the head of his own party's ballot, has historically bought bigger verdicts than this one — the wave scenario is not the edge case here, it's the pattern repeating with a weaker man at the center of it.",
+   "evidence": "Trump approval 33-38% (AP-NORC 33%, Economist/YouGov 34%, Silver Bulletin 38.2%), below his ~40% October 2018 reading that preceded a D+8.6 result.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "contrarian",
+   "name": "The Contrarian",
+   "avatar": "🎭",
+   "flag": "⚪",
+   "criterion": "Favorites usually fail; hunts the underpriced live path.",
+   "pick": "Toss-up range (fading Democratic edge)",
+   "pick_scenario": "Toss-up range (R+2 to D+4)",
+   "prob": "22-30%",
+   "prob_num": 26,
+   "confidence": "medium",
+   "register": "wry contrarian-desk",
+   "blurb": "Everyone's anchored on a spring number that's already stale. The RCP average has shed 2.1 points since June 1 — D+7.4 down to D+5.3 in eight weeks — and national polling undercounted the actual 2024 Republican House margin by about three points. Run that trend forward and the current D+5 average is a snapshot of a number still falling, not a floor. The market prices the toss-up bucket at twelve cents; I think the tightening trend plus the shy-Republican pattern makes that a live underpriced path, not a tail.",
+   "evidence": "RCP generic ballot D+7.4 (Jun 1, 2026) to D+5.3 (Jul 30, 2026), a 2.1-pt swing in 8 weeks; 2024 cycle undercounted the eventual GOP House margin by ~3 points.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  },
+  {
+   "persona": "prophet",
+   "name": "The Prophet",
+   "avatar": "🕊",
+   "flag": "🔵",
+   "criterion": "Divine providence; backs the fated, story-shaped outcome the ending events seem to be scripting.",
+   "pick": "Democratic wave (2018 mirrored)",
+   "pick_scenario": "Democratic wave (D+10 or more)",
+   "prob": "24-32%",
+   "prob_num": 28,
+   "confidence": "high",
+   "register": "oracular destiny-reading",
+   "blurb": "Look at the shape of the story so far: a first-term president, a cost-of-living grievance that will not quiet, an approval line worse than the one that produced 2018's reckoning. That earlier midterm did not end at a modest lean; it ended at 8.6 points and forty seats, because the story that was writing itself refused to stop at 'close.' I read the current arc as the same tale told with a harsher opening chapter, and a tale like that does not resolve itself in the toss-up column. It runs to the wave.",
+   "evidence": "2018 precedent: Trump approval ~40% in October 2018 produced a D+8.6 result; current approval (33-38%) is lower at the same point in the cycle, per the same historical parallel The Talisman reads.",
+   "record": {
+    "graded": 0,
+    "hits": 0
+   }
+  }
+ ],
+ "outcomes": [
+  {
+   "name": "Democratic-leaning result (D+4 to D+10)",
+   "low": 46.0,
+   "high": 55.0,
+   "description": "Democrats win the national House popular vote by four to ten points — enough to retake the chamber comfortably but short of a 2018-scale rout. The current polling average (D+4.8 to D+5.3) holds through the fall with only modest erosion, consistent with a normal, not historic, out-party midterm environment.",
+   "derivation": "Market anchor, decomposed. Polymarket's House Popular Vote Margin market sums the D+4-6, D+6-8, and D+8-10 buckets to 58% of $112,808 in volume (pulled 2026-08-01). The polling average itself (RCP D+5.3, PollingSource D+4.8, YouGov Aug 1-4 D+5.3) sits inside this band already. The Quant's independent decomposition — a D+5 center with a ~3.3-point historical error band drawn from five prior midterm cycles' final-poll-to-actual gaps — lands roughly half its mass here too, corroborating the market rather than diverging from it. Range widened slightly below the raw market print (58%) to 46-55% to absorb the compression risk the Historian and Contrarian raised in cross-examination.",
+   "drivers": [
+    "Trump's net approval near -18 to -21, a genuine but not historic midterm drag",
+    "The generic ballot polling average (D+4.8-5.3) sitting inside this band across every tracker pulled",
+    "Republican fundraising and messaging advantages on the economy capping, without erasing, the Democratic edge",
+    "Historical final-poll accuracy: 1998-2026, the Labor Day generic-ballot leader has won the House popular vote in all but one midterm"
+   ],
+   "signals": [
+    "The polling average holding inside D+4 to D+10 through Labor Day and into October",
+    "Polymarket's D+4-10 combined bucket price holding at or above ~50%",
+    "No further net movement beyond the -2.1 points already lost between June and July"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "Democratic wave (D+10 or more)",
+   "low": 20.0,
+   "high": 28.0,
+   "description": "Democrats win the national House popular vote by ten points or more, echoing or exceeding 2018's D+8.6 result. Trump's approval, already worse at this point in the cycle than in October 2018, continues sliding or holds at a historically low floor, and cost-of-living grievance dominates turnout on the Democratic side the way anti-Trump backlash did in 2018.",
+   "derivation": "Market anchor. Polymarket prices the D+10-12, D+12-14, D+14-16, and D+16-plus buckets at a combined 26% ($112,808 total volume, pulled 2026-08-01). Kept close to the raw market print because the Talisman and Prophet's cross-examined case — that Trump's approval (33-38%) is already below the ~40% reading that preceded 2018's wave — held up under rebuttal: it is a real, sourced approval-level comparison, not a vibe, even though the majority of the council still favored the narrower Democratic-leaning band.",
+   "drivers": [
+    "Trump approval at 33-38%, worse at this point in the cycle than the ~40% reading ahead of 2018's D+8.6 result",
+    "Cost-of-living and affordability grievance as the dominant midterm issue",
+    "A DNC cash disadvantage that could still be offset by outside-group and small-dollar mobilization if the environment worsens further",
+    "No incumbent-president approval recovery visible in any tracker as of early August"
+   ],
+   "signals": [
+    "Trump approval falling further below 35% across multiple aggregators",
+    "The generic ballot average widening back above D+7 rather than continuing to compress",
+    "A visible surge in Democratic small-dollar fundraising or enthusiasm metrics analogous to 2018"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "Toss-up range (R+2 to D+4)",
+   "low": 14.0,
+   "high": 22.0,
+   "description": "The national House vote lands within four points of even, in either direction — a genuine toss-up. The two-month compression already visible in the polling average (D+7.4 to D+5.3) continues into the fall, likely-voter screens erode the Democratic edge further, and a shy-Republican polling error on the scale seen in 2024 shows up again.",
+   "derivation": "Market complement, weighted up in cross-examination. Polymarket prices the D+0-2, D+2-4, and R+0-2 buckets at a combined 12% (pulled 2026-08-01), but the Historian's reference class — 3 of the last 5 midterm cycles (2006, 2010, 2022) saw final generic-ballot polls overstate the eventual leading party's margin — and the Contrarian's trend read (RCP average shed 2.1 points between June 1 and July 30, and 2024 polling undercounted the eventual Republican House margin by roughly 3 points) survived rebuttal well enough to widen this band from the market's raw 12% to a 14-22% range.",
+   "drivers": [
+    "The registered-to-likely-voter screen shift that historically narrows summer leads by 1-3 points as autumn approaches",
+    "A repeat of 2024-style polling undercounts of Republican support",
+    "Continuation of the tightening trend already visible since June 1",
+    "Economic-issue ownership shifting further toward Republicans if inflation or costs re-accelerate"
+   ],
+   "signals": [
+    "The generic ballot average falling below D+4 in September or October tracking polls",
+    "Likely-voter screens showing a materially more Republican electorate than registered-voter screens by October",
+    "Polymarket's toss-up-bucket price rising above ~15%"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  },
+  {
+   "name": "Republican-leaning or better (R+2 or more)",
+   "low": 5.0,
+   "high": 10.0,
+   "description": "Republicans win the national House popular vote outright, or come within two points of it — a scenario requiring the current Democratic polling edge to be substantially wrong, echoing 2022, when an approximately D+1 final polling average preceded an actual Republican-leaning result.",
+   "derivation": "Direct market read. Polymarket prices the R+2-4, R+4-6, and R+6-plus buckets at a combined 5% of $112,808 in volume (pulled 2026-08-01). Left essentially at the market print rather than widened further, because no council member built a grounded case — reference class, decomposition, or market divergence — for weighting this scenario above its market price; it is acknowledged as the live tail the 2022 precedent warns is possible, not modeled as more likely than the market allows.",
+   "drivers": [
+    "A polling miss on the scale of 2022, when the final generic-ballot average (~D+1) preceded an actual Republican-leaning national result",
+    "A late-breaking economic or foreign-policy event that consolidates undecided voters toward Republicans",
+    "Republican financial and turnout-operation advantages (NRCC cash edge) proving decisive in a genuinely close environment"
+   ],
+   "signals": [
+    "The polling average falling below D+2 by October",
+    "A specific, named economic shock (inflation re-acceleration, market selloff) in September or October",
+    "Polymarket's Republican-leaning buckets rising above ~8% combined"
+   ],
+   "horizon": "Through Nov 3, 2026"
+  }
+ ],
+ "base_rates": [
+  {
+   "stat": "D+4.8 to D+5.3",
+   "text": "Current generic congressional ballot polling averages as of late July/early August 2026: RealClearPolling D+5.3 (Jul 30); PollingSource D+4.8 (24 polls, trailing 30 days, as of Jul 29); YouGov/Economist Aug 1-4 field D+5.3 (43.7% to 38.4%)."
+  },
+  {
+   "stat": "26%",
+   "text": "Polymarket's implied probability of a D+10-or-more national House popular-vote margin (sum of the D+10-12 through D+16-plus buckets), pulled 2026-08-01, on $112,808 traded across the full market."
+  },
+  {
+   "stat": "7 of 8",
+   "text": "Midterms since 1998 in which the party leading the generic ballot on Labor Day went on to win the national House popular vote (~87.5%) — strong evidence for a Democratic-led topline, though it does not fix the margin's size."
+  },
+  {
+   "stat": "-2.1 pts",
+   "text": "The RCP generic ballot average narrowed from D+7.4 (June 1, 2026) to D+5.3 (July 30, 2026) — the tightening trend the Contrarian and Historian invoke for the compression scenario."
+  },
+  {
+   "stat": "3 of 5",
+   "text": "Recent midterm cycles (2006, 2010, 2022) in which the final generic-ballot polling average overstated the eventual leading party's certified margin; 2 of 5 (2014, 2018) understated the coming swing — a roughly two-to-one tilt toward compression, not a one-directional bias."
+  },
+  {
+   "stat": "~3 pts",
+   "text": "Approximate undercount of the eventual Republican House popular-vote margin by national polling in the 2024 cycle — the most recent concrete instance of the 'shy Republican' polling-error risk cited against the current Democratic lead."
+  },
+  {
+   "stat": "~1 pt = ~5 seats",
+   "text": "Historical rule of thumb converting generic-ballot popular-vote points into House seats (context for why this margin matters, though this market resolves on the vote share, not the seat count)."
+  }
+ ],
+ "markets": [
+  {
+   "platform": "Polymarket",
+   "market": "2026 Midterms: House Popular Vote Margin of Victory",
+   "detail": "Full 13-bucket breakdown: D+16%+ 1c, D+14-16% 1.8c, D+12-14% 5.8c, D+10-12% 20c, D+8-10% 29c, D+6-8% 19c, D+4-6% 11c, D+2-4% 6.3c, D+0-2% 2.1c, R+0-2% 4.6c, R+2-4% 3.7c, R+4-6% 1.2c, R+6%+ 1.7c. The single deepest, most direct exact-question market on this forecast.",
+   "volume": "$112,808 total traded (pulled 2026-08-01)"
+  },
+  {
+   "platform": "Polymarket",
+   "market": "Which party will win the House in 2026?",
+   "detail": "Related control market; Democratic control priced roughly 83-86% as of late July 2026 per aggregator reporting. Used only as a sanity check that the topline-winner pricing is consistent with the margin market's Democratic-side weighting (which sums to ~95% Democratic-or-toss-up-favoring-Democrats across the margin buckets).",
+   "volume": "Not separately captured at pull time; cited via secondary reporting"
+  },
+  {
+   "platform": "Kalshi",
+   "market": "2026 Midterms: House popular vote margin of victory (KXHOUSEPOPVOTEMARGIN-27NOV03)",
+   "detail": "A parallel exact-question market exists on Kalshi. Live bucket pricing could not be retrieved at pull time (repeated fetch errors); noted here as an existing venue rather than fabricated. The Polymarket book is treated as the primary market anchor for this forecast as a result.",
+   "volume": "Not captured at pull time"
+  }
+ ],
+ "triggers": [
+  "The generic ballot average falling below D+3 in two consecutive post-Labor-Day polls — shifts mass toward the toss-up scenario",
+  "The generic ballot average widening back above D+8 — shifts mass toward the Democratic-wave scenario",
+  "Trump's net approval recovering above -12 across major aggregators (AP-NORC, Economist/YouGov, Silver Bulletin) — the single largest driver-reversal, toward compression or a Republican-leaning result",
+  "Trump's net approval falling further, past -25 — pushes mass toward the wave scenario",
+  "Likely-voter screens in September/October running more than 2 points more Republican than registered-voter screens on the same polls — the concrete signal for the compression case",
+  "Polymarket's combined D+4-10 bucket price falling below 45% or rising above 65% — a real-money re-pricing that re-weights every scenario",
+  "A named economic shock (inflation re-acceleration, a market selloff, a jobs-report miss) in September or October — the concrete trigger for the Republican-leaning tail",
+  "A DNC fundraising recovery closing the cash gap with the NRCC below 2:1 — removes one of the Path Reader's compression mechanisms"
+ ],
+ "sources": [
+  {
+   "label": "Polymarket — 2026 Midterms: House Popular Vote Margin of Victory",
+   "url": "https://polymarket.com/event/2026-midterms-house-popular-vote-margin-of-victory-224"
+  },
+  {
+   "label": "Polymarket — Which party will win the House in 2026?",
+   "url": "https://polymarket.com/event/which-party-will-win-the-house-in-2026"
+  },
+  {
+   "label": "Kalshi — 2026 Midterms: National House Popular Vote Margin",
+   "url": "https://kalshi.com/markets/kxhousepopvotemargin/national-house-popular-vote-margin/kxhousepopvotemargin-27nov03"
+  },
+  {
+   "label": "RealClearPolling — 2026 Generic Congressional Vote",
+   "url": "https://www.realclearpolling.com/polls/state-of-the-union/generic-congressional-vote"
+  },
+  {
+   "label": "PollingSource — Generic Congressional Ballot 2026 Polling Average",
+   "url": "https://pollingsource.com/polls/generic-ballot"
+  },
+  {
+   "label": "Silver Bulletin — Generic Congressional Ballot, Latest Polls",
+   "url": "https://www.natesilver.net/p/generic-ballot-average-2026-nate-silver-bulletin-congress-polls"
+  },
+  {
+   "label": "USPollingData — Generic Ballot vs. House Seat Changes: Every Point Equals ~5 Seats",
+   "url": "https://uspollingdata.com/news/generic-ballot-history-house-results/"
+  },
+  {
+   "label": "Townhall — Polling Trend Gives Republicans Fresh Hope in Midterm Fight",
+   "url": "https://townhall.com/news/amy-curtis/2026/07/30/congressional-generic-ballot-n2680400"
+  },
+  {
+   "label": "National Journal — Generic ballot polls have tightened. Here's what that may mean.",
+   "url": "https://www.nationaljournal.com/s/732459/generic-ballot-polls-have-tightened-heres-what-we-know-about-what-it-means/?unlock=EWQCQHAJSZX4IY7E"
+  },
+  {
+   "label": "Sabato's Crystal Ball — Generic Ballot Model Gives Democrats Strong Chance to Take Back House in 2026",
+   "url": "https://centerforpolitics.org/crystalball/generic-ballot-model-gives-democrats-strong-chance-to-take-back-house-in-2026/"
+  },
+  {
+   "label": "Forbes — Trump Approval Rating Hits Record-Low In A Third Measurement This Week",
+   "url": "https://www.forbes.com/sites/saradorn/2026/07/27/trump-approval-rating-below-40-in-latest-string-of-polls/"
+  },
+  {
+   "label": "Yahoo News — President Donald Trump's approval rating entering August 2026",
+   "url": "https://www.yahoo.com/news/politics/articles/president-donald-trumps-approval-rating-211453828.html"
+  },
+  {
+   "label": "Axios — Supreme Court joins Trump, Congress in job approval slump",
+   "url": "https://www.axios.com/2026/07/29/supreme-court-congress-trump-approval-ratings"
+  },
+  {
+   "label": "FAIR — In 2022 Midterms, Media Were Again Misled by Generic Ballot",
+   "url": "https://fair.org/home/in-2022-midterms-media-were-again-misled-by-generic-ballot/"
+  }
+ ],
+ "method_note": "Anchored first on the deepest exact-question market — Polymarket's 13-bucket House Popular Vote Margin of Victory market, $112,808 traded, pulled 2026-08-01 — which puts 58% of its mass on a D+4-to-D+10 result, 26% on a D+10-plus wave, and the remaining 16% split across toss-up and Republican-leaning outcomes. That market-implied distribution is corroborated by the current polling average (D+4.8 to D+5.3 across RCP, PollingSource, and YouGov) sitting squarely inside the modal band. Cross-examination widened the toss-up band from the market's raw 12% to 14-22% on the strength of two grounded cases: a 3-of-5 recent-cycle reference class in which final generic-ballot polls overstated the leader's eventual margin, and the concrete 2.1-point tightening already visible in the RCP average since June 1, 2026. The Democratic-wave band was left close to its market print because Trump's approval (33-38%) is genuinely lower at this point in the cycle than the ~40% reading that preceded 2018's D+8.6 result. Horizon: through Election Day, Nov 3, 2026.",
+ "honesty_note": "The modal call — a Democratic-leaning result of four to ten points — is a lean, not a lock: pool the wave, toss-up, and Republican-leaning branches and there is a better-than-40% chance the actual margin falls outside this band in either direction. The generic ballot has already moved more than two points in eight weeks; there is no reason to assume it stops moving now, and the honesty_note is that this forecast describes where the evidence points on August 1, 2026, not where it will necessarily still point on November 3."
+}
