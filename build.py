@@ -3823,8 +3823,12 @@ def publish_research_scenes(out):
     global _ACTIVE_RESEARCH_SCENE_DIR
     scene_dir = Path(out) / SCENE_ASSET_DIRNAME
     scene_dir.mkdir(parents=True, exist_ok=True)
-    for stale in scene_dir.glob("*--*.*"):
-        stale.unlink()
+    # The directory is build output and nothing else writes here, so sweep all
+    # of it: the narrower "*--*.*" glob left behind a generation of one-per-
+    # corpus "<slug>.jpg" files that no page has referenced in a long time.
+    for stale in scene_dir.iterdir():
+        if stale.is_file():
+            stale.unlink()
     _ACTIVE_RESEARCH_SCENE_DIR = scene_dir
     _SCENE_ASSET_ASSIGNMENTS.clear()
     _USED_RESEARCH_SCENE_ASSETS.clear()
