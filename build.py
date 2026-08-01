@@ -20,6 +20,7 @@ folder, or deploy it to GitHub Pages / Netlify for a URL.
 
 import argparse
 import base64
+import datetime
 import hashlib
 import html
 import io
@@ -198,6 +199,8 @@ ABOUT_TEMPLATE = """<!DOCTYPE html>
 <title>About — calvincollins · xyz</title>
 <meta name="description" content="{descr}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -1310,6 +1313,8 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 {theme_style}
@@ -2499,7 +2504,16 @@ SHELL_JS = r"""
     var head;
     if (subs.length) { subs.sort(function (a, b) { return a.s - b.s; }); head = subs.slice(0, 10).map(function (x) { return x.e; }); }
     else head = fuz.slice(0, 8);
-    return head.concat(bodyMatches(ql));  // title/chapter hits first, then in-the-text hits
+    var out = head.concat(bodyMatches(ql));  // title/chapter hits first, then in-the-text hits
+    // The palette caps its in-the-text hits at 16 and shows one per chapter; the
+    // search page ranks the lot. Always offer the hand-off rather than letting a
+    // truncated list read as the whole answer.
+    if (ql.length >= 2) {
+      out.push({ t: 'Search the full text for “' + q + '”', m: 'all results, ranked',
+                 grp: 'In the text', icon: '⌕',
+                 href: 'search.html?q=' + encodeURIComponent(q) });
+    }
+    return out;
   }
   function render() {
     var q = input.value.trim();
@@ -3578,6 +3592,8 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <title>{site_title}</title>
 <meta name="description" content="{site_subtitle}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 {overture_head}
@@ -5484,6 +5500,8 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>The Ghost of Times — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -5511,7 +5529,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="ghost-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
+  <p class="colophon"><a href="research.html">← Back to the Research Library</a> · <a href="ghost/feed.xml">Subscribe by RSS</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -5868,6 +5886,8 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="../feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="../feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -6308,6 +6328,8 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>{page_title} — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}{accent_css}</style>
 </head>
@@ -6526,6 +6548,8 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="../feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="../feed.json">
 {og_meta}
 <style>{css}{accent_css}</style>
 </head>
@@ -10048,6 +10072,8 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>The Fingerprint — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -10075,7 +10101,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="fpp-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="research.html">The Research Library</a></p>
+  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="research.html">The Research Library</a> · <a href="fingerprint/feed.xml">Subscribe by RSS</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -10285,6 +10311,8 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="../feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="../feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -11079,6 +11107,196 @@ def strip_md(body, cap=6000):
     return t[:cap]
 
 
+# ------------------------------------------------------------- dated publications
+# The Ghost editions, Fingerprint editions, Pamphlets and desk Briefings are all
+# dated, standalone pieces that until now existed only as rendered HTML. Both the
+# feeds and the search index want the same thing from them — a date, a title, a
+# link and the words — so they are harvested once here into one shape.
+
+def _edition_stories(data):
+    """(headline, dek, body) for the lead and every story in an edition, in
+    reading order. Ghost and Fingerprint editions share this shape."""
+    out = []
+    lead = data.get("lead")
+    if isinstance(lead, dict):
+        out.append(lead)
+    for sec in data.get("sections") or []:
+        for st in (sec.get("stories") or []):
+            if isinstance(st, dict):
+                out.append(st)
+    return [(str(s.get("headline") or "").strip(),
+             str(s.get("dek") or "").strip(),
+             strip_md(str(s.get("body") or ""), cap=2600))
+            for s in out if s.get("headline") or s.get("body")]
+
+
+def harvest_publications(out_dir, editions, fp_editions, pamphlet_items,
+                         briefing_items=(), ghost_cfg=None, fp_cfg=None):
+    """Every dated publication on the site, newest first, in one normalised shape.
+
+    Each record: kind, section, title, dek, date, href, author, and `stories`
+    (the words, for the feed body and the search index).
+    """
+    ghost_title = (ghost_cfg or {}).get("title") or "The Ghost of Times"
+    fp_title = (fp_cfg or {}).get("title") or "The Fingerprint"
+    pubs = []
+
+    for ed in editions:
+        date = ed.get("date", "")
+        data = read_ghost_edition_data(out_dir, date) or {}
+        n = ed.get("edition_number")
+        pubs.append({
+            "kind": "ghost", "section": ghost_title,
+            "title": ed.get("lead_headline") or f"{ghost_title} — {date}",
+            "dek": ed.get("lead_dek", ""), "date": date,
+            "href": ed.get("file") or f"ghost/{date}-ghost-of-times.html",
+            "author": ed.get("lead_writer", ""),
+            "label": f"{ghost_title} Nº {n}" if n else ghost_title,
+            "stories": _edition_stories(data),
+        })
+
+    for ed in fp_editions:
+        date = ed.get("date", "")
+        data = read_fingerprint_edition_data(out_dir, date) or {}
+        n = ed.get("edition_number")
+        pubs.append({
+            "kind": "fingerprint", "section": fp_title,
+            "title": ed.get("lead_headline") or f"{fp_title} — {date}",
+            "dek": ed.get("lead_dek", ""), "date": date,
+            "href": ed.get("file") or f"fingerprint/{date}-fingerprint.html",
+            "author": "", "label": f"{fp_title} Nº {n}" if n else fp_title,
+            "stories": _edition_stories(data),
+        })
+
+    for kind, items, subdir, section in (
+            ("pamphlet", pamphlet_items, "pamphlets", "The Pamphlets"),
+            ("briefing", briefing_items, "briefings", "The Briefings")):
+        for it in items:
+            slug = it.get("slug", "")
+            data = read_pamphlet_data(out_dir, slug, subdir=subdir) or {}
+            body = strip_md(str(data.get("body") or ""), cap=6000)
+            pubs.append({
+                "kind": kind, "section": section,
+                "title": it.get("title") or slug, "dek": it.get("dek", ""),
+                "date": it.get("date", ""),
+                "href": it.get("file") or f"{subdir}/{slug}.html",
+                "author": it.get("writer", ""), "label": section,
+                "stories": [(it.get("title") or slug, it.get("dek", ""), body)] if body else [],
+            })
+
+    pubs.sort(key=lambda p: p["date"], reverse=True)
+    return pubs
+
+
+def _rfc822(date_str):
+    """YYYY-MM-DD → RFC-822, which is what RSS 2.0 wants. Midnight UTC: the
+    editions carry a date, not a time."""
+    try:
+        y, m, d = (int(x) for x in str(date_str)[:10].split("-"))
+        dt = datetime.datetime(y, m, d, tzinfo=datetime.timezone.utc)
+    except (ValueError, TypeError):
+        return ""
+    return dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
+
+
+def _feed_body_html(pub):
+    """The piece as feed-readable HTML: its dek, then each story's headline and
+    prose. Readers get the whole thing, not a teaser back to the site."""
+    parts = []
+    if pub.get("dek"):
+        parts.append(f"<p><em>{html.escape(pub['dek'])}</em></p>")
+    for headline, dek, body in pub.get("stories", []):
+        if headline:
+            parts.append(f"<h3>{html.escape(headline)}</h3>")
+        if dek:
+            parts.append(f"<p><em>{html.escape(dek)}</em></p>")
+        if body:
+            parts.append(f"<p>{html.escape(body)}</p>")
+    return "".join(parts) or f"<p>{html.escape(pub.get('dek', ''))}</p>"
+
+
+def build_feeds(out_dir, pubs, site_title, site_subtitle):
+    """Write RSS 2.0 + JSON Feed for the whole site, and one RSS feed per
+    dated section, so the Ghost and the Fingerprint can be subscribed to
+    separately from everything else."""
+    out = Path(out_dir)
+    if not pubs:
+        return []
+
+    def rss(items, title, desc, self_href):
+        entries = []
+        for p in items:
+            link = f"{SITE_URL}/{p['href']}"
+            entries.append(
+                "<item>"
+                f"<title>{html.escape(p['title'])}</title>"
+                f"<link>{html.escape(link)}</link>"
+                f"<guid isPermaLink=\"true\">{html.escape(link)}</guid>"
+                + (f"<pubDate>{_rfc822(p['date'])}</pubDate>" if _rfc822(p["date"]) else "")
+                + (f"<author>noreply@calvincollins.xyz ({html.escape(p['author'])})</author>"
+                   if p.get("author") else "")
+                + f"<category>{html.escape(p['section'])}</category>"
+                + f"<description>{html.escape(p.get('dek') or p['title'])}</description>"
+                + f"<content:encoded><![CDATA[{_feed_body_html(p)}]]></content:encoded>"
+                "</item>")
+        built = _rfc822(items[0]["date"]) if items else ""
+        return (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" '
+            'xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>'
+            f"<title>{html.escape(title)}</title>"
+            f"<link>{SITE_URL}/</link>"
+            f"<description>{html.escape(desc)}</description>"
+            "<language>en</language>"
+            f'<atom:link href="{SITE_URL}/{self_href}" rel="self" type="application/rss+xml"/>'
+            + (f"<lastBuildDate>{built}</lastBuildDate>" if built else "")
+            + "".join(entries) + "</channel></rss>\n")
+
+    def json_feed(items, title, desc, self_href):
+        entries = []
+        for p in items:
+            # JSON Feed wants optional keys absent, not null
+            e = {
+                "id": f"{SITE_URL}/{p['href']}",
+                "url": f"{SITE_URL}/{p['href']}",
+                "title": p["title"],
+                "summary": p.get("dek") or p["title"],
+                "content_html": _feed_body_html(p),
+                "tags": [p["section"]],
+            }
+            if p.get("date"):
+                e["date_published"] = f"{p['date']}T00:00:00Z"
+            if p.get("author"):
+                e["authors"] = [{"name": p["author"]}]
+            entries.append(e)
+        return json.dumps({
+            "version": "https://jsonfeed.org/version/1.1",
+            "title": title, "home_page_url": f"{SITE_URL}/",
+            "feed_url": f"{SITE_URL}/{self_href}", "description": desc,
+            "items": entries,
+        }, ensure_ascii=False, indent=1)
+
+    written = []
+    site_desc = f"{site_title} — {site_subtitle}"
+    (out / "feed.xml").write_text(rss(pubs[:60], site_title, site_desc, "feed.xml"))
+    (out / "feed.json").write_text(json_feed(pubs[:60], site_title, site_desc, "feed.json"))
+    written += ["feed.xml", "feed.json"]
+
+    for kind, subdir in (("ghost", "ghost"), ("fingerprint", "fingerprint"),
+                         ("pamphlet", "pamphlets"), ("briefing", "briefings")):
+        items = [p for p in pubs if p["kind"] == kind]
+        if not items or not (out / subdir).is_dir():
+            continue
+        sec = items[0]["section"]
+        path = f"{subdir}/feed.xml"
+        (out / subdir / "feed.xml").write_text(
+            rss(items[:60], f"{site_title} — {sec}", f"{sec}, from {site_title}.", path))
+        written.append(path)
+
+    print(f"  ✓ Feeds  ({len(pubs)} dated pieces) → " + ", ".join(written))
+    return written
+
+
 # ---------------------------------------------------------------- entertainment-layer data (build-time)
 # Two precomputed artifacts the runtime leans on, both static and offline:
 #   * pull-quotes per corpus  -> Today's Passage + (later) shareable passage cards
@@ -11644,6 +11862,8 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>{title} — calvincollins · xyz</title>
 <meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
+<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
+<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}{accent_css}</style>
 </head>
@@ -13296,6 +13516,300 @@ def build_errata_page(out_dir, receipts, shell=""):
     return True
 
 
+# --------------------------------------------------------------------- search
+# The command palette already searches the text, but it is a jump-to tool: 16
+# results, one per chapter, no ranking and no way to narrow. This is the page
+# for the other kind of search — the one where you want everything, ranked, and
+# you want to see it beside its neighbours. Both read the same search-index.json.
+
+SEARCH_CSS = """
+#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
+  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
+#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
+.se-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+.se-head { margin: .6rem 0 .4rem; }
+.se-head .kicker { margin: 0 0 .5rem; }
+.se-head h1 { font-size: clamp(2.2rem, 4.5vw, 3rem); margin: 0; }
+.se-head h1::after { content: ""; display: block; height: 4px; width: 88px; margin-top: .7rem; border-radius: 2px;
+  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
+.se-form { display: flex; gap: .5rem; margin: 1.8rem 0 .4rem; }
+.se-form input { flex: 1 1 auto; min-width: 0; font-family: var(--serif); font-size: 1.05rem; color: var(--text);
+  background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: .75rem .9rem; }
+.se-form input:focus-visible { outline: none; box-shadow: var(--ring); }
+.se-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.1rem 0 .3rem; }
+.se-tabs button { font-family: var(--sans); font-size: .74rem; letter-spacing: .04em; color: var(--muted);
+  background: none; border: 1px solid var(--border); border-radius: 999px; padding: .32rem .8rem; cursor: pointer; }
+.se-tabs button:hover { color: var(--accent); border-color: var(--accent); }
+.se-tabs button[aria-pressed="true"] { color: var(--bg); background: var(--text); border-color: var(--text); }
+.se-count { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: 1.1rem 0 .2rem; }
+.se-hit { border-top: 1px solid var(--border); padding: 1.15rem 0 1.2rem; }
+.se-hit:last-child { border-bottom: 1px solid var(--border); }
+.se-hit h3 { font-family: var(--display); font-size: 1.05rem; font-weight: 400; margin: 0 0 .12rem; }
+.se-hit h3 a { color: var(--text); text-decoration: none; }
+.se-hit h3 a:hover { color: var(--accent); }
+.se-where { font-family: var(--sans); font-size: .7rem; color: var(--muted); margin: 0 0 .6rem;
+  display: flex; flex-wrap: wrap; gap: .3rem .6rem; align-items: baseline; }
+.se-kind { font-size: .62rem; letter-spacing: .07em; text-transform: uppercase; padding: .14rem .4rem;
+  border: 1px solid var(--border); border-radius: 3px; }
+.se-snip { font-family: var(--serif); font-size: .9rem; line-height: 1.65; color: var(--muted);
+  margin: .3rem 0 0; padding-left: .8rem; border-left: 2px solid var(--border); }
+.se-snip a { color: inherit; text-decoration: none; }
+.se-snip a:hover { color: var(--accent); }
+.se-snip mark { background: var(--mark); color: var(--text); border-radius: 2px; padding: 0 .1em; }
+.se-empty { font-family: var(--sans); font-size: .86rem; color: var(--muted); padding: 2.4rem 0; }
+.se-empty b { color: var(--text); }
+.se-more { display: block; margin: 1.6rem auto 0; font-family: var(--sans); font-size: .78rem;
+  color: var(--muted); background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
+  padding: .55rem 1.1rem; cursor: pointer; }
+.se-more:hover { color: var(--accent); border-color: var(--accent); }
+.se-feeds { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: 2.6rem 0 0;
+  padding-top: 1.2rem; border-top: 1px solid var(--border); }
+.se-feeds a { color: var(--accent); }
+@media (max-width: 640px) { .se-wrap { padding: 1.4rem 1.3rem 4rem; } }
+"""
+
+SEARCH_JS = """
+// Ranked full-text search over search-index.json — the same payload the command
+// palette lazy-loads, so a visitor who has used the palette already has it cached.
+(function () {
+  var PAGE = 20;
+  var IDX = null, view = [], shown = 0, kind = '';
+  var form = document.getElementById('se-form'), input = document.getElementById('se-q');
+  var listEl = document.getElementById('se-list'), countEl = document.getElementById('se-count');
+  var moreEl = document.getElementById('se-more');
+  if (!input) return;
+
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
+    });
+  }
+  // Snippets are built from raw text, so the query is escaped into the markup
+  // after the surrounding text has been escaped — never before.
+  function mark(text, q) {
+    var out = '', low = text.toLowerCase(), ql = q.toLowerCase(), i = 0;
+    while (true) {
+      var p = low.indexOf(ql, i);
+      if (p < 0) { out += esc(text.slice(i)); break; }
+      out += esc(text.slice(i, p)) + '<mark>' + esc(text.slice(p, p + q.length)) + '</mark>';
+      i = p + q.length;
+    }
+    return out;
+  }
+
+  function snippets(text, q, max) {
+    var low = text.toLowerCase(), ql = q.toLowerCase(), out = [], i = 0;
+    while (out.length < max) {
+      var p = low.indexOf(ql, i);
+      if (p < 0) break;
+      var s = Math.max(0, p - 90), e = Math.min(text.length, p + q.length + 150);
+      out.push((s > 0 ? '…' : '') + text.slice(s, e).trim() + (e < text.length ? '…' : ''));
+      i = p + q.length + 150;
+    }
+    return out;
+  }
+
+  function search(q) {
+    var ql = q.toLowerCase(), hits = [];
+    (IDX || []).forEach(function (entry) {
+      (entry.chapters || []).forEach(function (ch, ci) {
+        var text = ch.text || '', title = ch.title || '';
+        var inTitle = title.toLowerCase().indexOf(ql) >= 0;
+        var inCorpus = (entry.title || '').toLowerCase().indexOf(ql) >= 0;
+        var n = 0, i = 0, low = text.toLowerCase();
+        while (true) { var p = low.indexOf(ql, i); if (p < 0) break; n++; i = p + ql.length; }
+        if (!n && !inTitle && !inCorpus) return;
+        // a hit in a heading outranks a hit in the prose; more hits outrank fewer
+        var score = n + (inTitle ? 30 : 0) + (inCorpus ? 12 : 0);
+        hits.push({ entry: entry, ch: ch, ci: ci, n: n, score: score,
+                    snips: snippets(text, q, 3) });
+      });
+    });
+    hits.sort(function (a, b) { return b.score - a.score; });
+    return hits;
+  }
+
+  function href(hit) {
+    var e = hit.entry, base = e.href || (e.slug + '.html');
+    if (e.kind && e.kind !== 'corpus') return base;
+    // corpora deep-link to the chapter, and carry ?q= so the reader scrolls to
+    // the phrase and flashes it
+    return base + '?q=' + encodeURIComponent(input.value.trim()) + '#ch-' + (hit.ch.i != null ? hit.ch.i : hit.ci);
+  }
+
+  function render() {
+    var slice = view.slice(shown, shown + PAGE), out = [], q = input.value.trim();
+    slice.forEach(function (h) {
+      var e = h.entry, link = href(h);
+      var where = ['<span class="se-kind">' + esc(e.kindLabel || 'Research') + '</span>',
+                   '<span>' + esc(e.title) + '</span>'];
+      if (e.category && e.category !== e.title) where.push('<span>' + esc(e.category) + '</span>');
+      if (h.n) where.push('<span>' + h.n + (h.n === 1 ? ' mention' : ' mentions') + '</span>');
+      var snips = h.snips.map(function (s) {
+        return '<p class="se-snip"><a href="' + esc(link) + '">' + mark(s, q) + '</a></p>';
+      }).join('');
+      out.push('<article class="se-hit"><h3><a href="' + esc(link) + '">'
+        + mark(h.ch.title || e.title, q) + '</a></h3><div class="se-where">'
+        + where.join('') + '</div>' + snips + '</article>');
+    });
+    listEl.insertAdjacentHTML('beforeend', out.join(''));
+    shown += slice.length;
+    moreEl.hidden = shown >= view.length;
+    if (!moreEl.hidden) moreEl.textContent = 'Show ' + Math.min(PAGE, view.length - shown) + ' more';
+  }
+
+  function run() {
+    var q = input.value.trim();
+    listEl.innerHTML = ''; shown = 0;
+    if (q.length < 2) {
+      countEl.textContent = '';
+      listEl.innerHTML = '<p class="se-empty">Type at least two characters to search the full text of every corpus, edition and pamphlet on the site.</p>';
+      moreEl.hidden = true; return;
+    }
+    if (!IDX) { countEl.textContent = 'Loading the index…'; return; }
+    var all = search(q);
+    view = kind ? all.filter(function (h) { return (h.entry.kind || 'corpus') === kind; }) : all;
+    var where = view.length === 1 ? ' passage' : ' passages';
+    countEl.textContent = view.length
+      ? view.length.toLocaleString() + where + ' matching “' + q + '”'
+      : '';
+    if (!view.length) {
+      listEl.innerHTML = '<p class="se-empty">Nothing matches <b>' + esc(q) + '</b>'
+        + (kind ? ' in this section' : '') + '.</p>';
+      moreEl.hidden = true; return;
+    }
+    render();
+    var u = new URL(location.href);
+    u.searchParams.set('q', q);
+    if (kind) u.searchParams.set('in', kind); else u.searchParams.delete('in');
+    history.replaceState(null, '', u);
+  }
+
+  var timer = null;
+  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 140); });
+  form.addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(timer); run(); });
+  moreEl.addEventListener('click', render);
+  [].slice.call(document.querySelectorAll('.se-tabs button')).forEach(function (b) {
+    b.addEventListener('click', function () {
+      kind = b.getAttribute('data-kind') || '';
+      document.querySelectorAll('.se-tabs button').forEach(function (o) {
+        o.setAttribute('aria-pressed', o === b ? 'true' : 'false');
+      });
+      run();
+    });
+  });
+
+  var url = new URL(location.href);
+  var q0 = url.searchParams.get('q') || '', k0 = url.searchParams.get('in') || '';
+  if (q0) input.value = q0;
+  if (k0) {
+    var btn = document.querySelector('.se-tabs button[data-kind="' + k0.replace(/"/g, '') + '"]');
+    if (btn) { kind = k0; btn.setAttribute('aria-pressed', 'true');
+      document.querySelector('.se-tabs button[data-kind=""]').setAttribute('aria-pressed', 'false'); }
+  }
+  input.focus();
+  run();
+
+  fetch('search-index.json').then(function (r) { return r.json(); }).then(function (j) {
+    IDX = j; run();
+  }).catch(function () {
+    countEl.textContent = '';
+    listEl.innerHTML = '<p class="se-empty">The search index could not be loaded.</p>';
+  });
+})();
+"""
+
+SEARCH_TEMPLATE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
+<title>Search — calvincollins · xyz</title>
+<meta name="description" content="Search the full text of every corpus, edition and pamphlet on the site.">
+<link rel="icon" href="{favicon}">
+{feed_links}
+{og_meta}
+<style>{css}</style>
+</head>
+<body>
+<div class="masthead">
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
+  <nav class="mh-nav">
+{nav}
+  </nav>
+</div>
+<main class="se-wrap">
+  <header class="se-head">
+    <p class="kicker">Full text</p>
+    <h1>Search</h1>
+  </header>
+  <form id="se-form" class="se-form" role="search">
+    <input id="se-q" type="search" name="q" autocomplete="off" spellcheck="false"
+           placeholder="Search every corpus, edition and pamphlet…" aria-label="Search the site">
+  </form>
+  <div class="se-tabs">{tabs}</div>
+  <p class="se-count" id="se-count"></p>
+  <div id="se-list"></div>
+  <button class="se-more" id="se-more" hidden>Show more</button>
+  <p class="se-feeds">{feeds_note}</p>
+</main>
+<footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
+  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
+</footer>
+<button id="theme-btn" title="Light / dark">◐ Theme</button>
+<script>{app_js}</script>
+{shell}
+</body>
+</html>
+"""
+
+
+def feed_link_tags(prefix=""):
+    """<link rel="alternate"> tags so a browser or reader can discover the feed
+    from any page on the site."""
+    return (f'<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" '
+            f'href="{prefix}feed.xml">\n'
+            f'<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" '
+            f'href="{prefix}feed.json">')
+
+
+def build_search_page(out_dir, kinds, feeds, shell=""):
+    """Render docs/search.html — ranked full-text search across the whole site."""
+    out = Path(out_dir)
+    tabs = ['<button data-kind="" aria-pressed="true">Everything</button>']
+    for kind, label in kinds:
+        tabs.append(f'<button data-kind="{html.escape(kind, quote=True)}" '
+                    f'aria-pressed="false">{html.escape(label)}</button>')
+
+    feed_bits = []
+    if "feed.xml" in feeds:
+        feed_bits.append('<a href="feed.xml">RSS</a>')
+    if "feed.json" in feeds:
+        feed_bits.append('<a href="feed.json">JSON Feed</a>')
+    per_section = [f for f in feeds if f.endswith("/feed.xml")]
+    note = ""
+    if feed_bits:
+        note = ("Subscribe instead: " + " · ".join(feed_bits)
+                + " for everything published here"
+                + (", or take one desk on its own — " if per_section else ".")
+                + " · ".join(f'<a href="{f}">{f.split("/")[0].title()}</a>' for f in per_section)
+                + ("." if per_section else ""))
+
+    og = og_tags("Search", "Search the full text of every corpus, edition and pamphlet on the site.",
+                 f"{SITE_URL}/search.html", f"{SITE_URL}/{OG_IMAGE}")
+    page = SEARCH_TEMPLATE.format(
+        favicon=FAVICON, og_meta=og, feed_links=feed_link_tags(),
+        css=LIBRARY_CSS + SEARCH_CSS, nav=main_nav_html(active="search.html"),
+        tabs="".join(tabs), feeds_note=note,
+        app_js=LIBRARY_THEME_JS + SEARCH_JS, shell=shell,
+    )
+    (out / "search.html").write_text(page)
+    print("  ✓ Search → search.html")
+    return True
+
+
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
           fingerprint_cfg=None, pamphlets_cfg=None, forecast_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
@@ -13435,6 +13949,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             })
         search_entries.append({
             "slug": corpus["slug"], "title": corpus["title"],
+            "kind": "corpus", "kindLabel": "Research", "category": category,
+            "href": f"{corpus['slug']}.html",
             "chapters": [
                 {"i": di, "title": d["title"], "text": strip_md(d["body"])}
                 for di, d in enumerate(corpus["documents"])
@@ -13642,14 +14158,39 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         manifest.append({"title": "Test Yourself", "kind": "section", "category": "Reference",
                          "href": "quiz.html",
                          "meta": "a quiz on the research — three levels"})
+    manifest.append({"title": "Search", "kind": "section", "category": "Reference",
+                     "href": "search.html",
+                     "meta": "ranked full-text search across the whole site"})
 
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
     shell_sub = shell_html(manifest_json, "../")    # edition pages in docs/<section>/
 
+    # Every dated publication, harvested once and spent twice: it feeds the RSS /
+    # JSON feeds, and it joins the search index so the palette and the search page
+    # reach the editions and pamphlets too, not just the corpora.
+    briefing_items = read_pamphlets_manifest(out, subdir="briefings")
+    publications = harvest_publications(out, editions, fp_editions, pamphlet_items,
+                                        briefing_items, ghost_cfg, fingerprint_cfg)
+    PUB_KIND_LABEL = {"ghost": "Ghost of Times", "fingerprint": "Fingerprint",
+                      "pamphlet": "Pamphlet", "briefing": "Briefing"}
+    for p in publications:
+        chapters = [{"i": i, "title": headline or p["title"],
+                     "text": " ".join(x for x in (dek, body) if x)}
+                    for i, (headline, dek, body) in enumerate(p["stories"])]
+        if not chapters:
+            continue
+        search_entries.append({
+            "slug": p["href"].rsplit("/", 1)[-1].replace(".html", ""),
+            "title": p["label"] if p["kind"] in ("ghost", "fingerprint") else p["title"],
+            "kind": p["kind"], "kindLabel": PUB_KIND_LABEL.get(p["kind"], p["section"]),
+            "category": p["section"], "href": p["href"], "chapters": chapters,
+        })
+
     # Lazy global-search payload — the palette fetches this only on an "in the
     # text" query, so it never weighs down first paint. Bodies are trimmed.
     (out / "search-index.json").write_text(json.dumps(search_entries, ensure_ascii=False))
+    feeds = build_feeds(out, publications, site_title, site_subtitle)
     # Pull-quotes for Today's Passage (also written as a file for later reuse).
     (out / "passages.json").write_text(json.dumps(all_passages, ensure_ascii=False))
 
@@ -13741,6 +14282,16 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     if receipts:
         build_receipts_page(out, receipts, shell=shell_root, n_corpora=len(wrapped_stats))
         build_errata_page(out, receipts, shell=shell_root)
+
+    # The dedicated search page — tabs are built from the kinds actually present
+    # in the index, so a section with nothing published yet never gets a dead tab.
+    _kinds_present = {e.get("kind", "corpus") for e in search_entries}
+    _search_kinds = [(k, lab) for k, lab in
+                     (("corpus", "Research"), ("ghost", "The Ghost of Times"),
+                      ("fingerprint", "The Fingerprint"), ("pamphlet", "Pamphlets"),
+                      ("briefing", "Briefings"))
+                     if k in _kinds_present]
+    build_search_page(out, _search_kinds, feeds, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site). Its
     # old single-line home-page teaser is gone — the front page now carries a
