@@ -1226,10 +1226,12 @@ footer { max-width: 1120px; margin: 0 auto; padding: 1rem 2rem 3rem; border-top:
 .cmp-fig { margin: 0; background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
   padding: 1.1rem 1.2rem; }
 .cmp-fig svg { display: block; width: 100%; height: auto; }
-.cmp-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; margin-top: .9rem; padding-top: .8rem;
+.cmp-legend { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin-top: .9rem; padding-top: .8rem;
   border-top: 1px solid var(--fdline); }
-.cmp-legend > span { display: inline-flex; align-items: center; gap: .38rem; font-family: var(--sans);
-  font-size: .68rem; font-weight: 700; color: var(--fdmut); }
+.cmp-legend > span { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans);
+  font-size: .66rem; font-weight: 700; color: var(--fdmut); white-space: nowrap; }
+/* the legend rides small — the charts, not the mascots, carry this section */
+.cmp-legend .fd-agent-mascot { width: 22px; height: 22px; margin-right: 0; border-radius: 5px; }
 
 /* head-to-head grid */
 .h2h-table { border-collapse: collapse; width: 100%; min-width: 900px; }

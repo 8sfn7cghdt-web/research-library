@@ -3859,13 +3859,11 @@ def _publish_research_scene_asset(selected):
 
 
 def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
-    """Assign a placement one piece of the artwork belonging to its own subject.
+    """Assign one real chapter scene to one scene-plate topic.
 
-    Relevance is the whole rule: a plate either shows art drawn from the
-    research it is about, or it shows nothing at all. A placement that names no
-    corpus — a desk front, a market page, a glossary, an edition of the paper —
-    gets no illustration, because the only illustration available to it would
-    be one borrowed from unrelated research.
+    Each placement receives its own illustration, including separate card and
+    feature treatments of the same content. No two placements are handed the
+    same source artwork.
     """
     pool = _research_scene_pool()
     if not pool:
@@ -3876,20 +3874,44 @@ def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
         return _SCENE_ASSET_ASSIGNMENTS[assignment_key]
 
     subject = _explicit_scene_subject(cover_slugs=cover_slugs, seed=seed)
-    if not subject:
-        return None
-
-    # Prefer art this build has not placed yet, but never leave the subject's
-    # own pool: one corpus's scene reappearing on that corpus's other page is
-    # far better than a stranger's scene appearing on either.
-    candidates = sorted(
-        pool.get(subject, ()),
-        key=lambda scene: (
-            (scene["slug"], scene["source"]) in _USED_RESEARCH_SCENE_ASSETS,
+    if subject:
+        candidates = list(pool.get(subject, ()))
+    else:
+        # Generic desks may draw from the whole library, but the first scene in
+        # every corpus is held back for that corpus's own reader/forecast/card.
+        # This makes relevance independent of page build order.
+        candidates = [
+            scene
+            for slug, scenes in pool.items()
+            for scene in scenes[1:]
+        ]
+        preferred = set(SCENE_COVERS.get(kind, ()))
+        candidates.sort(key=lambda scene: (
+            0 if scene["slug"] in preferred else 1,
             _scene_rank(assignment_key, f"{scene['slug']}:{scene['source']}"),
-        ),
+        ))
+    if subject:
+        candidates.sort(key=lambda scene: _scene_rank(
+            assignment_key, f"{scene['slug']}:{scene['source']}"
+        ))
+
+    selected = next(
+        (scene for scene in candidates
+         if (scene["slug"], scene["source"]) not in _USED_RESEARCH_SCENE_ASSETS),
+        None,
     )
-    selected = candidates[0] if candidates else None
+    if selected is None:
+        # A small corpus can run out before the entire site does. Preserve
+        # uniqueness by widening to the full research-scene pool.
+        all_candidates = [scene for scenes in pool.values() for scene in scenes]
+        all_candidates.sort(key=lambda scene: _scene_rank(
+            assignment_key, f"{scene['slug']}:{scene['source']}"
+        ))
+        selected = next(
+            (scene for scene in all_candidates
+             if (scene["slug"], scene["source"]) not in _USED_RESEARCH_SCENE_ASSETS),
+            all_candidates[0] if all_candidates else None,
+        )
     if selected is None:
         return None
 
@@ -8903,9 +8925,7 @@ def _fdc_bankroll_race_svg(book):
         return ""
     W, H = 660, 320
     X0, X1, Y0, Y1 = 58, 630, 268, 26
-    # n points per line = the opening bankroll plus one point per settled market,
-    # so every series visibly leaves the same $1,000 mark on the left edge.
-    n = len(events) + 1
+    n = len(events)
     def X(i):
         return X0 + (X1 - X0) * i / (n - 1)
     series = {}
@@ -8917,7 +8937,7 @@ def _fdc_bankroll_race_svg(book):
             for b in acct["bets"]:
                 if b.get("graded"):
                     by_event[(b.get("date") or "", b["market"])] = b
-        vals, bal = [FD_BANKROLL_START], FD_BANKROLL_START
+        vals, bal = [], FD_BANKROLL_START
         for ev in events:
             b = by_event.get(ev)
             if b is not None:
@@ -8939,11 +8959,8 @@ def _fdc_bankroll_race_svg(book):
     base_y = Y(FD_BANKROLL_START)
     grid.append(f'<line x1="{X0}" y1="{base_y:.1f}" x2="{X1}" y2="{base_y:.1f}" stroke="#9aa1af" '
                f'stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>')
-    # Label the baseline on the LEFT: every line leaves the $1,000 mark there and
-    # only falls at first, so the space above it is clear — the right edge belongs
-    # to the end-of-race monogram chips.
-    grid.append(f'<text x="{X0 + 8}" y="{base_y - 8:.1f}" fill="#9aa1af" font-size="9.5" '
-               f'font-style="italic" font-family="Georgia,serif">starting bankroll · $1,000 each</text>')
+    grid.append(f'<text x="{X1}" y="{base_y - 6:.1f}" text-anchor="end" fill="#9aa1af" font-size="9.5" '
+               f'font-style="italic" font-family="Georgia,serif">starting bankroll</text>')
     lines = []
     for key, name, avatar, criterion in FD_PERSONAS:
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
@@ -9422,12 +9439,10 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
 .cmp-fig { margin: 0; background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
   padding: 1.1rem 1.2rem; }
 .cmp-fig svg { display: block; width: 100%; height: auto; }
-.cmp-legend { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin-top: .9rem; padding-top: .8rem;
+.cmp-legend { display: flex; flex-wrap: wrap; gap: .5rem 1.1rem; margin-top: .9rem; padding-top: .8rem;
   border-top: 1px solid var(--fdline); }
-.cmp-legend > span { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans);
-  font-size: .66rem; font-weight: 700; color: var(--fdmut); white-space: nowrap; }
-/* the legend rides small — the charts, not the mascots, carry this section */
-.cmp-legend .fd-agent-mascot { width: 22px; height: 22px; margin-right: 0; border-radius: 5px; }
+.cmp-legend > span { display: inline-flex; align-items: center; gap: .38rem; font-family: var(--sans);
+  font-size: .68rem; font-weight: 700; color: var(--fdmut); }
 
 /* head-to-head grid */
 .h2h-table { border-collapse: collapse; width: 100%; min-width: 900px; }
@@ -12026,8 +12041,6 @@ DOMAIN_PAGE_CSS = """
 /* Sits in the copy column so it lines up under the nameplate rather than
    centring itself across the mascot too. */
 .dk-scene { grid-column: 1; margin: 1.5rem 0 0; min-width: 0; }
-/* A desk with no artwork of its own gets no reserved hole under the nameplate. */
-.dk-scene:empty { display: none; margin: 0; }
 .dk-scene .scene-plate { aspect-ratio: 21 / 9; max-width: none; margin: 0; }
 .dk-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }

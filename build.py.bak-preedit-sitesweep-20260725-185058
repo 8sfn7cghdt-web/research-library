@@ -20,7 +20,6 @@ folder, or deploy it to GitHub Pages / Netlify for a URL.
 
 import argparse
 import base64
-import datetime
 import hashlib
 import html
 import io
@@ -31,7 +30,6 @@ import re
 import shutil
 import subprocess
 import sys
-from collections import Counter
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -40,48 +38,14 @@ FIGURES_DIR = HERE / "figures"
 SCENE_ASSET_DIRNAME = "research-scenes"
 GENERATED_SCENES_DIR = HERE / "assets" / "generated-scenes"
 GENERATED_SCENE_MAP = {
-    "domain:adtech": ("adtech-home-v1.webp", "A media trader and publisher-side operator route one connected-TV ad opportunity between an auction room and a family living room."),
-    "fingerprint-band:2026-07-25": ("fingerprint-band-v1.webp", "Editors verify the morning's streaming-industry news in a pre-dawn newsroom as the press begins to run."),
-    "The Briefings:mcluhan-on-pause-ad-standards": ("briefings-band-v1.webp", "Experts examine the evidence behind a connected-TV measurement standard in a glass-walled night briefing."),
-    "ipv4-ipv6-ctv-research": ("reader-ipv4-ipv6-ctv-v1.webp", "Families stream television above a network engineer managing an overloaded shared address gateway beside a clean new network route."),
-    "mcluhan-research": ("reader-mcluhan-v1.webp", "Marshall McLuhan studies his own multiplying image across cathode-ray monitors in a late-1960s television studio."),
-    "fox-roku-research": ("reader-fox-roku-v1.webp", "A family watches television while deal teams behind the screen exchange control of the connected living-room infrastructure."),
-    "india-advertising-research": ("reader-india-advertising-v1.webp", "An Indian family and neighborhood watch cricket across connected screens while a local shopkeeper launches a digital campaign."),
-    "latam-ctv-research": ("reader-latam-ctv-v1.webp", "Latin American families stream football as media planners confront an audience map whose reach exceeds the available advertising money."),
-    "ctv-dsp-ssp-research": ("reader-ctv-dsp-ssp-v1.webp", "A connected-TV advertising payment passes through a sequence of intermediary toll gates before reaching the publisher."),
-    "ctv-identity-signals-research": ("reader-ctv-identity-signals-v1.webp", "Signals from a family's connected devices enter a privacy chamber where analysts compare encrypted traces without seeing the household directly."),
-    "agentic-advertising-protocols-research": ("reader-agentic-protocols-v1.webp", "Human media buyers oversee software agents negotiating between an open marketplace and a sealed private platform."),
-    "miq-research": ("reader-miq-v1.webp", "An independent media-trading team works above the vast data and auction infrastructure on which its campaigns depend."),
-    "ctv-brand-safety-research": ("reader-ctv-brand-safety-v1.webp", "Investigators trace a connected-TV advertisement from a family living room back through clean, chaotic, and fraudulent supply environments."),
-    "containerized-bidding-research": ("reader-containerized-bidding-v1.webp", "An engineer moves a sealed bidding machine into the exchange's secure data-center hall beside the auction core."),
-    "political-ctv-research": ("reader-political-ctv-v1.webp", "A campaign strategist traces a district audience from a neighborhood map to a family watching television across town."),
-    "walmart-vibe-research": ("reader-walmart-vibe-v1.webp", "A new doorway connects a retail checkout, media infrastructure, and a family's connected television."),
-    "social-ctv-retargeting-research": ("reader-social-ctv-retargeting-v1.webp", "A commuter's phone signal travels through identity routes and reappears as a connected-TV advertisement at home."),
-    "ctv-ssp-research": ("reader-ctv-ssp-v1.webp", "A publisher-side agent holds one connected-TV ad slot while market participants approach through separate auction entrances."),
-    "ancestry-research": ("reader-ancestry-v1.webp", "A nineteenth-century emigrant family consults a worn map and letters beside their luggage as a steamship waits at the Atlantic port."),
-    "carlyle-french-revolution-research": ("reader-carlyle-french-revolution-v1.webp", "Thomas Carlyle confronts an empty manuscript box and dying fireplace embers before beginning his history again."),
-    "carlyle-friedrich-research": ("reader-carlyle-friedrich-v1.webp", "Frederick the Great commands a Prussian war room while Thomas Carlyle reconstructs the ruler's world from a mountain of archival evidence."),
-    "carlyle-research": ("reader-carlyle-v1.webp", "Thomas Carlyle writes in his Chelsea study before dawn as the industrial city and its working crowds gather beyond the window."),
-    "civil-war-religion-whitman-research": ("reader-civil-war-religion-whitman-v1.webp", "Walt Whitman reads a letter to a wounded soldier in a Civil War field hospital at dusk."),
-    "democratic-socialism-research": ("reader-democratic-socialism-v1.webp", "Workers and neighbors debate public institutions around a circular table in a converted factory town hall."),
-    "deutsch-good-explanations-research": ("reader-deutsch-good-explanations-v1.webp", "Physicists test a simple explanation against an exacting beam experiment and a wall of failed contraptions."),
-    "dickinson-research": ("reader-dickinson-v1.webp", "Emily Dickinson binds a private fascicle beside pressed flowers while winter morning fills her Amherst room."),
-    "emerson-research": ("reader-emerson-v1.webp", "Ralph Waldo Emerson pauses on a rain-darkened Concord woodland path as neighbors cross the stream ahead."),
-    "great-awakenings-research": ("reader-great-awakenings-v1.webp", "A colonial outdoor revival draws belief, skepticism, grief, and expectation from a diverse crowd after a storm."),
-    "jesus-research": ("reader-jesus-v1.webp", "Jesus shares an evening meal with outsiders and working families in a first-century Galilean village."),
-    "john-the-baptist-research": ("reader-john-the-baptist-v1.webp", "John the Baptist addresses villagers, soldiers, laborers, and officials on the banks of the Jordan."),
-    "jung-research": ("reader-jung-v1.webp", "Carl Jung listens to a patient's dream inside his stone tower at Bollingen beside tools and carved river stones."),
-    "pareto-research": ("reader-pareto-v1.webp", "Vilfredo Pareto observes one governing elite descend as its successors rise through a crowded parliamentary hall."),
-    "phenomenology-pragmatism-research": ("reader-phenomenology-pragmatism-v1.webp", "Philosophers and a craftsperson bring perception, experiment, and practical repair to the same machine."),
-    "piaget-research": ("reader-piaget-v1.webp", "Children revise their reasoning through hands-on experiments while Jean Piaget and a colleague observe."),
-    "roman-catholicism-research": ("reader-roman-catholicism-v1.webp", "A layered old parish hosts a contemporary meal, vigil, and argument while the modern city moves beyond its doors."),
-    "us-economy-financial-system-research": ("reader-us-economy-financial-system-v1.webp", "Ports, factories, transit, shops, and financial operations wake together in an interconnected American city."),
-    "us-geopolitics-research": ("reader-us-geopolitics-v1.webp", "Civilian and military officials debate amid a harbor where trade, naval power, cables, and displaced people share one horizon."),
-    "uap-research": ("reader-uap-v1.webp", "Pilots and analysts compare ambiguous sensor evidence at a remote radar station before dawn."),
-    "american-pragmatism-research": ("reader-american-pragmatism-v1.webp", "American pragmatists, engineers, and residents test ideas by repairing a broken public water pump together."),
-    "forecast-corpus:ctv-dsp-ssp-research": ("forecast-ctv-dsp-ssp-v1.webp", "Publisher engineers, buyer-side traders, and an auditor reconcile a completed connected-TV auction through its technical handoffs and fees."),
-    "forecast-corpus:containerized-bidding-research": ("forecast-containerized-bidding-v1.webp", "Engineers and a security reviewer open a sealed compute chamber beside a publisher's live auction core."),
-    "forecast-corpus:walmart-vibe-research": ("forecast-walmart-vibe-v1.webp", "Retail-media and streaming teams test whether a purchase signal can safely bridge a store and a family's connected television."),
+    "domain:adtech": ("adtech-home-v1.png", "A media trader and publisher-side operator route one connected-TV ad opportunity between an auction room and a family living room."),
+    "fingerprint-band:2026-07-25": ("fingerprint-band-v1.png", "Editors verify the morning's streaming-industry news in a pre-dawn newsroom as the press begins to run."),
+    "The Briefings:mcluhan-on-pause-ad-standards": ("briefings-band-v1.png", "Experts examine the evidence behind a connected-TV measurement standard in a glass-walled night briefing."),
+    "ipv4-ipv6-ctv-research": ("reader-ipv4-ipv6-ctv-v1.png", "Families stream television above a network engineer managing an overloaded shared address gateway beside a clean new network route."),
+    "mcluhan-research": ("reader-mcluhan-v1.png", "Marshall McLuhan studies his own multiplying image across cathode-ray monitors in a late-1960s television studio."),
+    "fox-roku-research": ("reader-fox-roku-v1.png", "A family watches television while deal teams behind the screen exchange control of the connected living-room infrastructure."),
+    "india-advertising-research": ("reader-india-advertising-v1.png", "An Indian family and neighborhood watch cricket across connected screens while a local shopkeeper launches a digital campaign."),
+    "latam-ctv-research": ("reader-latam-ctv-v1.png", "Latin American families stream football as media planners confront an audience map whose reach exceeds the available advertising money."),
 }
 MARKED_JS = (HERE / "vendor" / "marked.min.js").read_text()
 # GFM strikethrough fires on a SINGLE tilde, so prose tildes meaning
@@ -125,181 +89,6 @@ USE_HERO_IMAGE = True  # Use the Divine Hero Agent mascot; flip to False for the
 # Open Graph + Twitter card tags so a shared link renders a rich preview with an
 # image. The result is passed as a VALUE into each template's .format() (never as
 # part of the format string), so any braces in a title pass through untouched.
-def _fmt_words(n):
-    """Word counts as a reader says them: 1.8M, not 1817k. Past a million the
-    'k' form stops being legible — 1817k reads as a typo, not a boast."""
-    if n >= 1_000_000:
-        m = n / 1_000_000
-        return f"{m:.1f}M words".replace(".0M", "M")
-    if n >= 1_000:
-        return f"{round(n / 1000)}k words"
-    return f"{n} words"
-
-
-# ------------------------------------------------------------------- about
-# The site's front door for anyone arriving from outside: what the library is,
-# how it is actually made, what it is evidence of, and how to make contact.
-# Every number on it is computed from the build, so the page cannot drift away
-# from the library it describes.
-
-CONTACT_EMAIL = "calvinpokorny128@gmail.com"
-
-ABOUT_CSS = """
-.ab-wrap { max-width: 820px; margin: 0 auto; padding: 2.4rem 2rem 4rem; }
-.ab-wrap header.ab-head { display: block; max-width: none; margin: 0 0 2.4rem; padding: 0;
-  text-align: center; }
-.ab-head .kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
-  letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
-.ab-head h1 { font-family: var(--display); font-weight: 600; font-size: clamp(2.4rem, 6vw, 3.6rem);
-  line-height: 1; margin: 0 0 .7rem; }
-.ab-lede { font-family: var(--serif); font-size: 1.18rem; line-height: 1.65; color: var(--muted);
-  max-width: 640px; margin: 0 auto; }
-.ab-figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1px;
-  background: var(--border); border: 1px solid var(--border); margin: 2.4rem 0; }
-.ab-fig { background: var(--bg); padding: 1.1rem 1rem; text-align: center; }
-.ab-fig b { display: block; font-family: var(--display); font-size: 1.75rem; line-height: 1.1;
-  color: var(--accent); font-variant-numeric: tabular-nums; }
-.ab-fig span { display: block; font-family: var(--mono); font-size: .62rem; text-transform: uppercase;
-  letter-spacing: .08em; color: var(--muted); margin-top: .35rem; }
-.ab-wrap h2 { font-family: var(--display); font-weight: 600; font-size: 1.5rem; margin: 2.4rem 0 .8rem; }
-.ab-wrap h2::after { content: ""; display: block; width: 92px; height: 6px; margin-top: .55rem;
-  background: linear-gradient(var(--accent), var(--accent)) 0 0 / 24px 6px no-repeat,
-              linear-gradient(180deg, var(--text) 0 2px, transparent 2px 4px, var(--text) 4px 5px, transparent 5px) 30px 0 / 62px 6px no-repeat; }
-.ab-wrap p { font-family: var(--serif); font-size: 1.02rem; line-height: 1.72; margin: 0 0 1rem; }
-.ab-wrap p a { color: var(--accent); }
-.ab-steps { list-style: none; margin: 1.2rem 0 0; padding: 0; counter-reset: ab; }
-.ab-steps li { position: relative; padding: 0 0 1.1rem 2.6rem; counter-increment: ab;
-  font-family: var(--serif); font-size: 1.02rem; line-height: 1.65; }
-.ab-steps li::before { content: counter(ab, decimal-leading-zero); position: absolute; left: 0; top: .15rem;
-  font-family: var(--mono); font-size: .72rem; font-weight: 600; color: var(--accent);
-  border: 1px solid var(--border); padding: .12rem .34rem; }
-.ab-steps b { font-family: var(--sans); font-weight: 600; }
-.ab-contact { border: 1px solid var(--border); border-left: 3px solid var(--accent); background: var(--bg);
-  padding: 1.8rem 1.9rem; margin: 2.6rem 0 0; box-shadow: var(--shadow-1); }
-.ab-contact h2 { margin-top: 0; }
-.ab-contact h2::after { display: none; }
-.ab-cta { display: inline-block; margin-top: .5rem; font-family: var(--sans); font-size: .95rem;
-  font-weight: 600; text-decoration: none; background: var(--accent); color: var(--bg);
-  padding: .72rem 1.3rem; border: 1px solid var(--accent);
-  transition: transform .16s var(--ease), box-shadow .16s var(--ease), filter .16s var(--ease); }
-.ab-cta:hover, .ab-cta:focus-visible { transform: translateY(-2px); box-shadow: var(--shadow-2); filter: brightness(1.06); }
-.ab-note { font-family: var(--sans); font-size: .82rem; color: var(--muted); margin: .9rem 0 0; }
-.ab-cta:hover, .ab-cta:focus-visible { color: var(--bg); }
-footer .colophon a { color: var(--accent); text-decoration: none; }
-footer .colophon a:hover, footer .colophon a:focus-visible { text-decoration: underline; }
-@media (max-width: 560px) { .ab-wrap { padding: 1.6rem 1.2rem 3rem; } .ab-contact { padding: 1.3rem 1.2rem; } }
-"""
-
-ABOUT_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
-<title>About — calvincollins · xyz</title>
-<meta name="description" content="{descr}">
-<link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
-{og_meta}
-<style>{css}</style>
-</head>
-<body>
-<div class="masthead">
-  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
-  <nav class="mh-nav">
-{nav}
-  </nav>
-</div>
-<main class="ab-wrap">
-  <header class="ab-head">
-    <p class="kicker">About this library</p>
-    <h1>Machine Humanities</h1>
-    <p class="ab-lede">A working library of deep research — written by an agentic pipeline I design and run,
-    verified claim by claim against its sources, and made to argue in public where anyone can check it.</p>
-  </header>
-
-  <div class="ab-figures">{figures}</div>
-
-  <h2>What this is</h2>
-  <p>Every work here starts as a question and ends as a book-length corpus: chapters of narrative
-  argument, a glossary, a set of figures drawn from the material itself, and a forecast that commits
-  to a number. The subjects run from Connected-TV auction mechanics to Carlyle, Dickinson, and the
-  Great Awakenings, because the method does not care what it is pointed at.</p>
-  <p>Alongside the library sit three standing desks: <a href="adtech.html">Ad Tech</a>, a trade desk
-  covering the programmatic and Advanced-TV market with a daily wire; <a href="ghost.html">The Ghost of
-  Times</a>, a paper of writer-voiced op-eds; and <a href="forecast.html">The Forecast Desk</a>, where
-  the predictions are priced, logged, and graded against what actually happened.</p>
-
-  <h2>How it is made</h2>
-  <p>The pipeline is the point. It is not a chatbot asked for an essay — it is a research process with
-  adversarial stages built into it:</p>
-  <ol class="ab-steps">
-    <li><b>Multi-round research.</b> Successive sweeps widen coverage, then a critic names what is still
-    missing and sends the process back out to fill the gaps.</li>
-    <li><b>Adversarial verification.</b> Claims are re-checked against independent sources by readers whose
-    job is to refute them. Refuted claims are corrected in place, not quietly dropped — several corpora
-    here carry dozens of corrections made this way.</li>
-    <li><b>Priced forecasts.</b> Every probability is the output of a process — a market price, a counted
-    base rate, or a decomposition — never a number someone liked the look of.</li>
-    <li><b>Public grading.</b> Calls are frozen when logged and scored when they resolve. Misses stay on
-    the board next to the hits, with Brier scores and a calibration curve.</li>
-  </ol>
-
-  <h2>What it is evidence of</h2>
-  <p>Read commercially, this site is a portfolio of three things: designing agentic systems that do real
-  intellectual work end to end and survive contact with their own errors; deep, current coverage of the
-  programmatic and Connected-TV ad market, from auction plumbing to identity to regulation; and
-  calibrated forecasting with a track record kept in the open rather than a deck of confident claims.</p>
-  <p>The <a href="forecast-record.html">Track Record</a> is the honest version of that argument. It is
-  public precisely because it includes the losses.</p>
-
-  <div class="ab-contact">
-    <h2>Get in touch</h2>
-    <p>I am Calvin Collins. If you want to talk about the research, the ad-tech work, the pipeline behind
-    it, or a project you think it fits — the fastest route is email.</p>
-    <a class="ab-cta" href="mailto:{email}?subject=Machine%20Humanities">Email me <span aria-hidden="true">&#8594;</span></a>
-    <p class="ab-note">Or start with <a href="adtech.html">the Ad Tech desk</a> if you came for the market
-    work, and <a href="research.html">the library</a> if you came for everything else.</p>
-  </div>
-</main>
-<footer>
-  <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
-  <p class="colophon"><a href="index.html">&#8592; Back to the homepage</a></p>
-</footer>
-<script>{theme_js}</script>
-{shell}
-</body>
-</html>
-"""
-
-
-def build_about_page(out_dir, figures, shell=""):
-    """Render docs/about.html — the front door for a first-time visitor.
-
-    `figures` is a list of (number, label) pairs, all computed from the build so
-    the page's claims stay true to the library it sits in front of."""
-    out = Path(out_dir)
-    descr = ("Machine Humanities — a library of agentic deep research by Calvin Collins, "
-             "with a Connected-TV trade desk and a publicly graded forecast record.")
-    fig_html = "".join(
-        f'<div class="ab-fig"><b>{html.escape(str(n))}</b><span>{html.escape(label)}</span></div>'
-        for n, label in figures
-    )
-    (out / "about.html").write_text(ABOUT_TEMPLATE.format(
-        favicon=FAVICON,
-        og_meta=og_tags("About — Machine Humanities", descr, f"{SITE_URL}/about.html", f"{SITE_URL}/{OG_IMAGE}"),
-        css=LIBRARY_CSS + ABOUT_CSS,
-        descr=html.escape(descr, quote=True),
-        nav=main_nav_html(active="about.html"),
-        figures=fig_html,
-        email=CONTACT_EMAIL,
-        theme_js=LIBRARY_THEME_JS,
-        shell=shell,
-    ))
-    print("  \u2713 About & contact \u2192 about.html")
-
-
 def og_tags(title, description, url, image):
     """Build a page's Open Graph + Twitter-card <meta> block (a string)."""
     esc = lambda s: html.escape(str(s), quote=True)
@@ -1246,22 +1035,13 @@ def hero_cta_html(hub_desk=None):
     if hub_desk:
         links.append((hub_desk["href"], hub_desk["title"], ''))
     links.append(('forecast.html', 'The Forecast Desk', ''))
-    links.append(('about.html', 'About & contact', ''))
     out = []
     for href, label, kind in links:
         cls = "hero-cta-btn" + (" primary" if kind == 'primary' else "")
         arrow = ' <span aria-hidden="true">→</span>' if kind == 'primary' else ''
         out.append(f'<a class="{cls}" href="{html.escape(href, quote=True)}">'
                    f'{html.escape(label)}{arrow}</a>')
-    # A real GET form, not a JS field: it submits to the search page and works
-    # with scripting off, and the browser treats it as the page's search box.
-    search = ('<form class="hero-search" role="search" action="search.html" method="get">'
-              f'<span class="hs-ic" aria-hidden="true">{SEARCH_GLYPH}</span>'
-              '<input type="search" name="q" autocomplete="off"'
-              ' placeholder="Search every corpus, edition and pamphlet…"'
-              ' aria-label="Search the library">'
-              '<button type="submit">Search</button></form>')
-    return f'{search}<div class="hero-cta">{"".join(out)}</div>'
+    return f'<div class="hero-cta">{"".join(out)}</div>'
 
 
 def hero_art():
@@ -1296,17 +1076,10 @@ MAIN_NAV_ITEMS = [
     ("The Pamphlets", "pamphlets.html"),
     ("The Forecast Desk", "forecast.html"),
     ("Connections", "connections.html"),
-    ("The Receipts", "receipts.html"),
     ("Glossary", "glossary.html"),
     ("Quiz", "quiz.html"),
     ("Wrapped", "wrapped.html"),
-    ("About", "about.html"),
 ]
-
-
-SEARCH_GLYPH = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" '
-                'stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/>'
-                '<line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>')
 
 
 def main_nav_html(prefix="", active=None):
@@ -1314,12 +1087,6 @@ def main_nav_html(prefix="", active=None):
     for label, href in MAIN_NAV_ITEMS:
         cls = ' class="active"' if href == active else ''
         lines.append(f'    <a href="{prefix}{href}"{cls}>{label}</a>')
-    # Search rides in the nav row so it inherits the wrap, but is drawn as a
-    # control rather than a twelfth nav word — the list is already two lines deep
-    # at desktop width and another label would only make that worse.
-    on = " active" if active == "search.html" else ""
-    lines.append(f'    <a class="mh-search{on}" href="{prefix}search.html" '
-                 f'aria-label="Search the site">{SEARCH_GLYPH}<span>Search</span></a>')
     return "\n".join(lines)
 
 
@@ -1330,10 +1097,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
 <title>{title}</title>
-<meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 {theme_style}
@@ -1352,7 +1116,6 @@ READER_TEMPLATE = """<!DOCTYPE html>
     <button id="type-btn" title="Text size &amp; width" aria-haspopup="true">Aa</button>
     <button id="terms-btn" title="Glossary of terms" aria-haspopup="true" hidden>❔ Terms</button>
     <a id="quiz-btn" href="quiz.html" title="Test yourself on this corpus">✏ Quiz</a>
-    <a id="searchall-btn" href="search.html" title="Search every corpus, edition and pamphlet">⌕ Search all</a>
     <button id="share-btn" title="Share this chapter">Share ↗</button>
     <button id="theme-btn">◐ Theme</button>
   </div>
@@ -1369,7 +1132,7 @@ READER_TEMPLATE = """<!DOCTYPE html>
   </div>
   <section id="related"></section>
 </main>
-<script id="reader-scenes-data" type="application/json">{scenes_json}</script>
+<template id="reader-scene-template">{scene}</template>
 <script id="corpus-data" type="application/json">{data_json}</script>
 <script>{marked_js}</script>
 <script>{app_js}</script>
@@ -1843,17 +1606,9 @@ function show(i, anchorText) {
   well.textContent = 'Chapter ' + (current + 1) + ' of ' + docs.length + ' · ' + mins + ' min read · Machine Humanities';
   var h1 = content.querySelector('h1');
   if (h1) h1.insertAdjacentElement('afterend', well); else content.insertAdjacentElement('afterbegin', well);
-  var sceneData = document.getElementById('reader-scenes-data');
-  var sceneHtmls = [];
-  if (sceneData) {
-    try { sceneHtmls = JSON.parse(sceneData.textContent || '[]') || []; } catch (e) { sceneHtmls = []; }
-  }
-  if (sceneHtmls.length && h1) {
-    var sceneTpl = document.createElement('template');
-    sceneTpl.innerHTML = sceneHtmls[current % sceneHtmls.length] || '';
-    if (sceneTpl.content && sceneTpl.content.firstElementChild) {
-      well.insertAdjacentElement('afterend', sceneTpl.content.firstElementChild.cloneNode(true));
-    }
+  var sceneTpl = document.getElementById('reader-scene-template');
+  if (sceneTpl && h1 && sceneTpl.content && sceneTpl.content.firstElementChild) {
+    well.insertAdjacentElement('afterend', sceneTpl.content.firstElementChild.cloneNode(true));
   }
   armReveals(content);
   toc.querySelectorAll('a').forEach((a, j) => a.classList.toggle('active', j === current));
@@ -2524,16 +2279,7 @@ SHELL_JS = r"""
     var head;
     if (subs.length) { subs.sort(function (a, b) { return a.s - b.s; }); head = subs.slice(0, 10).map(function (x) { return x.e; }); }
     else head = fuz.slice(0, 8);
-    var out = head.concat(bodyMatches(ql));  // title/chapter hits first, then in-the-text hits
-    // The palette caps its in-the-text hits at 16 and shows one per chapter; the
-    // search page ranks the lot. Always offer the hand-off rather than letting a
-    // truncated list read as the whole answer.
-    if (ql.length >= 2) {
-      out.push({ t: 'Search the full text for “' + q + '”', m: 'all results, ranked',
-                 grp: 'In the text', icon: '⌕',
-                 href: 'search.html?q=' + encodeURIComponent(q) });
-    }
-    return out;
+    return head.concat(bodyMatches(ql));  // title/chapter hits first, then in-the-text hits
   }
   function render() {
     var q = input.value.trim();
@@ -3612,8 +3358,6 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
 <title>{site_title}</title>
 <meta name="description" content="{site_subtitle}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 {overture_head}
@@ -3646,7 +3390,6 @@ LIBRARY_TEMPLATE = """<!DOCTYPE html>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">“The medium is the message.” — Marshall McLuhan</p>
   <p class="colophon"><span class="mh-stamp">Machine generated</span></p>
-  <p class="colophon"><a class="foot-contact" href="about.html">About</a> · <a class="foot-contact" href="mailto:{contact_email}?subject=Machine%20Humanities">Get in touch</a></p>
   <p class="colophon marc">
   <span class="marc-l"><b>008</b> Generated by machine — Claude (Anthropic)</span>
   <span class="marc-l"><b>245</b> Machine Humanities : agentic scholarship</span>
@@ -3678,8 +3421,6 @@ SCENE_LABELS = {
     "map": "A map room with linked panes, table notes, and signal lines between ideas.",
     "quiz": "A study desk with question cards, marked pages, and a lit review lamp.",
     "wrapped": "A reading ledger table with stacked holdings, square marks, and a private year-end tally.",
-    "receipts": "An evidence desk with claim slips, source stacks, and a checking lamp over the ledger.",
-    "errata": "A correction desk with struck lines, margin notes, and a fresh proof set beside them.",
 }
 
 
@@ -3694,8 +3435,6 @@ SCENE_COVERS = {
     "map": ("american-pragmatism-research", "jesus-research", "mcluhan-research", "india-advertising-research"),
     "quiz": ("piaget-research", "pareto-research", "jung-research", "deutsch-good-explanations-research"),
     "wrapped": ("carlyle-research", "american-pragmatism-research", "mcluhan-research", "jesus-research"),
-    "receipts": ("ctv-identity-signals-research", "roman-catholicism-research", "political-ctv-research", "mcluhan-research"),
-    "errata": ("mcluhan-research", "ctv-dsp-ssp-research", "emerson-research", "dickinson-research"),
 }
 
 SCENE_STAMPS = {
@@ -3709,17 +3448,11 @@ SCENE_STAMPS = {
     "map": "IDEA ATLAS",
     "quiz": "QUESTION SET",
     "wrapped": "PRIVATE LEDGER",
-    "receipts": "EVIDENCE LEDGER",
-    "errata": "STET / CORRECTED",
 }
 
 
 _SCENE_COVER_SLUGS_CACHE = None
 _RESEARCH_SCENES_CACHE = None
-_RESEARCH_SCENE_POOL_CACHE = None
-_SCENE_ASSET_ASSIGNMENTS = {}
-_USED_RESEARCH_SCENE_ASSETS = set()
-_ACTIVE_RESEARCH_SCENE_DIR = None
 
 
 def _all_scene_cover_slugs():
@@ -3776,127 +3509,12 @@ def _research_scenes():
     return scenes
 
 
-def _research_scene_pool():
-    """Return every content scene available to the site, grouped by corpus.
-
-    Unlike ``_research_scenes()``, which retains the original one-per-corpus
-    compatibility view, this pool lets each scene-plate topic receive its own
-    piece of real chapter artwork instead of recycling a representative image.
-    """
-    global _RESEARCH_SCENE_POOL_CACHE
-    if _RESEARCH_SCENE_POOL_CACHE is not None:
-        return _RESEARCH_SCENE_POOL_CACHE
-
-    pool = {}
-    if FIGURES_DIR.is_dir():
-        for folder in sorted(p for p in FIGURES_DIR.iterdir() if p.is_dir()):
-            scenes = []
-            snippets = sorted(folder.glob("scene_*.html"))
-            snippets.sort(key=lambda p: ("future" in p.stem.lower(), p.name))
-            for snippet in snippets:
-                text = snippet.read_text(errors="ignore")
-                img = re.search(
-                    r'<img\b[^>]*\bsrc=["\']data:image/(jpeg|jpg|png|webp);base64,([^"\']+)["\'][^>]*>',
-                    text,
-                    re.IGNORECASE,
-                )
-                if not img:
-                    continue
-                tag = img.group(0)
-                alt_match = re.search(r'\balt=(["\'])(.*?)\1', tag, re.IGNORECASE)
-                ext = "jpg" if img.group(1).lower() in ("jpeg", "jpg") else img.group(1).lower()
-                scenes.append({
-                    "bytes": base64.b64decode(img.group(2)),
-                    "ext": ext,
-                    "alt": html.unescape(alt_match.group(2)) if alt_match else "",
-                    "source": snippet.stem,
-                    "slug": folder.name,
-                })
-            if scenes:
-                pool[folder.name] = scenes
-    _RESEARCH_SCENE_POOL_CACHE = pool
-    return pool
-
-
 def publish_research_scenes(out):
-    """Prepare the served scene directory and reset one-to-one assignments."""
-    global _ACTIVE_RESEARCH_SCENE_DIR
+    """Materialize representative interior scenes into the served build."""
     scene_dir = Path(out) / SCENE_ASSET_DIRNAME
     scene_dir.mkdir(parents=True, exist_ok=True)
-    for stale in scene_dir.glob("*--*.*"):
-        stale.unlink()
-    _ACTIVE_RESEARCH_SCENE_DIR = scene_dir
-    _SCENE_ASSET_ASSIGNMENTS.clear()
-    _USED_RESEARCH_SCENE_ASSETS.clear()
-
-
-def _publish_research_scene_asset(selected):
-    """Write one scene-pool item as a served asset and return it with filename."""
-    published_bytes = selected["bytes"]
-    published_ext = selected["ext"]
-    try:
-        from PIL import Image
-        with Image.open(io.BytesIO(selected["bytes"])) as image:
-            image = image.convert("RGB")
-            if image.width > 640:
-                height = round(image.height * (640 / image.width))
-                image = image.resize((640, height), Image.Resampling.LANCZOS)
-            optimized = io.BytesIO()
-            image.save(optimized, "WEBP", quality=58, method=6)
-            published_bytes = optimized.getvalue()
-            published_ext = "webp"
-    except Exception:
-        # Pillow is optional; the original embedded research image remains a
-        # valid fallback when the build runs in a minimal Python environment.
-        pass
-    filename = f"{selected['slug']}--{selected['source']}.{published_ext}"
-    if _ACTIVE_RESEARCH_SCENE_DIR is not None:
-        (_ACTIVE_RESEARCH_SCENE_DIR / filename).write_bytes(published_bytes)
-    return {
-        **selected,
-        "filename": filename,
-    }
-
-
-def _unique_research_scene(kind, cover_slugs=None, seed="", placement=""):
-    """Assign a placement one piece of the artwork belonging to its own subject.
-
-    Relevance is the whole rule: a plate either shows art drawn from the
-    research it is about, or it shows nothing at all. A placement that names no
-    corpus — a desk front, a market page, a glossary, an edition of the paper —
-    gets no illustration, because the only illustration available to it would
-    be one borrowed from unrelated research.
-    """
-    pool = _research_scene_pool()
-    if not pool:
-        return None
-
-    assignment_key = f"{kind}:{seed}:{placement}"
-    if assignment_key in _SCENE_ASSET_ASSIGNMENTS:
-        return _SCENE_ASSET_ASSIGNMENTS[assignment_key]
-
-    subject = _explicit_scene_subject(cover_slugs=cover_slugs, seed=seed)
-    if not subject:
-        return None
-
-    # Prefer art this build has not placed yet, but never leave the subject's
-    # own pool: one corpus's scene reappearing on that corpus's other page is
-    # far better than a stranger's scene appearing on either.
-    candidates = sorted(
-        pool.get(subject, ()),
-        key=lambda scene: (
-            (scene["slug"], scene["source"]) in _USED_RESEARCH_SCENE_ASSETS,
-            _scene_rank(assignment_key, f"{scene['slug']}:{scene['source']}"),
-        ),
-    )
-    selected = candidates[0] if candidates else None
-    if selected is None:
-        return None
-
-    _USED_RESEARCH_SCENE_ASSETS.add((selected["slug"], selected["source"]))
-    result = _publish_research_scene_asset(selected)
-    _SCENE_ASSET_ASSIGNMENTS[assignment_key] = result
-    return result
+    for slug, scene in _research_scenes().items():
+        (scene_dir / f"{slug}.{scene['ext']}").write_bytes(scene["bytes"])
 
 
 def _scene_subject_slug(kind, cover_slugs=None, seed=""):
@@ -3918,34 +3536,27 @@ def _scene_subject_slug(kind, cover_slugs=None, seed=""):
     return min(pool, key=lambda slug: _scene_rank(f"{kind}:{seed}", slug))
 
 
-def _explicit_scene_subject(cover_slugs=None, seed=""):
-    """Return a corpus explicitly named by this placement, if there is one."""
-    pool = _research_scene_pool()
-    available = list(pool)
-    requested = [slug for slug in (cover_slugs or ()) if slug in available]
-    if requested:
-        # Multi-corpus collection plates should not consume the sole scene from
-        # a corpus that will need it for its own dedicated page later.
-        return next((slug for slug in requested if len(pool[slug]) > 1), requested[0])
-    matches = [slug for slug in available if slug in (seed or "")]
-    return max(matches, key=len) if matches else None
-
-
-def _scene_image(kind, root="", cover_slugs=None, seed="", placement=""):
-    """Return (src, alt) for a generated or uniquely assigned research scene."""
+def _scene_image(kind, root="", cover_slugs=None, seed=""):
+    """Return (src, alt) for a real research scene, falling back to its cover."""
     generated = GENERATED_SCENE_MAP.get(seed)
     if generated:
         filename, alt = generated
         return f"{root}generated-scenes/{filename}", alt
 
-    scene = _unique_research_scene(
-        kind, cover_slugs=cover_slugs, seed=seed, placement=placement
-    )
+    slug = _scene_subject_slug(kind, cover_slugs=cover_slugs, seed=seed)
+    if not slug:
+        return None, ""
+
+    scene = _research_scenes().get(slug)
     if scene:
         return (
-            f"{root}{SCENE_ASSET_DIRNAME}/{scene['filename']}",
-            scene["alt"] or f"A narrative scene from the {humanize(scene['slug'])} research.",
+            f"{root}{SCENE_ASSET_DIRNAME}/{slug}.{scene['ext']}",
+            scene["alt"] or f"A narrative scene from the {humanize(slug)} research.",
         )
+
+    cover = find_cover_image(slug)
+    if cover:
+        return f"{root}covers/{cover.name}", f"Cover scene for the {humanize(slug)} research."
     return None, ""
 
 
@@ -3995,9 +3606,7 @@ def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None, see
     kind = kind if kind in SCENE_LABELS else "pamphlet"
     variant = _scene_variant(kind, seed)
     cls = f"scene-plate scene-{kind} scene-v{variant}" + (f" {extra_class}" if extra_class else "")
-    src, scene_alt = _scene_image(
-        kind, root=root, cover_slugs=cover_slugs, seed=seed, placement=extra_class
-    )
+    src, scene_alt = _scene_image(kind, root=root, cover_slugs=cover_slugs, seed=seed)
     if not src:
         return ""
     alt = label or scene_alt or SCENE_LABELS[kind]
@@ -4007,54 +3616,6 @@ def scene_plate(kind, label=None, extra_class="", root="", cover_slugs=None, see
         f'alt="{html.escape(alt, quote=True)}" loading="lazy" decoding="async">'
         '</figure>'
     )
-
-
-def reader_scene_json(corpus, kind="research", cover_slugs=None, root=""):
-    """Return one deterministic scene-plate HTML string per reader chapter."""
-    scenes = []
-    slug = corpus.get("slug", "")
-    local_pool = list(_research_scene_pool().get(slug, ()))
-    local_used = set()
-    local_srcs = set()
-    for i, doc in enumerate(corpus.get("documents", ())):
-        seed = f"{slug}:chapter:{i}:{doc.get('title', '')}"
-        extra_class = f"reader-scene reader-scene-ch{i + 1}"
-        candidates = sorted(
-            (scene for scene in local_pool if scene["source"] not in local_used),
-            key=lambda scene: _scene_rank(seed, scene["source"]),
-        )
-        selected = candidates[0] if candidates else None
-        if selected:
-            local_used.add(selected["source"])
-            _USED_RESEARCH_SCENE_ASSETS.add((selected["slug"], selected["source"]))
-            asset = _publish_research_scene_asset(selected)
-            src = f"{root}{SCENE_ASSET_DIRNAME}/{asset['filename']}"
-            alt = asset["alt"] or f"A narrative scene from the {humanize(asset['slug'])} research."
-            cls = f"scene-plate scene-{kind if kind in SCENE_LABELS else 'pamphlet'} scene-v{_scene_variant(kind, seed)} {extra_class}"
-            scenes.append(
-                f'<figure class="{html.escape(cls, quote=True)}">'
-                f'<img class="sc-scene" src="{html.escape(src, quote=True)}" '
-                f'alt="{html.escape(alt, quote=True)}" loading="lazy" decoding="async">'
-                '</figure>'
-            )
-            local_srcs.add(src)
-            continue
-
-        fallback = scene_plate(
-            kind,
-            extra_class=extra_class,
-            root=root,
-            cover_slugs=cover_slugs,
-            seed=seed,
-        )
-        src_match = re.search(r'\bsrc="([^"]+)"', fallback)
-        if src_match and src_match.group(1) in local_srcs:
-            scenes.append("")
-        else:
-            if src_match:
-                local_srcs.add(src_match.group(1))
-            scenes.append(fallback)
-    return json_for_html(scenes)
 
 
 SCENE_PLATE_CSS = """
@@ -4505,16 +4066,6 @@ html.show-overture .ov-skip { animation-delay: .7s; }
 @keyframes ovOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
 @keyframes ovRise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; } }
 @keyframes ovTrack { from { opacity: 0; letter-spacing: .3em; } to { opacity: 1; letter-spacing: .04em; } }
-/* The separator dots sit in the gutter to the right of each link, so once the
-   rail wraps the last link on every line strands one against the margin. */
-@media (max-width: 680px) {
-  .ov-sections { gap: .5rem 1.1rem; margin-bottom: 1.9rem; }
-  .ov-sections a:not(:last-child)::after { content: none; }
-}
-/* No Esc key to press — the enter button is the whole affordance there. */
-@media (hover: none) and (pointer: coarse) {
-  .ov-skip { display: none; }
-}
 @media (prefers-reduced-motion: reduce) {
   html.show-overture #overture, html.show-overture .ov-inner > * { animation: none !important; }
   #ov-enter, #ov-enter:hover, #ov-enter:focus-visible, #ov-enter:active,
@@ -5024,16 +4575,6 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
 .mh-nav a:hover::after { transform: scaleX(1); transform-origin: left; }
 .mh-nav a.active { color: var(--text); }
 .mh-nav a.active::after { transform: scaleX(1); }
-/* The masthead's search control: a bordered pill, so it reads as an action and
-   not as one more destination in the nav list. */
-.mh-nav a.mh-search { display: inline-flex; align-items: center; gap: .38rem; padding: .26rem .62rem;
-  margin: -.26rem 0; border: 1px solid var(--border); border-radius: 999px; color: var(--text);
-  transition: color .2s ease, border-color .2s ease, background .2s ease; }
-.mh-nav a.mh-search svg { width: 11px; height: 11px; flex: 0 0 auto; }
-.mh-nav a.mh-search::after { display: none; }
-.mh-nav a.mh-search:hover, .mh-nav a.mh-search:focus-visible {
-  color: var(--accent); border-color: var(--accent); }
-.mh-nav a.mh-search.active { background: var(--text); color: var(--bg); border-color: var(--text); }
 .section-title { max-width: 1120px; margin: 1.6rem auto .2rem; padding: 0 2rem; font-family: var(--display);
   font-weight: 600; font-size: 1.9rem; scroll-margin-top: 1rem; }
 .section-title::after { content: ""; display: block; width: 148px; height: 8px; margin-top: .65rem; border-radius: 0;
@@ -5147,10 +4688,7 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--
   .ghost-band .gb-flag { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 .9rem; }
   .ghost-band .scene-plate { max-width: 320px; }
   .masthead { flex-direction: column; align-items: flex-start; gap: .5rem; letter-spacing: .09em; }
-  /* Stacked under the wordmark the nav is its own block, so it hangs off the
-     left margin with it — flush-right against a flush-left brand reads as
-     overflow rather than as an index. */
-  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; justify-content: flex-start; }
+  .mh-nav { flex-wrap: wrap; gap: .4rem 1.1rem; }
 }
 header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: flex;
   align-items: center; gap: 2.5rem; }
@@ -5167,25 +4705,7 @@ header { max-width: 1120px; margin: 0 auto; padding: 2.6rem 2rem 1rem; display: 
   background: transparent; border: 0; box-shadow: var(--shadow-2); }
 .hero-art .mascot-img { width: min(100%, 285px);
   animation: mhAgentFloat 6.5s ease-in-out infinite; transform-origin: 50% 58%; }
-/* Home-page search: the widest single entry point into the library, sitting
-   above the section buttons because it reaches all of them. */
-.hero-search { display: flex; align-items: center; gap: .5rem; margin: 1.6rem 0 0; max-width: 30rem;
-  background: var(--panel); border: 1px solid var(--border); border-radius: 999px; padding: .1rem .35rem .1rem .85rem;
-  transition: border-color .2s ease; }
-.hero-search:focus-within { border-color: var(--accent); }
-.hero-search .hs-ic { display: inline-flex; color: var(--muted); flex: 0 0 auto; }
-.hero-search .hs-ic svg { width: 14px; height: 14px; }
-.hero-search input { flex: 1 1 auto; min-width: 0; font-family: var(--sans); font-size: .82rem;
-  color: var(--text); background: none; border: 0; padding: .62rem 0; letter-spacing: 0; text-transform: none; }
-.hero-search input::placeholder { color: var(--muted); }
-.hero-search input:focus { outline: none; }
-.hero-search button { flex: 0 0 auto; font-family: var(--sans); font-size: .7rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .08em; color: var(--bg); background: var(--text);
-  border: 1px solid var(--text); border-radius: 999px; padding: .44rem .9rem; cursor: pointer;
-  transition: background .2s ease, border-color .2s ease; }
-.hero-search button:hover { background: var(--accent); border-color: var(--accent); }
-.hero-search button:focus-visible { outline: none; box-shadow: var(--ring); }
-.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.1rem 0 0; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.5rem 0 0; }
 .hero-cta-btn { font-family: var(--sans); font-size: .74rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .12em; text-decoration: none; color: var(--text); border: 1px solid var(--border);
   padding: .78rem 1.25rem; white-space: nowrap;
@@ -5526,8 +5046,6 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>The Ghost of Times — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -5555,7 +5073,7 @@ GHOST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="ghost-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="research.html">← Back to the Research Library</a> · <a href="ghost/feed.xml">Subscribe by RSS</a></p>
+  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -5912,8 +5430,6 @@ GHOST_EDITION_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="../feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="../feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -6354,8 +5870,6 @@ PAMPHLETS_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>{page_title} — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}{accent_css}</style>
 </head>
@@ -6574,8 +6088,6 @@ PAMPHLET_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="../feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="../feed.json">
 {og_meta}
 <style>{css}{accent_css}</style>
 </head>
@@ -7980,7 +7492,7 @@ FORECAST_PAGE_TEMPLATE = """<!DOCTYPE html>
 </head>
 <body>
 <div class="masthead">
-  <a class="mh-brand" href="{brand_href}" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
+  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
   <nav class="mh-nav">
 {nav}
   </nav>
@@ -8329,7 +7841,7 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
                  f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
     page_html = FORECAST_PAGE_TEMPLATE.format(
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
-        nav=nav, back=back, brand_href="index.html",
+        nav=nav, back=back,
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_PAGE_CSS,
         accent_css=_accent_css(page.get("accent")),
         favicon=FAVICON, og_meta=og,
@@ -8732,7 +8244,7 @@ def build_record_page(out_dir, native_items, markets, cfg, shell="", page=None, 
                  f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
     page_html = FORECAST_PAGE_TEMPLATE.format(
         page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
-        nav=nav, back=back, brand_href="index.html",
+        nav=nav, back=back,
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         accent_css=_accent_css(page.get("accent")),
         favicon=FAVICON, og_meta=og,
@@ -8858,7 +8370,7 @@ def build_persona_pages(out_dir, led, book, shell=""):
         page = FORECAST_PAGE_TEMPLATE.format(
             page_title=html.escape(title), h1=headline,
             kicker="The Forecast Desk · Predictor profile",
-            nav=main_nav_html(prefix="../", active="forecast.html"), brand_href="../index.html",
+            nav=main_nav_html(prefix="../", active="forecast.html"),
             back='<a href="../forecast-record.html">← The Track Record</a>',
             css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
             accent_css="",
@@ -8903,9 +8415,7 @@ def _fdc_bankroll_race_svg(book):
         return ""
     W, H = 660, 320
     X0, X1, Y0, Y1 = 58, 630, 268, 26
-    # n points per line = the opening bankroll plus one point per settled market,
-    # so every series visibly leaves the same $1,000 mark on the left edge.
-    n = len(events) + 1
+    n = len(events)
     def X(i):
         return X0 + (X1 - X0) * i / (n - 1)
     series = {}
@@ -8917,7 +8427,7 @@ def _fdc_bankroll_race_svg(book):
             for b in acct["bets"]:
                 if b.get("graded"):
                     by_event[(b.get("date") or "", b["market"])] = b
-        vals, bal = [FD_BANKROLL_START], FD_BANKROLL_START
+        vals, bal = [], FD_BANKROLL_START
         for ev in events:
             b = by_event.get(ev)
             if b is not None:
@@ -8939,11 +8449,8 @@ def _fdc_bankroll_race_svg(book):
     base_y = Y(FD_BANKROLL_START)
     grid.append(f'<line x1="{X0}" y1="{base_y:.1f}" x2="{X1}" y2="{base_y:.1f}" stroke="#9aa1af" '
                f'stroke-width="1" stroke-dasharray="4 4" opacity=".55"/>')
-    # Label the baseline on the LEFT: every line leaves the $1,000 mark there and
-    # only falls at first, so the space above it is clear — the right edge belongs
-    # to the end-of-race monogram chips.
-    grid.append(f'<text x="{X0 + 8}" y="{base_y - 8:.1f}" fill="#9aa1af" font-size="9.5" '
-               f'font-style="italic" font-family="Georgia,serif">starting bankroll · $1,000 each</text>')
+    grid.append(f'<text x="{X1}" y="{base_y - 6:.1f}" text-anchor="end" fill="#9aa1af" font-size="9.5" '
+               f'font-style="italic" font-family="Georgia,serif">starting bankroll</text>')
     lines = []
     for key, name, avatar, criterion in FD_PERSONAS:
         col = FDT_SERIES_COLORS.get(key, "#9aa1af")
@@ -9145,57 +8652,19 @@ def build_persona_compare_page(out_dir, led, book, shell=""):
         _row("P&amp;L, play money", lambda c: c["pnl"]),
         _row("Signature", lambda c: f'<span class="cmp-sig">{html.escape(c["signature"])}</span>'),
     ])
-    def _sec(n, title, kicker, inner):
-        return (f'<section class="cmp-sec"><h2 class="fdd-h"><span class="n">{n:02d}</span>{html.escape(title)}</h2>'
-                f'<p class="cmp-kick">{kicker}</p>{inner}</section>')
-
-    legend = _fd_persona_legend_html()
-    race = _fdc_bankroll_race_svg(book)
-    bars = _fdc_record_bars_svg(led)
-    scatter = _fdc_rigor_accuracy_svg(led)
-    h2h = _fdc_head_to_head_html(led)
-
-    secs = [_sec(1, "The card",
-                 'Every agent, side by side — the same rows the profile pages carry separately, read '
-                 'straight across so the differences in <em>method</em>, not just outcome, are visible at a glance.',
-                 f'<div class="cmp-wrap"><table class="cmp-table"><thead><tr><th></th>{head_cells}</tr></thead>'
-                 f'<tbody>{rows}</tbody></table></div>')]
-    n = 2
-    if bars:
-        secs.append(_sec(n, "The record, ranked",
-                         'Graded markets as the full bar, hits shaded in each agent’s own colour, best hit '
-                         'rate first. A short bar means few calls have come due yet — not a quiet record.',
-                         f'<figure class="cmp-fig">{bars}</figure>'))
-        n += 1
-    if race:
-        secs.append(_sec(n, "The bankroll race",
-                         'Each agent opens with the same $1,000 and sizes every bet by its own doctrine — so '
-                         'the same call can cost one agent a token ante and another a quarter of its book. '
-                         'Traced across every settled market in the order it graded.',
-                         f'<figure class="cmp-fig">{race}{legend}</figure>'))
-        n += 1
-    if scatter:
-        secs.append(_sec(n, "Rigor against accuracy",
-                         'The roster’s own premise, tested: does sitting further toward mathematical rigor '
-                         'actually buy a lower Brier score? On a handful of graded calls this is a picture, '
-                         'not a finding — but it is the picture that will either harden or collapse as the '
-                         'ledger fills.',
-                         f'<figure class="cmp-fig">{scatter}</figure>'))
-        n += 1
-    if h2h:
-        secs.append(_sec(n, "Head to head",
-                         'Every graded market as a row, every agent’s pick as a cell — green where it landed, '
-                         'red where it didn’t, dash where its doctrine sat the market out. Read a row to see '
-                         'where the desk agreed; read a column to see one agent’s whole book.',
-                         h2h))
-    body = "".join(secs)
+    body = (
+        '<p class="fdp-crit">Every standing predictor, side by side — the same rows the profile pages carry '
+        'separately, read straight across so the differences in method (not just outcome) are visible at a glance.</p>'
+        f'<div class="cmp-wrap"><table class="cmp-table"><thead><tr><th></th>{head_cells}</tr></thead>'
+        f'<tbody>{rows}</tbody></table></div>'
+    )
     title = "Compare the Predictors — The Forecast Desk"
     og = og_tags(title, "Every standing predictor's model, doctrine, and record, compared side by side.",
                  f"{SITE_URL}/forecasters/compare.html", f"{SITE_URL}/{OG_IMAGE}")
     page = FORECAST_PAGE_TEMPLATE.format(
         page_title=html.escape(title), h1="Compare the Predictors",
         kicker="The Forecast Desk · All seven, side by side",
-        nav=main_nav_html(prefix="../", active="forecast.html"), brand_href="../index.html",
+        nav=main_nav_html(prefix="../", active="forecast.html"),
         back='<a href="../forecast-record.html">← The Track Record</a>',
         css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_DETAIL_CSS,
         accent_css="",
@@ -9413,37 +8882,6 @@ FORECAST_DETAIL_CSS = FORECAST_PAGE_CSS + """
   line-height: 1.55; color: #c6d0e0; }
 .cmp-zone { display: block; font-family: var(--sans); font-size: .6rem; font-weight: 700; text-transform: uppercase;
   letter-spacing: .08em; color: var(--fdmut); margin-bottom: .4rem; }
-
-/* comparison sections, charts + legend */
-.cmp-sec { margin: 0 0 2.6rem; }
-.cmp-kick { font-family: var(--serif); font-size: .95rem; line-height: 1.62; color: #c6d0e0;
-  max-width: 62ch; margin: 0 0 1.1rem; }
-.cmp-kick em { color: var(--fdtext); font-style: italic; }
-.cmp-fig { margin: 0; background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
-  padding: 1.1rem 1.2rem; }
-.cmp-fig svg { display: block; width: 100%; height: auto; }
-.cmp-legend { display: flex; flex-wrap: wrap; gap: .45rem .9rem; margin-top: .9rem; padding-top: .8rem;
-  border-top: 1px solid var(--fdline); }
-.cmp-legend > span { display: inline-flex; align-items: center; gap: .35rem; font-family: var(--sans);
-  font-size: .66rem; font-weight: 700; color: var(--fdmut); white-space: nowrap; }
-/* the legend rides small — the charts, not the mascots, carry this section */
-.cmp-legend .fd-agent-mascot { width: 22px; height: 22px; margin-right: 0; border-radius: 5px; }
-
-/* head-to-head grid */
-.h2h-table { border-collapse: collapse; width: 100%; min-width: 900px; }
-.h2h-table th, .h2h-table td { border: 1px solid var(--fdline); padding: .5rem .6rem; text-align: center;
-  vertical-align: middle; font-family: var(--sans); font-size: .7rem; }
-.h2h-table thead th { background: #0c1117; }
-.h2h-persona { border-top: 3px solid var(--fdmut) !important; width: 96px; }
-.h2h-m { text-align: left !important; min-width: 210px; position: sticky; left: 0; background: var(--fdcard); }
-.h2h-m a { display: block; font-weight: 800; color: var(--fdtext); text-decoration: none; line-height: 1.3; }
-.h2h-m a:hover { color: var(--fdblue); }
-.h2h-w { display: block; font-family: var(--fdmono); font-size: .62rem; color: var(--fdmut); margin-top: .2rem; }
-.h2h-pick { display: block; font-weight: 700; line-height: 1.25; }
-.h2h-prob { display: block; font-family: var(--fdmono); font-size: .64rem; opacity: .8; margin-top: .12rem; }
-.h2h-hit { background: rgba(34,197,94,.14); color: var(--fdup); }
-.h2h-miss { background: rgba(239,68,68,.12); color: #f0a3a3; }
-.h2h-none { color: var(--fdline); }
 """
 
 FORECAST_DETAIL_TEMPLATE = """<!DOCTYPE html>
@@ -10172,8 +9610,6 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>The Fingerprint — calvincollins · xyz</title>
 <meta name="description" content="{motto}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -10201,7 +9637,7 @@ FINGERPRINT_PAGE_TEMPLATE = """<!DOCTYPE html>
 </main>
 <footer class="fpp-foot">
   <p class="epigraph">{blurb}</p>
-  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="research.html">The Research Library</a> · <a href="fingerprint/feed.xml">Subscribe by RSS</a></p>
+  <p class="colophon"><a href="adtech.html">← Back to the Ad Tech desk</a> · <a href="research.html">The Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -10411,8 +9847,6 @@ FINGERPRINT_EDITION_TEMPLATE = """<!DOCTYPE html>
 <title>{title}</title>
 <meta name="description" content="{description}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="../feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="../feed.json">
 {og_meta}
 <style>{css}</style>
 </head>
@@ -11207,196 +10641,6 @@ def strip_md(body, cap=6000):
     return t[:cap]
 
 
-# ------------------------------------------------------------- dated publications
-# The Ghost editions, Fingerprint editions, Pamphlets and desk Briefings are all
-# dated, standalone pieces that until now existed only as rendered HTML. Both the
-# feeds and the search index want the same thing from them — a date, a title, a
-# link and the words — so they are harvested once here into one shape.
-
-def _edition_stories(data):
-    """(headline, dek, body) for the lead and every story in an edition, in
-    reading order. Ghost and Fingerprint editions share this shape."""
-    out = []
-    lead = data.get("lead")
-    if isinstance(lead, dict):
-        out.append(lead)
-    for sec in data.get("sections") or []:
-        for st in (sec.get("stories") or []):
-            if isinstance(st, dict):
-                out.append(st)
-    return [(str(s.get("headline") or "").strip(),
-             str(s.get("dek") or "").strip(),
-             strip_md(str(s.get("body") or ""), cap=2600))
-            for s in out if s.get("headline") or s.get("body")]
-
-
-def harvest_publications(out_dir, editions, fp_editions, pamphlet_items,
-                         briefing_items=(), ghost_cfg=None, fp_cfg=None):
-    """Every dated publication on the site, newest first, in one normalised shape.
-
-    Each record: kind, section, title, dek, date, href, author, and `stories`
-    (the words, for the feed body and the search index).
-    """
-    ghost_title = (ghost_cfg or {}).get("title") or "The Ghost of Times"
-    fp_title = (fp_cfg or {}).get("title") or "The Fingerprint"
-    pubs = []
-
-    for ed in editions:
-        date = ed.get("date", "")
-        data = read_ghost_edition_data(out_dir, date) or {}
-        n = ed.get("edition_number")
-        pubs.append({
-            "kind": "ghost", "section": ghost_title,
-            "title": ed.get("lead_headline") or f"{ghost_title} — {date}",
-            "dek": ed.get("lead_dek", ""), "date": date,
-            "href": ed.get("file") or f"ghost/{date}-ghost-of-times.html",
-            "author": ed.get("lead_writer", ""),
-            "label": f"{ghost_title} Nº {n}" if n else ghost_title,
-            "stories": _edition_stories(data),
-        })
-
-    for ed in fp_editions:
-        date = ed.get("date", "")
-        data = read_fingerprint_edition_data(out_dir, date) or {}
-        n = ed.get("edition_number")
-        pubs.append({
-            "kind": "fingerprint", "section": fp_title,
-            "title": ed.get("lead_headline") or f"{fp_title} — {date}",
-            "dek": ed.get("lead_dek", ""), "date": date,
-            "href": ed.get("file") or f"fingerprint/{date}-fingerprint.html",
-            "author": "", "label": f"{fp_title} Nº {n}" if n else fp_title,
-            "stories": _edition_stories(data),
-        })
-
-    for kind, items, subdir, section in (
-            ("pamphlet", pamphlet_items, "pamphlets", "The Pamphlets"),
-            ("briefing", briefing_items, "briefings", "The Briefings")):
-        for it in items:
-            slug = it.get("slug", "")
-            data = read_pamphlet_data(out_dir, slug, subdir=subdir) or {}
-            body = strip_md(str(data.get("body") or ""), cap=6000)
-            pubs.append({
-                "kind": kind, "section": section,
-                "title": it.get("title") or slug, "dek": it.get("dek", ""),
-                "date": it.get("date", ""),
-                "href": it.get("file") or f"{subdir}/{slug}.html",
-                "author": it.get("writer", ""), "label": section,
-                "stories": [(it.get("title") or slug, it.get("dek", ""), body)] if body else [],
-            })
-
-    pubs.sort(key=lambda p: p["date"], reverse=True)
-    return pubs
-
-
-def _rfc822(date_str):
-    """YYYY-MM-DD → RFC-822, which is what RSS 2.0 wants. Midnight UTC: the
-    editions carry a date, not a time."""
-    try:
-        y, m, d = (int(x) for x in str(date_str)[:10].split("-"))
-        dt = datetime.datetime(y, m, d, tzinfo=datetime.timezone.utc)
-    except (ValueError, TypeError):
-        return ""
-    return dt.strftime("%a, %d %b %Y %H:%M:%S +0000")
-
-
-def _feed_body_html(pub):
-    """The piece as feed-readable HTML: its dek, then each story's headline and
-    prose. Readers get the whole thing, not a teaser back to the site."""
-    parts = []
-    if pub.get("dek"):
-        parts.append(f"<p><em>{html.escape(pub['dek'])}</em></p>")
-    for headline, dek, body in pub.get("stories", []):
-        if headline:
-            parts.append(f"<h3>{html.escape(headline)}</h3>")
-        if dek:
-            parts.append(f"<p><em>{html.escape(dek)}</em></p>")
-        if body:
-            parts.append(f"<p>{html.escape(body)}</p>")
-    return "".join(parts) or f"<p>{html.escape(pub.get('dek', ''))}</p>"
-
-
-def build_feeds(out_dir, pubs, site_title, site_subtitle):
-    """Write RSS 2.0 + JSON Feed for the whole site, and one RSS feed per
-    dated section, so the Ghost and the Fingerprint can be subscribed to
-    separately from everything else."""
-    out = Path(out_dir)
-    if not pubs:
-        return []
-
-    def rss(items, title, desc, self_href):
-        entries = []
-        for p in items:
-            link = f"{SITE_URL}/{p['href']}"
-            entries.append(
-                "<item>"
-                f"<title>{html.escape(p['title'])}</title>"
-                f"<link>{html.escape(link)}</link>"
-                f"<guid isPermaLink=\"true\">{html.escape(link)}</guid>"
-                + (f"<pubDate>{_rfc822(p['date'])}</pubDate>" if _rfc822(p["date"]) else "")
-                + (f"<author>noreply@calvincollins.xyz ({html.escape(p['author'])})</author>"
-                   if p.get("author") else "")
-                + f"<category>{html.escape(p['section'])}</category>"
-                + f"<description>{html.escape(p.get('dek') or p['title'])}</description>"
-                + f"<content:encoded><![CDATA[{_feed_body_html(p)}]]></content:encoded>"
-                "</item>")
-        built = _rfc822(items[0]["date"]) if items else ""
-        return (
-            '<?xml version="1.0" encoding="UTF-8"?>\n'
-            '<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" '
-            'xmlns:atom="http://www.w3.org/2005/Atom">\n<channel>'
-            f"<title>{html.escape(title)}</title>"
-            f"<link>{SITE_URL}/</link>"
-            f"<description>{html.escape(desc)}</description>"
-            "<language>en</language>"
-            f'<atom:link href="{SITE_URL}/{self_href}" rel="self" type="application/rss+xml"/>'
-            + (f"<lastBuildDate>{built}</lastBuildDate>" if built else "")
-            + "".join(entries) + "</channel></rss>\n")
-
-    def json_feed(items, title, desc, self_href):
-        entries = []
-        for p in items:
-            # JSON Feed wants optional keys absent, not null
-            e = {
-                "id": f"{SITE_URL}/{p['href']}",
-                "url": f"{SITE_URL}/{p['href']}",
-                "title": p["title"],
-                "summary": p.get("dek") or p["title"],
-                "content_html": _feed_body_html(p),
-                "tags": [p["section"]],
-            }
-            if p.get("date"):
-                e["date_published"] = f"{p['date']}T00:00:00Z"
-            if p.get("author"):
-                e["authors"] = [{"name": p["author"]}]
-            entries.append(e)
-        return json.dumps({
-            "version": "https://jsonfeed.org/version/1.1",
-            "title": title, "home_page_url": f"{SITE_URL}/",
-            "feed_url": f"{SITE_URL}/{self_href}", "description": desc,
-            "items": entries,
-        }, ensure_ascii=False, indent=1)
-
-    written = []
-    site_desc = f"{site_title} — {site_subtitle}"
-    (out / "feed.xml").write_text(rss(pubs[:60], site_title, site_desc, "feed.xml"))
-    (out / "feed.json").write_text(json_feed(pubs[:60], site_title, site_desc, "feed.json"))
-    written += ["feed.xml", "feed.json"]
-
-    for kind, subdir in (("ghost", "ghost"), ("fingerprint", "fingerprint"),
-                         ("pamphlet", "pamphlets"), ("briefing", "briefings")):
-        items = [p for p in pubs if p["kind"] == kind]
-        if not items or not (out / subdir).is_dir():
-            continue
-        sec = items[0]["section"]
-        path = f"{subdir}/feed.xml"
-        (out / subdir / "feed.xml").write_text(
-            rss(items[:60], f"{site_title} — {sec}", f"{sec}, from {site_title}.", path))
-        written.append(path)
-
-    print(f"  ✓ Feeds  ({len(pubs)} dated pieces) → " + ", ".join(written))
-    return written
-
-
 # ---------------------------------------------------------------- entertainment-layer data (build-time)
 # Two precomputed artifacts the runtime leans on, both static and offline:
 #   * pull-quotes per corpus  -> Today's Passage + (later) shareable passage cards
@@ -11602,266 +10846,6 @@ def quiz_facts_for(corpus, folder):
     return facts
 
 
-# ------------------------------------------------------------------- the receipts
-# Every research manifest carries the pipeline's own audit trail: `key_claims`
-# (each with a type, stakes, confidence and a verification verdict) and a
-# `verification` block (depth, tier counts, and the claims a skeptic panel
-# refuted, contested, or flagged as resting on one source). Thirty-odd runs
-# wrote that block thirty-odd slightly different ways — corrections live under
-# five different key names, claim IDs appear as "1.4", "Claim 1.4", "01:2.3", a
-# {id, doc, what} record, and sometimes as bare prose carrying no ID at all —
-# so everything here is normalisation before it is presentation. Nothing is
-# inferred: a corpus with no verification block is reported as unaudited rather
-# than quietly counted as clean.
-
-# "Claim 1.4" / "01:2.3" / "C4.1" / "1.4 — what changed" → the bare ID.
-CLAIM_ID_RE = re.compile(r"^(?:claim\s+)?(?:\d+\s*:\s*)?([A-Za-z]?\d+(?:\.\d+)+)", re.I)
-
-# The five key names under which runs recorded "a skeptic panel took this out or
-# rewrote it", the four for preserved dissent, and the three for one-source flags.
-VERIFY_CORRECTION_KEYS = ("refuted_and_corrected", "refuted_claim_ids", "corrected_claims",
-                          "corrections_applied", "refuted_and_excluded")
-VERIFY_CONTESTED_KEYS = ("contested_dissent", "contested_claim_ids", "contested_claims",
-                         "contested_preserved")
-VERIFY_FLAG_KEYS = ("single_source_claim_ids", "single_source_flagged", "single_source_flags")
-# Prose that means the audit did not finish. Checked against the block's own
-# status/method/note fields, which is where interrupted runs left their apology.
-INCOMPLETE_MARKERS = ("interrupt", "spend limit", "spend cap", "stall", "did not run",
-                      "did not complete", "not complete", "failed", "halted", "partial",
-                      "unavailable", "was lost", "were lost", "not returned", "trimmed",
-                      "hand-reconciled", "by hand", "not computed", "not re-run")
-
-
-def split_claim_ref(raw):
-    """Split one correction/flag entry into (claim_id, note).
-
-    Entries arrive as bare IDs ("1.4"), as an ID carrying its own account of what
-    was wrong ("Claim 2.7 (overclaimed 'mainstream' — corrected to …)"), as a
-    {id, doc, what} record, or as pure prose with no ID ("marriage date
-    1935->1939 (Doc 01)"). Prose-only entries keep their text and return no ID —
-    they are still corrections, they just cannot be joined to a claim.
-    """
-    if isinstance(raw, dict):
-        cid = norm_claim_id(raw.get("id") or raw.get("claim") or "")
-        note = str(raw.get("what") or raw.get("note") or raw.get("correction") or "").strip()
-        return cid, note
-    s = str(raw or "").strip()
-    m = CLAIM_ID_RE.match(s)
-    if not m:
-        return None, s
-    return m.group(1), s[m.end():].strip(" \t—–-:().,;")
-
-
-def norm_claim_id(raw):
-    m = CLAIM_ID_RE.match(str(raw or "").strip())
-    return m.group(1) if m else None
-
-
-def _source_count(sources):
-    """How many sources a corpus was built on. Runs recorded this as `count`,
-    `total_count` or `count_approx` depending on vintage."""
-    if not isinstance(sources, dict):
-        return None
-    for k in ("count", "total_count", "count_approx"):
-        if isinstance(sources.get(k), int):
-            return sources[k]
-    return None
-
-
-def claim_verdict(status):
-    """Collapse ~22 free-text verification_status spellings into one vocabulary.
-
-    Order matters: "unverified, corroborated in source" contains both "verif"
-    and "corroborat", and must not be read as verified.
-    """
-    s = str(status or "").strip().lower()
-    if not s:
-        return "unrated"
-    if "refut" in s or "correct" in s:
-        return "corrected"
-    if "contest" in s:
-        return "contested"
-    if "unverified" in s:
-        return "unverified"
-    if "verif" in s:
-        return "verified"
-    if "corroborat" in s:
-        return "corroborated"
-    if "single" in s:
-        return "unverified"
-    if "inference" in s:
-        return "inference"
-    return "unrated"
-
-
-VERDICT_LABELS = {
-    "verified": "Verified",
-    "corroborated": "Corroborated",
-    "corrected": "Refuted &amp; corrected",
-    "contested": "Contested",
-    "unverified": "Unverified",
-    "inference": "Inference",
-    "unrated": "Unrated",
-}
-
-
-def _audit_state(v):
-    """(state, note) for a corpus's verification block.
-
-    `full` — an adversarial panel ran to completion. `partial` — it ran but was
-    interrupted, trimmed, or reconstructed by hand afterwards. `none` — no
-    verification block exists at all.
-    """
-    if not isinstance(v, dict) or not v:
-        return "none", ""
-    parts = []
-    for k in ("status", "method", "note", "phase_status", "reconciliation", "depth",
-              "skeptic_panels_completed", "tier_counts", "depth_tier"):
-        val = v.get(k)
-        if isinstance(val, str) and val.strip():
-            parts.append(val.strip())
-    note = " ".join(parts)
-    state = "partial" if any(w in note.lower() for w in INCOMPLETE_MARKERS) else "full"
-    return state, note
-
-
-def receipts_for(corpus, folder, category):
-    """The audit record for one corpus: its claims, its corrections, its flags.
-
-    Returns None for a corpus whose manifest carries no claims at all (the three
-    early runs that predate the key_claims schema) — they would otherwise show
-    up on the ledger as a corpus with a perfect record and nothing behind it.
-    """
-    try:
-        m = json.loads((Path(folder) / "manifest.json").read_text())
-    except Exception:
-        return None
-    raw_claims = [c for c in (m.get("key_claims") or []) if isinstance(c, dict)]
-    if not raw_claims:
-        return None
-    v = m.get("verification")
-    v = v if isinstance(v, dict) else {}
-
-    def harvest(keys):
-        """Every entry under any of `keys`, split into (id, note) pairs."""
-        out = []
-        for k in keys:
-            val = v.get(k)
-            if isinstance(val, str):
-                val = [val]
-            if not isinstance(val, list):
-                continue
-            for item in val:
-                cid, note = split_claim_ref(item)
-                if cid or note:
-                    out.append((cid, note))
-        return out
-
-    claims, by_id = [], {}
-    for c in raw_claims:
-        cid = str(c.get("id") or "").strip()
-        text = str(c.get("claim") or c.get("statement") or c.get("label") or "").strip()
-        if not text:
-            continue
-        srcs = c.get("supporting_sources") or c.get("citation") or c.get("evidence") or []
-        if isinstance(srcs, str):
-            srcs = [srcs]
-        # A few early runs stored supporting_sources as bare indices into the
-        # corpus's Sources.md ([1, 2, 10]); those carry nothing a reader can
-        # check, so they are dropped rather than rendered as "1".
-        srcs = [s for s in srcs if not str(s).strip().isdigit()]
-        entry = {
-            "id": cid,
-            "doc": str(c.get("document") or c.get("doc") or "").strip(),
-            "t": _clean_passage(text, 620),
-            "ty": str(c.get("type") or c.get("claim_type") or "").strip().lower(),
-            "st": str(c.get("stakes") or "").strip().lower(),
-            "cf": str(c.get("confidence") or "").strip().lower(),
-            "v": claim_verdict(c.get("verification_status")),
-            "vr": str(c.get("verification_status") or "").strip(),
-            "tier": str(c.get("verification_tier") or "").strip().lower(),
-            "s": [_clean_passage(str(s), 220) for s in srcs[:4] if str(s).strip()],
-        }
-        if c.get("single_source") is True:
-            entry["one"] = 1
-        claims.append(entry)
-        nid = norm_claim_id(cid)
-        if nid and nid not in by_id:
-            by_id[nid] = entry
-
-    # Corrections: the verification block's own list, joined by ID to the claim
-    # text now standing in the corpus, plus any claim the panel marked corrected
-    # that the block never listed. Prose-only entries are kept verbatim.
-    corrections, seen = [], set()
-    for cid, note in harvest(VERIFY_CORRECTION_KEYS):
-        nid = norm_claim_id(cid) if cid else None
-        joined = by_id.get(nid) if nid else None
-        key = nid or note
-        if key in seen:
-            continue
-        seen.add(key)
-        corrections.append({
-            "id": (joined or {}).get("id") or cid or "",
-            "doc": (joined or {}).get("doc", ""),
-            "note": note,
-            "claim": (joined or {}).get("t", ""),
-            "stakes": (joined or {}).get("st", ""),
-        })
-    for c in claims:
-        nid = norm_claim_id(c["id"])
-        if c["v"] == "corrected" and nid and nid not in seen:
-            seen.add(nid)
-            corrections.append({"id": c["id"], "doc": c["doc"], "note": "",
-                                "claim": c["t"], "stakes": c["st"]})
-
-    def flagged(keys, sweep):
-        """The block's own flag list, plus any claim `sweep` recognises that the
-        block never got round to listing."""
-        out, seen_f = [], set()
-        for cid, note in harvest(keys):
-            nid = norm_claim_id(cid) if cid else None
-            joined = by_id.get(nid) if nid else None
-            key = nid or note
-            if key in seen_f:
-                continue
-            seen_f.add(key)
-            out.append({"id": (joined or {}).get("id") or cid or "", "note": note,
-                        "claim": (joined or {}).get("t", "")})
-        for c in claims:
-            nid = norm_claim_id(c["id"])
-            if sweep(c) and nid and nid not in seen_f:
-                seen_f.add(nid)
-                out.append({"id": c["id"], "note": "", "claim": c["t"]})
-        return out
-
-    state, note = _audit_state(v)
-    tiers = v.get("tiers") if isinstance(v.get("tiers"), dict) else {}
-    if not tiers and isinstance(v.get("tier_counts"), dict):
-        tiers = v["tier_counts"]
-    counts = Counter(c["v"] for c in claims)
-    return {
-        "slug": corpus["slug"], "title": corpus["title"], "category": category,
-        "href": f"{corpus['slug']}.html",
-        "state": state, "note": _clean_passage(note, 700),
-        "depth": str(v.get("depth") or v.get("depth_tier") or "").strip(),
-        "checked": v.get("claims_checked") if isinstance(v.get("claims_checked"), int) else None,
-        "tiers": {k: tiers.get(k, 0) for k in ("deep", "standard", "light")
-                  if isinstance(tiers.get(k), int)},
-        "gap_rounds": v.get("gap_rounds") if isinstance(v.get("gap_rounds"), int) else None,
-        "sources": _source_count(m.get("sources")),
-        "n": len(claims),
-        "load_bearing": sum(1 for c in claims if c["st"] == "load-bearing"),
-        "counts": dict(counts),
-        "corrections": corrections,
-        "contested": flagged(VERIFY_CONTESTED_KEYS, lambda c: c["v"] == "contested"),
-        # Only genuine one-source claims — the explicit single_source flag, or a
-        # verdict that says so. "unverified, corroborated in source" is neither.
-        "single_source": flagged(VERIFY_FLAG_KEYS,
-                                 lambda c: c.get("one") == 1 or "single" in c["vr"].lower()),
-        "claims": claims,
-    }
-
-
 def build_similarity(corpus_meta, top_k=3):
     """corpus_meta: list of {slug, title, category, keywords}. Returns {slug: [related entries]}."""
     out = {}
@@ -11962,8 +10946,6 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <title>{title} — calvincollins · xyz</title>
 <meta name="description" content="{subtitle}">
 <link rel="icon" href="{favicon}">
-<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" href="feed.xml">
-<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" href="feed.json">
 {og_meta}
 <style>{css}{accent_css}</style>
 </head>
@@ -12001,7 +10983,7 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
 <footer>
   <div class="tiles" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
   <p class="epigraph">{epigraph}</p>
-  <p class="colophon">{back_link}</p>
+  <p class="colophon"><a href="research.html">← Back to the Research Library</a></p>
 </footer>
 <script>{theme_js}</script>
 {shell}
@@ -12026,8 +11008,6 @@ DOMAIN_PAGE_CSS = """
 /* Sits in the copy column so it lines up under the nameplate rather than
    centring itself across the mascot too. */
 .dk-scene { grid-column: 1; margin: 1.5rem 0 0; min-width: 0; }
-/* A desk with no artwork of its own gets no reserved hole under the nameplate. */
-.dk-scene:empty { display: none; margin: 0; }
 .dk-scene .scene-plate { aspect-ratio: 21 / 9; max-width: none; margin: 0; }
 .dk-kicker { font-family: var(--sans); font-size: .72rem; font-weight: 600; text-transform: uppercase;
   letter-spacing: .14em; color: var(--accent); margin: 0 0 .5rem; }
@@ -12040,23 +11020,13 @@ DOMAIN_PAGE_CSS = """
     linear-gradient(180deg, var(--text) 0 3px, transparent 3px 5px, var(--text) 5px 6px, transparent 6px) 36px 0 / 112px 8px no-repeat; }
 .dk-motto { font-family: var(--serif); font-style: italic; font-size: 1.08rem; line-height: 1.5;
   color: var(--muted); max-width: 640px; margin: 0 auto 1.4rem; }
-.dk-folio { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem;
+.dk-folio { display: flex; justify-content: space-between; align-items: center; gap: 1rem;
   border-top: 2px solid var(--text); border-bottom: 1px solid var(--text); padding: .55rem 0;
   font-family: var(--mono); font-size: .72rem; font-weight: 500; text-transform: uppercase;
   letter-spacing: .06em; font-variant-numeric: tabular-nums; color: var(--text); }
-.dk-folio > :first-child { justify-self: start; }
-.dk-folio > :last-child { justify-self: end; text-align: right; }
-.dk-folio .dk-folio-c { color: var(--accent); font-weight: 600; justify-self: center; text-align: center; }
-.dk-folio a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--border); }
-.dk-folio a:hover, .dk-folio a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
-@media (max-width: 700px) {
-  /* three mono labels across a phone is a pile-up — keep the count, drop the rails */
-  .dk-folio { grid-template-columns: 1fr; justify-items: center; gap: .3rem; }
-  .dk-folio > :first-child, .dk-folio > :last-child { justify-self: center; text-align: center; }
-}
+.dk-folio .dk-folio-c { color: var(--accent); font-weight: 600; }
 footer .colophon a { color: var(--accent); text-decoration: none; }
 footer .colophon a:hover { text-decoration: underline; }
-.foot-contact { font-family: var(--sans); font-weight: 600; letter-spacing: .01em; }
 @media (max-width: 560px) {
   .dk-hero { grid-template-columns: 1fr; }
   .dk-agent { order: -1; }
@@ -12234,15 +11204,8 @@ HOME_MIRROR_CSS = """
   transition: background-color .16s var(--ease), color .16s var(--ease), transform .16s var(--ease); }
 .mirror-more:hover, .mirror-more:focus-visible { background: var(--mc-accent, var(--accent)); color: var(--bg);
   transform: translateX(3px); }
-/* Stacked, the two panes are no longer level with each other, so the shared
-   three-row scaffolding has to come off with the second column. Leaving
-   `grid-row: 1 / -1` on the panes makes auto-placement push the second one
-   into an *implicit* second column instead of stacking it — the 1fr track
-   then collapses to 0 and the panes render on top of each other. */
 @media (max-width: 900px) {
   .mirror-head, .mirror-grid { grid-template-columns: 1fr; }
-  .mirror-grid { grid-template-rows: none; row-gap: 2.6rem; }
-  .mirror-col { grid-column: 1; grid-row: auto; grid-template-rows: none; }
 }
 
 /* Bottom scrolls — Ghost of Times / Pamphlets / Briefings as horizontal
@@ -12435,12 +11398,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         accent_css=accent_css,
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
         stats=html.escape(stats),
-        folio_right=page_cfg.get("folio_right_html")
-                    or html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
-        # Every desk front is a sibling of the homepage, not a child of the
-        # library — pointing them all at research.html made research.html's own
-        # footer link to itself.
-        back_link=page_cfg.get("back_link", '<a href="index.html">← Back to the homepage</a>'),
+        folio_right=html.escape(page_cfg.get("folio_right", "Research + the daily wire")),
         scene=scene_plate(scene_kind, extra_class="section-scene", seed=f"domain:{slug}"),
         hero=desk_hero_art(slug),
         bands=bands,
@@ -13036,882 +11994,6 @@ def build_wrapped_page(out_dir, wrapped_stats, shell="", category_order=None):
     print("  ✓ Research Wrapped → wrapped.html")
 
 
-# ------------------------------------------------------------------- the receipts
-# Two pages off one payload. The Receipts is the standing evidence ledger — every
-# claim in the library with its verdict, its stakes and its sources, plus a
-# per-corpus audit record that says plainly where a verification panel finished
-# and where it was cut off. Errata is the narrower, sharper page: the claims a
-# skeptic panel refuted, and what they say now.
-
-RECEIPTS_CSS = """
-#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
-  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
-  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
-#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
-.rc-wrap { max-width: 1140px; margin: 0 auto; padding: 2rem 2rem 5rem; }
-.rc-head { margin: .6rem 0 .4rem; }
-.rc-head .kicker { margin: 0 0 .5rem; }
-.rc-head h1 { font-size: clamp(2.4rem, 5vw, 3.2rem); margin: 0; }
-.rc-head h1::after { content: ""; display: block; height: 4px; width: 96px; margin-top: .7rem;
-  border-radius: 2px; background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
-.rc-head .tagline { max-width: 62ch; margin: 1rem 0 0; }
-.rc-sub { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: .9rem 0 0; }
-.rc-sub a { color: var(--accent); }
-
-/* the assay — headline counts */
-.rc-assay { display: grid; grid-template-columns: repeat(auto-fit, minmax(126px, 1fr)); gap: 0;
-  margin: 2.2rem 0 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-.rc-assay div { padding: .95rem 1rem; border-right: 1px solid var(--border); }
-.rc-assay div:last-child { border-right: 0; }
-.rc-assay b { display: block; font-family: var(--display); font-size: 1.75rem; line-height: 1.1;
-  font-weight: 400; font-variant-numeric: tabular-nums; }
-.rc-assay span { display: block; font-family: var(--sans); font-size: .66rem; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--muted); margin-top: .35rem; }
-.rc-assay .rc-flag b { color: var(--accent); }
-
-.rc-note { font-family: var(--sans); font-size: .82rem; line-height: 1.65; color: var(--muted);
-  max-width: 74ch; margin: 1.6rem 0 0; }
-.rc-note strong { color: var(--text); font-weight: 600; }
-
-h2.rc-h { font-family: var(--display); font-size: 1.5rem; font-weight: 400; margin: 3rem 0 .3rem;
-  padding-bottom: .5rem; border-bottom: 1px solid var(--border); }
-.rc-h-sub { font-family: var(--sans); font-size: .8rem; color: var(--muted); margin: .55rem 0 1.2rem; max-width: 74ch; }
-
-/* verdict vocabulary — one colour per verdict, used by bars, pills and legend */
-.v-verified { --vc: var(--t4); }
-.v-corroborated { --vc: var(--t3); }
-.v-corrected { --vc: var(--t1); }
-.v-contested { --vc: var(--t2); }
-.v-unverified { --vc: var(--muted); }
-.v-inference { --vc: var(--t5); }
-.v-unrated { --vc: var(--border); }
-.rc-legend { display: flex; flex-wrap: wrap; gap: .4rem .9rem; font-family: var(--sans);
-  font-size: .72rem; color: var(--muted); margin: 0 0 1.3rem; }
-.rc-legend span { display: inline-flex; align-items: center; gap: .38rem; }
-.rc-legend i { width: 9px; height: 9px; border-radius: 2px; background: var(--vc); display: inline-block; }
-
-/* the ledger table */
-.rc-scroll { overflow-x: auto; }
-table.rc-tbl { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: .8rem; min-width: 720px; }
-table.rc-tbl th { text-align: left; font-size: .66rem; letter-spacing: .09em; text-transform: uppercase;
-  color: var(--muted); font-weight: 600; padding: .5rem .6rem; border-bottom: 1px solid var(--border);
-  cursor: pointer; white-space: nowrap; user-select: none; }
-table.rc-tbl th:hover { color: var(--accent); }
-table.rc-tbl th[data-dir]::after { content: " ▾"; }
-table.rc-tbl th[data-dir="asc"]::after { content: " ▴"; }
-table.rc-tbl td { padding: .6rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
-table.rc-tbl tbody tr:hover { background: var(--panel); }
-table.rc-tbl .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-table.rc-tbl a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
-table.rc-tbl a:hover { color: var(--accent); border-color: var(--accent); }
-.rc-cat { display: block; font-size: .68rem; color: var(--muted); margin-top: .2rem; }
-.rc-bar { display: flex; height: 9px; width: 128px; border-radius: 2px; overflow: hidden; background: var(--border); }
-.rc-bar i { display: block; height: 100%; background: var(--vc); }
-.rc-zero { color: var(--muted); }
-.rc-hit { color: var(--accent); font-weight: 600; }
-.state { display: inline-block; font-size: .64rem; letter-spacing: .07em; text-transform: uppercase;
-  padding: .18rem .45rem; border-radius: 3px; border: 1px solid var(--border); white-space: nowrap; }
-.state-full { color: var(--t4); border-color: var(--t4); }
-.state-partial { color: var(--t2); border-color: var(--t2); }
-.state-none { color: var(--muted); }
-
-/* the claim browser */
-.rc-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0 0 1.1rem; font-family: var(--sans); }
-.rc-filters select, .rc-filters input { font-family: var(--sans); font-size: .78rem; color: var(--text);
-  background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: .42rem .55rem; }
-.rc-filters input { flex: 1 1 220px; min-width: 0; }
-.rc-filters select:focus-visible, .rc-filters input:focus-visible { outline: none; box-shadow: var(--ring); }
-.rc-count { font-family: var(--sans); font-size: .74rem; color: var(--muted); margin: 0 0 1rem; }
-.rc-claim { border-top: 1px solid var(--border); padding: 1rem 0 1.05rem; }
-.rc-claim:last-child { border-bottom: 1px solid var(--border); }
-.rc-claim p { margin: 0; font-family: var(--serif); font-size: .95rem; line-height: 1.6; }
-.rc-meta { display: flex; flex-wrap: wrap; gap: .4rem .7rem; align-items: baseline; font-family: var(--sans);
-  font-size: .7rem; color: var(--muted); margin: 0 0 .5rem; }
-.rc-meta a { color: var(--muted); text-decoration: none; border-bottom: 1px solid var(--border); }
-.rc-meta a:hover { color: var(--accent); border-color: var(--accent); }
-.pill { display: inline-block; font-size: .64rem; letter-spacing: .06em; text-transform: uppercase;
-  padding: .16rem .42rem; border-radius: 3px; border: 1px solid var(--vc, var(--border)); color: var(--vc, var(--muted)); }
-.pill-lb { border-color: var(--accent); color: var(--accent); }
-.rc-src { font-family: var(--sans); font-size: .72rem; color: var(--muted); margin: .55rem 0 0;
-  padding-left: .8rem; border-left: 2px solid var(--border); line-height: 1.55; }
-.rc-more { display: block; margin: 1.6rem auto 0; font-family: var(--sans); font-size: .78rem;
-  color: var(--muted); background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
-  padding: .55rem 1.1rem; cursor: pointer; }
-.rc-more:hover { color: var(--accent); border-color: var(--accent); }
-.rc-empty { font-family: var(--sans); font-size: .82rem; color: var(--muted); padding: 2rem 0; }
-
-/* errata */
-.er-block { margin: 2.2rem 0 0; }
-.er-block > h3 { font-family: var(--display); font-size: 1.12rem; font-weight: 400; margin: 0 0 .15rem; }
-.er-block > h3 a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
-.er-block > h3 a:hover { color: var(--accent); border-color: var(--accent); }
-.er-block .er-cat { font-family: var(--sans); font-size: .7rem; color: var(--muted); margin: 0 0 .8rem; }
-.er-item { border-left: 2px solid var(--t1); padding: .1rem 0 .1rem .95rem; margin: 0 0 1.1rem; }
-.er-id { font-family: var(--mono); font-size: .7rem; color: var(--muted); }
-.er-what { font-family: var(--sans); font-size: .86rem; line-height: 1.6; margin: .25rem 0 0; color: var(--text); }
-.er-now { font-family: var(--serif); font-size: .88rem; line-height: 1.6; color: var(--muted); margin: .45rem 0 0; }
-.er-now b { font-family: var(--sans); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase;
-  color: var(--muted); font-weight: 600; display: block; margin-bottom: .2rem; }
-.er-thin { font-family: var(--sans); font-size: .82rem; line-height: 1.6; color: var(--muted);
-  border-left: 2px solid var(--border); padding: .1rem 0 .1rem .95rem; margin: 0 0 1.1rem; }
-.er-thin b { color: var(--text); font-weight: 600; }
-@media (max-width: 640px) {
-  .rc-wrap { padding: 1.4rem 1.3rem 4rem; }
-  .rc-assay { grid-template-columns: repeat(2, 1fr); }
-  .rc-assay div:nth-child(2n) { border-right: 0; }
-}
-"""
-
-
-TABLE_SORT_JS = """
-// Click-to-sort for the audit ledger. Cells carry a data-v sort key so the
-// visible cell can stay formatted (thousands separators, a bar, an em dash)
-// while the comparison uses the underlying value.
-(function () {
-  var tbl = document.getElementById('rc-ledger');
-  if (!tbl) return;
-  var heads = [].slice.call(tbl.tHead.rows[0].cells);
-  heads.forEach(function (th, i) {
-    th.addEventListener('click', function () {
-      var dir = th.getAttribute('data-dir') === 'desc' ? 'asc' : 'desc';
-      heads.forEach(function (h) { h.removeAttribute('data-dir'); });
-      th.setAttribute('data-dir', dir);
-      var num = th.getAttribute('data-sort') === 'num';
-      var body = tbl.tBodies[0];
-      [].slice.call(body.rows).map(function (row) {
-        var cell = row.cells[i];
-        var raw = cell.getAttribute('data-v');
-        if (raw === null) raw = cell.textContent.trim();
-        return [num ? (parseFloat(raw) || 0) : String(raw).toLowerCase(), row];
-      }).sort(function (a, b) {
-        return (a[0] < b[0] ? -1 : a[0] > b[0] ? 1 : 0) * (dir === 'asc' ? 1 : -1);
-      }).forEach(function (p) { body.appendChild(p[1]); });
-    });
-  });
-})();
-"""
-
-
-RECEIPTS_JS = """
-// The claim browser. receipts.json is ~1.4MB, so it is fetched on idle rather
-// than inlined; until it lands the page is already useful (the assay and the
-// per-corpus ledger are server-rendered).
-(function () {
-  var PAGE = 40;
-  var all = null, view = [], shown = 0;
-  var listEl = document.getElementById('rc-list');
-  var countEl = document.getElementById('rc-count');
-  var moreEl = document.getElementById('rc-more');
-  if (!listEl) return;
-  var f = {
-    corpus: document.getElementById('f-corpus'), verdict: document.getElementById('f-verdict'),
-    stakes: document.getElementById('f-stakes'), type: document.getElementById('f-type'),
-    q: document.getElementById('f-q')
-  };
-  var LABEL = {verified:'Verified', corroborated:'Corroborated', corrected:'Refuted & corrected',
-               contested:'Contested', unverified:'Unverified', inference:'Inference', unrated:'Unrated'};
-
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
-    });
-  }
-  function docLabel(d) { return String(d || '').replace(/\\.md$/, '').replace(/_/g, ' '); }
-
-  function apply() {
-    if (!all) return;
-    var q = (f.q.value || '').trim().toLowerCase();
-    var c = f.corpus.value, v = f.verdict.value, s = f.stakes.value, t = f.type.value;
-    view = all.filter(function (x) {
-      if (c && x.slug !== c) return false;
-      if (v && x.v !== v) return false;
-      if (s && x.st !== s) return false;
-      if (t && x.ty !== t) return false;
-      if (q && x.t.toLowerCase().indexOf(q) < 0 && x.title.toLowerCase().indexOf(q) < 0) return false;
-      return true;
-    });
-    shown = 0; listEl.innerHTML = '';
-    countEl.textContent = view.length.toLocaleString() + (view.length === 1 ? ' claim' : ' claims')
-      + (view.length < all.length ? ' of ' + all.length.toLocaleString() : '');
-    render();
-  }
-
-  function render() {
-    if (!view.length) {
-      listEl.innerHTML = '<p class="rc-empty">No claim matches those filters.</p>';
-      moreEl.hidden = true; return;
-    }
-    var slice = view.slice(shown, shown + PAGE), out = [];
-    slice.forEach(function (x) {
-      // Every entry must be its own element: contiguous bare text nodes collapse
-      // into one anonymous flex item and lose the row's gap between them.
-      var meta = ['<a href="' + esc(x.href) + '">' + esc(x.title) + '</a>'];
-      if (x.doc) meta.push('<span>' + esc(docLabel(x.doc)) + '</span>');
-      if (x.id) meta.push('<span class="er-id">' + esc(x.id) + '</span>');
-      meta.push('<span class="pill v-' + esc(x.v) + '">' + esc(LABEL[x.v] || x.v) + '</span>');
-      if (x.st === 'load-bearing') meta.push('<span class="pill pill-lb">Load-bearing</span>');
-      else if (x.st) meta.push('<span class="pill">' + esc(x.st) + '</span>');
-      if (x.ty) meta.push('<span>' + esc(x.ty) + '</span>');
-      if (x.cf) meta.push('<span>' + esc(x.cf) + ' confidence</span>');
-      if (x.one) meta.push('<span class="pill v-unverified">Single source</span>');
-      var src = (x.s && x.s.length)
-        ? '<p class="rc-src">' + x.s.map(esc).join('<br>') + '</p>' : '';
-      out.push('<article class="rc-claim"><div class="rc-meta">' + meta.join('') + '</div><p>'
-               + esc(x.t) + '</p>' + src + '</article>');
-    });
-    listEl.insertAdjacentHTML('beforeend', out.join(''));
-    shown += slice.length;
-    moreEl.hidden = shown >= view.length;
-    moreEl.textContent = 'Show ' + Math.min(PAGE, view.length - shown) + ' more';
-  }
-
-  Object.keys(f).forEach(function (k) {
-    if (!f[k]) return;
-    f[k].addEventListener(f[k].tagName === 'INPUT' ? 'input' : 'change', apply);
-  });
-  moreEl.addEventListener('click', render);
-
-  function load() {
-    fetch('receipts.json').then(function (r) { return r.json(); }).then(function (data) {
-      all = [];
-      data.forEach(function (c) {
-        c.claims.forEach(function (x) {
-          x.slug = c.slug; x.title = c.title; x.href = c.href; all.push(x);
-        });
-      });
-      var opts = data.slice().sort(function (a, b) { return a.title.localeCompare(b.title); })
-        .map(function (c) { return '<option value="' + esc(c.slug) + '">' + esc(c.title) + '</option>'; });
-      f.corpus.insertAdjacentHTML('beforeend', opts.join(''));
-      var url = new URL(location.href);
-      ['corpus', 'verdict', 'stakes'].forEach(function (k) {
-        var val = url.searchParams.get(k);
-        if (val && f[k]) f[k].value = val;
-      });
-      apply();
-    }).catch(function () {
-      listEl.innerHTML = '<p class="rc-empty">The claim ledger could not be loaded.</p>';
-    });
-  }
-  if (window.requestIdleCallback) requestIdleCallback(load, {timeout: 1500});
-  else setTimeout(load, 300);
-})();
-"""
-
-
-RECEIPTS_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
-<title>{title} — calvincollins · xyz</title>
-<meta name="description" content="{desc}">
-<link rel="icon" href="{favicon}">
-{og_meta}
-<style>{css}</style>
-</head>
-<body>
-<div class="masthead">
-  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
-  <nav class="mh-nav">
-{nav}
-  </nav>
-</div>
-<main class="rc-wrap">
-  <header class="rc-head">
-    <p class="kicker">{kicker}</p>
-    <h1>{h1}</h1>
-    <p class="tagline">{tagline}</p>
-    <p class="rc-sub">{sub}</p>
-    {scene}
-  </header>
-  {body}
-</main>
-<footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
-  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
-</footer>
-<button id="theme-btn" title="Light / dark">◐ Theme</button>
-<script>{app_js}</script>
-{shell}
-</body>
-</html>
-"""
-
-VERDICT_ORDER = ("verified", "corroborated", "corrected", "contested",
-                 "unverified", "inference", "unrated")
-
-AUDIT_STATE_LABEL = {"full": "Panel completed", "partial": "Partial", "none": "Unaudited"}
-
-
-def verdict_bar_html(counts, total):
-    """A stacked hairline bar of one corpus's verdict mix, widest verdict first."""
-    if not total:
-        return ""
-    segs = []
-    for v in VERDICT_ORDER:
-        n = counts.get(v, 0)
-        if n:
-            segs.append(f'<i class="v-{v}" style="width:{n / total * 100:.1f}%" '
-                        f'title="{VERDICT_LABELS[v]}: {n}"></i>')
-    return '<span class="rc-bar">' + "".join(segs) + "</span>"
-
-
-def receipts_legend_html():
-    return ('<p class="rc-legend">' + "".join(
-        f'<span class="v-{v}"><i></i>{VERDICT_LABELS[v]}</span>' for v in VERDICT_ORDER
-    ) + "</p>")
-
-
-def build_receipts_page(out_dir, receipts, shell="", n_corpora=None):
-    """Render docs/receipts.html + docs/receipts.json — the evidence ledger.
-
-    The assay and the per-corpus audit table are server-rendered; the 2,400-claim
-    browser is client-side off a lazily-fetched payload.
-    """
-    out = Path(out_dir)
-    if not receipts:
-        return False
-    totals = Counter()
-    for r in receipts:
-        totals.update(r["counts"])
-    n_claims = sum(r["n"] for r in receipts)
-    n_lb = sum(r["load_bearing"] for r in receipts)
-    n_corr = sum(len(r["corrections"]) for r in receipts)
-    # How many of those corrections are visible in the claim browser: the ones
-    # whose claim record itself carries the corrected verdict.
-    n_corr_joined = totals.get("corrected", 0)
-    n_cont = sum(len(r["contested"]) for r in receipts)
-    n_one = sum(len(r["single_source"]) for r in receipts)
-    n_srcs = sum(r["sources"] or 0 for r in receipts)
-    # Not every run recorded a source count; only claim a library-wide total when
-    # most of them did, and say "at least" either way.
-    n_src_reported = sum(1 for r in receipts if r["sources"])
-    audited = sum(1 for r in receipts if r["state"] != "none")
-
-    assay = [("Claims on the record", f"{n_claims:,}", ""),
-             ("Load-bearing", f"{n_lb:,}", ""),
-             ("Refuted &amp; corrected", f"{n_corr:,}", "rc-flag"),
-             ("Contested", f"{n_cont:,}", ""),
-             ("Single-source", f"{n_one:,}", ""),
-             ("Corpora audited", f"{audited}/{len(receipts)}", "")]
-    assay_html = ('<div class="rc-assay">' + "".join(
-        f'<div class="{cls}"><b>{val}</b><span>{lab}</span></div>' for lab, val, cls in assay
-    ) + "</div>")
-
-    rows = []
-    for r in sorted(receipts, key=lambda x: (-x["n"], x["title"])):
-        corr, cont = len(r["corrections"]), len(r["contested"])
-        depth = r["depth"].split("(")[0].strip() or "—"
-        src_cell = f"{r['sources']:,}" if r["sources"] else "—"
-        rows.append(
-            f'<tr data-slug="{html.escape(r["slug"], quote=True)}">'
-            f'<td><a href="{r["href"]}">{html.escape(r["title"])}</a>'
-            f'<span class="rc-cat">{html.escape(r["category"] or "")}</span></td>'
-            f'<td class="num" data-v="{r["n"]}">{r["n"]:,}</td>'
-            f'<td class="num" data-v="{r["load_bearing"]}">{r["load_bearing"] or "—"}</td>'
-            f'<td class="num" data-v="{r["sources"] or 0}">{src_cell}</td>'
-            f'<td data-v="{depth}">{html.escape(depth)}</td>'
-            f'<td data-v="{r["counts"].get("verified", 0)}">{verdict_bar_html(r["counts"], r["n"])}</td>'
-            f'<td class="num {"rc-hit" if corr else "rc-zero"}" data-v="{corr}">{corr or "—"}</td>'
-            f'<td class="num {"" if cont else "rc-zero"}" data-v="{cont}">{cont or "—"}</td>'
-            f'<td data-v="{r["state"]}"><span class="state state-{r["state"]}" '
-            f'title="{html.escape(r["note"], quote=True)}">{AUDIT_STATE_LABEL[r["state"]]}</span></td>'
-            f"</tr>")
-
-    ledger = (
-        '<h2 class="rc-h" id="ledger">The audit record</h2>'
-        '<p class="rc-h-sub">One row per corpus: how many claims it rests on, how deeply they were '
-        'checked, and how far the adversarial panel actually got. Sort by any column. Hover an audit '
-        'state to read that run\'s own account of itself.</p>'
-        + receipts_legend_html() +
-        '<div class="rc-scroll"><table class="rc-tbl" id="rc-ledger"><thead><tr>'
-        '<th data-sort="text">Corpus</th><th data-sort="num" class="num">Claims</th>'
-        '<th data-sort="num" class="num">Load-bearing</th><th data-sort="num" class="num">Sources</th>'
-        '<th data-sort="text">Depth</th>'
-        '<th data-sort="num">Verdicts</th><th data-sort="num" class="num">Corrected</th>'
-        '<th data-sort="num" class="num">Contested</th><th data-sort="text">Audit</th>'
-        '</tr></thead><tbody>' + "".join(rows) + "</tbody></table></div>")
-
-    browser = (
-        '<h2 class="rc-h" id="claims">Every claim</h2>'
-        '<p class="rc-h-sub">The whole ledger, filterable. Each entry carries the verdict a '
-        'verification pass returned, what the corpus was staking on it, and the sources it was '
-        'checked against.</p>'
-        '<div class="rc-filters">'
-        '<select id="f-corpus" aria-label="Corpus"><option value="">All corpora</option></select>'
-        '<select id="f-verdict" aria-label="Verdict"><option value="">Any verdict</option>'
-        + "".join(f'<option value="{v}">{VERDICT_LABELS[v]}</option>' for v in VERDICT_ORDER) +
-        '</select>'
-        '<select id="f-stakes" aria-label="Stakes"><option value="">Any stakes</option>'
-        '<option value="load-bearing">Load-bearing</option><option value="standard">Standard</option>'
-        '<option value="minor">Minor</option></select>'
-        '<select id="f-type" aria-label="Type"><option value="">Any type</option>'
-        '<option value="established">Established</option><option value="contested">Contested</option>'
-        '<option value="inference">Inference</option></select>'
-        '<input id="f-q" type="search" placeholder="Search the claims…" aria-label="Search claims">'
-        '</div>'
-        '<p class="rc-count" id="rc-count">Loading the ledger…</p>'
-        '<div id="rc-list"></div>'
-        '<button class="rc-more" id="rc-more" hidden>Show more</button>')
-
-    src_phrase = (f" drawn from at least {n_srcs:,} sources"
-                  if n_src_reported >= len(receipts) * 0.6 else "")
-    # Corpora that predate the claim-ledger schema carry no claims at all; say so
-    # rather than letting the page imply it covers the whole shelf.
-    n_absent = (n_corpora or len(receipts)) - len(receipts)
-    missing_phrase = ""
-    if n_absent > 0:
-        missing_phrase = (
-            f' A further {n_absent} corpora on the shelf predate this record and carry no claim '
-            'ledger, so nothing here speaks for them.' if n_absent > 1 else
-            ' One further corpus on the shelf predates this record and carries no claim ledger, '
-            'so nothing here speaks for it.')
-    note = (
-        '<p class="rc-note">Every corpus on this site is built by a pipeline that writes down what it '
-        f'is claiming and how sure it is. Across {len(receipts)} of them that comes to <strong>{n_claims:,} '
-        f'recorded claims</strong>{src_phrase}, each tagged with its type, its '
-        'stakes, and the verdict an adversarial verification pass returned. This page publishes that '
-        f'record whole — including the <strong>{n_corr} claims a skeptic panel refuted</strong> and sent '
-        'back for correction, and the runs where the panel never finished. A corpus with no verification '
-        'block is marked <em>unaudited</em> here rather than counted as clean.</p>'
-        f'<p class="rc-note">Of those {n_corr} corrections, {n_corr_joined} carry a verdict on the claim '
-        'record itself and can be filtered below; the remainder were logged by their run only as a '
-        f'correction note against a claim ID, and appear in full on the Errata page.{missing_phrase}</p>')
-
-    body = (assay_html + note +
-            f'<p class="rc-sub" style="margin-top:1.4rem"><a href="errata.html">→ Read the Errata</a> '
-            f'— the {n_corr} corrections in full, and what each claim says now.</p>'
-            + ledger + browser)
-
-    payload = [{k: r[k] for k in ("slug", "title", "href", "claims")} for r in receipts]
-    (out / "receipts.json").write_text(json.dumps(payload, ensure_ascii=False))
-
-    og = og_tags("The Receipts",
-                 "Every claim the research library rests on — with its verdict, its stakes, and its sources.",
-                 f"{SITE_URL}/receipts.html", f"{SITE_URL}/{OG_IMAGE}")
-    page = RECEIPTS_TEMPLATE.format(
-        title="The Receipts", favicon=FAVICON, og_meta=og,
-        desc="Every claim the research library rests on — with its verdict, its stakes, and its sources.",
-        css=LIBRARY_CSS + SCENE_PLATE_CSS + RECEIPTS_CSS,
-        nav=main_nav_html(active="receipts.html"),
-        kicker="Evidence", h1="The Receipts",
-        tagline=("What this library claims, and what happened when those claims were checked."),
-        sub='The standing evidence ledger. <a href="errata.html">Errata →</a>',
-        scene=scene_plate("receipts", extra_class="page-scene", seed="receipts-page"),
-        body=body, app_js=LIBRARY_THEME_JS + TABLE_SORT_JS + RECEIPTS_JS, shell=shell,
-    )
-    (out / "receipts.html").write_text(page)
-    print(f"  ✓ The Receipts  ({n_claims:,} claims, {n_corr} corrections) → receipts.html")
-    return True
-
-
-def build_errata_page(out_dir, receipts, shell=""):
-    """Render docs/errata.html — the corrections, in full, per corpus."""
-    out = Path(out_dir)
-    with_corr = [r for r in receipts if r["corrections"]]
-    n_corr = sum(len(r["corrections"]) for r in receipts)
-    if not n_corr:
-        return False
-
-    UNLOGGED = ("The verification panel refuted this claim as first written; it was corrected "
-                "before publication. That run recorded the claim ID but not the wording it replaced.")
-    blocks = []
-    for r in sorted(with_corr, key=lambda x: (-len(x["corrections"]), x["title"])):
-        # When a run logged no per-claim account of what was wrong, say that once
-        # for the whole corpus rather than repeating it under all 64 entries.
-        any_note = any(c["note"] for c in r["corrections"])
-        items = []
-        for c in r["corrections"]:
-            head = f'<span class="er-id">{html.escape(c["id"])}</span>' if c["id"] else ""
-            if c["doc"]:
-                head += f' <span class="er-id">· {html.escape(str(c["doc"]).replace(".md", "").replace("_", " "))}</span>'
-            if c["note"]:
-                what = f'<p class="er-what">{html.escape(c["note"])}</p>'
-            elif any_note:
-                what = f'<p class="er-what">{UNLOGGED}</p>'
-            else:
-                what = ""      # covered by the block-level note below
-            label = "Now reads" if (c["note"] or any_note) else "Corrected; now reads"
-            now = (f'<p class="er-now"><b>{label}</b>{html.escape(c["claim"])}</p>'
-                   if c["claim"] else "")
-            if not (what or now):
-                now = f'<p class="er-now">{UNLOGGED}</p>'
-            items.append(f'<div class="er-item">{head}{what}{now}</div>')
-        preface = "" if any_note else (
-            f'<p class="er-cat">This run recorded which claims its panel refuted, but not the '
-            f'wording each one replaced. The text below is what each claim says after correction.</p>')
-        blocks.append(
-            f'<section class="er-block"><h3><a href="{r["href"]}">{html.escape(r["title"])}</a> '
-            f'<span class="er-id">· {len(r["corrections"])} corrected</span></h3>'
-            f'<p class="er-cat">{html.escape(r["category"] or "")}</p>{preface}'
-            + "".join(items) + "</section>")
-
-    thin = []
-    for r in sorted(receipts, key=lambda x: x["title"]):
-        if r["state"] == "full":
-            continue
-        why = r["note"] or ("No verification block was recorded for this run, so nothing here "
-                            "should be read as an independent verdict on its claims.")
-        thin.append(f'<p class="er-thin"><b>{html.escape(r["title"])}</b> — '
-                    f'{AUDIT_STATE_LABEL[r["state"]].lower()}. {html.escape(why)}</p>')
-
-    cont_blocks = []
-    for r in sorted(receipts, key=lambda x: -len(x["contested"])):
-        if not r["contested"]:
-            continue
-        items = []
-        for c in r["contested"][:14]:
-            txt = c["claim"] or c["note"]
-            if not txt:
-                continue
-            cid = f'<span class="er-id">{html.escape(c["id"])} </span>' if c["id"] else ""
-            items.append(f'<p class="er-thin">{cid}{html.escape(txt)}</p>')
-        if items:
-            extra = (f'<p class="er-cat">…and {len(r["contested"]) - 14} more.</p>'
-                     if len(r["contested"]) > 14 else "")
-            cont_blocks.append(
-                f'<section class="er-block"><h3><a href="{r["href"]}">{html.escape(r["title"])}</a> '
-                f'<span class="er-id">· {len(r["contested"])} contested</span></h3>'
-                + "".join(items) + extra + "</section>")
-
-    n_lost = sum(1 for r in receipts if r["state"] != "full")
-    body = (
-        f'<div class="rc-assay"><div class="rc-flag"><b>{n_corr}</b><span>Claims corrected</span></div>'
-        f'<div><b>{len(with_corr)}</b><span>Corpora affected</span></div>'
-        f'<div><b>{sum(len(r["contested"]) for r in receipts)}</b><span>Contested, preserved</span></div>'
-        f'<div><b>{n_lost}</b><span>Runs left incomplete</span></div></div>'
-        '<p class="rc-note">These are the claims an adversarial verification panel challenged and sent '
-        'back. <strong>All of them were corrected before publication</strong> — the wording quoted below '
-        'is what the corpus says today, not the error. They are collected here because a research record '
-        'that never shows its corrections is not showing you very much. Where a run recorded what was '
-        'wrong, that account is printed first; where it logged only a claim ID, that is said plainly '
-        'rather than papered over.</p>'
-        '<h2 class="rc-h">The corrections</h2>' + "".join(blocks))
-    if cont_blocks:
-        body += ('<h2 class="rc-h">Contested, and left that way</h2>'
-                 '<p class="rc-h-sub">Claims where the panel could not reach agreement, or where the '
-                 'underlying dispute is real. These were kept in the corpora with the disagreement '
-                 'attached rather than resolved by fiat.</p>' + "".join(cont_blocks))
-    if thin:
-        body += ('<h2 class="rc-h">Where the record is thin</h2>'
-                 '<p class="rc-h-sub">Runs whose verification phase was cut short — usually by a spend '
-                 'cap or a tool failure mid-pipeline — or that predate the verification schema '
-                 'altogether. Their claims carry the research agents\' own flags, not an independent '
-                 'verdict.</p>' + "".join(thin))
-
-    og = og_tags("Errata",
-                 "The claims a skeptic panel refuted, what was wrong, and what they say now.",
-                 f"{SITE_URL}/errata.html", f"{SITE_URL}/{OG_IMAGE}")
-    page = RECEIPTS_TEMPLATE.format(
-        title="Errata", favicon=FAVICON, og_meta=og,
-        desc="The claims a skeptic panel refuted, what was wrong, and what they say now.",
-        css=LIBRARY_CSS + SCENE_PLATE_CSS + RECEIPTS_CSS,
-        nav=main_nav_html(active="receipts.html"),
-        kicker="Corrections", h1="Errata",
-        tagline="The claims that did not survive checking, and what they say now.",
-        sub='<a href="receipts.html">← The Receipts</a> — the full evidence ledger.',
-        scene=scene_plate("errata", extra_class="page-scene", seed="errata-page"),
-        body=body, app_js=LIBRARY_THEME_JS, shell=shell,
-    )
-    (out / "errata.html").write_text(page)
-    print(f"  ✓ Errata  ({n_corr} corrections across {len(with_corr)} corpora) → errata.html")
-    return True
-
-
-# --------------------------------------------------------------------- search
-# The command palette already searches the text, but it is a jump-to tool: 16
-# results, one per chapter, no ranking and no way to narrow. This is the page
-# for the other kind of search — the one where you want everything, ranked, and
-# you want to see it beside its neighbours. Both read the same search-index.json.
-
-SEARCH_CSS = """
-#theme-btn { position: fixed; bottom: 1.1rem; right: 1.1rem; z-index: 20; font-family: var(--sans);
-  font-size: .8rem; color: var(--muted); background: var(--panel); border: 1px solid var(--border);
-  border-radius: 12px; padding: .4rem .7rem; cursor: pointer; }
-#theme-btn:hover { color: var(--accent); border-color: var(--accent); }
-.se-wrap { max-width: 900px; margin: 0 auto; padding: 2rem 2rem 5rem; }
-.se-head { margin: .6rem 0 .4rem; }
-.se-head .kicker { margin: 0 0 .5rem; }
-.se-head h1 { font-size: clamp(2.2rem, 4.5vw, 3rem); margin: 0; }
-.se-head h1::after { content: ""; display: block; height: 4px; width: 88px; margin-top: .7rem; border-radius: 2px;
-  background: linear-gradient(90deg, var(--t1) 0 25%, var(--t2) 0 50%, var(--t3) 0 75%, var(--t4) 0); }
-.se-form { display: flex; gap: .5rem; margin: 1.8rem 0 .4rem; }
-.se-form input { flex: 1 1 auto; min-width: 0; font-family: var(--serif); font-size: 1.05rem; color: var(--text);
-  background: var(--panel); border: 1px solid var(--border); border-radius: 4px; padding: .75rem .9rem; }
-.se-form input:focus-visible { outline: none; box-shadow: var(--ring); }
-.se-tabs { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1.1rem 0 .3rem; }
-.se-tabs button { font-family: var(--sans); font-size: .74rem; letter-spacing: .04em; color: var(--muted);
-  background: none; border: 1px solid var(--border); border-radius: 999px; padding: .32rem .8rem; cursor: pointer; }
-.se-tabs button:hover { color: var(--accent); border-color: var(--accent); }
-.se-tabs button[aria-pressed="true"] { color: var(--bg); background: var(--text); border-color: var(--text); }
-.se-count { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: 1.1rem 0 .2rem; }
-.se-hit { border-top: 1px solid var(--border); padding: 1.15rem 0 1.2rem; }
-.se-hit:last-child { border-bottom: 1px solid var(--border); }
-.se-hit h3 { font-family: var(--display); font-size: 1.05rem; font-weight: 400; margin: 0 0 .12rem; }
-.se-hit h3 a { color: var(--text); text-decoration: none; }
-.se-hit h3 a:hover { color: var(--accent); }
-.se-where { font-family: var(--sans); font-size: .7rem; color: var(--muted); margin: 0 0 .6rem;
-  display: flex; flex-wrap: wrap; gap: .3rem .6rem; align-items: baseline; }
-.se-kind { font-size: .62rem; letter-spacing: .07em; text-transform: uppercase; padding: .14rem .4rem;
-  border: 1px solid var(--border); border-radius: 3px; }
-.se-snip { font-family: var(--serif); font-size: .9rem; line-height: 1.65; color: var(--muted);
-  margin: .3rem 0 0; padding-left: .8rem; border-left: 2px solid var(--border); }
-.se-snip a { color: inherit; text-decoration: none; }
-.se-snip a:hover { color: var(--accent); }
-.se-snip mark { background: var(--mark); color: var(--text); border-radius: 2px; padding: 0 .1em; }
-.se-empty { font-family: var(--sans); font-size: .86rem; color: var(--muted); padding: 2.4rem 0; }
-.se-empty b { color: var(--text); }
-.se-more { display: block; margin: 1.6rem auto 0; font-family: var(--sans); font-size: .78rem;
-  color: var(--muted); background: var(--panel); border: 1px solid var(--border); border-radius: 4px;
-  padding: .55rem 1.1rem; cursor: pointer; }
-.se-more:hover { color: var(--accent); border-color: var(--accent); }
-.se-feeds { font-family: var(--sans); font-size: .76rem; color: var(--muted); margin: 2.6rem 0 0;
-  padding-top: 1.2rem; border-top: 1px solid var(--border); }
-.se-feeds a { color: var(--accent); }
-@media (max-width: 640px) { .se-wrap { padding: 1.4rem 1.3rem 4rem; } }
-"""
-
-SEARCH_JS = """
-// Ranked full-text search over search-index.json — the same payload the command
-// palette lazy-loads, so a visitor who has used the palette already has it cached.
-(function () {
-  var PAGE = 20;
-  var IDX = null, view = [], shown = 0, kind = '';
-  var form = document.getElementById('se-form'), input = document.getElementById('se-q');
-  var listEl = document.getElementById('se-list'), countEl = document.getElementById('se-count');
-  var moreEl = document.getElementById('se-more');
-  if (!input) return;
-
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];
-    });
-  }
-  // Snippets are built from raw text, so the query is escaped into the markup
-  // after the surrounding text has been escaped — never before.
-  function mark(text, q) {
-    var out = '', low = text.toLowerCase(), ql = q.toLowerCase(), i = 0;
-    while (true) {
-      var p = low.indexOf(ql, i);
-      if (p < 0) { out += esc(text.slice(i)); break; }
-      out += esc(text.slice(i, p)) + '<mark>' + esc(text.slice(p, p + q.length)) + '</mark>';
-      i = p + q.length;
-    }
-    return out;
-  }
-
-  function snippets(text, q, max) {
-    var low = text.toLowerCase(), ql = q.toLowerCase(), out = [], i = 0;
-    while (out.length < max) {
-      var p = low.indexOf(ql, i);
-      if (p < 0) break;
-      var s = Math.max(0, p - 90), e = Math.min(text.length, p + q.length + 150);
-      out.push((s > 0 ? '…' : '') + text.slice(s, e).trim() + (e < text.length ? '…' : ''));
-      i = p + q.length + 150;
-    }
-    return out;
-  }
-
-  function search(q) {
-    var ql = q.toLowerCase(), hits = [];
-    (IDX || []).forEach(function (entry) {
-      (entry.chapters || []).forEach(function (ch, ci) {
-        var text = ch.text || '', title = ch.title || '';
-        var inTitle = title.toLowerCase().indexOf(ql) >= 0;
-        var inCorpus = (entry.title || '').toLowerCase().indexOf(ql) >= 0;
-        var n = 0, i = 0, low = text.toLowerCase();
-        while (true) { var p = low.indexOf(ql, i); if (p < 0) break; n++; i = p + ql.length; }
-        if (!n && !inTitle && !inCorpus) return;
-        // a hit in a heading outranks a hit in the prose; more hits outrank fewer
-        var score = n + (inTitle ? 30 : 0) + (inCorpus ? 12 : 0);
-        hits.push({ entry: entry, ch: ch, ci: ci, n: n, score: score,
-                    snips: snippets(text, q, 3) });
-      });
-    });
-    hits.sort(function (a, b) { return b.score - a.score; });
-    return hits;
-  }
-
-  function href(hit) {
-    var e = hit.entry, base = e.href || (e.slug + '.html');
-    if (e.kind && e.kind !== 'corpus') return base;
-    // corpora deep-link to the chapter, and carry ?q= so the reader scrolls to
-    // the phrase and flashes it
-    return base + '?q=' + encodeURIComponent(input.value.trim()) + '#ch-' + (hit.ch.i != null ? hit.ch.i : hit.ci);
-  }
-
-  function render() {
-    var slice = view.slice(shown, shown + PAGE), out = [], q = input.value.trim();
-    slice.forEach(function (h) {
-      var e = h.entry, link = href(h);
-      var where = ['<span class="se-kind">' + esc(e.kindLabel || 'Research') + '</span>',
-                   '<span>' + esc(e.title) + '</span>'];
-      if (e.category && e.category !== e.title) where.push('<span>' + esc(e.category) + '</span>');
-      if (h.n) where.push('<span>' + h.n + (h.n === 1 ? ' mention' : ' mentions') + '</span>');
-      var snips = h.snips.map(function (s) {
-        return '<p class="se-snip"><a href="' + esc(link) + '">' + mark(s, q) + '</a></p>';
-      }).join('');
-      out.push('<article class="se-hit"><h3><a href="' + esc(link) + '">'
-        + mark(h.ch.title || e.title, q) + '</a></h3><div class="se-where">'
-        + where.join('') + '</div>' + snips + '</article>');
-    });
-    listEl.insertAdjacentHTML('beforeend', out.join(''));
-    shown += slice.length;
-    moreEl.hidden = shown >= view.length;
-    if (!moreEl.hidden) moreEl.textContent = 'Show ' + Math.min(PAGE, view.length - shown) + ' more';
-  }
-
-  function run() {
-    var q = input.value.trim();
-    listEl.innerHTML = ''; shown = 0;
-    if (q.length < 2) {
-      countEl.textContent = '';
-      listEl.innerHTML = '<p class="se-empty">Type at least two characters to search the full text of every corpus, edition and pamphlet on the site.</p>';
-      moreEl.hidden = true; return;
-    }
-    if (!IDX) { countEl.textContent = 'Loading the index…'; return; }
-    var all = search(q);
-    view = kind ? all.filter(function (h) { return (h.entry.kind || 'corpus') === kind; }) : all;
-    var where = view.length === 1 ? ' passage' : ' passages';
-    countEl.textContent = view.length
-      ? view.length.toLocaleString() + where + ' matching “' + q + '”'
-      : '';
-    if (!view.length) {
-      listEl.innerHTML = '<p class="se-empty">Nothing matches <b>' + esc(q) + '</b>'
-        + (kind ? ' in this section' : '') + '.</p>';
-      moreEl.hidden = true; return;
-    }
-    render();
-    var u = new URL(location.href);
-    u.searchParams.set('q', q);
-    if (kind) u.searchParams.set('in', kind); else u.searchParams.delete('in');
-    history.replaceState(null, '', u);
-  }
-
-  var timer = null;
-  input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 140); });
-  form.addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(timer); run(); });
-  moreEl.addEventListener('click', render);
-  [].slice.call(document.querySelectorAll('.se-tabs button')).forEach(function (b) {
-    b.addEventListener('click', function () {
-      kind = b.getAttribute('data-kind') || '';
-      document.querySelectorAll('.se-tabs button').forEach(function (o) {
-        o.setAttribute('aria-pressed', o === b ? 'true' : 'false');
-      });
-      run();
-    });
-  });
-
-  var url = new URL(location.href);
-  var q0 = url.searchParams.get('q') || '', k0 = url.searchParams.get('in') || '';
-  if (q0) input.value = q0;
-  if (k0) {
-    var btn = document.querySelector('.se-tabs button[data-kind="' + k0.replace(/"/g, '') + '"]');
-    if (btn) { kind = k0; btn.setAttribute('aria-pressed', 'true');
-      document.querySelector('.se-tabs button[data-kind=""]').setAttribute('aria-pressed', 'false'); }
-  }
-  input.focus();
-  run();
-
-  fetch('search-index.json').then(function (r) { return r.json(); }).then(function (j) {
-    IDX = j; run();
-  }).catch(function () {
-    countEl.textContent = '';
-    listEl.innerHTML = '<p class="se-empty">The search index could not be loaded.</p>';
-  });
-})();
-"""
-
-SEARCH_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<script>(function(){{var t=null;try{{t=localStorage.getItem('corpus-theme')}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
-<title>Search — calvincollins · xyz</title>
-<meta name="description" content="Search the full text of every corpus, edition and pamphlet on the site.">
-<link rel="icon" href="{favicon}">
-{feed_links}
-{og_meta}
-<style>{css}</style>
-</head>
-<body>
-<div class="masthead">
-  <a class="mh-brand" href="index.html" aria-label="Go to the calvincollins.xyz homepage"><span>calvincollins · xyz</span></a>
-  <nav class="mh-nav">
-{nav}
-  </nav>
-</div>
-<main class="se-wrap">
-  <header class="se-head">
-    <p class="kicker">Full text</p>
-    <h1>Search</h1>
-  </header>
-  <form id="se-form" class="se-form" role="search">
-    <input id="se-q" type="search" name="q" autocomplete="off" spellcheck="false"
-           placeholder="Search every corpus, edition and pamphlet…" aria-label="Search the site">
-  </form>
-  <div class="se-tabs">{tabs}</div>
-  <p class="se-count" id="se-count"></p>
-  <div id="se-list"></div>
-  <button class="se-more" id="se-more" hidden>Show more</button>
-  <p class="se-feeds">{feeds_note}</p>
-</main>
-<footer class="cx-foot" style="max-width:860px;margin:2rem auto 0;padding:1.4rem 2rem 3rem;border-top:1px solid var(--border);text-align:center">
-  <p class="colophon" style="font-family:var(--sans);font-size:.74rem;color:var(--muted);margin:0"><a href="index.html" style="color:var(--accent);text-decoration:none">← Back to the Research Library</a></p>
-</footer>
-<button id="theme-btn" title="Light / dark">◐ Theme</button>
-<script>{app_js}</script>
-{shell}
-</body>
-</html>
-"""
-
-
-def feed_link_tags(prefix=""):
-    """<link rel="alternate"> tags so a browser or reader can discover the feed
-    from any page on the site."""
-    return (f'<link rel="alternate" type="application/rss+xml" title="calvincollins · xyz" '
-            f'href="{prefix}feed.xml">\n'
-            f'<link rel="alternate" type="application/feed+json" title="calvincollins · xyz" '
-            f'href="{prefix}feed.json">')
-
-
-def build_search_page(out_dir, kinds, feeds, shell=""):
-    """Render docs/search.html — ranked full-text search across the whole site."""
-    out = Path(out_dir)
-    tabs = ['<button data-kind="" aria-pressed="true">Everything</button>']
-    for kind, label in kinds:
-        tabs.append(f'<button data-kind="{html.escape(kind, quote=True)}" '
-                    f'aria-pressed="false">{html.escape(label)}</button>')
-
-    feed_bits = []
-    if "feed.xml" in feeds:
-        feed_bits.append('<a href="feed.xml">RSS</a>')
-    if "feed.json" in feeds:
-        feed_bits.append('<a href="feed.json">JSON Feed</a>')
-    per_section = [f for f in feeds if f.endswith("/feed.xml")]
-    note = ""
-    if feed_bits:
-        note = ("Subscribe instead: " + " · ".join(feed_bits)
-                + " for everything published here"
-                + (", or take one desk on its own — " if per_section else ".")
-                + " · ".join(f'<a href="{f}">{f.split("/")[0].title()}</a>' for f in per_section)
-                + ("." if per_section else ""))
-
-    og = og_tags("Search", "Search the full text of every corpus, edition and pamphlet on the site.",
-                 f"{SITE_URL}/search.html", f"{SITE_URL}/{OG_IMAGE}")
-    page = SEARCH_TEMPLATE.format(
-        favicon=FAVICON, og_meta=og, feed_links=feed_link_tags(),
-        css=LIBRARY_CSS + SEARCH_CSS, nav=main_nav_html(active="search.html"),
-        tabs="".join(tabs), feeds_note=note,
-        app_js=LIBRARY_THEME_JS + SEARCH_JS, shell=shell,
-    )
-    (out / "search.html").write_text(page)
-    print("  ✓ Search → search.html")
-    return True
-
-
 def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descriptions=None,
           fingerprint_cfg=None, pamphlets_cfg=None, forecast_cfg=None, titles=None, category_order=None, domains=None, collections=None, atlas_cfg=None):
     out = Path(out_dir)
@@ -13957,7 +12039,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     corpora_by_slug = {}   # full corpus objects, retained for assembling collections
     atlas_corpora = {}     # {slug: {title,href,accent,img,chapters}} for the Atlas map
     wrapped_stats = []     # per-corpus {slug,title,category,chapters,words} for Research Wrapped
-    receipts = []          # per-corpus claims + verification record, for The Receipts / Errata
     fd_markets = []        # harvested Forecast Desk markets (one per corpus with scenarios)
     total_chapters = 0
     total_words = 0
@@ -13992,7 +12073,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             f"{SITE_URL}/{corpus['slug']}.html",
             cover_url or f"{SITE_URL}/{OG_IMAGE}",
         )
-        category = override.get("category") or "Other"
         # Defer the reader render until the full library manifest exists, so the
         # shared command-palette shell (injected below) can see every corpus.
         pages.append({
@@ -14002,12 +12082,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             "theme_style": render_theme_style(theme),
             "reader_og": reader_og,
             "data_json": json_for_html(corpus),
-            "scenes_json": reader_scene_json(
-                corpus,
-                "briefing" if category == "Media & Advertising" else "research",
-                cover_slugs=(corpus["slug"],),
-            ),
-            "category": category,
+            "category": override.get("category") or "Other",
         })
         n = len(corpus["documents"])
         words = sum(len(d["body"].split()) for d in corpus["documents"])
@@ -14020,6 +12095,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         # build.config.json "descriptions" — useful when a corpus has no manifest
         # subtitle, or its manifest carries a long sharpened_question / boilerplate.
         card_sub = descriptions.get(corpus["slug"], corpus["subtitle"] or "")
+        category = override.get("category") or "Other"
         # A lowercase haystack the index search box matches against (title, blurb, category).
         search_text = html.escape(
             " ".join([corpus["title"], card_sub, category]).lower(), quote=True
@@ -14051,8 +12127,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             })
         search_entries.append({
             "slug": corpus["slug"], "title": corpus["title"],
-            "kind": "corpus", "kindLabel": "Research", "category": category,
-            "href": f"{corpus['slug']}.html",
             "chapters": [
                 {"i": di, "title": d["title"], "text": strip_md(d["body"])}
                 for di, d in enumerate(corpus["documents"])
@@ -14068,9 +12142,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         _qf = quiz_facts_for(corpus, folder)
         if any(_qf.values()):
             quiz_facts.append(dict(_qf, slug=corpus["slug"]))
-        _rc = receipts_for(corpus, folder, category)
-        if _rc:
-            receipts.append(_rc)
         corpora_by_slug[corpus["slug"]] = corpus  # retained for collections
         _atlas_img = find_cover_image(corpus["slug"])
         atlas_corpora[corpus["slug"]] = {
@@ -14241,16 +12312,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     manifest.append({"title": "Connections", "kind": "section",
                      "category": "The map of ideas", "href": "connections.html",
                      "meta": "how the corpora relate"})
-    if receipts:
-        _rc_corr = sum(len(r["corrections"]) for r in receipts)
-        _rc_n = sum(r["n"] for r in receipts)
-        manifest.append({"title": "The Receipts", "kind": "section", "category": "Evidence",
-                         "href": "receipts.html",
-                         "meta": f"all {_rc_n:,} claims, with their verdicts"})
-        if _rc_corr:
-            manifest.append({"title": "Errata", "kind": "section", "category": "Evidence",
-                             "href": "errata.html",
-                             "meta": f"the {_rc_corr} claims that were refuted and corrected"})
     if glossary_index:
         _gterms = sum(len({t["term"].lower() for t in g["terms"]}) for g in glossary_index)
         manifest.append({"title": "Glossary", "kind": "section", "category": "Reference",
@@ -14260,39 +12321,14 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         manifest.append({"title": "Test Yourself", "kind": "section", "category": "Reference",
                          "href": "quiz.html",
                          "meta": "a quiz on the research — three levels"})
-    manifest.append({"title": "Search", "kind": "section", "category": "Reference",
-                     "href": "search.html",
-                     "meta": "ranked full-text search across the whole site"})
 
     manifest_json = json_for_html(manifest)
     shell_root = shell_html(manifest_json, "")      # pages at docs/ root
     shell_sub = shell_html(manifest_json, "../")    # edition pages in docs/<section>/
 
-    # Every dated publication, harvested once and spent twice: it feeds the RSS /
-    # JSON feeds, and it joins the search index so the palette and the search page
-    # reach the editions and pamphlets too, not just the corpora.
-    briefing_items = read_pamphlets_manifest(out, subdir="briefings")
-    publications = harvest_publications(out, editions, fp_editions, pamphlet_items,
-                                        briefing_items, ghost_cfg, fingerprint_cfg)
-    PUB_KIND_LABEL = {"ghost": "Ghost of Times", "fingerprint": "Fingerprint",
-                      "pamphlet": "Pamphlet", "briefing": "Briefing"}
-    for p in publications:
-        chapters = [{"i": i, "title": headline or p["title"],
-                     "text": " ".join(x for x in (dek, body) if x)}
-                    for i, (headline, dek, body) in enumerate(p["stories"])]
-        if not chapters:
-            continue
-        search_entries.append({
-            "slug": p["href"].rsplit("/", 1)[-1].replace(".html", ""),
-            "title": p["label"] if p["kind"] in ("ghost", "fingerprint") else p["title"],
-            "kind": p["kind"], "kindLabel": PUB_KIND_LABEL.get(p["kind"], p["section"]),
-            "category": p["section"], "href": p["href"], "chapters": chapters,
-        })
-
     # Lazy global-search payload — the palette fetches this only on an "in the
     # text" query, so it never weighs down first paint. Bodies are trimmed.
     (out / "search-index.json").write_text(json.dumps(search_entries, ensure_ascii=False))
-    feeds = build_feeds(out, publications, site_title, site_subtitle)
     # Pull-quotes for Today's Passage (also written as a file for later reuse).
     (out / "passages.json").write_text(json.dumps(all_passages, ensure_ascii=False))
 
@@ -14335,7 +12371,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             shell=shell_root,
             back_href=_back_href,
             back_label=_back_label,
-            scenes_json=p["scenes_json"],
+            scene=scene_plate("briefing" if p["category"] == "Media & Advertising" else "research",
+                              extra_class="reader-scene", cover_slugs=(p["slug"],), seed=p["slug"]),
         ))
 
     # Collection pages — merged cross-corpus readers, rendered through the same
@@ -14348,11 +12385,8 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
             css=CSS + SCENE_PLATE_CSS, theme_style="", favicon=FAVICON, og_meta=col_og,
             data_json=shrink_data_uris(json_for_html(col_corpus)), marked_js=MARKED_JS, app_js=APP_JS, shell=shell_root,
             back_href="research.html", back_label="Library",
-            scenes_json=reader_scene_json(
-                col_corpus,
-                "collection",
-                cover_slugs=meta.get("slugs"),
-            )))
+            scene=scene_plate("collection", extra_class="reader-scene",
+                              cover_slugs=meta.get("slugs"), seed=meta["slug"])))
     if resolved_collections:
         print(f"  ✓ Rendered {len(resolved_collections)} collection(s)")
 
@@ -14377,23 +12411,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
     # Test Yourself quizzes the WHOLE library — desk corpora included; a quiz on
     # what you read spans every shelf, unlike the desk-scoped reference pages.
     build_quiz_page(out, quiz_facts, all_passages, shell=shell_root)
-
-    # The Receipts + Errata — the library's own audit trail. Like the quiz, these
-    # span every shelf: the point is one standard of proof across the whole site,
-    # not a per-desk one.
-    if receipts:
-        build_receipts_page(out, receipts, shell=shell_root, n_corpora=len(wrapped_stats))
-        build_errata_page(out, receipts, shell=shell_root)
-
-    # The dedicated search page — tabs are built from the kinds actually present
-    # in the index, so a section with nothing published yet never gets a dead tab.
-    _kinds_present = {e.get("kind", "corpus") for e in search_entries}
-    _search_kinds = [(k, lab) for k, lab in
-                     (("corpus", "Research"), ("ghost", "The Ghost of Times"),
-                      ("fingerprint", "The Fingerprint"), ("pamphlet", "Pamphlets"),
-                      ("briefing", "Briefings"))
-                     if k in _kinds_present]
-    build_search_page(out, _search_kinds, feeds, shell=shell_root)
 
     # The Ghost of Times section (second top-level section of the site). Its
     # old single-line home-page teaser is gone — the front page now carries a
@@ -14481,7 +12498,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         dcards = [c for c in cards if c["category"] in dcats]
         dws = [w for w in wrapped_stats if w["category"] in dcats]
         dstats = (f"{len(dcards)} corpora · {sum(w['chapters'] for w in dws)} chapters · "
-                  f"{_fmt_words(sum(w['words'] for w in dws))}")
+                  f"{round(sum(w['words'] for w in dws) / 1000)}k words")
         if hub_desk is None:
             hub_desk = {
                 "href": f"{slug}.html",
@@ -14619,7 +12636,7 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
 
     index_ws = [w for w in wrapped_stats if w["category"] not in detached_cats]
     stats = (f"{len(index_cards)} corpora · {sum(w['chapters'] for w in index_ws)} chapters · "
-             f"{_fmt_words(sum(w['words'] for w in index_ws))}")
+             f"{round(sum(w['words'] for w in index_ws) / 1000)}k words")
 
     # The index carries only a quiz invitation band — the full quiz lives on
     # quiz.html and spans every shelf, desks included; the desks additionally
@@ -14800,7 +12817,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         site_subtitle=html.escape(site_subtitle),
         css=library_css,
         favicon=FAVICON, og_meta=OG_META,
-        contact_email=CONTACT_EMAIL,
         nav=main_nav_html(active="index.html"),
         top_header=top_header_art(),
         brand_logo=brand_logo_art(),
@@ -14827,15 +12843,9 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
         "accent": ("#9a2c1a", "#d98055"),
         "epigraph": "“The medium is the message.” — Marshall McLuhan",
         "folio_left": "The library",
-        # was "Corpora, collections, and reference" — a third label saying what
-        # the other two already said. The rail is better spent as a route out.
-        "folio_right_html": '<a href="about.html">About &amp; contact →</a>',
+        "folio_right": "Corpora, collections, and reference",
         "kicker": "A library of deep research",
-        # The site subtitle is a two-word brand line; a desk front needs to say
-        # what a reader actually gets when they open a shelf.
-        "subtitle": ("Book-length research on whatever the question turns out to need — media theory, "
-                     "market plumbing, theology, poetry. Written by an agentic pipeline, checked against "
-                     "its sources claim by claim, and made to commit to a forecast at the end."),
+        "subtitle": site_subtitle,
         "title": site_title,
     }
     research_tools = [
@@ -14857,22 +12867,6 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                       tools=_desk_tools_html(research_tools), quiz=research_quiz,
                       bottom_bands=collections_html, shell=shell_root)
     build_wrapped_page(out, wrapped_stats, shell=shell_root, category_order=category_order)
-    # The front door. Its figures are computed here so the page can never claim
-    # more (or less) than the library actually holds.
-    _ab_words = sum(w["words"] for w in wrapped_stats)
-    _ab_terms = sum(len({t["term"].lower() for t in g["terms"]}) for g in glossary_index)
-    _ab_graded = _fd_site_led["desk"]["graded"]
-    _ab_figs = [
-        (len(wrapped_stats), "research corpora"),
-        (sum(w["chapters"] for w in wrapped_stats), "chapters"),
-        (_fmt_words(_ab_words).replace(" words", ""), "words"),
-        (f"{len(fp_editions)}", "wire editions"),
-        (f"{_ab_terms:,}", "glossary terms"),
-    ]
-    if _ab_graded:
-        _ab_hits = _fd_site_led["desk"]["hits"]
-        _ab_figs.append((f"{_ab_hits}–{_ab_graded - _ab_hits}", "forecast record"))
-    build_about_page(out, _ab_figs, shell=shell_root)
     print(f"\nBuilt {len(cards)} corpora + {len(editions)} ghost + {len(fp_editions)} fingerprint editions ({stats}) → {out}/index.html, {out}/research.html")
 
 
