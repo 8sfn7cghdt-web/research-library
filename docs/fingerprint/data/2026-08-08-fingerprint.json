@@ -1,0 +1,545 @@
+{
+  "edition_date": "2026-08-08",
+  "edition_number": 35,
+  "weekday": "Saturday",
+  "subtitle": "All the news that's fit to Fingerprint",
+  "lead": {
+    "headline": "Nielsen to Buy DoubleVerify for $2.15 Billion",
+    "dek": "The measurement giant absorbs the verification leader in a deal that folds audience, context and quality signals into one platform.",
+    "body": "Nielsen agreed to acquire DoubleVerify for $13.60 per share in an all-cash deal valuing the ad-verification company at roughly $2.15 billion, a 30% premium to its 60-day average price. The companies say the combined business will generate more than $4 billion in annual revenue; DoubleVerify will keep operating under its own brand as a Nielsen subsidiary once the deal closes, expected in Q1 2027 pending shareholder and regulatory approval. It consolidates measurement and verification into fewer hands right as CTV buyers lean harder on both for trust in programmatic spend.",
+    "source_publication": "AdExchanger",
+    "source_url": "https://www.adexchanger.com/measurement/nielsen-is-acquiring-doubleverify-for-2-15-billion/",
+    "sources": [
+      {
+        "publication": "AdExchanger",
+        "url": "https://www.adexchanger.com/measurement/nielsen-is-acquiring-doubleverify-for-2-15-billion/",
+        "filed_date": "2026-08-07"
+      },
+      {
+        "publication": "Bloomberg",
+        "url": "https://www.bloomberg.com/news/articles/2026-08-06/nielsen-nears-2-billion-take-private-deal-for-doubleverify",
+        "filed_date": "2026-08-06"
+      },
+      {
+        "publication": "Variety",
+        "url": "https://variety.com/2026/tv/news/nielsen-acquire-doubleverify-digital-media-measurement-1236829441/",
+        "filed_date": "2026-08-07"
+      },
+      {
+        "publication": "Axios",
+        "url": "https://www.axios.com/2026/08/07/nielsen-doubleverify-media-measurement",
+        "filed_date": "2026-08-07"
+      }
+    ],
+    "filed_date": "2026-08-06"
+  },
+  "sections": [
+    {
+      "section_title": "Platform Watch",
+      "section_class": "platform-watch",
+      "stories": [
+        {
+          "headline": "Disney Weighs Free Ad-Supported Streaming Tier",
+          "dek": "CEO Josh D'Amaro says streaming inventory is nearly sold out, eyeing a free product to unlock more ad revenue.",
+          "body": "Disney disclosed it is exploring a free, ad-supported streaming product as CEO Josh D'Amaro leans further into streaming as a core growth platform, telling investors existing ad inventory is 'fairly well sold.' Disney also confirmed Super Bowl LX ad inventory on ABC and ESPN has sold out, with 30-second spots reportedly fetching $9 million. Entertainment streaming operating income more than doubled to $712 million for the quarter, giving Disney a new lever to pull for incremental ad-supported reach as CTV budgets keep shifting from linear.",
+          "sources": [
+            {
+              "publication": "CNBC",
+              "url": "https://www.cnbc.com/2026/08/05/disney-free-ad-supported-streaming-super-bowl-ads.html",
+              "filed_date": "2026-08-05"
+            },
+            {
+              "publication": "Variety",
+              "url": "https://variety.com/2026/tv/news/disney-free-streaming-channels-launch-josh-damaro-1236828249/",
+              "filed_date": "2026-08-05"
+            },
+            {
+              "publication": "Marketing Dive",
+              "url": "https://www.marketingdive.com/news/inside-disneys-ad-playbook-as-streaming-becomes-core-growth-platform/747503/",
+              "filed_date": "2026-08-05"
+            }
+          ],
+          "source_publication": "CNBC",
+          "source_url": "https://www.cnbc.com/2026/08/05/disney-free-ad-supported-streaming-super-bowl-ads.html",
+          "filed_date": "2026-08-05"
+        },
+        {
+          "headline": "FreeWheel Opens the Black Box on Show-Level CTV Delivery",
+          "dek": "New Video Content Report gives buyers series-level data two hours after impressions run.",
+          "body": "FreeWheel launched Video Content Report inside its Buyer Cloud platform, giving programmatic CTV buyers visibility into which TV series their ads actually ran alongside — a transparency gap that has persisted for nearly a decade in streaming. Seven publishers opted in at launch, including NBCUniversal, Paramount, Warner Bros. Discovery, A+E Global Media and Xumo, with reports available roughly two hours post-delivery. Advertiser Perceptions research cited alongside the launch found over half of CTV advertisers would shift spend to publishers offering show-level transparency, making this a direct answer to buyers' biggest standing complaint about streaming's black-box inventory.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/future-of-tv/future-of-tv-briefing-freewheel-adds-show-level-reporting-to-tackle-streamings-transparency-problem/",
+              "filed_date": "2026-07-29"
+            },
+            {
+              "publication": "Advanced Television",
+              "url": "https://www.advanced-television.com/2026/07/31/freewheel-launches-video-content-report",
+              "filed_date": "2026-07-31"
+            },
+            {
+              "publication": "MarTech Series",
+              "url": "https://martechseries.com/content/freewheel-debuts-first-to-market-series-level-reporting-powered-by-direct-publisher-insights-for-premium-ctv-buyers/",
+              "filed_date": "2026-07-29"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/future-of-tv/future-of-tv-briefing-freewheel-adds-show-level-reporting-to-tackle-streamings-transparency-problem/",
+          "filed_date": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "section_title": "Performance CTV",
+      "section_class": "performance-ctv",
+      "stories": [
+        {
+          "headline": "MNTN Grows 21%, Swings to Profit, Adds $100M Buyback",
+          "dek": "Self-serve performance-TV customers climb 40% as the format keeps scaling past the big managed desks.",
+          "body": "MNTN reported Q2 revenue of $82.5 million, up 21% year-over-year and at the high end of guidance, with adjusted EBITDA up 48% to $21.5 million and gross margin expanding to 80%. Active performance-TV customers grew about 40% to 4,225, and the company swung to $6.7 million in net income from a $26.2 million loss a year earlier; the board authorized a $100 million buyback. Q3 guidance points to 25% growth, reinforcing that self-serve, outcomes-counted CTV is still scaling even as larger managed-service DSPs stumble.",
+          "sources": [
+            {
+              "publication": "Investing.com",
+              "url": "https://www.investing.com/news/company-news/mntn-q2-2026-slides-21-revenue-growth-48-ebitda-gain-amid-earnings-miss-93CH-4835976",
+              "filed_date": "2026-08-04"
+            },
+            {
+              "publication": "StockTitan",
+              "url": "https://www.stocktitan.net/sec-filings/MNTN/8-k-mntn-inc-reports-material-event-4fef8ee2e97d.html",
+              "filed_date": "2026-08-04"
+            },
+            {
+              "publication": "BusinessWire",
+              "url": "https://www.businesswire.com/news/home/20260804192898/en/MNTN-Reports-Second-Quarter-2026-Results",
+              "filed_date": "2026-08-04"
+            }
+          ],
+          "source_publication": "Investing.com",
+          "source_url": "https://www.investing.com/news/company-news/mntn-q2-2026-slides-21-revenue-growth-48-ebitda-gain-amid-earnings-miss-93CH-4835976",
+          "filed_date": "2026-08-04"
+        }
+      ]
+    },
+    {
+      "section_title": "Partnership Signals",
+      "section_class": "partnership-signals",
+      "stories": [
+        {
+          "headline": "LiveRamp Folds Meta Into Cross-Media Measurement Suite",
+          "dek": "Brands can now de-duplicate Meta performance against CTV, programmatic and audio in a single clean room.",
+          "body": "LiveRamp announced Meta is now a reporting source inside its Cross-Media Intelligence platform, giving marketers de-duplicated attribution and incrementality measurement from Meta alongside CTV, programmatic, social and audio investments within the LiveRamp Clean Room. The expansion lets brand advertisers compare social performance directly against CTV spend in one unified, privacy-safe report rather than reconciling disparate walled-garden numbers by hand. As agencies push for cross-channel accountability amid tightening budgets, this closes one of the more persistent measurement gaps between social and CTV buys.",
+          "sources": [
+            {
+              "publication": "BusinessWire",
+              "url": "https://www.businesswire.com/news/home/20260804493642/en/LiveRamp-Adds-Meta-to-Cross-Media-Intelligence",
+              "filed_date": "2026-08-04"
+            },
+            {
+              "publication": "ppc.land",
+              "url": "https://ppc.land/brand-marketers-gain-de-duplicated-meta-measurement-in-liveramp-clean-room/",
+              "filed_date": "2026-08-04"
+            },
+            {
+              "publication": "LiveRamp Newsroom",
+              "url": "https://liveramp.com/news/liveramp-adds-meta-to-cross-media-intelligence",
+              "filed_date": "2026-08-04"
+            }
+          ],
+          "source_publication": "BusinessWire",
+          "source_url": "https://www.businesswire.com/news/home/20260804493642/en/LiveRamp-Adds-Meta-to-Cross-Media-Intelligence",
+          "filed_date": "2026-08-04"
+        },
+        {
+          "headline": "IAB Tech Lab Ships AAMP 2.3 for Agentic Ad Buying",
+          "dek": "Update wires privacy diligence and Google Ad Manager reporting into the agentic protocol stack.",
+          "body": "IAB Tech Lab released AAMP 2.3 on July 30, integrating the IAB Diligence Platform and SafeGuard Privacy directly into the Buyer Agent, plus support for Amazon Bedrock AgentCore, Meta buying, and Google Ad Manager reporting. The update finalizes pricing-integrity and platform-support standards meant to make AI agents deployable inside existing ad infrastructure. As agentic buying protocols race toward production, this is the clearest signal yet that CTV/programmatic platforms will need to support agent-to-agent transacting within the next buying cycle.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416892/iab-tech-lab-advances-agentic-protocols.html",
+              "filed_date": "2026-07-30"
+            },
+            {
+              "publication": "MarTech",
+              "url": "https://martech.org/iab-tech-lab-gets-ai-agents-ready-for-real-advertising/",
+              "filed_date": "2026-07-30"
+            },
+            {
+              "publication": "PR Newswire",
+              "url": "https://www.prnewswire.com/news-releases/iab-tech-lab-releases-aamp-2-3--bringing-enterprise-grade-infrastructure-and-privacy-diligence-to-agentic-advertising-302838652.html",
+              "filed_date": "2026-07-30"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/416892/iab-tech-lab-advances-agentic-protocols.html",
+          "filed_date": "2026-07-30"
+        }
+      ]
+    },
+    {
+      "section_title": "Competitor Moves",
+      "section_class": "competitor-moves",
+      "stories": [
+        {
+          "headline": "Trade Desk Posts Rare Miss, Guides to Revenue Decline",
+          "dek": "A rebuilt C-suite inherits a Q3 forecast that turns growth deceleration into an outright drop.",
+          "body": "The Trade Desk's Q2 revenue grew just 3% to $715 million, missing estimates of $751.6 million, and EPS of $0.34 fell short of the $0.40 consensus; shares fell more than 20% on the print. CEO Jeff Green cited poor execution and clients shifting to cheaper media, and Q3 guidance implies a roughly 12% revenue decline — the first outright drop in the company's public history. The miss lands weeks after Trade Desk hired a new CFO, chief commercial officer, CMO and board director in under two months, a full C-suite reset the company is calling a \"changing of the guard.\"",
+          "sources": [
+            {
+              "publication": "The Motley Fool",
+              "url": "https://www.fool.com/investing/2026/08/07/the-trade-desk-rebuilt-its-c-suite-in-two-months-i/",
+              "filed_date": "2026-08-07"
+            },
+            {
+              "publication": "Adweek",
+              "url": "https://www.adweek.com/media/the-trade-desks-cfo-is-out-after-just-6-months-on-the-job/",
+              "filed_date": "2026-08-06"
+            },
+            {
+              "publication": "VideoWeek",
+              "url": "https://videoweek.com/2026/08/07/week-in-review-nielsen-buys-doubleverify-for-2-15-billion-disney-agrees-ip-deal-with-tiktok-and-ctv-stars-in-mixed-ad-tech-earnings/",
+              "filed_date": "2026-08-07"
+            }
+          ],
+          "source_publication": "The Motley Fool",
+          "source_url": "https://www.fool.com/investing/2026/08/07/the-trade-desk-rebuilt-its-c-suite-in-two-months-i/",
+          "filed_date": "2026-08-06"
+        },
+        {
+          "headline": "Magnite Beats, Raises Guidance as CTV Grows 36%",
+          "body": "Magnite reported Q2 contribution ex-TAC of $190 million, up 17% year-over-year, and adjusted EBITDA up 30% to $71 million, beating estimates on both revenue and earnings. CTV contribution ex-TAC jumped 36% year-over-year to $97 million, with top-10 CTV accounts accelerating to mid-to-high-40% growth across partners including Disney, Netflix, Roku and Warner Bros. Discovery. The company raised full-year guidance to 13-14% contribution ex-TAC growth and at least 37% adjusted EBITDA margin, and shares jumped over 11% — a sharp contrast to the sell-side's mood around The Trade Desk the same week.",
+          "sources": [
+            {
+              "publication": "Seeking Alpha",
+              "url": "https://seekingalpha.com/news/4627130-magnite-raises-full-year-2026-outlook-to-13-percentminus-14-percent-contribution-ex-tac",
+              "filed_date": "2026-08-05"
+            },
+            {
+              "publication": "Benzinga",
+              "url": "https://www.benzinga.com/analyst-stock-ratings/price-target/26/08/60990248/magnite-analysts-boost-their-forecasts-following-better-than-expected-q2-earnings",
+              "filed_date": "2026-08-06"
+            },
+            {
+              "publication": "Yahoo Finance",
+              "url": "https://finance.yahoo.com/markets/stocks/articles/magnite-inc-mgni-q2-2026-051258557.html",
+              "filed_date": "2026-08-05"
+            }
+          ],
+          "source_publication": "Seeking Alpha",
+          "source_url": "https://seekingalpha.com/news/4627130-magnite-raises-full-year-2026-outlook-to-13-percentminus-14-percent-contribution-ex-tac",
+          "filed_date": "2026-08-05"
+        }
+      ]
+    },
+    {
+      "section_title": "Regulatory Wire",
+      "section_class": "regulatory-wire",
+      "stories": [
+        {
+          "headline": "Teads Sues Google Over Lost Ad Exchange Impressions",
+          "dek": "The lawsuit leans directly on a Virginia federal court's prior finding that Google's ad-tech conduct was unlawful.",
+          "body": "Teads filed suit against Google and Alphabet in the Southern District of New York on August 3, seeking treble damages and injunctive relief, alleging Google's tying of AdX to its buying tools cost Teads an estimated 6.88 trillion ad impressions to rival exchanges. The complaint builds on the Eastern District of Virginia's ruling that Google held illegal monopolies in the ad server and exchange markets. It's the clearest sign yet that last year's antitrust liability finding is now generating private damages claims from ad-tech rivals, with the DOJ's remedies ruling in the same case still pending.",
+          "sources": [
+            {
+              "publication": "MediaPost",
+              "url": "https://www.mediapost.com/publications/article/416993/teads-sues-google-citing-loss-of-688-trillion-ad.html",
+              "filed_date": "2026-08-04"
+            },
+            {
+              "publication": "ppc.land",
+              "url": "https://ppc.land/teads-sues-google-citing-6-88-trillion-impressions-lost-to-rival-exchanges/",
+              "filed_date": "2026-08-04"
+            },
+            {
+              "publication": "StreetInsider",
+              "url": "https://www.streetinsider.com/Corporate+News/Teads+sues+Google+for+damages+after+federal+antitrust+ruling/26860069.html",
+              "filed_date": "2026-08-03"
+            }
+          ],
+          "source_publication": "MediaPost",
+          "source_url": "https://www.mediapost.com/publications/article/416993/teads-sues-google-citing-loss-of-688-trillion-ad.html",
+          "filed_date": "2026-08-03"
+        },
+        {
+          "headline": "UK Clears Paramount Skydance's Bid for Warner Bros. Discovery",
+          "dek": "The CMA waves through the $110B tie-up without a Phase 2 probe, even as a US antitrust trial still looms.",
+          "body": "The UK Competition and Markets Authority formally cleared Paramount Skydance's acquisition of Warner Bros. Discovery on August 6, declining to refer the deal for deeper review and finding no UK competition concerns. The clearance follows earlier approvals from the EU, Australia, Canada and other jurisdictions, though Paramount Skydance has separately agreed with a coalition of US state attorneys general not to close the deal until after an antitrust trial. A combined Paramount-WBD would reshape upfront and programmatic supply relationships across HBO Max, Paramount+ and CBS/Discovery's ad-tech stack, a live variable for any buyer planning 2027 budgets.",
+          "sources": [
+            {
+              "publication": "Bloomberg",
+              "url": "https://www.bloomberg.com/news/articles/2026-08-06/paramount-warner-deal-cleared-by-uk-antitrust-watchdog",
+              "filed_date": "2026-08-06"
+            },
+            {
+              "publication": "Paramount (press release)",
+              "url": "https://www.paramount.com/press/uk-competition-and-markets-authority-approves-paramount-skydance-corporation-acquisition-of-warner-bros-discovery",
+              "filed_date": "2026-08-06"
+            },
+            {
+              "publication": "PR Newswire",
+              "url": "https://www.prnewswire.com/news-releases/uk-competition-and-markets-authority-approves-paramount-skydance-corporation-acquisition-of-warner-bros-discovery-302844927.html",
+              "filed_date": "2026-08-06"
+            }
+          ],
+          "source_publication": "Bloomberg",
+          "source_url": "https://www.bloomberg.com/news/articles/2026-08-06/paramount-warner-deal-cleared-by-uk-antitrust-watchdog",
+          "filed_date": "2026-08-06"
+        }
+      ]
+    },
+    {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "Roku Adds Zip-Code Targeting Ahead of Midterm Ad Surge",
+          "dek": "Self-serve, AI-assisted political creative arrives as AdImpact lifts its 2026 cycle forecast to $11.6 billion.",
+          "body": "Roku says 2026 midterm campaigns will be among the first to use its regionally targeted, zip-code-segmented ad tools, pairing self-serve buying with AI-generated creative; analysts project the platform could see roughly 25% platform-revenue growth aided by political and World Cup demand. Roku requires political advertisers to be identified and verified before campaigns launch. The rollout comes as AdImpact's latest tracking puts the full 2026 cycle at a record $11.6 billion, with CTV's projected share at $2.7 billion (23%) — the only media type AdImpact expects to grow versus 2024. With Netflix and Prime Video still declining political ads, the dollars keep concentrating on Hulu, Roku and YouTube.",
+          "sources": [
+            {
+              "publication": "Roku Advertising",
+              "url": "https://advertising.roku.com/2026-predictions",
+              "filed_date": "2026-06-01"
+            },
+            {
+              "publication": "Proactive Investors",
+              "url": "https://www.proactiveinvestors.com/companies/news/1092405/roku-seen-hitting-25-platform-revenue-growth-as-political-ads-and-world-cup-bolster-outlook-1092405.html",
+              "filed_date": "2026-07-22"
+            },
+            {
+              "publication": "AdImpact",
+              "url": "https://adimpact.com/blogs/adimpact-reveals-2026-election-cycle-to-reach-record-11.6-billion-in-ad-spending",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "Roku Advertising",
+          "source_url": "https://advertising.roku.com/2026-predictions",
+          "filed_date": "2026-07-22"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — UK",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Ofcom: Netflix Overtakes BBC as UK's First Viewing Choice",
+          "dek": "Media Nations 2026 finds linear reach still sliding as streaming saturates younger audiences.",
+          "body": "Ofcom's Media Nations UK 2026 report, published July 29, found Netflix now edges out the BBC as UK viewers' first choice (26% vs 25%), while broadcaster linear reach continues its decline and streaming subscriptions show signs of plateauing among younger audiences. The report lands weeks after ITV, Channel 4 and Sky's joint Universal Ads self-serve marketplace opened UK premium video to SME advertisers for the first time. Together they frame the UK's core ad-market tension: linear's audience keeps shrinking even as new programmatic access points multiply around it.",
+          "sources": [
+            {
+              "publication": "Ofcom",
+              "url": "https://www.ofcom.org.uk/media-use-and-attitudes/media-habits-adults/media-nations-2026",
+              "filed_date": "2026-07-29"
+            },
+            {
+              "publication": "Broadband TV News",
+              "url": "https://www.broadbandtvnews.com/2026/07/29/netflix-overtakes-bbc-as-uk-viewers-first-choice-says-ofcom/",
+              "filed_date": "2026-07-29"
+            },
+            {
+              "publication": "VideoWeek",
+              "url": "https://videoweek.com/2026/07/29/younger-audiences-reaching-saturation-in-streaming-finds-ofcom/",
+              "filed_date": "2026-07-29"
+            }
+          ],
+          "source_publication": "Ofcom",
+          "source_url": "https://www.ofcom.org.uk/media-use-and-attitudes/media-habits-adults/media-nations-2026",
+          "filed_date": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — India",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Omnicom and JioStar Pilot Scene-Matched In-Content Ads",
+          "dek": "NIVEA becomes the first brand tested across linear soaps, OTT and CTV under a single unified buy.",
+          "body": "Omnicom Media India, JioStar and Whisper World launched a unified in-content advertising program that embeds 15-second scene-matched brand messages inside soap-opera episodes across Star and Colors channels, mirrored simultaneously on JioHotstar's mobile and connected-TV surfaces, with NIVEA India as the launch brand. The program uses Acxiom TV Segments for audience targeting and tracks reach, frequency, GRPs and brand lift across the combined footprint. It's a notable test of cross-screen, single-buy activation in India's fast-consolidating JioStar-dominated CTV market, ahead of expected Sony/Zee rate responses.",
+          "sources": [
+            {
+              "publication": "MediaNews4u",
+              "url": "https://www.medianews4u.com/omnicom-media-india-and-jiostar-launch-unified-in-content-advertising-solution-across-tv-ott-and-ctv-with-nivea-india/",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "Storyboard18",
+              "url": "https://www.storyboard18.com/agency-news/omnicom-media-jiostar-roll-out-cross-screen-in-content-ad-solution-with-nivea-india-102045.htm",
+              "filed_date": "2026-06-23"
+            },
+            {
+              "publication": "afaqs!",
+              "url": "https://www.afaqs.com/news/media/jiostar-and-omnicom-media-launch-in-content-ads-across-screens-12065600",
+              "filed_date": "2026-06-23"
+            }
+          ],
+          "source_publication": "MediaNews4u",
+          "source_url": "https://www.medianews4u.com/omnicom-media-india-and-jiostar-launch-unified-in-content-advertising-solution-across-tv-ott-and-ctv-with-nivea-india/",
+          "filed_date": "2026-06-23"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — LATAM",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "LATAM Leads Global FAST Growth as Ad Impressions Jump 124%",
+          "dek": "Amagi's latest AIRTIME report shows Latin America outpacing every other region on viewing-hour growth.",
+          "body": "Amagi's June 2026 AIRTIME report, covering roughly 6,500 FAST channel deliveries between April and mid-June, found LATAM posting the strongest regional growth worldwide — hours of viewing up 190% and ad impressions up 124% year over year — as the company adds high-viewership channels across the region. Globally, FAST hours of viewing grew 55% and ad impressions 53%, with poor metadata cited as the main drag on discovery and monetization. LATAM's outsized growth confirms it as the region where ad-supported streaming inventory is expanding fastest, even as measurement infrastructure lags.",
+          "sources": [
+            {
+              "publication": "Amagi",
+              "url": "https://www.amagi.com/newsroom/amagi-releases-june-2026-airtime-report-fast-viewing-hours-grow-55-yoy-as-metadata-friction-escalates",
+              "filed_date": "2026-07-01"
+            },
+            {
+              "publication": "Media Play News",
+              "url": "https://www.mediaplaynews.com/amagi-fast-viewership-growing-but-poor-metadata-is-a-major-challenge/",
+              "filed_date": "2026-07-01"
+            }
+          ],
+          "source_publication": "Amagi",
+          "source_url": "https://www.amagi.com/newsroom/amagi-releases-june-2026-airtime-report-fast-viewing-hours-grow-55-yoy-as-metadata-friction-escalates",
+          "filed_date": "2026-07-01"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — Canada",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Corus Layoffs Squeeze Canadian Broadcaster's CTV Pivot",
+          "dek": "Global News consolidates morning shows as ad-revenue decline forces a 25% headcount cut.",
+          "body": "Corus Entertainment is centralizing local Global News Morning production across its Prairie and Eastern markets after a fresh round of layoffs, part of a plan to cut its full-time workforce roughly 25% (nearly 800 jobs) by end of summer amid persistently falling ad sales and rising debt. The consolidation lands as Canadian industry forecasts put CTV and audio as the only channels expected to see programmatic budget growth this year, with CTV projected to capture 26% of media budgets on average. It's a stark illustration of the linear-to-programmatic value transfer playing out inside a single struggling Canadian broadcaster.",
+          "sources": [
+            {
+              "publication": "Playback",
+              "url": "https://playbackonline.ca/2026/07/29/corus-consolidates-global-news-morning-shows/",
+              "filed_date": "2026-07-29"
+            },
+            {
+              "publication": "Media in Canada",
+              "url": "https://mediaincanada.com/2026/07/29/corus-consolidates-global-news-morning-shows-after-layoffs/",
+              "filed_date": "2026-07-29"
+            },
+            {
+              "publication": "CBC News",
+              "url": "https://www.cbc.ca/news/business/corus-layoffs-at-global-news-9.7272684",
+              "filed_date": "2026-07-17"
+            }
+          ],
+          "source_publication": "Playback",
+          "source_url": "https://playbackonline.ca/2026/07/29/corus-consolidates-global-news-morning-shows/",
+          "filed_date": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "section_title": "Global Desk — China",
+      "section_class": "global-desk",
+      "stories": [
+        {
+          "headline": "Beijing's Ad-Disclosure Crackdown Runs Through September",
+          "dek": "SAMR's six-month enforcement campaign targets misleading claims and warning-label evasion across online ad formats.",
+          "body": "China's State Administration for Market Regulation is roughly midway through a six-month nationwide enforcement campaign (launched March 13) targeting disclosure and warning-language violations in online advertising, including 'big print to attract, small print to disclaim' tactics, missing mandatory warnings, and unverifiable superlative claims — part of a broader push that has already produced over 2,000 false-advertising enforcement actions in H1 2026. The campaign covers online platforms, sellers, advertisers and livestream operators alike. For any brand running OTT/CTV or livestream-adjacent creative into China, the enforcement window through September raises real creative-compliance risk.",
+          "sources": [
+            {
+              "publication": "DLA Piper",
+              "url": "https://www.dlapiper.com/en-us/insights/publications/2026/03/china-launches-six-month-enforcement-campaign-targeting-advertising-cautionary-statements",
+              "filed_date": "2026-03-13"
+            },
+            {
+              "publication": "Digital Policy Alert",
+              "url": "https://digitalpolicyalert.org/change/18736",
+              "filed_date": "2026-03-16"
+            }
+          ],
+          "source_publication": "DLA Piper",
+          "source_url": "https://www.dlapiper.com/en-us/insights/publications/2026/03/china-launches-six-month-enforcement-campaign-targeting-advertising-cautionary-statements",
+          "filed_date": "2026-03-13"
+        }
+      ]
+    },
+    {
+      "section_title": "The Watercooler",
+      "section_class": "watercooler",
+      "stories": [
+        {
+          "headline": "Survey: YouTube Still Owns the Ad-Supported Streaming Budget",
+          "body": "Digiday+ Research surveyed 125 brand and agency professionals and found YouTube leading ad-supported streaming placement for the fourth straight year (75% of respondents), pulling 50% of streaming ad budgets, with Prime Video second (47% placement, 18% of budget). Marketers cited lack of measurement capability, media cost and insufficient budgets as their top obstacles, and 19% flagged poor content transparency specifically on Disney+ and Hulu.",
+          "sources": [
+            {
+              "publication": "Digiday",
+              "url": "https://digiday.com/future-of-tv/d-research-marketers-navigate-a-changing-ctv-landscape/",
+              "filed_date": "2026-08-03"
+            },
+            {
+              "publication": "Modern Retail",
+              "url": "https://www.modernretail.co/marketing/modern-retail-research-the-marketers-2026-guide-to-a-shifting-ctv-landscape-including-youtube-peacock-and-roku/",
+              "filed_date": "2026-08-03"
+            }
+          ],
+          "source_publication": "Digiday",
+          "source_url": "https://digiday.com/future-of-tv/d-research-marketers-navigate-a-changing-ctv-landscape/",
+          "filed_date": "2026-08-03"
+        },
+        {
+          "headline": "Women's Sports Boom Collides With a Hard Ad-Inventory Ceiling",
+          "body": "Surging women's sports viewership — the WNBA's most-watched season on record, athletes like Angel Reese out-following entire leagues on social — has collided with a hard supply constraint: women's sports received only about 15% of sports media coverage from 2018-2022, and that legacy scheduling gap still throttles available ad inventory. Sports marketing agency Deep Blue and analytics firm Mondo Metrics responded by launching the Women's Sports Index, tracking over 20,000 social handles to help advertisers plan around engagement data rather than scarce linear/CTV slots.",
+          "sources": [
+            {
+              "publication": "AdExchanger",
+              "url": "https://www.adexchanger.com/ctv-roundup/theres-not-enough-womens-sports-ad-inventory-to-go-around-but-thats-starting-to-change/",
+              "filed_date": "2026-07-29"
+            },
+            {
+              "publication": "Publir",
+              "url": "https://publir.com/blog/2026/08/why-the-women-s-sports-inventory-deficit-is-forcing-a-pivot/",
+              "filed_date": "2026-08-01"
+            }
+          ],
+          "source_publication": "AdExchanger",
+          "source_url": "https://www.adexchanger.com/ctv-roundup/theres-not-enough-womens-sports-ad-inventory-to-go-around-but-thats-starting-to-change/",
+          "filed_date": "2026-07-29"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — McLuhan",
+      "section_class": "wire-opinion-mcluhan",
+      "stories": [
+        {
+          "headline": "The Buyer Was Already an Agent",
+          "dek": "The protocol does not add an agent to advertising. It removes the last human check from a machine that was already deciding.",
+          "body": "The trade body that writes advertising's technical standards has shipped a new protocol letting software transact media on a desk's behalf — bidding, verifying and reporting, all inside machine-to-machine calls that no person reads in real time. The coverage calls this the moment \"AI enters the media buy,\" which is the rear-view mirror talking. Programmatic buying was agentic from its first auction: a decision executed by algorithm thousands of times a second, long before any planner opened the report. What the protocol changes is not that a machine decides. It is that the machine now also negotiates, verifies itself, and files its own paperwork — closing a loop a person used to have to open.\n\nEvery medium is an extension of some human faculty, and every extension is also an amputation. The trading desk extended a buyer's judgment across a market; the agent extends the whole transaction, and in doing so retires the judgment it once merely extended. The telephone extended the voice across distance and amputated the face that used to travel with it. The agentic protocol extends the desk across the exchange and amputates the pause — the beat of hesitation, the second look at a rate card, that used to sit between a bid and a buy. A press release is a hot medium: high in detail, asking little of the reader. A protocol spec is cool — low in visible content, high in what it silently completes on your behalf. The industry has just made its hottest function run through its coolest machinery.\n\nI neither approve nor disapprove of the agent transacting the buy. I notice only what it retrieves and what it retires. It retrieves the old commission man, dressed now as an API. It retires the pause. There is no inevitability in any of this — only a faculty, quietly, changing hands while the report still says a person signed off.\n\n— Marshall McLuhan",
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.mediapost.com/publications/article/416892/iab-tech-lab-advances-agentic-protocols.html",
+          "filed_date": "2026-08-08",
+          "portrait": "mcluhan",
+          "portrait_caption": "Marshall McLuhan"
+        }
+      ]
+    },
+    {
+      "section_title": "Wire Opinion — Ogilvy",
+      "section_class": "wire-opinion-ogilvy",
+      "stories": [
+        {
+          "headline": "The Desk That Stopped Selling",
+          "dek": "When clients start calling premium media \"too expensive,\" they are not complaining about price. They are complaining about proof.",
+          "body": "This week the largest independent buying desk in American television reported its first revenue decline in company history, and a self-serve upstart a tenth its size posted its best quarter on record. The trade press wrote these up as two unrelated stories — a big miss, a small win. They are the same story. Budgets are not leaving expensive media because it costs too much. They are leaving it because it has stopped showing its work.\n\nI built an agency on the principle that we sell, or else. When I wrote the Hathaway eyepatch, I did not trust the eyepatch. I trusted the sales figures that came in afterward — thirty-six per cent, first quarter. The Rolls-Royce headline ran because the phrase held up under research, not because it was clever at a dinner party. This week the smaller company grew its self-serve customer count past four thousand, up forty per cent, while the giant it undercuts watched its own clients — by its own chairman's word — shift to \"cheaper media.\" Cheaper is the wrong word for what happened. What that client actually bought was a receipt. The larger desk sold reach. The smaller one sold arithmetic.\n\nSell the receipt, not the reach. A client who cannot see what a dollar bought will eventually stop spending the dollar, no matter how good your table manners are at the upfront. Show your work or lose the account — that has never once, in forty years, been optional.\n\n— David Ogilvy",
+          "source_publication": "Wire Opinion",
+          "source_url": "https://www.fool.com/investing/2026/08/07/the-trade-desk-rebuilt-its-c-suite-in-two-months-i/",
+          "filed_date": "2026-08-08",
+          "portrait": "ogilvy",
+          "portrait_caption": "David Ogilvy"
+        }
+      ]
+    }
+  ],
+  "what_to_watch": "Paramount Skydance's Warner Bros. Discovery deal has cleared the UK, EU, Australia and Canada, but a US antitrust trial and a state-AG standstill agreement still stand between signing and close — watch the trial date land before any programmatic re-platforming begins across HBO Max and Discovery's ad stack."
+}

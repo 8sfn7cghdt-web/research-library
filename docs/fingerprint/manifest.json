@@ -203,6 +203,25 @@
         "Global Desk"
       ],
       "dispatches": 17
+    },
+    {
+      "date": "2026-08-08",
+      "weekday": "Saturday",
+      "edition_number": 35,
+      "file": "fingerprint/2026-08-08-fingerprint.html",
+      "lead_headline": "Nielsen to Buy DoubleVerify for $2.15 Billion",
+      "lead_dek": "The measurement giant absorbs the verification leader in a deal that folds audience, context and quality signals into one platform.",
+      "beats": [
+        "Platform Watch",
+        "Performance CTV",
+        "Partnership Signals",
+        "Competitor Moves",
+        "Regulatory Wire",
+        "Campaign Wire",
+        "Global Desk",
+        "The Watercooler"
+      ],
+      "dispatches": 18
     }
   ]
 }
