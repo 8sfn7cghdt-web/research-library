@@ -6240,7 +6240,7 @@ def pamphlets_band_html(items, cfg, page=None):
     mid = (f'<div class="pb-mid"><p class="pb-kicker">{html.escape(kicker)}</p>'
            f'<p class="pb-lead">{lead}</p><p class="pb-sub">{sub}</p></div>')
     latest_key = items[0].get("slug") if items else href
-    scene = scene_plate(scene_kind, extra_class="band-scene", seed=f"{name}:{latest_key}")
+    scene = "" if scene_kind == "briefing" else scene_plate(scene_kind, extra_class="band-scene", seed=f"{name}:{latest_key}")
     return (f'<div class="pamphlet-band{cls}"><a href="{html.escape(href, quote=True)}">{flag}{scene}{mid}'
             f'<span class="pb-cta">{cta}</span></a></div>')
 
@@ -8656,36 +8656,83 @@ CTV_BOARD_DATA = {
         "source": "AdWave, Paramount Ads Manager, NAMediaExperts — Q2–Q3 2026",
     },
     "regions": [
+        {"region": "Global", "metric": "Total ad spend", "value": "$1.06T", "growth": "+5.0%",
+         "note": "Crosses $1 trillion for the first time in 2026, across 56 tracked markets.",
+         "source": "dentsu, mid-year 2026"},
         {"region": "United States", "metric": "CTV ad spend", "value": "$37.95B", "growth": "+14% YoY",
-         "note": "CTV upfront ($17.73B) to exceed primetime linear upfront ($16.98B) for the first time in 2026.",
-         "source": "eMarketer"},
+         "note": "CTV upfront ($17.73B) to exceed primetime linear upfront ($16.98B) for the first time in 2026. "
+                 "Total US ad spend growth (all formats) tracking +5.0%.",
+         "source": "eMarketer; dentsu"},
+        {"region": "Americas (total)", "metric": "Total ad spend", "value": "$460.5B", "growth": "+5.2%",
+         "note": "The US is the dominant driver of this figure.", "source": "dentsu"},
         {"region": "Asia-Pacific", "metric": "Total ad spend", "value": "$376.4B", "growth": "+5.4%",
          "note": "The fastest-growing region overall.", "source": "dentsu"},
+        {"region": "EMEA (total)", "metric": "Total ad-spend growth", "value": "+4.2%", "growth": "",
+         "note": "Trails the Americas and APAC — the slowest-growing major region tracked.", "source": "dentsu"},
+        {"region": "China", "metric": "Total ad-spend growth", "value": "+6.1%", "growth": "",
+         "note": "Driven by short-form video and lifestyle-platform ad formats.", "source": "dentsu"},
         {"region": "India", "metric": "Total ad-spend growth", "value": "+8.6%", "growth": "",
          "note": "Driven by major sporting events and digital expansion.", "source": "Magna / dentsu"},
+        {"region": "Japan", "metric": "CTV ad spend", "value": "~$1.0B", "growth": "+17.4% YoY",
+         "note": "Smaller base than the US or China but among the fastest-growing CTV markets tracked.",
+         "source": "industry estimate, not independently confirmed"},
         {"region": "Brazil / LATAM", "metric": "Total ad-spend growth", "value": "+9.1%", "growth": "",
          "note": "The fastest-growing major market tracked.", "source": "Magna"},
-        {"region": "China", "metric": "Total ad-spend growth", "value": "+6.1%", "growth": "",
-         "note": "", "source": "Magna"},
         {"region": "Australia", "metric": "Total ad-spend growth", "value": "+4.1%", "growth": "",
          "note": "", "source": "Magna"},
-        {"region": "Global", "metric": "Total ad spend", "value": "$1T+", "growth": "+6.3–8.9%",
-         "note": "Crosses $1 trillion for the first time in 2026; the range spans dentsu/Magna's 6.3% vs. Publicis's 8.9%.",
-         "source": "dentsu / Magna / Publicis"},
-        {"region": "UK / Germany", "metric": "CTV ad spend", "value": "—", "growth": "",
+        {"region": "Germany", "metric": "CTV usage growth", "value": "+21% YoY", "growth": "",
+         "note": "A usage figure, not confirmed ad-spend — Germany's CTV ad-spend total wasn't confirmed this pass.",
+         "source": "industry estimate, not independently confirmed"},
+        {"region": "United Kingdom", "metric": "CTV ad spend", "value": "—", "growth": "",
+         "note": "Not confirmed in the last research pass — eMarketer tracks Western Europe programmatic spend, "
+                 "but a UK-specific figure wasn't pulled. Flagged for follow-up.", "source": "—"},
+        {"region": "Canada", "metric": "CTV ad spend", "value": "—", "growth": "",
          "note": "Not confirmed in the last research pass — flagged for follow-up.", "source": "—"},
+        {"region": "South Korea", "metric": "CTV ad spend", "value": "—", "growth": "",
+         "note": "Not confirmed in the last research pass — flagged for follow-up.", "source": "—"},
+        {"region": "Mexico", "metric": "CTV ad spend", "value": "—", "growth": "",
+         "note": "Not confirmed in the last research pass; included under the broader Brazil/LATAM growth figure above.",
+         "source": "—"},
     ],
-    "watch_time": {
-        "us_daily": "~5 hrs/day", "us_daily_note": "US/Canada, up 0.7 hrs YoY (TiVo)",
-        "streaming_share": "48.6%", "streaming_share_note": "of total TV watch-time — Nielsen Gauge, May 2026; "
-                                                              "a Dec 2025 daily record hit 54% (Christmas Day)",
-        "platform_share": [
-            {"name": "YouTube", "pct": 13.8}, {"name": "Disney (portfolio)", "pct": 10.0},
-            {"name": "Netflix", "pct": 8.0}, {"name": "Prime Video", "pct": 4.5},
-        ],
-        "note": "Hulu, Roku Channel, and Tubi don't break out individually in the Nielsen Gauge sources found.",
-        "source": "Nielsen Gauge (May 2026), TiVo, Comscore",
-    },
+    "watch_time": [
+        {"country": "United States",
+         "us_daily": "~5 hrs/day", "us_daily_note": "US/Canada, up 0.7 hrs YoY (TiVo)",
+         "streaming_share": "48.6%", "streaming_share_note": "of total TV watch-time — Nielsen Gauge, May 2026; "
+                                                               "a Dec 2025 daily record hit 54% (Christmas Day)",
+         "platform_share": [
+             {"name": "YouTube", "pct": 13.8}, {"name": "Disney (portfolio)", "pct": 10.0},
+             {"name": "Netflix", "pct": 8.0}, {"name": "Prime Video", "pct": 4.5},
+         ],
+         "note": "Hulu, Roku Channel, and Tubi don't break out individually in the Nielsen Gauge sources found.",
+         "source": "Nielsen Gauge (May 2026), TiVo, Comscore"},
+        {"country": "Australia",
+         "us_daily": "—", "us_daily_note": "Daily minutes not confirmed this pass",
+         "streaming_share": "39.6%", "streaming_share_note": "of TV-set viewing, Q2 2026 (Netflix, Disney+, "
+                                                               "Prime Video, and YouTube combined); broadcast + BVOD "
+                                                               "('Total TV') held the other 60.4%",
+         "platform_share": [
+             {"name": "Total TV (broadcast + BVOD)", "pct": 60.4},
+             {"name": "Digital Video (Netflix, Disney+, Prime, YouTube)", "pct": 39.6},
+         ],
+         "note": "OzTAM's Streamscape dashboard doesn't break the Digital Video bucket into per-service shares.",
+         "source": "OzTAM Streamscape, Q2 2026"},
+        {"country": "Canada",
+         "us_daily": "—", "us_daily_note": "Daily minutes not confirmed this pass",
+         "streaming_share": "—", "streaming_share_note": "Overall streaming share of total TV not confirmed this pass",
+         "platform_share": [
+             {"name": "Netflix (share of SVOD market)", "pct": 24.0},
+         ],
+         "note": "Numeris tracks the SVOD sub-market only in the sources found — a full platform-share picture "
+                 "against linear TV wasn't confirmed.",
+         "source": "Numeris, 2026"},
+        {"country": "United Kingdom",
+         "us_daily": "—", "us_daily_note": "Daily minutes not confirmed this pass",
+         "streaming_share": "—", "streaming_share_note": "Numeric platform shares not confirmed this pass",
+         "platform_share": [],
+         "note": "BARB data (late Dec 2025–early Jan 2026) shows BBC iPlayer leading BVOD viewing and Sky Go "
+                 "leading live streaming, but percentage shares weren't confirmed in this pass.",
+         "source": "BARB, Dec 2025–Jan 2026"},
+    ],
 }
 
 CTV_BOARD_CSS = """
@@ -8730,6 +8777,8 @@ CTV_BOARD_CSS = """
 .ctv-region-v { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext); }
 .ctv-region-g { font-family: var(--fdmono); font-size: .78rem; color: var(--fdup); margin-left: .5rem; }
 .ctv-region-n { font-family: var(--serif); font-style: italic; font-size: .76rem; color: var(--fdmut); margin: .35rem 0 0; line-height: 1.4; }
+.ctv-watch-country { margin-bottom: 1.6rem; }
+.ctv-watch-country:last-child { margin-bottom: 0; }
 .ctv-watch { display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1rem; }
 .ctv-watch-row { display: grid; grid-template-columns: 140px 1fr 3.2rem; align-items: center; gap: .6rem; }
 .ctv-watch-nm { font-family: var(--sans); font-size: .78rem; color: var(--fdtext); }
@@ -8750,6 +8799,13 @@ CTV_BOARD_CSS = """
 .ctv-bet-pk { font-family: var(--sans); font-size: .76rem; font-weight: 600; }
 .ctv-bet-due { font-family: var(--fdmono); font-size: .66rem; color: var(--fdmut); margin-top: .35rem; }
 @media (max-width: 640px) { .ctv-watch-row { grid-template-columns: 100px 1fr 2.6rem; } }
+a.fd-board { transition: border-color .15s var(--ease), transform .15s var(--ease); cursor: pointer; }
+a.fd-board:hover { border-color: var(--fdup); transform: translateY(-2px); }
+.ctv-breaking { display: flex; align-items: baseline; gap: .55rem; margin: 0 0 1rem;
+  padding: .55rem .75rem; background: #1e1216; border: 1px solid #4a2530; border-radius: 2px; }
+.ctv-breaking-tag { flex-shrink: 0; font-family: var(--sans); font-weight: 800; font-size: .64rem;
+  text-transform: uppercase; letter-spacing: .1em; color: #f4715c; }
+.ctv-breaking-text { font-family: var(--serif); font-size: .84rem; line-height: 1.4; color: var(--fdtext); }
 """
 
 
@@ -8781,17 +8837,23 @@ def _ctv_logo_badge(ticker, name):
             f'title="{html.escape(name)} — figures not confirmed this pass">{html.escape(initials)}</span>')
 
 
-def _ctv_tape(data, fp_editions):
+def _ctv_tape(data, fp_editions, plain_links=False):
     """The board's own ticker: the latest Fingerprint headlines, then a beat off
-    every company's earnings note — same crawl mechanics as the Forecast tape."""
+    every company's earnings note — same crawl mechanics as the Forecast tape.
+    plain_links=True renders the Fingerprint items as <span> instead of <a> —
+    needed when the tape is embedded inside another anchor (e.g. the adtech.html
+    preview band), since nested <a> tags would truncate the outer link."""
     ticks = []
     for ed in (fp_editions or [])[:6]:
         headline = ed.get("lead_headline") or ""
         if not headline:
             continue
         href = ed.get("file") or "fingerprint.html"
-        ticks.append(f'<a class="fd-tk" href="{html.escape(href, quote=True)}" style="text-decoration:none">'
-                     f'<b>The Fingerprint</b> · {html.escape(headline)}</a>')
+        if plain_links:
+            ticks.append(f'<span class="fd-tk"><b>The Fingerprint</b> · {html.escape(headline)}</span>')
+        else:
+            ticks.append(f'<a class="fd-tk" href="{html.escape(href, quote=True)}" style="text-decoration:none">'
+                         f'<b>The Fingerprint</b> · {html.escape(headline)}</a>')
     for grp in data["companies"]:
         for c in grp["items"]:
             price = c.get("price", "—")
@@ -8863,7 +8925,7 @@ def _ctv_regions_html(regions):
     return f'<div class="ctv-regions">{"".join(cards)}</div>'
 
 
-def _ctv_watch_html(w):
+def _ctv_watch_one(w):
     rows = []
     top = max((p["pct"] for p in w["platform_share"]), default=1) or 1
     for p in w["platform_share"]:
@@ -8873,14 +8935,22 @@ def _ctv_watch_html(w):
             f'<div class="ctv-watch-bar"><span class="ctv-watch-fill" style="width:{width:.1f}%"></span></div>'
             f'<span class="ctv-watch-pct">{p["pct"]:.1f}%</span></div>'
         )
+    watch_html = f'<div class="ctv-watch">{"".join(rows)}</div>' if rows else ""
     tiles = (f'<div class="ctv-tiles">'
-            f'<div class="ctv-tile"><span class="l">US daily streaming</span><span class="v">{html.escape(w["us_daily"])}</span></div>'
+            f'<div class="ctv-tile"><span class="l">Daily streaming</span><span class="v">{html.escape(w["us_daily"])}</span></div>'
             f'<div class="ctv-tile"><span class="l">Streaming share of TV</span><span class="v">{html.escape(w["streaming_share"])}</span></div>'
             f'</div>')
-    return (f'{tiles}<div class="ctv-watch">{"".join(rows)}</div>'
+    return (f'<div class="ctv-watch-country">'
+            f'<h3 class="ctv-grp-h">{html.escape(w["country"])}</h3>'
+            f'{tiles}{watch_html}'
             f'<p class="ctv-note">{html.escape(w["us_daily_note"])}. {html.escape(w["streaming_share_note"])}. '
             f'{html.escape(w["note"])}</p>'
-            f'<p class="ctv-src">Source: {html.escape(w["source"])}</p>')
+            f'<p class="ctv-src">Source: {html.escape(w["source"])}</p></div>')
+
+
+def _ctv_watch_html(watch_time):
+    countries = watch_time if isinstance(watch_time, list) else [watch_time]
+    return "".join(_ctv_watch_one(w) for w in countries)
 
 
 def _ctv_bets_html(bet_rows, cap=9):
@@ -8900,30 +8970,48 @@ def _ctv_bets_html(bet_rows, cap=9):
 
 
 def ctv_board_band_html(data, fp_editions, bet_rows, href="ctv-board.html"):
-    """A compact embedded strip for the Ad Tech desk front (adtech.html): the
-    ticker tape plus the top few company tiles and a link through to the full
-    board — the desk's own miniature trading floor."""
-    top_companies = [c for grp in data["companies"] for c in grp["items"]][:4]
+    """A compact embedded strip for the Ad Tech desk front (adtech.html): a
+    breaking-news line off the latest Fingerprint edition, the ticker tape,
+    the top few company tiles with confirmed prices only (no dash
+    placeholders), and pricing (CPM) tiles — the desk's own miniature
+    trading floor. The whole band is a single click-through to the full
+    board (no internal links, so the band itself is one anchor)."""
+    priced = [c for grp in data["companies"] for c in grp["items"]
+              if c.get("price", "—") not in ("—", "")]
     tiles = "".join(
         f'<div class="ctv-co"><div class="ctv-co-top">'
         f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
-        f'<span class="ctv-co-price">{html.escape(c.get("price", "—"))}</span></div>'
-        f'<div class="ctv-co-cap">Mkt cap {html.escape(c.get("cap", "—"))}</div></div>'
-        for c in top_companies)
-    bets = _ctv_bets_html(bet_rows, cap=3)
+        f'<span class="ctv-co-price">{html.escape(c["price"])}</span></div>'
+        + (f'<div class="ctv-co-cap">Mkt cap {html.escape(c["cap"])}</div>' if c.get("cap", "—") not in ("—", "") else "")
+        + '</div>'
+        for c in priced[:4])
+    cpm = data["cpm"]
+    price_tiles = "".join(
+        f'<div class="ctv-tile"><span class="l">{html.escape(l)}</span>'
+        f'<span class="v">{html.escape(v)}</span></div>'
+        for l, v in (("Blended CPM", cpm["blended"]), ("Typical range", cpm["range"]),
+                     ("Premium / targeted", cpm["premium"])))
+    breaking = ""
+    for ed in (fp_editions or []):
+        headline = ed.get("lead_headline") or ""
+        if headline:
+            breaking = (f'<div class="ctv-breaking"><span class="ctv-breaking-tag">Breaking</span>'
+                        f'<span class="ctv-breaking-text">{html.escape(headline)}</span></div>')
+            break
     return (
-        f'<section class="fd-board" style="margin-top:2rem;padding:1.3rem 1.4rem 1.6rem">'
+        f'<a class="fd-board" href="{html.escape(href, quote=True)}" '
+        f'style="display:block;margin-top:2rem;padding:1.3rem 1.4rem 1.6rem;text-decoration:none;color:inherit">'
         f'<div style="display:flex;align-items:baseline;gap:.6rem;margin-bottom:1rem">'
         f'<h2 style="font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0;color:var(--fdtext)">The CTV Board</h2>'
         f'<span style="font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--fdmut)">'
         f'Earnings, CPMs, ad spend, and watch time across Connected TV</span>'
-        f'<a href="{html.escape(href, quote=True)}" style="margin-left:auto;font-family:var(--sans);'
-        f'font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fdup);'
-        f'text-decoration:none">Full board →</a></div>'
-        f'{_ctv_tape(data, fp_editions)}'
+        f'<span style="margin-left:auto;font-family:var(--sans);'
+        f'font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fdup)">Full board →</span></div>'
+        f'{breaking}'
+        f'{_ctv_tape(data, fp_editions, plain_links=True)}'
         f'<div class="ctv-grid" style="margin-top:1rem">{tiles}</div>'
-        f'{bets}'
-        f'</section>'
+        f'<div class="ctv-tiles" style="margin-top:.9rem">{price_tiles}</div>'
+        f'</a>'
     )
 
 
