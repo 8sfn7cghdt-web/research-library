@@ -12995,6 +12995,7 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         og_meta=og,
         nav=main_nav_html(active=f"{slug}.html"),
         css=(LIBRARY_CSS + SCENE_PLATE_CSS + FINGERPRINT_BAND_CSS + PAMPHLETS_BAND_CSS + DOMAIN_PAGE_CSS
+             + FORECAST_PAGE_CSS + CTV_BOARD_CSS
              + (QUIZ_CSS if quiz else "")),
         accent_css=accent_css,
         folio_left=html.escape(page_cfg.get("folio_left", "The desk")),
