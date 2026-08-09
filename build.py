@@ -1293,6 +1293,7 @@ MAIN_NAV_ITEMS = [
     ("The Research", "research.html"),
     ("The Ghost of Times", "ghost.html"),
     ("Ad Tech", "adtech.html"),
+    ("The CTV Board", "ctv-board.html"),
     ("The Pamphlets", "pamphlets.html"),
     ("The Forecast Desk", "forecast.html"),
     ("Connections", "connections.html"),
@@ -8538,6 +8539,374 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
     print(f"  ✓ {h1}  ({n_markets} markets, {n_outcomes} outcomes, {n_graded} graded) → {fname}")
 
 
+# --------------------------------------------------------------- the CTV board
+# A financial-board read on the Connected-TV market: public-company earnings
+# and share moves, CTV CPM benchmarks, ad-spend projections by country/region,
+# and platform watch-time share — dressed in the same dark .fd-board look as
+# the Forecast Desk, with a Fingerprint-fed news tape and the desk's own latest
+# bets pulled straight off the Ad Tech board. Hand-authored data (this is a
+# static site with no live market feed) — see CTV_BOARD_DATA below; every
+# figure carries its own source and "as of" date so staleness is visible on
+# the page rather than silently assumed.
+CTV_BOARD_DATA = {
+    "as_of": "August 9, 2026",
+    "note": "Q2 2026 earnings season (most names reported late July–early August 2026). "
+            "Figures marked “—” were not confirmed in the last research pass.",
+    "companies": [
+        {"group": "CTV & Streaming", "items": [
+            {"ticker": "ROKU", "name": "Roku", "price": "—", "cap": "$21.7B",
+             "earn": "Q2 2026: revenue $1.35B (+22% YoY), beat; EPS $1.18 vs $0.61 est. — 5th straight profitable quarter.",
+             "note": "Guidance withheld pending its $22B Fox Corp acquisition."},
+            {"ticker": "TTD", "name": "The Trade Desk", "price": "—", "cap": "—",
+             "earn": "Q2 2026: revenue $715M (+3% YoY), missed $751.5M est.; adj. EPS $0.34 vs $0.37 est.",
+             "note": "CFO, CMO, and commercial chief all replaced this quarter."},
+            {"ticker": "NFLX", "name": "Netflix", "price": "$73.63", "cap": "$309B",
+             "earn": "Q2 2026: revenue $12.56B (+13.4%), in-line; EPS $0.80 in-line; op. margin 33.4% (down from 34.1%).",
+             "note": "Ads business tracking ~$3B FY26 revenue, ~$43/mo ARPU; stock fell on a soft Q3 revenue guide."},
+            {"ticker": "DIS", "name": "Disney", "price": "—", "cap": "—",
+             "earn": "Q3 FY26: revenue $25.25B (+7%), slight miss; adj. EPS $2.06 vs $1.86 est. — beat.",
+             "note": "Streaming operating income more than doubled YoY to ~$712M; stock +~4% premarket."},
+            {"ticker": "WBD", "name": "Warner Bros. Discovery", "price": "—", "cap": "$67.4B",
+             "earn": "Q2 2026: revenue $8.72B, missed $9.21B est.; EPS beat despite the revenue miss.",
+             "note": "Subject to Paramount Skydance's pending $80.9–111B bid; US antitrust trial set March 2027."},
+            {"ticker": "PSKY", "name": "Paramount Skydance", "price": "—", "cap": "$10.4B",
+             "earn": "Q2 2026: revenue $6.91B vs $6.88B est. — slight beat; net earnings $41M.",
+             "note": "Pursuing the Warner Bros. Discovery acquisition."},
+        ]},
+        {"group": "Ad-Tech Platforms", "items": [
+            {"ticker": "GOOGL", "name": "Alphabet", "price": "—", "cap": "—",
+             "earn": "Q2 2026: revenue $119.8B (+24%), beat; ad revenue $81.63B; YouTube ads $11.1B (+13%).",
+             "note": "Stock fell >6% on a raised 2026 capex guide ($195–205B, up from $180–190B)."},
+            {"ticker": "AMZN", "name": "Amazon", "price": ">$255", "cap": "$3T (crossed Aug 3, a first)",
+             "earn": "Q2 2026: net sales $200.6B (+20%); AWS $42.2B (+37%); ad revenue $19.8B (+26%, nearing $20B/qtr).",
+             "note": "2026 capex guide raised to $220B."},
+            {"ticker": "MGNI", "name": "Magnite", "price": "$22.78 (after-hours)", "cap": "—",
+             "earn": "Q2 2026: non-GAAP EPS $0.26 vs $0.25 est.; revenue $192.8M vs $179.2M est. — beat.",
+             "note": "CTV now 51% of Contribution ex-TAC, up 36% YoY; FY26 targets raised."},
+            {"ticker": "PUBM", "name": "PubMatic", "price": "$16.23 (after-hours)", "cap": "—",
+             "earn": "Q2 2026: adj. EPS $0.12 vs an est. $0.23 loss — big beat; revenue $78.6M (+11%).",
+             "note": "Adj. EBITDA margin 25%, up from 20%."},
+            {"ticker": "CRTO", "name": "Criteo", "price": "$16.10 (premarket)", "cap": "—",
+             "earn": "Q2 2026: adj. EPS $0.80 vs $0.70 est. — beat; revenue $428M.",
+             "note": "Stock fell 28% premarket on a guidance cut and enterprise-client pullback; Retail Media spend +31% YoY."},
+        ]},
+        {"group": "Legacy Media & Agencies", "items": [
+            {"ticker": "CMCSA", "name": "Comcast / NBCUniversal", "price": "—", "cap": "$87.0B",
+             "earn": "Q2 2026: revenue $29.94B (-1.2%); adj. EPS $1.04 (-16.7%).",
+             "note": "Announced an NBCUniversal+Sky spin-off within 12 months; Peacock's first-ever profitable quarter."},
+            {"ticker": "FOX", "name": "Fox Corp.", "price": "—", "cap": "$21.0B",
+             "earn": "Q2 FY26: revenue $5.18B; net income $247M, down from $388M YoY.",
+             "note": "Ad revenue +1%, Tubi AVOD growth offsetting lower political ad revenue."},
+            {"ticker": "WPP", "name": "WPP", "price": "310p", "cap": "$4.44B",
+             "earn": "H1 2026: like-for-like net sales -4.7% (Q2 -2.8%, improving); operating margin 8.4%.",
+             "note": "Net new billings -$1.1B in H1 vs. Publicis +$1.6B."},
+            {"ticker": "OMC", "name": "Omnicom", "price": "—", "cap": "—",
+             "earn": "Post-IPG-merger core revenue ~$6B (£4.5B) — comparisons complicated by the Dec 2025 merger.",
+             "note": ""},
+            {"ticker": "PUB.PA", "name": "Publicis Groupe", "price": "—", "cap": "—",
+             "earn": "H1 2026: organic growth 4.8% in Q2; net revenue €3.77B.",
+             "note": "Raised full-year organic growth guidance."},
+        ]},
+    ],
+    "cpm": {
+        "blended": "$26", "range": "$25–35", "span": "$15–45",
+        "standard": "$20–40", "premium": "$40–60", "cpcv": "$2–4 (completed-view basis)",
+        "by_platform": [
+            {"name": "Netflix", "val": "$20–30 programmatic / $45–65 direct"},
+            {"name": "Hulu", "val": "$10–30"},
+            {"name": "Amazon Prime Video", "val": "$25–60"},
+        ],
+        "trend": "An inventory glut pushed CTV CPMs down 10–30% through 2025 — current levels read as a post-correction floor.",
+        "source": "AdWave, Paramount Ads Manager, NAMediaExperts — Q2–Q3 2026",
+    },
+    "regions": [
+        {"region": "United States", "metric": "CTV ad spend", "value": "$37.95B", "growth": "+14% YoY",
+         "note": "CTV upfront ($17.73B) to exceed primetime linear upfront ($16.98B) for the first time in 2026.",
+         "source": "eMarketer"},
+        {"region": "Asia-Pacific", "metric": "Total ad spend", "value": "$376.4B", "growth": "+5.4%",
+         "note": "The fastest-growing region overall.", "source": "dentsu"},
+        {"region": "India", "metric": "Total ad-spend growth", "value": "+8.6%", "growth": "",
+         "note": "Driven by major sporting events and digital expansion.", "source": "Magna / dentsu"},
+        {"region": "Brazil / LATAM", "metric": "Total ad-spend growth", "value": "+9.1%", "growth": "",
+         "note": "The fastest-growing major market tracked.", "source": "Magna"},
+        {"region": "China", "metric": "Total ad-spend growth", "value": "+6.1%", "growth": "",
+         "note": "", "source": "Magna"},
+        {"region": "Australia", "metric": "Total ad-spend growth", "value": "+4.1%", "growth": "",
+         "note": "", "source": "Magna"},
+        {"region": "Global", "metric": "Total ad spend", "value": "$1T+", "growth": "+6.3–8.9%",
+         "note": "Crosses $1 trillion for the first time in 2026; the range spans dentsu/Magna's 6.3% vs. Publicis's 8.9%.",
+         "source": "dentsu / Magna / Publicis"},
+        {"region": "UK / Germany", "metric": "CTV ad spend", "value": "—", "growth": "",
+         "note": "Not confirmed in the last research pass — flagged for follow-up.", "source": "—"},
+    ],
+    "watch_time": {
+        "us_daily": "~5 hrs/day", "us_daily_note": "US/Canada, up 0.7 hrs YoY (TiVo)",
+        "streaming_share": "48.6%", "streaming_share_note": "of total TV watch-time — Nielsen Gauge, May 2026; "
+                                                              "a Dec 2025 daily record hit 54% (Christmas Day)",
+        "platform_share": [
+            {"name": "YouTube", "pct": 13.8}, {"name": "Disney (portfolio)", "pct": 10.0},
+            {"name": "Netflix", "pct": 8.0}, {"name": "Prime Video", "pct": 4.5},
+        ],
+        "note": "Hulu, Roku Channel, and Tubi don't break out individually in the Nielsen Gauge sources found.",
+        "source": "Nielsen Gauge (May 2026), TiVo, Comscore",
+    },
+}
+
+CTV_BOARD_CSS = """
+.ctv-sec { margin: 2.6rem 0 1.2rem; }
+.ctv-sec:first-of-type { margin-top: 1rem; }
+.ctv-sec-h { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
+  font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
+  color: #c9cdd6; border-bottom: 1px solid var(--fdline); padding-bottom: .5rem; margin: 0 0 1rem; }
+.ctv-sec-h .k { font-family: var(--serif); font-style: italic; text-transform: none; letter-spacing: 0;
+  font-size: .85rem; color: var(--fdmut); }
+.ctv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: .9rem; }
+.ctv-grp-h { font-family: var(--sans); font-weight: 700; font-size: .68rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); margin: 1.3rem 0 .6rem; }
+.ctv-grp-h:first-child { margin-top: 0; }
+.ctv-co { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
+  padding: .85rem 1rem; }
+.ctv-co-top { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .35rem; }
+.ctv-co-tick { font-family: var(--fdmono); font-weight: 700; font-size: .84rem; color: var(--fdtext); }
+.ctv-co-name { font-family: var(--sans); font-size: .74rem; color: var(--fdmut); }
+.ctv-co-price { margin-left: auto; font-family: var(--fdmono); font-size: .8rem; font-weight: 700;
+  color: var(--fdup); white-space: nowrap; }
+.ctv-co-cap { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); margin-bottom: .5rem; }
+.ctv-co-earn { font-family: var(--serif); font-size: .84rem; line-height: 1.5; color: var(--fdtext); margin: 0 0 .3rem; }
+.ctv-co-note { font-family: var(--serif); font-style: italic; font-size: .78rem; line-height: 1.4; color: var(--fdmut); margin: 0; }
+.ctv-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: .8rem; margin-bottom: 1rem; }
+.ctv-tile { background: #0f131a; border: 1px solid var(--fdline); border-radius: 2px; padding: .7rem .85rem; }
+.ctv-tile .l { display: block; font-family: var(--sans); font-size: .64rem; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--fdmut); margin-bottom: .3rem; }
+.ctv-tile .v { font-family: var(--fdmono); font-weight: 700; font-size: 1.05rem; color: var(--fdtext); }
+.ctv-note { font-family: var(--serif); font-style: italic; font-size: .82rem; color: var(--fdmut); line-height: 1.5; margin: .6rem 0 0; }
+.ctv-src { font-family: var(--fdmono); font-size: .66rem; color: var(--fdmut); margin: .3rem 0 0; }
+.ctv-regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .8rem; }
+.ctv-region { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: .8rem .95rem; }
+.ctv-region-r { font-family: var(--sans); font-weight: 700; font-size: .82rem; color: var(--fdtext); }
+.ctv-region-m { font-family: var(--sans); font-size: .68rem; color: var(--fdmut); margin: .15rem 0 .4rem; }
+.ctv-region-v { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext); }
+.ctv-region-g { font-family: var(--fdmono); font-size: .78rem; color: var(--fdup); margin-left: .5rem; }
+.ctv-region-n { font-family: var(--serif); font-style: italic; font-size: .76rem; color: var(--fdmut); margin: .35rem 0 0; line-height: 1.4; }
+.ctv-watch { display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1rem; }
+.ctv-watch-row { display: grid; grid-template-columns: 140px 1fr 3.2rem; align-items: center; gap: .6rem; }
+.ctv-watch-nm { font-family: var(--sans); font-size: .78rem; color: var(--fdtext); }
+.ctv-watch-bar { position: relative; height: 10px; background: #0a0f16; border-radius: 0; overflow: hidden; }
+.ctv-watch-fill { position: absolute; top: 0; bottom: 0; left: 0; background: var(--fdblue); }
+.ctv-watch-pct { font-family: var(--fdmono); font-size: .76rem; color: var(--fdmut); text-align: right;
+  font-variant-numeric: tabular-nums; }
+.ctv-bets { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: .8rem; }
+.ctv-bet { display: block; text-decoration: none; color: var(--fdtext); background: var(--fdcard);
+  border: 1px solid var(--fdline); border-radius: 2px; padding: .75rem .9rem;
+  transition: border-color .15s var(--ease), transform .15s var(--ease); }
+.ctv-bet:hover { border-color: var(--fdup); transform: translateY(-2px); }
+.ctv-bet-top { display: flex; align-items: center; gap: .4rem; margin-bottom: .4rem; }
+.ctv-bet-av { font-size: 1.1rem; }
+.ctv-bet-nm { font-family: var(--sans); font-weight: 700; font-size: .78rem; }
+.ctv-bet-p { margin-left: auto; font-family: var(--fdmono); font-weight: 700; font-size: .82rem; color: var(--fdup); }
+.ctv-bet-mk { font-family: var(--serif); font-size: .82rem; line-height: 1.4; margin: 0 0 .3rem; color: var(--fdmut); }
+.ctv-bet-pk { font-family: var(--sans); font-size: .76rem; font-weight: 600; }
+.ctv-bet-due { font-family: var(--fdmono); font-size: .66rem; color: var(--fdmut); margin-top: .35rem; }
+@media (max-width: 640px) { .ctv-watch-row { grid-template-columns: 100px 1fr 2.6rem; } }
+"""
+
+
+def _ctv_tape(data, fp_editions):
+    """The board's own ticker: the latest Fingerprint headlines, then a beat off
+    every company's earnings note — same crawl mechanics as the Forecast tape."""
+    ticks = []
+    for ed in (fp_editions or [])[:6]:
+        headline = ed.get("lead_headline") or ""
+        if not headline:
+            continue
+        href = ed.get("file") or "fingerprint.html"
+        ticks.append(f'<a class="fd-tk" href="{html.escape(href, quote=True)}" style="text-decoration:none">'
+                     f'<b>The Fingerprint</b> · {html.escape(headline)}</a>')
+    for grp in data["companies"]:
+        for c in grp["items"]:
+            price = c.get("price", "—")
+            cls = "up" if price not in ("—", "") else ""
+            ticks.append(f'<span class="fd-tk"><b>{html.escape(c["ticker"])}</b> · '
+                         f'<span class="{cls}">{html.escape(price)}</span></span>')
+    if not ticks:
+        return ""
+    row = "".join(ticks)
+    dur = max(160, len(ticks) * 7)
+    return (f'<div class="fd-tape" aria-hidden="true">'
+            f'<div class="fd-tape-inner" style="animation-duration:{dur}s">{row}{row}</div></div>')
+
+
+def _ctv_company_grid(data):
+    out = []
+    for grp in data["companies"]:
+        cards = []
+        for c in grp["items"]:
+            note = f'<p class="ctv-co-note">{html.escape(c["note"])}</p>' if c.get("note") else ""
+            cards.append(
+                f'<div class="ctv-co"><div class="ctv-co-top">'
+                f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
+                f'<span class="ctv-co-name">{html.escape(c["name"])}</span>'
+                f'<span class="ctv-co-price">{html.escape(c.get("price", "—"))}</span></div>'
+                f'<div class="ctv-co-cap">Mkt cap {html.escape(c.get("cap", "—"))}</div>'
+                f'<p class="ctv-co-earn">{html.escape(c["earn"])}</p>{note}</div>'
+            )
+        out.append(f'<h3 class="ctv-grp-h">{html.escape(grp["group"])}</h3>'
+                   f'<div class="ctv-grid">{"".join(cards)}</div>')
+    return "".join(out)
+
+
+def _ctv_cpm_html(cpm):
+    tiles = [
+        ("Blended average", cpm["blended"]), ("Typical range", cpm["range"]),
+        ("Full market span", cpm["span"]), ("Standard inventory", cpm["standard"]),
+        ("Premium / targeted", cpm["premium"]), ("Completed-view (CPCV)", cpm["cpcv"]),
+    ] + [(p["name"], p["val"]) for p in cpm["by_platform"]]
+    tile_html = "".join(f'<div class="ctv-tile"><span class="l">{html.escape(l)}</span>'
+                        f'<span class="v">{html.escape(v)}</span></div>' for l, v in tiles)
+    return (f'<div class="ctv-tiles">{tile_html}</div>'
+            f'<p class="ctv-note">{html.escape(cpm["trend"])}</p>'
+            f'<p class="ctv-src">Source: {html.escape(cpm["source"])}</p>')
+
+
+def _ctv_regions_html(regions):
+    cards = []
+    for r in regions:
+        growth = f'<span class="ctv-region-g">{html.escape(r["growth"])}</span>' if r.get("growth") else ""
+        note = f'<p class="ctv-region-n">{html.escape(r["note"])}</p>' if r.get("note") else ""
+        cards.append(
+            f'<div class="ctv-region"><div class="ctv-region-r">{html.escape(r["region"])}</div>'
+            f'<div class="ctv-region-m">{html.escape(r["metric"])} · {html.escape(r.get("source", "—"))}</div>'
+            f'<div><span class="ctv-region-v">{html.escape(r["value"])}</span>{growth}</div>{note}</div>'
+        )
+    return f'<div class="ctv-regions">{"".join(cards)}</div>'
+
+
+def _ctv_watch_html(w):
+    rows = []
+    top = max((p["pct"] for p in w["platform_share"]), default=1) or 1
+    for p in w["platform_share"]:
+        width = max(4, p["pct"] / top * 100)
+        rows.append(
+            f'<div class="ctv-watch-row"><span class="ctv-watch-nm">{html.escape(p["name"])}</span>'
+            f'<div class="ctv-watch-bar"><span class="ctv-watch-fill" style="width:{width:.1f}%"></span></div>'
+            f'<span class="ctv-watch-pct">{p["pct"]:.1f}%</span></div>'
+        )
+    tiles = (f'<div class="ctv-tiles">'
+            f'<div class="ctv-tile"><span class="l">US daily streaming</span><span class="v">{html.escape(w["us_daily"])}</span></div>'
+            f'<div class="ctv-tile"><span class="l">Streaming share of TV</span><span class="v">{html.escape(w["streaming_share"])}</span></div>'
+            f'</div>')
+    return (f'{tiles}<div class="ctv-watch">{"".join(rows)}</div>'
+            f'<p class="ctv-note">{html.escape(w["us_daily_note"])}. {html.escape(w["streaming_share_note"])}. '
+            f'{html.escape(w["note"])}</p>'
+            f'<p class="ctv-src">Source: {html.escape(w["source"])}</p>')
+
+
+def _ctv_bets_html(bet_rows, cap=9):
+    cards = []
+    for b in bet_rows[:cap]:
+        due = (f'<div class="ctv-bet-due">{"graded " + b["date"] if b["graded"] else "grades " + (b["due"] or "soon")}</div>')
+        pct = f'{b["p"] * 100:.0f}%' if b["p"] <= 1 else f'{b["p"]:.0f}%'
+        cards.append(
+            f'<a class="ctv-bet" href="{html.escape(b["href"], quote=True)}">'
+            f'<div class="ctv-bet-top"><span class="ctv-bet-av">{html.escape(b.get("avatar", "🎯"))}</span>'
+            f'<span class="ctv-bet-nm">{html.escape(b["name"])}</span>'
+            f'<span class="ctv-bet-p">{pct}</span></div>'
+            f'<p class="ctv-bet-mk">{html.escape(b["market"])}</p>'
+            f'<p class="ctv-bet-pk">{html.escape(b.get("flag", ""))} {html.escape(b["pick"])}</p>{due}</a>'
+        )
+    return f'<div class="ctv-bets">{"".join(cards)}</div>' if cards else ""
+
+
+def ctv_board_band_html(data, fp_editions, bet_rows, href="ctv-board.html"):
+    """A compact embedded strip for the Ad Tech desk front (adtech.html): the
+    ticker tape plus the top few company tiles and a link through to the full
+    board — the desk's own miniature trading floor."""
+    top_companies = [c for grp in data["companies"] for c in grp["items"]][:4]
+    tiles = "".join(
+        f'<div class="ctv-co"><div class="ctv-co-top">'
+        f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
+        f'<span class="ctv-co-price">{html.escape(c.get("price", "—"))}</span></div>'
+        f'<div class="ctv-co-cap">Mkt cap {html.escape(c.get("cap", "—"))}</div></div>'
+        for c in top_companies)
+    bets = _ctv_bets_html(bet_rows, cap=3)
+    return (
+        f'<section class="fd-board" style="margin-top:2rem;padding:1.3rem 1.4rem 1.6rem">'
+        f'<div style="display:flex;align-items:baseline;gap:.6rem;margin-bottom:1rem">'
+        f'<h2 style="font-family:var(--display);font-weight:600;font-size:1.3rem;margin:0;color:var(--fdtext)">The CTV Board</h2>'
+        f'<span style="font-family:var(--serif);font-style:italic;font-size:.85rem;color:var(--fdmut)">'
+        f'Earnings, CPMs, ad spend, and watch time across Connected TV</span>'
+        f'<a href="{html.escape(href, quote=True)}" style="margin-left:auto;font-family:var(--sans);'
+        f'font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fdup);'
+        f'text-decoration:none">Full board →</a></div>'
+        f'{_ctv_tape(data, fp_editions)}'
+        f'<div class="ctv-grid" style="margin-top:1rem">{tiles}</div>'
+        f'{bets}'
+        f'</section>'
+    )
+
+
+def build_ctv_board_page(out_dir, data, fp_editions, bet_rows, cfg=None, shell="", page=None):
+    """Render the CTV Board — docs/ctv-board.html by default: a financial-board
+    read on Connected TV, reusing the Forecast Desk's dark .fd-board shell.
+    Sections: public-company earnings/share moves, CPM benchmarks, ad-spend
+    projections by country/region, platform watch-time share, a Fingerprint +
+    company news tape, and the desk's own latest bets pulled off the Ad Tech
+    board. All figures are hand-authored (no live market feed) — see
+    CTV_BOARD_DATA for sourcing and the as-of date shown in the folio."""
+    out = Path(out_dir)
+    cfg = cfg or {}
+    page = page or {}
+    fname = page.get("fname", "ctv-board.html")
+    h1 = page.get("title", "The CTV Board")
+    kicker = page.get("kicker", "Public markets, CPMs, ad spend, and watch time across Connected TV")
+    nav = page.get("nav") or main_nav_html(active="ctv-board.html")
+    back = page.get("back", '<a href="adtech.html">← Back to the Ad Tech desk</a>')
+    accent_css = _accent_css(page.get("accent"))
+    n_co = sum(len(grp["items"]) for grp in data["companies"])
+    n_regions = len(data["regions"])
+    folio = (f'    <span>{n_co} companies tracked</span>\n'
+             f'    <span class="fd-folio-c">{n_regions} regions</span>\n'
+             f'    <span>as of {html.escape(data["as_of"])}</span>')
+    if bet_rows:
+        folio += f'\n    <span class="fd-folio-g">{len(bet_rows)} live bets from the desk</span>'
+    plate_extra = f'  <p class="ctv-note" style="max-width:640px;margin:.6rem auto 0">{html.escape(data["note"])}</p>'
+    parts = [
+        _ctv_tape(data, fp_editions),
+        '<div class="ctv-sec"><h2 class="ctv-sec-h">Public Markets<span class="k">Earnings and share moves</span></h2>'
+        + _ctv_company_grid(data) + '</div>',
+        '<div class="ctv-sec"><h2 class="ctv-sec-h">CTV CPM Benchmarks<span class="k">What inventory is actually clearing at</span></h2>'
+        + _ctv_cpm_html(data["cpm"]) + '</div>',
+        '<div class="ctv-sec"><h2 class="ctv-sec-h">Ad Spend by Country / Region<span class="k">2026 forecast cycle</span></h2>'
+        + _ctv_regions_html(data["regions"]) + '</div>',
+        '<div class="ctv-sec"><h2 class="ctv-sec-h">Watch Time &amp; Platform Share<span class="k">Where the hours actually go</span></h2>'
+        + _ctv_watch_html(data["watch_time"]) + '</div>',
+    ]
+    bets_html = _ctv_bets_html(bet_rows, cap=12)
+    if bets_html:
+        parts.append('<div class="ctv-sec"><h2 class="ctv-sec-h">Latest Bets from the Forecast Desk'
+                     '<span class="k">The roster’s live positions on Ad Tech &amp; CTV markets</span></h2>'
+                     + bets_html + '</div>')
+    og = og_tags(h1, cfg.get("motto", "A financial-board read on Connected TV."),
+                 f"{SITE_URL}/{fname}", f"{SITE_URL}/{OG_IMAGE}")
+    page_html = FORECAST_PAGE_TEMPLATE.format(
+        page_title=html.escape(h1), h1=html.escape(h1), kicker=html.escape(kicker),
+        nav=nav, back=back, brand_href="index.html",
+        css=LIBRARY_CSS + SCENE_PLATE_CSS + FORECAST_PAGE_CSS + CTV_BOARD_CSS,
+        accent_css=accent_css,
+        favicon=FAVICON, og_meta=og,
+        motto=html.escape(cfg.get("motto", "")),
+        blurb=html.escape(cfg.get("blurb", "The board is hand-updated, not live — treat every figure as of its own date, not today's.")),
+        folio=folio, plate_extra=plate_extra,
+        scene=scene_plate("forecast", extra_class="page-scene", seed=f"ctv-board-front:{fname}"),
+        body="\n".join(parts),
+        theme_js=LIBRARY_THEME_JS,
+        app_js=FORECAST_PAGE_JS,
+        shell=shell,
+    )
+    (out / fname).write_text(_persona_public_copy(page_html))
+    print(f"  ✓ {h1}  ({n_co} companies, {n_regions} regions) → {fname}")
+
+
 # ------------------------------------------------------------- the track record
 # The accountability page: every graded call scored, the standing personas'
 # cumulative records, a calibration diagram, and the open positions still
@@ -14753,6 +15122,27 @@ def build(folders, out_dir, site_title, site_subtitle, ghost_cfg=None, descripti
                               "meta": (f"{dgraded} graded · {dopen} open positions — "
                                        f"every call scored when it resolves"),
                               "cta": "See the record →"})
+            # The CTV Board — a financial-board read (earnings, CPMs, ad spend,
+            # watch time) sitting alongside the desk's own predictions. Built
+            # only for the Ad Tech desk, off the same dnative/dmarkets already
+            # scoped above, so its "latest bets" panel is exactly the desk's
+            # live positions on Ad Tech & CTV markets.
+            if slug == "adtech":
+                ctv_bet_rows = sorted(
+                    _fd_bet_rows(dnative, dmarkets, fd_native_data),
+                    key=lambda r: (r["graded"], r.get("date") or r.get("due") or ""),
+                )
+                build_ctv_board_page(out, CTV_BOARD_DATA, fp_editions, ctv_bet_rows,
+                                     shell=shell_root,
+                                     page={"nav": main_nav_html(active="ctv-board.html"),
+                                           "back": desk_back,
+                                           "accent": pcfg.get("accent")})
+                tools.append({"href": "ctv-board.html", "kicker": "The trading floor",
+                              "title": "The CTV Board",
+                              "meta": "Public earnings, CPMs, ad spend by region, and watch time — "
+                                      "plus the desk's latest bets",
+                              "cta": "To the board →"})
+                bands += ctv_board_band_html(CTV_BOARD_DATA, fp_editions, ctv_bet_rows)
         if "glossary" in inc:
             dgloss = [g for g in glossary_index if g.get("category") in dcats]
             if dgloss:
