@@ -1,6 +1,14 @@
 {
   "pamphlets": [
     {
+      "slug": "carlyle-on-advertising-as-national-vision",
+      "title": "The Loom of the Republic",
+      "dek": "On what American advertising must become, now that it has become the Nation's picture of itself",
+      "writer": "Thomas Carlyle",
+      "subject": "Advertising's role in shaping American national vision",
+      "date": "2026-08-09"
+    },
+    {
       "slug": "mcluhan-on-pause-ad-standards",
       "title": "The Message in the Gap",
       "dek": "On the IAB Tech Lab's new signaling standard for pause ads, menu ads, and screensavers",
