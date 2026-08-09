@@ -1,0 +1,50 @@
+{
+  "aesthetic": "The Tableau",
+  "anchor": "Quesnay's Tableau Économique (1758) — the first attempt to draw an entire economy as a circulating system, its famous zigzag threads tracing value from class to class down an engraved page. The Physiocrats who made it are in this corpus's own first chapter: Smith met them in Paris between 1764 and 1767, and everything that followed is an argument with the diagram they drew.",
+  "rationale": "This corpus is not about one economics but about rival ones, so it is dressed as the engraved plate on which the argument was first made visible. The ground is the warm laid paper of an eighteenth-century treatise; the primary ink is the near-black of a copperplate engraving, warmed toward sepia the way real intaglio ink ages. The accent is Prussian blue — the pigment of the Enlightenment plate and the drafting line. What makes the palette load-bearing rather than decorative is the tint ramp: five distinct school inks (Prussian blue, oxblood, ochre, a deep forest, a muted violet) that let five contending traditions sit on one page without any of them reading as the default. The ornament is Quesnay's zigzag itself. A transitional French serif carries the display line, a warm old-style serif the body, so the whole reads as a plate from the era when the argument began. It stands apart from its shelf-mates deliberately: not the greenback green of the American-money corpus, not the letterpress umber of the pragmatists, not the ad-tech cobalts — this one looks like the engraved diagram the whole quarrel started from.",
+  "light": {
+    "bg": "#f2eee3",
+    "panel": "#fffcf4",
+    "text": "#1b1a17",
+    "muted": "#63605a",
+    "accent": "#2a4a7c",
+    "border": "#d9d2c1",
+    "mark": "#dde5ef",
+    "cover-bg": "#e9e3d3",
+    "t1": "#2a4a7c",
+    "t2": "#8e3324",
+    "t3": "#9a7614",
+    "t4": "#265c46",
+    "t5": "#5f4076"
+  },
+  "dark": {
+    "bg": "#12110f",
+    "panel": "#1c1a17",
+    "text": "#ece7db",
+    "muted": "#9a948a",
+    "accent": "#7ba3d8",
+    "border": "#2c2924",
+    "mark": "#17202c",
+    "cover-bg": "#161410",
+    "t1": "#7ba3d8",
+    "t2": "#e07a63",
+    "t3": "#dcb44f",
+    "t4": "#5cb98f",
+    "t5": "#ab8ac8"
+  },
+  "fonts": {
+    "display": "'Baskerville', 'Libre Baskerville', 'Playfair Display', Georgia, 'Times New Roman', serif",
+    "body": "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif",
+    "mono": "'Courier New', 'Consolas', 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2571\\2572\\2571\\2572   \\25c9   \\2571\\2572\\2571\\2572'",
+    "fig_radius": "0px"
+  },
+  "cover_palette": [
+    "#2a4a7c",
+    "#8e3324",
+    "#9a7614",
+    "#265c46"
+  ]
+}
