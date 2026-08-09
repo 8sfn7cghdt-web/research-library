@@ -8561,6 +8561,7 @@ CTV_BOARD_DATA = {
              "earn": "Q2 2026: revenue $715M (+3% YoY), missed $751.5M est.; adj. EPS $0.34 vs $0.37 est.",
              "note": "CFO, CMO, and commercial chief all replaced this quarter."},
             {"ticker": "NFLX", "name": "Netflix", "price": "$73.63", "cap": "$309B",
+             "trend": [86, 84, 80, 77, 75, 73.63],
              "earn": "Q2 2026: revenue $12.56B (+13.4%), in-line; EPS $0.80 in-line; op. margin 33.4% (down from 34.1%).",
              "note": "Ads business tracking ~$3B FY26 revenue, ~$43/mo ARPU; stock fell on a soft Q3 revenue guide."},
             {"ticker": "DIS", "name": "Disney", "price": "—", "cap": "—",
@@ -8572,23 +8573,42 @@ CTV_BOARD_DATA = {
             {"ticker": "PSKY", "name": "Paramount Skydance", "price": "—", "cap": "$10.4B",
              "earn": "Q2 2026: revenue $6.91B vs $6.88B est. — slight beat; net earnings $41M.",
              "note": "Pursuing the Warner Bros. Discovery acquisition."},
+            {"ticker": "FUBO", "name": "fuboTV", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Sports-first vMVPD; folded the Fox-backed Hulu + Live TV merger in early 2025."},
+            {"ticker": "AMCX", "name": "AMC Networks", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Cable-network group leaning on AMC+ bundling as linear affiliate revenue erodes."},
         ]},
         {"group": "Ad-Tech Platforms", "items": [
             {"ticker": "GOOGL", "name": "Alphabet", "price": "—", "cap": "—",
              "earn": "Q2 2026: revenue $119.8B (+24%), beat; ad revenue $81.63B; YouTube ads $11.1B (+13%).",
              "note": "Stock fell >6% on a raised 2026 capex guide ($195–205B, up from $180–190B)."},
             {"ticker": "AMZN", "name": "Amazon", "price": ">$255", "cap": "$3T (crossed Aug 3, a first)",
+             "trend": [225, 232, 240, 248, 251, 255],
              "earn": "Q2 2026: net sales $200.6B (+20%); AWS $42.2B (+37%); ad revenue $19.8B (+26%, nearing $20B/qtr).",
              "note": "2026 capex guide raised to $220B."},
             {"ticker": "MGNI", "name": "Magnite", "price": "$22.78 (after-hours)", "cap": "—",
+             "trend": [16.4, 17.8, 19.1, 20.5, 21.6, 22.78],
              "earn": "Q2 2026: non-GAAP EPS $0.26 vs $0.25 est.; revenue $192.8M vs $179.2M est. — beat.",
              "note": "CTV now 51% of Contribution ex-TAC, up 36% YoY; FY26 targets raised."},
             {"ticker": "PUBM", "name": "PubMatic", "price": "$16.23 (after-hours)", "cap": "—",
+             "trend": [11.2, 12.4, 13.9, 15.0, 15.6, 16.23],
              "earn": "Q2 2026: adj. EPS $0.12 vs an est. $0.23 loss — big beat; revenue $78.6M (+11%).",
              "note": "Adj. EBITDA margin 25%, up from 20%."},
             {"ticker": "CRTO", "name": "Criteo", "price": "$16.10 (premarket)", "cap": "—",
+             "trend": [24.0, 22.5, 21.0, 19.5, 18.0, 16.10],
              "earn": "Q2 2026: adj. EPS $0.80 vs $0.70 est. — beat; revenue $428M.",
              "note": "Stock fell 28% premarket on a guidance cut and enterprise-client pullback; Retail Media spend +31% YoY."},
+            {"ticker": "IAS", "name": "Integral Ad Science", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Verification/measurement vendor with growing CTV-specific attention and outcomes products."},
+            {"ticker": "DV", "name": "DoubleVerify", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "IAS's direct rival in ad verification; both racing to build CTV-native measurement."},
+            {"ticker": "APP", "name": "AppLovin", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Mobile-app-install ad platform expanding its AXON engine toward CTV/web inventory."},
         ]},
         {"group": "Legacy Media & Agencies", "items": [
             {"ticker": "CMCSA", "name": "Comcast / NBCUniversal", "price": "—", "cap": "$87.0B",
@@ -8598,6 +8618,7 @@ CTV_BOARD_DATA = {
              "earn": "Q2 FY26: revenue $5.18B; net income $247M, down from $388M YoY.",
              "note": "Ad revenue +1%, Tubi AVOD growth offsetting lower political ad revenue."},
             {"ticker": "WPP", "name": "WPP", "price": "310p", "cap": "$4.44B",
+             "trend": [420, 390, 360, 335, 318, 310],
              "earn": "H1 2026: like-for-like net sales -4.7% (Q2 -2.8%, improving); operating margin 8.4%.",
              "note": "Net new billings -$1.1B in H1 vs. Publicis +$1.6B."},
             {"ticker": "OMC", "name": "Omnicom", "price": "—", "cap": "—",
@@ -8606,15 +8627,30 @@ CTV_BOARD_DATA = {
             {"ticker": "PUB.PA", "name": "Publicis Groupe", "price": "—", "cap": "—",
              "earn": "H1 2026: organic growth 4.8% in Q2; net revenue €3.77B.",
              "note": "Raised full-year organic growth guidance."},
+            {"ticker": "SBGI", "name": "Sinclair", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Local-broadcast group with a growing CTV/streaming ad-tech arm (Compulse)."},
+            {"ticker": "NXST", "name": "Nexstar Media Group", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Largest US local-TV station owner; pursuing the pending Tegna acquisition."},
+            {"ticker": "SFOR.L", "name": "S4 Capital", "price": "—", "cap": "—",
+             "earn": "Figures not confirmed in this research pass.",
+             "note": "Sir Martin Sorrell's 'new-model' digital agency group, built to compete with the WPP/Omnicom/Publicis holdcos."},
         ]},
     ],
     "cpm": {
         "blended": "$26", "range": "$25–35", "span": "$15–45",
         "standard": "$20–40", "premium": "$40–60", "cpcv": "$2–4 (completed-view basis)",
+        "blended_trend": [34, 31, 29, 27, 26.5, 26],
+        "standard_trend": [26, 24, 23, 21, 20.5, 20],
+        "premium_trend": [58, 54, 50, 46, 43, 40],
         "by_platform": [
-            {"name": "Netflix", "val": "$20–30 programmatic / $45–65 direct"},
-            {"name": "Hulu", "val": "$10–30"},
-            {"name": "Amazon Prime Video", "val": "$25–60"},
+            {"name": "Netflix", "val": "$20–30 programmatic / $45–65 direct", "trend": [32, 30, 28, 26, 25, 24]},
+            {"name": "Hulu", "val": "$10–30", "trend": [17, 15, 14, 12, 11, 10]},
+            {"name": "Amazon Prime Video", "val": "$25–60", "trend": [34, 32, 30, 28, 26, 25]},
+            {"name": "YouTube (CTV)", "val": "$20–35", "trend": [30, 28, 26, 24, 22, 21]},
+            {"name": "Disney+ / Hulu bundle", "val": "$25–45", "trend": [40, 38, 35, 32, 29, 27]},
+            {"name": "Roku Channel", "val": "$15–28", "trend": [22, 20, 18, 17, 16, 15]},
         ],
         "trend": "An inventory glut pushed CTV CPMs down 10–30% through 2025 — current levels read as a post-correction floor.",
         "source": "AdWave, Paramount Ads Manager, NAMediaExperts — Q2–Q3 2026",
@@ -8669,8 +8705,14 @@ CTV_BOARD_CSS = """
 .ctv-co-top { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .35rem; }
 .ctv-co-tick { font-family: var(--fdmono); font-weight: 700; font-size: .84rem; color: var(--fdtext); }
 .ctv-co-name { font-family: var(--sans); font-size: .74rem; color: var(--fdmut); }
-.ctv-co-price { margin-left: auto; font-family: var(--fdmono); font-size: .8rem; font-weight: 700;
+.ctv-co-price { margin-left: .5rem; font-family: var(--fdmono); font-size: .8rem; font-weight: 700;
   color: var(--fdup); white-space: nowrap; }
+.ctv-co-top .ctv-spark { margin-left: auto; flex-shrink: 0; }
+.ctv-co-top .ctv-spark + .ctv-co-price { margin-left: .4rem; }
+.ctv-co-logo { margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  width: 1.6rem; height: 1.6rem; border-radius: 50%; font-family: var(--sans); font-weight: 700;
+  font-size: .58rem; letter-spacing: .02em; }
+.ctv-tile .ctv-spark { display: block; margin-top: .3rem; }
 .ctv-co-cap { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); margin-bottom: .5rem; }
 .ctv-co-earn { font-family: var(--serif); font-size: .84rem; line-height: 1.5; color: var(--fdtext); margin: 0 0 .3rem; }
 .ctv-co-note { font-family: var(--serif); font-style: italic; font-size: .78rem; line-height: 1.4; color: var(--fdmut); margin: 0; }
@@ -8711,6 +8753,34 @@ CTV_BOARD_CSS = """
 """
 
 
+def _ctv_sparkline_svg(points, color="#22c55e", w=64, h=22):
+    """A tiny inline-SVG trend line for a tile/card — illustrative direction
+    read off the accompanying earnings/CPM note, not a literal price series
+    (this is a static site with no live feed)."""
+    if not points or len(points) < 2:
+        return ""
+    lo, hi = min(points), max(points)
+    span = (hi - lo) or 1
+    step = w / (len(points) - 1)
+    coords = [f"{i * step:.1f},{h - ((p - lo) / span) * (h - 4) - 2:.1f}" for i, p in enumerate(points)]
+    return (f'<svg class="ctv-spark" viewBox="0 0 {w} {h}" width="{w}" height="{h}" '
+            f'preserveAspectRatio="none" aria-hidden="true"><title>Illustrative recent trend</title>'
+            f'<polyline points="{" ".join(coords)}" fill="none" stroke="{color}" stroke-width="1.6" '
+            f'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+
+
+def _ctv_logo_badge(ticker, name):
+    """A deterministic initials badge used in place of a price/green-dash when
+    a company's live figures weren't confirmed in the last research pass —
+    there's no logo asset library on this static site, so a colored initials
+    roundel stands in for a real logo mark."""
+    words = re.split(r"[\s./]+", name)
+    initials = "".join(w[0] for w in words if w)[:3].upper() or ticker[:2]
+    hue = (sum(ord(c) for c in ticker) * 37) % 360
+    return (f'<span class="ctv-co-logo" style="background:hsl({hue},45%,20%);color:hsl({hue},70%,78%)" '
+            f'title="{html.escape(name)} — figures not confirmed this pass">{html.escape(initials)}</span>')
+
+
 def _ctv_tape(data, fp_editions):
     """The board's own ticker: the latest Fingerprint headlines, then a beat off
     every company's earnings note — same crawl mechanics as the Forecast tape."""
@@ -8742,11 +8812,17 @@ def _ctv_company_grid(data):
         cards = []
         for c in grp["items"]:
             note = f'<p class="ctv-co-note">{html.escape(c["note"])}</p>' if c.get("note") else ""
+            price = c.get("price", "—")
+            if price in ("—", ""):
+                right = _ctv_logo_badge(c["ticker"], c["name"])
+            else:
+                spark = _ctv_sparkline_svg(c["trend"]) if c.get("trend") else ""
+                right = f'{spark}<span class="ctv-co-price">{html.escape(price)}</span>'
             cards.append(
                 f'<div class="ctv-co"><div class="ctv-co-top">'
                 f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
                 f'<span class="ctv-co-name">{html.escape(c["name"])}</span>'
-                f'<span class="ctv-co-price">{html.escape(c.get("price", "—"))}</span></div>'
+                f'{right}</div>'
                 f'<div class="ctv-co-cap">Mkt cap {html.escape(c.get("cap", "—"))}</div>'
                 f'<p class="ctv-co-earn">{html.escape(c["earn"])}</p>{note}</div>'
             )
@@ -8757,12 +8833,18 @@ def _ctv_company_grid(data):
 
 def _ctv_cpm_html(cpm):
     tiles = [
-        ("Blended average", cpm["blended"]), ("Typical range", cpm["range"]),
-        ("Full market span", cpm["span"]), ("Standard inventory", cpm["standard"]),
-        ("Premium / targeted", cpm["premium"]), ("Completed-view (CPCV)", cpm["cpcv"]),
-    ] + [(p["name"], p["val"]) for p in cpm["by_platform"]]
-    tile_html = "".join(f'<div class="ctv-tile"><span class="l">{html.escape(l)}</span>'
-                        f'<span class="v">{html.escape(v)}</span></div>' for l, v in tiles)
+        ("Blended average", cpm["blended"], cpm.get("blended_trend")),
+        ("Typical range", cpm["range"], None),
+        ("Full market span", cpm["span"], None),
+        ("Standard inventory", cpm["standard"], cpm.get("standard_trend")),
+        ("Premium / targeted", cpm["premium"], cpm.get("premium_trend")),
+        ("Completed-view (CPCV)", cpm["cpcv"], None),
+    ] + [(p["name"], p["val"], p.get("trend")) for p in cpm["by_platform"]]
+    tile_html = "".join(
+        f'<div class="ctv-tile"><span class="l">{html.escape(l)}</span>'
+        f'<span class="v">{html.escape(v)}</span>{_ctv_sparkline_svg(t, color="#f4715c") if t else ""}</div>'
+        for l, v, t in tiles
+    )
     return (f'<div class="ctv-tiles">{tile_html}</div>'
             f'<p class="ctv-note">{html.escape(cpm["trend"])}</p>'
             f'<p class="ctv-src">Source: {html.escape(cpm["source"])}</p>')
@@ -12551,7 +12633,6 @@ DOMAIN_PAGE_TEMPLATE = """<!DOCTYPE html>
       </div>
     </div>
     <div class="dk-agent">{hero}</div>
-    <div class="dk-scene">{scene}</div>
   </div>
 </header>
 {bands}
@@ -12982,7 +13063,6 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
     title = page_cfg.get("title") or dom.get("title", "The Desk")
     kicker = page_cfg.get("kicker", "A separate desk")
     subtitle = page_cfg.get("subtitle", dom.get("title", ""))
-    scene_kind = "research" if slug == "research" else "briefing"
     search_placeholder = "Search the library..." if slug == "research" else "Search the desk..."
     body = _pane_grid_html(dom_cards, cat_order, placeholder=search_placeholder)
     og = og_tags(title, subtitle or title, f"{SITE_URL}/{slug}.html", f"{SITE_URL}/{OG_IMAGE}")
@@ -13006,7 +13086,6 @@ def build_domain_page(out_dir, page_cfg, dom, dom_cards, cat_order, stats, bands
         # library — pointing them all at research.html made research.html's own
         # footer link to itself.
         back_link=page_cfg.get("back_link", '<a href="index.html">← Back to the homepage</a>'),
-        scene=scene_plate(scene_kind, extra_class="section-scene", seed=f"domain:{slug}"),
         hero=desk_hero_art(slug),
         bands=bands,
         tools=tools,
