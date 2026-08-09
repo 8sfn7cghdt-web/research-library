@@ -1,0 +1,8 @@
+[
+  { "file": "00_Six_Easy_Pieces.md", "after": "## How a School Actually Takes Power", "snippet": "hero_circulation.html" },
+  { "file": "03_List_And_National_School.md", "after": "## The Standing Counter-Case", "snippet": "ladder.html" },
+  { "file": "09_The_Neoclassical_Mainstream.md", "after": "## The Results the Program Produced Against Itself", "snippet": "against_itself.html" },
+  { "file": "11_Feminist_And_Ecological_Economics.md", "after": "## The Production Boundary Is a Decision", "snippet": "production_boundary.html" },
+  { "file": "12_Public_Choice.md", "after": "## What the School Did Once It Had Influence", "snippet": "verdict.html" },
+  { "file": "Future_Trajectory.md", "after": "## Base Rates", "snippet": "base_rates.html" }
+]

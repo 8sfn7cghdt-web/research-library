@@ -1,39 +1,39 @@
 {
   "aesthetic": "The Tableau",
-  "anchor": "Quesnay's Tableau Économique (1758) — the first attempt to draw an entire economy as a circulating system, its famous zigzag threads tracing value from class to class down an engraved page. The Physiocrats who made it are in this corpus's own first chapter: Smith met them in Paris between 1764 and 1767, and everything that followed is an argument with the diagram they drew.",
-  "rationale": "This corpus is not about one economics but about rival ones, so it is dressed as the engraved plate on which the argument was first made visible. The ground is the warm laid paper of an eighteenth-century treatise; the primary ink is the near-black of a copperplate engraving, warmed toward sepia the way real intaglio ink ages. The accent is Prussian blue — the pigment of the Enlightenment plate and the drafting line. What makes the palette load-bearing rather than decorative is the tint ramp: five distinct school inks (Prussian blue, oxblood, ochre, a deep forest, a muted violet) that let five contending traditions sit on one page without any of them reading as the default. The ornament is Quesnay's zigzag itself. A transitional French serif carries the display line, a warm old-style serif the body, so the whole reads as a plate from the era when the argument began. It stands apart from its shelf-mates deliberately: not the greenback green of the American-money corpus, not the letterpress umber of the pragmatists, not the ad-tech cobalts — this one looks like the engraved diagram the whole quarrel started from.",
+  "anchor": "Quesnay's Tableau Economique (1758) — the first attempt to draw a whole economy, its famous zigzag threads tracing value from class to class. Quesnay was Louis XV's physician, and he built the diagram on Harvey's circulation of the blood: value pumped through a body. The Physiocrats who made it are in this corpus's own first chapter — Smith met them in Paris between 1764 and 1767, and everything after is an argument with the diagram they drew.",
+  "rationale": "This corpus is not about one economics but about rival ones, so it is dressed as the engraved plate on which the argument was first made visible. The ground is the warm laid paper of an eighteenth-century treatise. The accent is not the drafting blue you would expect from an Enlightenment plate — it is the sanguine of an anatomical engraving, because Quesnay was a surgeon before he was an economist and the Tableau is a circulation diagram in the literal, Harveyan sense: value pumped through a body that can be healthy or diseased. That single fact is what separates this world from every other paper-and-serif corpus on the shelf, and it earns the red. What makes the palette load-bearing rather than decorative is the tint ramp: five distinct school inks — sanguine, iron-gall blue, ochre, forest, and a muted violet — so five contending traditions can sit on one page with none of them reading as the default. The ornament is Quesnay's zigzag itself. A Didot carries the display line — Firmin Didot cut his faces in Paris in the same decades and the same city as the Physiocrats' plates — and a warm old-style serif the body, so the whole reads as a plate from the era when the argument began.",
   "light": {
     "bg": "#f2eee3",
     "panel": "#fffcf4",
     "text": "#1b1a17",
     "muted": "#63605a",
-    "accent": "#2a4a7c",
+    "accent": "#6f2418",
     "border": "#d9d2c1",
-    "mark": "#dde5ef",
+    "mark": "#efdcd5",
     "cover-bg": "#e9e3d3",
-    "t1": "#2a4a7c",
-    "t2": "#8e3324",
+    "t1": "#6f2418",
+    "t2": "#2a4a7c",
     "t3": "#9a7614",
     "t4": "#265c46",
     "t5": "#5f4076"
   },
   "dark": {
     "bg": "#12110f",
-    "panel": "#1c1a17",
+    "panel": "#26221c",
     "text": "#ece7db",
     "muted": "#9a948a",
-    "accent": "#7ba3d8",
-    "border": "#2c2924",
-    "mark": "#17202c",
+    "accent": "#c9705a",
+    "border": "#3a352c",
+    "mark": "#2b1a15",
     "cover-bg": "#161410",
-    "t1": "#7ba3d8",
-    "t2": "#e07a63",
+    "t1": "#c9705a",
+    "t2": "#7ba3d8",
     "t3": "#dcb44f",
     "t4": "#5cb98f",
     "t5": "#ab8ac8"
   },
   "fonts": {
-    "display": "'Baskerville', 'Libre Baskerville', 'Playfair Display', Georgia, 'Times New Roman', serif",
+    "display": "'Didot', 'Bodoni 72', 'Bodoni MT', 'Hoefler Text', Georgia, 'Times New Roman', serif",
     "body": "'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif",
     "mono": "'Courier New', 'Consolas', 'DejaVu Sans Mono', monospace"
   },
@@ -42,8 +42,8 @@
     "fig_radius": "0px"
   },
   "cover_palette": [
+    "#6f2418",
     "#2a4a7c",
-    "#8e3324",
     "#9a7614",
     "#265c46"
   ]

@@ -2777,6 +2777,7 @@ ATLAS_PLACEMENTS = {
     "carlyle-french-revolution-research":  {"lon": -0.17,   "lat": 51.48, "group": "britain", "label": "Cheyne Row, Chelsea — where the manuscript burned"},
     "deutsch-good-explanations-research":  {"lon": -1.26,   "lat": 51.75, "group": "britain", "label": "Oxford, England"},
     "miq-research":                        {"lon": -0.09,   "lat": 51.52, "group": "britain", "label": "London — MiQ's home office"},
+    "economic-schools-research":           {"lon": -4.29,   "lat": 55.87, "group": "britain", "label": "Glasgow — where Smith held the chair"},
     "ancestry-research":                   {"lon": -8.47,   "lat": 51.90, "group": "munster", "label": "Munster, Ireland"},
     # — the Continent —
     "jung-research":                       {"lon": 8.54,    "lat": 47.37, "group": "alps", "label": "Zürich, Switzerland"},
@@ -2804,7 +2805,7 @@ ATLAS_GROUPS = {
     "newyork":     {"name": "New York",          "plate": [-51.0, 35.0], "cols": 3},
     "newengland":  {"name": "New England",       "plate": [-78.0, 55.0], "cols": 2},
     "toronto":     {"name": "Toronto",           "plate": [-96.0, 52.0]},
-    "britain":     {"name": "Britain",           "plate": [-18.0, 58.5], "cols": 2},
+    "britain":     {"name": "Britain",           "plate": [-21.0, 61.0], "cols": 3},
     "munster":     {"name": "Munster",           "plate": [-16.0, 42.5]},
     "alps":        {"name": "The Alps",          "plate": [-1.0, 36.0], "cols": 2},
     "berlin":      {"name": "Berlin & Potsdam",  "plate": [22.0, 58.5], "cols": 2},
