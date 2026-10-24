@@ -1,6 +1,14 @@
 {
   "pamphlets": [
     {
+      "slug": "hemingway-on-the-h3-hiatus",
+      "title": "Indefinite Hiatus",
+      "dek": "On the H3 show and the word they used",
+      "writer": "Ernest Hemingway",
+      "subject": "The H3 podcast and the Klein separation",
+      "date": "2026-10-24"
+    },
+    {
       "slug": "hemingway-on-the-world-cup",
       "title": "The Cooling Break",
       "dek": "On the 2026 World Cup",
