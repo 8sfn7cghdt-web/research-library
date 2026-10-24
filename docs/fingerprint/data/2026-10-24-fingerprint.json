@@ -158,6 +158,37 @@
       ]
     },
     {
+      "section_title": "Campaign Wire",
+      "section_class": "campaign-wire",
+      "stories": [
+        {
+          "headline": "AdImpact Raises 2026 Midterm Forecast to Record $11.6 Billion",
+          "dek": "Filed in June; the most material verified US political-ad projection found this edition, with CTV at $2.7 billion.",
+          "body": "AdImpact's revised projection puts 2026 midterm political ad spending at a record $11.6 billion, up from $10.84 billion in its September 2025 estimate and above the $8.9 billion of the 2022 midterms. Connected TV rises to $2.7 billion, broadcast to $5.6 billion and digital to $1.6 billion. Senate spending is now estimated at $3.4 billion, while House spending falls to $2 billion as redistricting made 28 races less competitive. For CTV sellers the revision confirms streaming as the fastest-growing political channel, and a total of this size pulls more campaign budget toward addressable inventory.",
+          "sources": [
+            {
+              "publication": "Advanced Television",
+              "url": "https://www.advanced-television.com/2026/06/12/forecast-2026-us-election-cycle-to-hit-11-6bn-in-ad-spend/",
+              "filed_date": "2026-06-12"
+            },
+            {
+              "publication": "Bloomberg Law",
+              "url": "https://news.bloomberglaw.com/texas-brief/midterm-election-ad-buys-to-beat-2024-hit-record-11-6-billion",
+              "filed_date": "2026-06-11"
+            },
+            {
+              "publication": "AdImpact",
+              "url": "https://adimpact.com/blogs/adimpact-reveals-2026-election-cycle-to-reach-record-11.6-billion-in-ad-spending",
+              "filed_date": "2026-06-11"
+            }
+          ],
+          "source_publication": "Advanced Television",
+          "source_url": "https://www.advanced-television.com/2026/06/12/forecast-2026-us-election-cycle-to-hit-11-6bn-in-ad-spend/",
+          "filed_date": "2026-06-12"
+        }
+      ]
+    },
+    {
       "section_title": "Global Desk — UK",
       "section_class": "global-desk",
       "stories": [
