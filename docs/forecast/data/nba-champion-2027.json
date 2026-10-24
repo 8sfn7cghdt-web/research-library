@@ -1,0 +1,253 @@
+{
+  "kind": "native_forecast",
+  "slug": "nba-champion-2027",
+  "question": "Which team will win the 2027 NBA championship?",
+  "title": "The 2027 NBA Champion",
+  "category": "Sport & Games",
+  "subcategory": "Basketball",
+  "status": "open",
+  "logged": "2026-10-24",
+  "grades": "2027-06-30",
+  "resolution": "Resolves to the franchise that wins the 2026–27 NBA Finals (the 2027 championship).",
+  "consensus": {
+    "pick": "San Antonio Spurs",
+    "flag": "🤠",
+    "band": "20–26%",
+    "band_low": 20,
+    "band_high": 26,
+    "runner_up": "Oklahoma City Thunder",
+    "runner_up_flag": "⚡",
+    "runner_up_band": "19–25%",
+    "headline_case": "The Spurs lead the Polymarket book at 23% with the Thunder at 22%, and the preseason board has the two as co-favorites. The band is wide because a full NBA season moves these prices more than any single report.",
+    "why_over_runner_up": "As single clubs the Spurs lead the newest prices by a point, and the talent centerpiece is the Spurs' case. The Thunder's advantage on the August book is older information and the markets have moved past it.",
+    "dissent": "The Thunder case survived: the August FanDuel line had them as the outright favorite at +230, and the Prophet reads the story as theirs. A healthy Thunder season and a Spurs injury flips the lead.",
+    "tally": [
+      {
+        "team": "San Antonio Spurs",
+        "flag": "🤠",
+        "votes": 3
+      },
+      {
+        "team": "Oklahoma City Thunder",
+        "flag": "⚡",
+        "votes": 2
+      },
+      {
+        "team": "New York Knicks",
+        "flag": "🗽",
+        "votes": 1
+      },
+      {
+        "team": "Philadelphia 76ers",
+        "flag": "🔔",
+        "votes": 1
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "San Antonio Spurs",
+      "flag": "🤠",
+      "prob": "23%",
+      "prob_num": 23,
+      "confidence": "medium",
+      "register": "Terse tape-reading",
+      "blurb": "The Spurs lead the Polymarket book at 23%, the Thunder are at 22%, and the gap is inside noise. I read the tape as a two-team race and price the leader at the leader's number.",
+      "evidence": "Polymarket (Oct 14): Spurs 23%, Thunder 22%, Knicks 11%, 76ers 10%.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "market-reader"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the mechanics and the models over recency and sentiment.",
+      "pick": "San Antonio Spurs",
+      "flag": "🤠",
+      "prob": "24%",
+      "prob_num": 24,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "The sportsbooks had the Thunder slightly ahead in August, but the newest prices have the Spurs on top, and the models follow the newest information. The Spurs are the model's call, with a small margin.",
+      "evidence": "FanDuel (Aug): Thunder +230, Spurs +270; Polymarket (Oct 14): Spurs 23% vs Thunder 22%.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "quant"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference classes — base rates, venue history, the record of prior cases.",
+      "pick": "New York Knicks",
+      "flag": "🗽",
+      "prob": "12%",
+      "prob_num": 12,
+      "confidence": "low",
+      "register": "Prophetic bardic catalog",
+      "blurb": "The defending champions rarely repeat, and the last back-to-back winners were the 2017 and 2018 Warriors. The counted record argues for the Knicks as a live but low-probability champion, not a favorite.",
+      "evidence": "Knicks are the defending champion, priced at 11% on Polymarket; the last repeat champion was the 2017–18 Warriors.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "historian"
+    },
+    {
+      "name": "The Path Reader",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual route by which the outcome can happen.",
+      "pick": "Oklahoma City Thunder",
+      "flag": "⚡",
+      "prob": "22%",
+      "prob_num": 22,
+      "confidence": "medium",
+      "register": "Terse verdict-driven",
+      "blurb": "Read the route: the Thunder and Spurs are the top two in the West, and both need the other to fall. The Thunder have the Western bracket path that the Spurs must also clear, so the route is a coin-flip between two clubs.",
+      "evidence": "Thunder and Spurs top both Polymarket and the August FanDuel board; the West route runs through both.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "path-reader"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights the elite individual — motivation, legacy, and the pull of the story the player is writing.",
+      "pick": "San Antonio Spurs",
+      "flag": "🤠",
+      "prob": "25%",
+      "prob_num": 25,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "Wembanyama is the elite individual on the board, and a team built around a player of his reach has the best case for a title. The motivation is the team's, and the team is the Spurs.",
+      "evidence": "Victor Wembanyama is the Spurs' centerpiece; the Spurs are tied for the top preseason price at +270.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "talisman"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and the field is hot — hunts the underpriced live path the story forgot.",
+      "pick": "Philadelphia 76ers",
+      "flag": "🔔",
+      "prob": "10%",
+      "prob_num": 10,
+      "confidence": "low",
+      "register": "Wry contrarian-desk",
+      "blurb": "The favorites fail more often than they win, and the Sixers' LeBron-driven surge to +900 is the underpriced live leg the crowd has been slow to chase. The price is a long shot, and the story is the one nobody prices in full.",
+      "evidence": "Sixers at +900 after the LeBron signing (ABC7); Polymarket Sixers 10%.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "contrarian"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Oklahoma City Thunder",
+      "flag": "⚡",
+      "prob": "22%",
+      "prob_num": 22,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the story, not the spread. The Thunder took the 2025 crown, the young core is the one the omens keep promising, and the West's most dangerous story is the one Oklahoma City is writing.",
+      "evidence": "Thunder were the 2025 champions and the August FanDuel favorite at +230; priced at 22% on Polymarket.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet"
+    }
+  ],
+  "field": [
+    {
+      "team": "San Antonio Spurs",
+      "flag": "🤠",
+      "price": 23.0
+    },
+    {
+      "team": "Oklahoma City Thunder",
+      "flag": "⚡",
+      "price": 22.0
+    },
+    {
+      "team": "New York Knicks",
+      "flag": "🗽",
+      "price": 11.0
+    },
+    {
+      "team": "Philadelphia 76ers",
+      "flag": "🔔",
+      "price": 10.0
+    },
+    {
+      "team": "Field (all others)",
+      "flag": "🏀",
+      "price": 34.0
+    }
+  ],
+  "markets": [
+    {
+      "platform": "Polymarket",
+      "market": "2027 NBA champion",
+      "detail": "Spurs 23% · Thunder 22% · Knicks 11% · 76ers 10%",
+      "volume": "not in snapshot",
+      "pulled": "2026-10-14"
+    },
+    {
+      "platform": "FanDuel",
+      "market": "NBA championship, outright (Aug)",
+      "detail": "Thunder +230 · Spurs +270 · Knicks +950 · 76ers +1000 · Celtics +1400",
+      "volume": "sportsbook line",
+      "pulled": "2026-08"
+    }
+  ],
+  "base_rates": [
+    {
+      "stat": "2017–18",
+      "text": "The last back-to-back champion was the Golden State Warriors; defending champions rarely repeat."
+    },
+    {
+      "stat": "~23%",
+      "text": "The leading Polymarket price — a favorite who still loses more often than not."
+    },
+    {
+      "stat": "+900",
+      "text": "The 76ers' price after the LeBron James signing, against +1000 in the August board."
+    }
+  ],
+  "triggers": [
+    "A significant injury to a top-two player (Wembanyama, Shai Gilgeous-Alexander) moves the band by five points or more.",
+    "A trade that alters a contender's roster before the February deadline, as the Sixers' LeBron move did.",
+    "The Western Conference standings at the All-Star break, which set the route to the Finals."
+  ],
+  "sources": [
+    {
+      "label": "Covers — NBA Championship Odds 2026-27: Spurs, Thunder already clashing",
+      "url": "https://www.covers.com/nba/spurs-thunder-top-2027-championship-odds-board"
+    },
+    {
+      "label": "ABC7 — 2027 NBA championship odds: Sixers sign LeBron, surge to +900",
+      "url": "https://abc7news.com/post/2027-nba-championship-odds-spurs-early-favorites-win-followed-thunder-celtics/19297358/"
+    },
+    {
+      "label": "News 6 — LeBron James signs 2-year, $8M deal with Philadelphia 76ers",
+      "url": "https://www.newson6.com/sports/lebron-james-signs-2-year-8m-deal-with-philadelphia-76ers"
+    }
+  ],
+  "method_note": "Seven standing predictor profiles each committed to one club by a fixed criterion; the consensus was fused by grounding strength, with the strongest dissent preserved. The October Polymarket book is the anchor; the August sportsbook board is kept as the dissent.",
+  "honesty_note": "The Spurs are the most likely champion at 20–26%, which also means they fail to win roughly three times in four. The top four clubs share about two-thirds of the price, and the field is priced to move over a full season."
+}

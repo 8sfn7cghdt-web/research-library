@@ -1,0 +1,278 @@
+{
+  "kind": "native_forecast",
+  "slug": "new-zealand-election-2026",
+  "question": "Which bloc will govern New Zealand after the November 7, 2026 general election?",
+  "title": "New Zealand's Election, November 2026",
+  "category": "The Modern World",
+  "subcategory": "Elections Abroad",
+  "status": "open",
+  "logged": "2026-10-24",
+  "grades": "2026-12-15",
+  "resolution": "Resolves to the outcome of the November 7, 2026 New Zealand general election and the government formed by December 15, 2026: a National-led government, a Labour-led government, or no government formed by then.",
+  "consensus": {
+    "pick": "National-led Government",
+    "flag": "🔵",
+    "band": "44–54%",
+    "band_low": 44,
+    "band_high": 54,
+    "runner_up": "Labour-led Government",
+    "runner_up_flag": "🔴",
+    "runner_up_band": "30–40%",
+    "headline_case": "The right bloc leads the party-vote sum: National, ACT and NZ First total about 48% in the 1News poll, against Labour and the Greens at about 43–44. The two main parties are level, so the lead is a bloc-sum lead, and the band says so.",
+    "why_over_runner_up": "Four of the five recent polls put the right bloc ahead on the sum, and the Labour route needs Te Pāti Māori, which no source prices. Labour's best case is one outlier poll and a leader with a steadier profile.",
+    "dissent": "The Labour case survived: the Reid Research poll has Labour 4.9 points ahead, and Hipkins matches Luxon as preferred PM. If the left bloc clears half the seats with Te Pāti Māori, the Labour-led outcome becomes the lead.",
+    "tally": [
+      {
+        "name": "National-led Government",
+        "flag": "🔵",
+        "votes": 4
+      },
+      {
+        "name": "Labour-led Government",
+        "flag": "🔴",
+        "votes": 2
+      },
+      {
+        "name": "Hung Result, Talks Run On",
+        "flag": "⬜",
+        "votes": 1
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "National-led Government",
+      "flag": "🔵",
+      "prob": "46%",
+      "prob_num": 46,
+      "confidence": "low",
+      "register": "Terse tape-reading",
+      "blurb": "No liquid market turned up, so the tape is the poll average. On the bloc sums the right is slightly ahead, but the Labour-leaning Reid poll and the 28–28 tie keep the call thin, and I hold it at 46 with a low-confidence badge.",
+      "evidence": "No liquid election market located; 1News–Verian 28–28 tie, Anacta Labour 29 / National 28, Curia National 28.5 / Labour 28.2.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "market-reader",
+      "pick_scenario": "National-led Government"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the mechanics and the models over recency and sentiment.",
+      "pick": "National-led Government",
+      "flag": "🔵",
+      "prob": "49%",
+      "prob_num": 49,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "Bloc arithmetic is the model: National, ACT and NZ First sum to about 48% of the party vote in the 1News poll, against Labour and the Greens at about 43–44. The right leads the sum, though Te Pāti Māori is unpriced in the sources.",
+      "evidence": "1News–Verian: National 28 + ACT 10 + NZ First 10 = 48; Labour 28 + Greens 15 = 43.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "quant",
+      "pick_scenario": "National-led Government"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference classes — base rates, venue history, the record of prior cases.",
+      "pick": "National-led Government",
+      "flag": "🔵",
+      "prob": "45%",
+      "prob_num": 45,
+      "confidence": "medium",
+      "register": "Prophetic bardic catalog",
+      "blurb": "Changes of government are common in the MMP record — three in the last six elections — but the trailing side must win a bloc majority, which the sums do not hand Labour. The count leans National without making it a lock.",
+      "evidence": "Government changed at the 2008, 2017 and 2023 elections and was retained in 2011, 2014 and 2020 — three changes in six.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "historian",
+      "pick_scenario": "National-led Government"
+    },
+    {
+      "name": "The Path Reader",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual route by which the outcome can happen.",
+      "pick": "National-led Government",
+      "flag": "🔵",
+      "prob": "50%",
+      "prob_num": 50,
+      "confidence": "medium",
+      "register": "Terse verdict-driven",
+      "blurb": "Read the route: the right bloc reaches a majority on its own numbers and needs no unpriced partner. Labour needs Te Pāti Māori and the Greens to line up, and that is a longer road.",
+      "evidence": "The right bloc is ahead on the party-vote sum; the Labour route depends on Te Pāti Māori, which no source in the sweep prices.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "path-reader",
+      "pick_scenario": "National-led Government"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights the elite individual — motivation, legacy, and the pull of the story the player is writing.",
+      "pick": "Labour-led Government",
+      "flag": "🔴",
+      "prob": "38%",
+      "prob_num": 38,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "Hipkins is level with Luxon as preferred prime minister and the opposition leader has been the steadier figure through the campaign. The personal pull is weaker than the bloc arithmetic, but it is real and it runs his way.",
+      "evidence": "Preferred PM ratings level at 20.2% each; Luxon net approval −23 and Hipkins −15 in the late-September 1News poll.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "talisman",
+      "pick_scenario": "Labour-led Government"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and the field is hot — hunts the underpriced live path the story forgot.",
+      "pick": "Hung Result, Talks Run On",
+      "flag": "⬜",
+      "prob": "12%",
+      "prob_num": 12,
+      "confidence": "medium",
+      "register": "Wry contrarian-desk",
+      "blurb": "A favorite on a 2-point tie fails a lot, and the field the story keeps forgetting is the slow negotiation. A hung parliament has been projected in one poll, and the Opportunity Party's 8% can make talks drag.",
+      "evidence": "Newstalk ZB poll projects a hung parliament; Opportunity Party at 8% in the 1News poll could act as kingmaker.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "contrarian",
+      "pick_scenario": "Hung Result, Talks Run On"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Labour-led Government",
+      "flag": "🔴",
+      "prob": "40%",
+      "prob_num": 40,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the arc: a government that has to answer for a falling leader and a rising opposition is the oldest ending the election keeps. Luxon's net approval sits at −23 and the omens all point to the change.",
+      "evidence": "Luxon net approval −23 in late-September 1News; Labour level or ahead in three of the four October polls.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet",
+      "pick_scenario": "Labour-led Government"
+    }
+  ],
+  "outcomes": [
+    {
+      "name": "National-led Government",
+      "low": 44,
+      "high": 54,
+      "description": "National, ACT and NZ First together reach a majority of seats and Luxon remains prime minister.",
+      "derivation": "Right bloc (National + ACT + NZ First) about 48% of party vote in 1News–Verian (28+10+10) and about 47% in Anacta (28+9+10), against Labour + Greens about 43–44. The band carries the unpriced Te Pāti Māori margin and the Opportunity Party's 8%, which is not in the bloc sum.",
+      "drivers": [
+        "Right bloc ahead on the party-vote sum in most October polls",
+        "Luxon's preferred-PM rating level with Hipkins",
+        "The Opportunity Party's position on coalition"
+      ],
+      "signals_to_watch": [
+        "Final-week 1News–Verian and Taxpayers' Union–Curia polls",
+        "Te Pāti Māori's stated position",
+        "Opportunity Party coalition statements"
+      ],
+      "time_horizon": "Government formed by Dec 15, 2026"
+    },
+    {
+      "name": "Labour-led Government",
+      "low": 30,
+      "high": 40,
+      "description": "Labour, the Greens and Te Pāti Māori together reach a majority and Hipkins becomes prime minister.",
+      "derivation": "Left bloc (Labour + Greens) about 43–44 in the party-vote sum, short of a majority without Te Pāti Māori, which the sources do not price. Reid Research (Labour 30.8, National 25.9) is the one clear Labour lead, weighted down against four near-tie polls; band 30–40.",
+      "drivers": [
+        "Labour ahead in the Reid Research poll",
+        "Hipkins level with Luxon on preferred PM",
+        "Te Pāti Māori's willingness to back a Labour government"
+      ],
+      "signals_to_watch": [
+        "Polls showing Labour ahead in the final two weeks",
+        "Te Pāti Māori and Greens coalition signals",
+        "Turnout in Labour's urban seats"
+      ],
+      "time_horizon": "Government formed by Dec 15, 2026"
+    },
+    {
+      "name": "Hung Result, Talks Run On",
+      "low": 8,
+      "high": 16,
+      "description": "Neither bloc reaches a clear majority; the Opportunity Party or another minor party decides the government, and talks run past mid-December.",
+      "derivation": "Residual: 100 − (midpoint 49 + midpoint 35) = 16, band 8–16. A hung parliament is projected in one poll and a 28–28 tie keeps a slow coalition route alive, with the Opportunity Party's 8% as kingmaker.",
+      "drivers": [
+        "Opportunity Party at about 8% in the 1News poll",
+        "Projected hung parliament in one October poll",
+        "Te Pāti Māori as swing partner"
+      ],
+      "signals_to_watch": [
+        "Opportunity Party coalition commitments",
+        "Special-vote count margins",
+        "Any party announcing it will not support either leader"
+      ],
+      "time_horizon": "No government by Dec 15, 2026"
+    }
+  ],
+  "markets": [
+    {
+      "platform": "Polls (no liquid market located)",
+      "market": "Party vote, latest October polls",
+      "detail": "1News–Verian (Oct 8–12): National 28 · Labour 28 · Greens 15 · ACT 10 · NZ First 10 · Opportunity 8 · Anacta (Oct 6–10): Labour 29 · National 28 · Greens 15 · NZ First 10 · ACT 9 · Curia (Oct 1–5): National 28.5 · Labour 28.2 · Greens 13.3 · NZ First 12",
+      "volume": "none located",
+      "pulled": "2026-10-24"
+    }
+  ],
+  "base_rates": [
+    {
+      "stat": "3 of 6",
+      "text": "Elections since 2008 that changed the government (2008, 2017, 2023); the other three retained it."
+    },
+    {
+      "stat": "48 · 43",
+      "text": "Right bloc versus left bloc party-vote sum in the 1News–Verian poll, before Te Pāti Māori and the Opportunity Party."
+    },
+    {
+      "stat": "−23",
+      "text": "Luxon's net approval in the late-September 1News poll; Hipkins at −15 — both leaders underwater."
+    }
+  ],
+  "triggers": [
+    "Final-week 1News–Verian and Curia polls moving the bloc sum by three points or more shift the band by about five points.",
+    "Te Pāti Māori's coalition position, which the sources do not price and which decides the left route.",
+    "Opportunity Party statements on which bloc it will back, which set the kingmaker probability.",
+    "Special-vote and election-night margins in a close count."
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia — Opinion polling for the 2026 New Zealand general election",
+      "url": "https://en.wikipedia.org/wiki/Opinion_polling_for_the_2026_New_Zealand_general_election"
+    },
+    {
+      "label": "1News — Both Luxon and Hipkins' approval ratings down ahead of election (Sep 29)",
+      "url": "https://1news.co.nz/2026/09/29/poll-both-luxon-hipkins-approval-ratings-down-ahead-of-election/"
+    },
+    {
+      "label": "ODT — Hung parliament projected in new political poll",
+      "url": "https://www.odt.co.nz/news/hung-parliament-projected-in-new-political-poll-dms0j2iv"
+    }
+  ],
+  "method_note": "Seven standing predictor profiles each committed to one outcome by a fixed criterion; the consensus was fused by grounding strength, with the strongest dissent preserved. No liquid election market was located, so the bloc arithmetic on the poll average is the anchor and the band is wider than a market-priced call.",
+  "honesty_note": "A National-led government is the most likely outcome at 44–54%, which also means it is more likely than not that the government changes or stalls. The polls are close enough that a single-digit shift in the final weeks flips the modal result."
+}

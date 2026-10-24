@@ -99,6 +99,15 @@
       "note": "The FOMC voted 12–0 to raise the target range by 25 basis points to 3.75%–4.00%, the first hike since 2023, with Chair Warsh saying the inflation standard for action had not been met.",
       "source_url": "https://www.federalreserve.gov/monetarypolicy/files/monetary20260916a1.pdf",
       "source_label": "Federal Reserve"
+    },
+    {
+      "slug": "lebron-2026-27",
+      "winner": "Philadelphia 76ers",
+      "winner_flag": "🔔",
+      "resolved": "2026-07-24",
+      "note": "LeBron James agreed a two-year, $8M deal with the Philadelphia 76ers (player option in year two), not Cleveland; the Cavaliers consensus missed.",
+      "source_url": "https://www.newson6.com/sports/lebron-james-signs-2-year-8m-deal-with-philadelphia-76ers",
+      "source_label": "News 6 — LeBron James signs 2-year, $8M deal with Philadelphia 76ers"
     }
   ]
 }

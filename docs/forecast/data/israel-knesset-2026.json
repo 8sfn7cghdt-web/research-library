@@ -1,0 +1,285 @@
+{
+  "kind": "native_forecast",
+  "slug": "israel-knesset-2026",
+  "question": "Which government forms after Israel's October 27, 2026 Knesset election?",
+  "title": "Israel's Knesset Vote, October 2026",
+  "category": "The Modern World",
+  "subcategory": "Elections Abroad",
+  "status": "open",
+  "logged": "2026-10-24",
+  "grades": "2026-12-31",
+  "resolution": "Resolves to the government that holds office on December 31, 2026, after the October 27 Knesset election and coalition formation: an Eisenkot-led government, a Netanyahu-led government, or no government formed by year-end.",
+  "consensus": {
+    "pick": "Eisenkot Government",
+    "flag": "🟢",
+    "band": "44–52%",
+    "band_low": 44,
+    "band_high": 52,
+    "runner_up": "Netanyahu Government",
+    "runner_up_flag": "🔴",
+    "runner_up_band": "33–41%",
+    "headline_case": "Eisenkot's Yashar leads the independent polls for the largest party and sits near half the next-PM market. The opposition route to 61 needs Arab-party support, which is a real cost but a known one, and the stall outcome is kept honest in the residual band.",
+    "why_over_runner_up": "Yashar leads Likud in most of the recent surveys and the next-PM market prices Eisenkot near 50%. Netanyahu's route runs through the coalition reaching 61, which no independent poll shows.",
+    "dissent": "The comeback case survived scrutiny. Channel 14 has Likud at 29 seats with a coalition majority, and Netanyahu's record of returning from a deficit is real. If the Likud-led bloc reaches 61 on the count, this dissent becomes the lead.",
+    "tally": [
+      {
+        "name": "Eisenkot Government",
+        "flag": "🟢",
+        "votes": 3
+      },
+      {
+        "name": "Netanyahu Government",
+        "flag": "🔴",
+        "votes": 2
+      },
+      {
+        "name": "Stalemate Past Dec 31",
+        "flag": "⬜",
+        "votes": 2
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "Eisenkot Government",
+      "flag": "🟢",
+      "prob": "50%",
+      "prob_num": 50,
+      "confidence": "medium",
+      "register": "Terse tape-reading",
+      "blurb": "The Polymarket book on the next prime minister has Gadi Eisenkot at about half, and it is the only price on this question I can read. The snapshot is undated, so I hold the number loosely, but the tape points one way and I do not argue with it.",
+      "evidence": "Polymarket next-PM-after-election: Eisenkot ~50.1% (snapshot undated); Netanyahu exit-by-year-end market at 40% Yes (Oct 17, ~$124.6M traded).",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "market-reader",
+      "pick_scenario": "Eisenkot Government"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the mechanics and the models over recency and sentiment.",
+      "pick": "Stalemate Past Dec 31",
+      "flag": "⬜",
+      "prob": "14%",
+      "prob_num": 14,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "Every poll I have puts neither bloc at 61 seats without the Arab parties, and the models say a formation drags. The mechanics price a stall at a real rate, even though the headline winner is clear on the seat count.",
+      "evidence": "Channel 13 (late Sept): coalition 51, opposition 52, Arab parties 13 — neither bloc reaches 61 without them.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "quant",
+      "pick_scenario": "Stalemate Past Dec 31"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference classes — base rates, venue history, the record of prior cases.",
+      "pick": "Netanyahu Government",
+      "flag": "🔴",
+      "prob": "37%",
+      "prob_num": 37,
+      "confidence": "medium",
+      "register": "Prophetic bardic catalog",
+      "blurb": "Netanyahu lost the 2021 election and was back in office within eighteen months. The counted record of comebacks from a polling deficit is his, and that is the reference class I weigh. I set him at 37, not higher, because the polls still have Yashar ahead.",
+      "evidence": "Netanyahu lost power in 2021 and returned in December 2022 — a counted precedent for recovery from a deficit.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "historian",
+      "pick_scenario": "Netanyahu Government"
+    },
+    {
+      "name": "The Path Reader",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual route by which the outcome can happen.",
+      "pick": "Eisenkot Government",
+      "flag": "🟢",
+      "prob": "46%",
+      "prob_num": 46,
+      "confidence": "medium",
+      "register": "Terse verdict-driven",
+      "blurb": "The opposition route needs thirteen Arab seats, which is a hard ask but a known one. The coalition route needs ten seats that no independent poll shows it finding. Read the road, and the opposition road is the one that can be walked.",
+      "evidence": "Opposition needs Arab-party support to reach 61; the coalition's 51–52 in the independent polls needs a further ten-plus seats.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "path-reader",
+      "pick_scenario": "Eisenkot Government"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights the elite individual — motivation, legacy, and the pull of the story the player is writing.",
+      "pick": "Eisenkot Government",
+      "flag": "🟢",
+      "prob": "46%",
+      "prob_num": 46,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "Eisenkot is the ex-general who went from third place in the polls to the largest party in the field, and that is the story the electorate is buying. Momentum is the variable the spreadsheets cannot price, and it runs his way.",
+      "evidence": "Yashar rose from the polls' third slot to the largest party in most recent surveys (Channel 12 23–20 over Likud two weeks out).",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "talisman",
+      "pick_scenario": "Eisenkot Government"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and the field is hot — hunts the underpriced live path the story forgot.",
+      "pick": "Stalemate Past Dec 31",
+      "flag": "⬜",
+      "prob": "14%",
+      "prob_num": 14,
+      "confidence": "medium",
+      "register": "Wry contrarian-desk",
+      "blurb": "A favorite at half the price fails half the time, and the stall is the field the story keeps forgetting. Coalition formation in a fragmented Knesset is the underpriced route, and it wins whenever nobody reaches 61.",
+      "evidence": "The 61-seat arithmetic leaves both blocs short in every poll on file, so a stall is the default if no Arab-party deal lands.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "contrarian",
+      "pick_scenario": "Stalemate Past Dec 31"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Netanyahu Government",
+      "flag": "🔴",
+      "prob": "41%",
+      "prob_num": 41,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the arc of the man, not the seat chart. The leader who was counted out, lost the chair, and came back to lead the next government is the story the omens keep telling. Channel 14 already has his bloc at 29 seats, and I believe the story over the average.",
+      "evidence": "Channel 14 (mid-Oct): Likud 29 seats, coalition at an absolute majority; the 2021 loss and 2022 return as the precedent.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet",
+      "pick_scenario": "Netanyahu Government"
+    }
+  ],
+  "outcomes": [
+    {
+      "name": "Eisenkot Government",
+      "low": 44,
+      "high": 52,
+      "description": "Yashar leads the largest bloc and Eisenkot forms the government, through either a 61-seat majority with Arab-party support or a coalition deal that clears the threshold before year-end.",
+      "derivation": "Polymarket next-PM-after-election prices Eisenkot near 50% (undated snapshot), shaded down to 44–52 because the opposition's 61 needs Arab-party support: Channel 13 (late Sept) had the opposition at 52 and Arab parties at 13. Yashar led Likud in the Channel 12 and Maariv readings.",
+      "drivers": [
+        "Yashar as largest party in most recent surveys",
+        "Arab-party willingness to support an opposition government",
+        "Likud's internal pressure after a poor result"
+      ],
+      "signals_to_watch": [
+        "Official seat count on election night versus the Channel 12 and Maariv final polls",
+        "Arab-party announcements on recommending a candidate for prime minister",
+        "Consultations with the President before the mandate is assigned"
+      ],
+      "time_horizon": "Government formed by Dec 31, 2026"
+    },
+    {
+      "name": "Netanyahu Government",
+      "low": 33,
+      "high": 41,
+      "description": "The Likud-led bloc reaches 61 or a workable majority and Netanyahu returns to the premiership before year-end.",
+      "derivation": "P(Netanyahu still PM at end-2026) = 1 − 0.40 = 0.60, from the Polymarket exit market (Yes 40%, Oct 17). Of that, about 0.6 runs through a Likud-led coalition rather than a caretaker or rotation deal, giving about 36%; band 33–41.",
+      "drivers": [
+        "Channel 14 and polls showing Likud at 26–29 seats",
+        "The coalition bloc at 51 seats in the independent polls",
+        "Netanyahu's record of recovering from a 2021 loss"
+      ],
+      "signals_to_watch": [
+        "Whether the right-religious bloc reaches 61 without the Arab parties",
+        "Likud's coalition agreements with the smaller right-wing parties",
+        "Any Netanyahu legal development that changes his availability"
+      ],
+      "time_horizon": "Government formed by Dec 31, 2026"
+    },
+    {
+      "name": "Stalemate Past Dec 31",
+      "low": 8,
+      "high": 16,
+      "description": "Neither bloc forms a government by year-end; coalition talks drag past the deadline or force a second round.",
+      "derivation": "Residual: 100 − (midpoint 48 + midpoint 37) = 15, band 8–16. No poll reaches 61 for either bloc, so a stall is a live route rather than a tail.",
+      "drivers": [
+        "Neither bloc at 61 in any independent poll",
+        "Formation windows that can run past a deadline",
+        "The Arab parties as a swing bloc"
+      ],
+      "signals_to_watch": [
+        "Failed mandates handed to a second candidate",
+        "A deal among the Arab parties and the opposition",
+        "Any announced return to the polls"
+      ],
+      "time_horizon": "No government by Dec 31, 2026"
+    }
+  ],
+  "markets": [
+    {
+      "platform": "Polymarket",
+      "market": "Next Israeli PM after the election",
+      "detail": "Gadi Eisenkot ~50.1% (snapshot undated)",
+      "volume": "not in snapshot",
+      "pulled": "undated source, logged 2026-10-24"
+    },
+    {
+      "platform": "Polymarket",
+      "market": "Netanyahu exits office by end-2026",
+      "detail": "Yes 40% (+150) · No 62% (−163) as of Oct 17",
+      "volume": "~$124.6M traded",
+      "pulled": "2026-10-17"
+    }
+  ],
+  "base_rates": [
+    {
+      "stat": "51 · 52 · 13",
+      "text": "Coalition, opposition and Arab-party seats in Channel 13's late-September poll — neither bloc reaches 61 without the Arab parties."
+    },
+    {
+      "stat": "2021 → 2022",
+      "text": "Netanyahu lost the premiership in 2021 and returned in December 2022, the counted precedent for recovery from a deficit."
+    },
+    {
+      "stat": "Yashar lead",
+      "text": "Yashar led Likud in most recent surveys, though Channel 14 had Likud on top at 29 seats — the pollsters disagree on the lead."
+    }
+  ],
+  "triggers": [
+    "Election-night official count versus the final-week polls: a gap of three seats or more between blocs moves the band by about five points.",
+    "An Arab-party commitment to back an opposition candidate, or a refusal, shifts mass between the first two outcomes.",
+    "The President's mandate decisions and the first failed mandate, which signal whether a stall is becoming the base case.",
+    "Any Netanyahu legal development that changes his availability for the premiership."
+  ],
+  "sources": [
+    {
+      "label": "RG — Polymarket daily: Israel election, Netanyahu (Oct 17)",
+      "url": "https://rg.org/news/prediction-markets/polymarket-daily-israel-election-netanyahu-tesla-spacex-merger-world-series-october-17-2026"
+    },
+    {
+      "label": "Al-Monitor — Netanyahu trails Eisenkot in new poll (Aug)",
+      "url": "https://al-monitor.com/originals/2026/08/netanyahu-trails-eisenkot-new-poll-israels-right-wing-bloc-weakens"
+    },
+    {
+      "label": "Agenzia Nova — Israel polls still divided on majority, two weeks before the vote",
+      "url": "https://www.agenzianova.com/en/news/Israel-polls-still-divided-on-majority-two-weeks-before-election/"
+    }
+  ],
+  "method_note": "Seven standing predictor profiles each committed to one outcome by a fixed criterion; the consensus was fused by grounding strength, with the strongest dissent preserved. The Polymarket next-PM price is undated, so the band is shaded to the poll arithmetic rather than taken raw.",
+  "honesty_note": "The Eisenkot-led outcome is the single most likely at 44–52%, which also means it is more likely than not that Eisenkot does not form the government. The poll stack disagrees on the lead, and the newest figures on file are from mid-October."
+}

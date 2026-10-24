@@ -1,0 +1,217 @@
+{
+  "kind": "native_forecast",
+  "slug": "world-series-2026",
+  "question": "Which team will win the 2026 World Series?",
+  "title": "The 2026 World Series",
+  "category": "Sport & Games",
+  "subcategory": "Baseball",
+  "status": "open",
+  "logged": "2026-10-24",
+  "grades": "2026-11-01",
+  "resolution": "Resolves to the team that wins the 2026 World Series (best-of-seven). Game 1 was scheduled for October 23; this record is priced on the pre-Game-1 line and should be re-run once the series result is in.",
+  "consensus": {
+    "pick": "Milwaukee Brewers",
+    "flag": "🍺",
+    "band": "55–63%",
+    "band_low": 55,
+    "band_high": 63,
+    "runner_up": "Tampa Bay Rays",
+    "runner_up_flag": "🌊",
+    "runner_up_band": "37–45%",
+    "headline_case": "The Brewers are the favorite on the only price that matters, roughly 59–41 after the vig on the pre-Game-1 line, and the pitching and home-game arithmetic point the same way. Milwaukee owns games 1, 2, 6 and 7 under the 2-3-2 format.",
+    "why_over_runner_up": "As single clubs, Milwaukee leads on the price, the regular-season pitching lines, and the home-game count. The Rays' case rests on one arm's postseason run rather than the series as a whole.",
+    "dissent": "The Rays survived as the Talisman and Prophet case: Rasmussen's ALDS run is real and two first-time franchises make a story the crowd is drawn to. A split of the first two games in Milwaukee flips the read.",
+    "tally": [
+      {
+        "team": "Milwaukee Brewers",
+        "flag": "🍺",
+        "votes": 4
+      },
+      {
+        "team": "Tampa Bay Rays",
+        "flag": "🌊",
+        "votes": 3
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "Milwaukee Brewers",
+      "flag": "🍺",
+      "prob": "59%",
+      "prob_num": 59,
+      "confidence": "medium",
+      "register": "Terse tape-reading",
+      "blurb": "The Brewers are the price: DraftKings has them at −162 against the Rays at +134, which strips to about 59 and 41 after the vig. That was the pre-Game-1 line, and I read it as the market's verdict.",
+      "evidence": "DraftKings moneyline pre-Game-1: Brewers −162, Rays +134 — roughly 59% / 41% after removing the vig.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "market-reader"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the mechanics and the models over recency and sentiment.",
+      "pick": "Milwaukee Brewers",
+      "flag": "🍺",
+      "prob": "58%",
+      "prob_num": 58,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "The pitching edge runs to Milwaukee: Misiorowski posted a 1.80 ERA in the regular season against Rasmussen's 2.67, and the Brewers host four of seven games. The model says a moderate edge, not a lock.",
+      "evidence": "Regular-season ERA: Misiorowski 1.80, Rasmussen 2.67; Milwaukee owns home games 1, 2, 6 and 7 in the 2-3-2 format.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "quant"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference classes — base rates, venue history, the record of prior cases.",
+      "pick": "Milwaukee Brewers",
+      "flag": "🍺",
+      "prob": "56%",
+      "prob_num": 56,
+      "confidence": "low",
+      "register": "Prophetic bardic catalog",
+      "blurb": "Milwaukee's only Series trip was 1982, a seven-game loss, and this club has just swept the defending champion in the NLCS. The sample of teams that sweep a league series is small, so I hold the edge modest.",
+      "evidence": "Milwaukee's only prior World Series was 1982, lost in seven games; swept the Dodgers in the NLCS.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "historian"
+    },
+    {
+      "name": "The Path Reader",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual route by which the outcome can happen.",
+      "pick": "Milwaukee Brewers",
+      "flag": "🍺",
+      "prob": "60%",
+      "prob_num": 60,
+      "confidence": "high",
+      "register": "Terse verdict-driven",
+      "blurb": "Count the home games: Milwaukee has games 1, 2, 6 and 7 under the 2-3-2 format, which makes the route shorter. The Rays have to take three on the road, and that is the road I read.",
+      "evidence": "2-3-2 format gives the Brewers home games 1, 2, 6 and 7; the Rays need at least three wins away from Milwaukee.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "path-reader"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights the elite individual — motivation, legacy, and the pull of the story the player is writing.",
+      "pick": "Tampa Bay Rays",
+      "flag": "🌊",
+      "prob": "45%",
+      "prob_num": 45,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "Drew Rasmussen threw 7⅔ no-hit innings in the ALDS opener, and he is the sort of arm that can turn a Series on one start. The story belongs to the Rays' pitching, and that is worth more than the moneyline credits.",
+      "evidence": "Rasmussen's 7⅔ no-hit innings in the ALDS Game 1 win over the Yankees; 16-5, 2.67 ERA in the regular season.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "talisman"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and the field is hot — hunts the underpriced live path the story forgot.",
+      "pick": "Tampa Bay Rays",
+      "flag": "🌊",
+      "prob": "42%",
+      "prob_num": 42,
+      "confidence": "medium",
+      "register": "Wry contrarian-desk",
+      "blurb": "The favorite at −162 fails about four times in ten, and a Series between two low-payroll pennant winners is the kind of pricing that hands the underdog a real path. The Rays are the live leg the crowd is ignoring.",
+      "evidence": "Pre-Game-1 Rays +134 implies about 41% after the vig; both clubs are low-payroll pennant winners.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "contrarian"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Tampa Bay Rays",
+      "flag": "🌊",
+      "prob": "44%",
+      "prob_num": 44,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the story: two franchises still hunting a first title, and one of them has the arm that already did something no one expected in October. The omens favor the underdog's first crown, and I back it.",
+      "evidence": "Neither franchise has a title; Rasmussen's ALDS no-hitter run is the omen the story is built around.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet"
+    }
+  ],
+  "field": [
+    {
+      "team": "Milwaukee Brewers",
+      "flag": "🍺",
+      "price": 59.0
+    },
+    {
+      "team": "Tampa Bay Rays",
+      "flag": "🌊",
+      "price": 41.0
+    }
+  ],
+  "markets": [
+    {
+      "platform": "DraftKings",
+      "market": "World Series moneyline, pre-Game-1",
+      "detail": "Milwaukee Brewers −162 · Tampa Bay Rays +134 · total 6 runs",
+      "volume": "sportsbook line; no exchange volume located",
+      "pulled": "2026-10-24"
+    }
+  ],
+  "base_rates": [
+    {
+      "stat": "1982",
+      "text": "Milwaukee's only prior World Series, a seven-game loss to St. Louis."
+    },
+    {
+      "stat": "2-3-2",
+      "text": "Home-field format giving Milwaukee games 1, 2, 6 and 7 — four of seven at home."
+    },
+    {
+      "stat": "1.80 vs 2.67",
+      "text": "Regular-season ERA, Misiorowski (MIL) against Rasmussen (TB)."
+    }
+  ],
+  "triggers": [
+    "The Game 1 result: a Rays win in Milwaukee moves the band toward a coin flip; a Brewers win firms the favorite.",
+    "Starting-pitcher health and any late scratches in the Rays' rotation.",
+    "Two or more games at home for either side decides the 2-3-2 format's leverage."
+  ],
+  "sources": [
+    {
+      "label": "SI — Rays vs Brewers Game 1 opening odds, Milwaukee home favorite",
+      "url": "https://www.si.com/betting/rays-vs-brewers-game-1-opening-odds-for-2026-world-series-milwaukee-set-as-home-favorite"
+    },
+    {
+      "label": "FOX6 — Brewers will face Rays for 2026 championship",
+      "url": "https://www.fox6now.com/sports/brewers-world-series-rays-2026"
+    }
+  ],
+  "method_note": "Seven standing predictor profiles each committed to one club by a fixed criterion; the consensus was fused by grounding strength, with the strongest dissent preserved. The DraftKings pre-Game-1 moneyline is the anchor, vig removed.",
+  "honesty_note": "The Brewers are the most likely champion at 55–63%, which also means the Rays win roughly four times in ten. Game 1 was scheduled for October 23 and its result could not be confirmed in this pass, so the price is stale until the box score is in."
+}

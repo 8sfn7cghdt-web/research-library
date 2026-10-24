@@ -1,0 +1,222 @@
+{
+  "kind": "native_forecast",
+  "slug": "brazil-runoff-2026",
+  "question": "Who will win Brazil's presidential runoff on October 25, 2026?",
+  "title": "Brazil's Runoff, October 2026",
+  "category": "The Modern World",
+  "subcategory": "Elections Abroad",
+  "status": "open",
+  "logged": "2026-10-24",
+  "grades": "2026-10-25",
+  "resolution": "Resolves to the candidate who wins the October 25, 2026 presidential runoff, as declared by Brazil's electoral authority (TSE).",
+  "consensus": {
+    "pick": "Flavio Bolsonaro",
+    "flag": "🟢",
+    "band": "52–58%",
+    "band_low": 52,
+    "band_high": 58,
+    "runner_up": "Lula",
+    "runner_up_flag": "🌹",
+    "runner_up_band": "42–48%",
+    "headline_case": "Flavio Bolsonaro carries a narrow but consistent edge into the runoff. He led the October 4 first round 47.0% to 45.2% of valid votes, and the runoff polls on file (Datafolha 47–45, Quaest 46–44, CNT/MDA 46.8–45.9) all put him ahead inside their margins. A band of 52–58 is the honest width for a race this close.",
+    "why_over_runner_up": "As single candidates, Flavio is ahead in every poll published since mid-October and on the first-round count. Lula's edge was the September trend, and the October polls erased it.",
+    "dissent": "The Talisman and Prophet case for Lula is the best survivor: his September lead was real, and the PoderData reading is an outlier only if the October move is noise. A three-point swing in the final week flips the call.",
+    "tally": [
+      {
+        "team": "Flavio Bolsonaro",
+        "flag": "🟢",
+        "votes": 4
+      },
+      {
+        "team": "Lula",
+        "flag": "🌹",
+        "votes": 3
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "name": "The Market Reader",
+      "avatar": "📈",
+      "criterion": "Sides with the price the sharpest, deepest, most liquid prediction markets have set.",
+      "pick": "Flavio Bolsonaro",
+      "flag": "🟢",
+      "prob": "55%",
+      "prob_num": 55,
+      "confidence": "medium",
+      "register": "Terse tape-reading",
+      "blurb": "No liquid runoff market turned up, so I read the polls as the tape. Three runoff polls from the last three weeks all have Flavio Bolsonaro in front, if only by a point or two. A lean inside the margin is a lean, and I price it at 55 and no higher.",
+      "evidence": "No liquid runoff market located; Datafolha 47–45, Quaest 46–44, CNT/MDA 46.8–45.9 (mid-October) all lean Flavio inside the margin.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "market-reader"
+    },
+    {
+      "name": "The Quant",
+      "avatar": "🧮",
+      "criterion": "Trusts the mechanics and the models over recency and sentiment.",
+      "pick": "Flavio Bolsonaro",
+      "flag": "🟢",
+      "prob": "53%",
+      "prob_num": 53,
+      "confidence": "medium",
+      "register": "Measured analytic contrarian",
+      "blurb": "Strip out the single-day moves and the September-to-October poll average puts the two within about a point, with Flavio on top. The model reads a coin flip with a tilt, and I refuse to round the tilt past 53.",
+      "evidence": "Poll spread Sept–mid-Oct runs from Lula +2 (September Datafolha) to Flavio +2 (October Datafolha and Quaest); the PoderData 53–47 Flavio reading is the widest gap and sits outside the rest.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "quant"
+    },
+    {
+      "name": "The Historian",
+      "avatar": "📜",
+      "criterion": "Judges by counted reference classes — base rates, venue history, the record of prior cases.",
+      "pick": "Flavio Bolsonaro",
+      "flag": "🟢",
+      "prob": "56%",
+      "prob_num": 56,
+      "confidence": "medium",
+      "register": "Prophetic bardic catalog",
+      "blurb": "The first-round leader has carried each direct Brazilian runoff since the return to direct elections in 1989, on the record as I hold it. The first-round margin is under two points, so the count gives a lean rather than a lock.",
+      "evidence": "First-round leader in direct runoffs since 1989, from the electoral record as recalled and not re-checked against TSE tallies in this pass; Flavio led the Oct 4 first round 47.0% to 45.2% of valid votes.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "historian"
+    },
+    {
+      "name": "The Path Reader",
+      "avatar": "🔪",
+      "criterion": "Ignores reputation and reads the actual route by which the outcome can happen.",
+      "pick": "Flavio Bolsonaro",
+      "flag": "🟢",
+      "prob": "55%",
+      "prob_num": 55,
+      "confidence": "medium",
+      "register": "Terse verdict-driven",
+      "blurb": "The route to a majority runs through the 7.8% of valid first-round votes that went to eliminated candidates, and the first-round leader needs only a slice of it. Flavio's road is shorter, and the road is what I read.",
+      "evidence": "Valid first-round shares: Flavio 47.03%, Lula 45.16%, others about 7.8% — the pool both campaigns are fighting over.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "path-reader"
+    },
+    {
+      "name": "The Talisman",
+      "avatar": "⭐",
+      "criterion": "Weights the elite individual — motivation, legacy, and the pull of the story the player is writing.",
+      "pick": "Lula",
+      "flag": "🌹",
+      "prob": "47%",
+      "prob_num": 47,
+      "confidence": "medium",
+      "register": "Bardic-incantatory, archetypal",
+      "blurb": "The campaign's whole story is the return: a president who was jailed, written off, and came back to win the top office. Lula's voters are the ones who turn out when the stakes feel personal, and the 47 I give him is a turnout bet dressed as a verdict.",
+      "evidence": "Lula's 2022 comeback after the 2018–19 imprisonment, and the PT base's turnout enthusiasm — a story signal, not a poll number.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "talisman"
+    },
+    {
+      "name": "The Contrarian",
+      "avatar": "🎭",
+      "criterion": "Favorites usually fail and the field is hot — hunts the underpriced live path the story forgot.",
+      "pick": "Lula",
+      "flag": "🌹",
+      "prob": "46%",
+      "prob_num": 46,
+      "confidence": "medium",
+      "register": "Wry contrarian-desk",
+      "blurb": "A 55 percent favorite in a 1.9-point race still loses four times in ten, and the crowd has priced the favorite's win as settled. The live path the headline ignores is a Northeast turnout surge that closes the gap on a single Sunday.",
+      "evidence": "The first-round gap is 1.9 points and the runoff polls sit within a 2-point margin of error, so the favorite is priced on a thin edge.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "contrarian"
+    },
+    {
+      "name": "The Prophet",
+      "avatar": "🕊",
+      "criterion": "Divine providence — backs the fated, story-shaped ending, however long the odds.",
+      "pick": "Lula",
+      "flag": "🌹",
+      "prob": "45%",
+      "prob_num": 45,
+      "confidence": "high",
+      "register": "Oracular destiny-reading",
+      "blurb": "Read the omens, not the crosstabs. The leader who was jailed, written off, and returned to the top of the ballot in 2022 is being asked to do it again, and every poll in the stack has him inside a point of the lead. The story says the fight is not over, and I believe the story.",
+      "evidence": "Lula's 2022 comeback after 2018–19 imprisonment; runoff polls within the margin of error throughout September and October.",
+      "record": {
+        "graded": 0,
+        "hits": 0
+      },
+      "persona": "prophet"
+    }
+  ],
+  "field": [
+    {
+      "team": "Flavio Bolsonaro",
+      "flag": "🟢",
+      "price": 55.0
+    },
+    {
+      "team": "Lula",
+      "flag": "🌹",
+      "price": 45.0
+    }
+  ],
+  "markets": [
+    {
+      "platform": "Polls (no liquid market swept)",
+      "market": "Runoff head-to-head, Oct 25",
+      "detail": "Datafolha (mid-Oct) Flavio 47 · Lula 45 · Quaest (mid-Oct) Flavio 46 · Lula 44 · CNT/MDA Flavio 46.8 · Lula 45.9 · PoderData (Oct 5–7) Flavio 53 · Lula 47",
+      "volume": "none located",
+      "pulled": "2026-10-24"
+    }
+  ],
+  "base_rates": [
+    {
+      "stat": "47.0 · 45.2",
+      "text": "First-round valid-vote shares on Oct 4 (Bolsonaro · Lula): a 1.9-point lead for the candidate now in front in the runoff polls."
+    },
+    {
+      "stat": "7.8%",
+      "text": "Valid first-round votes that went to eliminated candidates — the pool both campaigns are fighting over in the final week."
+    },
+    {
+      "stat": "Leader",
+      "text": "The first-round leader has won each direct runoff since 1989 on the record used here; recalled, not yet checked against TSE tallies."
+    }
+  ],
+  "triggers": [
+    "A final-week Datafolha or Quaest poll moving three points or more in either direction shifts the band by about five points.",
+    "Turnout in the Northeast against the South and Center-West is the decisive regional margin.",
+    "Endorsements from eliminated first-round candidates decide the 7.8% pool; a formal endorsement of either side moves the band.",
+    "Any electoral-court action touching a candidate's eligibility or campaign conduct in the final days."
+  ],
+  "sources": [
+    {
+      "label": "Al Jazeera — Latest poll shows Bolsonaro maintaining edge over Lula (Oct 16)",
+      "url": "https://www.aljazeera.com/news/2026/10/16/latest-poll-shows-bolsonaro-maintaining-edge-over-lula-in-brazil-run-off"
+    },
+    {
+      "label": "The Star — Lula leads Bolsonaro by 3 points, Datafolha (Oct 2)",
+      "url": "https://www.thestar.com.my/news/world/2026/10/02/lula-leads-bolsonaro-by-3-points-in-brazil-runoff-scenario-datafolha-poll-shows"
+    },
+    {
+      "label": "Al Jazeera — Lula and Flavio Bolsonaro still essentially tied (Sep 25)",
+      "url": "https://www.aljazeera.com/news/2026/9/25/brazils-lula-and-flavio-bolsonaro-still-essentially-tied-in-new-poll"
+    }
+  ],
+  "method_note": "Seven standing predictor profiles each committed to one named candidate by a fixed criterion; the consensus was fused by grounding strength, with the strongest dissent preserved. No liquid exact-question market was located, so the polls are the only anchor and the band is wider than a market-priced call would be.",
+  "honesty_note": "Flavio Bolsonaro is the most likely winner at 52–58%, which also means Lula wins roughly four times in ten. The newest poll on file is from mid-October; a final-week move would change the call."
+}
