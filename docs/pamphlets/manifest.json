@@ -1,6 +1,14 @@
 {
   "pamphlets": [
     {
+      "slug": "carlyle-on-zizek-and-trumps-peace",
+      "title": "Nothing But Diesel",
+      "dek": "On Žižek's “Is Trump a Rational Peacemaker?” and the President's turn on Ukraine",
+      "writer": "Thomas Carlyle",
+      "subject": "Trump's October 2026 positioning on Ukraine and Russia, answering Slavoj Žižek",
+      "date": "2026-10-24"
+    },
+    {
       "slug": "hemingway-on-the-h3-hiatus",
       "title": "Indefinite Hiatus",
       "dek": "On the H3 show and the word they used",
