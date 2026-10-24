@@ -54,6 +54,51 @@
       "note": "DOJ's Office of Legal Counsel ruled the restructured, majority-American-owned TikTok USDS joint venture falls outside the No TikTok on Government Devices Act, clearing it for federal devices — the clearest government treatment yet of the deal as a qualified divestiture, with ByteDance's stake capped just under 20%.",
       "source_url": "https://www.washingtonpost.com/national-security/2026/07/20/doj-its-safe-fed-employees-download-tiktok-work-phones/",
       "source_label": "Washington Post"
+    },
+    {
+      "slug": "us-open-2026-mens",
+      "winner": "Zverev",
+      "winner_flag": "🇩🇪",
+      "resolved": "2026-09-13",
+      "note": "Top seed Alexander Zverev beat American Ben Shelton 6-3, 7-6(2), 5-7, 6-2 for his second major of the season, sinking the Sinner and Alcaraz picks and the council's favorite.",
+      "source_url": "https://tennistourcalendar.com/us-open-2026-final-results/",
+      "source_label": "Tennis Tour Calendar"
+    },
+    {
+      "slug": "us-open-2026-womens",
+      "winner": "Rybakina",
+      "winner_flag": "🇰🇿",
+      "resolved": "2026-09-12",
+      "note": "Second seed Elena Rybakina beat two-time defending champion Aryna Sabalenka 6-4, 5-7, 6-2 for her first US Open title, ending Sabalenka's bid for a three-peat and lifting Rybakina to world No. 1 for the first time.",
+      "source_url": "https://tennistourcalendar.com/us-open-2026-final-results/",
+      "source_label": "Tennis Tour Calendar"
+    },
+    {
+      "slug": "mlb-astros-2026-playoffs",
+      "winner": "Astros make the playoffs (YES)",
+      "winner_flag": "⚾",
+      "resolved": "2026-10-04",
+      "note": "The Astros clinched their eighth AL West title on the final day of the regular season, their 19th playoff appearance, despite the council's NO-leaning call. Houston finished at 81 wins, the fewest ever for a playoff team.",
+      "source_url": "https://en.wikipedia.org/wiki/2026_Houston_Astros_season",
+      "source_label": "Wikipedia"
+    },
+    {
+      "slug": "government-shutdown-sep-2026",
+      "winner": "CR or deal averts a lapse (NO SHUTDOWN)",
+      "winner_flag": "🤝",
+      "resolved": "2026-10-01",
+      "note": "A stopgap funding law signed in early September kept the government funded through the October 1 fiscal-year start, so no lapse occurred and no shutdown began.",
+      "source_url": "https://thehill.com/homenews/administration/6067996-trump-stopgap-funding-law-government-shutdown/",
+      "source_label": "The Hill"
+    },
+    {
+      "slug": "fed-rate-cut-sep-2026",
+      "winner": "Hike — 25bp increase to 3.75%–4.00%",
+      "winner_flag": "🔥",
+      "resolved": "2026-09-16",
+      "note": "The FOMC voted 12–0 to raise the target range by 25 basis points to 3.75%–4.00%, the first hike since 2023, with Chair Warsh saying the inflation standard for action had not been met.",
+      "source_url": "https://www.federalreserve.gov/monetarypolicy/files/monetary20260916a1.pdf",
+      "source_label": "Federal Reserve"
     }
   ]
 }

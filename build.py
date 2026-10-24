@@ -8552,25 +8552,35 @@ CTV_BOARD_DATA = {
     "as_of": "August 9, 2026",
     "note": "Q2 2026 earnings season (most names reported late July–early August 2026). "
             "Figures marked “—” were not confirmed in the last research pass.",
+    # The session-movers strip: the board's lead read, each one restating a move
+    # already carried in a company note below (no new facts live here).
+    "movers": [
+        {"tick": "CRTO", "dir": "dn", "move": "−28%", "why": "guidance cut, premarket"},
+        {"tick": "GOOGL", "dir": "dn", "move": "−6%", "why": "capex guide raised"},
+        {"tick": "DIS", "dir": "up", "move": "+4%", "why": "EPS beat, premarket"},
+        {"tick": "AMZN", "dir": "up", "move": "$3T club", "why": "crossed Aug 3, a first"},
+        {"tick": "NFLX", "dir": "dn", "move": "soft guide", "why": "Q3 revenue outlook"},
+        {"tick": "MGNI", "dir": "up", "move": "targets ↑", "why": "FY26 raised"},
+    ],
     "companies": [
         {"group": "CTV & Streaming", "items": [
-            {"ticker": "ROKU", "name": "Roku", "price": "—", "cap": "$21.7B",
+            {"ticker": "ROKU", "name": "Roku", "price": "—", "cap": "$21.7B", "call": "beat",
              "earn": "Q2 2026: revenue $1.35B (+22% YoY), beat; EPS $1.18 vs $0.61 est. — 5th straight profitable quarter.",
              "note": "Guidance withheld pending its $22B Fox Corp acquisition."},
-            {"ticker": "TTD", "name": "The Trade Desk", "price": "—", "cap": "—",
+            {"ticker": "TTD", "name": "The Trade Desk", "price": "—", "cap": "—", "call": "miss",
              "earn": "Q2 2026: revenue $715M (+3% YoY), missed $751.5M est.; adj. EPS $0.34 vs $0.37 est.",
              "note": "CFO, CMO, and commercial chief all replaced this quarter."},
-            {"ticker": "NFLX", "name": "Netflix", "price": "$73.63", "cap": "$309B",
+            {"ticker": "NFLX", "name": "Netflix", "price": "$73.63", "cap": "$309B", "call": "inline",
              "trend": [86, 84, 80, 77, 75, 73.63],
              "earn": "Q2 2026: revenue $12.56B (+13.4%), in-line; EPS $0.80 in-line; op. margin 33.4% (down from 34.1%).",
              "note": "Ads business tracking ~$3B FY26 revenue, ~$43/mo ARPU; stock fell on a soft Q3 revenue guide."},
-            {"ticker": "DIS", "name": "Disney", "price": "—", "cap": "—",
+            {"ticker": "DIS", "name": "Disney", "price": "—", "cap": "—", "call": "mixed",
              "earn": "Q3 FY26: revenue $25.25B (+7%), slight miss; adj. EPS $2.06 vs $1.86 est. — beat.",
              "note": "Streaming operating income more than doubled YoY to ~$712M; stock +~4% premarket."},
-            {"ticker": "WBD", "name": "Warner Bros. Discovery", "price": "—", "cap": "$67.4B",
+            {"ticker": "WBD", "name": "Warner Bros. Discovery", "price": "—", "cap": "$67.4B", "call": "mixed",
              "earn": "Q2 2026: revenue $8.72B, missed $9.21B est.; EPS beat despite the revenue miss.",
              "note": "Subject to Paramount Skydance's pending $80.9–111B bid; US antitrust trial set March 2027."},
-            {"ticker": "PSKY", "name": "Paramount Skydance", "price": "—", "cap": "$10.4B",
+            {"ticker": "PSKY", "name": "Paramount Skydance", "price": "—", "cap": "$10.4B", "call": "beat",
              "earn": "Q2 2026: revenue $6.91B vs $6.88B est. — slight beat; net earnings $41M.",
              "note": "Pursuing the Warner Bros. Discovery acquisition."},
             {"ticker": "FUBO", "name": "fuboTV", "price": "—", "cap": "—",
@@ -8581,22 +8591,22 @@ CTV_BOARD_DATA = {
              "note": "Cable-network group leaning on AMC+ bundling as linear affiliate revenue erodes."},
         ]},
         {"group": "Ad-Tech Platforms", "items": [
-            {"ticker": "GOOGL", "name": "Alphabet", "price": "—", "cap": "—",
+            {"ticker": "GOOGL", "name": "Alphabet", "price": "—", "cap": "—", "call": "beat",
              "earn": "Q2 2026: revenue $119.8B (+24%), beat; ad revenue $81.63B; YouTube ads $11.1B (+13%).",
              "note": "Stock fell >6% on a raised 2026 capex guide ($195–205B, up from $180–190B)."},
             {"ticker": "AMZN", "name": "Amazon", "price": ">$255", "cap": "$3T (crossed Aug 3, a first)",
              "trend": [225, 232, 240, 248, 251, 255],
              "earn": "Q2 2026: net sales $200.6B (+20%); AWS $42.2B (+37%); ad revenue $19.8B (+26%, nearing $20B/qtr).",
              "note": "2026 capex guide raised to $220B."},
-            {"ticker": "MGNI", "name": "Magnite", "price": "$22.78 (after-hours)", "cap": "—",
+            {"ticker": "MGNI", "name": "Magnite", "price": "$22.78 (after-hours)", "cap": "—", "call": "beat",
              "trend": [16.4, 17.8, 19.1, 20.5, 21.6, 22.78],
              "earn": "Q2 2026: non-GAAP EPS $0.26 vs $0.25 est.; revenue $192.8M vs $179.2M est. — beat.",
              "note": "CTV now 51% of Contribution ex-TAC, up 36% YoY; FY26 targets raised."},
-            {"ticker": "PUBM", "name": "PubMatic", "price": "$16.23 (after-hours)", "cap": "—",
+            {"ticker": "PUBM", "name": "PubMatic", "price": "$16.23 (after-hours)", "cap": "—", "call": "beat",
              "trend": [11.2, 12.4, 13.9, 15.0, 15.6, 16.23],
              "earn": "Q2 2026: adj. EPS $0.12 vs an est. $0.23 loss — big beat; revenue $78.6M (+11%).",
              "note": "Adj. EBITDA margin 25%, up from 20%."},
-            {"ticker": "CRTO", "name": "Criteo", "price": "$16.10 (premarket)", "cap": "—",
+            {"ticker": "CRTO", "name": "Criteo", "price": "$16.10 (premarket)", "cap": "—", "call": "beat",
              "trend": [24.0, 22.5, 21.0, 19.5, 18.0, 16.10],
              "earn": "Q2 2026: adj. EPS $0.80 vs $0.70 est. — beat; revenue $428M.",
              "note": "Stock fell 28% premarket on a guidance cut and enterprise-client pullback; Retail Media spend +31% YoY."},
@@ -8640,7 +8650,7 @@ CTV_BOARD_DATA = {
     ],
     "cpm": {
         "blended": "$26", "range": "$25–35", "span": "$15–45",
-        "standard": "$20–40", "premium": "$40–60", "cpcv": "$2–4 (completed-view basis)",
+        "standard": "$20–40", "premium": "$40–60", "cpcv": "$2–4",
         "blended_trend": [34, 31, 29, 27, 26.5, 26],
         "standard_trend": [26, 24, 23, 21, 20.5, 20],
         "premium_trend": [58, 54, 50, 46, 43, 40],
@@ -8736,7 +8746,7 @@ CTV_BOARD_DATA = {
 }
 
 CTV_BOARD_CSS = """
-.ctv-sec { margin: 2.6rem 0 1.2rem; }
+.ctv-sec { margin: 2.6rem 0 1.2rem; scroll-margin-top: 1rem; }
 .ctv-sec:first-of-type { margin-top: 1rem; }
 .ctv-sec-h { display: flex; align-items: baseline; gap: .6rem; flex-wrap: wrap;
   font-family: var(--sans); font-size: .72rem; text-transform: uppercase; letter-spacing: .18em;
@@ -8747,57 +8757,116 @@ CTV_BOARD_CSS = """
 .ctv-grp-h { font-family: var(--sans); font-weight: 700; font-size: .68rem; text-transform: uppercase;
   letter-spacing: .12em; color: var(--fdmut); margin: 1.3rem 0 .6rem; }
 .ctv-grp-h:first-child { margin-top: 0; }
-.ctv-co { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px;
-  padding: .85rem 1rem; }
-.ctv-co-top { display: flex; align-items: baseline; gap: .5rem; margin-bottom: .35rem; }
+.ctv-grp-h .n { font-family: var(--fdmono); color: var(--fdup); margin-left: .3rem; }
+
+/* session movers — the board's lead read */
+.ctv-movers { display: flex; flex-wrap: wrap; align-items: stretch; gap: .5rem; margin: 0 0 1.4rem; }
+.ctv-movers-l { align-self: center; font-family: var(--sans); font-size: .64rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .14em; color: var(--fdmut); margin-right: .2rem; }
+.ctv-mover { display: inline-flex; align-items: baseline; gap: .45rem; background: #0f131a;
+  border: 1px solid var(--fdline); border-left: 3px solid var(--fdup); border-radius: 2px;
+  padding: .38rem .65rem; }
+.ctv-mover.dn { border-left-color: var(--fddn); }
+.ctv-mover .t { font-family: var(--fdmono); font-weight: 700; font-size: .76rem; color: var(--fdtext); }
+.ctv-mover .m { font-family: var(--fdmono); font-weight: 700; font-size: .76rem; color: var(--fdup);
+  font-variant-numeric: tabular-nums; }
+.ctv-mover.dn .m { color: var(--fddn); }
+.ctv-mover .w { font-family: var(--serif); font-style: italic; font-size: .72rem; color: var(--fdmut); }
+
+/* company cards */
+.ctv-co { display: flex; flex-direction: column; background: var(--fdcard); border: 1px solid var(--fdline);
+  border-radius: 2px; padding: .85rem 1rem; }
+.ctv-co-top { display: flex; align-items: baseline; gap: .5rem; flex-wrap: wrap; margin-bottom: .35rem; }
 .ctv-co-tick { font-family: var(--fdmono); font-weight: 700; font-size: .84rem; color: var(--fdtext); }
 .ctv-co-name { font-family: var(--sans); font-size: .74rem; color: var(--fdmut); }
 .ctv-co-price { margin-left: .5rem; font-family: var(--fdmono); font-size: .8rem; font-weight: 700;
-  color: var(--fdup); white-space: nowrap; }
-.ctv-co-top .ctv-spark { margin-left: auto; flex-shrink: 0; }
+  color: var(--fdup); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ctv-co-price.dn { color: var(--fddn); }
+.ctv-co-top .ctv-spark { margin-left: auto; flex-shrink: 0; align-self: center; }
 .ctv-co-top .ctv-spark + .ctv-co-price { margin-left: .4rem; }
 .ctv-co-logo { margin-left: auto; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
   width: 1.6rem; height: 1.6rem; border-radius: 50%; font-family: var(--sans); font-weight: 700;
-  font-size: .58rem; letter-spacing: .02em; }
-.ctv-tile .ctv-spark { display: block; margin-top: .3rem; }
-.ctv-co-cap { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); margin-bottom: .5rem; }
+  font-size: .58rem; letter-spacing: .02em; align-self: center; }
+.ctv-co-meta { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; margin-bottom: .5rem; }
+.ctv-verdict { font-family: var(--sans); font-size: .58rem; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .1em; border-radius: 2px; padding: .16rem .42rem; }
+.ctv-verdict.beat { color: #0c1117; background: var(--fdup); }
+.ctv-verdict.miss { color: #0c1117; background: var(--fddn); }
+.ctv-verdict.mixed { color: #0c1117; background: var(--fdgold); }
+.ctv-verdict.inline { color: var(--fdmut); border: 1px solid var(--fdline); padding: .12rem .38rem; }
+.ctv-co-cap { font-family: var(--fdmono); font-size: .68rem; color: var(--fdmut); }
 .ctv-co-earn { font-family: var(--serif); font-size: .84rem; line-height: 1.5; color: var(--fdtext); margin: 0 0 .3rem; }
-.ctv-co-note { font-family: var(--serif); font-style: italic; font-size: .78rem; line-height: 1.4; color: var(--fdmut); margin: 0; }
-.ctv-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: .8rem; margin-bottom: 1rem; }
+.ctv-co-note { font-family: var(--serif); font-style: italic; font-size: .78rem; line-height: 1.4; color: var(--fdmut); margin: auto 0 0; padding-top: .2rem; }
+
+/* stat tiles (CPM benchmarks, watch-time) */
+.ctv-tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .8rem; margin-bottom: 1rem; }
 .ctv-tile { background: #0f131a; border: 1px solid var(--fdline); border-radius: 2px; padding: .7rem .85rem; }
 .ctv-tile .l { display: block; font-family: var(--sans); font-size: .64rem; text-transform: uppercase;
   letter-spacing: .1em; color: var(--fdmut); margin-bottom: .3rem; }
+.ctv-tile .vrow { display: flex; align-items: flex-end; justify-content: space-between; gap: .6rem; }
 .ctv-tile .v { font-family: var(--fdmono); font-weight: 700; font-size: 1.05rem; color: var(--fdtext); }
-.ctv-note { font-family: var(--serif); font-style: italic; font-size: .82rem; color: var(--fdmut); line-height: 1.5; margin: .6rem 0 0; }
+.ctv-tile .vrow .ctv-spark { flex-shrink: 0; margin-bottom: .15rem; }
+.ctv-tile .c { display: block; font-family: var(--serif); font-style: italic; font-size: .7rem;
+  line-height: 1.35; color: var(--fdmut); margin-top: .35rem; }
+.ctv-tile.big { grid-column: span 2; }
+.ctv-tile.big .v { font-size: 1.6rem; }
+@media (max-width: 480px) { .ctv-tile.big { grid-column: span 1; } }
+.ctv-note { font-family: var(--serif); font-style: italic; font-size: .82rem; color: var(--fdmut, var(--muted));
+  line-height: 1.5; margin: .6rem 0 0; }
 .ctv-src { font-family: var(--fdmono); font-size: .66rem; color: var(--fdmut); margin: .3rem 0 0; }
+
+/* ad spend by region */
 .ctv-regions { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .8rem; }
 .ctv-region { background: var(--fdcard); border: 1px solid var(--fdline); border-radius: 2px; padding: .8rem .95rem; }
 .ctv-region-r { font-family: var(--sans); font-weight: 700; font-size: .82rem; color: var(--fdtext); }
 .ctv-region-m { font-family: var(--sans); font-size: .68rem; color: var(--fdmut); margin: .15rem 0 .4rem; }
-.ctv-region-v { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext); }
-.ctv-region-g { font-family: var(--fdmono); font-size: .78rem; color: var(--fdup); margin-left: .5rem; }
+.ctv-region-v { font-family: var(--fdmono); font-weight: 700; font-size: 1.15rem; color: var(--fdtext);
+  font-variant-numeric: tabular-nums; }
+.ctv-region-v.up { color: var(--fdup); }
+.ctv-region-g { font-family: var(--fdmono); font-size: .78rem; color: var(--fdup); margin-left: .5rem;
+  font-variant-numeric: tabular-nums; }
 .ctv-region-n { font-family: var(--serif); font-style: italic; font-size: .76rem; color: var(--fdmut); margin: .35rem 0 0; line-height: 1.4; }
+.ctv-flagged { display: flex; align-items: baseline; gap: .55rem; flex-wrap: wrap; margin-top: .8rem;
+  padding: .55rem .75rem; background: #0f131a; border: 1px dashed var(--fdline); border-radius: 2px; }
+.ctv-flagged .t { font-family: var(--sans); font-weight: 700; font-size: .62rem; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--fdmut); }
+.ctv-flagged .r { font-family: var(--sans); font-size: .76rem; color: var(--fdtext); cursor: help;
+  border-bottom: 1px dotted var(--fdline); }
+.ctv-flagged .n { font-family: var(--serif); font-style: italic; font-size: .74rem; color: var(--fdmut); }
+
+/* watch time */
 .ctv-watch-country { margin-bottom: 1.6rem; }
 .ctv-watch-country:last-child { margin-bottom: 0; }
 .ctv-watch { display: flex; flex-direction: column; gap: .55rem; margin-bottom: 1rem; }
-.ctv-watch-row { display: grid; grid-template-columns: 140px 1fr 3.2rem; align-items: center; gap: .6rem; }
+.ctv-watch-row { display: grid; grid-template-columns: 150px 1fr 3.2rem; align-items: center; gap: .6rem; }
 .ctv-watch-nm { font-family: var(--sans); font-size: .78rem; color: var(--fdtext); }
 .ctv-watch-bar { position: relative; height: 10px; background: #0a0f16; border-radius: 0; overflow: hidden; }
 .ctv-watch-fill { position: absolute; top: 0; bottom: 0; left: 0; background: var(--fdblue); }
 .ctv-watch-pct { font-family: var(--fdmono); font-size: .76rem; color: var(--fdmut); text-align: right;
   font-variant-numeric: tabular-nums; }
-.ctv-bets { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: .8rem; }
+.ctv-watch-scale { font-family: var(--fdmono); font-size: .62rem; color: var(--fdmut); text-transform: uppercase;
+  letter-spacing: .08em; margin: -.3rem 0 .6rem; }
+
+/* the desk's live bets, one card per market */
+.ctv-bets { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: .9rem; }
 .ctv-bet { display: block; text-decoration: none; color: var(--fdtext); background: var(--fdcard);
-  border: 1px solid var(--fdline); border-radius: 2px; padding: .75rem .9rem;
+  border: 1px solid var(--fdline); border-radius: 2px; padding: .9rem 1rem;
   transition: border-color .15s var(--ease), transform .15s var(--ease); }
 .ctv-bet:hover { border-color: var(--fdup); transform: translateY(-2px); }
-.ctv-bet-top { display: flex; align-items: center; gap: .4rem; margin-bottom: .4rem; }
-.ctv-bet-av { font-size: 1.1rem; }
-.ctv-bet-nm { font-family: var(--sans); font-weight: 700; font-size: .78rem; }
-.ctv-bet-p { margin-left: auto; font-family: var(--fdmono); font-weight: 700; font-size: .82rem; color: var(--fdup); }
-.ctv-bet-mk { font-family: var(--serif); font-size: .82rem; line-height: 1.4; margin: 0 0 .3rem; color: var(--fdmut); }
-.ctv-bet-pk { font-family: var(--sans); font-size: .76rem; font-weight: 600; }
-.ctv-bet-due { font-family: var(--fdmono); font-size: .66rem; color: var(--fdmut); margin-top: .35rem; }
+.ctv-bet-top { display: flex; align-items: baseline; gap: .7rem; margin-bottom: .65rem; }
+.ctv-bet-q { font-family: var(--display); font-weight: 600; font-size: 1rem; line-height: 1.25; }
+.ctv-bet-due { margin-left: auto; flex-shrink: 0; font-family: var(--fdmono); font-size: .66rem; color: var(--fdmut); }
+.ctv-pick { padding: .55rem 0 .6rem; border-top: 1px solid var(--fdline); }
+.ctv-pick-t { font-family: var(--sans); font-size: .76rem; font-weight: 600; line-height: 1.4; margin-bottom: .45rem; }
+.ctv-pick-t .q { font-family: var(--fdmono); font-weight: 700; font-size: .72rem; color: var(--fdblue);
+  white-space: nowrap; margin-left: .35rem; }
+.ctv-pick-ch { display: flex; flex-wrap: wrap; gap: .35rem; }
+.ctv-chip { --pc: var(--fdmut); display: inline-flex; align-items: center; gap: .35rem;
+  font-family: var(--sans); font-size: .68rem; color: var(--fdtext); background: #161b24;
+  border: 1px solid var(--fdline); border-left: 3px solid var(--pc); border-radius: 2px;
+  padding: .2rem .45rem; }
+.ctv-chip b { font-family: var(--fdmono); font-weight: 700; font-size: .66rem; color: var(--fdup);
+  font-variant-numeric: tabular-nums; }
 @media (max-width: 640px) { .ctv-watch-row { grid-template-columns: 100px 1fr 2.6rem; } }
 a.fd-board { transition: border-color .15s var(--ease), transform .15s var(--ease); cursor: pointer; }
 a.fd-board:hover { border-color: var(--fdup); transform: translateY(-2px); }
@@ -8806,23 +8875,37 @@ a.fd-board:hover { border-color: var(--fdup); transform: translateY(-2px); }
 .ctv-breaking-tag { flex-shrink: 0; font-family: var(--sans); font-weight: 800; font-size: .64rem;
   text-transform: uppercase; letter-spacing: .1em; color: #f4715c; }
 .ctv-breaking-text { font-family: var(--serif); font-size: .84rem; line-height: 1.4; color: var(--fdtext); }
+.fd-tk .dn { color: var(--fddn); font-weight: 700; }
 """
 
 
-def _ctv_sparkline_svg(points, color="#22c55e", w=64, h=22):
+def _ctv_trend_dir(points):
+    """'up' | 'dn' | None off a trend series — last point vs first."""
+    if not points or len(points) < 2:
+        return None
+    return "up" if points[-1] >= points[0] else "dn"
+
+
+def _ctv_sparkline_svg(points, color=None, w=64, h=22):
     """A tiny inline-SVG trend line for a tile/card — illustrative direction
     read off the accompanying earnings/CPM note, not a literal price series
-    (this is a static site with no live feed)."""
+    (this is a static site with no live feed). Unless a color is forced, the
+    stroke reads direction: market green up, market red down. A dot marks the
+    latest point so the eye lands on 'now'."""
     if not points or len(points) < 2:
         return ""
+    if color is None:
+        color = "var(--fdup, #22c55e)" if _ctv_trend_dir(points) == "up" else "var(--fddn, #ef4444)"
     lo, hi = min(points), max(points)
     span = (hi - lo) or 1
-    step = w / (len(points) - 1)
-    coords = [f"{i * step:.1f},{h - ((p - lo) / span) * (h - 4) - 2:.1f}" for i, p in enumerate(points)]
+    step = (w - 6) / (len(points) - 1)
+    xy = [(3 + i * step, h - ((p - lo) / span) * (h - 6) - 3) for i, p in enumerate(points)]
+    coords = " ".join(f"{x:.1f},{y:.1f}" for x, y in xy)
     return (f'<svg class="ctv-spark" viewBox="0 0 {w} {h}" width="{w}" height="{h}" '
             f'preserveAspectRatio="none" aria-hidden="true"><title>Illustrative recent trend</title>'
-            f'<polyline points="{" ".join(coords)}" fill="none" stroke="{color}" stroke-width="1.6" '
-            f'stroke-linecap="round" stroke-linejoin="round"/></svg>')
+            f'<polyline points="{coords}" fill="none" stroke="{color}" stroke-width="1.6" '
+            f'stroke-linecap="round" stroke-linejoin="round"/>'
+            f'<circle cx="{xy[-1][0]:.1f}" cy="{xy[-1][1]:.1f}" r="2.2" fill="{color}"/></svg>')
 
 
 def _ctv_logo_badge(ticker, name):
@@ -8857,9 +8940,12 @@ def _ctv_tape(data, fp_editions, plain_links=False):
     for grp in data["companies"]:
         for c in grp["items"]:
             price = c.get("price", "—")
-            cls = "up" if price not in ("—", "") else ""
+            if price in ("—", ""):
+                continue   # no dash noise on the tape — unpriced names sit out
+            d = _ctv_trend_dir(c.get("trend")) or "up"
+            arrow = "▲" if d == "up" else "▼"
             ticks.append(f'<span class="fd-tk"><b>{html.escape(c["ticker"])}</b> · '
-                         f'<span class="{cls}">{html.escape(price)}</span></span>')
+                         f'<span class="{d}">{html.escape(price)} {arrow}</span></span>')
     if not ticks:
         return ""
     row = "".join(ticks)
@@ -8868,83 +8954,155 @@ def _ctv_tape(data, fp_editions, plain_links=False):
             f'<div class="fd-tape-inner" style="animation-duration:{dur}s">{row}{row}</div></div>')
 
 
+_CTV_VERDICTS = {"beat": "Beat", "miss": "Miss", "inline": "In line", "mixed": "Mixed"}
+
+
+def _ctv_price_bits(c):
+    """Split a hand-authored price like '$22.78 (after-hours)' into the number
+    and its session qualifier, and read direction off the trend series.
+    Returns (price, qualifier, dir) — dir defaults 'up' when no trend exists."""
+    price = c.get("price", "—")
+    m = re.match(r"^(.*?)\s*\(([^)]+)\)\s*$", price)
+    if m:
+        price, when = m.group(1), m.group(2)
+    else:
+        when = ""
+    return price, when, (_ctv_trend_dir(c.get("trend")) or "up")
+
+
+def _ctv_movers_html(movers):
+    if not movers:
+        return ""
+    chips = "".join(
+        f'<span class="ctv-mover {m["dir"]}"><span class="t">{html.escape(m["tick"])}</span>'
+        f'<span class="m">{html.escape(m["move"])}</span>'
+        f'<span class="w">{html.escape(m["why"])}</span></span>'
+        for m in movers)
+    return f'<div class="ctv-movers"><span class="ctv-movers-l">Session movers</span>{chips}</div>'
+
+
 def _ctv_company_grid(data):
     out = []
     for grp in data["companies"]:
         cards = []
         for c in grp["items"]:
             note = f'<p class="ctv-co-note">{html.escape(c["note"])}</p>' if c.get("note") else ""
-            price = c.get("price", "—")
+            price, when, d = _ctv_price_bits(c)
             if price in ("—", ""):
                 right = _ctv_logo_badge(c["ticker"], c["name"])
             else:
                 spark = _ctv_sparkline_svg(c["trend"]) if c.get("trend") else ""
-                right = f'{spark}<span class="ctv-co-price">{html.escape(price)}</span>'
+                right = f'{spark}<span class="ctv-co-price {d}">{html.escape(price)}</span>'
+            meta = []
+            call = c.get("call")
+            if call in _CTV_VERDICTS:
+                meta.append(f'<span class="ctv-verdict {call}">{_CTV_VERDICTS[call]}</span>')
+            cap_bits = []
+            if c.get("cap", "—") not in ("—", ""):
+                cap_bits.append(f'Mkt cap {c["cap"]}')
+            if when:
+                cap_bits.append(when)
+            if cap_bits:
+                meta.append(f'<span class="ctv-co-cap">{html.escape(" · ".join(cap_bits))}</span>')
+            meta_html = f'<div class="ctv-co-meta">{"".join(meta)}</div>' if meta else ""
             cards.append(
                 f'<div class="ctv-co"><div class="ctv-co-top">'
                 f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
                 f'<span class="ctv-co-name">{html.escape(c["name"])}</span>'
-                f'{right}</div>'
-                f'<div class="ctv-co-cap">Mkt cap {html.escape(c.get("cap", "—"))}</div>'
+                f'{right}</div>{meta_html}'
                 f'<p class="ctv-co-earn">{html.escape(c["earn"])}</p>{note}</div>'
             )
-        out.append(f'<h3 class="ctv-grp-h">{html.escape(grp["group"])}</h3>'
+        out.append(f'<h3 class="ctv-grp-h">{html.escape(grp["group"])}'
+                   f'<span class="n">{len(grp["items"])}</span></h3>'
                    f'<div class="ctv-grid">{"".join(cards)}</div>')
     return "".join(out)
 
 
+def _ctv_tile(label, value, trend=None, caption="", big=False, spark_color="#f4715c"):
+    """One stat tile: label over a value row (value left, sparkline right),
+    with an optional serif caption underneath. CPM sparklines keep one salmon
+    accent — they chart a price level, not a P&L, so no green/red verdict."""
+    spark = _ctv_sparkline_svg(trend, color=spark_color) if trend else ""
+    cap = f'<span class="c">{html.escape(caption)}</span>' if caption else ""
+    return (f'<div class="ctv-tile{" big" if big else ""}"><span class="l">{html.escape(label)}</span>'
+            f'<span class="vrow"><span class="v">{html.escape(value)}</span>{spark}</span>{cap}</div>')
+
+
 def _ctv_cpm_html(cpm):
-    tiles = [
-        ("Blended average", cpm["blended"], cpm.get("blended_trend")),
-        ("Typical range", cpm["range"], None),
-        ("Full market span", cpm["span"], None),
-        ("Standard inventory", cpm["standard"], cpm.get("standard_trend")),
-        ("Premium / targeted", cpm["premium"], cpm.get("premium_trend")),
-        ("Completed-view (CPCV)", cpm["cpcv"], None),
-    ] + [(p["name"], p["val"], p.get("trend")) for p in cpm["by_platform"]]
-    tile_html = "".join(
-        f'<div class="ctv-tile"><span class="l">{html.escape(l)}</span>'
-        f'<span class="v">{html.escape(v)}</span>{_ctv_sparkline_svg(t, color="#f4715c") if t else ""}</div>'
-        for l, v, t in tiles
-    )
-    return (f'<div class="ctv-tiles">{tile_html}</div>'
+    bench = _ctv_tile("Blended average", cpm["blended"], cpm.get("blended_trend"), big=True) + "".join((
+        _ctv_tile("Typical range", cpm["range"]),
+        _ctv_tile("Full market span", cpm["span"]),
+        _ctv_tile("Standard inventory", cpm["standard"], cpm.get("standard_trend")),
+        _ctv_tile("Premium / targeted", cpm["premium"], cpm.get("premium_trend")),
+        _ctv_tile("Completed-view (CPCV)", cpm["cpcv"]),
+    ))
+    platforms = "".join(_ctv_tile(p["name"], p["val"], p.get("trend")) for p in cpm["by_platform"])
+    return (f'<h3 class="ctv-grp-h">The benchmarks</h3><div class="ctv-tiles">{bench}</div>'
+            f'<h3 class="ctv-grp-h">By platform<span class="n">{len(cpm["by_platform"])}</span></h3>'
+            f'<div class="ctv-tiles">{platforms}</div>'
             f'<p class="ctv-note">{html.escape(cpm["trend"])}</p>'
             f'<p class="ctv-src">Source: {html.escape(cpm["source"])}</p>')
 
 
 def _ctv_regions_html(regions):
-    cards = []
+    """Confirmed regions get full cards (growth-only values read in market
+    green); regions whose value never confirmed collapse into one compact
+    follow-up strip instead of four cards of dashes — absence stays visible
+    without spending a card on it. Each flagged name keeps its note as a
+    hover title."""
+    cards, flagged = [], []
     for r in regions:
+        if r["value"] in ("—", ""):
+            flagged.append(r)
+            continue
+        vcls = " up" if r["value"].startswith("+") else ""
         growth = f'<span class="ctv-region-g">{html.escape(r["growth"])}</span>' if r.get("growth") else ""
         note = f'<p class="ctv-region-n">{html.escape(r["note"])}</p>' if r.get("note") else ""
         cards.append(
             f'<div class="ctv-region"><div class="ctv-region-r">{html.escape(r["region"])}</div>'
             f'<div class="ctv-region-m">{html.escape(r["metric"])} · {html.escape(r.get("source", "—"))}</div>'
-            f'<div><span class="ctv-region-v">{html.escape(r["value"])}</span>{growth}</div>{note}</div>'
+            f'<div><span class="ctv-region-v{vcls}">{html.escape(r["value"])}</span>{growth}</div>{note}</div>'
         )
-    return f'<div class="ctv-regions">{"".join(cards)}</div>'
+    out = f'<div class="ctv-regions">{"".join(cards)}</div>'
+    if flagged:
+        names = "".join(f'<span class="r" title="{html.escape(r.get("note") or "Not confirmed in the last research pass.", quote=True)}">'
+                        f'{html.escape(r["region"])}</span>' for r in flagged)
+        out += (f'<div class="ctv-flagged"><span class="t">Awaiting confirmation</span>{names}'
+                f'<span class="n">— not confirmed in the last research pass; flagged for follow-up.</span></div>')
+    return out
 
 
 def _ctv_watch_one(w):
+    """One country's watch-time read. Bars sit on a true 0–100% scale (a
+    13.8% share draws as 13.8% of the track, not a full bar), each stat tile
+    carries its own sourcing fragment as a caption, dash tiles are skipped
+    (their fragments fold into the bottom note instead), and a country with
+    no numbers at all renders as a slim field note rather than empty tiles."""
     rows = []
-    top = max((p["pct"] for p in w["platform_share"]), default=1) or 1
     for p in w["platform_share"]:
-        width = max(4, p["pct"] / top * 100)
+        width = max(2, min(100, p["pct"]))
         rows.append(
             f'<div class="ctv-watch-row"><span class="ctv-watch-nm">{html.escape(p["name"])}</span>'
             f'<div class="ctv-watch-bar"><span class="ctv-watch-fill" style="width:{width:.1f}%"></span></div>'
             f'<span class="ctv-watch-pct">{p["pct"]:.1f}%</span></div>'
         )
-    watch_html = f'<div class="ctv-watch">{"".join(rows)}</div>' if rows else ""
-    tiles = (f'<div class="ctv-tiles">'
-            f'<div class="ctv-tile"><span class="l">Daily streaming</span><span class="v">{html.escape(w["us_daily"])}</span></div>'
-            f'<div class="ctv-tile"><span class="l">Streaming share of TV</span><span class="v">{html.escape(w["streaming_share"])}</span></div>'
-            f'</div>')
+    watch_html = (f'<div class="ctv-watch">{"".join(rows)}</div>'
+                  f'<p class="ctv-watch-scale">Bars on a 0–100% scale</p>') if rows else ""
+    tiles, loose_notes = [], []
+    for val, cap, label in ((w["us_daily"], w["us_daily_note"], "Daily streaming"),
+                            (w["streaming_share"], w["streaming_share_note"], "Streaming share of TV")):
+        if val in ("—", ""):
+            if cap:
+                loose_notes.append(cap)
+        else:
+            tiles.append(_ctv_tile(label, val, caption=cap))
+    tiles_html = f'<div class="ctv-tiles">{"".join(tiles)}</div>' if tiles else ""
+    if w.get("note"):
+        loose_notes.append(w["note"])
+    note_html = f'<p class="ctv-note">{html.escape(". ".join(n.rstrip(".") for n in loose_notes) + ".")}</p>' if loose_notes else ""
     return (f'<div class="ctv-watch-country">'
             f'<h3 class="ctv-grp-h">{html.escape(w["country"])}</h3>'
-            f'{tiles}{watch_html}'
-            f'<p class="ctv-note">{html.escape(w["us_daily_note"])}. {html.escape(w["streaming_share_note"])}. '
-            f'{html.escape(w["note"])}</p>'
+            f'{tiles_html}{watch_html}{note_html}'
             f'<p class="ctv-src">Source: {html.escape(w["source"])}</p></div>')
 
 
@@ -8953,18 +9111,49 @@ def _ctv_watch_html(watch_time):
     return "".join(_ctv_watch_one(w) for w in countries)
 
 
-def _ctv_bets_html(bet_rows, cap=9):
+def _ctv_pct(p):
+    return f'{p * 100:.0f}%' if p <= 1 else f'{p:.0f}%'
+
+
+def _ctv_bets_html(bet_rows, cap=6):
+    """One card per MARKET, not per (persona, market) — a board of six
+    near-identical persona cards on the same question read as copy-paste.
+    Each card: the question, its grade date (live countdown via the page's
+    data-grades hook), then one block per side taken, showing that side's
+    market price and the personas on it as roster-colored chips with their
+    own numbers. cap counts markets."""
+    groups = {}
+    for b in bet_rows:
+        g = groups.setdefault((b["market"], b["href"]), {
+            "market": b["market"], "href": b["href"], "graded": b["graded"],
+            "date": b.get("date", ""), "due": b.get("due", ""), "picks": {}})
+        pk = g["picks"].setdefault(b["pick"], {"flag": b.get("flag", ""), "q": b.get("q"), "rows": []})
+        pk["rows"].append(b)
     cards = []
-    for b in bet_rows[:cap]:
-        due = (f'<div class="ctv-bet-due">{"graded " + b["date"] if b["graded"] else "grades " + (b["due"] or "soon")}</div>')
-        pct = f'{b["p"] * 100:.0f}%' if b["p"] <= 1 else f'{b["p"]:.0f}%'
+    for g in list(groups.values())[:cap]:
+        if g["graded"]:
+            due = f'<span class="ctv-bet-due">graded {html.escape(g["date"] or "")}</span>'
+        elif re.match(r"^\d{4}-\d{2}-\d{2}$", g["due"] or ""):
+            due = (f'<span class="ctv-bet-due" data-grades="{g["due"]}">grades {g["due"]}</span>')
+        else:
+            due = f'<span class="ctv-bet-due">grades {html.escape(g["due"] or "soon")}</span>'
+        picks = []
+        for pick, pk in sorted(g["picks"].items(), key=lambda kv: -len(kv[1]["rows"])):
+            label = f'{pk["flag"]} {pick}'.strip()
+            label = re.sub(r"^([^\w\s]+)(?=\w)", r"\1 ", label)   # breathing room after a leading emoji
+            q = pk.get("q")
+            mkt = (f'<span class="q">mkt {_ctv_pct(float(q))}</span>'
+                   if isinstance(q, (int, float)) else "")
+            chips = "".join(
+                f'<span class="ctv-chip" style="--pc:{FDT_SERIES_COLORS.get(r.get("key"), "#9aa1af")}">'
+                f'{html.escape(r.get("avatar", "🎯"))} {html.escape(r["name"])}<b>{_ctv_pct(r["p"])}</b></span>'
+                for r in sorted(pk["rows"], key=lambda r: -r["p"]))
+            picks.append(f'<div class="ctv-pick"><div class="ctv-pick-t">{html.escape(label)}{mkt}</div>'
+                         f'<div class="ctv-pick-ch">{chips}</div></div>')
         cards.append(
-            f'<a class="ctv-bet" href="{html.escape(b["href"], quote=True)}">'
-            f'<div class="ctv-bet-top"><span class="ctv-bet-av">{html.escape(b.get("avatar", "🎯"))}</span>'
-            f'<span class="ctv-bet-nm">{html.escape(b["name"])}</span>'
-            f'<span class="ctv-bet-p">{pct}</span></div>'
-            f'<p class="ctv-bet-mk">{html.escape(b["market"])}</p>'
-            f'<p class="ctv-bet-pk">{html.escape(b.get("flag", ""))} {html.escape(b["pick"])}</p>{due}</a>'
+            f'<a class="ctv-bet" href="{html.escape(g["href"], quote=True)}">'
+            f'<div class="ctv-bet-top"><span class="ctv-bet-q">{html.escape(g["market"])}</span>{due}</div>'
+            f'{"".join(picks)}</a>'
         )
     return f'<div class="ctv-bets">{"".join(cards)}</div>' if cards else ""
 
@@ -8978,13 +9167,19 @@ def ctv_board_band_html(data, fp_editions, bet_rows, href="ctv-board.html"):
     board (no internal links, so the band itself is one anchor)."""
     priced = [c for grp in data["companies"] for c in grp["items"]
               if c.get("price", "—") not in ("—", "")]
-    tiles = "".join(
-        f'<div class="ctv-co"><div class="ctv-co-top">'
-        f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
-        f'<span class="ctv-co-price">{html.escape(c["price"])}</span></div>'
-        + (f'<div class="ctv-co-cap">Mkt cap {html.escape(c["cap"])}</div>' if c.get("cap", "—") not in ("—", "") else "")
-        + '</div>'
-        for c in priced[:4])
+    tiles = []
+    for c in priced[:4]:
+        price, when, d = _ctv_price_bits(c)
+        spark = _ctv_sparkline_svg(c["trend"]) if c.get("trend") else ""
+        cap_bits = ([f'Mkt cap {c["cap"]}'] if c.get("cap", "—") not in ("—", "") else []) + ([when] if when else [])
+        cap = f'<div class="ctv-co-cap">{html.escape(" · ".join(cap_bits))}</div>' if cap_bits else ""
+        tiles.append(
+            f'<div class="ctv-co"><div class="ctv-co-top">'
+            f'<span class="ctv-co-tick">{html.escape(c["ticker"])}</span>'
+            f'<span class="ctv-co-name">{html.escape(c["name"])}</span>'
+            f'{spark}<span class="ctv-co-price {d}">{html.escape(price)}</span></div>'
+            f'{cap}</div>')
+    tiles = "".join(tiles)
     cpm = data["cpm"]
     price_tiles = "".join(
         f'<div class="ctv-tile"><span class="l">{html.escape(l)}</span>'
@@ -9009,6 +9204,7 @@ def ctv_board_band_html(data, fp_editions, bet_rows, href="ctv-board.html"):
         f'font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--fdup)">Full board →</span></div>'
         f'{breaking}'
         f'{_ctv_tape(data, fp_editions, plain_links=True)}'
+        f'{_ctv_movers_html(data.get("movers"))}'
         f'<div class="ctv-grid" style="margin-top:1rem">{tiles}</div>'
         f'<div class="ctv-tiles" style="margin-top:.9rem">{price_tiles}</div>'
         f'</a>'
