@@ -8549,40 +8549,38 @@ def build_forecast_page(out_dir, native_items, markets, cfg, category_order=None
 # figure carries its own source and "as of" date so staleness is visible on
 # the page rather than silently assumed.
 CTV_BOARD_DATA = {
-    "as_of": "August 9, 2026",
-    "note": "Q2 2026 earnings season (most names reported late July–early August 2026). "
+    "as_of": "October 24, 2026",
+    "note": "Q3 2026 earnings season is just starting: Netflix has reported (Oct 20); Alphabet reports Oct 28 and Roku Nov 2. "
+            "Names that haven't reported yet still show their Q2 2026 results (late July–early August). "
             "Figures marked “—” were not confirmed in the last research pass.",
     # The session-movers strip: the board's lead read, each one restating a move
     # already carried in a company note below (no new facts live here).
     "movers": [
-        {"tick": "CRTO", "dir": "dn", "move": "−28%", "why": "guidance cut, premarket"},
-        {"tick": "GOOGL", "dir": "dn", "move": "−6%", "why": "capex guide raised"},
-        {"tick": "DIS", "dir": "up", "move": "+4%", "why": "EPS beat, premarket"},
-        {"tick": "AMZN", "dir": "up", "move": "$3T club", "why": "crossed Aug 3, a first"},
-        {"tick": "NFLX", "dir": "dn", "move": "soft guide", "why": "Q3 revenue outlook"},
-        {"tick": "MGNI", "dir": "up", "move": "targets ↑", "why": "FY26 raised"},
+        {"tick": "NFLX", "dir": "dn", "move": "−5–6%", "why": "after hours, ad forecast cut to ~$2.7B"},
+        {"tick": "SKYD", "dir": "up", "move": "deal closed", "why": "Paramount–WBD completed Oct 6"},
+        {"tick": "ROKU", "dir": "up", "move": "Nov 2", "why": "reports Q3, no call (Fox deal)"},
+        {"tick": "GOOGL", "dir": "up", "move": "Oct 28", "why": "Q3 report after the close"},
     ],
     "companies": [
         {"group": "CTV & Streaming", "items": [
             {"ticker": "ROKU", "name": "Roku", "price": "—", "cap": "$21.7B", "call": "beat",
              "earn": "Q2 2026: revenue $1.35B (+22% YoY), beat; EPS $1.18 vs $0.61 est. — 5th straight profitable quarter.",
-             "note": "Guidance withheld pending its $22B Fox Corp acquisition."},
+             "note": "Reports Q3 Nov 2 after the close, with no call and no outlook, pending its $22B Fox Corp acquisition (agreed June 15)."},
             {"ticker": "TTD", "name": "The Trade Desk", "price": "—", "cap": "—", "call": "miss",
              "earn": "Q2 2026: revenue $715M (+3% YoY), missed $751.5M est.; adj. EPS $0.34 vs $0.37 est.",
              "note": "CFO, CMO, and commercial chief all replaced this quarter."},
-            {"ticker": "NFLX", "name": "Netflix", "price": "$73.63", "cap": "$309B", "call": "inline",
-             "trend": [86, 84, 80, 77, 75, 73.63],
-             "earn": "Q2 2026: revenue $12.56B (+13.4%), in-line; EPS $0.80 in-line; op. margin 33.4% (down from 34.1%).",
-             "note": "Ads business tracking ~$3B FY26 revenue, ~$43/mo ARPU; stock fell on a soft Q3 revenue guide."},
+            {"ticker": "NFLX", "name": "Netflix", "price": "$69.85 (Oct 19 close)", "cap": "~$291B", "call": "inline",
+             "trend": [86, 84, 80, 77, 73.63, 69.85],
+             "earn": "Q3 2026 (Oct 20): revenue $12.87B (+~12%), in-line; EPS $0.87 vs $0.82 est. — beat; op. income $4.46B (+37%), margin 34.6%.",
+             "note": "FY26 ad revenue forecast cut to ~$2.7B from ~$3B; 15-country ad-tier expansion pushed to 2027. "
+                     "Q4 EPS guide $0.67 vs $0.73 est.; stock −5–6% after hours. Record $4.8B buyback."},
             {"ticker": "DIS", "name": "Disney", "price": "—", "cap": "—", "call": "mixed",
              "earn": "Q3 FY26: revenue $25.25B (+7%), slight miss; adj. EPS $2.06 vs $1.86 est. — beat.",
              "note": "Streaming operating income more than doubled YoY to ~$712M; stock +~4% premarket."},
-            {"ticker": "WBD", "name": "Warner Bros. Discovery", "price": "—", "cap": "$67.4B", "call": "mixed",
-             "earn": "Q2 2026: revenue $8.72B, missed $9.21B est.; EPS beat despite the revenue miss.",
-             "note": "Subject to Paramount Skydance's pending $80.9–111B bid; US antitrust trial set March 2027."},
-            {"ticker": "PSKY", "name": "Paramount Skydance", "price": "—", "cap": "$10.4B", "call": "beat",
-             "earn": "Q2 2026: revenue $6.91B vs $6.88B est. — slight beat; net earnings $41M.",
-             "note": "Pursuing the Warner Bros. Discovery acquisition."},
+            {"ticker": "SKYD", "name": "Skydance (Paramount + Warner Bros. Discovery)", "price": "—", "cap": "—", "call": "mixed",
+             "earn": "Last standalone prints (Q2 2026): WBD revenue $8.72B, missed $9.21B est.; PSKY revenue $6.91B vs $6.88B est.",
+             "note": "Paramount closed its ~$81B ($111B with debt) WBD acquisition Oct 6, 2026; the combined company trades as SKYD "
+                     "(Ellison and Kreiz co-CEOs). WBD holders got $31.02 cash per share. First combined results not yet reported."},
             {"ticker": "FUBO", "name": "fuboTV", "price": "—", "cap": "—",
              "earn": "Figures not confirmed in this research pass.",
              "note": "Sports-first vMVPD; folded the Fox-backed Hulu + Live TV merger in early 2025."},
