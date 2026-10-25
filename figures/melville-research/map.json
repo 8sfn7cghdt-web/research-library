@@ -1,22 +1,27 @@
 [
- {
-  "file": "08_The_Doctrine_Of_Providence_Melvilles_Inheritance.md",
-  "after": "## What Melville Demonstrably Used",
-  "snippet": "mel_lineage.html"
- },
- {
-  "file": "04_Providence_Across_The_Career.md",
-  "after": "## The Arc Assessed",
-  "snippet": "mel_career_timeline.html"
- },
- {
-  "file": "02_Providence_In_Moby_Dick.md",
-  "after": "## The Mat-Maker",
-  "snippet": "mel_mat_maker_loom.html"
- },
- {
-  "file": "05_Reception_And_The_Scholarly_Debate.md",
-  "after": "## The Schools and What They Rest On",
-  "snippet": "mel_schools_matrix.html"
- }
+  { "file": "08_The_Doctrine_Of_Providence_Melvilles_Inheritance.md", "after": "## What Melville Demonstrably Used", "snippet": "mel_lineage.html" },
+  { "file": "04_Providence_Across_The_Career.md", "after": "## The Arc Assessed", "snippet": "mel_career_timeline.html" },
+  { "file": "02_Providence_In_Moby_Dick.md", "after": "## The Mat-Maker", "snippet": "mel_mat_maker_loom.html" },
+  { "file": "05_Reception_And_The_Scholarly_Debate.md", "after": "## The Schools and What They Rest On", "snippet": "mel_schools_matrix.html" },
+  { "file": "00_Six_Easy_Pieces.md", "after": "How the book makes the argument", "snippet": "scene_mat_maker.html" },
+  { "file": "01_Origins_And_Intellectual_Lineage.md", "after": "The Sea as Second School", "snippet": "scene_acushnet_departure.html" },
+  { "file": "01_Origins_And_Intellectual_Lineage.md", "after": "The Hawthorne review, August 1850", "snippet": "scene_arrowhead_hawthorne.html" },
+  { "file": "02_Providence_In_Moby_Dick.md", "after": "Father Mapple", "snippet": "scene_father_mapple.html" },
+  { "file": "02_Providence_In_Moby_Dick.md", "after": "Defiance Rehearsed", "snippet": "scene_candles.html" },
+  { "file": "03_Ahab_And_Ishmael_Rival_Theologies.md", "after": "The quarter-deck as a creed", "snippet": "scene_quarter_deck.html" },
+  { "file": "03_Ahab_And_Ishmael_Rival_Theologies.md", "after": "Queequeg's coffin", "snippet": "scene_queequeg_coffin.html" },
+  { "file": "04_Providence_Across_The_Career.md", "after": "Mardi (1849): The Metaphysical Quest", "snippet": "scene_mardi_desk.html" },
+  { "file": "04_Providence_Across_The_Career.md", "after": "The Arc Assessed", "snippet": "scene_late_melville.html" },
+  { "file": "05_Reception_And_The_Scholarly_Debate.md", "after": "The First Reception, 1851 to 1852", "snippet": "scene_first_reviews.html" },
+  { "file": "05_Reception_And_The_Scholarly_Debate.md", "after": "The Calvinist Turn and the Cultural Critics, 1970s to the 1990s", "snippet": "scene_scholarly_revival.html" },
+  { "file": "06_Critique_And_The_Strongest_Objections.md", "after": "The encyclopedic mode", "snippet": "scene_ishmael_cetology.html" },
+  { "file": "06_Critique_And_The_Strongest_Objections.md", "after": "The Epilogue and the Rachel", "snippet": "scene_ishmael_rescue.html" },
+  { "file": "07_Melvilles_Own_Testimony_The_Letters_And_Hawthornes_Notebook.md", "after": "He Says No! in Thunder", "snippet": "scene_thunder_letter.html" },
+  { "file": "07_Melvilles_Own_Testimony_The_Letters_And_Hawthornes_Notebook.md", "after": "What Melville Read and Marked", "snippet": "scene_marginalia.html" },
+  { "file": "08_The_Doctrine_Of_Providence_Melvilles_Inheritance.md", "after": "Calvin: Providence Without Fortune", "snippet": "scene_calvin_geneva.html" },
+  { "file": "08_The_Doctrine_Of_Providence_Melvilles_Inheritance.md", "after": "The Quaker Strand and the Whaleman's Chapel", "snippet": "scene_empty_chapel.html" },
+  { "file": "09_Providence_In_Recent_Scholarship_And_Afterlives.md", "after": "Reading the book in public", "snippet": "scene_melville_society.html" },
+  { "file": "09_Providence_In_Recent_Scholarship_And_Afterlives.md", "after": "The screen, the stage and the opera", "snippet": "scene_stage_afterlife.html" },
+  { "file": "Future_Trajectory.md", "after": "Scenarios", "snippet": "scene_future_reader.html" },
+  { "file": "Future_Trajectory.md", "after": "Prediction Market Snapshot", "snippet": "scene_reading_circle.html" }
 ]
