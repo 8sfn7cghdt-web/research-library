@@ -379,6 +379,11 @@
       "title": "The Inherited Guilt",
       "subtitle": "Nathaniel Hawthorne and the Puritan Conscience",
       "category": "Mind & Philosophy"
+    },
+    "carlyle-reading-primer-research": {
+      "title": "Before You Open Carlyle",
+      "subtitle": "A reader's primer to The French Revolution: A History (1837)",
+      "category": "Thomas Carlyle"
     }
   },
   "corpora": [
@@ -420,7 +425,8 @@
     "../ctv-ssp-research",
     "../economic-schools-research",
     "../melville-research",
-    "../hawthorne-research"
+    "../hawthorne-research",
+    "../carlyle-reading-primer-research"
   ],
   "atlas": {
     "_comment": "Optional overrides for the Atlas stamp map. 'places' = {slug: {lon, lat, label, group}} pins a corpus (one uniform stamp each); 'groups' = {gid: {name, plate:[lon,lat] center, cols}} defines the callout plates. Defaults live in build.py (ATLAS_PLACEMENTS / ATLAS_GROUPS) — leave empty to use them."

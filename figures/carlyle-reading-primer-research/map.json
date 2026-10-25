@@ -1,0 +1,27 @@
+[
+ {
+  "file": "00_Six_Easy_Pieces.md",
+  "after": "## How the book is built",
+  "snippet": "cr_architecture.html"
+ },
+ {
+  "file": "01_The_Revolution_In_Order.md",
+  "after": "## Timeline",
+  "snippet": "cr_ratchet.html"
+ },
+ {
+  "file": "05_The_Cast.md",
+  "after": "## How the book is built",
+  "snippet": "cr_epithets.html"
+ },
+ {
+  "file": "07_Editions_Companions_And_A_Reading_Plan.md",
+  "after": "### Six weeks",
+  "snippet": "cr_schedule.html"
+ },
+ {
+  "file": "01_The_Revolution_In_Order.md",
+  "after": "## Five places where Carlyle departs",
+  "snippet": "cr_emphasis.html"
+ }
+]

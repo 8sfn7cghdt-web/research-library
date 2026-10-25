@@ -1,0 +1,25 @@
+{
+  "aesthetic": "The Circulating-Library Set — a triple-decker read to a borrower's ledger",
+  "anchor": "A Mudie's Select Library three-volume 'triple-decker' set in publisher's cloth, read through the subscriber's reading-schedule ledger and pencil marginalia: Carlyle's 1837 Fraser edition is itself three volumes (The Bastille / The Constitution / The Guillotine), 20 books, 159 chapters, and this primer's whole job is to pace a first-time borrower through them in six weeks.",
+  "rationale": "The sibling corpus (The Burnt Manuscript) reads the book as a fire: ember, Caslon, warm char. This corpus reads the book as an object you check out and finish: three volumes to be borrowed one at a time, a ruled ledger of weeks, a numbered tick-list of ten chapters. So the world is cool and bookish rather than incandescent: library-cloth teal-green, the plum of a borrower's ticket, Prussian-blue ledger ink, ochre catalogue-card edge, pencil-graphite slate for marginalia, on pale sage ledger paper. Display type is a humanist sans (the stamped spine-label and ticket), body is Georgia, so nothing here shares the sibling's Caslon serif voice.",
+  "light": {
+    "bg": "#edf0e9", "panel": "#dfe5da", "text": "#18221e", "muted": "#53605a",
+    "accent": "#1c5f56", "border": "#c2cbbe", "mark": "#cfe3a6", "cover-bg": "#e3e9de",
+    "t1": "#1e6b5c", "t2": "#7c2d57", "t3": "#2a4f88", "t4": "#8a6212", "t5": "#566270"
+  },
+  "dark": {
+    "bg": "#0f1714", "panel": "#1a2621", "text": "#e3ebe5", "muted": "#8fa097",
+    "accent": "#5fc4b0", "border": "#2b3a33", "mark": "#3b4a1f", "cover-bg": "#16211c",
+    "t1": "#5fc4ae", "t2": "#d98ab2", "t3": "#7fa6e6", "t4": "#e0b24f", "t5": "#9eaebe"
+  },
+  "fonts": {
+    "display": "'Gill Sans', 'Trebuchet MS', Helvetica, Arial, sans-serif",
+    "body": "Georgia, 'Iowan Old Style', 'Times New Roman', serif",
+    "mono": "'Courier New', Consolas, 'DejaVu Sans Mono', monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2039   \\00b7   \\203a'",
+    "fig_radius": "8px"
+  },
+  "cover_palette": ["#1e6b5c", "#7c2d57", "#2a4f88", "#8a6212"]
+}
