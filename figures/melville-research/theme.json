@@ -1,0 +1,45 @@
+{
+  "aesthetic": "Cenotaph Tablet",
+  "anchor": "The marble memorial tablets of the Whaleman's Chapel (Seamen's Bethel, New Bedford), which Melville attended in December 1840 and rendered in Moby-Dick ch. 7, set in the engraved small-capitals and modern-face title-page typography of the 1851 Harper & Brothers first American edition (and Bentley's London The Whale)",
+  "rationale": "Chapter 7 describes the chapel walls lined with black-lettered white marble tablets to men lost at sea, each ending in the chiselled question of whether the dead are in heaven; the corpus is itself an inquiry into whether anything steers the lost. Bone-white marble ground, lampblack lettering, tarnished brass fittings and a Bethel-pew slate accent; engraved capitals for display, Georgia-class modern serif for body.",
+  "light": {
+    "bg": "#f1eee6",
+    "panel": "#e2ded2",
+    "text": "#1b1d21",
+    "muted": "#5a5d63",
+    "accent": "#35465c",
+    "border": "#c9c4b4",
+    "mark": "#d9d2a8",
+    "cover-bg": "#e8e4d8",
+    "t1": "#2f3b4a",
+    "t2": "#86651a",
+    "t3": "#3b6a62",
+    "t4": "#99472a",
+    "t5": "#6a5578"
+  },
+  "dark": {
+    "bg": "#121417",
+    "panel": "#1d2025",
+    "text": "#e9e6dd",
+    "muted": "#9b9ea4",
+    "accent": "#a9bbd0",
+    "border": "#343a42",
+    "mark": "#3b3a22",
+    "cover-bg": "#1d2025",
+    "t1": "#8fa4bd",
+    "t2": "#d6ad55",
+    "t3": "#69b0a3",
+    "t4": "#e0825f",
+    "t5": "#b79bcb"
+  },
+  "fonts": {
+    "display": "Copperplate, 'Copperplate Gothic Light', 'Trajan Pro', 'Times New Roman', serif",
+    "body": "Georgia, 'Bookman Old Style', 'Times New Roman', serif",
+    "mono": "'American Typewriter', 'Courier New', Consolas, monospace"
+  },
+  "ornament": {
+    "hr_glyph": "'\\2014  \\25c6  \\2014'",
+    "fig_radius": "2px"
+  },
+  "cover_palette": ["#2f3b4a", "#86651a", "#3b6a62", "#99472a"]
+}

@@ -369,6 +369,11 @@
       "title": "The Argument Nobody Finished",
       "subtitle": "Rival schools of economic thought, and which of them actually governs",
       "category": "The Modern World"
+    },
+    "melville-research": {
+      "title": "The Sea Does Not Say",
+      "subtitle": "Melville, Moby-Dick, and the unanswered argument about providence",
+      "category": "Faith & Religion"
     }
   },
   "corpora": [
@@ -408,7 +413,8 @@
     "../walmart-vibe-research",
     "../social-ctv-retargeting-research",
     "../ctv-ssp-research",
-    "../economic-schools-research"
+    "../economic-schools-research",
+    "../melville-research"
   ],
   "atlas": {
     "_comment": "Optional overrides for the Atlas stamp map. 'places' = {slug: {lon, lat, label, group}} pins a corpus (one uniform stamp each); 'groups' = {gid: {name, plate:[lon,lat] center, cols}} defines the callout plates. Defaults live in build.py (ATLAS_PLACEMENTS / ATLAS_GROUPS) — leave empty to use them."

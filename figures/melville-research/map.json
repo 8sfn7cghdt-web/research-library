@@ -1,0 +1,22 @@
+[
+ {
+  "file": "08_The_Doctrine_Of_Providence_Melvilles_Inheritance.md",
+  "after": "## What Melville Demonstrably Used",
+  "snippet": "mel_lineage.html"
+ },
+ {
+  "file": "04_Providence_Across_The_Career.md",
+  "after": "## The Arc Assessed",
+  "snippet": "mel_career_timeline.html"
+ },
+ {
+  "file": "02_Providence_In_Moby_Dick.md",
+  "after": "## The Mat-Maker",
+  "snippet": "mel_mat_maker_loom.html"
+ },
+ {
+  "file": "05_Reception_And_The_Scholarly_Debate.md",
+  "after": "## The Schools and What They Rest On",
+  "snippet": "mel_schools_matrix.html"
+ }
+]
